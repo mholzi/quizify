@@ -421,7 +421,11 @@ def serialize_state_snapshot(game_state: QuizifyGameState) -> dict[str, Any]:
             "window_remaining": round(game_state.wager_window_remaining(), 1),
             "window_duration": game_state.wager_window_duration,
             # The tally, so a TV reconnecting mid-window shows the bets
-            # already in rather than restarting the count at zero.
+            # already in rather than restarting the count at zero. How much
+            # anyone staked stays out of here — a bet the TV gave away would
+            # not be a bet. The recipient's own bank and own standing bet are
+            # added per player by
+            # ``RoundMessageBuilder.project_snapshot_for_player`` (#876).
             "locked_in": len(connected) - len(game_state.players_missing_wager()),
             "player_count": len(connected),
         }

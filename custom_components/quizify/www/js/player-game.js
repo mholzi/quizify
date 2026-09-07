@@ -725,6 +725,13 @@
 
         panel.classList.remove('hidden', 'wager-panel--collapsed');
         _paintWagerPanel(data.player_score || 0);
+
+        // #876: this phone has already bet — a reload, not a fresh window.
+        // Painting stops at a live 25% slider, which invites a second submit
+        // that silently overwrites the first, and leaves `submitted` false so
+        // `_showWagerBadge` hides the badge the phone that stayed connected
+        // keeps. Same shape as the Hot Seat's `lockBidUi` on a reconnect.
+        if (data.you_wagered != null) _lockWagerUi(data.you_wagered);
     }
 
     /**
@@ -749,6 +756,40 @@
         panel.classList.add('wager-panel--collapsed');
         var titleEl = document.getElementById('wager-panel-title');
         if (titleEl) titleEl.textContent = t('wager.locked', { pct: _wagerState.pct });
+    }
+
+    /**
+     * Collapse the betting panel onto a placed bet (#876).
+     *
+     * The one place the "you have bet, and this is what it was" state is
+     * built, so the phone that tapped Submit and the phone that reloaded onto
+     * its own standing bet end up identical — the drift #858 is about, on the
+     * one screen where the two halves disagreeing costs points.
+     */
+    function _lockWagerUi(pct) {
+        _wagerState.submitted = true;
+        _wagerState.pct = pct;
+
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        var panel = document.getElementById('wager-panel');
+        var slider = document.getElementById('wager-slider');
+        var submitBtn = document.getElementById('wager-submit-btn');
+        var titleEl = document.getElementById('wager-panel-title');
+        var hintEl = document.getElementById('wager-panel-hint');
+        var timeoutNoteEl = document.getElementById('wager-panel-timeout-note');
+
+        if (slider) {
+            slider.value = String(pct);
+            slider.disabled = true;
+        }
+        if (submitBtn) submitBtn.disabled = true;
+        // Collapse into a "wager: 25%" badge. The player now waits for the
+        // rest of the room — the question arrives on its own once the window
+        // closes, so there is nothing else to do here.
+        if (panel) panel.classList.add('wager-panel--collapsed');
+        if (titleEl) titleEl.textContent = t('wager.locked', { pct: pct });
+        if (hintEl) hintEl.textContent = t('wager.waitingForOthers');
+        if (timeoutNoteEl) timeoutNoteEl.textContent = '';
     }
 
     function _paintWagerPanel(currentScore) {
@@ -793,20 +834,10 @@
             submitBtn.onclick = function () {
                 if (_wagerState.submitted) return;
                 var pct = parseInt(slider.value, 10);
-                _wagerState.submitted = true;
-                _wagerState.pct = pct;
-                submitBtn.disabled = true;
-                if (slider) slider.disabled = true;
+                _lockWagerUi(pct);
                 // Send via the player-core send() function.
                 var send = window.QuizifyPlayer && window.QuizifyPlayer.send;
                 if (send) send('submit_wager', { wager: pct });
-                // Collapse into a "wager: 25%" badge. The player now waits for
-                // the rest of the room — the question arrives on its own once
-                // the window closes, so there is nothing else to do here.
-                panel.classList.add('wager-panel--collapsed');
-                if (titleEl) titleEl.textContent = t('wager.locked', { pct: pct });
-                if (hintEl) hintEl.textContent = t('wager.waitingForOthers');
-                if (timeoutNoteEl) timeoutNoteEl.textContent = '';
             };
         }
     }
