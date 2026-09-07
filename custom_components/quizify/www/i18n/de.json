@@ -137,7 +137,6 @@
     "result": "Ergebnis",
     "questionCounter": "Frage {current} / {total}",
     "correctLabel": "Richtig: {answer}",
-    "answerNone": "Keine Antwort",
     "answerProgress": "{submitted} von {total} haben geantwortet",
     "waitingFor": "es fehlen noch {names}",
     "summaryRoundsUnit": "Runden",
@@ -260,7 +259,6 @@
     "correctAnswerWas": "Richtige Antwort:",
     "funFact": "Wusstest du?",
     "yourAnswer": "Deine Antwort",
-    "result": "Ergebnis",
     "correct": "Richtig",
     "wrong": "Falsch",
     "baseScore": "Grundpunkte",
@@ -273,48 +271,6 @@
     "joinedLate": "Du bist nach Rundenstart beigetreten",
     "joinedLateHint": "Ab der nächsten Frage spielst du mit!",
     "ptsUnit": "Pkt.",
-    "ptsBonus": "+{count} Pkt.",
-    "emotion": {
-      "exact": [
-        "VOLLTREFFER! 🎯",
-        "PERFEKT! 🎯",
-        "STARK! ✨",
-        "BULLSEYE! 🎯"
-      ],
-      "wrong": [
-        "Falsch! ❌",
-        "Knapp daneben 😬",
-        "Nicht ganz 😅",
-        "Schade 💨"
-      ],
-      "missed": [
-        "Zu langsam! ⏱️",
-        "Zeit um! ⏰",
-        "Verpasst! 😬"
-      ],
-      "exactSub": [
-        "Perfekte Antwort!",
-        "Du wusstest es!",
-        "Beeindruckend!"
-      ],
-      "fastSub": [
-        "Blitzschnell ⚡",
-        "Tempo-Bonus verdient!"
-      ],
-      "streakSub": [
-        "{count}er-Serie! 🔥",
-        "Du läufst heiß! 🔥"
-      ],
-      "wrongSub": [
-        "Beim nächsten Mal! 💪",
-        "Weitermachen!",
-        "Die nächste schaffst du!"
-      ],
-      "missedSub": [
-        "Keine Antwort abgegeben",
-        "Diese hier verpasst"
-      ]
-    },
     "finalResults": "Endergebnis",
     "flagAriaLabel": "Diese Frage als fehlerhaft melden",
     "flagTitle": "Frage melden",
