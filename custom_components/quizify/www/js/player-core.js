@@ -532,8 +532,8 @@
                 // #803: the settlement leaves the room on HOT_SEAT_REVEAL,
                 // which only a host tap leaves. If the host was the seat
                 // holder and their phone died, the clock settles the stake
-                // (#653) and stops here — with no way out for anyone.
-                setResetStage('HOT_SEAT_REVEAL');
+                // (#653) and stops here — with no way out for anyone. The
+                // hatch is armed by STAGE_ENTERED_BY, not from here (#858).
                 break;
 
             // ---- Lightning Round (issue #42) ----
@@ -558,8 +558,8 @@
             case 'lightning_recap':
                 if (lightning) lightning.handleLightningRecap(msg);
                 // #803: the recap waits for the host's "Continue game" and
-                // nothing else. Same dead-end as the reveal, same hatch.
-                setResetStage('LIGHTNING_RECAP');
+                // nothing else. Same dead-end as the reveal, same hatch —
+                // armed by STAGE_ENTERED_BY, not from here (#858).
                 break;
 
             case 'guess_accepted':
@@ -576,6 +576,12 @@
                 handleError(msg);
                 break;
         }
+
+        // #858: the live half of the same decision the snapshot makes one
+        // line below `_rememberRoster` in handleGameState. Deliberately here
+        // rather than inside three `case` blocks — the bug this closes was a
+        // fourth case that nobody wrote.
+        enterStageFor(msg);
     }
 
     function handleReactionBonus(msg) {
@@ -764,7 +770,10 @@
                 // stake (#653), and they could not answer what they could not
                 // see.
                 pu.showView('game-view');
-                if (hotSeat && msg.hot_seat) hotSeat.restoreFromSnapshot(msg.hot_seat);
+                // #859: the snapshot is handed over whole — the settled chair's
+                // post-settlement leaderboard lives at the top level of it, not
+                // inside the hot_seat block.
+                if (hotSeat && msg.hot_seat) hotSeat.restoreFromSnapshot(msg.hot_seat, msg);
                 // #697: the detour is entered from ANSWER_REVEAL, which hides
                 // the control bar, and nothing here brought it back. A host
                 // who plays along — the default, since the admin tab redirects
@@ -1275,6 +1284,41 @@
         'LIGHTNING_RECAP': ['lightning-recap-reset-btn', 'lightning-recap-reset-controls'],
         'HOT_SEAT_REVEAL': ['hotseat-reset-btn', 'hotseat-reset-controls']
     };
+
+    // Which LIVE frame opens which waiting stage (#858).
+    //
+    // The snapshot half of this decision is one line in handleGameState:
+    // `setResetStage(STAGE_RESET_AFFORDANCES[msg.phase] ? msg.phase : null)`.
+    // A phone only ever receives a snapshot when it joins, reconnects or asks
+    // for one — so a guest who reaches a stage by LIVING THROUGH the round
+    // gets there with `_resetStage` still null, `refreshStageReset` returns at
+    // its first line, and a perfectly correct `host_connected:false` has
+    // nothing to arm.
+    //
+    // #803 patched that per case, and got two of the three: `lightning_recap`
+    // and `hot_seat_result` each said their own stage out loud, `round_summary`
+    // said nothing, and the reveal — the screen every single round ends on, and
+    // the one a host-less room waits on most — was the one left with no way
+    // out (#858, found on real hardware after 137 seconds of four phones
+    // showing `reveal-reset-controls: none`).
+    //
+    // So the live half is a table too, applied once at the bottom of
+    // handleMessage. A between-round stage is now added by writing two rows —
+    // its controls below, its opening frame here — and forgetting the second
+    // is a failing test rather than a stranded room
+    // (tests/test_stage_entry_parity_858.py).
+    var STAGE_ENTERED_BY = {
+        'round_summary': 'ANSWER_REVEAL',
+        'lightning_recap': 'LIGHTNING_RECAP',
+        'hot_seat_result': 'HOT_SEAT_REVEAL'
+    };
+
+    // Enter the stage this frame opens, if it opens one. Reads `type || event`
+    // for the same reason the dispatcher does.
+    function enterStageFor(msg) {
+        var stage = msg && STAGE_ENTERED_BY[msg.type || msg.event];
+        if (stage) setResetStage(stage);
+    }
 
     // The roster from the most recent frame that carried one.
     //

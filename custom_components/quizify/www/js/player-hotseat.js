@@ -61,6 +61,32 @@
         return el('hotseat-panel');
     }
 
+    function stage(id, show) {
+        var node = el(id);
+        if (node) node.classList.toggle('hidden', !show);
+    }
+
+    /**
+     * Whose row is "mine" (#804/#728).
+     *
+     * The settlement is keyed by ENTRANT, not by player: in team mode the
+     * chair is bought out of the team's purse and the deltas land on the team
+     * id. Looking myself up by name there finds nothing, which on a phone
+     * reads as "the biggest swing of the night did not touch you".
+     */
+    function myEntrant() {
+        var team = window.QuizifyPlayerTeam;
+        var mine = (team && team.myTeam) ? team.myTeam() : null;
+        if (mine && (mine.team_id || mine.name)) return mine.team_id || mine.name;
+        var utils = window.QuizifyPlayerUtils;
+        return (utils && utils.state) ? utils.state.playerName : null;
+    }
+
+    function isAdmin() {
+        var utils = window.QuizifyPlayerUtils;
+        return !!(utils && utils.state && utils.state.isAdmin);
+    }
+
     function hide() {
         var p = panel();
         if (p) p.classList.add('hidden');
@@ -74,6 +100,9 @@
         _state.betPlaced = false;
         _state.seatAnswering = false;
         _state.winner = null;
+        // #859: the settlement of the LAST chair must not be standing under
+        // the next auction's slider.
+        stage('hotseat-result-stage', false);
         hide();
     }
 
@@ -104,6 +133,8 @@
         var betStage = el('hotseat-bet-stage');
         if (bidStage) bidStage.classList.remove('hidden');
         if (betStage) betStage.classList.add('hidden');
+        // #859: a new chair opens over the previous one's settlement.
+        stage('hotseat-result-stage', false);
 
         var title = el('hotseat-title');
         var hint = el('hotseat-hint');
@@ -400,9 +431,168 @@
     // Result
     // ------------------------------------------------------------------
 
-    function handleResult() {
-        // The reveal screen owns the outcome; the panel's job is done.
-        reset();
+    /**
+     * The settlement (#859).
+     *
+     * This used to be ``reset()`` and a one-line comment saying "the reveal
+     * screen owns the outcome". No reveal follows: ``hot_seat_result`` is the
+     * only frame the server sends for the settlement, the room stays in
+     * HOT_SEAT_REVEAL until the host taps Next Question, and no
+     * ``round_summary`` ever arrives. So the frame that carries the answer,
+     * every delta and — since #833 — the post-settlement leaderboard was
+     * received and dropped on the floor, and four phones sat on the seat
+     * question with a stopped clock and the standings the chair had just
+     * overturned while the host page and the television both read
+     * "Ben answered it — +80 points".
+     *
+     * The panel narrates the whole detour already (auction → award →
+     * question), so it narrates the end of it too. The three lines are the
+     * ones the room actually asks: who took the chair and what it cost or
+     * paid, what the answer was, and — the part only a phone can give — what
+     * it did to MY points, spectator bet included.
+     *
+     * Unchanged since the mode landed in #654; not a regression from RC3.
+     */
+    function handleResult(msg) {
+        msg = msg || {};
+        var p = panel();
+        if (!p) {
+            reset();
+            return;
+        }
+
+        _state.bidding = false;
+        _state.seatAnswering = false;
+
+        p.classList.remove('hidden');
+        p.classList.remove('wager-panel--collapsed');
+        stage('hotseat-bid-stage', false);
+        stage('hotseat-bet-stage', false);
+        stage('hotseat-result-stage', true);
+
+        // ``answered`` is tri-state on the server: true = right, false =
+        // wrong, null = never answered. A bare falsy check collapses the last
+        // two, and since #653 charges the same points for both, "ran out of
+        // time" vs "got it wrong" is the whole distinction this line makes.
+        // Same three keys and the same reading as the television's
+        // handleHotSeatResult, so the room is told one story.
+        var noAnswer = msg.answered === null || msg.answered === undefined;
+        var right = msg.answered === true;
+        // #804: ``winner`` is the person in the chair, ``entrant`` is who pays
+        // — their team in team mode. The points move on the entrant's row, so
+        // that is the name beside the number.
+        var payer = msg.entrant || msg.winner || '';
+        var delta = (msg.winner_delta != null)
+            ? msg.winner_delta
+            : ((msg.deltas && msg.deltas[msg.winner]) || 0);
+        var key = noAnswer
+            ? 'hotSeat.resultTimeout'
+            : (right ? 'hotSeat.resultRight' : 'hotSeat.resultWrong');
+        var title = el('hotseat-title');
+        if (title) title.textContent = t(key, { name: payer, pts: Math.abs(delta) });
+
+        // The answer itself. ``correct_index`` is a CANONICAL index and the
+        // seat holder was shown a shuffle, so the spelled-out string (#833) is
+        // the only one a phone can use.
+        var answerEl = el('hotseat-result-answer');
+        if (answerEl) {
+            answerEl.textContent = msg.correct_answer
+                ? t('reveal.correctAnswerWas') + ' ' + msg.correct_answer
+                : '';
+            answerEl.classList.toggle('hidden', !msg.correct_answer);
+        }
+
+        renderOwnSettlement(msg);
+        renderResultStandings(msg.leaderboard);
+
+        var hint = el('hotseat-hint');
+        if (hint) {
+            // The host has Next Question on their own bar; everyone else is
+            // waiting for them to press it.
+            hint.textContent = t(isAdmin()
+                ? 'hotSeat.hostSettled' : 'lightning.recapWaitHint');
+        }
+
+        // The chair is closed. A tap on a grid the seat holder never got to
+        // use would send `hot_seat_answer` into a settled question.
+        var host = el('answer-buttons');
+        if (host && host.querySelectorAll) {
+            var buttons = host.querySelectorAll('.answer-btn');
+            for (var i = 0; i < buttons.length; i++) buttons[i].disabled = true;
+        }
+        // #839/#852: the clock stopped with the settlement, and the polite
+        // region was still holding the chair's last "5 seconds left".
+        var g = window.QuizifyPlayerGame;
+        if (g && g.clearTimeAnnouncement) g.clearTimeAnnouncement();
+    }
+
+    /**
+     * What the chair did to MY points — the line no other screen can show.
+     *
+     * ``deltas`` is keyed by entrant and carries both halves of the
+     * settlement: the seat entrant's stake and every spectator's bet. A
+     * spectator who staked on the outcome is otherwise never told whether
+     * their bet came in.
+     */
+    function renderOwnSettlement(msg) {
+        var row = el('hotseat-result-you');
+        if (!row) return;
+        var deltas = msg.deltas || {};
+        var me = myEntrant();
+        var has = me != null
+            && Object.prototype.hasOwnProperty.call(deltas, me);
+        // Nothing moved on my row — no line, rather than a decorative "0".
+        row.classList.toggle('hidden', !has);
+        if (!has) return;
+        var mine = deltas[me] || 0;
+        var label = el('hotseat-result-you-label');
+        var value = el('hotseat-result-you-delta');
+        if (label) label.textContent = t('lobby.you');
+        // U+2212 for the minus, matching the settlement strings the server
+        // bundles already use.
+        if (value) {
+            value.textContent = (mine < 0 ? '\u2212' : '+')
+                + Math.abs(mine) + ' ' + t('reveal.ptsUnit');
+        }
+    }
+
+    /**
+     * The board the settlement produced (#833).
+     *
+     * The frame carries the post-settlement standing in the ordinary row
+     * shape; the phone's own leaderboard is a collapsed summary that was
+     * still showing the pre-settlement order underneath. Drawn with the same
+     * medal rows the lightning recap uses, so it is a shape the room has been
+     * reading all evening rather than a new kind of list.
+     */
+    function renderResultStandings(leaderboard) {
+        var box = el('hotseat-result-standings');
+        if (!box) return;
+        var rows = leaderboard || [];
+        var pu = window.QuizifyPlayerUtils;
+        if (!pu || !pu.renderMedalStandings || !rows.length) {
+            box.innerHTML = '';
+            return;
+        }
+        var me = myEntrant();
+        var youLabel = t('lobby.you');
+        if (youLabel === 'lobby.you') youLabel = 'You';
+        pu.renderMedalStandings(box, rows.map(function (p) {
+            return {
+                rank: p.rank,
+                name: p.name,
+                score: p.score,
+                // #728: two teams may share a name; only one of them is mine.
+                isYou: (p.entrant_id || p.name) === me
+            };
+        }), { youLabel: youLabel });
+        // The phone's own collapsed board sits further down the same screen
+        // and was the stale one the live test read. Repaint it from the same
+        // frame so the two never disagree.
+        var game = window.QuizifyPlayerGame;
+        if (game && game.updateLeaderboard) {
+            game.updateLeaderboard({ leaderboard: rows }, 'leaderboard-list');
+        }
     }
 
     function handleTick(msg) {
@@ -420,7 +610,7 @@
      * lobby. It matters most for the seat holder: they cannot answer a
      * question they cannot see, and an unanswered question costs the stake.
      */
-    function restoreFromSnapshot(hs) {
+    function restoreFromSnapshot(hs, snapshot) {
         if (!hs) return;
         var stage = hs.stage;
 
@@ -436,7 +626,28 @@
             return;
         }
 
-        if (stage === 'awarded' || stage === 'result') {
+        if (stage === 'result') {
+            // #859, and the same rule #858 is about: a snapshot and the live
+            // frame must leave this phone in the same state. The serializer
+            // has put the whole settlement in ``hot_seat.summary`` since #664
+            // — every field ``hot_seat_result`` spreads — and the snapshot
+            // carries the post-settlement leaderboard at the top level. Before
+            // this, a phone that reloaded on the settled chair was told who
+            // had bought it and never what happened next, which is the same
+            // hole the live path had.
+            var settled = {};
+            var summary = hs.summary || {};
+            for (var key in summary) {
+                if (Object.prototype.hasOwnProperty.call(summary, key)) {
+                    settled[key] = summary[key];
+                }
+            }
+            settled.leaderboard = (snapshot && snapshot.leaderboard) || [];
+            handleResult(settled);
+            return;
+        }
+
+        if (stage === 'awarded') {
             handleAwarded({
                 winner: hs.winner,
                 pct: hs.pct,
