@@ -369,6 +369,7 @@
       "q8": "Power-Ups?",
       "powerupsHint": "Joker, Klauen, Einfrieren und Co. werden verteilt",
       "q9": "Einsatz in der letzten Runde?",
+      "needsMultipleChoice": "Diese Modi brauchen Fragen mit Antwortmöglichkeiten.",
       "wagerHint": "Punkte auf die letzte Frage setzen",
       "wagerTeamNote": "Mit Teams: der Einsatz geh\u00f6rt dem Team und geht auf den Teampunktestand."
     },

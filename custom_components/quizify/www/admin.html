@@ -335,11 +335,17 @@
                          shared .toggle-compact switch (Beatify pattern). -->
                     <div class="vF-step">
                         <div class="vF-q"><span class="num">6</span><span data-i18n="setup.eigene.q6">Lightning Round?</span></div>
-                        <label class="toggle-compact setup-lightning-toggle" for="lightning-enabled-toggle">
+                        <label class="toggle-compact setup-lightning-toggle" id="lightning-toggle-row" for="lightning-enabled-toggle">
                             <input type="checkbox" id="lightning-enabled-toggle" checked>
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
                             <span class="toggle-label" data-i18n="setup.eigene.lightningHint">Surprise fast round mid-game</span>
                         </label>
+                        <!-- #890: Lightning skips estimate questions, so a
+                             selection of nothing but estimate packs leaves it
+                             with no pool at all. admin.js greys the row and
+                             unhides this line the moment that is the case. -->
+                        <p class="vF-team-note hidden" id="lightning-mc-note"
+                           data-i18n="setup.eigene.needsMultipleChoice">These modes need multiple-choice questions.</p>
                     </div>
 
                     <!-- Hot Seat auction (#616). Same shape as the Lightning
@@ -349,7 +355,7 @@
                          losing points is the part children like least. -->
                     <div class="vF-step">
                         <div class="vF-q"><span class="num">7</span><span data-i18n="setup.eigene.q7">Hot Seat?</span></div>
-                        <label class="toggle-compact setup-lightning-toggle" for="hot-seat-enabled-toggle">
+                        <label class="toggle-compact setup-lightning-toggle" id="hot-seat-toggle-row" for="hot-seat-enabled-toggle">
                             <input type="checkbox" id="hot-seat-enabled-toggle" checked>
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
                             <span class="toggle-label" data-i18n="setup.eigene.hotSeatHint">The chair is auctioned, one player answers alone</span>
@@ -361,6 +367,9 @@
                              where the auction used to be. -->
                         <p class="vF-team-note hidden" id="hot-seat-team-note"
                            data-i18n="setup.eigene.hotSeatTeamNote">With teams: each team bids once, and whoever bids takes the chair for them.</p>
+                        <!-- #890, twin of the Lightning note above. -->
+                        <p class="vF-team-note hidden" id="hot-seat-mc-note"
+                           data-i18n="setup.eigene.needsMultipleChoice">These modes need multiple-choice questions.</p>
                     </div>
 
                     <!-- Power-ups (#742). Same shape as the two toggles above,
@@ -382,7 +391,7 @@
                          costs you the stake" can wipe a child's score. -->
                     <div class="vF-step">
                         <div class="vF-q"><span class="num">9</span><span data-i18n="setup.eigene.q9">Bet on the last round?</span></div>
-                        <label class="toggle-compact setup-lightning-toggle" for="wager-enabled-toggle">
+                        <label class="toggle-compact setup-lightning-toggle" id="wager-toggle-row" for="wager-enabled-toggle">
                             <input type="checkbox" id="wager-enabled-toggle" checked>
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
                             <span class="toggle-label" data-i18n="setup.eigene.wagerHint">Stake points on the final question</span>
@@ -390,6 +399,11 @@
                         <!-- #804, twin of the Hot Seat note above. -->
                         <p class="vF-team-note hidden" id="wager-team-note"
                            data-i18n="setup.eigene.wagerTeamNote">With teams: the bet is the team's, staked on the team score.</p>
+                        <!-- #890: an estimate final never opens a betting
+                             window (_needs_wager_window), so the same gate
+                             applies to the third toggle. -->
+                        <p class="vF-team-note hidden" id="wager-mc-note"
+                           data-i18n="setup.eigene.needsMultipleChoice">These modes need multiple-choice questions.</p>
                     </div>
 
                     <!-- TTS narration toggles (#281). Master switch + per-event
