@@ -176,6 +176,7 @@
     "powerup": "Potenciador",
     "paused": "Partida en pausa",
     "pausedHint": "La partida se reanudará cuando vuelva el anfitrión",
+    "pausedResetHint": "Cualquier móvil de la sala puede reiniciar la partida ahora",
     "stoleFromYou": "¡{name} te robó {points} puntos!",
     "stoleFromOpponent": "Robado: ¡+{points} pts a {name}!",
     "frozen": "¡Te congelaron durante 5 s!",

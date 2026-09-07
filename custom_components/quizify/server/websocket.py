@@ -223,6 +223,7 @@ _PRESET_FIELD_MAP = {
     "rounds": "num_rounds",
     "timer": "timer_duration",
     "difficulty": "difficulty",
+    "language": "language",
     "lightning": "lightning_enabled",
     "hot_seat": "hot_seat_enabled",
     "powerups": "powerups_enabled",
@@ -270,6 +271,13 @@ def _preset_to_start_settings(preset: dict[str, Any]) -> dict[str, Any]:
             settings["difficulty"] = (
                 None if str(value).strip() in ("", _MIXED) else str(value).strip()
             )
+        elif keyword == "language":
+            # #889: a preset's packs are written in one language, so the
+            # language rides along with them. Empty means "not stored" — a
+            # preset saved before #889 — and the layers below keep owning it.
+            text = str(value).strip()
+            if text:
+                settings["language"] = text
         elif keyword in ("num_rounds", "timer_duration"):
             try:
                 settings[keyword] = int(value)
@@ -2407,8 +2415,9 @@ class QuizifyWebSocketHandler:
         handler, a socket or a Home Assistant instance.
         """
         settings: dict[str, Any] = dict(game_state.last_settings or {})
-        # A preset never carries a language: it is a shape-of-the-evening, and
-        # the language belongs to the room. Left to layer 2/4.
+        # #889: a preset carries the language it was built for, because its
+        # packs do. Older presets have no such field and leave the language to
+        # layer 2/4, which is where it lived before.
         if preset:
             settings.update(_preset_to_start_settings(preset))
         if overrides:
