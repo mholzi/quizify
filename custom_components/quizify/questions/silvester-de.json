@@ -1,0 +1,2068 @@
+{
+  "name": "Silvester",
+  "language": "de",
+  "version": "1.0",
+  "theme": "trivia",
+  "season": {
+    "start": "12-27",
+    "end": "01-06",
+    "label": "🎆 Jahreswechsel"
+  },
+  "questions": [
+    {
+      "id": "silvester_de_001",
+      "question": "Welcher schwarzweiße Fernsehsketch läuft in Deutschland seit Jahrzehnten an jedem Silvester?",
+      "answers": [
+        {
+          "text": "'Dinner for One'",
+          "correct": true
+        },
+        {
+          "text": "'Der 90. Geburtstag der Queen'",
+          "correct": false
+        },
+        {
+          "text": "'Die Feuerzangenbowle'",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der NDR nahm den englischsprachigen Sketch 1963 auf; in Großbritannien selbst ist er praktisch unbekannt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_002",
+      "question": "Woher kommt der deutsche Name 'Silvester' für den 31. Dezember?",
+      "answers": [
+        {
+          "text": "Von einem Papst, der an diesem Tag starb",
+          "correct": true
+        },
+        {
+          "text": "Von einem lateinischen Wort für Feuer",
+          "correct": false
+        },
+        {
+          "text": "Von einem mittelalterlichen Winterfest",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Papst Silvester I. starb am 31. Dezember 335; sein Gedenktag fiel damit auf den Jahresschluss.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_003",
+      "question": "Seit wann fällt am Times Square in New York zum Jahreswechsel eine leuchtende Kugel?",
+      "answers": [
+        {
+          "text": "Seit 1907",
+          "correct": true
+        },
+        {
+          "text": "Seit 1955",
+          "correct": false
+        },
+        {
+          "text": "Seit 1980",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Vorher gab es dort ein Feuerwerk, das die Stadt aus Brandschutzgründen untersagte.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_004",
+      "question": "Auf welches Gedicht geht das Lied 'Auld Lang Syne' zurück?",
+      "answers": [
+        {
+          "text": "Auf einen Text von Robert Burns",
+          "correct": true
+        },
+        {
+          "text": "Auf ein Sonett von Shakespeare",
+          "correct": false
+        },
+        {
+          "text": "Auf ein Kirchenlied aus Irland",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Burns schickte den Text 1788 an ein Liedarchiv und gab an, er habe ihn von einem alten Mann gehört.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_005",
+      "question": "Was isst man in Spanien traditionell in den zwölf Sekunden um Mitternacht?",
+      "answers": [
+        {
+          "text": "Zwölf Weintrauben",
+          "correct": true
+        },
+        {
+          "text": "Zwölf Oliven",
+          "correct": false
+        },
+        {
+          "text": "Zwölf Mandeln",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Zu jedem Glockenschlag eine Traube — wer sich verschluckt oder nicht mitkommt, hat der Legende nach kein Glück im neuen Jahr.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_006",
+      "question": "Wie entstand der spanische Brauch der zwölf Trauben angeblich um 1909?",
+      "answers": [
+        {
+          "text": "Winzer in Alicante hatten eine Rekordernte zu verkaufen",
+          "correct": true
+        },
+        {
+          "text": "Ein König verordnete ihn",
+          "correct": false
+        },
+        {
+          "text": "Ein Radiosender verloste Trauben",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die 'uvas de la suerte' waren zunächst eine Vermarktungsidee und wurden binnen weniger Jahre landesweite Gewohnheit.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_007",
+      "question": "Vor welcher Uhr versammeln sich die Madrilenen zum Jahreswechsel?",
+      "answers": [
+        {
+          "text": "Vor der Uhr an der Puerta del Sol",
+          "correct": true
+        },
+        {
+          "text": "Vor der Uhr des Bahnhofs Atocha",
+          "correct": false
+        },
+        {
+          "text": "Vor der Uhr des Prado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die vier Vorschläge vor den zwölf Schlägen sind Teil des Rituals — wer zu früh anfängt, verzählt sich.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_008",
+      "question": "Was tun viele Dänen in der Sekunde des Jahreswechsels?",
+      "answers": [
+        {
+          "text": "Sie springen von einem Stuhl",
+          "correct": true
+        },
+        {
+          "text": "Sie werfen Salz über die Schulter",
+          "correct": false
+        },
+        {
+          "text": "Sie öffnen alle Fenster",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Sprung soll den Start ins neue Jahr markieren; zerbrochenes Geschirr vor der Haustür gilt zusätzlich als Freundschaftsbeweis.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_009",
+      "question": "Was verschicken Japaner zum Jahreswechsel millionenfach?",
+      "answers": [
+        {
+          "text": "Neujahrspostkarten",
+          "correct": true
+        },
+        {
+          "text": "Getrocknete Blumen",
+          "correct": false
+        },
+        {
+          "text": "Kalligrafierte Fächer",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die 'Nengajo' werden vorher gesammelt und von der Post gebündelt am Neujahrsmorgen zugestellt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_010",
+      "question": "Welches Gericht essen viele Japaner am Abend des 31. Dezember?",
+      "answers": [
+        {
+          "text": "Lange Buchweizennudeln",
+          "correct": true
+        },
+        {
+          "text": "Rohen Thunfisch mit Reis",
+          "correct": false
+        },
+        {
+          "text": "Gedämpfte Teigtaschen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die 'Toshikoshi Soba' lassen sich leicht durchbeißen — sinnbildlich trennt man sich damit von den Mühen des alten Jahres.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_011",
+      "question": "Wie heißt das schottische Silvesterfest?",
+      "answers": [
+        {
+          "text": "Hogmanay",
+          "correct": true
+        },
+        {
+          "text": "Beltane",
+          "correct": false
+        },
+        {
+          "text": "Samhain",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Weil das Weihnachtsfest in Schottland lange verboten war, wanderte das große Feiern auf den Jahreswechsel.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_012",
+      "question": "Was soll der schottische 'First Footer' nach Mitternacht ins Haus bringen?",
+      "answers": [
+        {
+          "text": "Kohle, Brot und Whisky",
+          "correct": true
+        },
+        {
+          "text": "Ein weißes Tuch und Salz",
+          "correct": false
+        },
+        {
+          "text": "Einen Zweig Stechpalme",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Am besten ist ein dunkelhaariger Mann als erster Gast; ein blonder Besucher galt früher als Vorbote von Ärger.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_013",
+      "question": "Welches Gebäck gehört in den Niederlanden zum Jahreswechsel?",
+      "answers": [
+        {
+          "text": "Oliebollen",
+          "correct": true
+        },
+        {
+          "text": "Stroopwafels",
+          "correct": false
+        },
+        {
+          "text": "Speculaas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die frittierten Teigkugeln sollten der Sage nach böse Geister abhalten, weil ihr Fett deren Klingen abgleiten ließ.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_014",
+      "question": "Was tun am 1. Januar zehntausende Niederländer bei Scheveningen?",
+      "answers": [
+        {
+          "text": "Sie springen in die Nordsee",
+          "correct": true
+        },
+        {
+          "text": "Sie steigen auf Windmühlen",
+          "correct": false
+        },
+        {
+          "text": "Sie radeln zum Deich",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der 'Nieuwjaarsduik' findet bei einstelligen Wassertemperaturen statt; danach gibt es traditionell Erbsensuppe.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_015",
+      "question": "Welche Hülsenfrucht isst man in Italien zum Jahreswechsel als Glückssymbol?",
+      "answers": [
+        {
+          "text": "Linsen",
+          "correct": true
+        },
+        {
+          "text": "Kichererbsen",
+          "correct": false
+        },
+        {
+          "text": "Weiße Bohnen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ihre Form erinnert an Münzen; klassisch werden sie mit Cotechino oder Zampone gereicht.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_016",
+      "question": "Welche Farbe hat in Italien traditionell die Unterwäsche in der Silvesternacht?",
+      "answers": [
+        {
+          "text": "Rot",
+          "correct": true
+        },
+        {
+          "text": "Gelb",
+          "correct": false
+        },
+        {
+          "text": "Weiß",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sie soll Glück bringen und wird der Tradition nach am Neujahrstag weggeworfen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_017",
+      "question": "Was ist in der griechischen 'Vasilopita' versteckt?",
+      "answers": [
+        {
+          "text": "Eine Münze",
+          "correct": true
+        },
+        {
+          "text": "Eine Mandel",
+          "correct": false
+        },
+        {
+          "text": "Ein Papierzettel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wer das Stück mit der Münze bekommt, hat Glück für das Jahr; das erste Stück gehört traditionell dem Haus.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_018",
+      "question": "Welche Kleiderfarbe tragen viele Brasilianer in der Silvesternacht?",
+      "answers": [
+        {
+          "text": "Weiß",
+          "correct": true
+        },
+        {
+          "text": "Grün",
+          "correct": false
+        },
+        {
+          "text": "Schwarz",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Weiß steht für Frieden; an der Copacabana springen viele zusätzlich über sieben Wellen und werfen Blumen ins Meer.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_019",
+      "question": "Was verbrennen viele Menschen in Ecuador und Kolumbien um Mitternacht?",
+      "answers": [
+        {
+          "text": "Selbstgebaute Puppen, die das alte Jahr darstellen",
+          "correct": true
+        },
+        {
+          "text": "Alte Kalender",
+          "correct": false
+        },
+        {
+          "text": "Getrocknete Maiskolben",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die 'años viejos' tragen oft die Gesichter von Politikern oder Filmfiguren; manchmal steckt ein Testament in der Tasche.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_020",
+      "question": "Welches Muster tragen viele Menschen auf den Philippinen zu Neujahr?",
+      "answers": [
+        {
+          "text": "Punkte",
+          "correct": true
+        },
+        {
+          "text": "Streifen",
+          "correct": false
+        },
+        {
+          "text": "Karos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Runde Formen stehen für Münzen; auf dem Tisch liegen aus demselben Grund zwölf runde Früchte.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_021",
+      "question": "Welcher sowjetische Film läuft in Russland traditionell zum Jahreswechsel im Fernsehen?",
+      "answers": [
+        {
+          "text": "'Ironie des Schicksals'",
+          "correct": true
+        },
+        {
+          "text": "'Panzerkreuzer Potemkin'",
+          "correct": false
+        },
+        {
+          "text": "'Solaris'",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Komödie von 1975 wird seit Jahrzehnten fast jedes Jahr gezeigt und ist Teil des Rituals wie der Sekt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_022",
+      "question": "Wer bringt in Russland traditionell zu Neujahr die Geschenke?",
+      "answers": [
+        {
+          "text": "Väterchen Frost mit seiner Enkelin Snegurotschka",
+          "correct": true
+        },
+        {
+          "text": "Der heilige Nikolaus",
+          "correct": false
+        },
+        {
+          "text": "Die Heiligen Drei Könige",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In der Sowjetzeit wurde das Fest bewusst vom kirchlichen Weihnachten auf den Jahreswechsel verschoben.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_023",
+      "question": "Welcher Inselstaat begrüßt das neue Jahr als einer der ersten weltweit?",
+      "answers": [
+        {
+          "text": "Kiribati",
+          "correct": true
+        },
+        {
+          "text": "Island",
+          "correct": false
+        },
+        {
+          "text": "Malta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Linieninseln von Kiribati liegen in der Zeitzone UTC+14 — der frühesten, die es gibt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_024",
+      "question": "Was tat Samoa Ende 2011 mit seinem Kalender?",
+      "answers": [
+        {
+          "text": "Es strich den 30. Dezember ersatzlos",
+          "correct": true
+        },
+        {
+          "text": "Es verlängerte den 31. Dezember auf 48 Stunden",
+          "correct": false
+        },
+        {
+          "text": "Es feierte Neujahr zweimal",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mit dem Sprung über die Datumsgrenze rückte das Land näher an Australien und Neuseeland, seine wichtigsten Handelspartner.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_025",
+      "question": "Welches Volk fasste vor rund 4000 Jahren als erstes bekanntes Neujahrsvorsätze?",
+      "answers": [
+        {
+          "text": "Die Babylonier",
+          "correct": true
+        },
+        {
+          "text": "Die Etrusker",
+          "correct": false
+        },
+        {
+          "text": "Die Wikinger",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Fest Akitu versprach man den Göttern, Schulden zu begleichen und geliehene Geräte zurückzugeben.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_026",
+      "question": "Wer legte den 1. Januar als Jahresbeginn im römischen Kalender fest?",
+      "answers": [
+        {
+          "text": "Julius Caesar",
+          "correct": true
+        },
+        {
+          "text": "Kaiser Augustus",
+          "correct": false
+        },
+        {
+          "text": "Konstantin der Große",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mit der Kalenderreform von 46 vor unserer Zeitrechnung; davor begann das römische Jahr im März.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_027",
+      "question": "Nach welchem Papst ist der heute weltweit gebräuchliche Kalender benannt?",
+      "answers": [
+        {
+          "text": "Nach Gregor XIII.",
+          "correct": true
+        },
+        {
+          "text": "Nach Pius IX.",
+          "correct": false
+        },
+        {
+          "text": "Nach Innozenz III.",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bei der Umstellung 1582 wurden zehn Tage übersprungen: Auf den 4. Oktober folgte unmittelbar der 15.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_028",
+      "question": "Wann begann in England vor 1752 offiziell das neue Jahr?",
+      "answers": [
+        {
+          "text": "Am 25. März",
+          "correct": true
+        },
+        {
+          "text": "Am 1. Dezember",
+          "correct": false
+        },
+        {
+          "text": "Am 1. September",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Erst mit der Umstellung auf den gregorianischen Kalender rückte der Jahresbeginn auf den 1. Januar.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_029",
+      "question": "Wozu dient eine Schaltsekunde, die meist am Jahresende eingefügt wird?",
+      "answers": [
+        {
+          "text": "Sie gleicht die Atomzeit an die Erdrotation an",
+          "correct": true
+        },
+        {
+          "text": "Sie korrigiert Sommerzeitfehler",
+          "correct": false
+        },
+        {
+          "text": "Sie verlängert das Schaltjahr",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Erdrotation läuft nicht gleichmäßig; Atomuhren sind genauer als der Planet, den sie beschreiben.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_030",
+      "question": "Warum gießt man in Deutschland zu Silvester heute Wachs statt Blei?",
+      "answers": [
+        {
+          "text": "Weil Bleigießsets in der EU verboten wurden",
+          "correct": true
+        },
+        {
+          "text": "Weil Blei zu teuer wurde",
+          "correct": false
+        },
+        {
+          "text": "Weil Wachs schönere Figuren ergibt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Grenzwert für Blei in Verbraucherprodukten machte die klassischen Sets 2018 unverkäuflich.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_031",
+      "question": "Was ist eine Feuerzangenbowle?",
+      "answers": [
+        {
+          "text": "Ein Punsch, über dem ein mit Rum getränkter Zuckerhut abbrennt",
+          "correct": true
+        },
+        {
+          "text": "Eine Schale mit brennenden Kerzen",
+          "correct": false
+        },
+        {
+          "text": "Ein Gebäck aus der Pfanne",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Zuckerhut liegt in einer Zange über dem Topf und tropft karamellisiert in den Wein.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_032",
+      "question": "Welcher Streich ist in Deutschland an Silvester mit Berlinern verbreitet?",
+      "answers": [
+        {
+          "text": "Ein Gebäckstück wird mit Senf statt Marmelade gefüllt",
+          "correct": true
+        },
+        {
+          "text": "Das Gebäck wird eingefroren",
+          "correct": false
+        },
+        {
+          "text": "Das Gebäck wird gesalzen und versteckt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wer den Senf-Berliner erwischt, hat der Überlieferung nach trotzdem Glück im neuen Jahr.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_033",
+      "question": "Mit welchem Stück endet traditionell das Neujahrskonzert der Wiener Philharmoniker?",
+      "answers": [
+        {
+          "text": "Mit dem Radetzky-Marsch",
+          "correct": true
+        },
+        {
+          "text": "Mit dem Kaiserwalzer",
+          "correct": false
+        },
+        {
+          "text": "Mit Beethovens Neunter",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Publikum klatscht mit, und der Dirigent dirigiert dabei den Saal statt das Orchester.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_034",
+      "question": "Welcher Walzer wird beim Wiener Neujahrskonzert als erste Zugabe angestimmt?",
+      "answers": [
+        {
+          "text": "'An der schönen blauen Donau'",
+          "correct": true
+        },
+        {
+          "text": "'Wiener Blut'",
+          "correct": false
+        },
+        {
+          "text": "'Rosen aus dem Süden'",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Orchester wird nach den ersten Takten unterbrochen, damit die Musiker dem Publikum ein gutes Jahr wünschen können.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_035",
+      "question": "Wie hoch ist der Druck in einer geschlossenen Champagnerflasche ungefähr?",
+      "answers": [
+        {
+          "text": "Etwa sechs bar",
+          "correct": true
+        },
+        {
+          "text": "Etwa ein bar",
+          "correct": false
+        },
+        {
+          "text": "Etwa dreißig bar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das ist rund das Dreifache eines Autoreifens — deshalb ist das Glas so dick und der Korken verdrahtet.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_036",
+      "question": "Wann darf ein Schaumwein die Bezeichnung Champagner tragen?",
+      "answers": [
+        {
+          "text": "Nur wenn er aus der Region Champagne stammt",
+          "correct": true
+        },
+        {
+          "text": "Nur wenn er mindestens zehn Jahre reift",
+          "correct": false
+        },
+        {
+          "text": "Nur wenn er aus einer einzigen Rebsorte besteht",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die geschützte Herkunftsbezeichnung wird von Frankreich weltweit juristisch verteidigt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_037",
+      "question": "Was ist das 'Sabrage' bei einer Schaumweinflasche?",
+      "answers": [
+        {
+          "text": "Das Köpfen der Flasche mit einem Säbel",
+          "correct": true
+        },
+        {
+          "text": "Das Kühlen im Salzeis",
+          "correct": false
+        },
+        {
+          "text": "Das Umfüllen in eine Karaffe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Schlag trifft die Naht der Flasche; der Innendruck sprengt den Glasring mitsamt Korken ab.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_038",
+      "question": "In welchem Land wurde das Feuerwerk erfunden?",
+      "answers": [
+        {
+          "text": "In China",
+          "correct": true
+        },
+        {
+          "text": "In Italien",
+          "correct": false
+        },
+        {
+          "text": "In Persien",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Schwarzpulver diente zuerst dazu, mit Lärm böse Geister zu vertreiben — die Farben kamen erst Jahrhunderte später.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_039",
+      "question": "Wodurch entsteht die rote Farbe in einem Feuerwerk?",
+      "answers": [
+        {
+          "text": "Durch Strontiumverbindungen",
+          "correct": true
+        },
+        {
+          "text": "Durch Eisenspäne",
+          "correct": false
+        },
+        {
+          "text": "Durch Schwefel",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kupfer leuchtet blau, Barium grün, Natrium gelb — Feuerwerk ist angewandte Flammenfärbung.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_040",
+      "question": "An wie vielen Tagen im Jahr darf in Deutschland Silvesterfeuerwerk regulär verkauft werden?",
+      "answers": [
+        {
+          "text": "An drei Tagen",
+          "correct": true
+        },
+        {
+          "text": "An zehn Tagen",
+          "correct": false
+        },
+        {
+          "text": "Das ganze Jahr über",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Verkauf ist auf den 29. bis 31. Dezember beschränkt; fällt einer davon auf einen Sonntag, verschiebt sich der Start.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_041",
+      "question": "Welche Messwerte steigen in europäischen Städten in der Silvesternacht sprunghaft an?",
+      "answers": [
+        {
+          "text": "Die Feinstaubwerte",
+          "correct": true
+        },
+        {
+          "text": "Die Ozonwerte",
+          "correct": false
+        },
+        {
+          "text": "Die Radonwerte",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In der ersten Stunde des Jahres liegen sie oft um ein Vielfaches über dem Tagesgrenzwert.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_042",
+      "question": "Zwischen welchen Daten kann das chinesische Neujahrsfest liegen?",
+      "answers": [
+        {
+          "text": "Zwischen dem 21. Januar und dem 20. Februar",
+          "correct": true
+        },
+        {
+          "text": "Zwischen dem 1. und dem 15. Januar",
+          "correct": false
+        },
+        {
+          "text": "Zwischen dem 1. und dem 30. März",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der chinesische Kalender ist lunisolar; das Fest fällt auf den zweiten Neumond nach der Wintersonnenwende.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_043",
+      "question": "Wann beginnt das persische Neujahrsfest Nouruz?",
+      "answers": [
+        {
+          "text": "Zur Frühlings-Tagundnachtgleiche",
+          "correct": true
+        },
+        {
+          "text": "Zur Wintersonnenwende",
+          "correct": false
+        },
+        {
+          "text": "Am ersten Vollmond im Februar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nouruz wird von Iran bis Zentralasien gefeiert und steht auf der UNESCO-Liste des immateriellen Kulturerbes.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_044",
+      "question": "In welchem Monat feiert Äthiopien mit 'Enkutatash' sein Neujahr?",
+      "answers": [
+        {
+          "text": "Im September",
+          "correct": true
+        },
+        {
+          "text": "Im Januar",
+          "correct": false
+        },
+        {
+          "text": "Im Mai",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der äthiopische Kalender hat dreizehn Monate — zwölf zu 30 Tagen und einen kurzen Restmonat.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_045",
+      "question": "Wie feiert Thailand mit 'Songkran' den Jahreswechsel?",
+      "answers": [
+        {
+          "text": "Mit einer landesweiten Wasserschlacht",
+          "correct": true
+        },
+        {
+          "text": "Mit einem Fastentag",
+          "correct": false
+        },
+        {
+          "text": "Mit einem Drachenfest",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das ursprünglich rituelle Übergießen zur Reinigung ist heute ein dreitägiges Wasserfest im April.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_046",
+      "question": "Welches Problem beschäftigte die IT-Welt zum Jahreswechsel 1999/2000?",
+      "answers": [
+        {
+          "text": "Zweistellig gespeicherte Jahreszahlen",
+          "correct": true
+        },
+        {
+          "text": "Ein weltweiter Stromausfall",
+          "correct": false
+        },
+        {
+          "text": "Ein Virus namens Millennium",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Weil '00' als 1900 gelesen werden konnte, wurden weltweit Milliarden in die Umstellung gesteckt — und wenig passierte.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_047",
+      "question": "Welches Gedicht wird in Schweden auf Skansen zum Jahreswechsel verlesen?",
+      "answers": [
+        {
+          "text": "'Ring out, wild bells' von Tennyson",
+          "correct": true
+        },
+        {
+          "text": "Ein Auszug aus der Edda",
+          "correct": false
+        },
+        {
+          "text": "Ein Text von Astrid Lindgren",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Tradition besteht seit 1895; der Vortrag wird landesweit im Fernsehen übertragen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_048",
+      "question": "Welches Fleisch meidet man in Ungarn am Neujahrstag?",
+      "answers": [
+        {
+          "text": "Geflügel",
+          "correct": true
+        },
+        {
+          "text": "Rind",
+          "correct": false
+        },
+        {
+          "text": "Lamm",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Aberglaube sagt, das Glück fliege sonst davon; Schwein dagegen wühlt nach vorn und bringt Fortschritt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_049",
+      "question": "Was tut man in Irland der Überlieferung nach zu Neujahr mit einem Brot?",
+      "answers": [
+        {
+          "text": "Man schlägt damit gegen Wände und Türen",
+          "correct": true
+        },
+        {
+          "text": "Man vergräbt es im Garten",
+          "correct": false
+        },
+        {
+          "text": "Man wirft es ins Meer",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Lärm soll Unglück aus dem Haus und gutes Brot ins kommende Jahr treiben.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_050",
+      "question": "Was zerschmettert man in der Türkei und in Griechenland zu Neujahr auf der Türschwelle?",
+      "answers": [
+        {
+          "text": "Einen Granatapfel",
+          "correct": true
+        },
+        {
+          "text": "Einen Krug Wasser",
+          "correct": false
+        },
+        {
+          "text": "Eine Walnuss",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Je weiter die Kerne springen, desto größer soll der Segen für das Haus ausfallen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_051",
+      "question": "Welche Farbe hat in Peru und Teilen Lateinamerikas die Glücks-Unterwäsche zu Neujahr?",
+      "answers": [
+        {
+          "text": "Gelb",
+          "correct": true
+        },
+        {
+          "text": "Blau",
+          "correct": false
+        },
+        {
+          "text": "Grün",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gelb steht für Wohlstand; rote Wäsche wählt, wer sich Liebe wünscht.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_052",
+      "question": "Was macht man in Mexiko zu Neujahr mit einem leeren Koffer?",
+      "answers": [
+        {
+          "text": "Man läuft damit um den Block",
+          "correct": true
+        },
+        {
+          "text": "Man stellt ihn vor die Tür",
+          "correct": false
+        },
+        {
+          "text": "Man verbrennt ihn",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Spaziergang soll Reisen im neuen Jahr sichern — manche laufen dafür bis zur nächsten Straßenecke und zurück.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_053",
+      "question": "Welcher Salat gehört in Russland fest auf den Silvestertisch?",
+      "answers": [
+        {
+          "text": "Der Olivier-Salat",
+          "correct": true
+        },
+        {
+          "text": "Ein Rote-Bete-Salat mit Hering",
+          "correct": false
+        },
+        {
+          "text": "Ein Krautsalat mit Kümmel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Er ist nach einem Koch benannt, der ihn im 19. Jahrhundert in Moskau erfand; das Originalrezept gilt als verschollen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_054",
+      "question": "Welche Fernsehsendung schauen fast alle Isländer am Silvesterabend?",
+      "answers": [
+        {
+          "text": "Die Satiresendung 'Áramótaskaupið'",
+          "correct": true
+        },
+        {
+          "text": "Ein Konzert aus der Harpa",
+          "correct": false
+        },
+        {
+          "text": "Eine Übertragung vom Geysir",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Straßen leeren sich für eine halbe Stunde; erst danach beginnen Feuerwerk und Freudenfeuer.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_055",
+      "question": "Was findet in Madrid am Nachmittag des 31. Dezember statt?",
+      "answers": [
+        {
+          "text": "Ein großer Straßenlauf",
+          "correct": true
+        },
+        {
+          "text": "Ein Stierlauf",
+          "correct": false
+        },
+        {
+          "text": "Ein Autokorso",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die 'San Silvestre Vallecana' zieht Zehntausende an; viele laufen verkleidet.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_056",
+      "question": "Welche Band veröffentlichte 1980 das Lied 'Happy New Year'?",
+      "answers": [
+        {
+          "text": "ABBA",
+          "correct": true
+        },
+        {
+          "text": "Queen",
+          "correct": false
+        },
+        {
+          "text": "Die Bee Gees",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Text ist deutlich melancholischer als der Titel; in mehreren Ländern wurde er erst Jahre später ein Hit.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_057",
+      "question": "Woher stammt der Monatsname Januar?",
+      "answers": [
+        {
+          "text": "Vom römischen Gott Janus",
+          "correct": true
+        },
+        {
+          "text": "Vom lateinischen Wort für Eis",
+          "correct": false
+        },
+        {
+          "text": "Von einem etruskischen Herrscher",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Janus hat zwei Gesichter und blickt zugleich zurück und nach vorn — passender geht es für einen Jahresbeginn kaum.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_058",
+      "question": "Was bedeutet der Trinkspruch 'Prosit Neujahr' wörtlich?",
+      "answers": [
+        {
+          "text": "'Es möge nützen'",
+          "correct": true
+        },
+        {
+          "text": "'Auf die Gesundheit'",
+          "correct": false
+        },
+        {
+          "text": "'Bis zum Grund'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Prosit' ist lateinisch und stammt aus der Studentensprache des 18. Jahrhunderts.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_059",
+      "question": "Welches Sportereignis findet in Deutschland traditionell am 1. Januar statt?",
+      "answers": [
+        {
+          "text": "Das Neujahrsskispringen in Garmisch-Partenkirchen",
+          "correct": true
+        },
+        {
+          "text": "Ein Formel-1-Rennen",
+          "correct": false
+        },
+        {
+          "text": "Das Pokalfinale im Fußball",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es ist die zweite Station der Vierschanzentournee und beginnt schon am Vormittag mit der Qualifikation.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_060",
+      "question": "Welche Blumenparade findet in Kalifornien am Neujahrstag statt?",
+      "answers": [
+        {
+          "text": "Die Rose Parade in Pasadena",
+          "correct": true
+        },
+        {
+          "text": "Die Poppy Parade in San Diego",
+          "correct": false
+        },
+        {
+          "text": "Die Lily Parade in Sacramento",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Wagen müssen vollständig mit pflanzlichem Material verkleidet sein — jedes Blatt zählt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_061",
+      "question": "Wer machte 'Auld Lang Syne' in Nordamerika zum festen Bestandteil des Jahreswechsels?",
+      "answers": [
+        {
+          "text": "Der Bandleader Guy Lombardo",
+          "correct": true
+        },
+        {
+          "text": "Der Sänger Bing Crosby",
+          "correct": false
+        },
+        {
+          "text": "Der Radiomoderator Orson Welles",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sein Orchester spielte den Titel ab 1929 jedes Jahr live um Mitternacht — erst im Radio, später im Fernsehen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_062",
+      "question": "Was ist die walisische 'Mari Lwyd', die um den Jahreswechsel von Haus zu Haus zieht?",
+      "answers": [
+        {
+          "text": "Ein geschmückter Pferdeschädel auf einer Stange",
+          "correct": true
+        },
+        {
+          "text": "Eine Strohpuppe im Boot",
+          "correct": false
+        },
+        {
+          "text": "Eine Laterne aus Rübe",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Gruppe fordert in gereimten Versen Einlass; die Bewohner müssen in Reimen zurückantworten.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_063",
+      "question": "Welches Land begrüßt das neue Jahr als eines der letzten der Welt?",
+      "answers": [
+        {
+          "text": "Die USA mit den Baker- und Howlandinseln",
+          "correct": true
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        },
+        {
+          "text": "Chile",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die unbewohnten Inseln liegen in der Zeitzone UTC−12, ganze 26 Stunden hinter Kiribati.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_064",
+      "question": "Was wirft man in Teilen Kubas und Puerto Ricos um Mitternacht aus dem Fenster?",
+      "answers": [
+        {
+          "text": "Einen Eimer Wasser",
+          "correct": true
+        },
+        {
+          "text": "Alte Kleidung",
+          "correct": false
+        },
+        {
+          "text": "Münzen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Wasser soll das Unglück des alten Jahres aus dem Haus spülen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_065",
+      "question": "Was tragen die Männer beim Feuerballwerfen im schottischen Stonehaven durch die Straßen?",
+      "answers": [
+        {
+          "text": "Brennende Drahtkörbe an langen Ketten",
+          "correct": true
+        },
+        {
+          "text": "Fackeln aus Torf",
+          "correct": false
+        },
+        {
+          "text": "Laternen aus Kürbissen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Am Ende landen die Feuerbälle im Hafenbecken; der Brauch soll böse Geister vertreiben.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_066",
+      "question": "Wie heißt das Neujahrsbad, bei dem Schotten in den eiskalten Firth of Forth steigen?",
+      "answers": [
+        {
+          "text": "Loony Dook",
+          "correct": true
+        },
+        {
+          "text": "Cold Ceilidh",
+          "correct": false
+        },
+        {
+          "text": "Firth Plunge",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Viele springen verkleidet; die Veranstaltung sammelt Geld für wohltätige Zwecke.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_067",
+      "question": "Welches Bauwerk markiert in Sydney den Jahreswechsel mit einem der ersten großen Feuerwerke der Welt?",
+      "answers": [
+        {
+          "text": "Die Hafenbrücke",
+          "correct": true
+        },
+        {
+          "text": "Der Fernsehturm",
+          "correct": false
+        },
+        {
+          "text": "Das Parlamentsgebäude",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wegen der Zeitzone laufen die Bilder aus Sydney in Europa oft schon am Nachmittag des 31. Dezember.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_068",
+      "question": "An welchem Bauwerk feiert Berlin traditionell die größte Silvesterparty der Stadt?",
+      "answers": [
+        {
+          "text": "Am Brandenburger Tor",
+          "correct": true
+        },
+        {
+          "text": "Am Berliner Dom",
+          "correct": false
+        },
+        {
+          "text": "Am Olympiastadion",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Bühnenshow auf der 'Partymeile' wird live im Fernsehen übertragen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_069",
+      "question": "Welches Gebäude ist Mittelpunkt des Silvesterfeuerwerks in Dubai?",
+      "answers": [
+        {
+          "text": "Der Burj Khalifa",
+          "correct": true
+        },
+        {
+          "text": "Der Flughafenturm",
+          "correct": false
+        },
+        {
+          "text": "Die Sheikh-Zayid-Moschee",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Fassade des höchsten Gebäudes der Welt dient dabei zugleich als Projektionsfläche.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_070",
+      "question": "An welchem Strand findet eine der größten Silvesterfeiern der Welt statt?",
+      "answers": [
+        {
+          "text": "An der Copacabana in Rio de Janeiro",
+          "correct": true
+        },
+        {
+          "text": "An der Waikiki Beach auf Hawaii",
+          "correct": false
+        },
+        {
+          "text": "An der Bondi Beach in Sydney",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Millionen Menschen kommen in Weiß; nach dem Feuerwerk werden Blumen für die Meeresgöttin Iemanjá ins Wasser gelegt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_071",
+      "question": "Was passiert am Times Square mit den Zetteln, auf die Besucher ihre Wünsche schreiben?",
+      "answers": [
+        {
+          "text": "Sie werden um Mitternacht als Konfetti abgeworfen",
+          "correct": true
+        },
+        {
+          "text": "Sie werden verbrannt",
+          "correct": false
+        },
+        {
+          "text": "Sie werden im Rathaus archiviert",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Wunschzettel werden vorher gesammelt und mit dem übrigen Konfetti von den Dächern geschüttet.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_072",
+      "question": "Wie lange braucht die Kugel am Times Square für ihren Weg nach unten?",
+      "answers": [
+        {
+          "text": "Genau 60 Sekunden",
+          "correct": true
+        },
+        {
+          "text": "Etwa fünf Minuten",
+          "correct": false
+        },
+        {
+          "text": "Etwa zehn Sekunden",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sie kommt exakt um Mitternacht unten an; die Zahlen des neuen Jahres leuchten erst danach auf.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_073",
+      "question": "Woher stammt der deutsche Gruß 'Guten Rutsch' vermutlich?",
+      "answers": [
+        {
+          "text": "Von einem alten Wort für eine gute Reise",
+          "correct": true
+        },
+        {
+          "text": "Von vereisten Straßen",
+          "correct": false
+        },
+        {
+          "text": "Von einem Rodelbrauch",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die verbreitete Herleitung aus dem Jiddischen gilt sprachwissenschaftlich als unsicher.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_074",
+      "question": "Welche Figur steht in vielen Ländern sinnbildlich für das neue Jahr?",
+      "answers": [
+        {
+          "text": "Ein Baby mit Jahreszahl-Schärpe",
+          "correct": true
+        },
+        {
+          "text": "Ein Adler",
+          "correct": false
+        },
+        {
+          "text": "Ein Schlüssel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Motiv ist Jahrhunderte alt und wurde ab dem 19. Jahrhundert von Zeitschriften-Titelseiten popularisiert.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_075",
+      "question": "Was ist eine skandinavische 'Kransekake'?",
+      "answers": [
+        {
+          "text": "Ein Turm aus Mandelteigringen",
+          "correct": true
+        },
+        {
+          "text": "Ein Kranz aus Salzgebäck",
+          "correct": false
+        },
+        {
+          "text": "Ein Eiskuchen mit Beeren",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Ringe werden von unten nach oben immer kleiner; zum Jahreswechsel steckt oft eine Flagge oben drin.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_076",
+      "question": "Wie viele Mahlzeiten isst man in Estland der Tradition nach am Silvestertag?",
+      "answers": [
+        {
+          "text": "Sieben, neun oder zwölf",
+          "correct": true
+        },
+        {
+          "text": "Genau drei",
+          "correct": false
+        },
+        {
+          "text": "Genau fünf",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Zahlen gelten als Glückszahlen; man soll die Kraft von so vielen Männern in sich tragen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_077",
+      "question": "Was tun viele Japaner in den ersten Tagen des Jahres beim 'Hatsumode'?",
+      "answers": [
+        {
+          "text": "Sie besuchen zum ersten Mal im Jahr einen Schrein oder Tempel",
+          "correct": true
+        },
+        {
+          "text": "Sie pflanzen einen Baum",
+          "correct": false
+        },
+        {
+          "text": "Sie schreiben ein Gedicht ins Meer",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dabei werden alte Glücksbringer zurückgegeben und neue gekauft.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_078",
+      "question": "Was sind japanische 'Otoshidama'?",
+      "answers": [
+        {
+          "text": "Geldgeschenke für Kinder in kleinen Umschlägen",
+          "correct": true
+        },
+        {
+          "text": "Neujahrsgedichte auf Reispapier",
+          "correct": false
+        },
+        {
+          "text": "Kleine Glücksfiguren aus Ton",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Summe richtet sich nach dem Alter; ältere Kinder bekommen mehr.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_079",
+      "question": "Welche Suppe isst man in Korea am Neujahrstag?",
+      "answers": [
+        {
+          "text": "Eine Suppe mit Reiskuchenscheiben",
+          "correct": true
+        },
+        {
+          "text": "Eine Suppe mit Seetang und Muscheln",
+          "correct": false
+        },
+        {
+          "text": "Eine kalte Buchweizensuppe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Überlieferung nach wird man erst ein Jahr älter, wenn man 'Tteokguk' gegessen hat.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_080",
+      "question": "Wie heißt das vietnamesische Neujahrsfest?",
+      "answers": [
+        {
+          "text": "Tet",
+          "correct": true
+        },
+        {
+          "text": "Diwali",
+          "correct": false
+        },
+        {
+          "text": "Obon",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es folgt dem Mondkalender und fällt meist mit dem chinesischen Neujahr zusammen; Kumquat-Bäumchen gehören in jedes Haus.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_081",
+      "question": "Womit wird das jüdische Neujahrsfest Rosch ha-Schana eingeläutet?",
+      "answers": [
+        {
+          "text": "Mit einem Widderhorn",
+          "correct": true
+        },
+        {
+          "text": "Mit einer Bronzeglocke",
+          "correct": false
+        },
+        {
+          "text": "Mit einer Trommel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Schofar wird nach einer festen Abfolge von Tonfolgen geblasen; das Fest fällt in den Herbst.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_082",
+      "question": "Warum wandert das islamische Neujahrsfest durch die Jahreszeiten?",
+      "answers": [
+        {
+          "text": "Weil der islamische Kalender rein lunar ist",
+          "correct": true
+        },
+        {
+          "text": "Weil es an Ostern gekoppelt ist",
+          "correct": false
+        },
+        {
+          "text": "Weil es alle vier Jahre verschoben wird",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Mondjahr ist rund elf Tage kürzer als das Sonnenjahr, also verschiebt sich der 1. Muharram jedes Jahr nach vorn.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_083",
+      "question": "Bis wann war der erste Weihnachtstag in Schottland kein allgemeiner Feiertag?",
+      "answers": [
+        {
+          "text": "Bis 1958",
+          "correct": true
+        },
+        {
+          "text": "Bis 1901",
+          "correct": false
+        },
+        {
+          "text": "Bis 1975",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Deshalb war Hogmanay dort jahrhundertelang das eigentliche große Fest des Winters.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_084",
+      "question": "Was gehört in Frankreich klassisch auf den Tisch des 'Réveillon de la Saint-Sylvestre'?",
+      "answers": [
+        {
+          "text": "Austern",
+          "correct": true
+        },
+        {
+          "text": "Gefüllte Paprika",
+          "correct": false
+        },
+        {
+          "text": "Rindergulasch",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dazu kommen oft Foie gras und Champagner; gegessen wird spät und lange.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_085",
+      "question": "Was ist in Belgien ein Neujahrsbrauch für Kinder?",
+      "answers": [
+        {
+          "text": "Sie lesen den Paten einen selbst geschriebenen Brief vor",
+          "correct": true
+        },
+        {
+          "text": "Sie läuten Kuhglocken auf dem Feld",
+          "correct": false
+        },
+        {
+          "text": "Sie verstecken Münzen im Schnee",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Brief wird auf verziertem Papier geschrieben und am Neujahrstag feierlich vorgetragen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_086",
+      "question": "Was geschieht beim Appenzeller 'Silvesterchlausen' in der Schweiz?",
+      "answers": [
+        {
+          "text": "Gruppen ziehen in aufwendigen Kostümen von Hof zu Hof und jodeln",
+          "correct": true
+        },
+        {
+          "text": "Es wird ein Feuerrad den Berg hinuntergerollt",
+          "correct": false
+        },
+        {
+          "text": "Die Dorfbewohner tauschen Kuhglocken",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gefeiert wird zweimal: am 31. Dezember und am 13. Januar nach dem alten Kalender.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_087",
+      "question": "Was ist ein 'Cotillón' auf einer spanischen oder lateinamerikanischen Silvesterfeier?",
+      "answers": [
+        {
+          "text": "Eine Tüte mit Hütchen, Tröten und Luftschlangen",
+          "correct": true
+        },
+        {
+          "text": "Ein Tanz zu zwölf Paaren",
+          "correct": false
+        },
+        {
+          "text": "Ein Nachtisch mit Sahne",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nach den zwölf Trauben wird die Tüte geöffnet und der Lärm beginnt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_088",
+      "question": "Was wirft man in Argentinien am letzten Arbeitstag des Jahres aus den Bürofenstern?",
+      "answers": [
+        {
+          "text": "Zerrissenes Papier aus alten Akten",
+          "correct": true
+        },
+        {
+          "text": "Blumen",
+          "correct": false
+        },
+        {
+          "text": "Münzen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Papierregen im Finanzviertel von Buenos Aires ist ein Bild, das jedes Jahr um die Welt geht.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_089",
+      "question": "Woher stammt das Wort 'Konfetti'?",
+      "answers": [
+        {
+          "text": "Von italienischen Zuckermandeln",
+          "correct": true
+        },
+        {
+          "text": "Von einem französischen Papierhersteller",
+          "correct": false
+        },
+        {
+          "text": "Von einem lateinischen Wort für Wind",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Karneval in Mailand warf man einst Süßigkeiten; als das zu teuer wurde, kamen bunte Papierschnipsel an ihre Stelle.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_090",
+      "question": "Warum war das Jahr 1900 kein Schaltjahr?",
+      "answers": [
+        {
+          "text": "Weil volle Jahrhunderte nur bei Teilbarkeit durch 400 Schaltjahre sind",
+          "correct": true
+        },
+        {
+          "text": "Weil der Kalender damals umgestellt wurde",
+          "correct": false
+        },
+        {
+          "text": "Weil der Februar verkürzt wurde",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nach derselben Regel fällt auch 2100 aus — 2000 dagegen war ein Schaltjahr.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_091",
+      "question": "Was wird im Vatikan am Abend des 31. Dezember gesungen?",
+      "answers": [
+        {
+          "text": "Das Te Deum als Dankgottesdienst",
+          "correct": true
+        },
+        {
+          "text": "Das Requiem",
+          "correct": false
+        },
+        {
+          "text": "Das Magnificat",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Papst dankt dabei für das zu Ende gehende Jahr; am 1. Januar folgt der Weltfriedenstag.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_092",
+      "question": "Wann hält das dänische Staatsoberhaupt seine Neujahrsansprache?",
+      "answers": [
+        {
+          "text": "Am Abend des 31. Dezember",
+          "correct": true
+        },
+        {
+          "text": "Am Vormittag des 1. Januar",
+          "correct": false
+        },
+        {
+          "text": "Am 6. Januar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Rede um 18 Uhr strukturiert den Abend: Davor wird gegessen, danach gefeiert.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_093",
+      "question": "Was ist die niederländische 'oudejaarsconference'?",
+      "answers": [
+        {
+          "text": "Ein satirischer Jahresrückblick eines Kabarettisten",
+          "correct": true
+        },
+        {
+          "text": "Eine Talkshow mit Politikern",
+          "correct": false
+        },
+        {
+          "text": "Ein Chorkonzert",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Auftritt dauert oft mehr als zwei Stunden und wird am Abend des 31. Dezember live gesendet.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_094",
+      "question": "Welche Ballsaison beginnt in Wien traditionell um den Jahreswechsel?",
+      "answers": [
+        {
+          "text": "Die Faschingsballsaison",
+          "correct": true
+        },
+        {
+          "text": "Die Opernsaison",
+          "correct": false
+        },
+        {
+          "text": "Die Konzertsaison im Musikverein",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Kaiserball in der Hofburg findet in der Silvesternacht statt; der Opernball folgt erst im Februar.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_095",
+      "question": "Wie viele Tierzeichen umfasst der chinesische Tierkreis, der jedem Jahr ein Zeichen gibt?",
+      "answers": [
+        {
+          "text": "Zwölf",
+          "correct": true
+        },
+        {
+          "text": "Zehn",
+          "correct": false
+        },
+        {
+          "text": "Vierundzwanzig",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Ratte macht den Anfang; nach der Legende kam die Katze zu spät zum Wettlauf und fehlt deshalb.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_096",
+      "question": "Wie viele Weintrauben isst man in Spanien in der Silvesternacht zu den Glockenschlägen?",
+      "type": "estimate",
+      "answer": 12,
+      "min": 1,
+      "max": 60,
+      "unit": "Trauben",
+      "difficulty": "easy",
+      "fun_fact": "Zwölf, eine je Schlag — im Handel gibt es sie deshalb geschält und entkernt in der Dose.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_097",
+      "question": "Wie oft schlagen japanische Tempelglocken in der Nacht zum Neujahrstag?",
+      "type": "estimate",
+      "answer": 108,
+      "min": 0,
+      "max": 500,
+      "unit": "Schläge",
+      "difficulty": "medium",
+      "fun_fact": "108 Schläge stehen für die weltlichen Begierden, die man mit dem alten Jahr zurücklässt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_098",
+      "question": "Wie viele Stunden liegen zwischen dem ersten und dem letzten Jahreswechsel auf der Erde?",
+      "type": "estimate",
+      "answer": 26,
+      "min": 0,
+      "max": 60,
+      "unit": "Stunden",
+      "difficulty": "hard",
+      "fun_fact": "26 Stunden — von UTC+14 auf den Linieninseln Kiribatis bis UTC−12 bei den Baker- und Howlandinseln.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_099",
+      "question": "In welchem Jahr führte Papst Gregor XIII. den heute weltweit genutzten Kalender ein?",
+      "type": "estimate",
+      "answer": 1582,
+      "min": 1200,
+      "max": 1900,
+      "unit": "Jahr",
+      "difficulty": "medium",
+      "fun_fact": "1582 — bei der Umstellung folgte auf den 4. Oktober direkt der 15. Oktober.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_100",
+      "question": "In welchem Jahr nahm der NDR den Sketch 'Dinner for One' auf, der seither zu Silvester läuft?",
+      "type": "estimate",
+      "answer": 1963,
+      "min": 1900,
+      "max": 2000,
+      "unit": "Jahr",
+      "difficulty": "medium",
+      "fun_fact": "1963 — aufgezeichnet vor Publikum in Hamburg, in englischer Sprache und ohne Untertitel.",
+      "category": "Silvester"
+    }
+  ]
+}

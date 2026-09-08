@@ -1,0 +1,2089 @@
+{
+  "name": "Christmas",
+  "language": "en",
+  "version": "1.0",
+  "theme": "trivia",
+  "season": {
+    "start": "12-01",
+    "end": "12-26",
+    "label": "🎄 Christmas season"
+  },
+  "questions": [
+    {
+      "id": "christmas_en_001",
+      "question": "Which company's advertising fixed the modern image of the plump, jolly Santa from 1931 onwards?",
+      "answers": [
+        {
+          "text": "Coca-Cola",
+          "correct": true
+        },
+        {
+          "text": "Pepsi",
+          "correct": false
+        },
+        {
+          "text": "Nestlé",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The red suit predates the campaign — illustrator Haddon Sundblom standardised the look rather than inventing it.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_002",
+      "question": "Who commissioned Rudolph the reindeer in 1939?",
+      "answers": [
+        {
+          "text": "A US department store",
+          "correct": true
+        },
+        {
+          "text": "A Disney film studio",
+          "correct": false
+        },
+        {
+          "text": "A cigarette brand",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Robert L. May wrote the rhyming story as a giveaway booklet for the Montgomery Ward chain.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_003",
+      "question": "Why has the North American air-defence command NORAD tracked Santa every year since 1955?",
+      "answers": [
+        {
+          "text": "Because of a misprinted telephone number",
+          "correct": true
+        },
+        {
+          "text": "Because two generals made a bet",
+          "correct": false
+        },
+        {
+          "text": "Because of a cinema film",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A store advertisement printed a command centre's number instead of the Santa hotline, and the duty officer played along.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_004",
+      "question": "Which holiday was the song 'Jingle Bells' originally written for?",
+      "answers": [
+        {
+          "text": "Thanksgiving",
+          "correct": true
+        },
+        {
+          "text": "Easter",
+          "correct": false
+        },
+        {
+          "text": "Independence Day",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "James Lord Pierpont published it in 1857 as 'One Horse Open Sleigh' — a winter song with no Christmas content at all.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_005",
+      "question": "Which song was the first ever broadcast to Earth from space?",
+      "answers": [
+        {
+          "text": "Jingle Bells",
+          "correct": true
+        },
+        {
+          "text": "Silent Night",
+          "correct": false
+        },
+        {
+          "text": "White Christmas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In December 1965 the Gemini 6 crew first reported an 'unidentified object', then produced a harmonica and sleigh bells.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_006",
+      "question": "Which instrument accompanied the first performance of 'Silent Night'?",
+      "answers": [
+        {
+          "text": "A guitar",
+          "correct": true
+        },
+        {
+          "text": "An organ",
+          "correct": false
+        },
+        {
+          "text": "A harp",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Why the organ stayed silent is unclear; the story about mice in the bellows was invented much later.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_007",
+      "question": "Which Christmas recording is regarded as the best-selling single of all time?",
+      "answers": [
+        {
+          "text": "'White Christmas' by Bing Crosby",
+          "correct": true
+        },
+        {
+          "text": "'Last Christmas' by Wham!",
+          "correct": false
+        },
+        {
+          "text": "'Feliz Navidad' by José Feliciano",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Estimates run past 50 million copies sold; no other single comes close.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_008",
+      "question": "How long did it take Wham!'s 'Last Christmas' to reach number one in the UK charts?",
+      "answers": [
+        {
+          "text": "More than 35 years",
+          "correct": true
+        },
+        {
+          "text": "Two weeks",
+          "correct": false
+        },
+        {
+          "text": "It went straight to number one",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In 1984 the charity single 'Do They Know It's Christmas?' blocked the top spot; the song finally got there in early 2021.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_009",
+      "question": "How long did Mariah Carey and Walter Afanasieff reportedly take to write 'All I Want for Christmas Is You'?",
+      "answers": [
+        {
+          "text": "About a quarter of an hour",
+          "correct": true
+        },
+        {
+          "text": "About half a year",
+          "correct": false
+        },
+        {
+          "text": "About three weeks",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The two still tell the story differently; the only point they agree on is that it happened very fast.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_010",
+      "question": "What is the poinsettia named after?",
+      "answers": [
+        {
+          "text": "A US ambassador to Mexico",
+          "correct": true
+        },
+        {
+          "text": "An English gardener",
+          "correct": false
+        },
+        {
+          "text": "A saint",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Joel Roberts Poinsett sent the plant home from Mexico to the United States in the 1820s.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_011",
+      "question": "Which statement about the poinsettia as a houseplant is true?",
+      "answers": [
+        {
+          "text": "It is not deadly poisonous to humans",
+          "correct": true
+        },
+        {
+          "text": "One leaf can kill a child",
+          "correct": false
+        },
+        {
+          "text": "Its sap is a powerful nerve poison",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The milky sap irritates skin and stomach and nothing more; the killer reputation traces back to one unverified case from 1919.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_012",
+      "question": "How does mistletoe feed itself?",
+      "answers": [
+        {
+          "text": "It taps its host tree and also photosynthesises",
+          "correct": true
+        },
+        {
+          "text": "It lives on rainwater alone",
+          "correct": false
+        },
+        {
+          "text": "It feeds on insects",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "As a hemiparasite it draws water and minerals from the tree but makes its own sugar.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_013",
+      "question": "Why is there a good case that the reindeer pulling the sleigh are female?",
+      "answers": [
+        {
+          "text": "Males shed their antlers before winter",
+          "correct": true
+        },
+        {
+          "text": "Males cannot travel as far",
+          "correct": false
+        },
+        {
+          "text": "Males hibernate",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Female reindeer keep their antlers into spring, so in December almost the only reindeer wearing antlers are cows.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_014",
+      "question": "What happens to reindeer eyes in the Arctic winter?",
+      "answers": [
+        {
+          "text": "The reflective layer behind the retina turns from gold to blue",
+          "correct": true
+        },
+        {
+          "text": "They go temporarily blind",
+          "correct": false
+        },
+        {
+          "text": "They grow a third eyelid",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The blue version scatters more light inside the eye, making the animals more sensitive during the polar night.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_015",
+      "question": "Where does the big Christmas tree on London's Trafalgar Square come from?",
+      "answers": [
+        {
+          "text": "It is an annual gift from Oslo",
+          "correct": true
+        },
+        {
+          "text": "It is grown on a plantation in Wales",
+          "correct": false
+        },
+        {
+          "text": "It is auctioned off anew each year",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Norway has sent one every year since 1947 as thanks for British support during the Second World War.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_016",
+      "question": "Who had the first commercial Christmas card printed in 1843?",
+      "answers": [
+        {
+          "text": "Henry Cole in London",
+          "correct": true
+        },
+        {
+          "text": "Queen Victoria",
+          "correct": false
+        },
+        {
+          "text": "Charles Dickens",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cole simply had too much correspondence, so he printed a thousand cards and sold them at a shilling each.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_017",
+      "question": "How long did Charles Dickens take to write 'A Christmas Carol'?",
+      "answers": [
+        {
+          "text": "About six weeks",
+          "correct": true
+        },
+        {
+          "text": "About four years",
+          "correct": false
+        },
+        {
+          "text": "About eight months",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He wrote it in 1843 while short of money and published it at his own expense; it sold out within days.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_018",
+      "question": "What happened to Christmas in England under Oliver Cromwell?",
+      "answers": [
+        {
+          "text": "Parliament banned the festival outright",
+          "correct": true
+        },
+        {
+          "text": "It was moved to 1 January",
+          "correct": false
+        },
+        {
+          "text": "It was raised to a state holiday",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In 1647 the Puritans abolished it as unbiblical, and several towns rioted in response.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_019",
+      "question": "When did Christmas become a federal public holiday in the United States?",
+      "answers": [
+        {
+          "text": "1870",
+          "correct": true
+        },
+        {
+          "text": "1776",
+          "correct": false
+        },
+        {
+          "text": "1935",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Until then 25 December was an ordinary working day in several states.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_020",
+      "question": "Who invented the Advent wreath in 1839?",
+      "answers": [
+        {
+          "text": "The Hamburg educator Johann Hinrich Wichern",
+          "correct": true
+        },
+        {
+          "text": "Martin Luther",
+          "correct": false
+        },
+        {
+          "text": "A canon of Cologne cathedral",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wichern hung a cartwheel of candles in his children's home so the children could count down the wait.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_021",
+      "question": "In which country was the printed Advent calendar invented?",
+      "answers": [
+        {
+          "text": "Germany",
+          "correct": true
+        },
+        {
+          "text": "England",
+          "correct": false
+        },
+        {
+          "text": "The Netherlands",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gerhard Lang sold the first printed cut-out sheets around 1904; the little doors came later.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_022",
+      "question": "What does the X in 'Xmas' stand for?",
+      "answers": [
+        {
+          "text": "The Greek letter Chi",
+          "correct": true
+        },
+        {
+          "text": "A crossed-out cross",
+          "correct": false
+        },
+        {
+          "text": "The Roman numeral ten",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Chi is the first letter of Christós; the abbreviation is centuries old rather than a modern shortcut.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_023",
+      "question": "How did Christmas Island in the Indian Ocean get its name?",
+      "answers": [
+        {
+          "text": "A captain passed it on Christmas Day 1643",
+          "correct": true
+        },
+        {
+          "text": "A nativity scene was found there",
+          "correct": false
+        },
+        {
+          "text": "It is shaped like a star",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "William Mynors sailed by and simply entered the date as the name.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_024",
+      "question": "Which meal counts as the classic Christmas dinner in Japan?",
+      "answers": [
+        {
+          "text": "Fried chicken from a fast-food chain",
+          "correct": true
+        },
+        {
+          "text": "Grilled eel",
+          "correct": false
+        },
+        {
+          "text": "Duck in orange sauce",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A 1974 advertising campaign built around the slogan 'Kentucky for Christmas' hardened into a tradition.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_025",
+      "question": "What is the typical Christmas cake in Japan?",
+      "answers": [
+        {
+          "text": "A sponge cake with cream and strawberries",
+          "correct": true
+        },
+        {
+          "text": "A dark fruit cake",
+          "correct": false
+        },
+        {
+          "text": "A layered cake with marzipan",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Red and white like the national colours; the cake sells on 24 December and almost nowhere after that.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_026",
+      "question": "What do millions of Swedes traditionally watch at 3 p.m. on 24 December?",
+      "answers": [
+        {
+          "text": "A Donald Duck programme",
+          "correct": true
+        },
+        {
+          "text": "The king's speech",
+          "correct": false
+        },
+        {
+          "text": "An ice hockey match",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Kalle Anka' has run almost unchanged since 1959, and attempts to move it have caused public outrage.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_027",
+      "question": "What is put up on the main square of Gävle, Sweden, every Advent?",
+      "answers": [
+        {
+          "text": "A giant goat made of straw",
+          "correct": true
+        },
+        {
+          "text": "A polar bear carved from ice",
+          "correct": false
+        },
+        {
+          "text": "A tower of gingerbread",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The goat has been erected since 1966 and has been set on fire dozens of times.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_028",
+      "question": "What do Norwegians traditionally hide on Christmas Eve?",
+      "answers": [
+        {
+          "text": "The brooms",
+          "correct": true
+        },
+        {
+          "text": "The shoes",
+          "correct": false
+        },
+        {
+          "text": "The keys",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Old belief held that witches are abroad that night looking for something to ride.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_029",
+      "question": "How many Yule Lads visit Icelandic children in the nights before Christmas?",
+      "answers": [
+        {
+          "text": "Thirteen",
+          "correct": true
+        },
+        {
+          "text": "Three",
+          "correct": false
+        },
+        {
+          "text": "Seven",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Each has his own quirk: one steals skyr, one licks spoons, one slams doors.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_030",
+      "question": "What does the Icelandic 'Jólabókaflóð' refer to?",
+      "answers": [
+        {
+          "text": "The flood of books before Christmas",
+          "correct": true
+        },
+        {
+          "text": "A December tidal wave",
+          "correct": false
+        },
+        {
+          "text": "Fireworks on Christmas Eve",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Books are the classic gift, and the evening of the 24th belongs to reading with chocolate.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_031",
+      "question": "What is the Catalan 'Caga Tió'?",
+      "answers": [
+        {
+          "text": "A log that produces presents",
+          "correct": true
+        },
+        {
+          "text": "A nativity figure with a lantern",
+          "correct": false
+        },
+        {
+          "text": "A Christmas pastry",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Children feed the painted log for weeks, then beat it with sticks on 24 December until sweets fall out.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_032",
+      "question": "Which figure traditionally belongs in a corner of a Catalan nativity scene?",
+      "answers": [
+        {
+          "text": "A crouching man with his trousers down",
+          "correct": true
+        },
+        {
+          "text": "A fisherman with a net",
+          "correct": false
+        },
+        {
+          "text": "A mountaineer",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The 'Caganer' symbolically fertilises the soil and is considered a good omen for the coming year.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_033",
+      "question": "Which Christmas tree decoration is considered lucky in Ukraine?",
+      "answers": [
+        {
+          "text": "Spider webs",
+          "correct": true
+        },
+        {
+          "text": "Salt crystals",
+          "correct": false
+        },
+        {
+          "text": "Dried chilli pods",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A legend tells of a poor widow whose bare tree was decorated overnight by spiders.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_034",
+      "question": "How do many worshippers in Caracas get to early Mass on Christmas morning?",
+      "answers": [
+        {
+          "text": "On roller skates",
+          "correct": true
+        },
+        {
+          "text": "On donkeys",
+          "correct": false
+        },
+        {
+          "text": "Barefoot and in step",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Some neighbourhoods close streets to traffic for the 'Misa de Aguinaldo'.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_035",
+      "question": "Which frightening figure accompanies St Nicholas in the Alpine countries?",
+      "answers": [
+        {
+          "text": "The Krampus",
+          "correct": true
+        },
+        {
+          "text": "The goblin Puck",
+          "correct": false
+        },
+        {
+          "text": "Father Frost",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "On 5 December whole Krampus runs move through Alpine towns in fur, horns and cowbells.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_036",
+      "question": "From which country does the Dutch Sinterklaas arrive by steamboat each year, according to tradition?",
+      "answers": [
+        {
+          "text": "Spain",
+          "correct": true
+        },
+        {
+          "text": "Norway",
+          "correct": false
+        },
+        {
+          "text": "Iceland",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "His November arrival is broadcast live across the country, and he brings presents on 5 December.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_037",
+      "question": "What has been proclaimed in Turku, Finland, at noon on 24 December since the Middle Ages?",
+      "answers": [
+        {
+          "text": "The Christmas Peace",
+          "correct": true
+        },
+        {
+          "text": "The end of the fishing season",
+          "correct": false
+        },
+        {
+          "text": "The new royal name",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The reading is broadcast on radio and counts as one of the country's oldest unbroken traditions.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_038",
+      "question": "Where, according to Finnish tradition, is Santa's workshop?",
+      "answers": [
+        {
+          "text": "On the Korvatunturi fell in Lapland",
+          "correct": true
+        },
+        {
+          "text": "On Svalbard",
+          "correct": false
+        },
+        {
+          "text": "On an island off Helsinki",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The fell is shaped like a pair of ears, which is how Santa is said to hear every child's wish.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_039",
+      "question": "Which postal code has Canada Post assigned to Santa Claus?",
+      "answers": [
+        {
+          "text": "H0H 0H0",
+          "correct": true
+        },
+        {
+          "text": "X0X 0X0",
+          "correct": false
+        },
+        {
+          "text": "N0E 0L0",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Volunteers answer millions of letters every year, each in the language the child wrote in.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_040",
+      "question": "In which region did the historical bishop Nicholas, the origin of St Nicholas Day, actually live?",
+      "answers": [
+        {
+          "text": "Myra, in present-day Turkey",
+          "correct": true
+        },
+        {
+          "text": "Northern Sweden",
+          "correct": false
+        },
+        {
+          "text": "Sicily",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "His bones were taken to Bari in 1087 and remain there today.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_041",
+      "question": "Who promoted the Christ Child as the gift-bringer in German-speaking countries?",
+      "answers": [
+        {
+          "text": "Martin Luther",
+          "correct": true
+        },
+        {
+          "text": "Emperor Charles V",
+          "correct": false
+        },
+        {
+          "text": "The Brothers Grimm",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Luther wanted to push back the cult of saints; ironically it was Catholic regions that later held on to the Christkind longest.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_042",
+      "question": "Who plays the Nuremberg Christkind at the city's Christmas market?",
+      "answers": [
+        {
+          "text": "A young woman elected every two years",
+          "correct": true
+        },
+        {
+          "text": "A child from the cathedral school",
+          "correct": false
+        },
+        {
+          "text": "A puppet on a crane",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Applicants must live in Nuremberg, be at least 1.60 metres tall and have a head for heights.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_043",
+      "question": "Since when is Dresden's Striezelmarkt documented?",
+      "answers": [
+        {
+          "text": "Since 1434",
+          "correct": true
+        },
+        {
+          "text": "Since 1834",
+          "correct": false
+        },
+        {
+          "text": "Since 1634",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It began as a one-day meat market before the feast, which makes it one of the oldest Christmas markets anywhere.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_044",
+      "question": "Which German region produces the classic nutcracker and incense-smoker figures?",
+      "answers": [
+        {
+          "text": "The Ore Mountains",
+          "correct": true
+        },
+        {
+          "text": "The Black Forest",
+          "correct": false
+        },
+        {
+          "text": "East Frisia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "When mining declined whole villages lived from carving, which is why the nutcracker so often wears a uniform.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_045",
+      "question": "How was Tchaikovsky's ballet 'The Nutcracker' received at its 1892 premiere?",
+      "answers": [
+        {
+          "text": "Coolly, mostly negatively",
+          "correct": true
+        },
+        {
+          "text": "As an instant triumph",
+          "correct": false
+        },
+        {
+          "text": "It was abandoned after the first act",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Critics found the plot thin and the children's roles odd; it only became a Christmas fixture decades later.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_046",
+      "question": "How many parts does Johann Sebastian Bach's Christmas Oratorio have?",
+      "answers": [
+        {
+          "text": "Six",
+          "correct": true
+        },
+        {
+          "text": "Three",
+          "correct": false
+        },
+        {
+          "text": "Twelve",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The parts were written for six separate services between 25 December 1734 and 6 January 1735.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_047",
+      "question": "At which time of year was Handel's 'Messiah' first performed?",
+      "answers": [
+        {
+          "text": "In spring, shortly before Easter",
+          "correct": true
+        },
+        {
+          "text": "On Christmas Day",
+          "correct": false
+        },
+        {
+          "text": "In midsummer",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The premiere was in Dublin in April 1742; only later did the work drift into the Christmas season.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_048",
+      "question": "What happened along parts of the Western Front at Christmas 1914?",
+      "answers": [
+        {
+          "text": "Soldiers from both sides left the trenches and celebrated together",
+          "correct": true
+        },
+        {
+          "text": "The war was officially suspended for two days",
+          "correct": false
+        },
+        {
+          "text": "A record battle was fought",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "There was singing, cigarettes and in places football; high commands forbade any repeat in later years.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_049",
+      "question": "Who put up the first electrically lit Christmas tree in 1882?",
+      "answers": [
+        {
+          "text": "A colleague of Thomas Edison",
+          "correct": true
+        },
+        {
+          "text": "Nikola Tesla",
+          "correct": false
+        },
+        {
+          "text": "Werner von Siemens",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Edward H. Johnson had 80 red, white and blue bulbs hand-wired and set the tree rotating as well.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_050",
+      "question": "What was tinsel originally made of?",
+      "answers": [
+        {
+          "text": "Thinly beaten silver",
+          "correct": true
+        },
+        {
+          "text": "Dyed paper",
+          "correct": false
+        },
+        {
+          "text": "Fish scales",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nuremberg craftsmen were beating it from around 1610; it tarnished over time and had to be replaced.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_051",
+      "question": "Where did the making of glass Christmas baubles begin?",
+      "answers": [
+        {
+          "text": "Lauscha in Thuringia",
+          "correct": true
+        },
+        {
+          "text": "Murano near Venice",
+          "correct": false
+        },
+        {
+          "text": "Karlsbad",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Legend says a glassblower could not afford apples and nuts for his tree, so he blew himself some out of glass.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_052",
+      "question": "What did English mince pies originally contain?",
+      "answers": [
+        {
+          "text": "Actual meat",
+          "correct": true
+        },
+        {
+          "text": "Nothing but honey",
+          "correct": false
+        },
+        {
+          "text": "Ground shells",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Minced meat, suet and dried fruit together were a preserving trick; the meat only vanished in the 19th century.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_053",
+      "question": "What is the British 'Stir-up Sunday'?",
+      "answers": [
+        {
+          "text": "The Sunday the Christmas pudding is mixed",
+          "correct": true
+        },
+        {
+          "text": "The first Sunday of Advent",
+          "correct": false
+        },
+        {
+          "text": "Christmas tree auction day",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Every family member stirs once, clockwise, and makes a wish while doing it.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_054",
+      "question": "Which drink outsells cola in Sweden at Christmas?",
+      "answers": [
+        {
+          "text": "Julmust",
+          "correct": true
+        },
+        {
+          "text": "Mulled wine",
+          "correct": false
+        },
+        {
+          "text": "Buttermilk",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The dark malt drink shifts December market shares so hard that Coca-Cola at times produced a version itself.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_055",
+      "question": "Which continent does the turkey, now the Christmas roast in many countries, come from?",
+      "answers": [
+        {
+          "text": "The Americas",
+          "correct": true
+        },
+        {
+          "text": "Asia",
+          "correct": false
+        },
+        {
+          "text": "North Africa",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Before it was brought over in the 16th century, Europe's festive roasts were goose, pork or peacock.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_056",
+      "question": "What is one of the most common Christmas Eve dinners in Germany?",
+      "answers": [
+        {
+          "text": "Sausages with potato salad",
+          "correct": true
+        },
+        {
+          "text": "Lobster with rice",
+          "correct": false
+        },
+        {
+          "text": "Leg of lamb",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The classic has a practical reason: it can be prepared in the morning and does not tie up the evening.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_057",
+      "question": "What was the British 'Boxing Day' on 26 December originally?",
+      "answers": [
+        {
+          "text": "The day servants and the poor received their gift box",
+          "correct": true
+        },
+        {
+          "text": "A day for prize fighting",
+          "correct": false
+        },
+        {
+          "text": "The day presents are exchanged in shops",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The name comes from alms boxes and parcels, not from the sport and not from unwrapping.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_058",
+      "question": "When do the 'Twelve Days of Christmas' of the song actually run?",
+      "answers": [
+        {
+          "text": "From 25 December to 5 January",
+          "correct": true
+        },
+        {
+          "text": "From 13 to 24 December",
+          "correct": false
+        },
+        {
+          "text": "From 1 to 12 December",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "They end on the eve of Epiphany, so the song counts away from Christmas rather than towards it.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_059",
+      "question": "What does the German word 'Weihnachten' go back to?",
+      "answers": [
+        {
+          "text": "'Consecrated nights'",
+          "correct": true
+        },
+        {
+          "text": "'White nights'",
+          "correct": false
+        },
+        {
+          "text": "'Wheat nights'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Middle High German phrase 'ze den wîhen nahten' means the hallowed nights around the feast.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_060",
+      "question": "Where does the red-and-green colour pairing of Christmas come from?",
+      "answers": [
+        {
+          "text": "From holly, with red berries against green leaves",
+          "correct": true
+        },
+        {
+          "text": "From the flag of the Papal States",
+          "correct": false
+        },
+        {
+          "text": "From postmen's uniforms",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Evergreens bearing red fruit stood for life in winter long before Christianity.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_061",
+      "question": "What was the original Yule log?",
+      "answers": [
+        {
+          "text": "A large log meant to burn through the holidays",
+          "correct": true
+        },
+        {
+          "text": "A letter full of riddles",
+          "correct": false
+        },
+        {
+          "text": "A cake shaped like a tree trunk",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Only when open hearths grew rare did the motif move onto the cake plate; the French bûche de Noël is a replica.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_062",
+      "question": "How did the 1946 film 'It's a Wonderful Life' become the classic it is?",
+      "answers": [
+        {
+          "text": "Its copyright lapsed and stations aired it for free",
+          "correct": true
+        },
+        {
+          "text": "It won ten Oscars",
+          "correct": false
+        },
+        {
+          "text": "It became required viewing in schools",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It lost money at the box office; the endless 1970s television repeats made it a fixture.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_063",
+      "question": "In which city is most of 'Home Alone' set?",
+      "answers": [
+        {
+          "text": "Chicago",
+          "correct": true
+        },
+        {
+          "text": "Boston",
+          "correct": false
+        },
+        {
+          "text": "Denver",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The family flies to Paris while Kevin stays behind in suburban Chicago; filming was in Winnetka, Illinois.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_064",
+      "question": "Why do many people count 'Die Hard' as a Christmas film?",
+      "answers": [
+        {
+          "text": "It takes place at a Christmas party on 24 December",
+          "correct": true
+        },
+        {
+          "text": "The hero's middle name is Nicholas",
+          "correct": false
+        },
+        {
+          "text": "It opened on Christmas Eve",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The argument is as old as it is stubborn, and the director and the lead actor have publicly disagreed about it.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_065",
+      "question": "Who wrote the jazz score for the 1965 television classic 'A Charlie Brown Christmas'?",
+      "answers": [
+        {
+          "text": "Vince Guaraldi",
+          "correct": true
+        },
+        {
+          "text": "Dave Brubeck",
+          "correct": false
+        },
+        {
+          "text": "Duke Ellington",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The network first thought a jazz trio was wrong for a children's show; the record went on to sell millions.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_066",
+      "question": "Who turned 'Rudolph, the Red-Nosed Reindeer' into a worldwide hit song in 1949?",
+      "answers": [
+        {
+          "text": "The singer Gene Autry",
+          "correct": true
+        },
+        {
+          "text": "Frank Sinatra",
+          "correct": false
+        },
+        {
+          "text": "Louis Armstrong",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Autry hesitated for a long time and only recorded it because his wife pushed him; it became his best-selling record.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_067",
+      "question": "In which text did Santa's eight reindeer first appear by name?",
+      "answers": [
+        {
+          "text": "In a poem from 1823",
+          "correct": true
+        },
+        {
+          "text": "In a Charles Dickens novel",
+          "correct": false
+        },
+        {
+          "text": "In a newspaper advertisement from 1902",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'A Visit from St. Nicholas' also named Donder and Blitzen, which are Dutch for thunder and lightning.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_068",
+      "question": "In which country was the charity Christmas seal invented in 1904?",
+      "answers": [
+        {
+          "text": "Denmark",
+          "correct": true
+        },
+        {
+          "text": "Canada",
+          "correct": false
+        },
+        {
+          "text": "Italy",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A postal clerk proposed the extra stamp to fund children's hospitals, and the idea spread worldwide.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_069",
+      "question": "Which legend explains the hung-up Christmas stockings?",
+      "answers": [
+        {
+          "text": "Nicholas threw gold through a window and it landed in stockings",
+          "correct": true
+        },
+        {
+          "text": "A tailor lost his stocking up a chimney",
+          "correct": false
+        },
+        {
+          "text": "Miners dried their stockings by the fire",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In the story the gold saved the three daughters of a ruined man from destitution.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_070",
+      "question": "What is true about the 'German tradition' of the Christmas pickle on the tree?",
+      "answers": [
+        {
+          "text": "Hardly anyone in Germany has heard of it",
+          "correct": true
+        },
+        {
+          "text": "It comes from the Spreewald",
+          "correct": false
+        },
+        {
+          "text": "It was invented in Bavaria in 1850",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The custom is mainly American and was marketed there with an invented German origin story.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_071",
+      "question": "Where did the custom of kissing under mistletoe arise?",
+      "answers": [
+        {
+          "text": "In England",
+          "correct": true
+        },
+        {
+          "text": "In Greece",
+          "correct": false
+        },
+        {
+          "text": "In Russia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 18th-century rule was that each kiss cost a berry, and when the sprig was bare the kissing stopped.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_072",
+      "question": "What happens to the wood of the big Rockefeller Center tree after the holidays?",
+      "answers": [
+        {
+          "text": "It is milled into lumber for charity housing",
+          "correct": true
+        },
+        {
+          "text": "It is auctioned off",
+          "correct": false
+        },
+        {
+          "text": "It stays up until Easter",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Since 2007 the boards go to Habitat for Humanity; a tree has stood there almost every year since 1931.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_073",
+      "question": "What rank did the 'Good King Wenceslas' of the carol actually hold?",
+      "answers": [
+        {
+          "text": "He was a duke of Bohemia",
+          "correct": true
+        },
+        {
+          "text": "He was a Byzantine emperor",
+          "correct": false
+        },
+        {
+          "text": "He was a king of Poland",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wenceslas I was only granted royal title posthumously; the carol promotes him in advance.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_074",
+      "question": "Where does the melody of 'O Christmas Tree' come from?",
+      "answers": [
+        {
+          "text": "From an old folk song",
+          "correct": true
+        },
+        {
+          "text": "From Beethoven",
+          "correct": false
+        },
+        {
+          "text": "From an English hymn",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ernst Anschütz wrote today's words in 1824 to a long-known tune that had previously been about an unfaithful lover.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_075",
+      "question": "Which honour did 'Silent Night' receive from UNESCO in 2011?",
+      "answers": [
+        {
+          "text": "It became Austrian intangible cultural heritage",
+          "correct": true
+        },
+        {
+          "text": "It joined the Memory of the World register",
+          "correct": false
+        },
+        {
+          "text": "It was declared a world anthem",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The song has been translated into well over 300 languages and dialects.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_076",
+      "question": "What does the Latin word 'adventus', the root of Advent, mean?",
+      "answers": [
+        {
+          "text": "Arrival",
+          "correct": true
+        },
+        {
+          "text": "Expectation",
+          "correct": false
+        },
+        {
+          "text": "Darkness",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Advent was originally a fasting period, which is why the food before 24 December used to be plain.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_077",
+      "question": "What traditionally goes under the tablecloth at the Polish 'Wigilia'?",
+      "answers": [
+        {
+          "text": "Hay",
+          "correct": true
+        },
+        {
+          "text": "Coins",
+          "correct": false
+        },
+        {
+          "text": "A lump of coal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It recalls the manger, and one place at the table is also left free for an unexpected guest.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_078",
+      "question": "What are the Greek 'kallikantzaroi'?",
+      "answers": [
+        {
+          "text": "Goblins who make mischief between Christmas and Epiphany",
+          "correct": true
+        },
+        {
+          "text": "Cretan Christmas pastries",
+          "correct": false
+        },
+        {
+          "text": "Carol singers in Athens",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Legend says they saw at the world tree all year and only surface during the twelve nights.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_079",
+      "question": "On which day is Christmas ('Genna') celebrated in Ethiopia?",
+      "answers": [
+        {
+          "text": "7 January",
+          "correct": true
+        },
+        {
+          "text": "24 December",
+          "correct": false
+        },
+        {
+          "text": "2 February",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Ethiopian Orthodox Church follows its own calendar, and the Ethiopian year runs behind the Gregorian one.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_080",
+      "question": "How many evenings do the Mexican 'posadas' before Christmas last?",
+      "answers": [
+        {
+          "text": "Nine",
+          "correct": true
+        },
+        {
+          "text": "Three",
+          "correct": false
+        },
+        {
+          "text": "Twelve",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "They re-enact the search for shelter; each evening ends at a different front door with singing and a piñata.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_081",
+      "question": "What do the seven points of the classic Mexican Christmas piñata stand for?",
+      "answers": [
+        {
+          "text": "The seven deadly sins",
+          "correct": true
+        },
+        {
+          "text": "The seven days of the week",
+          "correct": false
+        },
+        {
+          "text": "Seven stars in the sky",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Striking it blindfolded means striking blindly at sin, and the sweets are the reward of faith.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_082",
+      "question": "Who draws the numbers of Spain's 'El Gordo' Christmas lottery and sings out the prizes?",
+      "answers": [
+        {
+          "text": "Schoolchildren",
+          "correct": true
+        },
+        {
+          "text": "Television presenters",
+          "correct": false
+        },
+        {
+          "text": "Notaries of the Bank of Spain",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Children of the San Ildefonso school have sung number and amount in alternation since the 18th century.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_083",
+      "question": "Who traditionally brings children their presents in Spain?",
+      "answers": [
+        {
+          "text": "The Three Kings",
+          "correct": true
+        },
+        {
+          "text": "Santa Claus on 24 December",
+          "correct": false
+        },
+        {
+          "text": "St Nicholas on 6 December",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "On the night before 6 January children put out shoes and some water for the camels.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_084",
+      "question": "Which country is known for the longest Christmas season in the world?",
+      "answers": [
+        {
+          "text": "The Philippines",
+          "correct": true
+        },
+        {
+          "text": "Iceland",
+          "correct": false
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "As soon as September starts the carols come on, and the season runs into January.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_085",
+      "question": "What shape is the Filipino Christmas lantern, the 'parol'?",
+      "answers": [
+        {
+          "text": "A five-pointed star",
+          "correct": true
+        },
+        {
+          "text": "A crescent moon",
+          "correct": false
+        },
+        {
+          "text": "A bell",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It stands for the star of Bethlehem and was originally built from bamboo and rice paper.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_086",
+      "question": "In which season does Australia celebrate Christmas?",
+      "answers": [
+        {
+          "text": "In high summer",
+          "correct": true
+        },
+        {
+          "text": "In late autumn",
+          "correct": false
+        },
+        {
+          "text": "In early spring",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Barbecues on the beach and open-air 'Carols by Candlelight' are part of the day there.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_087",
+      "question": "Why do Russian Orthodox believers celebrate Christmas on 7 January?",
+      "answers": [
+        {
+          "text": "Because the church keeps the Julian calendar",
+          "correct": true
+        },
+        {
+          "text": "Because a tsar moved the date",
+          "correct": false
+        },
+        {
+          "text": "Because 25 December is a working day",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The gap to the Gregorian calendar currently stands at thirteen days.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_088",
+      "question": "What does the recipe rule for Nuremberg Elisenlebkuchen require?",
+      "answers": [
+        {
+          "text": "No more than ten per cent flour",
+          "correct": true
+        },
+        {
+          "text": "At least half honey",
+          "correct": false
+        },
+        {
+          "text": "Exactly seven spices",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The protected designation also demands a high proportion of nuts, which is why they stay so moist.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_089",
+      "question": "What is the shape of the Dresden Christstollen meant to represent?",
+      "answers": [
+        {
+          "text": "The Christ child wrapped in swaddling cloth",
+          "correct": true
+        },
+        {
+          "text": "A sledge",
+          "correct": false
+        },
+        {
+          "text": "A snow-covered hill",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The icing sugar stands for the cloths; the recipe was long limited by the Advent ban on butter.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_090",
+      "question": "Which city is panettone from?",
+      "answers": [
+        {
+          "text": "Milan",
+          "correct": true
+        },
+        {
+          "text": "Naples",
+          "correct": false
+        },
+        {
+          "text": "Turin",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "With its starter and several rises the dough often takes more than 30 hours.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_091",
+      "question": "How far back is spiced hot wine documented in Europe?",
+      "answers": [
+        {
+          "text": "To Roman antiquity",
+          "correct": true
+        },
+        {
+          "text": "To the 18th century",
+          "correct": false
+        },
+        {
+          "text": "To the 1920s",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A Roman cookbook describes 'conditum paradoxum' of wine, honey and pepper — the ancestor of mulled wine.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_092",
+      "question": "In which city is the decorated Christmas tree first documented?",
+      "answers": [
+        {
+          "text": "Strasbourg",
+          "correct": true
+        },
+        {
+          "text": "Vienna",
+          "correct": false
+        },
+        {
+          "text": "Copenhagen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A 1539 guild record mentions a tree in the cathedral; candles came much later.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_093",
+      "question": "Since when has the British royal Christmas message existed?",
+      "answers": [
+        {
+          "text": "Since 1932",
+          "correct": true
+        },
+        {
+          "text": "Since 1901",
+          "correct": false
+        },
+        {
+          "text": "Since 1966",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "George V spoke on radio first; the first televised message followed only in 1957.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_094",
+      "question": "What is notable about José Feliciano's 1970 'Feliz Navidad'?",
+      "answers": [
+        {
+          "text": "The lyric is just a few lines in Spanish and English",
+          "correct": true
+        },
+        {
+          "text": "It is the longest charting Christmas song",
+          "correct": false
+        },
+        {
+          "text": "It was recorded without instruments",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Feliciano needed only minutes for the words and played the cuatro on the track.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_095",
+      "question": "Which astronomical explanation did Johannes Kepler propose for the star of Bethlehem?",
+      "answers": [
+        {
+          "text": "A close conjunction of Jupiter and Saturn",
+          "correct": true
+        },
+        {
+          "text": "A comet impact",
+          "correct": false
+        },
+        {
+          "text": "A solar eclipse",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kepler watched such a conjunction in 1603 and calculated back to the year 7 BCE.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_096",
+      "question": "What does the Bible say about the date of Jesus's birth?",
+      "answers": [
+        {
+          "text": "It gives no date at all",
+          "correct": true
+        },
+        {
+          "text": "It names 25 December",
+          "correct": false
+        },
+        {
+          "text": "It names 6 January",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "25 December took hold in the 4th century and coincided with Roman festivals around the winter solstice.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_097",
+      "question": "How many gifts do you receive in total if every day of 'The Twelve Days of Christmas' repeats all the earlier ones?",
+      "type": "estimate",
+      "answer": 364,
+      "min": 0,
+      "max": 1000,
+      "unit": "gifts",
+      "difficulty": "medium",
+      "fun_fact": "364 — almost one for every day of the year, including twelve partridges in a pear tree.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_098",
+      "question": "In which year was 'Silent Night' sung for the first time?",
+      "type": "estimate",
+      "answer": 1818,
+      "min": 1700,
+      "max": 1950,
+      "unit": "year",
+      "difficulty": "medium",
+      "fun_fact": "1818, in Oberndorf near Salzburg, accompanied on a guitar rather than the organ.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_099",
+      "question": "How tall is the Gävle straw goat that goes up every Advent in Sweden?",
+      "type": "estimate",
+      "answer": 13,
+      "min": 1,
+      "max": 60,
+      "unit": "metres",
+      "difficulty": "hard",
+      "fun_fact": "13 metres tall and about 3.6 tonnes; even so it has often failed to survive Advent.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_100",
+      "question": "How many reindeer are named in the 1823 poem 'A Visit from St. Nicholas'?",
+      "type": "estimate",
+      "answer": 8,
+      "min": 0,
+      "max": 40,
+      "unit": "reindeer",
+      "difficulty": "easy",
+      "fun_fact": "Eight; Rudolph was added 116 years later as an advertising invention.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_101",
+      "question": "How many doors does a classic Advent calendar have?",
+      "type": "estimate",
+      "answer": 24,
+      "min": 0,
+      "max": 100,
+      "unit": "doors",
+      "difficulty": "easy",
+      "fun_fact": "24 — the calendar ends on Christmas Eve rather than on Christmas Day.",
+      "category": "Christmas"
+    }
+  ]
+}

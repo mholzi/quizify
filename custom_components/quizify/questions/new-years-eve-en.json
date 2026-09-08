@@ -1,0 +1,2068 @@
+{
+  "name": "New Year's Eve",
+  "language": "en",
+  "version": "1.0",
+  "theme": "trivia",
+  "season": {
+    "start": "12-27",
+    "end": "01-06",
+    "label": "🎆 New Year season"
+  },
+  "questions": [
+    {
+      "id": "new_years_eve_en_001",
+      "question": "Which black-and-white television sketch has run every New Year's Eve in Germany for decades?",
+      "answers": [
+        {
+          "text": "'Dinner for One'",
+          "correct": true
+        },
+        {
+          "text": "'The Queen's 90th Birthday'",
+          "correct": false
+        },
+        {
+          "text": "'Die Feuerzangenbowle'",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "German public broadcaster NDR recorded the English-language sketch in 1963; in Britain itself it is virtually unknown.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_002",
+      "question": "Where does the German name 'Silvester' for 31 December come from?",
+      "answers": [
+        {
+          "text": "From a pope who died on that day",
+          "correct": true
+        },
+        {
+          "text": "From a Latin word for fire",
+          "correct": false
+        },
+        {
+          "text": "From a medieval winter festival",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pope Sylvester I died on 31 December 335, so his feast day landed on the last day of the year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_003",
+      "question": "Since when has a lit ball dropped in New York's Times Square at the turn of the year?",
+      "answers": [
+        {
+          "text": "Since 1907",
+          "correct": true
+        },
+        {
+          "text": "Since 1955",
+          "correct": false
+        },
+        {
+          "text": "Since 1980",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Before that the square had fireworks, which the city banned on fire-safety grounds.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_004",
+      "question": "Which poem is the song 'Auld Lang Syne' based on?",
+      "answers": [
+        {
+          "text": "A text by Robert Burns",
+          "correct": true
+        },
+        {
+          "text": "A Shakespeare sonnet",
+          "correct": false
+        },
+        {
+          "text": "An Irish hymn",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Burns sent the words to a song archive in 1788, saying he had taken them down from an old man.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_005",
+      "question": "What do Spaniards traditionally eat in the twelve seconds around midnight?",
+      "answers": [
+        {
+          "text": "Twelve grapes",
+          "correct": true
+        },
+        {
+          "text": "Twelve olives",
+          "correct": false
+        },
+        {
+          "text": "Twelve almonds",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "One grape per chime; anyone who chokes or falls behind supposedly forfeits their luck for the year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_006",
+      "question": "How did the Spanish twelve-grape custom supposedly start around 1909?",
+      "answers": [
+        {
+          "text": "Growers in Alicante had a record harvest to sell",
+          "correct": true
+        },
+        {
+          "text": "A king decreed it",
+          "correct": false
+        },
+        {
+          "text": "A radio station raffled off grapes",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The 'uvas de la suerte' began as a marketing idea and became a nationwide habit within a few years.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_007",
+      "question": "Which clock do people in Madrid gather in front of at the turn of the year?",
+      "answers": [
+        {
+          "text": "The clock on the Puerta del Sol",
+          "correct": true
+        },
+        {
+          "text": "The clock of Atocha station",
+          "correct": false
+        },
+        {
+          "text": "The clock of the Prado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The four preliminary chimes before the twelve are part of the ritual; starting early ruins the count.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_008",
+      "question": "What do many Danes do at the exact moment the year turns?",
+      "answers": [
+        {
+          "text": "They jump off a chair",
+          "correct": true
+        },
+        {
+          "text": "They throw salt over the shoulder",
+          "correct": false
+        },
+        {
+          "text": "They open every window",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The jump marks the leap into the new year, and broken crockery on your doorstep counts as proof of friendship.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_009",
+      "question": "What do Japanese households send in their millions at the turn of the year?",
+      "answers": [
+        {
+          "text": "New Year postcards",
+          "correct": true
+        },
+        {
+          "text": "Dried flowers",
+          "correct": false
+        },
+        {
+          "text": "Calligraphed fans",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Nengajo' are collected in advance and delivered by the post office in one batch on New Year's morning.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_010",
+      "question": "Which dish do many Japanese eat on the evening of 31 December?",
+      "answers": [
+        {
+          "text": "Long buckwheat noodles",
+          "correct": true
+        },
+        {
+          "text": "Raw tuna with rice",
+          "correct": false
+        },
+        {
+          "text": "Steamed dumplings",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Toshikoshi soba' break easily between the teeth, which symbolises cutting loose from the old year's troubles.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_011",
+      "question": "What is the Scottish New Year's Eve festival called?",
+      "answers": [
+        {
+          "text": "Hogmanay",
+          "correct": true
+        },
+        {
+          "text": "Beltane",
+          "correct": false
+        },
+        {
+          "text": "Samhain",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Because Christmas was long suppressed in Scotland, the big celebration migrated to the turn of the year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_012",
+      "question": "What is the Scottish 'first footer' supposed to bring into the house after midnight?",
+      "answers": [
+        {
+          "text": "Coal, bread and whisky",
+          "correct": true
+        },
+        {
+          "text": "A white cloth and salt",
+          "correct": false
+        },
+        {
+          "text": "A sprig of holly",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A dark-haired man makes the best first visitor; a fair-haired one used to be read as a warning of trouble.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_013",
+      "question": "Which pastry belongs to New Year's Eve in the Netherlands?",
+      "answers": [
+        {
+          "text": "Oliebollen",
+          "correct": true
+        },
+        {
+          "text": "Stroopwafels",
+          "correct": false
+        },
+        {
+          "text": "Speculaas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Legend held that the deep-fried dough balls warded off evil spirits, whose blades slid off the greasy skin.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_014",
+      "question": "What do tens of thousands of Dutch people do at Scheveningen on 1 January?",
+      "answers": [
+        {
+          "text": "They plunge into the North Sea",
+          "correct": true
+        },
+        {
+          "text": "They climb windmills",
+          "correct": false
+        },
+        {
+          "text": "They cycle to the dyke",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 'Nieuwjaarsduik' happens in single-digit water temperatures, and pea soup follows by tradition.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_015",
+      "question": "Which pulse do Italians eat at New Year as a symbol of luck?",
+      "answers": [
+        {
+          "text": "Lentils",
+          "correct": true
+        },
+        {
+          "text": "Chickpeas",
+          "correct": false
+        },
+        {
+          "text": "White beans",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Their shape recalls coins, and they are classically served with cotechino or zampone.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_016",
+      "question": "Which colour is the traditional Italian underwear on New Year's Eve?",
+      "answers": [
+        {
+          "text": "Red",
+          "correct": true
+        },
+        {
+          "text": "Yellow",
+          "correct": false
+        },
+        {
+          "text": "White",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It is meant to bring luck and, by tradition, is thrown away on New Year's Day.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_017",
+      "question": "What is hidden in the Greek 'vasilopita'?",
+      "answers": [
+        {
+          "text": "A coin",
+          "correct": true
+        },
+        {
+          "text": "An almond",
+          "correct": false
+        },
+        {
+          "text": "A slip of paper",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Whoever gets the slice with the coin has luck for the year; the first slice traditionally belongs to the house.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_018",
+      "question": "Which colour do many Brazilians wear on New Year's Eve?",
+      "answers": [
+        {
+          "text": "White",
+          "correct": true
+        },
+        {
+          "text": "Green",
+          "correct": false
+        },
+        {
+          "text": "Black",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "White stands for peace; on Copacabana many also jump seven waves and throw flowers into the sea.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_019",
+      "question": "What do many people in Ecuador and Colombia burn at midnight?",
+      "answers": [
+        {
+          "text": "Home-made effigies representing the old year",
+          "correct": true
+        },
+        {
+          "text": "Old calendars",
+          "correct": false
+        },
+        {
+          "text": "Dried corn cobs",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 'años viejos' often wear the faces of politicians or film characters, sometimes with a will in the pocket.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_020",
+      "question": "Which pattern do many people in the Philippines wear at New Year?",
+      "answers": [
+        {
+          "text": "Polka dots",
+          "correct": true
+        },
+        {
+          "text": "Stripes",
+          "correct": false
+        },
+        {
+          "text": "Checks",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Round shapes stand for coins, which is also why twelve round fruits sit on the table.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_021",
+      "question": "Which Soviet film traditionally airs in Russia at the turn of the year?",
+      "answers": [
+        {
+          "text": "'The Irony of Fate'",
+          "correct": true
+        },
+        {
+          "text": "'Battleship Potemkin'",
+          "correct": false
+        },
+        {
+          "text": "'Solaris'",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The 1975 comedy has run almost every year for decades and is as much part of the ritual as the sparkling wine.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_022",
+      "question": "Who traditionally brings the presents at New Year in Russia?",
+      "answers": [
+        {
+          "text": "Father Frost with his granddaughter Snegurochka",
+          "correct": true
+        },
+        {
+          "text": "St Nicholas",
+          "correct": false
+        },
+        {
+          "text": "The Three Kings",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In Soviet times the celebration was deliberately shifted from church Christmas to the turn of the year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_023",
+      "question": "Which island state greets the new year among the very first in the world?",
+      "answers": [
+        {
+          "text": "Kiribati",
+          "correct": true
+        },
+        {
+          "text": "Iceland",
+          "correct": false
+        },
+        {
+          "text": "Malta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kiribati's Line Islands sit in time zone UTC+14, the earliest that exists.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_024",
+      "question": "What did Samoa do to its calendar at the end of 2011?",
+      "answers": [
+        {
+          "text": "It deleted 30 December entirely",
+          "correct": true
+        },
+        {
+          "text": "It stretched 31 December to 48 hours",
+          "correct": false
+        },
+        {
+          "text": "It celebrated New Year twice",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Jumping the date line moved the country closer to Australia and New Zealand, its main trading partners.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_025",
+      "question": "Which people made the earliest known new-year resolutions about 4,000 years ago?",
+      "answers": [
+        {
+          "text": "The Babylonians",
+          "correct": true
+        },
+        {
+          "text": "The Etruscans",
+          "correct": false
+        },
+        {
+          "text": "The Vikings",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "At the Akitu festival they promised the gods to settle debts and return borrowed tools.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_026",
+      "question": "Who fixed 1 January as the start of the year in the Roman calendar?",
+      "answers": [
+        {
+          "text": "Julius Caesar",
+          "correct": true
+        },
+        {
+          "text": "Emperor Augustus",
+          "correct": false
+        },
+        {
+          "text": "Constantine the Great",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Through the calendar reform of 46 BCE; before that the Roman year began in March.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_027",
+      "question": "Which pope is today's globally used calendar named after?",
+      "answers": [
+        {
+          "text": "Gregory XIII",
+          "correct": true
+        },
+        {
+          "text": "Pius IX",
+          "correct": false
+        },
+        {
+          "text": "Innocent III",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 1582 switch skipped ten days: 4 October was followed immediately by the 15th.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_028",
+      "question": "When did the official new year begin in England before 1752?",
+      "answers": [
+        {
+          "text": "On 25 March",
+          "correct": true
+        },
+        {
+          "text": "On 1 December",
+          "correct": false
+        },
+        {
+          "text": "On 1 September",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Only the switch to the Gregorian calendar moved the start of the year to 1 January.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_029",
+      "question": "What is a leap second, usually inserted at the end of the year, for?",
+      "answers": [
+        {
+          "text": "It keeps atomic time in step with the Earth's rotation",
+          "correct": true
+        },
+        {
+          "text": "It corrects daylight-saving errors",
+          "correct": false
+        },
+        {
+          "text": "It lengthens a leap year",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Earth's rotation is not perfectly steady, and atomic clocks are more precise than the planet they describe.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_030",
+      "question": "Why do Germans now pour wax rather than lead on New Year's Eve?",
+      "answers": [
+        {
+          "text": "Because lead-pouring kits were banned in the EU",
+          "correct": true
+        },
+        {
+          "text": "Because lead became too expensive",
+          "correct": false
+        },
+        {
+          "text": "Because wax makes prettier shapes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A limit on lead in consumer products made the classic sets unsellable in 2018.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_031",
+      "question": "What is a Feuerzangenbowle?",
+      "answers": [
+        {
+          "text": "A punch with a rum-soaked sugarloaf burning above it",
+          "correct": true
+        },
+        {
+          "text": "A bowl of burning candles",
+          "correct": false
+        },
+        {
+          "text": "A pastry fried in a pan",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The sugarloaf sits in a pair of tongs over the pot and drips caramelised into the wine.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_032",
+      "question": "Which New Year's Eve prank involving doughnuts is common in Germany?",
+      "answers": [
+        {
+          "text": "One is filled with mustard instead of jam",
+          "correct": true
+        },
+        {
+          "text": "One is frozen solid",
+          "correct": false
+        },
+        {
+          "text": "One is salted and hidden",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tradition says whoever gets the mustard doughnut still has luck in the coming year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_033",
+      "question": "Which piece traditionally closes the Vienna Philharmonic's New Year's Concert?",
+      "answers": [
+        {
+          "text": "The Radetzky March",
+          "correct": true
+        },
+        {
+          "text": "The Emperor Waltz",
+          "correct": false
+        },
+        {
+          "text": "Beethoven's Ninth",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The audience claps along, and the conductor spends the piece conducting the hall rather than the orchestra.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_034",
+      "question": "Which waltz opens the encores at the Vienna New Year's Concert?",
+      "answers": [
+        {
+          "text": "'The Blue Danube'",
+          "correct": true
+        },
+        {
+          "text": "'Wiener Blut'",
+          "correct": false
+        },
+        {
+          "text": "'Roses from the South'",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The orchestra is interrupted after the opening bars so the players can wish the audience a good year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_035",
+      "question": "Roughly what pressure sits inside a sealed champagne bottle?",
+      "answers": [
+        {
+          "text": "About six bar",
+          "correct": true
+        },
+        {
+          "text": "About one bar",
+          "correct": false
+        },
+        {
+          "text": "About thirty bar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "That is roughly three times a car tyre, which is why the glass is thick and the cork is wired down.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_036",
+      "question": "When may a sparkling wine be called champagne?",
+      "answers": [
+        {
+          "text": "Only if it comes from the Champagne region",
+          "correct": true
+        },
+        {
+          "text": "Only if it ages at least ten years",
+          "correct": false
+        },
+        {
+          "text": "Only if it is made from a single grape variety",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "France defends the protected designation of origin in courts around the world.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_037",
+      "question": "What is 'sabrage' with a bottle of sparkling wine?",
+      "answers": [
+        {
+          "text": "Striking the neck off with a sabre",
+          "correct": true
+        },
+        {
+          "text": "Chilling it in salted ice",
+          "correct": false
+        },
+        {
+          "text": "Decanting it into a carafe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The blow lands on the seam of the bottle, and the internal pressure blows off the glass ring with the cork.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_038",
+      "question": "In which country were fireworks invented?",
+      "answers": [
+        {
+          "text": "China",
+          "correct": true
+        },
+        {
+          "text": "Italy",
+          "correct": false
+        },
+        {
+          "text": "Persia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Black powder was first used to scare off evil spirits with noise; the colours came centuries later.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_039",
+      "question": "What produces the colour red in a firework?",
+      "answers": [
+        {
+          "text": "Strontium compounds",
+          "correct": true
+        },
+        {
+          "text": "Iron filings",
+          "correct": false
+        },
+        {
+          "text": "Sulphur",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Copper burns blue, barium green and sodium yellow: fireworks are applied flame chemistry.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_040",
+      "question": "On how many days a year may New Year fireworks normally be sold in Germany?",
+      "answers": [
+        {
+          "text": "Three days",
+          "correct": true
+        },
+        {
+          "text": "Ten days",
+          "correct": false
+        },
+        {
+          "text": "All year round",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sales are limited to 29–31 December, and the start shifts if one of those days falls on a Sunday.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_041",
+      "question": "Which readings spike in European cities during the New Year's Eve night?",
+      "answers": [
+        {
+          "text": "Particulate matter levels",
+          "correct": true
+        },
+        {
+          "text": "Ozone levels",
+          "correct": false
+        },
+        {
+          "text": "Radon levels",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In the first hour of the year they often sit at a multiple of the daily limit.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_042",
+      "question": "Between which dates can Chinese New Year fall?",
+      "answers": [
+        {
+          "text": "Between 21 January and 20 February",
+          "correct": true
+        },
+        {
+          "text": "Between 1 and 15 January",
+          "correct": false
+        },
+        {
+          "text": "Between 1 and 30 March",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Chinese calendar is lunisolar, and the festival falls on the second new moon after the winter solstice.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_043",
+      "question": "When does the Persian new year festival Nowruz begin?",
+      "answers": [
+        {
+          "text": "At the spring equinox",
+          "correct": true
+        },
+        {
+          "text": "At the winter solstice",
+          "correct": false
+        },
+        {
+          "text": "At the first full moon in February",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nowruz is celebrated from Iran to Central Asia and is on the UNESCO intangible heritage list.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_044",
+      "question": "In which month does Ethiopia celebrate its new year, 'Enkutatash'?",
+      "answers": [
+        {
+          "text": "September",
+          "correct": true
+        },
+        {
+          "text": "January",
+          "correct": false
+        },
+        {
+          "text": "May",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Ethiopian calendar has thirteen months: twelve of 30 days and one short remainder month.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_045",
+      "question": "How does Thailand mark its new year at 'Songkran'?",
+      "answers": [
+        {
+          "text": "With a nationwide water fight",
+          "correct": true
+        },
+        {
+          "text": "With a day of fasting",
+          "correct": false
+        },
+        {
+          "text": "With a kite festival",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The originally ritual pouring of water for purification is now a three-day April water festival.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_046",
+      "question": "Which problem preoccupied the IT world at the turn of 1999 to 2000?",
+      "answers": [
+        {
+          "text": "Years stored as two digits",
+          "correct": true
+        },
+        {
+          "text": "A worldwide power cut",
+          "correct": false
+        },
+        {
+          "text": "A virus called Millennium",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Because '00' could read as 1900, billions went into fixing it worldwide — and very little happened.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_047",
+      "question": "Which poem is read out at Skansen in Sweden at the turn of the year?",
+      "answers": [
+        {
+          "text": "Tennyson's 'Ring out, wild bells'",
+          "correct": true
+        },
+        {
+          "text": "An extract from the Edda",
+          "correct": false
+        },
+        {
+          "text": "A text by Astrid Lindgren",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The tradition dates from 1895 and the recitation is broadcast nationwide on television.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_048",
+      "question": "Which meat do Hungarians avoid on New Year's Day?",
+      "answers": [
+        {
+          "text": "Poultry",
+          "correct": true
+        },
+        {
+          "text": "Beef",
+          "correct": false
+        },
+        {
+          "text": "Lamb",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Superstition says the luck would fly away; pork, by contrast, roots forwards and brings progress.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_049",
+      "question": "What are Irish households said to do with a loaf of bread at New Year?",
+      "answers": [
+        {
+          "text": "Bang it against walls and doors",
+          "correct": true
+        },
+        {
+          "text": "Bury it in the garden",
+          "correct": false
+        },
+        {
+          "text": "Throw it into the sea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The noise is meant to drive misfortune out of the house and good bread into the coming year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_050",
+      "question": "What is smashed on the doorstep at New Year in Turkey and Greece?",
+      "answers": [
+        {
+          "text": "A pomegranate",
+          "correct": true
+        },
+        {
+          "text": "A jug of water",
+          "correct": false
+        },
+        {
+          "text": "A walnut",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The further the seeds scatter, the greater the blessing on the house is supposed to be.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_051",
+      "question": "Which colour is the lucky New Year underwear in Peru and parts of Latin America?",
+      "answers": [
+        {
+          "text": "Yellow",
+          "correct": true
+        },
+        {
+          "text": "Blue",
+          "correct": false
+        },
+        {
+          "text": "Green",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Yellow stands for prosperity; those hoping for love choose red instead.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_052",
+      "question": "What do Mexicans do with an empty suitcase at New Year?",
+      "answers": [
+        {
+          "text": "Walk around the block with it",
+          "correct": true
+        },
+        {
+          "text": "Put it outside the door",
+          "correct": false
+        },
+        {
+          "text": "Burn it",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The walk is meant to secure travel in the coming year; some go only to the corner and back.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_053",
+      "question": "Which salad is a fixture on the Russian New Year's Eve table?",
+      "answers": [
+        {
+          "text": "Olivier salad",
+          "correct": true
+        },
+        {
+          "text": "Beetroot salad with herring",
+          "correct": false
+        },
+        {
+          "text": "Caraway coleslaw",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It is named after a chef who invented it in 19th-century Moscow, and the original recipe is considered lost.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_054",
+      "question": "Which television programme do nearly all Icelanders watch on New Year's Eve?",
+      "answers": [
+        {
+          "text": "The satirical show 'Áramótaskaupið'",
+          "correct": true
+        },
+        {
+          "text": "A concert from the Harpa hall",
+          "correct": false
+        },
+        {
+          "text": "A live feed from the geysers",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The streets empty for half an hour, and only afterwards do the fireworks and bonfires start.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_055",
+      "question": "What takes place in Madrid on the afternoon of 31 December?",
+      "answers": [
+        {
+          "text": "A big road race",
+          "correct": true
+        },
+        {
+          "text": "A running of the bulls",
+          "correct": false
+        },
+        {
+          "text": "A motorcade",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 'San Silvestre Vallecana' draws tens of thousands, and many run in costume.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_056",
+      "question": "Which band released the song 'Happy New Year' in 1980?",
+      "answers": [
+        {
+          "text": "ABBA",
+          "correct": true
+        },
+        {
+          "text": "Queen",
+          "correct": false
+        },
+        {
+          "text": "The Bee Gees",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The lyric is far more melancholy than the title suggests, and in several countries it only charted years later.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_057",
+      "question": "Where does the month name January come from?",
+      "answers": [
+        {
+          "text": "From the Roman god Janus",
+          "correct": true
+        },
+        {
+          "text": "From the Latin word for ice",
+          "correct": false
+        },
+        {
+          "text": "From an Etruscan ruler",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Janus has two faces and looks backwards and forwards at once, which is hard to improve on for a year's start.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_058",
+      "question": "What does the German toast 'Prosit Neujahr' literally mean?",
+      "answers": [
+        {
+          "text": "'May it be of use'",
+          "correct": true
+        },
+        {
+          "text": "'To your health'",
+          "correct": false
+        },
+        {
+          "text": "'Bottoms up'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Prosit' is Latin and entered German through 18th-century student slang.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_059",
+      "question": "Which sporting event traditionally takes place in Germany on 1 January?",
+      "answers": [
+        {
+          "text": "The New Year ski jumping in Garmisch-Partenkirchen",
+          "correct": true
+        },
+        {
+          "text": "A Formula One race",
+          "correct": false
+        },
+        {
+          "text": "The football cup final",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It is the second stop of the Four Hills Tournament and starts with qualifying in the morning.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_060",
+      "question": "Which flower parade takes place in California on New Year's Day?",
+      "answers": [
+        {
+          "text": "The Rose Parade in Pasadena",
+          "correct": true
+        },
+        {
+          "text": "The Poppy Parade in San Diego",
+          "correct": false
+        },
+        {
+          "text": "The Lily Parade in Sacramento",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Every float must be covered entirely in plant material, down to the last leaf.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_061",
+      "question": "Who made 'Auld Lang Syne' a fixture of the North American New Year?",
+      "answers": [
+        {
+          "text": "Bandleader Guy Lombardo",
+          "correct": true
+        },
+        {
+          "text": "Singer Bing Crosby",
+          "correct": false
+        },
+        {
+          "text": "Broadcaster Orson Welles",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "His orchestra played it live at midnight every year from 1929, first on radio and later on television.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_062",
+      "question": "What is the Welsh 'Mari Lwyd' that travels door to door around New Year?",
+      "answers": [
+        {
+          "text": "A decorated horse skull on a pole",
+          "correct": true
+        },
+        {
+          "text": "A straw doll in a boat",
+          "correct": false
+        },
+        {
+          "text": "A turnip lantern",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The party demands entry in rhyming verse, and the household has to answer in rhyme.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_063",
+      "question": "Which country greets the new year among the last in the world?",
+      "answers": [
+        {
+          "text": "The United States, with Baker and Howland Islands",
+          "correct": true
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        },
+        {
+          "text": "Chile",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The uninhabited islands sit in time zone UTC−12, a full 26 hours behind Kiribati.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_064",
+      "question": "What is thrown out of the window at midnight in parts of Cuba and Puerto Rico?",
+      "answers": [
+        {
+          "text": "A bucket of water",
+          "correct": true
+        },
+        {
+          "text": "Old clothes",
+          "correct": false
+        },
+        {
+          "text": "Coins",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The water is meant to wash the old year's bad luck out of the house.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_065",
+      "question": "What do the men in Stonehaven, Scotland, swing through the streets at New Year?",
+      "answers": [
+        {
+          "text": "Burning wire cages on long chains",
+          "correct": true
+        },
+        {
+          "text": "Peat torches",
+          "correct": false
+        },
+        {
+          "text": "Pumpkin lanterns",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The fireballs end up in the harbour, and the custom is meant to drive off evil spirits.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_066",
+      "question": "What is the Scottish New Year dip into the freezing Firth of Forth called?",
+      "answers": [
+        {
+          "text": "The Loony Dook",
+          "correct": true
+        },
+        {
+          "text": "The Cold Ceilidh",
+          "correct": false
+        },
+        {
+          "text": "The Firth Plunge",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Many take the plunge in costume, and the event raises money for charity.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_067",
+      "question": "Which structure marks the turn of the year in Sydney with one of the world's first big firework displays?",
+      "answers": [
+        {
+          "text": "The Harbour Bridge",
+          "correct": true
+        },
+        {
+          "text": "The television tower",
+          "correct": false
+        },
+        {
+          "text": "The parliament building",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Because of the time zone, pictures from Sydney often reach Europe on the afternoon of 31 December.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_068",
+      "question": "At which landmark does Berlin traditionally hold its biggest New Year's Eve party?",
+      "answers": [
+        {
+          "text": "The Brandenburg Gate",
+          "correct": true
+        },
+        {
+          "text": "Berlin Cathedral",
+          "correct": false
+        },
+        {
+          "text": "The Olympic Stadium",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The stage show on the 'party mile' is broadcast live on television.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_069",
+      "question": "Which building is at the centre of Dubai's New Year's Eve fireworks?",
+      "answers": [
+        {
+          "text": "The Burj Khalifa",
+          "correct": true
+        },
+        {
+          "text": "The airport tower",
+          "correct": false
+        },
+        {
+          "text": "The Sheikh Zayed Mosque",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The facade of the world's tallest building doubles as a projection screen.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_070",
+      "question": "On which beach does one of the world's biggest New Year's Eve parties take place?",
+      "answers": [
+        {
+          "text": "Copacabana in Rio de Janeiro",
+          "correct": true
+        },
+        {
+          "text": "Waikiki Beach in Hawaii",
+          "correct": false
+        },
+        {
+          "text": "Bondi Beach in Sydney",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Millions arrive dressed in white, and after the fireworks flowers go into the water for the sea goddess Iemanjá.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_071",
+      "question": "What happens to the slips of paper visitors write their wishes on at Times Square?",
+      "answers": [
+        {
+          "text": "They are dropped as confetti at midnight",
+          "correct": true
+        },
+        {
+          "text": "They are burned",
+          "correct": false
+        },
+        {
+          "text": "They are archived at city hall",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The wishes are collected beforehand and tipped off the rooftops with the rest of the confetti.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_072",
+      "question": "How long does the Times Square ball take to complete its descent?",
+      "answers": [
+        {
+          "text": "Exactly 60 seconds",
+          "correct": true
+        },
+        {
+          "text": "About five minutes",
+          "correct": false
+        },
+        {
+          "text": "About ten seconds",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It reaches the bottom precisely at midnight, and the numerals of the new year light up only afterwards.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_073",
+      "question": "Where does the German greeting 'Guten Rutsch' probably come from?",
+      "answers": [
+        {
+          "text": "From an old word for a good journey",
+          "correct": true
+        },
+        {
+          "text": "From icy roads",
+          "correct": false
+        },
+        {
+          "text": "From a sledging custom",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The popular derivation from Yiddish is regarded by linguists as doubtful.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_074",
+      "question": "Which figure symbolises the new year in many countries?",
+      "answers": [
+        {
+          "text": "A baby wearing a sash with the year on it",
+          "correct": true
+        },
+        {
+          "text": "An eagle",
+          "correct": false
+        },
+        {
+          "text": "A key",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The motif is centuries old and was popularised by magazine covers from the 19th century onwards.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_075",
+      "question": "What is a Scandinavian 'kransekake'?",
+      "answers": [
+        {
+          "text": "A tower of almond-paste rings",
+          "correct": true
+        },
+        {
+          "text": "A wreath of savoury biscuits",
+          "correct": false
+        },
+        {
+          "text": "An ice cake with berries",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The rings shrink from bottom to top, and at New Year a small flag often sits on the summit.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_076",
+      "question": "How many meals does Estonian tradition prescribe on New Year's Eve?",
+      "answers": [
+        {
+          "text": "Seven, nine or twelve",
+          "correct": true
+        },
+        {
+          "text": "Exactly three",
+          "correct": false
+        },
+        {
+          "text": "Exactly five",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Those are the lucky numbers, and the eater is said to gain the strength of that many men.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_077",
+      "question": "What do many Japanese do in the first days of the year at 'hatsumode'?",
+      "answers": [
+        {
+          "text": "They make the year's first visit to a shrine or temple",
+          "correct": true
+        },
+        {
+          "text": "They plant a tree",
+          "correct": false
+        },
+        {
+          "text": "They cast a poem into the sea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Old lucky charms are handed back on the same visit and new ones bought.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_078",
+      "question": "What are Japanese 'otoshidama'?",
+      "answers": [
+        {
+          "text": "Money gifts for children in small envelopes",
+          "correct": true
+        },
+        {
+          "text": "New Year poems on rice paper",
+          "correct": false
+        },
+        {
+          "text": "Small clay luck figures",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The amount depends on age, with older children receiving more.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_079",
+      "question": "Which soup do Koreans eat on New Year's Day?",
+      "answers": [
+        {
+          "text": "A soup with sliced rice cakes",
+          "correct": true
+        },
+        {
+          "text": "A soup with seaweed and clams",
+          "correct": false
+        },
+        {
+          "text": "A cold buckwheat soup",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tradition says you only turn a year older once you have eaten 'tteokguk'.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_080",
+      "question": "What is the Vietnamese new year festival called?",
+      "answers": [
+        {
+          "text": "Tet",
+          "correct": true
+        },
+        {
+          "text": "Diwali",
+          "correct": false
+        },
+        {
+          "text": "Obon",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It follows the lunar calendar and usually coincides with Chinese New Year; kumquat trees belong in every home.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_081",
+      "question": "What is blown to mark the Jewish new year, Rosh Hashanah?",
+      "answers": [
+        {
+          "text": "A ram's horn",
+          "correct": true
+        },
+        {
+          "text": "A bronze bell",
+          "correct": false
+        },
+        {
+          "text": "A drum",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The shofar is sounded in a fixed sequence of calls, and the festival falls in autumn.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_082",
+      "question": "Why does the Islamic new year drift through the seasons?",
+      "answers": [
+        {
+          "text": "Because the Islamic calendar is purely lunar",
+          "correct": true
+        },
+        {
+          "text": "Because it is tied to Easter",
+          "correct": false
+        },
+        {
+          "text": "Because it is shifted every four years",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The lunar year is about eleven days shorter than the solar one, so 1 Muharram moves forward each year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_083",
+      "question": "Until when was Christmas Day not a general public holiday in Scotland?",
+      "answers": [
+        {
+          "text": "Until 1958",
+          "correct": true
+        },
+        {
+          "text": "Until 1901",
+          "correct": false
+        },
+        {
+          "text": "Until 1975",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "That is why Hogmanay was for centuries the real winter celebration there.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_084",
+      "question": "What classically appears on the table for the French 'Réveillon de la Saint-Sylvestre'?",
+      "answers": [
+        {
+          "text": "Oysters",
+          "correct": true
+        },
+        {
+          "text": "Stuffed peppers",
+          "correct": false
+        },
+        {
+          "text": "Beef goulash",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Foie gras and champagne usually join them, and the meal starts late and runs long.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_085",
+      "question": "What is a Belgian New Year custom for children?",
+      "answers": [
+        {
+          "text": "They read a letter they wrote to their godparents",
+          "correct": true
+        },
+        {
+          "text": "They ring cowbells in the fields",
+          "correct": false
+        },
+        {
+          "text": "They hide coins in the snow",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The letter is written on decorated paper and read out ceremonially on New Year's Day.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_086",
+      "question": "What happens at the Appenzell 'Silvesterchlausen' in Switzerland?",
+      "answers": [
+        {
+          "text": "Groups in elaborate costumes go farm to farm and yodel",
+          "correct": true
+        },
+        {
+          "text": "A burning wheel is rolled down the mountain",
+          "correct": false
+        },
+        {
+          "text": "Villagers swap cowbells",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It happens twice: on 31 December and again on 13 January, following the old calendar.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_087",
+      "question": "What is a 'cotillón' at a Spanish or Latin American New Year's party?",
+      "answers": [
+        {
+          "text": "A bag of hats, horns and streamers",
+          "correct": true
+        },
+        {
+          "text": "A dance for twelve couples",
+          "correct": false
+        },
+        {
+          "text": "A cream dessert",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "After the twelve grapes the bag is opened and the noise starts.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_088",
+      "question": "What is thrown out of office windows in Argentina on the last working day of the year?",
+      "answers": [
+        {
+          "text": "Shredded paper from old files",
+          "correct": true
+        },
+        {
+          "text": "Flowers",
+          "correct": false
+        },
+        {
+          "text": "Coins",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The paper storm in the financial district of Buenos Aires makes the news every year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_089",
+      "question": "Where does the word 'confetti' come from?",
+      "answers": [
+        {
+          "text": "From Italian sugared almonds",
+          "correct": true
+        },
+        {
+          "text": "From a French paper maker",
+          "correct": false
+        },
+        {
+          "text": "From a Latin word for wind",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Milanese carnival crowds once threw sweets; when that got too expensive, coloured paper took their place.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_090",
+      "question": "Why was 1900 not a leap year?",
+      "answers": [
+        {
+          "text": "Full centuries are leap years only when divisible by 400",
+          "correct": true
+        },
+        {
+          "text": "Because the calendar was reformed that year",
+          "correct": false
+        },
+        {
+          "text": "Because February was shortened",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The same rule drops 2100, while 2000 did qualify.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_091",
+      "question": "What is sung in the Vatican on the evening of 31 December?",
+      "answers": [
+        {
+          "text": "The Te Deum, as a service of thanksgiving",
+          "correct": true
+        },
+        {
+          "text": "The Requiem",
+          "correct": false
+        },
+        {
+          "text": "The Magnificat",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The pope gives thanks for the closing year; 1 January is then the World Day of Peace.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_092",
+      "question": "When does the Danish head of state give the new year address?",
+      "answers": [
+        {
+          "text": "On the evening of 31 December",
+          "correct": true
+        },
+        {
+          "text": "On the morning of 1 January",
+          "correct": false
+        },
+        {
+          "text": "On 6 January",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 6 p.m. speech structures the evening: dinner before, celebration after.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_093",
+      "question": "What is the Dutch 'oudejaarsconference'?",
+      "answers": [
+        {
+          "text": "A comedian's satirical review of the year",
+          "correct": true
+        },
+        {
+          "text": "A talk show with politicians",
+          "correct": false
+        },
+        {
+          "text": "A choir concert",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The show often runs beyond two hours and airs live on the evening of 31 December.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_094",
+      "question": "Which ball season traditionally opens in Vienna around the turn of the year?",
+      "answers": [
+        {
+          "text": "The carnival ball season",
+          "correct": true
+        },
+        {
+          "text": "The opera season",
+          "correct": false
+        },
+        {
+          "text": "The Musikverein concert season",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Imperial Ball at the Hofburg takes place on New Year's Eve; the Opera Ball follows only in February.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_095",
+      "question": "How many animal signs does the Chinese zodiac, which gives each year a sign, contain?",
+      "answers": [
+        {
+          "text": "Twelve",
+          "correct": true
+        },
+        {
+          "text": "Ten",
+          "correct": false
+        },
+        {
+          "text": "Twenty-four",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The rat comes first; legend says the cat arrived too late for the race and is missing as a result.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_096",
+      "question": "How many grapes do people in Spain eat to the chimes on New Year's Eve?",
+      "type": "estimate",
+      "answer": 12,
+      "min": 1,
+      "max": 60,
+      "unit": "grapes",
+      "difficulty": "easy",
+      "fun_fact": "Twelve, one per chime — which is why shops sell them peeled and de-seeded in tins.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_097",
+      "question": "How many times do Japanese temple bells ring on the night before New Year's Day?",
+      "type": "estimate",
+      "answer": 108,
+      "min": 0,
+      "max": 500,
+      "unit": "strikes",
+      "difficulty": "medium",
+      "fun_fact": "The 108 strikes stand for the worldly desires left behind with the old year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_098",
+      "question": "How many hours pass between the first and the last turn of the year on Earth?",
+      "type": "estimate",
+      "answer": 26,
+      "min": 0,
+      "max": 60,
+      "unit": "hours",
+      "difficulty": "hard",
+      "fun_fact": "26 hours — from UTC+14 in Kiribati's Line Islands to UTC−12 at Baker and Howland Islands.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_099",
+      "question": "In which year did Pope Gregory XIII introduce the calendar used worldwide today?",
+      "type": "estimate",
+      "answer": 1582,
+      "min": 1200,
+      "max": 1900,
+      "unit": "year",
+      "difficulty": "medium",
+      "fun_fact": "1582 — in the changeover, 4 October was followed directly by 15 October.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_100",
+      "question": "In which year did German broadcaster NDR record the sketch 'Dinner for One' that has run at New Year ever since?",
+      "type": "estimate",
+      "answer": 1963,
+      "min": 1900,
+      "max": 2000,
+      "unit": "year",
+      "difficulty": "medium",
+      "fun_fact": "1963 — taped before a live audience in Hamburg, in English and without subtitles.",
+      "category": "New Year's Eve"
+    }
+  ]
+}

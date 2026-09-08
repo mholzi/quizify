@@ -1,0 +1,2089 @@
+{
+  "name": "Weihnachten",
+  "language": "de",
+  "version": "1.0",
+  "theme": "trivia",
+  "season": {
+    "start": "12-01",
+    "end": "12-26",
+    "label": "🎄 Weihnachtszeit"
+  },
+  "questions": [
+    {
+      "id": "weihnachten_de_001",
+      "question": "Welches Unternehmen prägte ab 1931 mit seiner Werbung das heutige Bild des rundlichen Weihnachtsmanns?",
+      "answers": [
+        {
+          "text": "Coca-Cola",
+          "correct": true
+        },
+        {
+          "text": "Pepsi",
+          "correct": false
+        },
+        {
+          "text": "Nestlé",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rot gekleidet war er schon vorher: Der Zeichner Haddon Sundblom vereinheitlichte das Bild nur, er erfand es nicht.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_002",
+      "question": "Für wen wurde das Rentier Rudolph 1939 erfunden?",
+      "answers": [
+        {
+          "text": "Für ein US-Kaufhaus",
+          "correct": true
+        },
+        {
+          "text": "Für einen Disney-Film",
+          "correct": false
+        },
+        {
+          "text": "Für eine Zigarettenmarke",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Robert L. May schrieb die Reimgeschichte als Werbegeschenk für die Kaufhauskette Montgomery Ward.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_003",
+      "question": "Warum verfolgt die nordamerikanische Luftraumüberwachung NORAD seit 1955 den Weihnachtsmann?",
+      "answers": [
+        {
+          "text": "Wegen einer falsch gedruckten Telefonnummer",
+          "correct": true
+        },
+        {
+          "text": "Wegen einer Wette zweier Generäle",
+          "correct": false
+        },
+        {
+          "text": "Wegen eines Kinofilms",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Kaufhausanzeige druckte statt der Weihnachtsmann-Hotline die Nummer einer Kommandozentrale — der diensthabende Offizier spielte mit.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_004",
+      "question": "Für welches Fest wurde das Lied 'Jingle Bells' ursprünglich geschrieben?",
+      "answers": [
+        {
+          "text": "Für Thanksgiving",
+          "correct": true
+        },
+        {
+          "text": "Für Ostern",
+          "correct": false
+        },
+        {
+          "text": "Für den Nationalfeiertag",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "James Lord Pierpont veröffentlichte es 1857 als 'One Horse Open Sleigh' — ein Winterlied ohne jeden Weihnachtsbezug.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_005",
+      "question": "Welches Lied war das erste, das aus dem Weltall zur Erde gefunkt wurde?",
+      "answers": [
+        {
+          "text": "Jingle Bells",
+          "correct": true
+        },
+        {
+          "text": "Stille Nacht",
+          "correct": false
+        },
+        {
+          "text": "White Christmas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Gemini-6-Besatzung meldete im Dezember 1965 erst ein 'unbekanntes Objekt' und spielte dann Mundharmonika und Schellen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_006",
+      "question": "Auf welchem Instrument wurde 'Stille Nacht' bei der Uraufführung begleitet?",
+      "answers": [
+        {
+          "text": "Auf einer Gitarre",
+          "correct": true
+        },
+        {
+          "text": "Auf einer Orgel",
+          "correct": false
+        },
+        {
+          "text": "Auf einer Harfe",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Warum die Orgel schwieg, ist ungeklärt — die Geschichte von den Mäusen im Blasebalg kam erst viel später auf.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_007",
+      "question": "Welche Weihnachtsaufnahme gilt als meistverkaufte Single aller Zeiten?",
+      "answers": [
+        {
+          "text": "'White Christmas' von Bing Crosby",
+          "correct": true
+        },
+        {
+          "text": "'Last Christmas' von Wham!",
+          "correct": false
+        },
+        {
+          "text": "'Feliz Navidad' von José Feliciano",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Schätzungen liegen bei über 50 Millionen verkauften Exemplaren — kein anderer Titel kommt in die Nähe.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_008",
+      "question": "Wie lange brauchte 'Last Christmas' von Wham! bis zur ersten Nummer eins in den britischen Charts?",
+      "answers": [
+        {
+          "text": "Über 35 Jahre",
+          "correct": true
+        },
+        {
+          "text": "Zwei Wochen",
+          "correct": false
+        },
+        {
+          "text": "Es war sofort auf Platz eins",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "1984 blockierte der Benefiz-Song 'Do They Know It's Christmas?' den Spitzenplatz; erst Anfang 2021 reichte es dafür.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_009",
+      "question": "Wie lange brauchten Mariah Carey und Walter Afanasieff angeblich, um 'All I Want for Christmas Is You' zu schreiben?",
+      "answers": [
+        {
+          "text": "Etwa eine Viertelstunde",
+          "correct": true
+        },
+        {
+          "text": "Etwa ein halbes Jahr",
+          "correct": false
+        },
+        {
+          "text": "Etwa drei Wochen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beide erzählen die Geschichte bis heute unterschiedlich — einig sind sie sich nur darin, dass es sehr schnell ging.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_010",
+      "question": "Wonach ist der Weihnachtsstern (Poinsettie) benannt?",
+      "answers": [
+        {
+          "text": "Nach einem US-Botschafter in Mexiko",
+          "correct": true
+        },
+        {
+          "text": "Nach einem englischen Gärtner",
+          "correct": false
+        },
+        {
+          "text": "Nach einem Heiligen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Joel Roberts Poinsett schickte die Pflanze in den 1820er-Jahren aus Mexiko in die USA.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_011",
+      "question": "Was stimmt über den Weihnachtsstern als Zimmerpflanze?",
+      "answers": [
+        {
+          "text": "Er ist für Menschen nicht tödlich giftig",
+          "correct": true
+        },
+        {
+          "text": "Ein Blatt kann ein Kind töten",
+          "correct": false
+        },
+        {
+          "text": "Sein Saft ist ein starkes Nervengift",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Milchsaft reizt Haut und Magen, mehr nicht — der Ruf als Todespflanze geht auf einen unbelegten Fall von 1919 zurück.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_012",
+      "question": "Wie ernährt sich die Mistel?",
+      "answers": [
+        {
+          "text": "Sie zapft ihren Wirtsbaum an und betreibt zusätzlich Photosynthese",
+          "correct": true
+        },
+        {
+          "text": "Sie lebt rein von Regenwasser",
+          "correct": false
+        },
+        {
+          "text": "Sie ernährt sich von Insekten",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Als Halbschmarotzer nimmt sie Wasser und Nährsalze aus dem Baum, den Zucker macht sie selbst.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_013",
+      "question": "Warum spricht viel dafür, dass die Rentiere vor dem Schlitten weiblich sind?",
+      "answers": [
+        {
+          "text": "Männchen werfen ihr Geweih vor dem Winter ab",
+          "correct": true
+        },
+        {
+          "text": "Männchen können nicht so weit laufen",
+          "correct": false
+        },
+        {
+          "text": "Männchen halten Winterruhe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rentierkühe behalten ihr Geweih bis ins Frühjahr — im Dezember tragen fast nur sie eines.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_014",
+      "question": "Was passiert bei Rentieren im arktischen Winter mit den Augen?",
+      "answers": [
+        {
+          "text": "Der reflektierende Augenhintergrund wechselt von Gold zu Blau",
+          "correct": true
+        },
+        {
+          "text": "Sie werden vorübergehend blind",
+          "correct": false
+        },
+        {
+          "text": "Sie bekommen ein drittes Augenlid",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die blaue Variante streut mehr Licht im Auge und macht die Tiere in der Polarnacht empfindlicher.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_015",
+      "question": "Woher kommt der große Weihnachtsbaum auf dem Trafalgar Square in London?",
+      "answers": [
+        {
+          "text": "Er ist ein jährliches Geschenk aus Oslo",
+          "correct": true
+        },
+        {
+          "text": "Er wird auf einer Plantage in Wales gezogen",
+          "correct": false
+        },
+        {
+          "text": "Er wird jedes Jahr neu versteigert",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Norwegen bedankt sich damit seit 1947 für die britische Unterstützung im Zweiten Weltkrieg.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_016",
+      "question": "Wer ließ 1843 die erste kommerzielle Weihnachtskarte drucken?",
+      "answers": [
+        {
+          "text": "Henry Cole in London",
+          "correct": true
+        },
+        {
+          "text": "Königin Victoria",
+          "correct": false
+        },
+        {
+          "text": "Charles Dickens",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cole hatte schlicht zu viele Briefe zu beantworten und ließ 1000 Karten drucken, die er zu einem Schilling verkaufte.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_017",
+      "question": "Wie lange brauchte Charles Dickens für 'Eine Weihnachtsgeschichte'?",
+      "answers": [
+        {
+          "text": "Etwa sechs Wochen",
+          "correct": true
+        },
+        {
+          "text": "Etwa vier Jahre",
+          "correct": false
+        },
+        {
+          "text": "Etwa acht Monate",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Er schrieb sie 1843 unter Geldnot und veröffentlichte sie auf eigene Rechnung — sie war binnen Tagen ausverkauft.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_018",
+      "question": "Was geschah in England unter Oliver Cromwell mit Weihnachten?",
+      "answers": [
+        {
+          "text": "Das Fest wurde per Parlamentsbeschluss verboten",
+          "correct": true
+        },
+        {
+          "text": "Es wurde auf den 1. Januar verlegt",
+          "correct": false
+        },
+        {
+          "text": "Es wurde zum Staatsfeiertag erhoben",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "1647 strichen die Puritaner das Fest als unbiblisch — in mehreren Städten kam es deswegen zu Aufständen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_019",
+      "question": "Wann wurde Weihnachten in den USA gesetzlicher Feiertag auf Bundesebene?",
+      "answers": [
+        {
+          "text": "1870",
+          "correct": true
+        },
+        {
+          "text": "1776",
+          "correct": false
+        },
+        {
+          "text": "1935",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bis dahin war der 25. Dezember in einigen Bundesstaaten ein ganz normaler Arbeitstag.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_020",
+      "question": "Wer erfand 1839 den Adventskranz?",
+      "answers": [
+        {
+          "text": "Der Hamburger Erzieher Johann Hinrich Wichern",
+          "correct": true
+        },
+        {
+          "text": "Martin Luther",
+          "correct": false
+        },
+        {
+          "text": "Ein Kölner Domherr",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wichern hängte im 'Rauhen Haus' ein Wagenrad mit Kerzen auf, damit die Kinder das Warten zählen konnten.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_021",
+      "question": "In welchem Land entstand der gedruckte Adventskalender?",
+      "answers": [
+        {
+          "text": "In Deutschland",
+          "correct": true
+        },
+        {
+          "text": "In England",
+          "correct": false
+        },
+        {
+          "text": "In den Niederlanden",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gerhard Lang brachte um 1904 die ersten Bogen mit Ausschneidebildern in den Handel; Türchen kamen später dazu.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_022",
+      "question": "Wofür steht das X in der englischen Schreibweise 'Xmas'?",
+      "answers": [
+        {
+          "text": "Für den griechischen Buchstaben Chi",
+          "correct": true
+        },
+        {
+          "text": "Für ein durchgestrichenes Kreuz",
+          "correct": false
+        },
+        {
+          "text": "Für das römische Zahlzeichen zehn",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Chi ist der Anfangsbuchstabe von Christós — die Abkürzung ist Jahrhunderte alt und keine moderne Bequemlichkeit.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_023",
+      "question": "Wie kam die Weihnachtsinsel im Indischen Ozean zu ihrem Namen?",
+      "answers": [
+        {
+          "text": "Ein Kapitän passierte sie am ersten Weihnachtstag 1643",
+          "correct": true
+        },
+        {
+          "text": "Dort wurde eine Weihnachtskrippe gefunden",
+          "correct": false
+        },
+        {
+          "text": "Sie hat die Form eines Sterns",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "William Mynors segelte vorbei und trug schlicht das Datum als Namen ein.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_024",
+      "question": "Welches Essen gilt in Japan als klassisches Weihnachtsessen?",
+      "answers": [
+        {
+          "text": "Frittiertes Hähnchen aus der Fast-Food-Kette",
+          "correct": true
+        },
+        {
+          "text": "Gegrillter Aal",
+          "correct": false
+        },
+        {
+          "text": "Ente in Orangensauce",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eine Werbekampagne von 1974 mit dem Slogan 'Kentucky für Weihnachten' hat sich als Tradition festgesetzt.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_025",
+      "question": "Was ist in Japan die typische Weihnachtstorte?",
+      "answers": [
+        {
+          "text": "Ein Biskuit mit Sahne und Erdbeeren",
+          "correct": true
+        },
+        {
+          "text": "Ein dunkler Früchtekuchen",
+          "correct": false
+        },
+        {
+          "text": "Ein Baumkuchen mit Marzipan",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rot und weiß wie die Landesfarben — die Torte wird am 24. Dezember gekauft und danach kaum noch verkauft.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_026",
+      "question": "Was schauen Millionen Schweden traditionell am 24. Dezember um 15 Uhr?",
+      "answers": [
+        {
+          "text": "Eine Donald-Duck-Sendung",
+          "correct": true
+        },
+        {
+          "text": "Die Rede des Königs",
+          "correct": false
+        },
+        {
+          "text": "Ein Eishockeyspiel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Kalle Anka' läuft seit 1959 fast unverändert; Terminverschiebungen lösten schon öffentliche Empörung aus.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_027",
+      "question": "Was steht im schwedischen Gävle jedes Jahr im Advent auf dem Schlossplatz?",
+      "answers": [
+        {
+          "text": "Ein riesiger Bock aus Stroh",
+          "correct": true
+        },
+        {
+          "text": "Ein Eisbär aus Eis",
+          "correct": false
+        },
+        {
+          "text": "Ein Turm aus Lebkuchen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Bock wird seit 1966 aufgestellt und ist seither dutzendfach angezündet worden.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_028",
+      "question": "Was versteckt man in Norwegen traditionell am Heiligabend?",
+      "answers": [
+        {
+          "text": "Die Besen",
+          "correct": true
+        },
+        {
+          "text": "Die Schuhe",
+          "correct": false
+        },
+        {
+          "text": "Die Schlüssel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dem alten Glauben nach ziehen in dieser Nacht Hexen umher und suchen ein Fluggerät.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_029",
+      "question": "Wie viele Weihnachtsgesellen ('Jólasveinar') kommen in Island in den Nächten vor Weihnachten?",
+      "answers": [
+        {
+          "text": "Dreizehn",
+          "correct": true
+        },
+        {
+          "text": "Drei",
+          "correct": false
+        },
+        {
+          "text": "Sieben",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jeder hat eine eigene Marotte — einer stiehlt Skyr, einer schleckt Löffel ab, einer knallt mit Türen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_030",
+      "question": "Was bezeichnet die isländische 'Jólabókaflóð'?",
+      "answers": [
+        {
+          "text": "Die Bücherflut vor Weihnachten",
+          "correct": true
+        },
+        {
+          "text": "Eine Flutwelle im Dezember",
+          "correct": false
+        },
+        {
+          "text": "Ein Feuerwerk am Heiligabend",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bücher sind das klassische Geschenk; der Abend des 24. gehört dem Lesen mit Schokolade.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_031",
+      "question": "Was ist der katalanische 'Caga Tió'?",
+      "answers": [
+        {
+          "text": "Ein Holzscheit, das Geschenke ausspuckt",
+          "correct": true
+        },
+        {
+          "text": "Ein Krippenfigur mit Laterne",
+          "correct": false
+        },
+        {
+          "text": "Ein Weihnachtsgebäck",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kinder füttern den bemalten Scheit wochenlang und verprügeln ihn am 24. Dezember mit Stöcken, bis Süßigkeiten herauskommen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_032",
+      "question": "Welche Figur gehört in Katalonien traditionell in eine Ecke der Weihnachtskrippe?",
+      "answers": [
+        {
+          "text": "Ein hockendes Männchen mit heruntergelassener Hose",
+          "correct": true
+        },
+        {
+          "text": "Ein Fischer mit Netz",
+          "correct": false
+        },
+        {
+          "text": "Ein Bergsteiger",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der 'Caganer' düngt sinnbildlich die Erde — die Figur gilt als Glücksbringer für das kommende Jahr.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_033",
+      "question": "Welche Dekoration am Weihnachtsbaum gilt in der Ukraine als Glücksbringer?",
+      "answers": [
+        {
+          "text": "Spinnennetze",
+          "correct": true
+        },
+        {
+          "text": "Salzkristalle",
+          "correct": false
+        },
+        {
+          "text": "Getrocknete Chilischoten",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Legende erzählt von einer armen Witwe, deren kahlen Baum Spinnen über Nacht mit Netzen schmückten.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_034",
+      "question": "Wie kommen viele Gläubige in Caracas am Weihnachtsmorgen zur Frühmesse?",
+      "answers": [
+        {
+          "text": "Auf Rollschuhen",
+          "correct": true
+        },
+        {
+          "text": "Auf Eseln",
+          "correct": false
+        },
+        {
+          "text": "Barfuß im Gleichschritt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Für die 'Misa de Aguinaldo' werden in einigen Vierteln sogar Straßen gesperrt.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_035",
+      "question": "Wer begleitet in den Alpenländern den Nikolaus als furchterregende Gestalt?",
+      "answers": [
+        {
+          "text": "Der Krampus",
+          "correct": true
+        },
+        {
+          "text": "Der Kobold Puck",
+          "correct": false
+        },
+        {
+          "text": "Der Schneemann Väterchen Frost",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Am 5. Dezember ziehen ganze Krampus-Läufe durch die Orte — mit Fell, Hörnern und Kuhglocken.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_036",
+      "question": "Aus welchem Land kommt der niederländische Sinterklaas der Erzählung nach jedes Jahr per Schiff an?",
+      "answers": [
+        {
+          "text": "Aus Spanien",
+          "correct": true
+        },
+        {
+          "text": "Aus Norwegen",
+          "correct": false
+        },
+        {
+          "text": "Aus Island",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Ankunft im November wird landesweit im Fernsehen übertragen; Sinterklaas beschenkt die Kinder am 5. Dezember.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_037",
+      "question": "Was wird in Finnland seit dem Mittelalter am Mittag des 24. Dezember in Turku verkündet?",
+      "answers": [
+        {
+          "text": "Der Weihnachtsfrieden",
+          "correct": true
+        },
+        {
+          "text": "Der Fischereischluss",
+          "correct": false
+        },
+        {
+          "text": "Der neue Königsname",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Verlesung wird im Radio übertragen und gilt als eine der ältesten ununterbrochenen Traditionen des Landes.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_038",
+      "question": "Wo liegt nach finnischer Darstellung die Werkstatt des Weihnachtsmanns?",
+      "answers": [
+        {
+          "text": "Auf dem Fjell Korvatunturi in Lappland",
+          "correct": true
+        },
+        {
+          "text": "Auf Spitzbergen",
+          "correct": false
+        },
+        {
+          "text": "Auf einer Insel vor Helsinki",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Berg hat die Form von Ohren — von dort soll der Weihnachtsmann die Wünsche aller Kinder hören.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_039",
+      "question": "Welche Postleitzahl hat die kanadische Post dem Weihnachtsmann zugeteilt?",
+      "answers": [
+        {
+          "text": "H0H 0H0",
+          "correct": true
+        },
+        {
+          "text": "X0X 0X0",
+          "correct": false
+        },
+        {
+          "text": "N0E 0L0",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Freiwillige beantworten jedes Jahr Millionen Briefe — in der Sprache, in der das Kind geschrieben hat.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_040",
+      "question": "In welcher Region wirkte der historische Bischof Nikolaus, auf den der Nikolaustag zurückgeht?",
+      "answers": [
+        {
+          "text": "In Myra in der heutigen Türkei",
+          "correct": true
+        },
+        {
+          "text": "In Nordschweden",
+          "correct": false
+        },
+        {
+          "text": "Auf Sizilien",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Seine Gebeine wurden 1087 nach Bari gebracht, wo sie bis heute liegen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_041",
+      "question": "Wer setzte im deutschsprachigen Raum das Christkind als Gabenbringer durch?",
+      "answers": [
+        {
+          "text": "Martin Luther",
+          "correct": true
+        },
+        {
+          "text": "Kaiser Karl V.",
+          "correct": false
+        },
+        {
+          "text": "Die Brüder Grimm",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Luther wollte den Heiligenkult zurückdrängen — ausgerechnet die katholischen Regionen hielten das Christkind später am längsten hoch.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_042",
+      "question": "Wer verkörpert das Nürnberger Christkind auf dem Christkindlesmarkt?",
+      "answers": [
+        {
+          "text": "Eine junge Frau, die alle zwei Jahre gewählt wird",
+          "correct": true
+        },
+        {
+          "text": "Ein Kind aus der Domschule",
+          "correct": false
+        },
+        {
+          "text": "Eine Puppe an einem Kran",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bewerberinnen müssen in Nürnberg wohnen, mindestens 1,60 Meter groß und schwindelfrei sein.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_043",
+      "question": "Seit wann findet der Dresdner Striezelmarkt urkundlich statt?",
+      "answers": [
+        {
+          "text": "Seit 1434",
+          "correct": true
+        },
+        {
+          "text": "Seit 1834",
+          "correct": false
+        },
+        {
+          "text": "Seit 1634",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Er begann als eintägiger Fleischmarkt vor dem Fest und ist damit einer der ältesten Weihnachtsmärkte überhaupt.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_044",
+      "question": "Aus welcher deutschen Region stammen die klassischen Nussknacker- und Räuchermännchenfiguren?",
+      "answers": [
+        {
+          "text": "Aus dem Erzgebirge",
+          "correct": true
+        },
+        {
+          "text": "Aus dem Schwarzwald",
+          "correct": false
+        },
+        {
+          "text": "Aus Ostfriesland",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Als der Bergbau zurückging, lebten ganze Dörfer vom Schnitzen — der Nussknacker trägt bis heute oft eine Uniform.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_045",
+      "question": "Wie wurde Tschaikowskys Ballett 'Der Nussknacker' bei der Uraufführung 1892 aufgenommen?",
+      "answers": [
+        {
+          "text": "Überwiegend kühl bis ablehnend",
+          "correct": true
+        },
+        {
+          "text": "Als sofortiger Triumph",
+          "correct": false
+        },
+        {
+          "text": "Es wurde nach dem ersten Akt abgebrochen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Kritik fand die Handlung dünn und die Kinderrollen befremdlich; zum Weihnachtsklassiker wurde das Stück erst Jahrzehnte später.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_046",
+      "question": "Aus wie vielen Teilen besteht Johann Sebastian Bachs Weihnachtsoratorium?",
+      "answers": [
+        {
+          "text": "Aus sechs",
+          "correct": true
+        },
+        {
+          "text": "Aus drei",
+          "correct": false
+        },
+        {
+          "text": "Aus zwölf",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Teile waren für sechs verschiedene Gottesdienste zwischen dem 25. Dezember 1734 und dem 6. Januar 1735 gedacht.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_047",
+      "question": "Zu welcher Jahreszeit wurde Händels 'Messias' uraufgeführt?",
+      "answers": [
+        {
+          "text": "Im Frühjahr, kurz vor Ostern",
+          "correct": true
+        },
+        {
+          "text": "Am ersten Weihnachtstag",
+          "correct": false
+        },
+        {
+          "text": "Im Hochsommer",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Premiere war im April 1742 in Dublin; erst später wurde das Werk zum Weihnachtsstück.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_048",
+      "question": "Was geschah an Weihnachten 1914 an Teilen der Westfront?",
+      "answers": [
+        {
+          "text": "Soldaten beider Seiten verließen die Gräben und feierten gemeinsam",
+          "correct": true
+        },
+        {
+          "text": "Der Krieg wurde offiziell für zwei Tage beendet",
+          "correct": false
+        },
+        {
+          "text": "Es wurde eine Rekordschlacht geschlagen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es gab Gesang, Zigaretten und stellenweise Fußball — die Generalstäbe verboten Wiederholungen für die Folgejahre.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_049",
+      "question": "Wer stellte 1882 den ersten elektrisch beleuchteten Weihnachtsbaum auf?",
+      "answers": [
+        {
+          "text": "Ein Mitarbeiter Thomas Edisons",
+          "correct": true
+        },
+        {
+          "text": "Nikola Tesla",
+          "correct": false
+        },
+        {
+          "text": "Werner von Siemens",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Edward H. Johnson ließ 80 rot, weiß und blau gefasste Lämpchen von Hand verdrahten und den Baum dazu drehen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_050",
+      "question": "Woraus bestand Lametta ursprünglich?",
+      "answers": [
+        {
+          "text": "Aus dünn geschlagenem Silber",
+          "correct": true
+        },
+        {
+          "text": "Aus gefärbtem Papier",
+          "correct": false
+        },
+        {
+          "text": "Aus Fischschuppen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nürnberger Handwerker schlugen es ab etwa 1610; es lief mit der Zeit an und musste ersetzt werden.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_051",
+      "question": "In welchem Ort begann die Herstellung gläserner Christbaumkugeln?",
+      "answers": [
+        {
+          "text": "In Lauscha in Thüringen",
+          "correct": true
+        },
+        {
+          "text": "In Murano bei Venedig",
+          "correct": false
+        },
+        {
+          "text": "In Karlsbad",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Legende nach konnte sich ein Glasbläser keine Äpfel und Nüsse für den Baum leisten und blies sich welche aus Glas.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_052",
+      "question": "Was enthielten englische 'mince pies' ursprünglich?",
+      "answers": [
+        {
+          "text": "Echtes Fleisch",
+          "correct": true
+        },
+        {
+          "text": "Nur Honig",
+          "correct": false
+        },
+        {
+          "text": "Gemahlene Muscheln",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hackfleisch, Nierenfett und Trockenfrüchte waren zusammen ein Konservierungstrick; das Fleisch verschwand erst im 19. Jahrhundert.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_053",
+      "question": "Was ist der britische 'Stir-up Sunday'?",
+      "answers": [
+        {
+          "text": "Der Sonntag, an dem der Weihnachtspudding angerührt wird",
+          "correct": true
+        },
+        {
+          "text": "Der erste Adventssonntag",
+          "correct": false
+        },
+        {
+          "text": "Der Tag der Christbaumversteigerung",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Jedes Familienmitglied rührt einmal im Uhrzeigersinn und darf sich dabei etwas wünschen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_054",
+      "question": "Welches Getränk verkauft sich in Schweden zur Weihnachtszeit besser als Cola?",
+      "answers": [
+        {
+          "text": "Julmust",
+          "correct": true
+        },
+        {
+          "text": "Glühwein",
+          "correct": false
+        },
+        {
+          "text": "Buttermilch",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das dunkle Malzgetränk verschiebt die Marktanteile im Dezember so stark, dass Coca-Cola es zeitweise selbst produzierte.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_055",
+      "question": "Aus welchem Erdteil stammt der Truthahn, der heute vielerorts das Weihnachtsessen ist?",
+      "answers": [
+        {
+          "text": "Aus Amerika",
+          "correct": true
+        },
+        {
+          "text": "Aus Asien",
+          "correct": false
+        },
+        {
+          "text": "Aus Nordafrika",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vor seiner Einfuhr im 16. Jahrhundert waren Gans, Schwein oder Pfau die Festbraten Europas.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_056",
+      "question": "Was ist in Deutschland an Heiligabend eines der häufigsten Abendessen?",
+      "answers": [
+        {
+          "text": "Würstchen mit Kartoffelsalat",
+          "correct": true
+        },
+        {
+          "text": "Hummer mit Reis",
+          "correct": false
+        },
+        {
+          "text": "Lammkeule",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Klassiker hat einen praktischen Grund: Er lässt sich vormittags vorbereiten und blockiert den Abend nicht.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_057",
+      "question": "Was ist der britische 'Boxing Day' am 26. Dezember ursprünglich?",
+      "answers": [
+        {
+          "text": "Der Tag, an dem Dienstboten und Arme ihre Geschenkbox bekamen",
+          "correct": true
+        },
+        {
+          "text": "Ein Tag für Faustkämpfe",
+          "correct": false
+        },
+        {
+          "text": "Der Tag, an dem Geschenke umgetauscht werden",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name kommt von den Almosenbüchsen und Päckchen, nicht vom Sport und nicht vom Auspacken.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_058",
+      "question": "Wann laufen die 'Zwölf Weihnachtstage' des englischen Liedes?",
+      "answers": [
+        {
+          "text": "Vom 25. Dezember bis zum 5. Januar",
+          "correct": true
+        },
+        {
+          "text": "Vom 13. bis zum 24. Dezember",
+          "correct": false
+        },
+        {
+          "text": "Vom 1. bis zum 12. Dezember",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sie enden am Vorabend des Dreikönigstags — das Lied zählt also nicht auf Weihnachten hin, sondern von ihm weg.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_059",
+      "question": "Worauf geht das deutsche Wort 'Weihnachten' zurück?",
+      "answers": [
+        {
+          "text": "Auf 'geweihte Nächte'",
+          "correct": true
+        },
+        {
+          "text": "Auf 'weiße Nächte'",
+          "correct": false
+        },
+        {
+          "text": "Auf 'Weizennächte'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die mittelhochdeutsche Wendung 'ze den wîhen nahten' meint die geheiligten Nächte um das Fest.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_060",
+      "question": "Woher stammt die Kombination Rot und Grün als Weihnachtsfarben?",
+      "answers": [
+        {
+          "text": "Von der Stechpalme mit roten Beeren und grünen Blättern",
+          "correct": true
+        },
+        {
+          "text": "Von der Flagge des Kirchenstaats",
+          "correct": false
+        },
+        {
+          "text": "Von den Uniformen der Postboten",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Immergrüne Pflanzen mit roten Früchten galten schon vor dem Christentum als Zeichen von Leben im Winter.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_061",
+      "question": "Was war der ursprüngliche 'Julklapp' beziehungsweise Yule Log?",
+      "answers": [
+        {
+          "text": "Ein großer Holzscheit, der über die Feiertage brennen sollte",
+          "correct": true
+        },
+        {
+          "text": "Ein Brief mit Rätseln",
+          "correct": false
+        },
+        {
+          "text": "Ein Kuchen in Baumstammform",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Erst als offene Kamine seltener wurden, wanderte das Motiv auf den Kuchenteller — die französische Bûche de Noël ist ein Nachbau.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_062",
+      "question": "Wie kam der Film 'Ist das Leben nicht schön?' von 1946 zu seinem heutigen Ruhm?",
+      "answers": [
+        {
+          "text": "Weil das Urheberrecht auslief und Sender ihn gratis zeigten",
+          "correct": true
+        },
+        {
+          "text": "Weil er zehn Oscars gewann",
+          "correct": false
+        },
+        {
+          "text": "Weil er in Schulen Pflichtstoff wurde",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "An den Kinokassen war er ein Verlust; erst die Dauerschleife im US-Fernsehen der 1970er machte ihn zum Klassiker.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_063",
+      "question": "In welcher Stadt spielt der Hauptteil von 'Kevin – Allein zu Haus'?",
+      "answers": [
+        {
+          "text": "In Chicago",
+          "correct": true
+        },
+        {
+          "text": "In Boston",
+          "correct": false
+        },
+        {
+          "text": "In Denver",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Familie fliegt nach Paris, Kevin bleibt in einem Vorort von Chicago zurück — gedreht wurde in Winnetka, Illinois.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_064",
+      "question": "Warum gilt 'Stirb langsam' vielen als Weihnachtsfilm?",
+      "answers": [
+        {
+          "text": "Er spielt auf einer Weihnachtsfeier am 24. Dezember",
+          "correct": true
+        },
+        {
+          "text": "Der Held heißt mit zweitem Namen Nikolaus",
+          "correct": false
+        },
+        {
+          "text": "Der Film startete an Heiligabend",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Debatte ist so alt wie hartnäckig; der Regisseur und der Hauptdarsteller haben sich öffentlich widersprochen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_065",
+      "question": "Wer schrieb die Jazzmusik zum Fernsehklassiker 'Die Peanuts – Fröhliche Weihnachten' von 1965?",
+      "answers": [
+        {
+          "text": "Vince Guaraldi",
+          "correct": true
+        },
+        {
+          "text": "Dave Brubeck",
+          "correct": false
+        },
+        {
+          "text": "Duke Ellington",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Sender fand ein Jazztrio für eine Kindersendung zunächst unpassend — die Platte wurde ein Millionenseller.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_066",
+      "question": "Wer machte 'Rudolph, the Red-Nosed Reindeer' 1949 als Lied zum Welterfolg?",
+      "answers": [
+        {
+          "text": "Der Sänger Gene Autry",
+          "correct": true
+        },
+        {
+          "text": "Frank Sinatra",
+          "correct": false
+        },
+        {
+          "text": "Louis Armstrong",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Autry zögerte lange und nahm den Titel nur auf Drängen seiner Frau auf; es wurde seine meistverkaufte Platte.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_067",
+      "question": "In welchem Text tauchten die acht Rentiere des Weihnachtsmanns zuerst mit Namen auf?",
+      "answers": [
+        {
+          "text": "In einem Gedicht von 1823",
+          "correct": true
+        },
+        {
+          "text": "In einem Roman von Charles Dickens",
+          "correct": false
+        },
+        {
+          "text": "In einer Zeitungsanzeige von 1902",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'A Visit from St. Nicholas' nannte auch Donder und Blitzen — die Namen sind niederländisch für Donner und Blitz.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_068",
+      "question": "In welchem Land wurde 1904 die Weihnachtsmarke zur Spendenfinanzierung erfunden?",
+      "answers": [
+        {
+          "text": "In Dänemark",
+          "correct": true
+        },
+        {
+          "text": "In Kanada",
+          "correct": false
+        },
+        {
+          "text": "In Italien",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ein Postbeamter schlug die Zusatzmarke vor, um Kinderkliniken zu finanzieren; die Idee verbreitete sich weltweit.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_069",
+      "question": "Welche Legende erklärt die aufgehängten Weihnachtsstrümpfe?",
+      "answers": [
+        {
+          "text": "Nikolaus warf Goldstücke durch ein Fenster, die in Strümpfen landeten",
+          "correct": true
+        },
+        {
+          "text": "Ein Schneider verlor seinen Strumpf im Kamin",
+          "correct": false
+        },
+        {
+          "text": "Bergleute trockneten ihre Strümpfe am Kaminfeuer",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In der Erzählung rettete das Gold drei Töchter eines verarmten Mannes vor einem Leben in Not.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_070",
+      "question": "Was stimmt über die 'deutsche Tradition' der Weihnachtsgurke am Baum?",
+      "answers": [
+        {
+          "text": "In Deutschland kennt sie kaum jemand",
+          "correct": true
+        },
+        {
+          "text": "Sie stammt aus dem Spreewald",
+          "correct": false
+        },
+        {
+          "text": "Sie wurde 1850 in Bayern erfunden",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Brauch ist vor allem in den USA verbreitet und wurde dort als deutsche Herkunftsgeschichte vermarktet.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_071",
+      "question": "Wo entstand der Brauch, sich unter einem Mistelzweig zu küssen?",
+      "answers": [
+        {
+          "text": "In England",
+          "correct": true
+        },
+        {
+          "text": "In Griechenland",
+          "correct": false
+        },
+        {
+          "text": "In Russland",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Im 18. Jahrhundert galt: Für jeden Kuss wird eine Beere gepflückt, und ist der Zweig leer, ist Schluss.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_072",
+      "question": "Was geschieht mit dem Holz des großen Baums am Rockefeller Center nach den Feiertagen?",
+      "answers": [
+        {
+          "text": "Es wird zu Bauholz für Wohltätigkeitsprojekte verarbeitet",
+          "correct": true
+        },
+        {
+          "text": "Es wird versteigert",
+          "correct": false
+        },
+        {
+          "text": "Es bleibt bis Ostern stehen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Seit 2007 gehen die Bretter an Habitat for Humanity — der Baum steht dort seit 1931 fast jedes Jahr.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_073",
+      "question": "Welchen Rang hatte der 'gute König Wenzel' aus dem englischen Weihnachtslied wirklich?",
+      "answers": [
+        {
+          "text": "Er war Herzog von Böhmen",
+          "correct": true
+        },
+        {
+          "text": "Er war Kaiser von Byzanz",
+          "correct": false
+        },
+        {
+          "text": "Er war König von Polen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wenzel I. wurde erst nach seinem Tod postum zum König erhoben — im Lied ist er bereits einer.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_074",
+      "question": "Woher stammt die Melodie von 'O Tannenbaum'?",
+      "answers": [
+        {
+          "text": "Von einem alten Volkslied",
+          "correct": true
+        },
+        {
+          "text": "Von Beethoven",
+          "correct": false
+        },
+        {
+          "text": "Von einem englischen Kirchenlied",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ernst Anschütz schrieb 1824 den heutigen Text auf eine längst bekannte Weise, die vorher von einer untreuen Geliebten handelte.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_075",
+      "question": "Welche Auszeichnung erhielt 'Stille Nacht' 2011 von der UNESCO?",
+      "answers": [
+        {
+          "text": "Es wurde immaterielles Kulturerbe Österreichs",
+          "correct": true
+        },
+        {
+          "text": "Es wurde Weltdokumentenerbe",
+          "correct": false
+        },
+        {
+          "text": "Es wurde zur Welthymne erklärt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Lied ist in weit über 300 Sprachen und Dialekte übersetzt worden.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_076",
+      "question": "Was bedeutet das lateinische Wort 'adventus', von dem der Advent kommt?",
+      "answers": [
+        {
+          "text": "Ankunft",
+          "correct": true
+        },
+        {
+          "text": "Erwartung",
+          "correct": false
+        },
+        {
+          "text": "Dunkelheit",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Adventszeit war ursprünglich eine Fastenzeit — deshalb war das Essen vor dem 24. Dezember eher karg.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_077",
+      "question": "Was gehört in Polen traditionell unter das Tischtuch der 'Wigilia'?",
+      "answers": [
+        {
+          "text": "Heu",
+          "correct": true
+        },
+        {
+          "text": "Münzen",
+          "correct": false
+        },
+        {
+          "text": "Ein Stück Kohle",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es erinnert an die Krippe; außerdem bleibt ein Gedeck für einen unerwarteten Gast frei.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_078",
+      "question": "Was sind die griechischen 'Kallikantzaroi'?",
+      "answers": [
+        {
+          "text": "Kobolde, die zwischen Weihnachten und Dreikönig Unfug treiben",
+          "correct": true
+        },
+        {
+          "text": "Weihnachtsgebäck aus Kreta",
+          "correct": false
+        },
+        {
+          "text": "Sternsinger in Athen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Legende nach sägen sie das ganze Jahr am Weltenbaum und kommen nur in den zwölf Nächten an die Oberfläche.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_079",
+      "question": "An welchem Tag wird in Äthiopien Weihnachten ('Genna') gefeiert?",
+      "answers": [
+        {
+          "text": "Am 7. Januar",
+          "correct": true
+        },
+        {
+          "text": "Am 24. Dezember",
+          "correct": false
+        },
+        {
+          "text": "Am 2. Februar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die äthiopisch-orthodoxe Kirche folgt einem eigenen Kalender; das äthiopische Jahr liegt gegenüber dem gregorianischen zurück.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_080",
+      "question": "Wie viele Abende dauern die mexikanischen 'Posadas' vor Weihnachten?",
+      "answers": [
+        {
+          "text": "Neun",
+          "correct": true
+        },
+        {
+          "text": "Drei",
+          "correct": false
+        },
+        {
+          "text": "Zwölf",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sie stellen die Herbergssuche nach — jeder Abend endet vor einer anderen Haustür mit Gesang und Piñata.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_081",
+      "question": "Wofür stehen die sieben Zacken der klassischen mexikanischen Weihnachtspiñata?",
+      "answers": [
+        {
+          "text": "Für die sieben Todsünden",
+          "correct": true
+        },
+        {
+          "text": "Für die sieben Wochentage",
+          "correct": false
+        },
+        {
+          "text": "Für sieben Sterne am Himmel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wer mit verbundenen Augen zuschlägt, schlägt sinnbildlich blind gegen die Sünde — die Süßigkeiten sind die Belohnung des Glaubens.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_082",
+      "question": "Wer zieht in Spanien die Nummern der Weihnachtslotterie 'El Gordo' und singt die Gewinne?",
+      "answers": [
+        {
+          "text": "Schulkinder",
+          "correct": true
+        },
+        {
+          "text": "Fernsehmoderatoren",
+          "correct": false
+        },
+        {
+          "text": "Notare der Bank von Spanien",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Kinder der Residencia San Ildefonso singen Nummer und Betrag seit dem 18. Jahrhundert im Wechselgesang.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_083",
+      "question": "Wer bringt in Spanien traditionell die Geschenke für die Kinder?",
+      "answers": [
+        {
+          "text": "Die Heiligen Drei Könige",
+          "correct": true
+        },
+        {
+          "text": "Der Weihnachtsmann am 24. Dezember",
+          "correct": false
+        },
+        {
+          "text": "Der heilige Nikolaus am 6. Dezember",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In der Nacht zum 6. Januar stellen Kinder Schuhe und etwas Wasser für die Kamele bereit.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_084",
+      "question": "Welches Land ist für die längste Weihnachtssaison der Welt bekannt?",
+      "answers": [
+        {
+          "text": "Die Philippinen",
+          "correct": true
+        },
+        {
+          "text": "Island",
+          "correct": false
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sobald der September beginnt, laufen dort die Weihnachtslieder; die Saison zieht sich bis in den Januar.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_085",
+      "question": "Welche Form hat die philippinische Weihnachtslaterne 'Parol'?",
+      "answers": [
+        {
+          "text": "Einen fünfzackigen Stern",
+          "correct": true
+        },
+        {
+          "text": "Einen Halbmond",
+          "correct": false
+        },
+        {
+          "text": "Eine Glocke",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sie steht für den Stern von Betlehem und wurde ursprünglich aus Bambus und Reispapier gebaut.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_086",
+      "question": "In welcher Jahreszeit feiert Australien Weihnachten?",
+      "answers": [
+        {
+          "text": "Im Hochsommer",
+          "correct": true
+        },
+        {
+          "text": "Im Spätherbst",
+          "correct": false
+        },
+        {
+          "text": "Im Vorfrühling",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Grillen am Strand und 'Carols by Candlelight' im Freien gehören dort zum Fest.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_087",
+      "question": "Warum feiern russisch-orthodoxe Gläubige Weihnachten am 7. Januar?",
+      "answers": [
+        {
+          "text": "Weil die Kirche am julianischen Kalender festhält",
+          "correct": true
+        },
+        {
+          "text": "Weil der Zar das Datum verschob",
+          "correct": false
+        },
+        {
+          "text": "Weil der 25. Dezember Arbeitstag ist",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Unterschied zum gregorianischen Kalender beträgt derzeit dreizehn Tage.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_088",
+      "question": "Was schreibt die Rezeptur für Nürnberger Elisenlebkuchen vor?",
+      "answers": [
+        {
+          "text": "Höchstens zehn Prozent Mehl",
+          "correct": true
+        },
+        {
+          "text": "Mindestens die Hälfte Honig",
+          "correct": false
+        },
+        {
+          "text": "Genau sieben Gewürze",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die geschützte Bezeichnung verlangt außerdem einen hohen Nussanteil — deshalb sind sie so saftig.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_089",
+      "question": "Was soll die Form des Dresdner Christstollens darstellen?",
+      "answers": [
+        {
+          "text": "Das in Tücher gewickelte Christuskind",
+          "correct": true
+        },
+        {
+          "text": "Einen Schlitten",
+          "correct": false
+        },
+        {
+          "text": "Einen Schneeberg",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Puderzucker steht für die Windeln; das Rezept war lange durch das Butterverbot der Fastenzeit eingeschränkt.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_090",
+      "question": "Aus welcher Stadt stammt der Panettone?",
+      "answers": [
+        {
+          "text": "Aus Mailand",
+          "correct": true
+        },
+        {
+          "text": "Aus Neapel",
+          "correct": false
+        },
+        {
+          "text": "Aus Turin",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Hefeteig braucht mit Vorteig und mehreren Gehzeiten oft mehr als 30 Stunden.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_091",
+      "question": "Seit wann ist gewürzter Heißwein in Europa belegt?",
+      "answers": [
+        {
+          "text": "Seit der römischen Antike",
+          "correct": true
+        },
+        {
+          "text": "Seit dem 18. Jahrhundert",
+          "correct": false
+        },
+        {
+          "text": "Seit den 1920er-Jahren",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ein römisches Kochbuch beschreibt 'conditum paradoxum' aus Wein, Honig und Pfeffer — die Vorlage des heutigen Glühweins.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_092",
+      "question": "In welcher Stadt ist der geschmückte Weihnachtsbaum erstmals urkundlich belegt?",
+      "answers": [
+        {
+          "text": "In Straßburg",
+          "correct": true
+        },
+        {
+          "text": "In Wien",
+          "correct": false
+        },
+        {
+          "text": "In Kopenhagen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Eine Zunftordnung von 1539 erwähnt einen Baum im Münster; Kerzen kamen erst deutlich später dazu.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_093",
+      "question": "Seit wann gibt es die Weihnachtsansprache des britischen Königshauses?",
+      "answers": [
+        {
+          "text": "Seit 1932",
+          "correct": true
+        },
+        {
+          "text": "Seit 1901",
+          "correct": false
+        },
+        {
+          "text": "Seit 1966",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Georg V. sprach zuerst im Radio; das erste Fernsehbild folgte erst 1957.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_094",
+      "question": "Was ist an José Felicianos 'Feliz Navidad' von 1970 besonders?",
+      "answers": [
+        {
+          "text": "Der Text besteht nur aus wenigen Zeilen auf Spanisch und Englisch",
+          "correct": true
+        },
+        {
+          "text": "Es ist das längste Weihnachtslied der Charts",
+          "correct": false
+        },
+        {
+          "text": "Es wurde ohne Instrumente aufgenommen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Feliciano brauchte für den Text wenige Minuten und spielte den cuatro dazu.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_095",
+      "question": "Welche astronomische Erklärung schlug Johannes Kepler für den Stern von Betlehem vor?",
+      "answers": [
+        {
+          "text": "Eine enge Begegnung von Jupiter und Saturn",
+          "correct": true
+        },
+        {
+          "text": "Einen Kometeneinschlag",
+          "correct": false
+        },
+        {
+          "text": "Eine Sonnenfinsternis",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kepler beobachtete 1603 eine solche Konjunktion und rechnete zurück auf das Jahr 7 vor unserer Zeitrechnung.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_096",
+      "question": "Was sagt die Bibel über das Geburtsdatum Jesu?",
+      "answers": [
+        {
+          "text": "Sie nennt gar kein Datum",
+          "correct": true
+        },
+        {
+          "text": "Sie nennt den 25. Dezember",
+          "correct": false
+        },
+        {
+          "text": "Sie nennt den 6. Januar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der 25. Dezember setzte sich im 4. Jahrhundert durch und fiel mit römischen Festen um die Wintersonnenwende zusammen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_097",
+      "question": "Wie viele Geschenke bekommt man insgesamt, wenn im Lied 'The Twelve Days of Christmas' jeden Tag alle bisherigen Gaben erneut überreicht werden?",
+      "type": "estimate",
+      "answer": 364,
+      "min": 0,
+      "max": 1000,
+      "unit": "Geschenke",
+      "difficulty": "medium",
+      "fun_fact": "364 — fast eines für jeden Tag des Jahres, davon allein zwölf Rebhühner im Birnbaum.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_098",
+      "question": "In welchem Jahr wurde 'Stille Nacht' zum ersten Mal gesungen?",
+      "type": "estimate",
+      "answer": 1818,
+      "min": 1700,
+      "max": 1950,
+      "unit": "Jahr",
+      "difficulty": "medium",
+      "fun_fact": "1818 in Oberndorf bei Salzburg, begleitet auf einer Gitarre statt auf der Orgel.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_099",
+      "question": "Wie hoch ist der Strohbock von Gävle, der jedes Jahr im schwedischen Advent aufgestellt wird?",
+      "type": "estimate",
+      "answer": 13,
+      "min": 1,
+      "max": 60,
+      "unit": "Meter",
+      "difficulty": "hard",
+      "fun_fact": "13 Meter hoch und rund 3,6 Tonnen schwer — trotzdem hat er die Adventszeit oft nicht überstanden.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_100",
+      "question": "Wie viele Rentiere werden im Gedicht 'A Visit from St. Nicholas' von 1823 mit Namen genannt?",
+      "type": "estimate",
+      "answer": 8,
+      "min": 0,
+      "max": 40,
+      "unit": "Rentiere",
+      "difficulty": "easy",
+      "fun_fact": "Acht — Rudolph kam erst 116 Jahre später als Werbefigur dazu.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_101",
+      "question": "Wie viele Türchen hat ein klassischer Adventskalender?",
+      "type": "estimate",
+      "answer": 24,
+      "min": 0,
+      "max": 100,
+      "unit": "Türchen",
+      "difficulty": "easy",
+      "fun_fact": "24 — der Kalender endet am Heiligabend und nicht am ersten Weihnachtstag.",
+      "category": "Weihnachten"
+    }
+  ]
+}
