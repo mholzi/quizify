@@ -1753,12 +1753,10 @@ button, .btn {
    Answer Buttons (Beatify-style pills)
    ========================================== */
 
-.answers-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    padding-bottom: var(--space-lg);
-}
+/* `.answers-container` stacked the answers here and matched nothing: the
+   element is `<section id="answers-container" class="card-section
+   answer-section">` — an id, never a class. The live layout comes from
+   `.answer-section` / the grid rules in 08-responsive.css. Removed in #919. */
 
 .answer-btn {
     position: relative;
@@ -2098,9 +2096,9 @@ button, .btn {
 }
 
 /* Player list */
-.player-list {
-    width: 100%;
-}
+/* `.player-list { width: 100% }` matched nothing: the lobby's list is
+   `<div class="pl-orbits" id="player-list">` — the name is an id, never a
+   class. Removed in #919, same shape as the reveal admin bar. */
 
 /* `.player-count` lived here and matched nothing. It read as referenced
    only because a comment in the television's inline <style> used the words
@@ -2127,21 +2125,14 @@ button, .btn {
    QR Code
    ========================================== */
 
-.qr-code, .qr-container {
-    display: inline-block;
-    padding: var(--space-md);
-    background: white;
-    border-radius: var(--radius-md);
-    margin: var(--space-md) 0;
-    box-shadow: var(--shadow-md);
-}
-
-.qr-code img, .qr-code canvas,
-.qr-container img, .qr-container canvas {
-    display: block;
-    width: 180px;
-    height: 180px;
-}
+/* `.qr-code, .qr-container` (the white QR card) and its img/canvas sizing lived
+   here and painted nothing. `.qr-container` is an id — `<div class="lobby-e-qr"
+   id="qr-container">` — and `.qr-code` is set nowhere at all; the two QR hosts
+   are `#lobby-qr-code` and `#player-qr-code`. The dead-weight guard (#797) kept
+   the pair alive because the id half looked referenced to it, which is the
+   blind spot #919 is about: dropping that half made `.qr-code` visibly dead and
+   both rules went with it. The live QR styling is `.lobby-e-qr` (console) and
+   `.dashboard-qr-*` (television). */
 
 /* ==========================================
    Admin question preview
@@ -2195,21 +2186,9 @@ button, .btn {
 }
 
 /* Dashboard link (Cast to TV) */
-.dashboard-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
-    margin-top: var(--space-sm);
-    font-size: 0.8rem;
-    color: var(--color-accent-secondary);
-    text-decoration: none;
-    opacity: 0.8;
-    transition: opacity 0.2s ease;
-}
-
-.dashboard-link:hover {
-    opacity: 1;
-}
+/* `.dashboard-link` and its hover styled nothing: the console's Cast link is
+   `<a id="dashboard-link" class="lobby-e-cast">`, so the name is an id. The
+   link's live look is `.lobby-e-cast`. Removed in #919. */
 
 /* Form group for modal inputs */
 .form-group {
@@ -3607,20 +3586,11 @@ footer {
     font-size: max(0.75rem, 12px);
 }
 
-.new-game-btn {
-    background: var(--color-accent-blue);
-    color: var(--color-text-white);
-    border: none;
-    border-radius: var(--radius-md);
-    padding: var(--space-md) var(--space-lg);
-    font-weight: var(--font-weight-semibold);
-    cursor: pointer;
-    transition: background var(--transition-fast);
-}
-
-.new-game-btn:hover:not(:disabled) {
-    background: var(--color-accent-blue-hover);
-}
+/* `.new-game-btn` and its hover lived here and matched nothing: the name is an
+   id on both buttons that carry it — `<button id="new-game-btn" class="resbtn
+   resbtn--secondary">` on the player end screen, `class="btn btn-primary…"` on
+   the admin console — and never a class. Removed with the same-shaped reveal
+   rules in #919. */
 
 /* .player-rematch-btn removed in v1.1.3 — rematch flow deprecated. */
 
@@ -4023,34 +3993,14 @@ footer {
    Player Page: REVEAL VIEW
    ========================================== */
 
-/* Reveal admin controls */
-.reveal-admin-controls {
-    margin-top: var(--space-md);
-}
-
-.next-round-btn {
-    background: var(--color-accent-blue);
-    color: var(--color-text-white);
-    border: none;
-    border-radius: var(--radius-md);
-    padding: var(--space-md) var(--space-lg);
-    font-weight: var(--font-weight-semibold);
-    cursor: pointer;
-    transition: background var(--transition-fast);
-    width: 100%;
-}
-
-.next-round-btn:hover:not(:disabled) {
-    background: var(--color-accent-blue-hover);
-}
-
-.next-round-btn.is-final {
-    background: var(--color-accent-primary);
-}
-
-.next-round-btn.is-final:hover:not(:disabled) {
-    background: #ff4080;
-}
+/* The reveal admin bar used to be styled here as `.reveal-admin-controls` and
+   `.next-round-btn` (plus a hover and two `.is-final` variants). Both names are
+   ids on the markup, never classes — `<div id="reveal-admin-controls"
+   class="pl-result-admin-bar">`, `<button id="next-round-btn"
+   class="pl-result-bar-btn pl-result-bar-btn--primary">` — so the five rules
+   had matched nothing since the sticky bar arrived. The bar's live styling is
+   `.pl-result-admin-bar` / `.pl-result-bar-btn*` in 08-responsive.css.
+   Removed in #919; see tests/test_selector_kind_reachability_919.py. */
 
 /* Score zero state */
 .is-score-zero {
@@ -5826,12 +5776,11 @@ body.is-admin .reaction-bar {
 }
 
 /* Connection lost screen */
-.connection-lost-view {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 60vh;
-}
+/* `.connection-lost-view` centred the screen here, but the element is
+   `<div id="connection-lost-view" class="view hidden">` — an id, so the rule
+   never applied and the screen has always been laid out by `.view` plus
+   `.connection-lost-container` below. Removed in #919; giving it back the
+   centring would be a visual change, not a fix. */
 
 .connection-lost-container {
     display: flex;

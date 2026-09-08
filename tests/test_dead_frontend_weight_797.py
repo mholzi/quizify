@@ -27,6 +27,12 @@ markup itself.
 When this fails: either delete the rule, or — if the class is genuinely set
 somewhere this scan cannot see — add its prefix to ``DYNAMIC_PREFIXES`` with a
 comment saying where.
+
+The corpus here is a bag of tokens, so it cannot tell ``.foo`` from ``#foo``:
+``.next-round-btn`` read as referenced for as long as ``id="next-round-btn"``
+existed, which is the state a rename leaves behind. That half is
+``tests/test_selector_kind_reachability_919.py``; the two guards are meant to be
+read together.
 """
 
 from __future__ import annotations
