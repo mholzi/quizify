@@ -484,12 +484,26 @@ class QuizifyGameState:
         return self._player_registry.players
 
     @property
-    def leader(self) -> PlayerSession | None:
-        """Current top-scoring player, or None if no players yet."""
-        players = self._player_registry.players
-        if not players:
+    def leader(self) -> PlayerSession | Team | None:
+        """Whoever is currently top of the ranking, or None in an empty room.
+
+        A *participant*, not a player (#923). In team mode the room's truth is
+        ``Team.score``; ``PlayerSession.score`` is a by-product of whichever
+        member happened to carry a round, which is 0 for everybody else. Taking
+        the max over the raw player dict therefore named a person — and named
+        them with a number no screen shows — while the podium, the reveal and
+        the television all showed the winning team. ``quizify_winner_decided``
+        (``game_events``), the ``leader``/``top_score`` sensors and the TTS
+        game-over line all read this, so all four disagreed with
+        ``quizify_game_ended`` for the same finale.
+
+        Solo mode is untouched: ``get_ranked_participants`` returns the players
+        themselves, in registry order, so the same player wins the same ties.
+        """
+        participants = self.get_ranked_participants()
+        if not participants:
             return None
-        return max(players.values(), key=lambda p: p.score)
+        return max(participants, key=lambda p: p.score)
 
     # ------------------------------------------------------------------
     # State change observers (HA sensor push)
@@ -1102,9 +1116,21 @@ class QuizifyGameState:
         # STEAL is rejected on estimate rounds, #406.)
         player.round_score += points
         player.round_score_breakdown = computation.breakdown
-        player.score += points
-        if player.score < 0:
-            player.score = 0
+        # The running total is the *participant's* (#923). A team member's
+        # points are booked onto the team by ``_credit_team_round`` a few
+        # frames later; adding them here as well kept a second, per-person
+        # ledger that no screen shows and that reads 0 for every member except
+        # whoever carried this round. Analytics, the ``leader`` sensor and
+        # ``quizify_winner_decided`` all used to read that ledger and so
+        # contradicted the podium beside them. ``round_score`` above is a
+        # different thing and stays: it is what the carrier hands back to
+        # ``_credit_team_round``, and the reveal reports it as this round's
+        # points. Solo mode and the player who joined no team are unaffected —
+        # they are their own participant.
+        if self._keeps_own_score(player.name):
+            player.score += points
+            if player.score < 0:
+                player.score = 0
 
         # Track hard question score
         if correct and diff_enum == Difficulty.HARD:
@@ -1376,6 +1402,11 @@ class QuizifyGameState:
                 _team_bank=team.score,
             )
             if isinstance(result, AnswerResult):
+                # The milestone was earned on the team's streak (lent to the
+                # carrier above), so it is tallied on the team (#923) — the
+                # analytics rollup reads this counter off the entrant.
+                if result.milestone_bonus:
+                    team.streak_milestones_hit += 1
                 self._credit_team_round(
                     team,
                     result.points_earned,
@@ -1738,9 +1769,14 @@ class QuizifyGameState:
                     "estimate_rank": entry["rank"],
                     "estimate_exact": entry["exact"],
                 }
-                player.score += points
-                if player.score < 0:
-                    player.score = 0
+                # Participant's total, not the carrier's (#923) — the twin
+                # of the guard in ``submit_answer``. The team is credited from
+                # ``round_score`` in ``_apply_estimate_results_to_teams``, so
+                # the running total here would be a second ledger.
+                if self._keeps_own_score(player.name):
+                    player.score += points
+                    if player.score < 0:
+                        player.score = 0
                 if diff_enum == Difficulty.HARD:
                     player.hard_score += points
                 player.last_answer_correct = entry["exact"]
@@ -2023,16 +2059,26 @@ class QuizifyGameState:
         game_id = self.game_id
 
         duration = int(time.time() - (self._game_start_time or time.time()))
-        players = {p.name: p.score for p in self.get_players()}
-        # Per-player details feed the all-time rollup (best streak, milestone
-        # hits). Keep this map narrow so the analytics module never sees the
-        # full PlayerSession object — easier to evolve independently.
+        # Participants, not players (#923). What gets written here is the
+        # record of who played and who won: the all-time standings, the
+        # evening tally (#612) and the end-screen head-to-head (#613) are all
+        # built from it, and the season standing pushed to each phone (#624)
+        # comes back out of it. In team mode the entrant is the team, so a
+        # per-person map wrote a shadow score into the season table and put
+        # "Tonight: Bert 2 wins" under a podium that says team Sofa won.
+        # ``get_ranked_participants`` is the same list the podium is drawn
+        # from; in solo mode it is exactly ``get_players()``.
+        participants = self.get_ranked_participants()
+        players = {p.name: p.score for p in participants}
+        # Per-participant details feed the all-time rollup (best streak,
+        # milestone hits). Keep this map narrow so the analytics module never
+        # sees the full domain object — easier to evolve independently.
         player_details = {
             p.name: {
                 "best_streak": p.max_streak,
                 "streak_milestones_hit": p.streak_milestones_hit,
             }
-            for p in self.get_players()
+            for p in participants
         }
 
         async def _do_record() -> None:
@@ -2941,6 +2987,21 @@ class QuizifyGameState:
             if self._team_registry.get_by_member(p.name) is None
         ]
         return teams + solo
+
+    def _keeps_own_score(self, player_name: str) -> bool:
+        """Whether this player's points land in a row of their own (#923).
+
+        The inverse question of ``get_ranked_participants``: that method says
+        who the ranking is about, this one says whose ``score`` field is part
+        of it. True for everybody in solo mode, and for the guest who joined no
+        team in team mode — they keep their own row, so their own total is the
+        room's truth about them. False for a team member: their points belong
+        to the team, and a second copy on ``PlayerSession.score`` is a ledger
+        nothing renders.
+        """
+        if not self.team_mode:
+            return True
+        return self._team_registry.get_by_member(player_name) is None
 
     def _entrant_key(self, participant: Any) -> str:
         """The key a participant bids, bets and settles under (#804).

@@ -78,7 +78,11 @@ def test_each_player_gets_their_own_standing() -> None:
     )
 
     assert "for player in game_state.get_players()" in body
-    assert "self._all_time_standing(player.name)" in body
+    # The lookup key is the *entrant's* name since #923: in team mode the game
+    # is recorded under the team, so a member's own name finds nothing. Still
+    # one send per player — the rank is delivered to a phone, not to a room.
+    assert "self._all_time_standing(" in body
+    assert "get_ranked_participant_for(player.name)" in body
     assert '"type": "all_time_update"' in body
     # Asserts the absent CALL, not the absent word: the docstring above
     # explains why this is not a broadcast, and `_without_comments` strips
