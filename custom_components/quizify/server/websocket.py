@@ -3951,14 +3951,18 @@ class QuizifyWebSocketHandler:
         for player in game_state.get_players():
             if not self._conn.is_connection_open(player.connection_id):
                 continue
-            # The standing belongs to the entrant, not the person (#923): in
-            # team mode the game was recorded under the team's name, so asking
-            # for the member's own name returns nothing and the phone shows no
-            # line at all. Ask for the row the podium beside it is drawn from.
-            participant = game_state.get_ranked_participant_for(player.name)
-            standing = self._all_time_standing(
-                participant.name if participant is not None else player.name
-            )
+            # The player's OWN name, the same key the join frame used (#932).
+            # #923 moved this to the entrant, so a team member's phone showed
+            # the team's row worded as a personal one: "1 win from 1 game"
+            # replacing the "14 wins from 27 games" the same phone read in the
+            # lobby minutes earlier. The all-time table is keyed by entrant
+            # name, so a member with history is found here perfectly well —
+            # their record simply does not move for a game the team was
+            # recorded under, which is what one ledger (#923) means. A member
+            # with no history of their own gets no line, exactly as they got
+            # none in the lobby; the alternative is a team's record wearing a
+            # person's wording.
+            standing = self._all_time_standing(player.name)
             if standing is None:
                 continue
             sends.append(
