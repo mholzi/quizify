@@ -97,11 +97,13 @@ def test_the_team_scores_once_not_once_per_member(game: QuizifyGameState) -> Non
 
     team = _team(game)
     assert team.score > 0
-    scored_members = [
-        p for p in (game.get_player("Anna"), game.get_player("Jan")) if p.score > 0
-    ]
-    assert len(scored_members) == 1, "exactly one member carries the team's points"
-    assert team.score == scored_members[0].score
+    # And nowhere else. Until #923 the carrier also kept the points on their
+    # own ``score``, which this test used to assert ("exactly one member
+    # carries the team's points") — a second ledger no screen shows, read by
+    # analytics, the ``leader`` sensor and ``quizify_winner_decided``. The
+    # rule was always "one answer, one score"; it now holds for the totals too.
+    assert game.get_player("Anna").score == 0
+    assert game.get_player("Jan").score == 0
 
 
 def test_a_wrong_team_answer_breaks_the_team_streak(game: QuizifyGameState) -> None:

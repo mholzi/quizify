@@ -106,6 +106,11 @@ class Team:
     # dashboard, the reveal and the finale need no team-specific rendering
     # path: they receive rows and cannot tell the difference (#365).
     max_streak: int = 0
+    #: Streak milestones this team has hit, tallied from the carrier's
+    #: settlement (#923). A team is what the analytics record calls an
+    #: entrant, so it needs the counter a player keeps — otherwise the
+    #: all-time rollup would report every team as having hit none.
+    streak_milestones_hit: int = 0
     powerups_used: int = 0
     submitted: bool = False
     is_admin: bool = False
@@ -256,6 +261,7 @@ class Team:
         self.score = 0
         self.streak = 0
         self.max_streak = 0
+        self.streak_milestones_hit = 0
         self.round_history = []
         self.round_scores = []
         self.answer_times = []
