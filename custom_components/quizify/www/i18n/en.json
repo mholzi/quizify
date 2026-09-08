@@ -408,7 +408,7 @@
     "title": "Final Round — Wager",
     "hint": "You only see the category. Bet a chunk of your points — right = win, wrong = lose.",
     "timeoutNote": "The wager always counts — including if you never answer. No answer costs you the stake just like a wrong one.",
-    "bank": "Current points",
+    "bank": "Current points:",
     "submit": "Lock in wager",
     "sliderAria": "Wager percent",
     "valueFmt": "{pct}% ({pts} pts)",

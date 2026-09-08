@@ -408,7 +408,7 @@
     "title": "Letzte Runde — Einsatzrunde",
     "hint": "Du siehst nur die Kategorie. Setze einen Teil deiner Punkte — richtig = gewinnen, falsch = verlieren.",
     "timeoutNote": "Der Einsatz zählt immer — auch wenn du nicht antwortest. Keine Antwort kostet dich den Einsatz genauso wie eine falsche.",
-    "bank": "Punktestand",
+    "bank": "Punktestand:",
     "submit": "Einsatz festlegen",
     "sliderAria": "Einsatz in Prozent",
     "valueFmt": "{pct}% ({pts} Pkt.)",
