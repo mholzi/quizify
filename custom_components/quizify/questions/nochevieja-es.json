@@ -1,0 +1,2068 @@
+{
+  "name": "Nochevieja",
+  "language": "es",
+  "version": "1.0",
+  "theme": "trivia",
+  "season": {
+    "start": "12-27",
+    "end": "01-06",
+    "label": "🎆 Fin de año"
+  },
+  "questions": [
+    {
+      "id": "nochevieja_es_001",
+      "question": "¿Qué sketch televisivo en blanco y negro se emite cada Nochevieja en Alemania desde hace décadas?",
+      "answers": [
+        {
+          "text": "'Dinner for One'",
+          "correct": true
+        },
+        {
+          "text": "'El 90 cumpleaños de la reina'",
+          "correct": false
+        },
+        {
+          "text": "'Die Feuerzangenbowle'",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La cadena alemana NDR grabó el sketch en inglés en 1963; en el Reino Unido es prácticamente desconocido.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_002",
+      "question": "¿De dónde viene el nombre alemán 'Silvester' para el 31 de diciembre?",
+      "answers": [
+        {
+          "text": "De un papa que murió ese día",
+          "correct": true
+        },
+        {
+          "text": "De una palabra latina para fuego",
+          "correct": false
+        },
+        {
+          "text": "De una fiesta invernal medieval",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El papa Silvestre I murió el 31 de diciembre del año 335 y su festividad quedó en el último día del año.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_003",
+      "question": "¿Desde cuándo cae una bola luminosa en Times Square de Nueva York en el cambio de año?",
+      "answers": [
+        {
+          "text": "Desde 1907",
+          "correct": true
+        },
+        {
+          "text": "Desde 1955",
+          "correct": false
+        },
+        {
+          "text": "Desde 1980",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Antes había fuegos artificiales, que la ciudad prohibió por motivos de seguridad contra incendios.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_004",
+      "question": "¿En qué poema se basa la canción 'Auld Lang Syne'?",
+      "answers": [
+        {
+          "text": "En un texto de Robert Burns",
+          "correct": true
+        },
+        {
+          "text": "En un soneto de Shakespeare",
+          "correct": false
+        },
+        {
+          "text": "En un himno irlandés",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Burns envió la letra a un archivo de canciones en 1788 y dijo habérsela oído a un anciano.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_005",
+      "question": "¿Qué se come tradicionalmente en España en los doce segundos de la medianoche?",
+      "answers": [
+        {
+          "text": "Doce uvas",
+          "correct": true
+        },
+        {
+          "text": "Doce aceitunas",
+          "correct": false
+        },
+        {
+          "text": "Doce almendras",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Una uva por campanada; quien se atraganta o se queda atrás pierde, según la tradición, la suerte del año.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_006",
+      "question": "¿Cómo surgió supuestamente hacia 1909 la costumbre española de las doce uvas?",
+      "answers": [
+        {
+          "text": "Los viticultores de Alicante tenían una cosecha récord que vender",
+          "correct": true
+        },
+        {
+          "text": "Lo decretó un rey",
+          "correct": false
+        },
+        {
+          "text": "Una emisora de radio sorteó uvas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las 'uvas de la suerte' empezaron como una idea comercial y en pocos años ya eran costumbre nacional.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_007",
+      "question": "¿Ante qué reloj se reúnen los madrileños en el cambio de año?",
+      "answers": [
+        {
+          "text": "Ante el reloj de la Puerta del Sol",
+          "correct": true
+        },
+        {
+          "text": "Ante el reloj de la estación de Atocha",
+          "correct": false
+        },
+        {
+          "text": "Ante el reloj del Prado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los cuatro cuartos previos a las doce campanadas son parte del ritual: empezar antes estropea la cuenta.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_008",
+      "question": "¿Qué hacen muchos daneses en el instante del cambio de año?",
+      "answers": [
+        {
+          "text": "Saltan desde una silla",
+          "correct": true
+        },
+        {
+          "text": "Tiran sal por encima del hombro",
+          "correct": false
+        },
+        {
+          "text": "Abren todas las ventanas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El salto marca la entrada en el año nuevo, y la vajilla rota ante tu puerta se considera una prueba de amistad.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_009",
+      "question": "¿Qué envían los japoneses por millones en el cambio de año?",
+      "answers": [
+        {
+          "text": "Postales de Año Nuevo",
+          "correct": true
+        },
+        {
+          "text": "Flores secas",
+          "correct": false
+        },
+        {
+          "text": "Abanicos caligrafiados",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las 'nengajo' se recogen antes y correos las reparte todas juntas la mañana de Año Nuevo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_010",
+      "question": "¿Qué plato comen muchos japoneses la noche del 31 de diciembre?",
+      "answers": [
+        {
+          "text": "Fideos largos de trigo sarraceno",
+          "correct": true
+        },
+        {
+          "text": "Atún crudo con arroz",
+          "correct": false
+        },
+        {
+          "text": "Empanadillas al vapor",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los 'toshikoshi soba' se cortan fácil de un mordisco: simbolizan romper con las penas del año viejo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_011",
+      "question": "¿Cómo se llama la fiesta escocesa de Nochevieja?",
+      "answers": [
+        {
+          "text": "Hogmanay",
+          "correct": true
+        },
+        {
+          "text": "Beltane",
+          "correct": false
+        },
+        {
+          "text": "Samhain",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Como la Navidad estuvo mucho tiempo prohibida en Escocia, la gran celebración se trasladó al cambio de año.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_012",
+      "question": "¿Qué debe llevar a la casa el 'first footer' escocés después de medianoche?",
+      "answers": [
+        {
+          "text": "Carbón, pan y whisky",
+          "correct": true
+        },
+        {
+          "text": "Un paño blanco y sal",
+          "correct": false
+        },
+        {
+          "text": "Una rama de acebo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El mejor primer visitante es un hombre moreno; antiguamente uno rubio se interpretaba como augurio de problemas.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_013",
+      "question": "¿Qué dulce se asocia al cambio de año en los Países Bajos?",
+      "answers": [
+        {
+          "text": "Los oliebollen",
+          "correct": true
+        },
+        {
+          "text": "Los stroopwafels",
+          "correct": false
+        },
+        {
+          "text": "Las speculaas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Según la leyenda, estas bolas de masa frita ahuyentaban a los malos espíritus porque sus hojas resbalaban en la grasa.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_014",
+      "question": "¿Qué hacen decenas de miles de neerlandeses en Scheveningen el 1 de enero?",
+      "answers": [
+        {
+          "text": "Se lanzan al mar del Norte",
+          "correct": true
+        },
+        {
+          "text": "Suben a los molinos",
+          "correct": false
+        },
+        {
+          "text": "Van en bici hasta el dique",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El 'Nieuwjaarsduik' se hace con el agua a menos de diez grados, y después toca sopa de guisantes.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_015",
+      "question": "¿Qué legumbre comen los italianos en Año Nuevo como símbolo de suerte?",
+      "answers": [
+        {
+          "text": "Lentejas",
+          "correct": true
+        },
+        {
+          "text": "Garbanzos",
+          "correct": false
+        },
+        {
+          "text": "Alubias blancas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su forma recuerda a las monedas y se sirven clásicamente con cotechino o zampone.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_016",
+      "question": "¿De qué color es tradicionalmente la ropa interior italiana en Nochevieja?",
+      "answers": [
+        {
+          "text": "Roja",
+          "correct": true
+        },
+        {
+          "text": "Amarilla",
+          "correct": false
+        },
+        {
+          "text": "Blanca",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se supone que trae suerte y, por tradición, se tira el día de Año Nuevo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_017",
+      "question": "¿Qué se esconde dentro de la 'vasilopita' griega?",
+      "answers": [
+        {
+          "text": "Una moneda",
+          "correct": true
+        },
+        {
+          "text": "Una almendra",
+          "correct": false
+        },
+        {
+          "text": "Un papelito",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Quien recibe la porción con la moneda tiene suerte todo el año; la primera porción es para la casa.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_018",
+      "question": "¿De qué color se viste mucha gente en Brasil en Nochevieja?",
+      "answers": [
+        {
+          "text": "De blanco",
+          "correct": true
+        },
+        {
+          "text": "De verde",
+          "correct": false
+        },
+        {
+          "text": "De negro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El blanco simboliza la paz; en Copacabana muchos saltan además siete olas y lanzan flores al mar.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_019",
+      "question": "¿Qué queman muchas personas en Ecuador y Colombia a medianoche?",
+      "answers": [
+        {
+          "text": "Muñecos caseros que representan el año viejo",
+          "correct": true
+        },
+        {
+          "text": "Calendarios viejos",
+          "correct": false
+        },
+        {
+          "text": "Mazorcas secas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los 'años viejos' suelen llevar caras de políticos o personajes de cine, y a veces un testamento en el bolsillo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_020",
+      "question": "¿Qué estampado lleva mucha gente en Filipinas en Año Nuevo?",
+      "answers": [
+        {
+          "text": "Lunares",
+          "correct": true
+        },
+        {
+          "text": "Rayas",
+          "correct": false
+        },
+        {
+          "text": "Cuadros",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las formas redondas representan monedas; por eso también hay doce frutas redondas en la mesa.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_021",
+      "question": "¿Qué película soviética se emite tradicionalmente en Rusia en el cambio de año?",
+      "answers": [
+        {
+          "text": "'La ironía del destino'",
+          "correct": true
+        },
+        {
+          "text": "'El acorazado Potemkin'",
+          "correct": false
+        },
+        {
+          "text": "'Solaris'",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La comedia de 1975 se emite casi todos los años desde hace décadas y forma parte del ritual tanto como el espumoso.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_022",
+      "question": "¿Quién trae tradicionalmente los regalos en Año Nuevo en Rusia?",
+      "answers": [
+        {
+          "text": "El Abuelo Invierno con su nieta Snegúrochka",
+          "correct": true
+        },
+        {
+          "text": "San Nicolás",
+          "correct": false
+        },
+        {
+          "text": "Los Reyes Magos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En la época soviética la fiesta se desplazó a propósito de la Navidad religiosa al cambio de año.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_023",
+      "question": "¿Qué estado insular recibe el año nuevo entre los primeros del mundo?",
+      "answers": [
+        {
+          "text": "Kiribati",
+          "correct": true
+        },
+        {
+          "text": "Islandia",
+          "correct": false
+        },
+        {
+          "text": "Malta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las islas de la Línea de Kiribati están en la zona horaria UTC+14, la más adelantada que existe.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_024",
+      "question": "¿Qué hizo Samoa con su calendario a finales de 2011?",
+      "answers": [
+        {
+          "text": "Eliminó por completo el 30 de diciembre",
+          "correct": true
+        },
+        {
+          "text": "Alargó el 31 de diciembre a 48 horas",
+          "correct": false
+        },
+        {
+          "text": "Celebró el Año Nuevo dos veces",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Al saltar la línea de cambio de fecha, el país se acercó a Australia y Nueva Zelanda, sus principales socios comerciales.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_025",
+      "question": "¿Qué pueblo hizo, hace unos 4000 años, los primeros propósitos de Año Nuevo conocidos?",
+      "answers": [
+        {
+          "text": "Los babilonios",
+          "correct": true
+        },
+        {
+          "text": "Los etruscos",
+          "correct": false
+        },
+        {
+          "text": "Los vikingos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En la fiesta de Akitu prometían a los dioses saldar deudas y devolver los aperos prestados.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_026",
+      "question": "¿Quién fijó el 1 de enero como comienzo del año en el calendario romano?",
+      "answers": [
+        {
+          "text": "Julio César",
+          "correct": true
+        },
+        {
+          "text": "El emperador Augusto",
+          "correct": false
+        },
+        {
+          "text": "Constantino el Grande",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Con la reforma del calendario del año 46 antes de nuestra era; antes el año romano empezaba en marzo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_027",
+      "question": "¿De qué papa toma el nombre el calendario usado hoy en todo el mundo?",
+      "answers": [
+        {
+          "text": "De Gregorio XIII",
+          "correct": true
+        },
+        {
+          "text": "De Pío IX",
+          "correct": false
+        },
+        {
+          "text": "De Inocencio III",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En el cambio de 1582 se saltaron diez días: al 4 de octubre le siguió directamente el 15.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_028",
+      "question": "¿Cuándo empezaba oficialmente el año en Inglaterra antes de 1752?",
+      "answers": [
+        {
+          "text": "El 25 de marzo",
+          "correct": true
+        },
+        {
+          "text": "El 1 de diciembre",
+          "correct": false
+        },
+        {
+          "text": "El 1 de septiembre",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Solo con el cambio al calendario gregoriano el inicio del año pasó al 1 de enero.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_029",
+      "question": "¿Para qué sirve el segundo intercalar, que suele añadirse a fin de año?",
+      "answers": [
+        {
+          "text": "Ajusta el tiempo atómico a la rotación de la Tierra",
+          "correct": true
+        },
+        {
+          "text": "Corrige errores del horario de verano",
+          "correct": false
+        },
+        {
+          "text": "Alarga el año bisiesto",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La rotación terrestre no es uniforme y los relojes atómicos son más precisos que el planeta que describen.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_030",
+      "question": "¿Por qué en Alemania hoy se funde cera y no plomo en Nochevieja?",
+      "answers": [
+        {
+          "text": "Porque los juegos de plomo se prohibieron en la UE",
+          "correct": true
+        },
+        {
+          "text": "Porque el plomo se encareció demasiado",
+          "correct": false
+        },
+        {
+          "text": "Porque la cera da figuras más bonitas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un límite al plomo en productos de consumo dejó invendibles los juegos clásicos en 2018.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_031",
+      "question": "¿Qué es una Feuerzangenbowle?",
+      "answers": [
+        {
+          "text": "Un ponche sobre el que arde un pan de azúcar empapado en ron",
+          "correct": true
+        },
+        {
+          "text": "Un cuenco con velas encendidas",
+          "correct": false
+        },
+        {
+          "text": "Un dulce hecho en sartén",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El pan de azúcar se sostiene con unas tenazas sobre la olla y gotea caramelizado en el vino.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_032",
+      "question": "¿Qué broma con berlinesas es habitual en Alemania en Nochevieja?",
+      "answers": [
+        {
+          "text": "Una se rellena de mostaza en vez de mermelada",
+          "correct": true
+        },
+        {
+          "text": "Una se congela",
+          "correct": false
+        },
+        {
+          "text": "Una se sala y se esconde",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La tradición dice que quien se lleva la de mostaza tiene igualmente suerte el año siguiente.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_033",
+      "question": "¿Con qué pieza termina tradicionalmente el Concierto de Año Nuevo de la Filarmónica de Viena?",
+      "answers": [
+        {
+          "text": "Con la Marcha Radetzky",
+          "correct": true
+        },
+        {
+          "text": "Con el Vals del Emperador",
+          "correct": false
+        },
+        {
+          "text": "Con la Novena de Beethoven",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El público acompaña con palmas y el director dirige la sala en lugar de la orquesta.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_034",
+      "question": "¿Con qué vals empiezan las propinas del Concierto de Año Nuevo de Viena?",
+      "answers": [
+        {
+          "text": "Con 'El Danubio azul'",
+          "correct": true
+        },
+        {
+          "text": "Con 'Wiener Blut'",
+          "correct": false
+        },
+        {
+          "text": "Con 'Rosas del sur'",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se interrumpe a la orquesta tras los primeros compases para que los músicos feliciten el año al público.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_035",
+      "question": "¿Qué presión hay aproximadamente dentro de una botella de champán cerrada?",
+      "answers": [
+        {
+          "text": "Unos seis bares",
+          "correct": true
+        },
+        {
+          "text": "Alrededor de un bar",
+          "correct": false
+        },
+        {
+          "text": "Unos treinta bares",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es unas tres veces la de un neumático: por eso el vidrio es grueso y el corcho va sujeto con alambre.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_036",
+      "question": "¿Cuándo puede un espumoso llamarse champán?",
+      "answers": [
+        {
+          "text": "Solo si procede de la región de Champaña",
+          "correct": true
+        },
+        {
+          "text": "Solo si envejece al menos diez años",
+          "correct": false
+        },
+        {
+          "text": "Solo si se hace con una única variedad de uva",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Francia defiende la denominación de origen protegida ante tribunales de todo el mundo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_037",
+      "question": "¿Qué es el 'sablage' de una botella de espumoso?",
+      "answers": [
+        {
+          "text": "Cortarle el cuello con un sable",
+          "correct": true
+        },
+        {
+          "text": "Enfriarla en hielo con sal",
+          "correct": false
+        },
+        {
+          "text": "Trasvasarla a una jarra",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El golpe cae sobre la costura de la botella y la presión interior arranca el anillo de vidrio con el corcho.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_038",
+      "question": "¿En qué país se inventaron los fuegos artificiales?",
+      "answers": [
+        {
+          "text": "En China",
+          "correct": true
+        },
+        {
+          "text": "En Italia",
+          "correct": false
+        },
+        {
+          "text": "En Persia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La pólvora negra sirvió primero para ahuyentar con ruido a los malos espíritus; los colores llegaron siglos después.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_039",
+      "question": "¿Qué produce el color rojo en unos fuegos artificiales?",
+      "answers": [
+        {
+          "text": "Los compuestos de estroncio",
+          "correct": true
+        },
+        {
+          "text": "Las limaduras de hierro",
+          "correct": false
+        },
+        {
+          "text": "El azufre",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El cobre arde azul, el bario verde y el sodio amarillo: la pirotecnia es química de la llama aplicada.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_040",
+      "question": "¿Cuántos días al año pueden venderse normalmente en Alemania los fuegos de Nochevieja?",
+      "answers": [
+        {
+          "text": "Tres días",
+          "correct": true
+        },
+        {
+          "text": "Diez días",
+          "correct": false
+        },
+        {
+          "text": "Todo el año",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La venta se limita del 29 al 31 de diciembre, y la fecha se adelanta si uno de esos días cae en domingo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_041",
+      "question": "¿Qué mediciones se disparan en las ciudades europeas la noche de Nochevieja?",
+      "answers": [
+        {
+          "text": "Las de partículas en suspensión",
+          "correct": true
+        },
+        {
+          "text": "Las de ozono",
+          "correct": false
+        },
+        {
+          "text": "Las de radón",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En la primera hora del año suelen multiplicar varias veces el límite diario.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_042",
+      "question": "¿Entre qué fechas puede caer el Año Nuevo chino?",
+      "answers": [
+        {
+          "text": "Entre el 21 de enero y el 20 de febrero",
+          "correct": true
+        },
+        {
+          "text": "Entre el 1 y el 15 de enero",
+          "correct": false
+        },
+        {
+          "text": "Entre el 1 y el 30 de marzo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El calendario chino es lunisolar y la fiesta cae en la segunda luna nueva tras el solsticio de invierno.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_043",
+      "question": "¿Cuándo empieza el año nuevo persa, el Noruz?",
+      "answers": [
+        {
+          "text": "En el equinoccio de primavera",
+          "correct": true
+        },
+        {
+          "text": "En el solsticio de invierno",
+          "correct": false
+        },
+        {
+          "text": "En la primera luna llena de febrero",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Noruz se celebra desde Irán hasta Asia Central y está en la lista de patrimonio inmaterial de la UNESCO.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_044",
+      "question": "¿En qué mes celebra Etiopía su año nuevo, el 'Enkutatash'?",
+      "answers": [
+        {
+          "text": "En septiembre",
+          "correct": true
+        },
+        {
+          "text": "En enero",
+          "correct": false
+        },
+        {
+          "text": "En mayo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El calendario etíope tiene trece meses: doce de 30 días y uno corto de resto.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_045",
+      "question": "¿Cómo celebra Tailandia su año nuevo en el 'Songkran'?",
+      "answers": [
+        {
+          "text": "Con una batalla de agua en todo el país",
+          "correct": true
+        },
+        {
+          "text": "Con un día de ayuno",
+          "correct": false
+        },
+        {
+          "text": "Con una fiesta de cometas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El vertido ritual de agua para purificarse es hoy una fiesta acuática de tres días en abril.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_046",
+      "question": "¿Qué problema ocupó al mundo informático en el cambio de 1999 a 2000?",
+      "answers": [
+        {
+          "text": "Los años guardados con dos dígitos",
+          "correct": true
+        },
+        {
+          "text": "Un apagón mundial",
+          "correct": false
+        },
+        {
+          "text": "Un virus llamado Millennium",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Como '00' podía leerse como 1900, se invirtieron miles de millones en corregirlo y apenas pasó nada.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_047",
+      "question": "¿Qué poema se recita en Skansen, en Suecia, en el cambio de año?",
+      "answers": [
+        {
+          "text": "'Ring out, wild bells', de Tennyson",
+          "correct": true
+        },
+        {
+          "text": "Un fragmento de la Edda",
+          "correct": false
+        },
+        {
+          "text": "Un texto de Astrid Lindgren",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La tradición viene de 1895 y la lectura se retransmite por televisión a todo el país.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_048",
+      "question": "¿Qué carne se evita en Hungría el día de Año Nuevo?",
+      "answers": [
+        {
+          "text": "Las aves",
+          "correct": true
+        },
+        {
+          "text": "La ternera",
+          "correct": false
+        },
+        {
+          "text": "El cordero",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La superstición dice que la suerte saldría volando; el cerdo, en cambio, hoza hacia delante y trae progreso.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_049",
+      "question": "¿Qué se hace en Irlanda, según la tradición, con un pan en Año Nuevo?",
+      "answers": [
+        {
+          "text": "Se golpea con él las paredes y las puertas",
+          "correct": true
+        },
+        {
+          "text": "Se entierra en el jardín",
+          "correct": false
+        },
+        {
+          "text": "Se lanza al mar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El ruido debe expulsar la mala suerte de la casa y atraer buen pan para el año que viene.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_050",
+      "question": "¿Qué se estrella contra el umbral en Año Nuevo en Turquía y Grecia?",
+      "answers": [
+        {
+          "text": "Una granada",
+          "correct": true
+        },
+        {
+          "text": "Una jarra de agua",
+          "correct": false
+        },
+        {
+          "text": "Una nuez",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cuanto más lejos saltan las semillas, mayor debe ser la bendición para la casa.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_051",
+      "question": "¿De qué color es la ropa interior de la suerte en Año Nuevo en Perú y parte de Latinoamérica?",
+      "answers": [
+        {
+          "text": "Amarilla",
+          "correct": true
+        },
+        {
+          "text": "Azul",
+          "correct": false
+        },
+        {
+          "text": "Verde",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El amarillo simboliza la prosperidad; quien desea amor elige el rojo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_052",
+      "question": "¿Qué se hace en México con una maleta vacía en Año Nuevo?",
+      "answers": [
+        {
+          "text": "Se da una vuelta a la manzana con ella",
+          "correct": true
+        },
+        {
+          "text": "Se deja delante de la puerta",
+          "correct": false
+        },
+        {
+          "text": "Se quema",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El paseo debe asegurar viajes en el año nuevo; algunos llegan solo hasta la esquina y vuelven.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_053",
+      "question": "¿Qué ensalada es imprescindible en la mesa rusa de Nochevieja?",
+      "answers": [
+        {
+          "text": "La ensalada Olivier",
+          "correct": true
+        },
+        {
+          "text": "La ensalada de remolacha con arenque",
+          "correct": false
+        },
+        {
+          "text": "La col con comino",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lleva el nombre de un cocinero que la creó en el Moscú del siglo XIX; la receta original se considera perdida.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_054",
+      "question": "¿Qué programa de televisión ven casi todos los islandeses en Nochevieja?",
+      "answers": [
+        {
+          "text": "El programa satírico 'Áramótaskaupið'",
+          "correct": true
+        },
+        {
+          "text": "Un concierto desde la Harpa",
+          "correct": false
+        },
+        {
+          "text": "Una conexión en directo con los géiseres",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las calles se vacían durante media hora; solo después empiezan los fuegos y las hogueras.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_055",
+      "question": "¿Qué se celebra en Madrid la tarde del 31 de diciembre?",
+      "answers": [
+        {
+          "text": "Una gran carrera popular",
+          "correct": true
+        },
+        {
+          "text": "Un encierro de toros",
+          "correct": false
+        },
+        {
+          "text": "Una caravana de coches",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La San Silvestre Vallecana reúne a decenas de miles de personas y muchos corren disfrazados.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_056",
+      "question": "¿Qué grupo publicó en 1980 la canción 'Happy New Year'?",
+      "answers": [
+        {
+          "text": "ABBA",
+          "correct": true
+        },
+        {
+          "text": "Queen",
+          "correct": false
+        },
+        {
+          "text": "Los Bee Gees",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La letra es mucho más melancólica que el título y en varios países solo triunfó años después.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_057",
+      "question": "¿De dónde viene el nombre del mes de enero?",
+      "answers": [
+        {
+          "text": "Del dios romano Jano",
+          "correct": true
+        },
+        {
+          "text": "De la palabra latina para hielo",
+          "correct": false
+        },
+        {
+          "text": "De un gobernante etrusco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jano tiene dos caras y mira a la vez hacia atrás y hacia delante: difícil mejorarlo para empezar un año.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_058",
+      "question": "¿Qué significa literalmente el brindis alemán 'Prosit Neujahr'?",
+      "answers": [
+        {
+          "text": "'Que aproveche'",
+          "correct": true
+        },
+        {
+          "text": "'A tu salud'",
+          "correct": false
+        },
+        {
+          "text": "'Hasta el fondo'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Prosit' es latín y entró en alemán a través de la jerga estudiantil del siglo XVIII.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_059",
+      "question": "¿Qué acontecimiento deportivo se celebra tradicionalmente en Alemania el 1 de enero?",
+      "answers": [
+        {
+          "text": "El salto de esquí de Año Nuevo en Garmisch-Partenkirchen",
+          "correct": true
+        },
+        {
+          "text": "Una carrera de Fórmula 1",
+          "correct": false
+        },
+        {
+          "text": "La final de copa de fútbol",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es la segunda estación del Torneo de los Cuatro Trampolines y empieza por la mañana con la clasificación.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_060",
+      "question": "¿Qué desfile floral se celebra en California el día de Año Nuevo?",
+      "answers": [
+        {
+          "text": "El Desfile de las Rosas de Pasadena",
+          "correct": true
+        },
+        {
+          "text": "El Desfile de las Amapolas de San Diego",
+          "correct": false
+        },
+        {
+          "text": "El Desfile de los Lirios de Sacramento",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las carrozas deben ir cubiertas por completo de material vegetal, hasta la última hoja.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_061",
+      "question": "¿Quién convirtió 'Auld Lang Syne' en un fijo del Año Nuevo norteamericano?",
+      "answers": [
+        {
+          "text": "El director de orquesta Guy Lombardo",
+          "correct": true
+        },
+        {
+          "text": "El cantante Bing Crosby",
+          "correct": false
+        },
+        {
+          "text": "El locutor Orson Welles",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su orquesta la tocó en directo a medianoche cada año desde 1929, primero en la radio y luego en televisión.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_062",
+      "question": "¿Qué es la 'Mari Lwyd' galesa que va de casa en casa por Año Nuevo?",
+      "answers": [
+        {
+          "text": "Un cráneo de caballo adornado sobre un palo",
+          "correct": true
+        },
+        {
+          "text": "Una muñeca de paja en una barca",
+          "correct": false
+        },
+        {
+          "text": "Un farol hecho con un nabo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El grupo pide entrar con versos rimados y los de la casa deben responder también en verso.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_063",
+      "question": "¿Qué país recibe el año nuevo entre los últimos del mundo?",
+      "answers": [
+        {
+          "text": "Estados Unidos, con las islas Baker y Howland",
+          "correct": true
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        },
+        {
+          "text": "Chile",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las islas deshabitadas están en la zona UTC−12, 26 horas por detrás de Kiribati.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_064",
+      "question": "¿Qué se tira por la ventana a medianoche en partes de Cuba y Puerto Rico?",
+      "answers": [
+        {
+          "text": "Un cubo de agua",
+          "correct": true
+        },
+        {
+          "text": "Ropa vieja",
+          "correct": false
+        },
+        {
+          "text": "Monedas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El agua debe arrastrar fuera de casa la mala suerte del año viejo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_065",
+      "question": "¿Qué hacen girar por las calles los hombres de Stonehaven, en Escocia, en Año Nuevo?",
+      "answers": [
+        {
+          "text": "Jaulas de alambre ardiendo colgadas de cadenas",
+          "correct": true
+        },
+        {
+          "text": "Antorchas de turba",
+          "correct": false
+        },
+        {
+          "text": "Faroles de calabaza",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las bolas de fuego acaban en el puerto y la costumbre pretende ahuyentar a los malos espíritus.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_066",
+      "question": "¿Cómo se llama el baño de Año Nuevo escocés en las aguas heladas del Firth of Forth?",
+      "answers": [
+        {
+          "text": "Loony Dook",
+          "correct": true
+        },
+        {
+          "text": "Cold Ceilidh",
+          "correct": false
+        },
+        {
+          "text": "Firth Plunge",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Muchos se lanzan disfrazados y el acto recauda dinero para causas benéficas.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_067",
+      "question": "¿Qué construcción marca en Sídney el cambio de año con uno de los primeros grandes fuegos del mundo?",
+      "answers": [
+        {
+          "text": "El puente del puerto",
+          "correct": true
+        },
+        {
+          "text": "La torre de televisión",
+          "correct": false
+        },
+        {
+          "text": "El edificio del parlamento",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Por el huso horario, las imágenes de Sídney llegan a Europa a menudo la tarde del 31 de diciembre.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_068",
+      "question": "¿Junto a qué monumento celebra Berlín tradicionalmente su mayor fiesta de Nochevieja?",
+      "answers": [
+        {
+          "text": "La Puerta de Brandeburgo",
+          "correct": true
+        },
+        {
+          "text": "La catedral de Berlín",
+          "correct": false
+        },
+        {
+          "text": "El Estadio Olímpico",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El espectáculo del escenario de la 'milla de la fiesta' se retransmite en directo por televisión.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_069",
+      "question": "¿Qué edificio es el centro de los fuegos de Nochevieja de Dubái?",
+      "answers": [
+        {
+          "text": "El Burj Khalifa",
+          "correct": true
+        },
+        {
+          "text": "La torre del aeropuerto",
+          "correct": false
+        },
+        {
+          "text": "La mezquita Sheikh Zayed",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La fachada del edificio más alto del mundo sirve además de pantalla de proyección.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_070",
+      "question": "¿En qué playa se celebra una de las mayores fiestas de Nochevieja del mundo?",
+      "answers": [
+        {
+          "text": "En Copacabana, en Río de Janeiro",
+          "correct": true
+        },
+        {
+          "text": "En Waikiki, en Hawái",
+          "correct": false
+        },
+        {
+          "text": "En Bondi, en Sídney",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Millones de personas acuden vestidas de blanco y, tras los fuegos, lanzan flores al agua para la diosa Iemanjá.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_071",
+      "question": "¿Qué se hace con los papeles en los que los visitantes escriben sus deseos en Times Square?",
+      "answers": [
+        {
+          "text": "Se sueltan como confeti a medianoche",
+          "correct": true
+        },
+        {
+          "text": "Se queman",
+          "correct": false
+        },
+        {
+          "text": "Se archivan en el ayuntamiento",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los deseos se recogen antes y se lanzan desde los tejados junto con el resto del confeti.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_072",
+      "question": "¿Cuánto tarda la bola de Times Square en completar su descenso?",
+      "answers": [
+        {
+          "text": "Exactamente 60 segundos",
+          "correct": true
+        },
+        {
+          "text": "Unos cinco minutos",
+          "correct": false
+        },
+        {
+          "text": "Unos diez segundos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Llega abajo justo a medianoche y las cifras del año nuevo se encienden solo después.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_073",
+      "question": "¿De dónde viene probablemente el saludo alemán 'Guten Rutsch'?",
+      "answers": [
+        {
+          "text": "De una vieja palabra para un buen viaje",
+          "correct": true
+        },
+        {
+          "text": "De las calles heladas",
+          "correct": false
+        },
+        {
+          "text": "De una costumbre de trineos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La derivación popular desde el yidis se considera dudosa entre lingüistas.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_074",
+      "question": "¿Qué figura simboliza el año nuevo en muchos países?",
+      "answers": [
+        {
+          "text": "Un bebé con una banda con la cifra del año",
+          "correct": true
+        },
+        {
+          "text": "Un águila",
+          "correct": false
+        },
+        {
+          "text": "Una llave",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El motivo tiene siglos y lo popularizaron las portadas de revistas a partir del siglo XIX.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_075",
+      "question": "¿Qué es la 'kransekake' escandinava?",
+      "answers": [
+        {
+          "text": "Una torre de aros de mazapán",
+          "correct": true
+        },
+        {
+          "text": "Una corona de galletas saladas",
+          "correct": false
+        },
+        {
+          "text": "Un pastel helado con frutos rojos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los aros se van estrechando de abajo arriba y en Año Nuevo suele llevar una banderita en la cima.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_076",
+      "question": "¿Cuántas comidas prescribe la tradición estonia en Nochevieja?",
+      "answers": [
+        {
+          "text": "Siete, nueve o doce",
+          "correct": true
+        },
+        {
+          "text": "Exactamente tres",
+          "correct": false
+        },
+        {
+          "text": "Exactamente cinco",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Son números de la suerte y se dice que quien come tantas veces adquiere la fuerza de tantos hombres.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_077",
+      "question": "¿Qué hacen muchos japoneses en los primeros días del año en el 'hatsumode'?",
+      "answers": [
+        {
+          "text": "Hacen la primera visita del año a un santuario o templo",
+          "correct": true
+        },
+        {
+          "text": "Plantan un árbol",
+          "correct": false
+        },
+        {
+          "text": "Lanzan un poema al mar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En la misma visita se devuelven los amuletos viejos y se compran otros nuevos.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_078",
+      "question": "¿Qué son los 'otoshidama' japoneses?",
+      "answers": [
+        {
+          "text": "Regalos de dinero para los niños en sobres pequeños",
+          "correct": true
+        },
+        {
+          "text": "Poemas de Año Nuevo en papel de arroz",
+          "correct": false
+        },
+        {
+          "text": "Figuritas de barro de la suerte",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La cantidad depende de la edad: los niños mayores reciben más.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_079",
+      "question": "¿Qué sopa se come en Corea el día de Año Nuevo?",
+      "answers": [
+        {
+          "text": "Una sopa con rodajas de pastel de arroz",
+          "correct": true
+        },
+        {
+          "text": "Una sopa de algas y almejas",
+          "correct": false
+        },
+        {
+          "text": "Una sopa fría de trigo sarraceno",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Según la tradición, uno no cumple un año más hasta haber comido 'tteokguk'.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_080",
+      "question": "¿Cómo se llama la fiesta del año nuevo vietnamita?",
+      "answers": [
+        {
+          "text": "Tet",
+          "correct": true
+        },
+        {
+          "text": "Diwali",
+          "correct": false
+        },
+        {
+          "text": "Obon",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sigue el calendario lunar y suele coincidir con el Año Nuevo chino; el kumquat no falta en ninguna casa.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_081",
+      "question": "¿Con qué se anuncia el año nuevo judío, Rosh Hashaná?",
+      "answers": [
+        {
+          "text": "Con un cuerno de carnero",
+          "correct": true
+        },
+        {
+          "text": "Con una campana de bronce",
+          "correct": false
+        },
+        {
+          "text": "Con un tambor",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El shofar se toca siguiendo una secuencia fija de toques, y la fiesta cae en otoño.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_082",
+      "question": "¿Por qué el año nuevo islámico se desplaza por las estaciones?",
+      "answers": [
+        {
+          "text": "Porque el calendario islámico es puramente lunar",
+          "correct": true
+        },
+        {
+          "text": "Porque está ligado a la Pascua",
+          "correct": false
+        },
+        {
+          "text": "Porque se cambia cada cuatro años",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El año lunar es unos once días más corto que el solar, así que el 1 de Muharram se adelanta cada año.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_083",
+      "question": "¿Hasta cuándo no fue el día de Navidad festivo general en Escocia?",
+      "answers": [
+        {
+          "text": "Hasta 1958",
+          "correct": true
+        },
+        {
+          "text": "Hasta 1901",
+          "correct": false
+        },
+        {
+          "text": "Hasta 1975",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Por eso el Hogmanay fue durante siglos la verdadera gran fiesta del invierno allí.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_084",
+      "question": "¿Qué aparece clásicamente en la mesa del 'Réveillon de la Saint-Sylvestre' francés?",
+      "answers": [
+        {
+          "text": "Ostras",
+          "correct": true
+        },
+        {
+          "text": "Pimientos rellenos",
+          "correct": false
+        },
+        {
+          "text": "Gulash de ternera",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Suelen acompañarse de foie gras y champán, y la cena empieza tarde y se alarga.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_085",
+      "question": "¿Cuál es una costumbre belga de Año Nuevo para los niños?",
+      "answers": [
+        {
+          "text": "Leen a sus padrinos una carta escrita por ellos",
+          "correct": true
+        },
+        {
+          "text": "Tocan cencerros en el campo",
+          "correct": false
+        },
+        {
+          "text": "Esconden monedas en la nieve",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La carta se escribe en papel decorado y se lee con solemnidad el día de Año Nuevo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_086",
+      "question": "¿Qué ocurre en el 'Silvesterchlausen' de Appenzell, en Suiza?",
+      "answers": [
+        {
+          "text": "Grupos con trajes elaborados van de granja en granja cantando a la tirolesa",
+          "correct": true
+        },
+        {
+          "text": "Se hace rodar una rueda ardiendo montaña abajo",
+          "correct": false
+        },
+        {
+          "text": "Los vecinos se intercambian cencerros",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se celebra dos veces: el 31 de diciembre y de nuevo el 13 de enero, según el calendario viejo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_087",
+      "question": "¿Qué es un 'cotillón' en una fiesta de Nochevieja española o latinoamericana?",
+      "answers": [
+        {
+          "text": "Una bolsa con gorros, matasuegras y serpentinas",
+          "correct": true
+        },
+        {
+          "text": "Un baile de doce parejas",
+          "correct": false
+        },
+        {
+          "text": "Un postre con nata",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Después de las doce uvas se abre la bolsa y empieza el ruido.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_088",
+      "question": "¿Qué se lanza por las ventanas de las oficinas en Argentina el último día laborable del año?",
+      "answers": [
+        {
+          "text": "Papel roto de expedientes viejos",
+          "correct": true
+        },
+        {
+          "text": "Flores",
+          "correct": false
+        },
+        {
+          "text": "Monedas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La lluvia de papel en el distrito financiero de Buenos Aires da la vuelta al mundo cada año.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_089",
+      "question": "¿De dónde viene la palabra 'confeti'?",
+      "answers": [
+        {
+          "text": "De unas almendras confitadas italianas",
+          "correct": true
+        },
+        {
+          "text": "De un fabricante de papel francés",
+          "correct": false
+        },
+        {
+          "text": "De una palabra latina para viento",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En el carnaval de Milán se lanzaban dulces; cuando se encareció, los sustituyeron trocitos de papel de colores.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_090",
+      "question": "¿Por qué 1900 no fue año bisiesto?",
+      "answers": [
+        {
+          "text": "Los años de siglo solo son bisiestos si son divisibles por 400",
+          "correct": true
+        },
+        {
+          "text": "Porque ese año se reformó el calendario",
+          "correct": false
+        },
+        {
+          "text": "Porque se acortó febrero",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La misma regla deja fuera a 2100, mientras que 2000 sí lo fue.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_091",
+      "question": "¿Qué se canta en el Vaticano la tarde del 31 de diciembre?",
+      "answers": [
+        {
+          "text": "El Te Deum, como acción de gracias",
+          "correct": true
+        },
+        {
+          "text": "El Réquiem",
+          "correct": false
+        },
+        {
+          "text": "El Magníficat",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El papa da gracias por el año que termina; el 1 de enero se celebra la Jornada Mundial de la Paz.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_092",
+      "question": "¿Cuándo pronuncia su discurso de Año Nuevo el jefe de Estado danés?",
+      "answers": [
+        {
+          "text": "La tarde del 31 de diciembre",
+          "correct": true
+        },
+        {
+          "text": "La mañana del 1 de enero",
+          "correct": false
+        },
+        {
+          "text": "El 6 de enero",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El discurso de las seis organiza la noche: primero la cena y después la fiesta.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_093",
+      "question": "¿Qué es la 'oudejaarsconference' neerlandesa?",
+      "answers": [
+        {
+          "text": "El repaso satírico del año a cargo de un humorista",
+          "correct": true
+        },
+        {
+          "text": "Un programa de debate con políticos",
+          "correct": false
+        },
+        {
+          "text": "Un concierto coral",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El espectáculo suele superar las dos horas y se emite en directo la tarde del 31 de diciembre.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_094",
+      "question": "¿Qué temporada de bailes empieza tradicionalmente en Viena en torno al cambio de año?",
+      "answers": [
+        {
+          "text": "La temporada de bailes de carnaval",
+          "correct": true
+        },
+        {
+          "text": "La temporada de ópera",
+          "correct": false
+        },
+        {
+          "text": "La temporada de conciertos del Musikverein",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Baile Imperial de la Hofburg se celebra en Nochevieja; el Baile de la Ópera llega en febrero.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_095",
+      "question": "¿Cuántos signos animales tiene el zodiaco chino, que asigna uno a cada año?",
+      "answers": [
+        {
+          "text": "Doce",
+          "correct": true
+        },
+        {
+          "text": "Diez",
+          "correct": false
+        },
+        {
+          "text": "Veinticuatro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La rata abre la lista; según la leyenda, el gato llegó tarde a la carrera y por eso falta.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_096",
+      "question": "¿Cuántas uvas se comen en España con las campanadas de Nochevieja?",
+      "type": "estimate",
+      "answer": 12,
+      "min": 1,
+      "max": 60,
+      "unit": "uvas",
+      "difficulty": "easy",
+      "fun_fact": "Doce, una por campanada; por eso se venden peladas y sin pepitas en lata.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_097",
+      "question": "¿Cuántas veces suenan las campanas de los templos japoneses la noche de fin de año?",
+      "type": "estimate",
+      "answer": 108,
+      "min": 0,
+      "max": 500,
+      "unit": "toques",
+      "difficulty": "medium",
+      "fun_fact": "Los 108 toques representan los deseos mundanos que se dejan atrás con el año viejo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_098",
+      "question": "¿Cuántas horas transcurren entre el primer y el último cambio de año en la Tierra?",
+      "type": "estimate",
+      "answer": 26,
+      "min": 0,
+      "max": 60,
+      "unit": "horas",
+      "difficulty": "hard",
+      "fun_fact": "26 horas: de UTC+14 en las islas de la Línea de Kiribati a UTC−12 en las islas Baker y Howland.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_099",
+      "question": "¿En qué año introdujo el papa Gregorio XIII el calendario que hoy se usa en todo el mundo?",
+      "type": "estimate",
+      "answer": 1582,
+      "min": 1200,
+      "max": 1900,
+      "unit": "año",
+      "difficulty": "medium",
+      "fun_fact": "En 1582: en el cambio, al 4 de octubre le siguió directamente el 15 de octubre.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_100",
+      "question": "¿En qué año grabó la cadena alemana NDR el sketch 'Dinner for One' que desde entonces se emite en Nochevieja?",
+      "type": "estimate",
+      "answer": 1963,
+      "min": 1900,
+      "max": 2000,
+      "unit": "año",
+      "difficulty": "medium",
+      "fun_fact": "En 1963, ante público en Hamburgo, en inglés y sin subtítulos.",
+      "category": "Nochevieja"
+    }
+  ]
+}

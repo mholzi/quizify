@@ -63,6 +63,18 @@ ESTIMATE_SETS: tuple[EstimateSet, ...] = (
     EstimateSet(theme="world-cup", packs=("weltmeisterschaft", "world-cup", "copa-mundial-es")),
     EstimateSet(theme="music", packs=("musik-de", "music-en", "musica-es")),
     EstimateSet(theme="pop-culture", packs=("popkultur", "pop-culture", "cultura-pop-es")),
+    # The holiday packs of #663. They carry no pictures, so they appear here
+    # and not in the #554 registry — the slider questions are the only part of
+    # the per-pack shape they took over, and they inherit the whole checklist
+    # by being listed rather than by their author remembering the rules.
+    EstimateSet(
+        theme="christmas",
+        packs=("weihnachten-de", "christmas-en", "navidad-es"),
+    ),
+    EstimateSet(
+        theme="new-year",
+        packs=("silvester-de", "new-years-eve-en", "nochevieja-es"),
+    ),
 )
 
 PACKS_WITH_ESTIMATES = [p for s in ESTIMATE_SETS for p in s.packs]
