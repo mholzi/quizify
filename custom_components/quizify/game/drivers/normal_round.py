@@ -18,7 +18,7 @@ from typing import TYPE_CHECKING, Any
 
 from ..phase_controller import TICK_INTERVAL
 from ..state import GamePhase
-from .protocols import MilestoneSink, RoundBroadcaster
+from .protocols import MilestoneSink, RoundBroadcaster, fire_milestone
 
 if TYPE_CHECKING:
     from ..state import QuizifyGameState
@@ -133,10 +133,4 @@ class NormalRoundDriver:
 
     def _milestone(self, name: str, *args: Any) -> None:
         """Fire one house beat, if a sink is wired."""
-        sink = self._milestones
-        if sink is None:
-            return
-        try:
-            getattr(sink, name)(*args)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("Round milestone %s raised", name)
+        fire_milestone(self._milestones, name, *args)

@@ -35,6 +35,17 @@ so treat them as an API: additive changes only.
 ``quizify_finale_started``    — {}
 ``quizify_winner_decided``    — {winner_name, score}
 ``quizify_game_ended``        — {leaderboard: [{name, score}, ...]}
+
+The three detour modes report their own opening beat (#708). Everything that
+happens *inside* a detour is an ordinary milestone — the chair's question is a
+``quizify_question_shown``, its settlement a ``quizify_answer_revealed`` — so
+only the moment a mode has no equivalent for gets a name of its own:
+
+``quizify_hot_seat_started``  — {player_name, entrant_name, bid_pct, stake,
+                                 bidder_count}
+``quizify_wager_open``        — {round, total_rounds, seconds}
+``quizify_lightning_started`` — {question_count, seconds_per_question,
+                                 player_count}
 """
 
 from __future__ import annotations
@@ -59,6 +70,11 @@ EVENT_STREAK_MILESTONE = "quizify_streak_milestone"
 EVENT_FINALE_STARTED = "quizify_finale_started"
 EVENT_WINNER_DECIDED = "quizify_winner_decided"
 EVENT_GAME_ENDED = "quizify_game_ended"
+# The detour modes (#708). One event per mode, fired at the moment the mode
+# genuinely begins — everything after that reuses the ordinary beats above.
+EVENT_HOT_SEAT_STARTED = "quizify_hot_seat_started"
+EVENT_WAGER_OPEN = "quizify_wager_open"
+EVENT_LIGHTNING_STARTED = "quizify_lightning_started"
 
 # Seconds-remaining threshold for the ``quizify_time_running_out`` event. Fires
 # once per round when the round timer first drops to/below this — the final
@@ -299,6 +315,80 @@ class QuizifyEventEmitter:
                 "player_name": player_name,
                 "streak": streak,
                 "bonus": bonus,
+            },
+        )
+
+    # -- The detour modes (#708) ---------------------------------------
+    #
+    # A mode's *opening* is the only moment that needs an event of its own.
+    # Once a detour is running, what happens inside it is an ordinary
+    # milestone: the chair's question fires ``quizify_question_shown`` and its
+    # settlement ``quizify_answer_revealed``, because they ARE a question and a
+    # reveal. Only "the chair has been sold", "bets are open" and "the fast
+    # round is on" have no equivalent in the normal round, so only those three
+    # are new names.
+
+    def notify_hot_seat_started(self, hot_seat: Any) -> None:
+        """Fire ``quizify_hot_seat_started`` once the chair has been sold.
+
+        Fired at the award and not when the auction opens, for the reason the
+        driver treats a bidless auction as a round that never happened (#616):
+        an auction nobody wanted is not a Hot Seat, and a blueprint that dimmed
+        the room for one would be left holding a mode that does not exist.
+
+        The payload names the person in the chair (already broadcast to every
+        client) and what the seat cost, so an automation can react to a
+        reckless bid differently from a cautious one. ``entrant_name`` is the
+        team in team mode and the same person otherwise (#804).
+        """
+        self._fire(
+            EVENT_HOT_SEAT_STARTED,
+            {
+                "player_name": getattr(hot_seat, "seat_holder", None),
+                "entrant_name": getattr(hot_seat, "winner_name", "") or "",
+                "bid_pct": getattr(hot_seat, "winning_pct", 0),
+                "stake": getattr(hot_seat, "winning_stake", 0),
+                "bidder_count": len(getattr(hot_seat, "bids", ()) or ()),
+            },
+        )
+
+    def notify_wager_open(
+        self, game_state: QuizifyGameState, seconds: float
+    ) -> None:
+        """Fire ``quizify_wager_open`` when the betting window opens (#656).
+
+        The question is loaded but deliberately unsent — the players are
+        betting on the category alone — so the payload carries the round and
+        the deadline and nothing about the question, the same withholding the
+        wire format applies.
+        """
+        self._fire(
+            EVENT_WAGER_OPEN,
+            {
+                "round": game_state.round,
+                "total_rounds": game_state.total_rounds,
+                "seconds": seconds,
+            },
+        )
+
+    def notify_lightning_started(
+        self, game_state: QuizifyGameState, lightning: Any
+    ) -> None:
+        """Fire ``quizify_lightning_started`` as the fast round opens (#42).
+
+        There is no per-question event inside Lightning on purpose: five
+        questions inside seventy-five seconds would be a stream, not a
+        milestone, and the phase-driven light recipe already holds the room for
+        the whole mode.
+        """
+        self._fire(
+            EVENT_LIGHTNING_STARTED,
+            {
+                "question_count": getattr(lightning, "num_questions", 0),
+                "seconds_per_question": getattr(
+                    lightning, "seconds_per_question", 0
+                ),
+                "player_count": len(game_state.get_players()),
             },
         )
 

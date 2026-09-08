@@ -17,8 +17,9 @@ by the caller. ``{names}`` may hold a single name or several joined by
 
 Keys: question-start, answer-options readout, reveal answer, who-got-it,
 standings/leader-change, player-joined, the time-running-out countdown, the
-game lifecycle lines (start / final round / game over + winner) and the
-streak-milestone shout.
+game lifecycle lines (start / final round / game over + winner), the
+streak-milestone shout and the three detour openings (#708) — the chair being
+sold, the betting window and the lightning round.
 """
 
 from __future__ import annotations
@@ -62,6 +63,12 @@ _PHRASES: dict[str, dict[str, str]] = {
         ),
         "milestone_streak": "{name} hit a {streak}-streak!",
         "milestone_fire": "{name} is on fire — {streak} in a row!",
+        # The three detour modes (#708). One line each, at the moment the
+        # mode opens — the rest of a detour is narrated by the ordinary
+        # question / reveal lines above.
+        "hot_seat_started": "The chair goes to {name} for {points} points.",
+        "wager_open": "Final round. Place your bets!",
+        "lightning_started": "Lightning round! Speed decides now.",
     },
     "de": {
         "question": "Frage {round} von {total}: {text}",
@@ -82,6 +89,9 @@ _PHRASES: dict[str, dict[str, str]] = {
         ),
         "milestone_streak": "{name} hat {streak} in Folge richtig!",
         "milestone_fire": "{name} ist nicht zu stoppen — {streak} in Folge!",
+        "hot_seat_started": "Der Stuhl geht an {name} für {points} Punkte.",
+        "wager_open": "Letzte Runde. Setzt eure Einsätze!",
+        "lightning_started": "Blitzrunde! Jetzt zählt Tempo.",
     },
     "es": {
         "question": "Pregunta {round} de {total}: {text}",
@@ -102,6 +112,9 @@ _PHRASES: dict[str, dict[str, str]] = {
         ),
         "milestone_streak": "¡{name} lleva {streak} seguidas!",
         "milestone_fire": "¡{name} está imparable: {streak} seguidas!",
+        "hot_seat_started": "La silla es para {name} por {points} puntos.",
+        "wager_open": "Última ronda. ¡Hagan sus apuestas!",
+        "lightning_started": "¡Ronda relámpago! Ahora manda la velocidad.",
     },
 }
 

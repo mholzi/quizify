@@ -32,7 +32,8 @@ import cost where it was, and it is the pattern ``serializers`` and
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Protocol
+import logging
+from typing import TYPE_CHECKING, Any, Protocol
 
 if TYPE_CHECKING:
     from ..hot_seat import HotSeatRound
@@ -40,12 +41,15 @@ if TYPE_CHECKING:
     from ..questions import Question
     from ..state import QuizifyGameState
 
+_LOGGER = logging.getLogger(__name__)
+
 __all__ = [
     "HotSeatBroadcaster",
     "LightningBroadcaster",
     "MilestoneSink",
     "RoundBroadcaster",
     "WagerBroadcaster",
+    "fire_milestone",
 ]
 
 
@@ -72,6 +76,47 @@ class MilestoneSink(Protocol):
 
     def reveal(self, game_state: QuizifyGameState) -> None:
         """The answer is out and the round has been scored."""
+
+    # -- the detours (#708) ---------------------------------------------
+    #
+    # Three beats, one per mode, and no more than that on purpose. A detour
+    # reuses the vocabulary above wherever it maps onto an existing moment —
+    # the chair's question is ``question_shown``, its settlement is
+    # ``reveal`` — so only the opening of a mode, which an ordinary round has
+    # no equivalent for, needed a name of its own.
+
+    def hot_seat_started(self, hot_seat: HotSeatRound) -> None:
+        """The chair has been sold and the seat holder is sitting down."""
+
+    def wager_open(self, game_state: QuizifyGameState, seconds: float) -> None:
+        """The betting window is open for ``seconds`` more."""
+
+    def lightning_started(
+        self, game_state: QuizifyGameState, lightning: LightningRound
+    ) -> None:
+        """The fast round is starting."""
+
+
+def fire_milestone(sink: MilestoneSink | None, name: str, *args: Any) -> None:
+    """Deliver one house beat to a driver's sink, or do nothing.
+
+    Every driver reported its beats through a private ``_milestone`` copy of
+    these eight lines. Four copies of "look the method up, swallow whatever it
+    raises" is four chances for one of them to drift, which is the shape of
+    bug #708 itself — the house path existed and one mode simply did not walk
+    it. One function instead.
+
+    The guard is doubled deliberately: the sink implementation guards each
+    consumer, and this guards the sink. A driver must never lose a game loop to
+    a misbehaving narrator, and ``None`` is a normal sink (the standalone dev
+    server wires none).
+    """
+    if sink is None:
+        return
+    try:
+        getattr(sink, name)(*args)
+    except Exception:  # noqa: BLE001
+        _LOGGER.exception("Mode-driver milestone %s raised", name)
 
 
 class LightningBroadcaster(Protocol):

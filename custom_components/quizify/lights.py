@@ -52,27 +52,76 @@ if TYPE_CHECKING:
 # brightness_pct is 0-100; transition is seconds. None for ``state`` =
 # leave the light alone (used in PAUSED so the room doesn't flicker
 # when the host steps away).
+#
+# The three "a question is live" / "a result is up" recipes are named, because
+# the detour modes reuse them rather than inventing a look of their own (#708):
+# the chair's question IS a question and its settlement IS a reveal, so the
+# room should say the same thing it says in an ordinary round. Only the two
+# moments a normal round has no equivalent for — an auction and the fast round
+# — get a colour of their own.
+_RECIPE_QUESTION: dict[str, object] = {
+    "rgb_color": [232, 138, 127],  # coral #E88A7F — primary accent, "go!"
+    "brightness_pct": 70,
+    "transition": 0.5,
+}
+_RECIPE_REVEAL: dict[str, object] = {
+    "rgb_color": [127, 168, 151],  # sage #7FA897 — calm, "result"
+    "brightness_pct": 60,
+    "transition": 1.0,
+}
+_RECIPE_LOBBY: dict[str, object] = {
+    "rgb_color": [232, 196, 127],  # sun #E8C47F — warm anticipation
+    "brightness_pct": 40,
+    "transition": 1.5,
+}
+
+# The auction (#616): amber, low and slow. Sealed bids are the one moment of
+# the evening where nothing is happening on screen and everyone is deciding in
+# private, so the room drops rather than pushes.
+_RECIPE_AUCTION: dict[str, object] = {
+    "rgb_color": [235, 175, 95],  # amber — the same one the "missed" accent uses
+    "brightness_pct": 35,
+    "transition": 1.5,
+}
+
+# The betting window (#656): sun, held back. Same anticipation as the lobby,
+# one notch brighter, because the money is already on the table.
+_RECIPE_WAGER: dict[str, object] = {
+    "rgb_color": [232, 196, 127],  # sun — "place your bets"
+    "brightness_pct": 50,
+    "transition": 1.2,
+}
+
+# Lightning (#42): the question coral, driven hard and snapped into place
+# instead of faded. Five questions in seventy-five seconds get no per-question
+# accent — the mode is the beat.
+_RECIPE_LIGHTNING: dict[str, object] = {
+    "rgb_color": [232, 138, 127],  # coral, at full tilt
+    "brightness_pct": 90,
+    "transition": 0.2,
+}
+
 _PHASE_LIGHT_RECIPES: dict[GamePhase, dict[str, object] | None] = {
-    GamePhase.LOBBY: {
-        "rgb_color": [232, 196, 127],  # sun #E8C47F — warm anticipation
-        "brightness_pct": 40,
-        "transition": 1.5,
-    },
-    GamePhase.QUESTION_ACTIVE: {
-        "rgb_color": [232, 138, 127],  # coral #E88A7F — primary accent, "go!"
-        "brightness_pct": 70,
-        "transition": 0.5,
-    },
-    GamePhase.ANSWER_REVEAL: {
-        "rgb_color": [127, 168, 151],  # sage #7FA897 — calm, "result"
-        "brightness_pct": 60,
-        "transition": 1.0,
-    },
+    GamePhase.LOBBY: _RECIPE_LOBBY,
+    GamePhase.QUESTION_ACTIVE: _RECIPE_QUESTION,
+    GamePhase.ANSWER_REVEAL: _RECIPE_REVEAL,
     GamePhase.FINALE: {
         "rgb_color": [232, 196, 127],  # sun — celebration
         "brightness_pct": 90,
         "transition": 2.0,
     },
+    # --- the detours (#708) ---------------------------------------------
+    # Without these the lookup below returned None and the room simply froze on
+    # whatever colour the previous phase had left it — for the whole auction,
+    # the whole betting window and the whole lightning round.
+    GamePhase.WAGER_ACTIVE: _RECIPE_WAGER,
+    GamePhase.HOT_SEAT_AUCTION: _RECIPE_AUCTION,
+    # The chair answers a question and then gets a result: the same two looks
+    # the normal round uses, deliberately not a third and fourth.
+    GamePhase.HOT_SEAT: _RECIPE_QUESTION,
+    GamePhase.HOT_SEAT_REVEAL: _RECIPE_REVEAL,
+    GamePhase.LIGHTNING: _RECIPE_LIGHTNING,
+    GamePhase.LIGHTNING_RECAP: _RECIPE_REVEAL,
     # PAUSED: leave the room as-is. Restoring on resume would surprise.
     GamePhase.PAUSED: None,
 }
