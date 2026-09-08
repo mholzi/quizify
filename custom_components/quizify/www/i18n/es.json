@@ -408,7 +408,7 @@
     "title": "Ronda final — Apuesta",
     "hint": "Solo ves la categoría. Apuesta una parte de tus puntos: acierto = ganas, fallo = pierdes.",
     "timeoutNote": "La apuesta cuenta siempre, también si no respondes. No responder te cuesta la apuesta igual que fallar.",
-    "bank": "Puntos actuales",
+    "bank": "Puntos actuales:",
     "submit": "Confirmar apuesta",
     "sliderAria": "Porcentaje de apuesta",
     "valueFmt": "{pct}% ({pts} pts)",
