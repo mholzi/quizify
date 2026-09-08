@@ -3,7 +3,7 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [1.17.0-RC1] — 2026-09-07
+## [1.17.0] — 2026-09-08
 
 **What the Reload Was Throwing Away**
 
