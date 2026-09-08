@@ -3,6 +3,20 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.18.0-RC1] — 2026-09-08
+
+**One Score, and the Room Joins the Loud Parts**
+
+Six entries, decided in the afternoon and built the same evening.
+
+### The team wins, and everything says so
+
+Team mode kept a second, hidden score ledger. The podium showed the team; analytics, the leader sensors and the winner event all read the person underneath — so two Home Assistant events named different winners for the same final. The source is closed now, rather than a fifth reader bent into shape. In team games the evening standing had also been looking itself up under a player's name, and found nothing at all.
+
+### A window that stood empty eleven months a year
+
+Christmas and New Year, in German, English and Spanish: six packs, 603 questions, covering 1 December to 6 January without a gap. And the house now joins the auction, the betting window and Lightning — the three loudest moments it used to sit out.
+
 ## [1.17.0] — 2026-09-08
 
 **What the Reload Was Throwing Away**
