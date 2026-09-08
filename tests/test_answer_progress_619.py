@@ -116,6 +116,36 @@ def test_the_payload_carries_no_scores(game: QuizifyGameState) -> None:
 # --- coalescing ------------------------------------------------------------
 
 
+async def _flush(handler: QuizifyWebSocketHandler) -> None:
+    """Wait for the flush the handler has already armed — nothing else (#918).
+
+    These tests used to sleep four flush windows and then read whatever had
+    landed. That is a race, not a wait: the window only starts ticking when
+    the flush task takes its first step, which is one loop iteration *after*
+    the test suspends. Any stall in between — a loaded machine, a GC pause,
+    the OS descheduling a full-suite run — pushes the flush's own deadline
+    past the test's fixed sleep, the assertion finds no frame at all, and the
+    test fails for a reason that has nothing to do with the code it guards.
+
+    Awaiting the task removes the clock from the assertion entirely: the test
+    resumes when the flush has actually broadcast, however long that took. It
+    also stops swallowing failures — an exception inside the flush used to go
+    to ``_log_task_exception`` and show up here as a merely absent frame.
+    """
+    task = handler._progress_flush_task
+    assert task is not None, "no flush armed — _mark_progress_dirty did nothing"
+    await task
+
+
+def _progress_frames(handler: QuizifyWebSocketHandler) -> list[dict]:
+    """Every ``answer_progress`` frame the handler has broadcast so far."""
+    return [
+        call.args[0]
+        for call in handler._conn.broadcast.call_args_list
+        if call.args and call.args[0].get("type") == "answer_progress"
+    ]
+
+
 @pytest.mark.asyncio
 async def test_a_tap_storm_is_one_broadcast(
     handler: QuizifyWebSocketHandler, game: QuizifyGameState
@@ -126,15 +156,13 @@ async def test_a_tap_storm_is_one_broadcast(
 
     for _ in range(5):
         handler._mark_progress_dirty()
-    await asyncio.sleep(handler._REACTION_FLUSH_WINDOW * 4)
+    await _flush(handler)
 
-    progress_frames = [
-        call.args[0]
-        for call in handler._conn.broadcast.call_args_list
-        if call.args and call.args[0].get("type") == "answer_progress"
-    ]
-    assert len(progress_frames) == 1
-    assert progress_frames[0]["total"] == 5
+    assert len(_progress_frames(handler)) == 1
+    assert _progress_frames(handler)[0]["total"] == 5
+    # No tail re-arm: the flush drained everything the storm marked, so the
+    # single frame above is the whole story and not just the first of two.
+    assert handler._progress_dirty is False
 
 
 @pytest.mark.asyncio
@@ -152,14 +180,9 @@ async def test_the_frame_reflects_the_room_at_flush_time(
     handler._mark_progress_dirty()
     game.get_player("Anna").submit_answer(0, 0.0)
     game.get_player("Ben").submit_answer(1, 0.0)
-    await asyncio.sleep(handler._REACTION_FLUSH_WINDOW * 4)
+    await _flush(handler)
 
-    frame = next(
-        call.args[0]
-        for call in handler._conn.broadcast.call_args_list
-        if call.args and call.args[0].get("type") == "answer_progress"
-    )
-    assert frame["submitted"] == 2
+    assert _progress_frames(handler)[0]["submitted"] == 2
 
 
 @pytest.mark.asyncio
