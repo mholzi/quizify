@@ -1554,6 +1554,11 @@ class QuizifyWebSocketHandler:
 
         await self._conn.send(ws, {"type": "team_joined", "team": team})
         await self._round_out.send_teams_update(game_state)
+        # #931: forming or dissolving a team changes who the entrants
+        # are, so the duel underneath the roster is about different rows
+        # now. Teams do not move the roster, so nothing else recomputes
+        # it here and the old line would simply stay up.
+        await self._send_head_to_head(game_state)
 
     async def _handle_join_team(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
@@ -1575,6 +1580,11 @@ class QuizifyWebSocketHandler:
 
         await self._conn.send(ws, {"type": "team_joined", "team": team})
         await self._round_out.send_teams_update(game_state)
+        # #931: forming or dissolving a team changes who the entrants
+        # are, so the duel underneath the roster is about different rows
+        # now. Teams do not move the roster, so nothing else recomputes
+        # it here and the old line would simply stay up.
+        await self._send_head_to_head(game_state)
 
     async def _handle_leave_team(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
@@ -1593,6 +1603,11 @@ class QuizifyWebSocketHandler:
 
         await self._conn.send(ws, {"type": "team_left"})
         await self._round_out.send_teams_update(game_state)
+        # #931: forming or dissolving a team changes who the entrants
+        # are, so the duel underneath the roster is about different rows
+        # now. Teams do not move the roster, so nothing else recomputes
+        # it here and the old line would simply stay up.
+        await self._send_head_to_head(game_state)
 
     # ------------------------------------------------------------------
     # Submit answer
@@ -2080,15 +2095,26 @@ class QuizifyWebSocketHandler:
         analytics = game_state.stats_service
         if analytics is None:
             return
+        # #931: entrants, not people. ``get_ranked_participants`` is the list
+        # the podium, the leaderboard and the recorded game (#923) are all
+        # built from, and in solo mode it is exactly ``get_players()``. Asking
+        # the people instead put "Anna 13 - 6 Cleo" under a podium that had
+        # just declared team Sofa the winner: Anna never entered that game,
+        # she is one of two members of something that did, and the pair
+        # selection silently picked one of the two. The rule is therefore the
+        # ranking's own: the duel compares whoever the game is between.
         duel = analytics.get_head_to_head(
-            [p.name for p in game_state.get_players()]
+            [p.name for p in game_state.get_ranked_participants()]
         )
-        if duel is None:
-            # Fewer than two present, or no pair has met twice. Silence beats a
-            # "1-0" that reads like a record and is a coincidence.
-            return
+        # #931: a frame either way, never silence. Fewer than two entrants, or
+        # no pair of them has met twice -> the line has to LEAVE the screen
+        # rather than stand from before. The lobby recomputes this on every
+        # roster change and on every team change, and two entrants who were on
+        # screen a moment ago are one team now. Both renderers already read a
+        # frame without ``left``/``right`` as "hide", so this needs no new
+        # element and no new text.
         await self._conn.broadcast_to_admins_and_dashboards(
-            {"type": "head_to_head", "at": at, **duel}
+            {"type": "head_to_head", "at": at, **(duel or {})}
         )
 
     def _cancel_roster_flush(self) -> None:
