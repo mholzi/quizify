@@ -3014,6 +3014,7 @@ class QuizifyWebSocketHandler:
         self._cancel_lightning_loop()
         driver = LightningDriver(
             self._lightning_out,
+            milestones=self,
             splash_grace=self.LIGHTNING_SPLASH_GRACE,
             splash_hold=self.AUTO_LIGHTNING_SPLASH_HOLD,
         )
@@ -3309,7 +3310,11 @@ class QuizifyWebSocketHandler:
         :class:`~custom_components.quizify.game.drivers.WagerWindowDriver`.
         """
         self._cancel_wager_window()
-        driver = WagerWindowDriver(self._wager_out, duration=WAGER_WINDOW_DURATION)
+        driver = WagerWindowDriver(
+            self._wager_out,
+            duration=WAGER_WINDOW_DURATION,
+            milestones=self,
+        )
         self._wager_window_task = asyncio.create_task(driver.run(game_state))
 
     def _cancel_wager_window(self) -> None:
@@ -4258,10 +4263,16 @@ class QuizifyWebSocketHandler:
     # The house beats (#789/#788)
     # ------------------------------------------------------------------
     #
-    # Six game moments the house reacts to. Each one is ONE method here, and
+    # Nine game moments the house reacts to. Each one is ONE method here, and
     # each method is the whole fan-out: which consumers hear this beat, and
     # what they are asked to do about it. Nothing sits between a dispatch point
     # and a consumer any more.
+    #
+    # Six of the nine are the beats of an ordinary round. The other three are
+    # the openings of the detour modes (#708) — and only the openings, because
+    # every other moment inside a detour is one of the six: the chair answers a
+    # question and gets a reveal, so it reports ``question_shown`` and
+    # ``reveal`` rather than a mode-shaped copy of them.
     #
     # This used to be three layers deep and three names wide for the same
     # event: a tick arrived as ``time_running_out``, became ``_notify_
@@ -4269,7 +4280,7 @@ class QuizifyWebSocketHandler:
     # time_running_out``. Two of the six beats skipped the middle layer, so the
     # layer read as an accident rather than a contract.
     #
-    # The three PUBLIC methods below are :class:`~custom_components.quizify.
+    # The six PUBLIC methods below are :class:`~custom_components.quizify.
     # game.drivers.protocols.MilestoneSink` — the contract a mode driver holds,
     # which is what lets every mode walk the house path (#708) instead of only
     # the normal round. The three private ones are the beats no driver reports;
@@ -4349,6 +4360,54 @@ class QuizifyWebSocketHandler:
         """The answer is out and the round has been scored (#789)."""
         self._fire(self._tts_announcer, "announce_reveal", game_state)
         self._fire(self._event_emitter, "notify_answer_revealed", game_state)
+
+    # -- MilestoneSink, the detours (#708) ------------------------------
+    #
+    # One beat per mode, for the one moment each mode has that an ordinary
+    # round does not. Everything else a detour does already arrives above:
+    # the chair's question through :meth:`question_shown`, its clock through
+    # :meth:`time_running_out`, its settlement through :meth:`reveal`.
+
+    def hot_seat_started(self, hot_seat: Any) -> None:
+        """The chair has been sold (#616/#708).
+
+        The narrator gets the person and the points — the sealed bid becomes
+        public at this exact moment, so this line is the room's first word on
+        it. The bus event carries the percentage and the field size as well,
+        which speech would only clutter.
+        """
+        self._fire(
+            self._tts_announcer,
+            "announce_hot_seat_started",
+            getattr(hot_seat, "seat_holder", "") or "",
+            getattr(hot_seat, "winning_stake", 0),
+        )
+        self._fire(self._event_emitter, "notify_hot_seat_started", hot_seat)
+
+    def wager_open(self, game_state: QuizifyGameState, seconds: float) -> None:
+        """The betting window is open (#656/#708).
+
+        The spoken line takes no arguments: it doubles as the "final round"
+        call, and reading the deadline out would be narrating a countdown the
+        players already have on screen. The bus event gets the deadline,
+        because an automation has no screen.
+        """
+        self._fire(self._tts_announcer, "announce_wager_open")
+        self._fire(
+            self._event_emitter, "notify_wager_open", game_state, seconds
+        )
+
+    def lightning_started(
+        self, game_state: QuizifyGameState, lightning: Any
+    ) -> None:
+        """The fast round is starting (#42/#708)."""
+        self._fire(self._tts_announcer, "announce_lightning_started")
+        self._fire(
+            self._event_emitter,
+            "notify_lightning_started",
+            game_state,
+            lightning,
+        )
 
     # -- Beats no driver reports ----------------------------------------
 

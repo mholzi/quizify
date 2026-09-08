@@ -21,7 +21,7 @@ import math
 from typing import TYPE_CHECKING, Any
 
 from ..state import GamePhase
-from .protocols import HotSeatBroadcaster, MilestoneSink
+from .protocols import HotSeatBroadcaster, MilestoneSink, fire_milestone
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -93,6 +93,14 @@ class HotSeatDriver:
 
         # --- simultaneous reveal ----------------------------------------
         await self._out.send_hot_seat_awarded(game_state, hs)
+        # #708: the auction result is the one moment of this mode a normal
+        # round has no equivalent for, so it is the one new beat — the narrator
+        # calls who bought the chair and for how much, and the bus event lets a
+        # blueprint light the room for whoever is about to play alone. Fired
+        # here rather than when the auction OPENED, for the same reason the
+        # bidless branch above exists: an auction nobody wanted is a round that
+        # never happened, and a blueprint should not have to unwind one.
+        self._milestone("hot_seat_started", hs)
         await asyncio.sleep(self._reveal_hold)
         if game_state.phase != GamePhase.HOT_SEAT:
             return
@@ -176,15 +184,5 @@ class HotSeatDriver:
             await asyncio.sleep(self.POLL_INTERVAL)
 
     def _milestone(self, name: str, *args: Any) -> None:
-        """Fire one house beat, if a sink is wired.
-
-        Guarded here as well as in the sink: a driver must never lose a game
-        loop to a misbehaving consumer.
-        """
-        sink = self._milestones
-        if sink is None:
-            return
-        try:
-            getattr(sink, name)(*args)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("Hot seat milestone %s raised", name)
+        """Fire one house beat, if a sink is wired."""
+        fire_milestone(self._milestones, name, *args)

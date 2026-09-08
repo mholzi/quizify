@@ -458,6 +458,71 @@ class QuizifyTTSAnnouncer:
             )
         self._previous_leader = new_leader
 
+    # ------------------------------------------------------------------
+    # The detour modes (#708)
+    # ------------------------------------------------------------------
+    #
+    # One spoken line per mode, at the moment it opens. Everything inside a
+    # detour is narrated by the lines above — the chair's question goes through
+    # ``announce_question`` and its settlement through ``announce_reveal``,
+    # because they are a question and a reveal.
+    #
+    # All three are gated on the MASTER switch alone, with no per-event toggle
+    # of their own. That is the posture the other lifecycle lines already take
+    # (``game_start`` / ``final_round`` / ``game_over`` in
+    # :meth:`_on_state_changed`): the per-event toggles in the TTS panel are
+    # about the beats of an ordinary round, and a mode announcing itself is not
+    # one of those. It also keeps the panel exactly as wide as it is today.
+
+    def announce_hot_seat_started(
+        self, seat_holder: str, stake: int
+    ) -> None:
+        """Call the auction result: who bought the chair, and for how much.
+
+        The bid is sealed until this moment, so this line is the room's first
+        word on it — which is why it is the auction's beat and not the
+        question's. No-op without a seat holder (a bidless auction never
+        reaches here, but the guard keeps the line from reading "The chair goes
+        to  for 0 points" if it ever did).
+        """
+        if not self._enabled:
+            return
+        if not seat_holder:
+            return
+        self._speak(
+            tts_phrases.phrase(
+                self._lang(),
+                "hot_seat_started",
+                name=seat_holder,
+                points=stake,
+            )
+        )
+
+    def announce_wager_open(self) -> None:
+        """Open the betting window out loud (#656).
+
+        Doubles as the "final round" call — the window only ever opens on the
+        last round — which is why :meth:`_on_state_changed` skips its own
+        ``final_round`` line when the game arrives at QUESTION_ACTIVE straight
+        out of WAGER_ACTIVE. Saying both would be the same announcement twice,
+        twenty seconds apart.
+        """
+        if not self._enabled:
+            return
+        self._speak(tts_phrases.phrase(self._lang(), "wager_open"))
+
+    def announce_lightning_started(self) -> None:
+        """Announce the fast round as its splash goes up (#42).
+
+        Deliberately the ONLY spoken line of the whole mode: the five questions
+        are not narrated, because ``announce_question`` reads a question aloud
+        and five readings inside seventy-five seconds would talk over the mode
+        they are meant to accompany.
+        """
+        if not self._enabled:
+            return
+        self._speak(tts_phrases.phrase(self._lang(), "lightning_started"))
+
     def announce_milestone(self, player_name: str, streak: int) -> None:
         """Trigger a milestone announcement. Called from the WS handler
         when it broadcasts ``streak_milestone`` so the announcement is
@@ -522,8 +587,14 @@ class QuizifyTTSAnnouncer:
             return
 
         # "Final round!" announcement when entering the last round.
+        #
+        # Skipped when the round arrived via the betting window (#708): the
+        # window only opens on the last round and ``announce_wager_open``
+        # already called it, so speaking here would repeat the same
+        # announcement a betting window later.
         if (
             phase == GamePhase.QUESTION_ACTIVE
+            and prev != GamePhase.WAGER_ACTIVE
             and self._game.round == self._game.total_rounds
             and self._game.total_rounds > 1
         ):

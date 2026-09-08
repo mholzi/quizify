@@ -7,11 +7,12 @@ which is why it lives here now and not next to the socket sends. The scoring
 and the question queue stay in :mod:`custom_components.quizify.game.lightning`;
 this only decides when things happen and asks the broadcaster to fan them out.
 
-It deliberately takes no ``MilestoneSink``. The house *should* play along here
-(#708), but not by reusing the normal round's beats: ``announce_question``
-reads a question aloud, and five of those inside seventy-five seconds would
-talk over the mode it is meant to accompany. Lightning needs its own phrases,
-its own light recipe and its own bus event, which is #708's remaining half.
+It reports exactly ONE house beat, and deliberately not the normal round's
+(#708): ``announce_question`` reads a question aloud, and five of those inside
+seventy-five seconds would talk over the mode they are meant to accompany, so
+there is no per-question milestone here. The mode announces itself once as it
+opens — its own phrase, its own bus event — and the phase-driven light recipe
+holds the room for the rest of it.
 """
 
 from __future__ import annotations
@@ -19,10 +20,10 @@ from __future__ import annotations
 import asyncio
 import logging
 import math
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from ..state import GamePhase
-from .protocols import LightningBroadcaster
+from .protocols import LightningBroadcaster, MilestoneSink, fire_milestone
 
 if TYPE_CHECKING:
     from ..lightning import LightningRound
@@ -44,10 +45,12 @@ class LightningDriver:
         self,
         broadcaster: LightningBroadcaster,
         *,
+        milestones: MilestoneSink | None = None,
         splash_grace: float = 1.0,
         splash_hold: float = 3.0,
     ) -> None:
         self._out = broadcaster
+        self._milestones = milestones
         self._splash_grace = splash_grace
         self._splash_hold = splash_hold
 
@@ -73,6 +76,12 @@ class LightningDriver:
     async def _run(
         self, game_state: QuizifyGameState, *, auto_dismiss_splash: bool
     ) -> None:
+        # #708: the mode's one beat, on the splash rather than on the first
+        # question — the splash IS the announcement, and the narrator should be
+        # talking over it and not over the clock. Reported whichever way the
+        # splash is dismissed, so the #285 auto flow and a host's tap sound the
+        # same.
+        self._milestone("lightning_started", game_state, game_state.lightning)
         if auto_dismiss_splash:
             # Hold the intro splash on its own, then advance out of it.
             await asyncio.sleep(self._splash_hold)
@@ -134,3 +143,7 @@ class LightningDriver:
             if game_state.phase != GamePhase.LIGHTNING:
                 return False
         return True
+
+    def _milestone(self, name: str, *args: Any) -> None:
+        """Fire one house beat, if a sink is wired."""
+        fire_milestone(self._milestones, name, *args)
