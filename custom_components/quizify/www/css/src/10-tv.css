@@ -280,10 +280,16 @@ body.dashboard-body {
 }
 
 /* ===================
-   LOADING / NO-GAME / WAITING
+   WAITING
    =================== */
-.dashboard-loading,
-.dashboard-no-game,
+/* `.dashboard-loading` and `.dashboard-no-game` styled nothing here: neither
+   name is ever set on an element — not as a class, not as an id, not by
+   `dashboard.js`. The lobby-wait screen has rendered as `.dashboard-waiting`
+   since before this module was split out of dashboard.html's inline <style>
+   (#880); the two dead names just rode along in the comma-list, which is why
+   #797's dead-weight guard could not see them — one live alternative
+   (`.dashboard-waiting`) kept the whole grouped rule looking referenced.
+   Removed in #919. */
 .dashboard-waiting {
     flex: 1;
     display: flex;
@@ -293,11 +299,8 @@ body.dashboard-body {
     gap: 24px;
 }
 
-.dashboard-loading .wordmark,
-.dashboard-no-game .wordmark,
 .dashboard-waiting .wordmark { font-size: clamp(40px, 5vw, 64px); }
 
-.dashboard-loading-text,
 .dashboard-waiting-text {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #667: 14px is a phone size. This is the primary instruction on
