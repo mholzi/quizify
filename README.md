@@ -567,7 +567,50 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 
 ## What's New
 
-Full prose notes for every release since 1.4.0 live in [`docs/release-notes/`](docs/release-notes/); the complete history is in [`CHANGELOG.md`](CHANGELOG.md).
+The complete history is in [`CHANGELOG.md`](CHANGELOG.md); [`docs/release-notes/`](docs/release-notes/) holds longer prose notes for some releases.
+
+### v1.18.0 — One Score, and the Room Joins the Loud Parts 👥
+- **Team mode keeps one score, not two.** The podium showed the team while analytics, the leader sensors and the winner event read the person underneath — two events could name different winners for the same finale (#923). Playing the candidate on a television found the last two leaks: the head-to-head strip and a member's all-time line.
+- **Six holiday packs, 603 questions** in all three languages, 1 December to 6 January (#663) — and the lights and speakers finally join the auction, the betting window and Lightning (#708)
+
+### v1.17.0 — What the Reload Was Throwing Away 🔄
+- **Reload during a Hot Seat, a bet, a team answer or the final screen** and the game used to forget where you were; six fixes rebuild each of those from the snapshot the server was already sending
+- Every surface got its own stylesheet and script, so a rule written for a 390 px phone can no longer reach the television
+
+### v1.16.0 — Everybody on the Final Board 🔒
+- **The door was open**: a page in any browser on the network could reach the game's socket and claim the host's seat. And four shipped pictures were not ours to ship — the licence check that missed them no longer greps for a phrase.
+- The television shows *this* game (language, fun fact, difficulty and leaderboard all followed the last one), a host who closed the tab can come back, and team mode gets its own auction and final wager
+
+### v1.15.0 — The House Closes Its Doors, and Brings Its Own Type 🚪
+- **A guest could claim the free admin slot** and drive the host's lights, speakers and scenes with no Home Assistant credential — two minutes after the host closed their tab
+- The end screen stopped clipping its awards on a television (a phone stylesheet's `max-width: 160px` was reaching the big screen), and an English game no longer framed its questions in German on the phones
+
+### v1.13.0 — What the Television Was Never Showing You 📺
+- **Three screens that never fitted a 720p television** — the question view, Lightning and the end screen all ran past the bottom, taking the last answers, the percentages and the leaderboard with them
+- The Hot Seat inherited five things Lightning had all along: snapshot, teardown, settings restore, the team case and a TV view
+
+### v1.12.0 — The Room Keeps Score Between You Two 🥊
+- **The lobby names the two people who have played together most often and shows their record**, and the end screen shows it again with the game everyone just watched counted in. Nothing appears until a pair has played twice.
+
+### v1.11.0 — The Chair Is Auctioned, and the Bet Comes First 🪑
+- **Once per game the Hot Seat is auctioned**, and a bid is a *share* of your own points rather than a number of them — bid in points and whoever is ahead wins every auction
+- The rest of the room stakes points on the outcome, and the wager window now opens before the question is shown
+
+### v1.10.0 — Spanish Is Finished, and the Room Tells You What's Happening 🇪🇸
+- **4,740 questions across 36 packs, twelve per language** — `imagenes-es`, `estimacion-es` and `copa-mundial-es` closed the last three gaps
+- Season and evening standings, power-up messages in words rather than symbols, and the join address as text you can type
+
+### v1.9.0 — Your Own Record, and a Finished Spanish Shelf 🏅
+- **One quiet line under the lobby hero**: a returning player's own all-time standing, "N wins from M games", visible to them and nobody else (#371)
+- A way to ask for a pack that is missing, instead of building one yourself (#579)
+
+### v1.8.0 — Play as a Team, and Every Pack Learns Two New Tricks 👥
+- **Two people on one sofa become one participant.** Players form teams themselves in the lobby; the host assigns nobody, and the answer stays changeable until the buzzer (#365).
+- Every themed pack now carries five picture questions and five estimation questions of its own
+
+### v1.7.0 — Host From the Dashboard, and a Round of Pictures 🎛️
+- **`custom:quizify-host-card`** puts start / advance / end on a Lovelace view, so hosting no longer means leaving the dashboard (#278)
+- Server-side presets (#433) and the first picture pack — plus four defects that eight release candidates and a green test suite had not found, and playing it did
 
 ### v1.6.1 — The Room Stops Giving It Away 📺
 - **The TV stopped parking the correct answer on tile A.** The big screen drew its grid in question-file order while the phones used the round's shuffle — on 16 of the 26 shipped packs that meant tile A, every question, every game (#521). Scoring was never affected; it simply leaked to everyone watching.
