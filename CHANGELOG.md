@@ -3,6 +3,20 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.18.0] — 2026-09-10
+
+**One Score, and the Room Joins the Loud Parts**
+
+Eight entries: the six chosen on Monday, plus two that only turned up when the first candidate was played on a real television.
+
+### The team is one player, everywhere
+
+Team mode had been keeping a second, hidden score ledger. The podium showed the team while analytics, the leader sensors and the winner event all read the person underneath — two events could name different winners for the same finale. That is closed at the source, with a guard so it cannot reopen. Playing RC1 then found the two places still leaking a name: the head-to-head strip named one member under a team result, and a member's phone showed the team's all-time record as their own. Both now read the same ranking as everything else.
+
+### A window that stood empty eleven months a year
+
+Christmas and New Year in German, English and Spanish: six packs, 603 questions, 1 December to 6 January without a gap. And the house finally joins the auction, the betting window and Lightning — the three loudest moments of the evening were the only ones the lights and speakers sat out.
+
 ## [1.18.0-RC2] — 2026-09-08
 
 **One Score, and the Room Joins the Loud Parts**
