@@ -1,0 +1,2089 @@
+{
+  "name": "Halloween",
+  "language": "en",
+  "version": "1.0",
+  "theme": "trivia",
+  "season": {
+    "start": "10-01",
+    "end": "10-31",
+    "label": "🎃 Halloween season"
+  },
+  "questions": [
+    {
+      "id": "halloween_en_001",
+      "question": "Which ancient Celtic festival is widely seen as a root of Halloween?",
+      "answers": [
+        {
+          "text": "Samhain",
+          "correct": true
+        },
+        {
+          "text": "Beltane",
+          "correct": false
+        },
+        {
+          "text": "Imbolc",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Samhain marked the end of the harvest and the start of the dark half of the year. It is pronounced roughly 'SOW-in'.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_002",
+      "question": "What does the word 'Halloween' originally mean?",
+      "answers": [
+        {
+          "text": "The evening before All Hallows' Day",
+          "correct": true
+        },
+        {
+          "text": "The night of the harvest moon",
+          "correct": false
+        },
+        {
+          "text": "The feast of hollow pumpkins",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Hallow' is an old word for a saint, and 'e'en' is a contraction of 'evening' — All Hallows' Day is All Saints' Day on 1 November.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_003",
+      "question": "Before pumpkins took over, what did people in Ireland and Scotland carve into lanterns?",
+      "answers": [
+        {
+          "text": "Turnips",
+          "correct": true
+        },
+        {
+          "text": "Onions",
+          "correct": false
+        },
+        {
+          "text": "Cabbages",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Irish immigrants in North America switched to the native pumpkin, which was bigger and far easier to hollow out.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_004",
+      "question": "In the Irish folk tale behind the name 'jack-o'-lantern', whom does Stingy Jack trick?",
+      "answers": [
+        {
+          "text": "The Devil",
+          "correct": true
+        },
+        {
+          "text": "A king",
+          "correct": false
+        },
+        {
+          "text": "A giant",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Turned away from both heaven and hell, Jack is said to wander the night with a glowing coal inside a carved turnip.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_005",
+      "question": "In Scotland, what did 'guising' children traditionally have to do before receiving a treat?",
+      "answers": [
+        {
+          "text": "Perform a song, poem or joke",
+          "correct": true
+        },
+        {
+          "text": "Answer a riddle about ghosts",
+          "correct": false
+        },
+        {
+          "text": "Sweep the doorstep",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The name comes from 'disguise'. In parts of Scotland children are still expected to do a turn before the sweets come out.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_006",
+      "question": "What was the medieval custom of poor people going door to door, offering prayers for the dead in exchange for small cakes?",
+      "answers": [
+        {
+          "text": "Souling",
+          "correct": true
+        },
+        {
+          "text": "Wassailing",
+          "correct": false
+        },
+        {
+          "text": "Mumming",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The little pastries were called soul cakes, and each one eaten was said to help a soul out of purgatory.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_007",
+      "question": "In a Victorian Halloween fortune-telling game, what did a young woman hope to see after eating an apple in front of a mirror?",
+      "answers": [
+        {
+          "text": "Her future husband",
+          "correct": true
+        },
+        {
+          "text": "A friendly ghost",
+          "correct": false
+        },
+        {
+          "text": "Next year's harvest",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Done by candlelight, often at midnight, the future sweetheart's face was supposed to appear over her shoulder in the glass.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_008",
+      "question": "The earliest known printed use of the phrase 'trick or treat', from 1927, appeared in a newspaper from which country?",
+      "answers": [
+        {
+          "text": "Canada",
+          "correct": true
+        },
+        {
+          "text": "Ireland",
+          "correct": false
+        },
+        {
+          "text": "England",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The report came from the small town of Blackie in Alberta, where children demanded 'edible plunder' at front and back doors.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_009",
+      "question": "What held back Halloween treats in the United States during World War II?",
+      "answers": [
+        {
+          "text": "Sugar rationing",
+          "correct": true
+        },
+        {
+          "text": "A ban on costumes",
+          "correct": false
+        },
+        {
+          "text": "A nationwide curfew",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Children got peanuts, coins or popcorn balls instead of sweets; US sugar rationing only ended in 1947.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_010",
+      "question": "Mexico's Día de Muertos, celebrated right after Halloween, is mainly about what?",
+      "answers": [
+        {
+          "text": "Welcoming back the souls of loved ones who have died",
+          "correct": true
+        },
+        {
+          "text": "Playing pranks on neighbours",
+          "correct": false
+        },
+        {
+          "text": "Celebrating the maize harvest",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It is its own tradition, not a Mexican Halloween: families build home altars called ofrendas with photos and favourite foods, and UNESCO lists it as intangible cultural heritage.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_011",
+      "question": "Which bright orange flower is used on Día de Muertos to guide the souls to the family altars?",
+      "answers": [
+        {
+          "text": "Marigold",
+          "correct": true
+        },
+        {
+          "text": "Poppy",
+          "correct": false
+        },
+        {
+          "text": "Sunflower",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Mexico the marigold is called cempasúchil; its strong scent and colour are believed to lead the spirits home.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_012",
+      "question": "According to Samhain tradition, what happened on that night?",
+      "answers": [
+        {
+          "text": "The boundary between this world and the Otherworld grew thin",
+          "correct": true
+        },
+        {
+          "text": "The sun stood still in the sky",
+          "correct": false
+        },
+        {
+          "text": "Crops planted that night grew twice as fast",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bonfires were lit, and later folklore says people wore disguises so wandering spirits would not recognise them.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_013",
+      "question": "Which city hosts the Village Halloween Parade, where anyone in costume can march?",
+      "answers": [
+        {
+          "text": "New York City",
+          "correct": true
+        },
+        {
+          "text": "Chicago",
+          "correct": false
+        },
+        {
+          "text": "Los Angeles",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It started in Greenwich Village in 1974 as a walk for a puppeteer's children and their neighbours.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_014",
+      "question": "Which Massachusetts town, famous for its witch trials of 1692, draws huge crowds every October?",
+      "answers": [
+        {
+          "text": "Salem",
+          "correct": true
+        },
+        {
+          "text": "Plymouth",
+          "correct": false
+        },
+        {
+          "text": "Concord",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Despite the legends, none of those executed in Salem was burned at the stake — nineteen people were hanged.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_015",
+      "question": "Which traditional Irish Halloween fruit bread has a ring baked inside?",
+      "answers": [
+        {
+          "text": "Barmbrack",
+          "correct": true
+        },
+        {
+          "text": "Soda bread",
+          "correct": false
+        },
+        {
+          "text": "Stollen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Finding the ring was said to mean a wedding within a year; other tokens such as a coin or a pea foretold wealth or poverty.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_016",
+      "question": "Under which name was candy corn marketed around 1900?",
+      "answers": [
+        {
+          "text": "Chicken Feed",
+          "correct": true
+        },
+        {
+          "text": "Pumpkin Teeth",
+          "correct": false
+        },
+        {
+          "text": "Harvest Gold",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Back then corn was seen as animal fodder, so the joke name fit; old boxes even showed a rooster.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_017",
+      "question": "Which US state grows by far the most pumpkins?",
+      "answers": [
+        {
+          "text": "Illinois",
+          "correct": true
+        },
+        {
+          "text": "Texas",
+          "correct": false
+        },
+        {
+          "text": "Florida",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Most of them end up in cans: a single factory in Morton, Illinois, processes the bulk of America's canned pumpkin.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_018",
+      "question": "Botanically speaking, what is a pumpkin?",
+      "answers": [
+        {
+          "text": "A fruit",
+          "correct": true
+        },
+        {
+          "text": "A root vegetable",
+          "correct": false
+        },
+        {
+          "text": "A tuber",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It grows from a flower and holds its seeds inside, making it a kind of berry botanists call a pepo.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_019",
+      "question": "Which plant family do pumpkins belong to?",
+      "answers": [
+        {
+          "text": "The gourd family, with cucumbers and melons",
+          "correct": true
+        },
+        {
+          "text": "The nightshade family, with tomatoes",
+          "correct": false
+        },
+        {
+          "text": "The cabbage family, with broccoli",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Courgettes, butternut squash and watermelons are close relatives too.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_020",
+      "question": "What is classic 'pumpkin spice' seasoning made of?",
+      "answers": [
+        {
+          "text": "Cinnamon, nutmeg, ginger and cloves",
+          "correct": true
+        },
+        {
+          "text": "Dried and ground pumpkin",
+          "correct": false
+        },
+        {
+          "text": "Paprika, cumin and pepper",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It is named after the pie it flavours, which is why many pumpkin spice products contain no pumpkin at all.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_021",
+      "question": "Who wrote 'Frankenstein'?",
+      "answers": [
+        {
+          "text": "Mary Shelley",
+          "correct": true
+        },
+        {
+          "text": "Bram Stoker",
+          "correct": false
+        },
+        {
+          "text": "Emily Brontë",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "She started the story at 18 during a ghost-story contest with Lord Byron and friends at Lake Geneva in 1816.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_022",
+      "question": "What is the monster's name in Mary Shelley's novel 'Frankenstein'?",
+      "answers": [
+        {
+          "text": "He has no name",
+          "correct": true
+        },
+        {
+          "text": "Frankenstein",
+          "correct": false
+        },
+        {
+          "text": "Igor",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Victor Frankenstein is the scientist who builds him — and a hunchbacked assistant called Igor appears in neither the novel nor the 1931 film.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_023",
+      "question": "The eruption of which volcano caused the gloomy 1816 summer that kept Mary Shelley's group indoors telling ghost stories?",
+      "answers": [
+        {
+          "text": "Tambora",
+          "correct": true
+        },
+        {
+          "text": "Krakatoa",
+          "correct": false
+        },
+        {
+          "text": "Vesuvius",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The 1815 eruption in Indonesia cooled the whole planet, and 1816 became known as the 'Year Without a Summer'.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_024",
+      "question": "Which early vampire story grew out of the same 1816 ghost-story contest that produced 'Frankenstein'?",
+      "answers": [
+        {
+          "text": "'The Vampyre' by John Polidori",
+          "correct": true
+        },
+        {
+          "text": "'The Castle of Otranto'",
+          "correct": false
+        },
+        {
+          "text": "'Carmilla'",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Polidori was Lord Byron's personal doctor, and his elegant vampire Lord Ruthven was modelled on Byron himself.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_025",
+      "question": "Who wrote 'Dracula'?",
+      "answers": [
+        {
+          "text": "Bram Stoker",
+          "correct": true
+        },
+        {
+          "text": "Oscar Wilde",
+          "correct": false
+        },
+        {
+          "text": "Arthur Conan Doyle",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Stoker was Irish and worked for years as business manager of London's Lyceum Theatre.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_026",
+      "question": "In which region does Count Dracula have his castle?",
+      "answers": [
+        {
+          "text": "Transylvania",
+          "correct": true
+        },
+        {
+          "text": "Bavaria",
+          "correct": false
+        },
+        {
+          "text": "Sicily",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bran Castle in Romania is marketed as Dracula's castle, although Stoker never visited Romania.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_027",
+      "question": "Which real ruler's family name is linked to the name 'Dracula'?",
+      "answers": [
+        {
+          "text": "Vlad III of Wallachia",
+          "correct": true
+        },
+        {
+          "text": "Ivan the Terrible",
+          "correct": false
+        },
+        {
+          "text": "Attila the Hun",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Dracula' means 'son of the dragon' — his father belonged to a knightly society called the Order of the Dragon.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_028",
+      "question": "In Stoker's novel, where does Dracula come ashore in England?",
+      "answers": [
+        {
+          "text": "Whitby",
+          "correct": true
+        },
+        {
+          "text": "Dover",
+          "correct": false
+        },
+        {
+          "text": "Brighton",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "He arrives on a wrecked ship and leaps ashore in the shape of a large dog; Whitby now hosts popular goth weekends.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_029",
+      "question": "In Edgar Allan Poe's poem 'The Raven', which word does the bird keep repeating?",
+      "answers": [
+        {
+          "text": "Nevermore",
+          "correct": true
+        },
+        {
+          "text": "Forevermore",
+          "correct": false
+        },
+        {
+          "text": "Beware",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Poe lived and died in Baltimore, whose NFL team, the Ravens, was named after the poem.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_030",
+      "question": "In which Edgar Allan Poe story is the narrator driven mad by a beating heart under the floorboards?",
+      "answers": [
+        {
+          "text": "'The Tell-Tale Heart'",
+          "correct": true
+        },
+        {
+          "text": "'The Black Cat'",
+          "correct": false
+        },
+        {
+          "text": "'The Gold-Bug'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Poe is also credited with inventing the modern detective story with 'The Murders in the Rue Morgue' in 1841.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_031",
+      "question": "In 'The Legend of Sleepy Hollow', who is the Headless Horseman said to be?",
+      "answers": [
+        {
+          "text": "The ghost of a Hessian soldier",
+          "correct": true
+        },
+        {
+          "text": "A Dutch farmer who lost a bet",
+          "correct": false
+        },
+        {
+          "text": "A British general",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In 1996 the village of North Tarrytown, New York, voted to rename itself Sleepy Hollow.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_032",
+      "question": "In Robert Louis Stevenson's 1886 novella, what is the name of Dr Jekyll's evil alter ego?",
+      "answers": [
+        {
+          "text": "Mr Hyde",
+          "correct": true
+        },
+        {
+          "text": "Mr Hood",
+          "correct": false
+        },
+        {
+          "text": "Mr Grey",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Stevenson said the core of the story came to him in a dream.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_033",
+      "question": "In Oscar Wilde's 'The Picture of Dorian Gray', what grows old instead of Dorian?",
+      "answers": [
+        {
+          "text": "His portrait",
+          "correct": true
+        },
+        {
+          "text": "His twin brother",
+          "correct": false
+        },
+        {
+          "text": "His reflection in a mirror",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It is the only novel Oscar Wilde ever wrote.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_034",
+      "question": "Who wrote 'The Haunting of Hill House' (1959)?",
+      "answers": [
+        {
+          "text": "Shirley Jackson",
+          "correct": true
+        },
+        {
+          "text": "Daphne du Maurier",
+          "correct": false
+        },
+        {
+          "text": "Agatha Christie",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jackson is also famous for the short story 'The Lottery', which prompted a flood of angry letters to The New Yorker in 1948.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_035",
+      "question": "In which US state are most of Stephen King's stories set?",
+      "answers": [
+        {
+          "text": "Maine",
+          "correct": true
+        },
+        {
+          "text": "Vermont",
+          "correct": false
+        },
+        {
+          "text": "Oregon",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "King lives in Bangor, Maine, where the iron fence of his house is decorated with bats and spiders.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_036",
+      "question": "In Roald Dahl's 'The Witches', what does the Grand High Witch plan to turn children into?",
+      "answers": [
+        {
+          "text": "Mice",
+          "correct": true
+        },
+        {
+          "text": "Frogs",
+          "correct": false
+        },
+        {
+          "text": "Toads",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dahl's real witches are bald under their wigs and have square feet with no toes.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_037",
+      "question": "In the first Harry Potter book, what gets loose inside Hogwarts on Halloween?",
+      "answers": [
+        {
+          "text": "A troll",
+          "correct": true
+        },
+        {
+          "text": "A dragon",
+          "correct": false
+        },
+        {
+          "text": "A basilisk",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Halloween is a dark date in the series: Harry's parents died on 31 October 1981.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_038",
+      "question": "In which city is 'The Phantom of the Opera' set?",
+      "answers": [
+        {
+          "text": "Paris",
+          "correct": true
+        },
+        {
+          "text": "Vienna",
+          "correct": false
+        },
+        {
+          "text": "Milan",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Palais Garnier opera house really does have a water tank beneath it, which inspired the Phantom's underground lake.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_039",
+      "question": "Which vampire novella with a female vampire appeared 25 years before 'Dracula'?",
+      "answers": [
+        {
+          "text": "'Carmilla'",
+          "correct": true
+        },
+        {
+          "text": "'Rebecca'",
+          "correct": false
+        },
+        {
+          "text": "'Lenore'",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Its author, Sheridan Le Fanu, was Irish like Bram Stoker, and 'Carmilla' is often named as an influence on 'Dracula'.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_040",
+      "question": "The mask in John Carpenter's 'Halloween' was originally a cheap mask of which character?",
+      "answers": [
+        {
+          "text": "Captain Kirk from 'Star Trek'",
+          "correct": true
+        },
+        {
+          "text": "Richard Nixon",
+          "correct": false
+        },
+        {
+          "text": "A circus clown",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The crew bought it for about two dollars, spray-painted it white and stretched out the eye holes.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_041",
+      "question": "Who composed the eerie piano theme of John Carpenter's 'Halloween'?",
+      "answers": [
+        {
+          "text": "John Carpenter himself",
+          "correct": true
+        },
+        {
+          "text": "John Williams",
+          "correct": false
+        },
+        {
+          "text": "Ennio Morricone",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The theme is in the unusual 5/4 time signature, which helps give it its restless feel.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_042",
+      "question": "Who sang the 1984 hit 'Ghostbusters'?",
+      "answers": [
+        {
+          "text": "Ray Parker Jr.",
+          "correct": true
+        },
+        {
+          "text": "Huey Lewis",
+          "correct": false
+        },
+        {
+          "text": "Stevie Wonder",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Huey Lewis claimed it sounded too much like his 'I Want a New Drug', and the dispute was settled out of court.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_043",
+      "question": "What is the giant marshmallow monster in 'Ghostbusters' called?",
+      "answers": [
+        {
+          "text": "The Stay Puft Marshmallow Man",
+          "correct": true
+        },
+        {
+          "text": "Mr Fluffy",
+          "correct": false
+        },
+        {
+          "text": "The Sugar Puff Giant",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ray tried to empty his mind and thought of the most harmless thing he could remember from childhood — which then attacked New York.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_044",
+      "question": "Which horror film legend performs the spoken part at the end of Michael Jackson's 'Thriller'?",
+      "answers": [
+        {
+          "text": "Vincent Price",
+          "correct": true
+        },
+        {
+          "text": "Christopher Lee",
+          "correct": false
+        },
+        {
+          "text": "Boris Karloff",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The music video, directed by John Landis, runs nearly 14 minutes — more like a short film.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_045",
+      "question": "Who recorded the 1962 novelty hit 'Monster Mash'?",
+      "answers": [
+        {
+          "text": "Bobby 'Boris' Pickett",
+          "correct": true
+        },
+        {
+          "text": "Chubby Checker",
+          "correct": false
+        },
+        {
+          "text": "Elvis Presley",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The BBC banned it as 'too morbid'; it only reached the UK top ten when re-released in 1973.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_046",
+      "question": "Who is the Pumpkin King in 'The Nightmare Before Christmas'?",
+      "answers": [
+        {
+          "text": "Jack Skellington",
+          "correct": true
+        },
+        {
+          "text": "Oogie Boogie",
+          "correct": false
+        },
+        {
+          "text": "Zero",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The film was directed by Henry Selick; Tim Burton came up with the story and produced it.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_047",
+      "question": "What are the three witches in Disney's 'Hocus Pocus' called?",
+      "answers": [
+        {
+          "text": "The Sanderson sisters",
+          "correct": true
+        },
+        {
+          "text": "The Halliwell sisters",
+          "correct": false
+        },
+        {
+          "text": "The Owens sisters",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Halloween film was released in July 1993, flopped, and only became a classic through years of TV repeats.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_048",
+      "question": "In 'It's the Great Pumpkin, Charlie Brown', what does Charlie Brown get at every house when trick-or-treating?",
+      "answers": [
+        {
+          "text": "A rock",
+          "correct": true
+        },
+        {
+          "text": "An apple",
+          "correct": false
+        },
+        {
+          "text": "A toothbrush",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "After the first broadcast in 1966, sympathetic viewers mailed sweets to the Peanuts studio for Charlie Brown.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_049",
+      "question": "What is the name of the disembodied hand in 'The Addams Family'?",
+      "answers": [
+        {
+          "text": "Thing",
+          "correct": true
+        },
+        {
+          "text": "Lurch",
+          "correct": false
+        },
+        {
+          "text": "Cousin Itt",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The family began as single-panel cartoons by Charles Addams in The New Yorker in 1938.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_050",
+      "question": "Who played the monster in Universal's 1931 film 'Frankenstein'?",
+      "answers": [
+        {
+          "text": "Boris Karloff",
+          "correct": true
+        },
+        {
+          "text": "Bela Lugosi",
+          "correct": false
+        },
+        {
+          "text": "Lon Chaney Jr.",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Karloff was born William Henry Pratt in London, and the flat-headed make-up took hours to apply each day.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_051",
+      "question": "Who played the title role in Universal's 1931 film 'Dracula'?",
+      "answers": [
+        {
+          "text": "Bela Lugosi",
+          "correct": true
+        },
+        {
+          "text": "Boris Karloff",
+          "correct": false
+        },
+        {
+          "text": "Christopher Lee",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lugosi was Hungarian and had already played Dracula on Broadway; he was buried in one of his Dracula capes.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_052",
+      "question": "What is the vampire called in the 1922 German silent film 'Nosferatu'?",
+      "answers": [
+        {
+          "text": "Count Orlok",
+          "correct": true
+        },
+        {
+          "text": "Count Zaroff",
+          "correct": false
+        },
+        {
+          "text": "Baron Samedi",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The studio never got the rights to 'Dracula', and Bram Stoker's widow won a court order that copies be destroyed — luckily some survived.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_053",
+      "question": "What did Alfred Hitchcock use as fake blood in the black-and-white film 'Psycho'?",
+      "answers": [
+        {
+          "text": "Chocolate syrup",
+          "correct": true
+        },
+        {
+          "text": "Ketchup",
+          "correct": false
+        },
+        {
+          "text": "Red wine",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In black and white, chocolate syrup looked more convincing than anything red, and it flowed just right.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_054",
+      "question": "How many times must you say 'Beetlejuice' to summon him?",
+      "answers": [
+        {
+          "text": "Three",
+          "correct": true
+        },
+        {
+          "text": "Five",
+          "correct": false
+        },
+        {
+          "text": "Seven",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Michael Keaton is on screen for only about 17 minutes of the 92-minute 1988 film.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_055",
+      "question": "In 'Gremlins', after what time must you never feed a mogwai?",
+      "answers": [
+        {
+          "text": "Midnight",
+          "correct": true
+        },
+        {
+          "text": "Sunset",
+          "correct": false
+        },
+        {
+          "text": "Three in the morning",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gizmo's squeaky voice was provided by comedian Howie Mandel.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_056",
+      "question": "In Pixar's 'Coco', set on Día de Muertos, what does Miguel dream of becoming?",
+      "answers": [
+        {
+          "text": "A musician",
+          "correct": true
+        },
+        {
+          "text": "A footballer",
+          "correct": false
+        },
+        {
+          "text": "A painter",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "His dog Dante is a Xoloitzcuintli, the ancient Mexican hairless dog breed.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_057",
+      "question": "How is E.T. disguised when the children smuggle him out on Halloween?",
+      "answers": [
+        {
+          "text": "As a ghost under a sheet",
+          "correct": true
+        },
+        {
+          "text": "As a pumpkin",
+          "correct": false
+        },
+        {
+          "text": "As a mummy",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "On the way he spots a child dressed as Yoda and seems to recognise him — a nod from Spielberg to his friend George Lucas.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_058",
+      "question": "In which US state is the town of Hawkins from 'Stranger Things' set?",
+      "answers": [
+        {
+          "text": "Indiana",
+          "correct": true
+        },
+        {
+          "text": "Ohio",
+          "correct": false
+        },
+        {
+          "text": "Maine",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Season 2 opens on Halloween 1984, and the boys go trick-or-treating dressed as the Ghostbusters.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_059",
+      "question": "Who almost always turns out to be behind the 'monster' in 'Scooby-Doo'?",
+      "answers": [
+        {
+          "text": "A person in a mask",
+          "correct": true
+        },
+        {
+          "text": "A real ghost",
+          "correct": false
+        },
+        {
+          "text": "A runaway robot",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Unmasked villains famously complain they would have got away with it, if it weren't for those meddling kids.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_060",
+      "question": "Who composed 'Night on Bald Mountain', used for the demon scene in Disney's 'Fantasia'?",
+      "answers": [
+        {
+          "text": "Modest Mussorgsky",
+          "correct": true
+        },
+        {
+          "text": "Pyotr Tchaikovsky",
+          "correct": false
+        },
+        {
+          "text": "Igor Stravinsky",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The version most people know was reworked by Nikolai Rimsky-Korsakov after Mussorgsky's death.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_061",
+      "question": "In Saint-Saëns' 'Danse macabre', which instrument imitates rattling skeleton bones?",
+      "answers": [
+        {
+          "text": "The xylophone",
+          "correct": true
+        },
+        {
+          "text": "The triangle",
+          "correct": false
+        },
+        {
+          "text": "The harp",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Death's solo violin has its top string tuned down to E-flat, giving it a deliberately sour sound.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_062",
+      "question": "Which composer is credited with the organ 'Toccata and Fugue in D minor' heard in so many haunted-house scenes?",
+      "answers": [
+        {
+          "text": "Johann Sebastian Bach",
+          "correct": true
+        },
+        {
+          "text": "Wolfgang Amadeus Mozart",
+          "correct": false
+        },
+        {
+          "text": "Ludwig van Beethoven",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Some musicologists doubt Bach really wrote it, but it is still published under his name.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_063",
+      "question": "What are The Simpsons' yearly Halloween episodes called?",
+      "answers": [
+        {
+          "text": "Treehouse of Horror",
+          "correct": true
+        },
+        {
+          "text": "Tales from the Crypt",
+          "correct": false
+        },
+        {
+          "text": "Night of the Living Springfield",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The first one aired in October 1990, during the show's second season.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_064",
+      "question": "In folklore and film, what is supposed to kill a werewolf?",
+      "answers": [
+        {
+          "text": "A silver bullet",
+          "correct": true
+        },
+        {
+          "text": "A wooden stake",
+          "correct": false
+        },
+        {
+          "text": "Holy water",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The full moon as the trigger for transformation was mostly fixed by 20th-century films; older legends used curses or magic belts.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_065",
+      "question": "According to folklore, what can't a vampire see in a mirror?",
+      "answers": [
+        {
+          "text": "Its own reflection",
+          "correct": true
+        },
+        {
+          "text": "The sunrise behind it",
+          "correct": false
+        },
+        {
+          "text": "Its victims' faces",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "One explanation offered for the legend is the old belief that mirrors show the soul — and vampires are said to have none.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_066",
+      "question": "According to Prague legend, which rabbi made a Golem out of clay?",
+      "answers": [
+        {
+          "text": "Rabbi Judah Loew",
+          "correct": true
+        },
+        {
+          "text": "Rabbi Akiva",
+          "correct": false
+        },
+        {
+          "text": "Rabbi Hillel",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The creature was brought to life with the Hebrew word 'emet' (truth); rubbing out the first letter left 'met' (dead) and stopped it.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_067",
+      "question": "In Irish folklore, what does the wail of a banshee announce?",
+      "answers": [
+        {
+          "text": "A death in the family",
+          "correct": true
+        },
+        {
+          "text": "A coming storm",
+          "correct": false
+        },
+        {
+          "text": "A good harvest",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The name comes from the Irish 'bean sí', meaning 'woman of the fairy mound'.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_068",
+      "question": "What does the name of the legendary creature 'chupacabra' mean?",
+      "answers": [
+        {
+          "text": "Goat-sucker",
+          "correct": true
+        },
+        {
+          "text": "Night-howler",
+          "correct": false
+        },
+        {
+          "text": "Moon-eater",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The first widely reported sightings came from Puerto Rico in 1995.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_069",
+      "question": "In Slavic folklore, what does the witch Baba Yaga's hut stand on?",
+      "answers": [
+        {
+          "text": "Chicken legs",
+          "correct": true
+        },
+        {
+          "text": "A giant turtle",
+          "correct": false
+        },
+        {
+          "text": "Four tree stumps",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "She doesn't ride a broom either: she flies in a giant mortar and steers with a pestle.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_070",
+      "question": "How do you defeat a kappa, the water creature of Japanese folklore?",
+      "answers": [
+        {
+          "text": "Bow to it, so it bows back and spills the water from its head",
+          "correct": true
+        },
+        {
+          "text": "Throw salt in its eyes",
+          "correct": false
+        },
+        {
+          "text": "Show it its reflection",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kappa are said to love cucumbers, which is why a cucumber sushi roll is called kappamaki.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_071",
+      "question": "Which country's folklore gave the world the zombie?",
+      "answers": [
+        {
+          "text": "Haiti",
+          "correct": true
+        },
+        {
+          "text": "Egypt",
+          "correct": false
+        },
+        {
+          "text": "Romania",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The first feature-length zombie film was 'White Zombie' from 1932, starring Bela Lugosi and set in Haiti.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_072",
+      "question": "Which organ did ancient Egyptian embalmers usually leave inside a mummy?",
+      "answers": [
+        {
+          "text": "The heart",
+          "correct": true
+        },
+        {
+          "text": "The brain",
+          "correct": false
+        },
+        {
+          "text": "The liver",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The heart was believed to be weighed against a feather in the afterlife to judge the dead person's life.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_073",
+      "question": "In English folklore, what is a will-o'-the-wisp?",
+      "answers": [
+        {
+          "text": "A ghostly light that lures travellers off the path",
+          "correct": true
+        },
+        {
+          "text": "A small helpful house spirit",
+          "correct": false
+        },
+        {
+          "text": "A talking scarecrow",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "One suggested scientific explanation for the flickering lights over marshes is gas from rotting plants catching fire.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_074",
+      "question": "Which figure of Irish folklore rides a black horse and carries its own head?",
+      "answers": [
+        {
+          "text": "The Dullahan",
+          "correct": true
+        },
+        {
+          "text": "The Púca",
+          "correct": false
+        },
+        {
+          "text": "The Leprechaun",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "According to legend the Dullahan is terrified of gold — even a small gold pin can drive it away.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_075",
+      "question": "What does the German word 'poltergeist' mean?",
+      "answers": [
+        {
+          "text": "Noisy ghost",
+          "correct": true
+        },
+        {
+          "text": "Hidden ghost",
+          "correct": false
+        },
+        {
+          "text": "Night ghost",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Poltergeists are blamed for banging, flying objects and moving furniture rather than for appearing as figures.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_076",
+      "question": "The ghost ship 'Flying Dutchman' is said to be doomed to sail forever off which cape?",
+      "answers": [
+        {
+          "text": "The Cape of Good Hope",
+          "correct": true
+        },
+        {
+          "text": "Cape Cod",
+          "correct": false
+        },
+        {
+          "text": "Cape Canaveral",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Richard Wagner turned the legend into his opera 'The Flying Dutchman', first performed in 1843.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_077",
+      "question": "How does the jiangshi, a 'hopping vampire' of Chinese folklore, get around?",
+      "answers": [
+        {
+          "text": "By hopping with its arms stretched out",
+          "correct": true
+        },
+        {
+          "text": "By flying on a bat's wings",
+          "correct": false
+        },
+        {
+          "text": "By riding a black horse",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Its stiff body is linked to rigor mortis, which is why it can't walk and has to hop.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_078",
+      "question": "According to German legend, on which mountain do witches gather on Walpurgis Night?",
+      "answers": [
+        {
+          "text": "The Brocken",
+          "correct": true
+        },
+        {
+          "text": "The Zugspitze",
+          "correct": false
+        },
+        {
+          "text": "The Feldberg",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Goethe set a wild Walpurgis Night scene on the Brocken in 'Faust'; the night is celebrated on 30 April.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_079",
+      "question": "Which is the only mammal capable of true powered flight?",
+      "answers": [
+        {
+          "text": "The bat",
+          "correct": true
+        },
+        {
+          "text": "The flying squirrel",
+          "correct": false
+        },
+        {
+          "text": "The sugar glider",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "There are more than 1,400 bat species — roughly one in five of all mammal species.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_080",
+      "question": "How do many bats find their way and their food in total darkness?",
+      "answers": [
+        {
+          "text": "Echolocation",
+          "correct": true
+        },
+        {
+          "text": "Heat-sensing pits",
+          "correct": false
+        },
+        {
+          "text": "Magnetic fields alone",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Not all bats echolocate: most fruit bats rely on their good eyesight and sense of smell.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_081",
+      "question": "Where in the world do vampire bats live?",
+      "answers": [
+        {
+          "text": "Central and South America",
+          "correct": true
+        },
+        {
+          "text": "Transylvania",
+          "correct": false
+        },
+        {
+          "text": "Australia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "There are only three species, and they share meals with roost-mates that went hungry that night.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_082",
+      "question": "How good is a bat's eyesight?",
+      "answers": [
+        {
+          "text": "No bat is blind — all species can see",
+          "correct": true
+        },
+        {
+          "text": "Bats are completely blind",
+          "correct": false
+        },
+        {
+          "text": "Bats only see in infrared",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Blind as a bat' is a myth; some large fruit bats see very well in dim light.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_083",
+      "question": "Spiders are not insects. Which animal group do they belong to?",
+      "answers": [
+        {
+          "text": "Arachnids",
+          "correct": true
+        },
+        {
+          "text": "Crustaceans",
+          "correct": false
+        },
+        {
+          "text": "Myriapods",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Scorpions, ticks and mites are arachnids too — all with eight legs.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_084",
+      "question": "What is the fear of spiders called?",
+      "answers": [
+        {
+          "text": "Arachnophobia",
+          "correct": true
+        },
+        {
+          "text": "Acrophobia",
+          "correct": false
+        },
+        {
+          "text": "Agoraphobia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Acrophobia is the fear of heights and agoraphobia the fear of places where escape feels hard.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_085",
+      "question": "What is the fear of Halloween sometimes called?",
+      "answers": [
+        {
+          "text": "Samhainophobia",
+          "correct": true
+        },
+        {
+          "text": "Hallowphobia",
+          "correct": false
+        },
+        {
+          "text": "Octophobia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The fear of ghosts has its own name too: phasmophobia.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_086",
+      "question": "What causes goosebumps when you get a fright?",
+      "answers": [
+        {
+          "text": "Tiny muscles at the base of hairs pulling them upright",
+          "correct": true
+        },
+        {
+          "text": "Skin cells swelling with water",
+          "correct": false
+        },
+        {
+          "text": "Nerves shrinking in the cold",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In furry animals the same reflex fluffs up the coat and makes them look bigger to an enemy.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_087",
+      "question": "Which hormone floods your body during a sudden scare?",
+      "answers": [
+        {
+          "text": "Adrenaline",
+          "correct": true
+        },
+        {
+          "text": "Insulin",
+          "correct": false
+        },
+        {
+          "text": "Melatonin",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It speeds up your heart and widens your pupils to let in more light — the classic 'fight or flight' response.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_088",
+      "question": "What allows owls to fly almost silently?",
+      "answers": [
+        {
+          "text": "Comb-like edges on their wing feathers",
+          "correct": true
+        },
+        {
+          "text": "Hollow bones that absorb sound",
+          "correct": false
+        },
+        {
+          "text": "Gliding without ever flapping",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Engineers copied the design to make quieter fans and to cut the noise of Japanese bullet trains.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_089",
+      "question": "How do many American tarantulas defend themselves?",
+      "answers": [
+        {
+          "text": "By flicking irritating hairs off their bodies",
+          "correct": true
+        },
+        {
+          "text": "By spitting venom",
+          "correct": false
+        },
+        {
+          "text": "By glowing in the dark",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The barbed hairs cause itching and can be very unpleasant in the eyes or nose of a predator.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_090",
+      "question": "What happens to scorpions under ultraviolet light?",
+      "answers": [
+        {
+          "text": "They glow blue-green",
+          "correct": true
+        },
+        {
+          "text": "They turn invisible",
+          "correct": false
+        },
+        {
+          "text": "They start to hum",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A substance in their outer shell causes the glow, and scientists still debate what it is good for.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_091",
+      "question": "What did researchers at the University of Washington show about crows?",
+      "answers": [
+        {
+          "text": "They remember faces of people who threatened them",
+          "correct": true
+        },
+        {
+          "text": "They can see in total darkness",
+          "correct": false
+        },
+        {
+          "text": "They sleep while flying",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Years later the crows still scolded the 'dangerous' mask — even birds that had never seen it before joined in.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_092",
+      "question": "What is a group of crows called?",
+      "answers": [
+        {
+          "text": "A murder",
+          "correct": true
+        },
+        {
+          "text": "A parliament",
+          "correct": false
+        },
+        {
+          "text": "A pride",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A parliament is a group of owls, and a pride is a group of lions.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_093",
+      "question": "What is the full moon after the Harvest Moon traditionally called?",
+      "answers": [
+        {
+          "text": "The Hunter's Moon",
+          "correct": true
+        },
+        {
+          "text": "The Wolf Moon",
+          "correct": false
+        },
+        {
+          "text": "The Snow Moon",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It usually falls in October; the Wolf Moon is January's full moon and the Snow Moon February's.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_094",
+      "question": "Which plant was said to scream when pulled out of the ground?",
+      "answers": [
+        {
+          "text": "The mandrake",
+          "correct": true
+        },
+        {
+          "text": "The nettle",
+          "correct": false
+        },
+        {
+          "text": "The foxglove",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Its forked root can look like a little human figure, which fed the legend — and Harry Potter's Herbology lessons.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_095",
+      "question": "Which moth has a pattern like a skull on its back?",
+      "answers": [
+        {
+          "text": "The death's-head hawkmoth",
+          "correct": true
+        },
+        {
+          "text": "The luna moth",
+          "correct": false
+        },
+        {
+          "text": "The atlas moth",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It can squeak loudly when disturbed and sneaks into beehives to steal honey.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_096",
+      "question": "Which nocturnal lemur with a long, thin middle finger is traditionally seen as a bad omen in parts of Madagascar?",
+      "answers": [
+        {
+          "text": "The aye-aye",
+          "correct": true
+        },
+        {
+          "text": "The ring-tailed lemur",
+          "correct": false
+        },
+        {
+          "text": "The sifaka",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It taps on tree bark with that finger and listens for hollow spots where grubs are hiding.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_097",
+      "question": "How many bones are there in an adult human skeleton?",
+      "type": "estimate",
+      "answer": 206,
+      "min": 0,
+      "max": 500,
+      "unit": "bones",
+      "difficulty": "easy",
+      "fun_fact": "206 — a newborn has around 300, but many of them fuse together as the child grows.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_098",
+      "question": "In which year was Bram Stoker's 'Dracula' first published?",
+      "type": "estimate",
+      "answer": 1897,
+      "min": 1700,
+      "max": 2000,
+      "unit": "year",
+      "difficulty": "medium",
+      "fun_fact": "1897. The whole novel is told through letters, diary entries and newspaper clippings.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_099",
+      "question": "In which year did the silent vampire film 'Nosferatu' premiere?",
+      "type": "estimate",
+      "answer": 1922,
+      "min": 1850,
+      "max": 2020,
+      "unit": "year",
+      "difficulty": "hard",
+      "fun_fact": "1922, in Berlin. The shadow of Count Orlok creeping up the stairs is still one of cinema's most copied images.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_100",
+      "question": "In which year did Martin Luther post his 95 theses — on 31 October, the eve of All Saints' Day?",
+      "type": "estimate",
+      "answer": 1517,
+      "min": 1300,
+      "max": 1800,
+      "unit": "year",
+      "difficulty": "hard",
+      "fun_fact": "1517. That is why Germany's Protestant regions celebrate Reformation Day on the very same date as Halloween.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_en_101",
+      "question": "In which year was John Carpenter's film 'Halloween' released?",
+      "type": "estimate",
+      "answer": 1978,
+      "min": 1900,
+      "max": 2020,
+      "unit": "year",
+      "difficulty": "medium",
+      "fun_fact": "1978. It was shot in about three weeks in spring in California, so the crew painted paper leaves to fake autumn.",
+      "category": "Halloween"
+    }
+  ]
+}

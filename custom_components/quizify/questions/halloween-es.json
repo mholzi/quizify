@@ -1,0 +1,2089 @@
+{
+  "name": "Halloween",
+  "language": "es",
+  "version": "1.0",
+  "theme": "trivia",
+  "season": {
+    "start": "10-01",
+    "end": "10-31",
+    "label": "🎃 Temporada de Halloween"
+  },
+  "questions": [
+    {
+      "id": "halloween_es_001",
+      "question": "¿De qué fiesta celta se considera que desciende Halloween?",
+      "answers": [
+        {
+          "text": "Samhain",
+          "correct": true
+        },
+        {
+          "text": "Beltane",
+          "correct": false
+        },
+        {
+          "text": "Imbolc",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Samhain marcaba el final de la cosecha y el comienzo de la mitad oscura del año, cuando se creía que el mundo de los muertos quedaba más cerca.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_002",
+      "question": "¿Qué significa el nombre inglés «Halloween»?",
+      "answers": [
+        {
+          "text": "Víspera de Todos los Santos",
+          "correct": true
+        },
+        {
+          "text": "Noche de las calabazas",
+          "correct": false
+        },
+        {
+          "text": "Fin del verano",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Viene de «All Hallows' Eve»: «hallow» es una palabra antigua para «santo» y «e'en» es la contracción de «evening».",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_003",
+      "question": "¿Qué papa extendió en el siglo IX la fiesta de Todos los Santos del 1 de noviembre a toda la Iglesia?",
+      "answers": [
+        {
+          "text": "Gregorio IV",
+          "correct": true
+        },
+        {
+          "text": "Silvestre II",
+          "correct": false
+        },
+        {
+          "text": "Inocencio III",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Un siglo antes, Gregorio III ya había dedicado a todos los santos una capilla en la basílica de San Pedro.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_004",
+      "question": "¿Qué día se celebra el Día de los Fieles Difuntos?",
+      "answers": [
+        {
+          "text": "El 2 de noviembre",
+          "correct": true
+        },
+        {
+          "text": "El 1 de noviembre",
+          "correct": false
+        },
+        {
+          "text": "El 31 de octubre",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El 1 de noviembre se honra a todos los santos y el 2 a todos los difuntos, aunque en la práctica muchas familias visitan el cementerio el día 1.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_005",
+      "question": "¿En qué país se tallaban nabos con caras antes de que la calabaza se impusiera en Halloween?",
+      "answers": [
+        {
+          "text": "Irlanda",
+          "correct": true
+        },
+        {
+          "text": "Francia",
+          "correct": false
+        },
+        {
+          "text": "Italia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los emigrantes irlandeses llevaron la costumbre a Estados Unidos, donde descubrieron que la calabaza era más grande y mucho más fácil de vaciar.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_006",
+      "question": "Según la leyenda irlandesa del jack-o'-lantern, ¿a quién engañó Jack el Tacaño?",
+      "answers": [
+        {
+          "text": "Al diablo",
+          "correct": true
+        },
+        {
+          "text": "A un duende",
+          "correct": false
+        },
+        {
+          "text": "A un rey",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Como castigo, ni el cielo ni el infierno lo aceptaron y quedó vagando en la oscuridad con una brasa metida en un nabo hueco.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_007",
+      "question": "¿Qué flor naranja adorna las ofrendas del Día de Muertos en México?",
+      "answers": [
+        {
+          "text": "El cempasúchil",
+          "correct": true
+        },
+        {
+          "text": "La flor de Pascua",
+          "correct": false
+        },
+        {
+          "text": "La buganvilla",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Según la tradición, su color intenso y su aroma guían a las almas de los difuntos hasta la ofrenda de su familia.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_008",
+      "question": "¿Cómo se llama el pan dulce típico del Día de Muertos?",
+      "answers": [
+        {
+          "text": "Pan de muerto",
+          "correct": true
+        },
+        {
+          "text": "Rosca de Reyes",
+          "correct": false
+        },
+        {
+          "text": "Concha",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las tiras de masa que lo decoran en forma de cruz representan huesos, y la bolita del centro, según muchas versiones, un cráneo.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_009",
+      "question": "¿Quién creó la «Calavera Garbancera», el grabado del que nació La Catrina?",
+      "answers": [
+        {
+          "text": "José Guadalupe Posada",
+          "correct": true
+        },
+        {
+          "text": "Diego Rivera",
+          "correct": false
+        },
+        {
+          "text": "Frida Kahlo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Posada se burlaba de quienes renegaban de sus raíces; fue Diego Rivera quien la llamó Catrina y la vistió de gala en uno de sus murales.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_010",
+      "question": "¿Qué película de Pixar de 2017 se desarrolla durante el Día de Muertos?",
+      "answers": [
+        {
+          "text": "Coco",
+          "correct": true
+        },
+        {
+          "text": "Luca",
+          "correct": false
+        },
+        {
+          "text": "Soul",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ganó el Óscar a mejor película de animación y a mejor canción original por «Recuérdame».",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_011",
+      "question": "¿Quién escribió el drama «Don Juan Tenorio»?",
+      "answers": [
+        {
+          "text": "José Zorrilla",
+          "correct": true
+        },
+        {
+          "text": "Gustavo Adolfo Bécquer",
+          "correct": false
+        },
+        {
+          "text": "Benito Pérez Galdós",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Zorrilla vendió los derechos por muy poco dinero y lamentó durante años no haber cobrado nada por uno de los mayores éxitos del teatro español.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_012",
+      "question": "¿Por qué es tradición en España representar «Don Juan Tenorio» en torno al 1 de noviembre?",
+      "answers": [
+        {
+          "text": "Porque su segunda parte transcurre en un panteón entre espectros",
+          "correct": true
+        },
+        {
+          "text": "Porque Zorrilla nació ese día",
+          "correct": false
+        },
+        {
+          "text": "Porque la obra se estrenó ese día",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En realidad se estrenó en marzo de 1844, pero sus fantasmas y su cementerio la unieron para siempre a los días de Todos los Santos y Difuntos.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_013",
+      "question": "En el Tenorio de Zorrilla, ¿cómo se llama la novicia de la que se enamora don Juan?",
+      "answers": [
+        {
+          "text": "Doña Inés",
+          "correct": true
+        },
+        {
+          "text": "Dulcinea",
+          "correct": false
+        },
+        {
+          "text": "Melibea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al final es el alma de doña Inés la que intercede por don Juan y logra salvarlo en el último momento.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_014",
+      "question": "¿Qué dulces se comen con castañas y boniatos en la castañada catalana?",
+      "answers": [
+        {
+          "text": "Panellets",
+          "correct": true
+        },
+        {
+          "text": "Torrijas",
+          "correct": false
+        },
+        {
+          "text": "Polvorones",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los más populares van rebozados en piñones, y la masa suele llevar almendra, azúcar y, a menudo, patata o boniato.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_015",
+      "question": "¿Qué dulce madrileño de Todos los Santos tiene forma de hueso?",
+      "answers": [
+        {
+          "text": "Los huesos de santo",
+          "correct": true
+        },
+        {
+          "text": "Las rosquillas tontas",
+          "correct": false
+        },
+        {
+          "text": "Los barquillos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Son cilindros de mazapán enrollados y rellenos, tradicionalmente de yema, que imitan un pequeño hueso.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_016",
+      "question": "Además de castañas, ¿qué se asa tradicionalmente en la castañada?",
+      "answers": [
+        {
+          "text": "Boniatos",
+          "correct": true
+        },
+        {
+          "text": "Plátanos",
+          "correct": false
+        },
+        {
+          "text": "Pimientos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En catalán se llaman «moniatos», y durante siglos las castañeras los vendían en la calle junto a las castañas calientes.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_017",
+      "question": "¿En qué comunidad autónoma es especialmente popular el magosto, la fiesta otoñal de las castañas asadas?",
+      "answers": [
+        {
+          "text": "Galicia",
+          "correct": true
+        },
+        {
+          "text": "Andalucía",
+          "correct": false
+        },
+        {
+          "text": "Canarias",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El magosto se celebra también en el norte de Portugal, Asturias y El Bierzo, casi siempre alrededor de San Martín o de Todos los Santos.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_018",
+      "question": "¿Con qué nombre se ha recuperado en Galicia la fiesta celta de fin de la cosecha, con calabazas talladas?",
+      "answers": [
+        {
+          "text": "Samaín",
+          "correct": true
+        },
+        {
+          "text": "Entroido",
+          "correct": false
+        },
+        {
+          "text": "San Xoán",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es la forma gallega de Samhain; en muchos pueblos y colegios gallegos se vacían calabazas con caras de miedo a finales de octubre.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_019",
+      "question": "¿Qué aguardiente es la base de la queimada gallega?",
+      "answers": [
+        {
+          "text": "Orujo",
+          "correct": true
+        },
+        {
+          "text": "Anís",
+          "correct": false
+        },
+        {
+          "text": "Ron",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se prende con azúcar, corteza de limón y granos de café mientras alguien recita el conjuro que empieza «Mouchos, coruxas, sapos e bruxas».",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_020",
+      "question": "¿Qué es la Santa Compaña del folclore gallego?",
+      "answers": [
+        {
+          "text": "Una procesión nocturna de almas en pena",
+          "correct": true
+        },
+        {
+          "text": "Un grupo de brujas que vuela",
+          "correct": false
+        },
+        {
+          "text": "Un duende que vive en los bosques",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Según la leyenda, la encabeza un vivo que carga con una cruz y un caldero de agua bendita y no puede librarse hasta pasársela a otro.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_021",
+      "question": "Completa el dicho gallego: «Yo no creo en las meigas, pero…»",
+      "answers": [
+        {
+          "text": "haberlas, haylas",
+          "correct": true
+        },
+        {
+          "text": "de noche, se oyen",
+          "correct": false
+        },
+        {
+          "text": "si las veo, corro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "«Meiga» es una de las palabras gallegas para «bruja»; en gallego el dicho termina «habelas, hainas».",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_022",
+      "question": "Según la leyenda, ¿qué lamento repite La Llorona?",
+      "answers": [
+        {
+          "text": "«¡Ay, mis hijos!»",
+          "correct": true
+        },
+        {
+          "text": "«¡Ay, mi amor!»",
+          "correct": false
+        },
+        {
+          "text": "«¡Ay, mi tierra!»",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La leyenda existe en toda Hispanoamérica con muchas variantes, y también dio nombre a una famosa canción popular mexicana.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_023",
+      "question": "En la nana «Duérmete, niño», ¿qué amenaza a los niños que no se duermen?",
+      "answers": [
+        {
+          "text": "Que viene el Coco",
+          "correct": true
+        },
+        {
+          "text": "Que se apaga la luna",
+          "correct": false
+        },
+        {
+          "text": "Que llega el invierno",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se cree que los navegantes portugueses llamaron «coco» al fruto del cocotero porque sus tres agujeros les recordaban la cara de ese ser.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_024",
+      "question": "¿Qué personaje del folclore español se lleva a los niños desobedientes en un saco?",
+      "answers": [
+        {
+          "text": "El hombre del saco",
+          "correct": true
+        },
+        {
+          "text": "El Ratoncito Pérez",
+          "correct": false
+        },
+        {
+          "text": "El Olentzero",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En muchos lugares de América se le conoce como «el viejo del costal», con la misma función de asustar.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_025",
+      "question": "¿Qué pintor español pintó «El aquelarre», con brujas alrededor de un gran macho cabrío?",
+      "answers": [
+        {
+          "text": "Francisco de Goya",
+          "correct": true
+        },
+        {
+          "text": "Diego Velázquez",
+          "correct": false
+        },
+        {
+          "text": "El Greco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Goya pintó dos aquelarres; el más sombrío lo pintó directamente en una pared de su casa, la Quinta del Sordo, y hoy está en el Museo del Prado.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_026",
+      "question": "¿Qué pueblo navarro es famoso por sus cuevas y por el proceso de la Inquisición contra supuestas brujas en 1610?",
+      "answers": [
+        {
+          "text": "Zugarramurdi",
+          "correct": true
+        },
+        {
+          "text": "Frigiliana",
+          "correct": false
+        },
+        {
+          "text": "Albarracín",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El proceso terminó en un auto de fe en Logroño; hoy el pueblo tiene un Museo de las Brujas y Álex de la Iglesia rodó allí «Las brujas de Zugarramurdi».",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_027",
+      "question": "¿Quién escribió la leyenda «El monte de las ánimas», ambientada en la noche de Difuntos en Soria?",
+      "answers": [
+        {
+          "text": "Gustavo Adolfo Bécquer",
+          "correct": true
+        },
+        {
+          "text": "Rosalía de Castro",
+          "correct": false
+        },
+        {
+          "text": "Antonio Machado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En Soria la leyenda se revive cada año con la «Noche de Ánimas», un festival en torno al 1 de noviembre.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_028",
+      "question": "¿Quién escribió la novela «Drácula»?",
+      "answers": [
+        {
+          "text": "Bram Stoker",
+          "correct": true
+        },
+        {
+          "text": "Mary Shelley",
+          "correct": false
+        },
+        {
+          "text": "Edgar Allan Poe",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Stoker, irlandés, nunca llegó a visitar Transilvania; se documentó en bibliotecas y libros de viajes.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_029",
+      "question": "¿En qué región está el castillo del conde en la novela «Drácula»?",
+      "answers": [
+        {
+          "text": "Transilvania",
+          "correct": true
+        },
+        {
+          "text": "Baviera",
+          "correct": false
+        },
+        {
+          "text": "Bohemia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Transilvania pertenece hoy a Rumanía, donde el castillo de Bran se promociona como «el castillo de Drácula».",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_030",
+      "question": "¿Qué príncipe de Valaquia del siglo XV se asocia con el nombre de Drácula?",
+      "answers": [
+        {
+          "text": "Vlad III",
+          "correct": true
+        },
+        {
+          "text": "Esteban el Grande",
+          "correct": false
+        },
+        {
+          "text": "Matías Corvino",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "«Drácula» significa «hijo de Dracul»: su padre pertenecía a la Orden del Dragón, y «dracul» quiere decir «dragón».",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_031",
+      "question": "¿Quién escribió «Frankenstein o el moderno Prometeo»?",
+      "answers": [
+        {
+          "text": "Mary Shelley",
+          "correct": true
+        },
+        {
+          "text": "Emily Brontë",
+          "correct": false
+        },
+        {
+          "text": "Jane Austen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mary Shelley tenía solo 18 años cuando empezó a escribirla; la novela se publicó por primera vez de forma anónima.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_032",
+      "question": "En la novela de Mary Shelley, ¿quién se llama Frankenstein?",
+      "answers": [
+        {
+          "text": "El científico que crea a la criatura",
+          "correct": true
+        },
+        {
+          "text": "La criatura creada en el laboratorio",
+          "correct": false
+        },
+        {
+          "text": "El pueblo donde transcurre la historia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Victor Frankenstein nunca da nombre a su creación: la novela la llama «la criatura», «el demonio» o «el ser».",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_033",
+      "question": "¿Con qué poeta pasó Mary Shelley el verano de 1816 junto al lago de Ginebra, donde surgió el reto de escribir historias de fantasmas que dio origen a «Frankenstein»?",
+      "answers": [
+        {
+          "text": "Lord Byron",
+          "correct": true
+        },
+        {
+          "text": "John Keats",
+          "correct": false
+        },
+        {
+          "text": "William Wordsworth",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fue el «año sin verano» tras la erupción del volcán Tambora; aquella misma estancia John Polidori escribió «El vampiro».",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_034",
+      "question": "¿Qué pájaro repite «Nunca más» en el famoso poema de Edgar Allan Poe?",
+      "answers": [
+        {
+          "text": "Un cuervo",
+          "correct": true
+        },
+        {
+          "text": "Un búho",
+          "correct": false
+        },
+        {
+          "text": "Una urraca",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El poema se publicó en 1845 y dio a Poe una fama inmediata, aunque le reportó muy poco dinero.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_035",
+      "question": "¿En qué ciudad murió Edgar Allan Poe en 1849, en circunstancias que siguen sin aclararse?",
+      "answers": [
+        {
+          "text": "Baltimore",
+          "correct": true
+        },
+        {
+          "text": "Boston",
+          "correct": false
+        },
+        {
+          "text": "Richmond",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El equipo de fútbol americano de la ciudad, los Baltimore Ravens, debe su nombre a «El cuervo».",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_036",
+      "question": "¿Qué oye latir el narrador bajo el suelo en «El corazón delator» de Poe?",
+      "answers": [
+        {
+          "text": "Un corazón",
+          "correct": true
+        },
+        {
+          "text": "Un reloj",
+          "correct": false
+        },
+        {
+          "text": "Un tambor",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Poe también inventó el relato policiaco moderno con «Los crímenes de la calle Morgue», en 1841.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_037",
+      "question": "¿Quién escribió «El extraño caso del doctor Jekyll y míster Hyde»?",
+      "answers": [
+        {
+          "text": "Robert Louis Stevenson",
+          "correct": true
+        },
+        {
+          "text": "Oscar Wilde",
+          "correct": false
+        },
+        {
+          "text": "Arthur Conan Doyle",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Stevenson, autor también de «La isla del tesoro», contó que la idea se le apareció en una pesadilla.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_038",
+      "question": "¿Qué le falta al jinete de la leyenda de Sleepy Hollow?",
+      "answers": [
+        {
+          "text": "La cabeza",
+          "correct": true
+        },
+        {
+          "text": "Un brazo",
+          "correct": false
+        },
+        {
+          "text": "El caballo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La leyenda la escribió Washington Irving en 1820; Tim Burton la llevó al cine en 1999 con Johnny Depp.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_039",
+      "question": "¿Qué escritor uruguayo, apodado a menudo «el Poe latinoamericano», publicó «Cuentos de amor de locura y de muerte»?",
+      "answers": [
+        {
+          "text": "Horacio Quiroga",
+          "correct": true
+        },
+        {
+          "text": "Mario Benedetti",
+          "correct": false
+        },
+        {
+          "text": "Juan Carlos Onetti",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Quiroga vivió gran parte de su vida en la selva de Misiones, en Argentina, escenario de muchos de sus cuentos.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_040",
+      "question": "¿Qué director mexicano dirigió «El laberinto del fauno»?",
+      "answers": [
+        {
+          "text": "Guillermo del Toro",
+          "correct": true
+        },
+        {
+          "text": "Alfonso Cuarón",
+          "correct": false
+        },
+        {
+          "text": "Alejandro González Iñárritu",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Del Toro llena cuadernos con dibujos y notas de sus criaturas; muchos de ellos se han publicado en libros.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_041",
+      "question": "¿Dónde y cuándo está ambientada «El laberinto del fauno»?",
+      "answers": [
+        {
+          "text": "En la España de 1944",
+          "correct": true
+        },
+        {
+          "text": "En el México de la Revolución",
+          "correct": false
+        },
+        {
+          "text": "En la Argentina de los años setenta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ganó tres Óscar: fotografía, dirección artística y maquillaje.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_042",
+      "question": "¿Qué película de Guillermo del Toro ganó el Óscar a mejor película?",
+      "answers": [
+        {
+          "text": "La forma del agua",
+          "correct": true
+        },
+        {
+          "text": "La cumbre escarlata",
+          "correct": false
+        },
+        {
+          "text": "El espinazo del diablo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Años después, su «Pinocho» en stop-motion ganó el Óscar a mejor película de animación.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_043",
+      "question": "¿Cuál fue el primer largometraje de Guillermo del Toro, sobre un artefacto que concede la vida eterna?",
+      "answers": [
+        {
+          "text": "Cronos",
+          "correct": true
+        },
+        {
+          "text": "Mimic",
+          "correct": false
+        },
+        {
+          "text": "Hellboy",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se estrenó en 1993, la protagonizó Federico Luppi y ganó el premio de la Semana de la Crítica en Cannes.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_044",
+      "question": "¿Quién dirigió «El orfanato»?",
+      "answers": [
+        {
+          "text": "Juan Antonio Bayona",
+          "correct": true
+        },
+        {
+          "text": "Alejandro Amenábar",
+          "correct": false
+        },
+        {
+          "text": "Álex de la Iglesia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue su primer largometraje, lo produjo Guillermo del Toro y lo protagonizó Belén Rueda.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_045",
+      "question": "¿Qué película de Alejandro Amenábar, con Nicole Kidman, transcurre en una casa aislada de la isla de Jersey?",
+      "answers": [
+        {
+          "text": "Los otros",
+          "correct": true
+        },
+        {
+          "text": "Tesis",
+          "correct": false
+        },
+        {
+          "text": "Abre los ojos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rodada en inglés, ganó el Goya a la mejor película: la primera vez que lo lograba un filme no hablado en español.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_046",
+      "question": "¿Dónde transcurre casi por completo la película «[REC]»?",
+      "answers": [
+        {
+          "text": "En un edificio de viviendas de Barcelona",
+          "correct": true
+        },
+        {
+          "text": "En un hospital de Madrid",
+          "correct": false
+        },
+        {
+          "text": "En un barco en alta mar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jaume Balagueró y Paco Plaza la rodaron como si fuera la grabación de un programa de televisión que acompaña a los bomberos.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_047",
+      "question": "¿De qué país es la película «La Llorona» de Jayro Bustamante, estrenada en 2019?",
+      "answers": [
+        {
+          "text": "Guatemala",
+          "correct": true
+        },
+        {
+          "text": "Chile",
+          "correct": false
+        },
+        {
+          "text": "Perú",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bustamante usó la leyenda para hablar de la memoria del genocidio maya, y la película fue candidata al Globo de Oro.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_048",
+      "question": "¿Qué actor español dio vida al hombre lobo Waldemar Daninsky en una larga serie de películas?",
+      "answers": [
+        {
+          "text": "Paul Naschy",
+          "correct": true
+        },
+        {
+          "text": "Fernando Rey",
+          "correct": false
+        },
+        {
+          "text": "Paco Rabal",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su nombre real era Jacinto Molina; fuera de España se le llegó a conocer como «el Lon Chaney español».",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_049",
+      "question": "¿Cómo se llamaba la serie de terror de TVE creada por Narciso Ibáñez Serrador en los años sesenta?",
+      "answers": [
+        {
+          "text": "Historias para no dormir",
+          "correct": true
+        },
+        {
+          "text": "Crónicas de un pueblo",
+          "correct": false
+        },
+        {
+          "text": "Curro Jiménez",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ibáñez Serrador, «Chicho», es también el creador del concurso «Un, dos, tres… responda otra vez».",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_050",
+      "question": "¿Quién dirigió «Psicosis»?",
+      "answers": [
+        {
+          "text": "Alfred Hitchcock",
+          "correct": true
+        },
+        {
+          "text": "Stanley Kubrick",
+          "correct": false
+        },
+        {
+          "text": "Orson Welles",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Para la famosa escena de la ducha, la sangre de la película en blanco y negro era sirope de chocolate.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_051",
+      "question": "¿Cómo se llama el villano enmascarado de «Halloween» de John Carpenter?",
+      "answers": [
+        {
+          "text": "Michael Myers",
+          "correct": true
+        },
+        {
+          "text": "Freddy Krueger",
+          "correct": false
+        },
+        {
+          "text": "Jason Voorhees",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su máscara era una careta barata del capitán Kirk de «Star Trek», pintada de blanco.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_052",
+      "question": "¿Quién interpretó al conde en el «Drácula» de Universal de 1931?",
+      "answers": [
+        {
+          "text": "Bela Lugosi",
+          "correct": true
+        },
+        {
+          "text": "Boris Karloff",
+          "correct": false
+        },
+        {
+          "text": "Christopher Lee",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Por las noches, en los mismos decorados, se rodaba una versión en español con otro reparto, protagonizada por Carlos Villarías y Lupita Tovar.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_053",
+      "question": "¿Qué película muda alemana fue una adaptación no autorizada de «Drácula»?",
+      "answers": [
+        {
+          "text": "Nosferatu",
+          "correct": true
+        },
+        {
+          "text": "Metrópolis",
+          "correct": false
+        },
+        {
+          "text": "El gabinete del doctor Caligari",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La viuda de Stoker ganó el pleito y un tribunal ordenó destruir las copias, pero algunas sobrevivieron.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_054",
+      "question": "¿Cómo se llama el Rey Calabaza de la Ciudad de Halloween en «Pesadilla antes de Navidad»?",
+      "answers": [
+        {
+          "text": "Jack Skellington",
+          "correct": true
+        },
+        {
+          "text": "Oogie Boogie",
+          "correct": false
+        },
+        {
+          "text": "Zero",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La idea y la producción fueron de Tim Burton, pero quien la dirigió fue Henry Selick.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_055",
+      "question": "¿Qué tienen en lugar de ojos los habitantes del Otro Mundo en «Coraline»?",
+      "answers": [
+        {
+          "text": "Botones",
+          "correct": true
+        },
+        {
+          "text": "Canicas",
+          "correct": false
+        },
+        {
+          "text": "Monedas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La historia viene de una novela de Neil Gaiman, y la película de 2009 se rodó en stop-motion fotograma a fotograma.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_056",
+      "question": "¿De qué disfrazan a E.T. los niños para sacarlo de casa en Halloween?",
+      "answers": [
+        {
+          "text": "De fantasma, con una sábana",
+          "correct": true
+        },
+        {
+          "text": "De vampiro",
+          "correct": false
+        },
+        {
+          "text": "De calabaza",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Por la calle, E.T. se cruza con un niño disfrazado de Yoda: un guiño de Spielberg a su amigo George Lucas.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_057",
+      "question": "¿Qué pieza de Mike Oldfield se hizo mundialmente famosa gracias a «El exorcista»?",
+      "answers": [
+        {
+          "text": "Tubular Bells",
+          "correct": true
+        },
+        {
+          "text": "Oxygène",
+          "correct": false
+        },
+        {
+          "text": "Ommadawn",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Oldfield tenía 19 años al grabarla y tocó él mismo casi todos los instrumentos.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_058",
+      "question": "¿Quién dirigió el videoclip de «Thriller» de Michael Jackson?",
+      "answers": [
+        {
+          "text": "John Landis",
+          "correct": true
+        },
+        {
+          "text": "Steven Spielberg",
+          "correct": false
+        },
+        {
+          "text": "Tim Burton",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Jackson lo eligió tras ver «Un hombre lobo americano en Londres»; la voz del recitado final es de Vincent Price.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_059",
+      "question": "¿Qué día de la semana da nombre, en el original inglés, a la hija de la familia Addams?",
+      "answers": [
+        {
+          "text": "Miércoles",
+          "correct": true
+        },
+        {
+          "text": "Viernes",
+          "correct": false
+        },
+        {
+          "text": "Domingo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Viene de una vieja rima inglesa: «Wednesday's child is full of woe», el niño nacido en miércoles está lleno de pena.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_060",
+      "question": "¿Qué alimento ahuyenta a los vampiros según la tradición?",
+      "answers": [
+        {
+          "text": "El ajo",
+          "correct": true
+        },
+        {
+          "text": "La canela",
+          "correct": false
+        },
+        {
+          "text": "El azafrán",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En el folclore de los Balcanes se untaban con ajo puertas y ventanas para mantener lejos a los muertos que regresaban.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_061",
+      "question": "¿De qué metal debe ser la bala que acaba con un hombre lobo, según las películas y leyendas?",
+      "answers": [
+        {
+          "text": "Plata",
+          "correct": true
+        },
+        {
+          "text": "Oro",
+          "correct": false
+        },
+        {
+          "text": "Cobre",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La plata se asocia desde antiguo a la pureza; el cine de los años cuarenta popularizó la plata como la gran debilidad de la bestia.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_062",
+      "question": "¿Qué fase de la luna transforma al hombre lobo?",
+      "answers": [
+        {
+          "text": "La luna llena",
+          "correct": true
+        },
+        {
+          "text": "La luna nueva",
+          "correct": false
+        },
+        {
+          "text": "El cuarto menguante",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La luna llena de octubre suele recibir en inglés el nombre de «Hunter's Moon», la luna del cazador.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_063",
+      "question": "Según el folclore del Río de la Plata, ¿en qué se convierte el séptimo hijo varón de una familia?",
+      "answers": [
+        {
+          "text": "En lobizón",
+          "correct": true
+        },
+        {
+          "text": "En duende",
+          "correct": false
+        },
+        {
+          "text": "En curandero",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En Argentina el presidente apadrina al séptimo hijo varón, una costumbre que suele relacionarse con esta leyenda.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_064",
+      "question": "¿En qué isla se hizo famosa en 1995 la leyenda del chupacabras?",
+      "answers": [
+        {
+          "text": "Puerto Rico",
+          "correct": true
+        },
+        {
+          "text": "Cuba",
+          "correct": false
+        },
+        {
+          "text": "Jamaica",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su nombre viene de los ataques a cabras y otros animales de granja que se le atribuían.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_065",
+      "question": "¿Qué órgano dejaban los antiguos egipcios dentro del cuerpo momificado?",
+      "answers": [
+        {
+          "text": "El corazón",
+          "correct": true
+        },
+        {
+          "text": "El cerebro",
+          "correct": false
+        },
+        {
+          "text": "El hígado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Creían que en el más allá el corazón se pesaba en una balanza frente a la pluma de la diosa Maat.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_066",
+      "question": "¿Quién financió la excavación que abrió la tumba de Tutankamón y murió pocos meses después, alimentando la leyenda de la maldición?",
+      "answers": [
+        {
+          "text": "Lord Carnarvon",
+          "correct": true
+        },
+        {
+          "text": "Howard Carter",
+          "correct": false
+        },
+        {
+          "text": "Heinrich Schliemann",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Howard Carter, que dirigía la excavación, vivió todavía diecisiete años más tras abrir la tumba.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_067",
+      "question": "¿Sobre qué se levanta la cabaña de la bruja Baba Yaga en los cuentos eslavos?",
+      "answers": [
+        {
+          "text": "Sobre patas de gallina",
+          "correct": true
+        },
+        {
+          "text": "Sobre un árbol hueco",
+          "correct": false
+        },
+        {
+          "text": "Sobre un lago helado",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Baba Yaga vuela dentro de un mortero y borra su rastro con una escoba.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_068",
+      "question": "¿Qué animal es el Cadejo del folclore centroamericano?",
+      "answers": [
+        {
+          "text": "Un perro",
+          "correct": true
+        },
+        {
+          "text": "Un caballo",
+          "correct": false
+        },
+        {
+          "text": "Un búho",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se dice que el Cadejo blanco protege a los caminantes nocturnos y el negro los acecha.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_069",
+      "question": "Según la leyenda llanera del Silbón, si su silbido se oye muy cerca, ¿qué significa?",
+      "answers": [
+        {
+          "text": "Que está lejos",
+          "correct": true
+        },
+        {
+          "text": "Que está a tu lado",
+          "correct": false
+        },
+        {
+          "text": "Que ha llegado la medianoche",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Y al revés: si el silbido suena lejano, el espanto está muy cerca. La leyenda es típica de los llanos de Venezuela y Colombia.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_070",
+      "question": "¿Cómo se llamaba el mundo de los muertos en la mitología mexica?",
+      "answers": [
+        {
+          "text": "Mictlán",
+          "correct": true
+        },
+        {
+          "text": "Xibalbá",
+          "correct": false
+        },
+        {
+          "text": "Aztlán",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo gobernaba Mictlantecuhtli, y las almas debían atravesar nueve niveles llenos de pruebas para llegar a su descanso.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_071",
+      "question": "¿De qué raza es Dante, el perro que acompaña a Miguel en «Coco»?",
+      "answers": [
+        {
+          "text": "Xoloitzcuintle",
+          "correct": true
+        },
+        {
+          "text": "Chihuahua",
+          "correct": false
+        },
+        {
+          "text": "Carlino",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Para los mexicas, el xoloitzcuintle ayudaba a las almas a cruzar un río en el camino hacia el Mictlán.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_072",
+      "question": "¿Qué son las «calaveritas literarias» mexicanas?",
+      "answers": [
+        {
+          "text": "Versos burlones que imaginan la muerte de alguien vivo",
+          "correct": true
+        },
+        {
+          "text": "Dulces de azúcar con nombres",
+          "correct": false
+        },
+        {
+          "text": "Máscaras de papel maché",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se escriben por Día de Muertos y se dedican a amigos, profesores o políticos, siempre con humor.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_073",
+      "question": "¿Qué llevan escrito en la frente muchas calaveritas de azúcar del Día de Muertos?",
+      "answers": [
+        {
+          "text": "Un nombre",
+          "correct": true
+        },
+        {
+          "text": "Una fecha",
+          "correct": false
+        },
+        {
+          "text": "Un número de la suerte",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se regalan a amigos y familiares vivos con su propio nombre, como una broma cariñosa con la muerte.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_074",
+      "question": "¿Qué animal acompaña tradicionalmente a la bruja en su escoba?",
+      "answers": [
+        {
+          "text": "Un gato negro",
+          "correct": true
+        },
+        {
+          "text": "Un perro blanco",
+          "correct": false
+        },
+        {
+          "text": "Una ardilla",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En la Edad Media europea se llegó a creer que las brujas podían convertirse en gatos.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_075",
+      "question": "¿De qué continente es originaria la calabaza naranja típica de Halloween?",
+      "answers": [
+        {
+          "text": "América",
+          "correct": true
+        },
+        {
+          "text": "Asia",
+          "correct": false
+        },
+        {
+          "text": "África",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los pueblos indígenas de América ya la cultivaban hace miles de años; llegó a Europa tras los viajes de Colón.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_076",
+      "question": "¿Qué fruta se intenta atrapar con la boca, sin manos, en un juego tradicional de Halloween?",
+      "answers": [
+        {
+          "text": "La manzana",
+          "correct": true
+        },
+        {
+          "text": "La naranja",
+          "correct": false
+        },
+        {
+          "text": "La pera",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En Irlanda la noche de Halloween llegó a llamarse «Snap-Apple Night» por este tipo de juegos.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_077",
+      "question": "¿Qué objeto escondido en el barmbrack, el pan de Halloween irlandés, anuncia una boda próxima?",
+      "answers": [
+        {
+          "text": "Un anillo",
+          "correct": true
+        },
+        {
+          "text": "Una castaña",
+          "correct": false
+        },
+        {
+          "text": "Una llave",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Otros objetos escondidos en el pan anunciaban riqueza, como una moneda, o soltería, como un dedal.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_078",
+      "question": "¿Qué famoso escapista murió un 31 de octubre?",
+      "answers": [
+        {
+          "text": "Harry Houdini",
+          "correct": true
+        },
+        {
+          "text": "Georges Méliès",
+          "correct": false
+        },
+        {
+          "text": "P. T. Barnum",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Desde su muerte en 1926 se celebran sesiones de espiritismo cada Halloween para intentar, sin éxito, contactar con él.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_079",
+      "question": "¿Qué emisión radiofónica de Orson Welles salió al aire la víspera de Halloween de 1938?",
+      "answers": [
+        {
+          "text": "La guerra de los mundos",
+          "correct": true
+        },
+        {
+          "text": "Frankenstein",
+          "correct": false
+        },
+        {
+          "text": "El hombre invisible",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hoy se cree que el pánico masivo que causó fue muy exagerado por los periódicos de la época.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_080",
+      "question": "¿Qué flor se lleva tradicionalmente a los cementerios en España por Todos los Santos?",
+      "answers": [
+        {
+          "text": "El crisantemo",
+          "correct": true
+        },
+        {
+          "text": "El tulipán",
+          "correct": false
+        },
+        {
+          "text": "El girasol",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Florece justo en otoño, y por eso en muchos países europeos se ha convertido en la flor de los difuntos.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_081",
+      "question": "¿Cuál es el único mamífero capaz de volar batiendo las alas?",
+      "answers": [
+        {
+          "text": "El murciélago",
+          "correct": true
+        },
+        {
+          "text": "La ardilla voladora",
+          "correct": false
+        },
+        {
+          "text": "El colugo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La ardilla voladora y el colugo solo planean gracias a una membrana entre las patas.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_082",
+      "question": "¿Qué usan los murciélagos para orientarse en la oscuridad?",
+      "answers": [
+        {
+          "text": "La ecolocalización",
+          "correct": true
+        },
+        {
+          "text": "La visión infrarroja",
+          "correct": false
+        },
+        {
+          "text": "El campo magnético",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Emiten sonidos agudos y escuchan el eco; así detectan insectos del tamaño de un mosquito.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_083",
+      "question": "¿De qué se alimentan los murciélagos vampiro?",
+      "answers": [
+        {
+          "text": "De sangre",
+          "correct": true
+        },
+        {
+          "text": "De fruta",
+          "correct": false
+        },
+        {
+          "text": "De néctar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Solo tres de las más de mil especies de murciélagos se alimentan de sangre, y las tres viven en América.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_084",
+      "question": "¿Cómo se llama la sustancia anticoagulante de la saliva del murciélago vampiro?",
+      "answers": [
+        {
+          "text": "Draculina",
+          "correct": true
+        },
+        {
+          "text": "Vampirina",
+          "correct": false
+        },
+        {
+          "text": "Nosferina",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se estudia como posible base de medicamentos contra los trombos.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_085",
+      "question": "¿Qué proporción aproximada de las especies de mamíferos son murciélagos?",
+      "answers": [
+        {
+          "text": "Una de cada cinco",
+          "correct": true
+        },
+        {
+          "text": "Una de cada cincuenta",
+          "correct": false
+        },
+        {
+          "text": "Una de cada dos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Solo los roedores tienen más especies que los murciélagos entre los mamíferos.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_086",
+      "question": "¿Qué planta, base del tequila, polinizan algunos murciélagos?",
+      "answers": [
+        {
+          "text": "El agave azul",
+          "correct": true
+        },
+        {
+          "text": "La caña de azúcar",
+          "correct": false
+        },
+        {
+          "text": "La vid",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los murciélagos nectarívoros visitan las flores de noche y quedan cubiertos de polen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_087",
+      "question": "¿A qué grupo pertenecen las arañas?",
+      "answers": [
+        {
+          "text": "Arácnidos",
+          "correct": true
+        },
+        {
+          "text": "Insectos",
+          "correct": false
+        },
+        {
+          "text": "Crustáceos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los insectos tienen seis patas y el cuerpo en tres partes; las arañas, ocho patas y el cuerpo en dos.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_088",
+      "question": "¿De qué ciudad italiana toman su nombre la tarántula y la tarantela?",
+      "answers": [
+        {
+          "text": "Tarento",
+          "correct": true
+        },
+        {
+          "text": "Turín",
+          "correct": false
+        },
+        {
+          "text": "Trento",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se creía que el baile frenético de la tarantela curaba la picadura de la araña de la zona.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_089",
+      "question": "¿Por qué el vuelo de los búhos y las lechuzas es casi silencioso?",
+      "answers": [
+        {
+          "text": "Por el borde deshilachado de sus plumas",
+          "correct": true
+        },
+        {
+          "text": "Porque baten las alas muy despacio",
+          "correct": false
+        },
+        {
+          "text": "Porque no tienen plumas en las alas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Esos flecos rompen la turbulencia del aire; los ingenieros los han imitado para hacer más silenciosos algunos ventiladores.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_090",
+      "question": "¿Qué hormona libera el cuerpo de golpe ante un susto?",
+      "answers": [
+        {
+          "text": "Adrenalina",
+          "correct": true
+        },
+        {
+          "text": "Melatonina",
+          "correct": false
+        },
+        {
+          "text": "Insulina",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Acelera el corazón y la respiración para preparar al cuerpo para huir o luchar.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_091",
+      "question": "¿Qué zona del cerebro tiene un papel central en el miedo?",
+      "answers": [
+        {
+          "text": "La amígdala",
+          "correct": true
+        },
+        {
+          "text": "El cerebelo",
+          "correct": false
+        },
+        {
+          "text": "La glándula pineal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Reacciona ante un peligro antes incluso de que seamos conscientes de lo que estamos viendo.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_092",
+      "question": "¿Cómo se llama el miedo irracional a Halloween?",
+      "answers": [
+        {
+          "text": "Samhainofobia",
+          "correct": true
+        },
+        {
+          "text": "Nictofobia",
+          "correct": false
+        },
+        {
+          "text": "Triscaidecafobia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La nictofobia es el miedo a la oscuridad y la triscaidecafobia, al número 13.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_093",
+      "question": "¿Qué explicación científica se da a los fuegos fatuos de pantanos y cementerios?",
+      "answers": [
+        {
+          "text": "Gases de la descomposición que se inflaman",
+          "correct": true
+        },
+        {
+          "text": "Electricidad estática de las nubes",
+          "correct": false
+        },
+        {
+          "text": "Reflejos de la luna en el agua",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En muchas leyendas eran almas en pena; la química apunta a gases como el metano y la fosfina.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_094",
+      "question": "¿Qué insecto migratorio llega a los bosques de Michoacán en torno al Día de Muertos?",
+      "answers": [
+        {
+          "text": "La mariposa monarca",
+          "correct": true
+        },
+        {
+          "text": "La libélula",
+          "correct": false
+        },
+        {
+          "text": "La abeja",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Según la tradición popular, las mariposas son las almas de los difuntos que vuelven a visitar a sus familias.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_095",
+      "question": "¿Qué son capaces de recordar durante años los cuervos, según estudios de la Universidad de Washington?",
+      "answers": [
+        {
+          "text": "Caras humanas",
+          "correct": true
+        },
+        {
+          "text": "Números de teléfono",
+          "correct": false
+        },
+        {
+          "text": "Canciones",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los investigadores usaron máscaras: los cuervos seguían graznando a quien llevaba la máscara «peligrosa» años después.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_096",
+      "question": "¿Qué científico italiano hacía mover ancas de rana con electricidad, un experimento que inspiró «Frankenstein»?",
+      "answers": [
+        {
+          "text": "Luigi Galvani",
+          "correct": true
+        },
+        {
+          "text": "Alessandro Volta",
+          "correct": false
+        },
+        {
+          "text": "Galileo Galilei",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "De su apellido viene la palabra «galvanismo», que Mary Shelley cita en el prólogo de su novela.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_097",
+      "question": "¿Cuántos huesos tiene el esqueleto de una persona adulta?",
+      "type": "estimate",
+      "answer": 206,
+      "min": 0,
+      "max": 500,
+      "unit": "huesos",
+      "difficulty": "easy",
+      "fun_fact": "Al nacer tenemos unos 300, pero muchos se van soldando durante el crecimiento.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_098",
+      "question": "¿En qué año se publicó «Drácula» de Bram Stoker?",
+      "type": "estimate",
+      "answer": 1897,
+      "min": 1700,
+      "max": 2000,
+      "unit": "año",
+      "difficulty": "medium",
+      "fun_fact": "Se publicó en 1897; al principio vendió de forma discreta y su gran fama llegó con el teatro y el cine.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_099",
+      "question": "¿En qué año se estrenó la película muda «Nosferatu», de F. W. Murnau?",
+      "type": "estimate",
+      "answer": 1922,
+      "min": 1850,
+      "max": 2020,
+      "unit": "año",
+      "difficulty": "hard",
+      "fun_fact": "En 1922; como no tenía los derechos de «Drácula», el conde pasó a llamarse Orlok.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_100",
+      "question": "¿En qué año publicó Martín Lutero sus 95 tesis, un 31 de octubre, víspera de Todos los Santos?",
+      "type": "estimate",
+      "answer": 1517,
+      "min": 1300,
+      "max": 1800,
+      "unit": "año",
+      "difficulty": "medium",
+      "fun_fact": "En 1517; por eso el 31 de octubre es también el Día de la Reforma en muchos países protestantes.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_es_101",
+      "question": "¿En qué año se estrenó la película «Halloween» de John Carpenter?",
+      "type": "estimate",
+      "answer": 1978,
+      "min": 1900,
+      "max": 2020,
+      "unit": "año",
+      "difficulty": "medium",
+      "fun_fact": "En 1978, con un presupuesto de unos 300.000 dólares; Carpenter compuso él mismo la inquietante música.",
+      "category": "Halloween"
+    }
+  ]
+}

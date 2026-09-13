@@ -1,0 +1,2089 @@
+{
+  "name": "Halloween",
+  "language": "de",
+  "version": "1.0",
+  "theme": "trivia",
+  "season": {
+    "start": "10-01",
+    "end": "10-31",
+    "label": "🎃 Halloween-Zeit"
+  },
+  "questions": [
+    {
+      "id": "halloween_de_001",
+      "question": "Wofür steht der Name „Halloween“ ursprünglich?",
+      "answers": [
+        {
+          "text": "Für den Abend vor Allerheiligen",
+          "correct": true
+        },
+        {
+          "text": "Für die Nacht der Hexen",
+          "correct": false
+        },
+        {
+          "text": "Für das Fest der Kürbisernte",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Aus „All Hallows' Eve“ wurde „Halloween“ — „hallow“ ist ein altes englisches Wort für „heilig“.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_002",
+      "question": "Welcher christliche Feiertag folgt am 1. November direkt auf Halloween?",
+      "answers": [
+        {
+          "text": "Allerheiligen",
+          "correct": true
+        },
+        {
+          "text": "Allerseelen",
+          "correct": false
+        },
+        {
+          "text": "Buß- und Bettag",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Allerseelen kommt einen Tag später, am 2. November — dann wird traditionell der Verstorbenen gedacht.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_003",
+      "question": "Welcher evangelische Gedenktag fällt ebenfalls auf den 31. Oktober?",
+      "answers": [
+        {
+          "text": "Der Reformationstag",
+          "correct": true
+        },
+        {
+          "text": "Der Buß- und Bettag",
+          "correct": false
+        },
+        {
+          "text": "Der Totensonntag",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Seit 2018 ist er auch in Hamburg, Bremen, Niedersachsen und Schleswig-Holstein arbeitsfrei.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_004",
+      "question": "Welches Gemüse höhlte man in Irland aus, bevor der Kürbis zur Halloween-Laterne wurde?",
+      "answers": [
+        {
+          "text": "Rüben",
+          "correct": true
+        },
+        {
+          "text": "Gurken",
+          "correct": false
+        },
+        {
+          "text": "Kohlköpfe",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Irische Auswanderer entdeckten in Amerika den Kürbis — der ließ sich viel leichter schnitzen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_005",
+      "question": "Was rufen Kinder an Halloween an deutschen Haustüren?",
+      "answers": [
+        {
+          "text": "„Süßes oder Saures!“",
+          "correct": true
+        },
+        {
+          "text": "„Hex-hex!“",
+          "correct": false
+        },
+        {
+          "text": "„Helau und Alaaf!“",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das amerikanische Vorbild heißt „Trick or treat“ — wer nichts rausrückt, muss mit einem Streich rechnen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_006",
+      "question": "Welche beiden Farben gelten als die klassischen Halloween-Farben?",
+      "answers": [
+        {
+          "text": "Orange und Schwarz",
+          "correct": true
+        },
+        {
+          "text": "Rot und Grün",
+          "correct": false
+        },
+        {
+          "text": "Blau und Silber",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Orange steht für Herbst und Ernte, Schwarz für die lange Nacht.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_007",
+      "question": "Wie heißt die geschnitzte Kürbislaterne auf Englisch?",
+      "answers": [
+        {
+          "text": "Jack O'Lantern",
+          "correct": true
+        },
+        {
+          "text": "Pumpkin Pete",
+          "correct": false
+        },
+        {
+          "text": "Candy Carl",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Name geht auf die irische Sage vom geizigen Jack zurück, der den Teufel überlistet haben soll.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_008",
+      "question": "Was versucht man beim Halloween-Spiel „Apfeltauchen“ nur mit dem Mund aus einer Wasserschüssel zu fischen?",
+      "answers": [
+        {
+          "text": "Äpfel",
+          "correct": true
+        },
+        {
+          "text": "Kastanien",
+          "correct": false
+        },
+        {
+          "text": "Walnüsse",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In Schottland heißt das Spiel „dooking for apples“ — nasse Haare inklusive.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_009",
+      "question": "Was teilte Sankt Martin der Legende nach mit einem frierenden Bettler?",
+      "answers": [
+        {
+          "text": "Seinen Mantel",
+          "correct": true
+        },
+        {
+          "text": "Sein Brot",
+          "correct": false
+        },
+        {
+          "text": "Sein Pferd",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Er soll den Umhang vor den Toren von Amiens mit dem Schwert in zwei Hälften geteilt haben.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_010",
+      "question": "Aus welchem Land stammt der Brauch des Día de Muertos?",
+      "answers": [
+        {
+          "text": "Aus Mexiko",
+          "correct": true
+        },
+        {
+          "text": "Aus Spanien",
+          "correct": false
+        },
+        {
+          "text": "Aus Brasilien",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gefeiert wird am 1. und 2. November — ein buntes Fest des Erinnerns und ausdrücklich kein mexikanisches Halloween.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_011",
+      "question": "Welches keltische Fest gilt als Vorläufer von Halloween?",
+      "answers": [
+        {
+          "text": "Samhain",
+          "correct": true
+        },
+        {
+          "text": "Beltane",
+          "correct": false
+        },
+        {
+          "text": "Imbolc",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mit Samhain begann die dunkle Jahreshälfte — in dieser Nacht galt die Grenze zur Anderswelt als besonders durchlässig.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_012",
+      "question": "Wer brachte Halloween im 19. Jahrhundert in großer Zahl nach Nordamerika?",
+      "answers": [
+        {
+          "text": "Irische Einwanderer",
+          "correct": true
+        },
+        {
+          "text": "Deutsche Einwanderer",
+          "correct": false
+        },
+        {
+          "text": "Englische Puritaner",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Vor allem nach der großen Hungersnot in den 1840er-Jahren wanderten Hunderttausende Iren aus.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_013",
+      "question": "Was trug der geizige Jack der irischen Sage in seiner ausgehöhlten Rübe?",
+      "answers": [
+        {
+          "text": "Ein glühendes Stück Kohle",
+          "correct": true
+        },
+        {
+          "text": "Eine Kerze aus Bienenwachs",
+          "correct": false
+        },
+        {
+          "text": "Ein Glühwürmchen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Weder Himmel noch Hölle wollten ihn aufnehmen — der Teufel warf ihm nur ein Stück Glut hinterher, damit er im Dunkeln herumirren kann.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_014",
+      "question": "Welcher Anlass wird oft genannt, warum Kostümhersteller ab den 1990ern Halloween in Deutschland bewarben?",
+      "answers": [
+        {
+          "text": "Der wegen des Golfkriegs abgesagte Karneval 1991",
+          "correct": true
+        },
+        {
+          "text": "Die Fußball-WM 1990 in Italien",
+          "correct": false
+        },
+        {
+          "text": "Die Einführung des Euro-Bargelds",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Branche blieb 1991 auf ihren Kostümen sitzen und suchte einen zweiten Anlass zum Verkleiden.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_015",
+      "question": "Welche Burg bei Darmstadt war jahrzehntelang Schauplatz eines der größten Halloweenfeste Deutschlands?",
+      "answers": [
+        {
+          "text": "Burg Frankenstein",
+          "correct": true
+        },
+        {
+          "text": "Die Wartburg",
+          "correct": false
+        },
+        {
+          "text": "Burg Eltz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die ersten Partys dort organisierten in den 1970ern US-Soldaten, die in der Gegend stationiert waren.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_016",
+      "question": "Welches Gebäck schenken Paten in Österreich und Bayern ihren Patenkindern zu Allerheiligen?",
+      "answers": [
+        {
+          "text": "Den Allerheiligenstriezel",
+          "correct": true
+        },
+        {
+          "text": "Das Martinshörnchen",
+          "correct": false
+        },
+        {
+          "text": "Den Christstollen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der geflochtene Zopf geht der Überlieferung nach auf alte Trauerbräuche zurück, bei denen man sich das Haar abschnitt.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_017",
+      "question": "In welchem Bundesland ist Allerheiligen ein gesetzlicher Feiertag?",
+      "answers": [
+        {
+          "text": "Bayern",
+          "correct": true
+        },
+        {
+          "text": "Hamburg",
+          "correct": false
+        },
+        {
+          "text": "Sachsen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Arbeitsfrei ist der 1. November außerdem in Baden-Württemberg, Nordrhein-Westfalen, Rheinland-Pfalz und im Saarland.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_018",
+      "question": "Welche orangefarbene Blume schmückt beim mexikanischen Día de Muertos die Gräber und Altäre?",
+      "answers": [
+        {
+          "text": "Die Studentenblume (Cempasúchil)",
+          "correct": true
+        },
+        {
+          "text": "Die Sonnenblume",
+          "correct": false
+        },
+        {
+          "text": "Die Mohnblume",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ihre leuchtende Farbe und ihr Duft sollen den Seelen den Weg nach Hause weisen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_019",
+      "question": "Wessen Geburtstag ehren Kinder beim Martinisingen in Ostfriesland am 10. November?",
+      "answers": [
+        {
+          "text": "Martin Luthers",
+          "correct": true
+        },
+        {
+          "text": "Karls des Großen",
+          "correct": false
+        },
+        {
+          "text": "Des heiligen Nikolaus",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mit Laternen ziehen die Kinder von Tür zu Tür und singen für Süßigkeiten — ganz ohne Kürbis.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_020",
+      "question": "Woraus bestehen die Tausenden Lichter der Räbechilbi im schweizerischen Richterswil?",
+      "answers": [
+        {
+          "text": "Aus ausgehöhlten Herbstrüben",
+          "correct": true
+        },
+        {
+          "text": "Aus ausgehöhlten Kürbissen",
+          "correct": false
+        },
+        {
+          "text": "Aus ausgehöhlten Äpfeln",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "1998 kam der Umzug mit 24 Tonnen Rüben ins Guinness-Buch — während des Umzugs geht sogar die Straßenbeleuchtung aus.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_021",
+      "question": "Wie nennt die Volkskunde Bräuche, bei denen Kinder an Haustüren um Gaben bitten?",
+      "answers": [
+        {
+          "text": "Heischebräuche",
+          "correct": true
+        },
+        {
+          "text": "Rügebräuche",
+          "correct": false
+        },
+        {
+          "text": "Zunftbräuche",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dazu zählen Sternsingen und Martinisingen genauso wie das Süßigkeitensammeln an Halloween.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_022",
+      "question": "Wie hieß im alten England der Brauch, rund um Allerseelen an Türen um „Seelenkuchen“ zu bitten?",
+      "answers": [
+        {
+          "text": "Souling",
+          "correct": true
+        },
+        {
+          "text": "Wassailing",
+          "correct": false
+        },
+        {
+          "text": "Mumming",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Als Gegenleistung versprachen die Bittenden, für die Verstorbenen des Hauses zu beten.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_023",
+      "question": "Wie heißt in Schottland das traditionelle Verkleiden und Von-Tür-zu-Tür-Ziehen an Halloween?",
+      "answers": [
+        {
+          "text": "Guising",
+          "correct": true
+        },
+        {
+          "text": "Carolling",
+          "correct": false
+        },
+        {
+          "text": "Busking",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wer etwas Süßes will, muss vorher etwas vortragen — ein Lied, einen Witz oder ein Gedicht.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_024",
+      "question": "Was bezeichnet das Wort „Samhain“ im heutigen Irischen außerdem?",
+      "answers": [
+        {
+          "text": "Den Monat November",
+          "correct": true
+        },
+        {
+          "text": "Den Kürbis",
+          "correct": false
+        },
+        {
+          "text": "Das Lagerfeuer",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Wurzel wird meist als „Sommerende“ gedeutet.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_025",
+      "question": "Wer schuf die elegante Skelettdame „La Catrina“, die heute zum Día de Muertos gehört?",
+      "answers": [
+        {
+          "text": "José Guadalupe Posada",
+          "correct": true
+        },
+        {
+          "text": "Frida Kahlo",
+          "correct": false
+        },
+        {
+          "text": "Pablo Picasso",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Grafik vom Anfang des 20. Jahrhunderts verspottete die feine Gesellschaft; Diego Rivera machte sie später weltberühmt.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_026",
+      "question": "In welchem Film jagen vier Männer mit Protonenstrahlern Geister durch New York?",
+      "answers": [
+        {
+          "text": "Ghostbusters",
+          "correct": true
+        },
+        {
+          "text": "Men in Black",
+          "correct": false
+        },
+        {
+          "text": "Gremlins",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Titelsong stellt die berühmte Frage: „Who you gonna call?“",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_027",
+      "question": "Wie heißt der freundliche kleine Geist aus amerikanischen Zeichentrickfilmen?",
+      "answers": [
+        {
+          "text": "Casper",
+          "correct": true
+        },
+        {
+          "text": "Beetlejuice",
+          "correct": false
+        },
+        {
+          "text": "Hui Buh",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Casper spukt schon seit den 1940er-Jahren über die Leinwand — und will eigentlich nur Freunde finden.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_028",
+      "question": "In welchem Pixar-Film gewinnen Monster Energie aus den Schreien von Kindern?",
+      "answers": [
+        {
+          "text": "Die Monster AG",
+          "correct": true
+        },
+        {
+          "text": "Alles steht Kopf",
+          "correct": false
+        },
+        {
+          "text": "Toy Story",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Am Ende stellt sich heraus, dass Kinderlachen noch viel mehr Energie liefert.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_029",
+      "question": "Wer führt im Animationsfilm „Hotel Transsilvanien“ das Hotel?",
+      "answers": [
+        {
+          "text": "Graf Dracula",
+          "correct": true
+        },
+        {
+          "text": "Frankensteins Monster",
+          "correct": false
+        },
+        {
+          "text": "Die Mumie",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Hotel soll die Monster vor den Menschen schützen — nicht umgekehrt.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_030",
+      "question": "Welcher Popstar tanzt im Musikvideo zu „Thriller“ mit Zombies?",
+      "answers": [
+        {
+          "text": "Michael Jackson",
+          "correct": true
+        },
+        {
+          "text": "Prince",
+          "correct": false
+        },
+        {
+          "text": "Madonna",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die unheimliche Sprechpassage im Song stammt von Horrorlegende Vincent Price.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_031",
+      "question": "Wer führte Regie beim Stummfilmklassiker „Nosferatu – Eine Symphonie des Grauens“?",
+      "answers": [
+        {
+          "text": "F. W. Murnau",
+          "correct": true
+        },
+        {
+          "text": "Fritz Lang",
+          "correct": false
+        },
+        {
+          "text": "Robert Wiene",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Den Vampir spielte Max Schreck — ein Name, der kaum besser hätte passen können.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_032",
+      "question": "Wie heißt der Vampir in Murnaus „Nosferatu“?",
+      "answers": [
+        {
+          "text": "Graf Orlok",
+          "correct": true
+        },
+        {
+          "text": "Graf Krolock",
+          "correct": false
+        },
+        {
+          "text": "Graf Vlad",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Rechte an „Dracula“ fehlten; Stokers Witwe klagte trotzdem, und ein Gericht ordnete die Vernichtung der Kopien an. Zum Glück überlebten einige.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_033",
+      "question": "Welche heute typische Vampir-Schwäche zeigte „Nosferatu“ als erster Film?",
+      "answers": [
+        {
+          "text": "Tod durch Sonnenlicht",
+          "correct": true
+        },
+        {
+          "text": "Angst vor Knoblauch",
+          "correct": false
+        },
+        {
+          "text": "Kein Spiegelbild",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Stokers Roman ist Dracula tagsüber nur geschwächt — er spaziert sogar bei Tageslicht durch London.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_034",
+      "question": "In welchen Städten wurde „Nosferatu“ unter anderem gedreht?",
+      "answers": [
+        {
+          "text": "In Wismar und Lübeck",
+          "correct": true
+        },
+        {
+          "text": "In Köln und Bonn",
+          "correct": false
+        },
+        {
+          "text": "In Dresden und Leipzig",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Im Film heißt die Stadt Wisborg — der Lübecker Salzspeicher wird zu Orloks neuem Haus.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_035",
+      "question": "Was ist typisch für die Kulissen in „Das Cabinet des Dr. Caligari“?",
+      "answers": [
+        {
+          "text": "Schiefe, bemalte Wände mit aufgemalten Schatten",
+          "correct": true
+        },
+        {
+          "text": "Echte Burgen in Transsilvanien",
+          "correct": false
+        },
+        {
+          "text": "Kulissen komplett aus Glas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Film von 1920 gilt als Hauptwerk des Expressionismus — sogar Lichtstreifen wurden direkt auf die Kulissen gemalt.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_036",
+      "question": "Welcher Schauspieler spielte das Monster im Frankenstein-Film von 1931?",
+      "answers": [
+        {
+          "text": "Boris Karloff",
+          "correct": true
+        },
+        {
+          "text": "Bela Lugosi",
+          "correct": false
+        },
+        {
+          "text": "Christopher Lee",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die flache Stirn und die Bolzen am Hals aus diesem Film prägen das Bild des Monsters bis heute.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_037",
+      "question": "Wessen Gesicht zeigte die Maske des Filmbösewichts Michael Myers aus „Halloween“ ursprünglich?",
+      "answers": [
+        {
+          "text": "William Shatners als Captain Kirk",
+          "correct": true
+        },
+        {
+          "text": "Elvis Presleys",
+          "correct": false
+        },
+        {
+          "text": "Richard Nixons",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Team kaufte eine billige Kirk-Maske, sprühte sie weiß an und vergrößerte die Augenlöcher.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_038",
+      "question": "In welchem Film wird ein Außerirdischer an Halloween unter einem Bettlaken als Gespenst nach draußen geschmuggelt?",
+      "answers": [
+        {
+          "text": "E.T. – Der Außerirdische",
+          "correct": true
+        },
+        {
+          "text": "Mars Attacks!",
+          "correct": false
+        },
+        {
+          "text": "Men in Black",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Unterwegs begegnet E.T. einem als Yoda verkleideten Kind — und will ihm hinterherlaufen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_039",
+      "question": "Worauf wartet Linus bei den Peanuts jedes Jahr an Halloween im Kürbisfeld?",
+      "answers": [
+        {
+          "text": "Auf den Großen Kürbis",
+          "correct": true
+        },
+        {
+          "text": "Auf den Weihnachtsmann",
+          "correct": false
+        },
+        {
+          "text": "Auf den kopflosen Reiter",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Charlie Brown bekommt beim Süßigkeitensammeln statt Bonbons nur einen Stein.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_040",
+      "question": "Wie heißt der Kürbiskönig von Halloween Town in „The Nightmare Before Christmas“?",
+      "answers": [
+        {
+          "text": "Jack Skellington",
+          "correct": true
+        },
+        {
+          "text": "Oogie Boogie",
+          "correct": false
+        },
+        {
+          "text": "Zero",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Regie führte Henry Selick — Tim Burton lieferte die Idee und produzierte.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_041",
+      "question": "Wie heißt die körperlose Hand der „Addams Family“ in der deutschen Fassung?",
+      "answers": [
+        {
+          "text": "Das eiskalte Händchen",
+          "correct": true
+        },
+        {
+          "text": "Der flinke Finger",
+          "correct": false
+        },
+        {
+          "text": "Die kalte Klaue",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Original heißt sie schlicht „Thing“ — also „Ding“.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_042",
+      "question": "Welcher Vampir-Graf stammt aus dem Roman von Bram Stoker?",
+      "answers": [
+        {
+          "text": "Graf Dracula",
+          "correct": true
+        },
+        {
+          "text": "Graf Zahl",
+          "correct": false
+        },
+        {
+          "text": "Graf Luckner",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Stoker selbst war nie in Transsilvanien — er recherchierte in Bibliotheken und Reiseberichten.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_043",
+      "question": "In welcher Region Rumäniens liegt Draculas Schloss im Roman?",
+      "answers": [
+        {
+          "text": "In Transsilvanien",
+          "correct": true
+        },
+        {
+          "text": "In Kärnten",
+          "correct": false
+        },
+        {
+          "text": "In der Toskana",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Auf Deutsch heißt Transsilvanien auch Siebenbürgen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_044",
+      "question": "Wer erschafft in Mary Shelleys Roman das künstliche Wesen?",
+      "answers": [
+        {
+          "text": "Victor Frankenstein",
+          "correct": true
+        },
+        {
+          "text": "Igor",
+          "correct": false
+        },
+        {
+          "text": "Dr. Jekyll",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Wesen selbst hat im Roman keinen Namen — „Frankenstein“ ist der Wissenschaftler.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_045",
+      "question": "Mit welchem Ausruf beendet Bibi Blocksberg ihre Zaubersprüche?",
+      "answers": [
+        {
+          "text": "„Hex-hex!“",
+          "correct": true
+        },
+        {
+          "text": "„Simsalabim!“",
+          "correct": false
+        },
+        {
+          "text": "„Abrakadabra!“",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ihr Besen heißt Kartoffelbrei, und ihr Nachname spielt auf den Blocksberg an — so heißt der Brocken im Volksmund.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_046",
+      "question": "In welchem Grimm-Märchen wohnt eine Hexe in einem Haus zum Anknabbern?",
+      "answers": [
+        {
+          "text": "Hänsel und Gretel",
+          "correct": true
+        },
+        {
+          "text": "Rotkäppchen",
+          "correct": false
+        },
+        {
+          "text": "Schneewittchen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bei den Grimms ist das Häuschen aus Brot gebaut, mit Kuchen gedeckt und hat Fenster aus hellem Zucker.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_047",
+      "question": "Auf welchem Berg im Harz treffen sich der Sage nach die Hexen in der Walpurgisnacht?",
+      "answers": [
+        {
+          "text": "Auf dem Brocken",
+          "correct": true
+        },
+        {
+          "text": "Auf der Zugspitze",
+          "correct": false
+        },
+        {
+          "text": "Auf dem Feldberg",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Walpurgisnacht ist die Nacht zum 1. Mai — sozusagen das Frühlings-Gegenstück zu Halloween.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_048",
+      "question": "Wie heißt das Schlossgespenst aus den Europa-Hörspielen, dem Hans Clarin seine Stimme lieh?",
+      "answers": [
+        {
+          "text": "Hui Buh",
+          "correct": true
+        },
+        {
+          "text": "Casper",
+          "correct": false
+        },
+        {
+          "text": "Balduin",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "2006 kam es mit Michael Bully Herbig ins Kino — Hans Clarin spielte darin den Kastellan.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_049",
+      "question": "In welcher Buchreihe taucht an Halloween ein Troll im Keller einer Schule auf?",
+      "answers": [
+        {
+          "text": "Harry Potter",
+          "correct": true
+        },
+        {
+          "text": "Der Herr der Ringe",
+          "correct": false
+        },
+        {
+          "text": "Die Schule der magischen Tiere",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Auch Harrys Eltern starben der Geschichte nach an einem Halloween-Abend.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_050",
+      "question": "Wie alt ist Preußlers kleine Hexe zu Beginn der Geschichte?",
+      "answers": [
+        {
+          "text": "127 Jahre",
+          "correct": true
+        },
+        {
+          "text": "13 Jahre",
+          "correct": false
+        },
+        {
+          "text": "999 Jahre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Für die großen Hexen ist das viel zu jung — sie darf in der Walpurgisnacht nicht mittanzen. Rat holt sie sich bei ihrem Raben Abraxas.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_051",
+      "question": "Auf welcher Burg spukt Preußlers kleines Gespenst?",
+      "answers": [
+        {
+          "text": "Auf Burg Eulenstein",
+          "correct": true
+        },
+        {
+          "text": "Auf Burg Frankenstein",
+          "correct": false
+        },
+        {
+          "text": "Auf Burg Schreckenstein",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sein größter Wunsch ist, einmal die Welt bei Tag zu sehen — als es klappt, wird es kohlrabenschwarz.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_052",
+      "question": "Wie heißt der kleine Vampir in Angela Sommer-Bodenburgs Kinderbuchreihe?",
+      "answers": [
+        {
+          "text": "Rüdiger",
+          "correct": true
+        },
+        {
+          "text": "Graf Zahl",
+          "correct": false
+        },
+        {
+          "text": "Nosferatu",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rüdiger von Schlotterstein freundet sich mit dem Menschenjungen Anton an, der Gruselgeschichten liebt.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_053",
+      "question": "Wo schrieb die junge Mary Shelley im Sommer 1816 an den ersten Seiten von „Frankenstein“?",
+      "answers": [
+        {
+          "text": "Am Genfersee",
+          "correct": true
+        },
+        {
+          "text": "Am Bodensee",
+          "correct": false
+        },
+        {
+          "text": "Am Loch Ness",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nach einem Vulkanausbruch war 1816 das „Jahr ohne Sommer“ — Lord Byron schlug bei Dauerregen einen Gruselgeschichten-Wettbewerb vor.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_054",
+      "question": "Welchen Untertitel trägt Mary Shelleys „Frankenstein“?",
+      "answers": [
+        {
+          "text": "Der moderne Prometheus",
+          "correct": true
+        },
+        {
+          "text": "Die Braut des Blitzes",
+          "correct": false
+        },
+        {
+          "text": "Das Erbe der Toten",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In der griechischen Sage formte Prometheus die Menschen aus Lehm.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_055",
+      "question": "Aus welchem Land stammte Dracula-Autor Bram Stoker?",
+      "answers": [
+        {
+          "text": "Aus Irland",
+          "correct": true
+        },
+        {
+          "text": "Aus Schottland",
+          "correct": false
+        },
+        {
+          "text": "Aus Rumänien",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Stoker wurde in Dublin geboren und arbeitete später als Theatermanager in London.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_056",
+      "question": "Wie heißt der Professor, der in Stokers Roman Jagd auf Dracula macht?",
+      "answers": [
+        {
+          "text": "Abraham Van Helsing",
+          "correct": true
+        },
+        {
+          "text": "Victor Frankenstein",
+          "correct": false
+        },
+        {
+          "text": "Henry Jekyll",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Van Helsing ist Niederländer — Arzt, Philosoph und Vampirkenner in einem.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_057",
+      "question": "Was bedeutet der Beiname „Drăculea“ des walachischen Fürsten Vlad III.?",
+      "answers": [
+        {
+          "text": "Sohn des Drachen",
+          "correct": true
+        },
+        {
+          "text": "Blutiger Graf",
+          "correct": false
+        },
+        {
+          "text": "Herr der Nacht",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sein Vater gehörte dem Drachenorden an; im Rumänischen kann „drac“ allerdings auch „Teufel“ heißen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_058",
+      "question": "In welcher Erzählung von Washington Irving jagt ein kopfloser Reiter den Lehrer Ichabod Crane?",
+      "answers": [
+        {
+          "text": "Die Legende von Sleepy Hollow",
+          "correct": true
+        },
+        {
+          "text": "Das Gespenst von Canterville",
+          "correct": false
+        },
+        {
+          "text": "Der Untergang des Hauses Usher",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Reiter soll ein hessischer Soldat aus dem Unabhängigkeitskrieg gewesen sein, der seinen Kopf verloren hatte.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_059",
+      "question": "Wer schrieb „Das Gespenst von Canterville“?",
+      "answers": [
+        {
+          "text": "Oscar Wilde",
+          "correct": true
+        },
+        {
+          "text": "Charles Dickens",
+          "correct": false
+        },
+        {
+          "text": "Edgar Allan Poe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die amerikanische Familie Otis bietet dem Gespenst Fleckenentferner und Schmieröl für seine rasselnden Ketten an.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_060",
+      "question": "Welches Wort krächzt der Rabe in Edgar Allan Poes berühmtem Gedicht immer wieder?",
+      "answers": [
+        {
+          "text": "„Nevermore“",
+          "correct": true
+        },
+        {
+          "text": "„Forever“",
+          "correct": false
+        },
+        {
+          "text": "„Goodbye“",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Footballteam der Baltimore Ravens ist nach dem Gedicht benannt — Poe liegt in Baltimore begraben.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_061",
+      "question": "Wer schrieb die Ballade „Erlkönig“?",
+      "answers": [
+        {
+          "text": "Johann Wolfgang von Goethe",
+          "correct": true
+        },
+        {
+          "text": "Friedrich Schiller",
+          "correct": false
+        },
+        {
+          "text": "Heinrich Heine",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name beruht wohl auf einem Übersetzungsfehler: Herder machte aus dem dänischen Elfenkönig einen Erlkönig.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_062",
+      "question": "Wer schrieb die gespenstische Novelle „Der Schimmelreiter“?",
+      "answers": [
+        {
+          "text": "Theodor Storm",
+          "correct": true
+        },
+        {
+          "text": "Wilhelm Hauff",
+          "correct": false
+        },
+        {
+          "text": "Theodor Fontane",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es war Storms letzte Novelle — sie erschien 1888, kurz vor seinem Tod.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_063",
+      "question": "Wogegen tauscht Peter Munk in Wilhelm Hauffs „Das kalte Herz“ sein Herz ein?",
+      "answers": [
+        {
+          "text": "Gegen einen Stein",
+          "correct": true
+        },
+        {
+          "text": "Gegen einen Goldklumpen",
+          "correct": false
+        },
+        {
+          "text": "Gegen einen Eisklotz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Den Handel schließt er im Schwarzwald mit dem unheimlichen Holländer-Michel.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_064",
+      "question": "Welches deutsche Wort hat das Englische für einen polternden Spukgeist übernommen?",
+      "answers": [
+        {
+          "text": "Poltergeist",
+          "correct": true
+        },
+        {
+          "text": "Geisterbahn",
+          "correct": false
+        },
+        {
+          "text": "Spukschloss",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Auch „Doppelgänger“ und „Angst“ haben es als Lehnwörter ins Englische geschafft.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_065",
+      "question": "Wie heißt der launische Berggeist des Riesengebirges?",
+      "answers": [
+        {
+          "text": "Rübezahl",
+          "correct": true
+        },
+        {
+          "text": "Rumpelstilzchen",
+          "correct": false
+        },
+        {
+          "text": "Klabautermann",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Spottname soll auf eine Sage zurückgehen, in der er Rüben zählen musste — deshalb hört er ihn gar nicht gern.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_066",
+      "question": "Welcher Alchemist wurde 1673 auf Burg Frankenstein bei Darmstadt geboren?",
+      "answers": [
+        {
+          "text": "Johann Konrad Dippel",
+          "correct": true
+        },
+        {
+          "text": "Paracelsus",
+          "correct": false
+        },
+        {
+          "text": "Nicolas Flamel",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Manche halten ihn für ein Vorbild von Victor Frankenstein — belegt ist das nicht. Sicher ist: Mit seinem Tieröl half er bei der Entdeckung von Berliner Blau.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_067",
+      "question": "Wer schrieb die Ballade, die mit „O schaurig ist's übers Moor zu gehn“ beginnt?",
+      "answers": [
+        {
+          "text": "Annette von Droste-Hülshoff",
+          "correct": true
+        },
+        {
+          "text": "Clemens Brentano",
+          "correct": false
+        },
+        {
+          "text": "Theodor Storm",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "„Der Knabe im Moor“ — ihr Porträt war früher auf dem 20-Mark-Schein zu sehen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_068",
+      "question": "Was ist Olimpia in E. T. A. Hoffmanns Erzählung „Der Sandmann“?",
+      "answers": [
+        {
+          "text": "Ein Automat",
+          "correct": true
+        },
+        {
+          "text": "Ein Geist",
+          "correct": false
+        },
+        {
+          "text": "Eine Vampirin",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Student Nathanael verliebt sich unsterblich in sie — ohne zu merken, dass sie eine mechanische Puppe ist.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_069",
+      "question": "Worum bittet der Werwolf in Christian Morgensterns Gedicht den toten Dorfschullehrer?",
+      "answers": [
+        {
+          "text": "Dass er ihn dekliniert",
+          "correct": true
+        },
+        {
+          "text": "Dass er ihn erlöst",
+          "correct": false
+        },
+        {
+          "text": "Dass er ihm das Lesen beibringt",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Werwolf, des Weswolfs, dem Wemwolf, den Wenwolf — nur einen Plural gibt es leider nicht.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_070",
+      "question": "Was lässt den Helden im Grimm-Märchen „Von einem, der auszog, das Fürchten zu lernen“ endlich gruseln?",
+      "answers": [
+        {
+          "text": "Ein Eimer kaltes Wasser mit kleinen Fischen",
+          "correct": true
+        },
+        {
+          "text": "Ein Gespenst ohne Kopf",
+          "correct": false
+        },
+        {
+          "text": "Ein heulender Wolf",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Seine Frau kippt ihm nachts Wasser mit Gründlingen ins Bett — nach Spukschloss und Gespenstern klappt es endlich.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_071",
+      "question": "In welchem Grimm-Märchen zeigt der Tod einem Arzt eine Höhle voller brennender Lebenslichter?",
+      "answers": [
+        {
+          "text": "Der Gevatter Tod",
+          "correct": true
+        },
+        {
+          "text": "Frau Holle",
+          "correct": false
+        },
+        {
+          "text": "Das Wasser des Lebens",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Arzt überlistet den Tod zweimal — beim dritten Mal lässt der sich nicht mehr hereinlegen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_072",
+      "question": "Welcher Prager Rabbiner soll der Legende nach den Golem aus Lehm geformt haben?",
+      "answers": [
+        {
+          "text": "Rabbi Löw",
+          "correct": true
+        },
+        {
+          "text": "Rabbi Akiba",
+          "correct": false
+        },
+        {
+          "text": "Rabbi Hillel",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Paul Wegener brachte die Sage 1920 als Stummfilm „Der Golem, wie er in die Welt kam“ ins Kino.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_073",
+      "question": "Welches Tier bringt im Aberglauben Unglück, wenn es einem über den Weg läuft?",
+      "answers": [
+        {
+          "text": "Eine schwarze Katze",
+          "correct": true
+        },
+        {
+          "text": "Ein weißes Kaninchen",
+          "correct": false
+        },
+        {
+          "text": "Ein brauner Hund",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In Teilen Großbritanniens gilt eine schwarze Katze dagegen als Glücksbringer.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_074",
+      "question": "Womit fliegt eine Hexe im Märchen traditionell durch die Nacht?",
+      "answers": [
+        {
+          "text": "Mit einem Besen",
+          "correct": true
+        },
+        {
+          "text": "Mit einem Teppich",
+          "correct": false
+        },
+        {
+          "text": "Mit einem Regenschirm",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Auf Bildern aus dem Mittelalter reiten Hexen auch auf Ofengabeln oder Ziegenböcken.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_075",
+      "question": "Welche Knolle soll der Sage nach Vampire fernhalten?",
+      "answers": [
+        {
+          "text": "Knoblauch",
+          "correct": true
+        },
+        {
+          "text": "Sellerie",
+          "correct": false
+        },
+        {
+          "text": "Ingwer",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Auch in Stokers „Dracula“ werden Knoblauchblüten zum Schutz ins Zimmer gehängt.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_076",
+      "question": "Was löst in Filmen die Verwandlung eines Werwolfs aus?",
+      "answers": [
+        {
+          "text": "Der Vollmond",
+          "correct": true
+        },
+        {
+          "text": "Ein Gewitter",
+          "correct": false
+        },
+        {
+          "text": "Eine Sonnenfinsternis",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Fachbegriff für die Verwandlung eines Menschen in einen Wolf lautet Lykanthropie.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_077",
+      "question": "Was tragen Gespenster in Kinderbüchern und Kostümen typischerweise?",
+      "answers": [
+        {
+          "text": "Ein weißes Laken",
+          "correct": true
+        },
+        {
+          "text": "Einen roten Umhang",
+          "correct": false
+        },
+        {
+          "text": "Einen Zylinder",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Preußlers kleines Gespenst ist auch weiß — bis es ins Tageslicht gerät und schwarz wird.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_078",
+      "question": "Aus welchem Land stammen die berühmtesten Mumien?",
+      "answers": [
+        {
+          "text": "Aus Ägypten",
+          "correct": true
+        },
+        {
+          "text": "Aus Island",
+          "correct": false
+        },
+        {
+          "text": "Aus Japan",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die alten Ägypter trockneten die Körper mit Natronsalz — eine Mumifizierung dauerte rund 70 Tage.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_079",
+      "question": "Was ist ein Kürbis botanisch gesehen?",
+      "answers": [
+        {
+          "text": "Eine Beere",
+          "correct": true
+        },
+        {
+          "text": "Eine Nuss",
+          "correct": false
+        },
+        {
+          "text": "Eine Steinfrucht",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Genauer eine „Panzerbeere“ mit harter Schale — genau wie Gurke und Melone.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_080",
+      "question": "Wie orientieren sich Fledermäuse im Dunkeln?",
+      "answers": [
+        {
+          "text": "Mit Ultraschall-Echos",
+          "correct": true
+        },
+        {
+          "text": "Mit leuchtenden Augen",
+          "correct": false
+        },
+        {
+          "text": "Mit Tasthaaren am Schwanz",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Blind sind Fledermäuse übrigens nicht — viele sehen sogar recht gut.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_081",
+      "question": "Wie viele Beine hat eine Spinne?",
+      "answers": [
+        {
+          "text": "Acht",
+          "correct": true
+        },
+        {
+          "text": "Sechs",
+          "correct": false
+        },
+        {
+          "text": "Zehn",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Deshalb zählt sie nicht zu den Insekten, sondern zu den Spinnentieren.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_082",
+      "question": "Wie nennt man die Angst vor Spinnen?",
+      "answers": [
+        {
+          "text": "Arachnophobie",
+          "correct": true
+        },
+        {
+          "text": "Klaustrophobie",
+          "correct": false
+        },
+        {
+          "text": "Akrophobie",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Name geht auf Arachne zurück: Die Weberin der griechischen Sage wurde von Athene in eine Spinne verwandelt.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_083",
+      "question": "Warum tauchen im Spätsommer und Herbst so viele große Winkelspinnen in Wohnungen auf?",
+      "answers": [
+        {
+          "text": "Die Männchen sind auf Partnersuche",
+          "correct": true
+        },
+        {
+          "text": "Sie werden vom Licht der Fernseher angelockt",
+          "correct": false
+        },
+        {
+          "text": "Sie flüchten vor Vögeln aus dem Garten",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hauswinkelspinnen sind für Menschen harmlos und fressen Fliegen und Mücken.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_084",
+      "question": "Wie weit können Eulen ihren Kopf drehen?",
+      "answers": [
+        {
+          "text": "Etwa 270 Grad",
+          "correct": true
+        },
+        {
+          "text": "Etwa 90 Grad",
+          "correct": false
+        },
+        {
+          "text": "Volle 360 Grad",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ihre Augen sitzen fest im Schädel — deshalb muss sich der ganze Kopf bewegen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_085",
+      "question": "Wo leben die echten Vampirfledermäuse?",
+      "answers": [
+        {
+          "text": "In Lateinamerika",
+          "correct": true
+        },
+        {
+          "text": "In Rumänien",
+          "correct": false
+        },
+        {
+          "text": "In Australien",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es gibt nur drei Arten, und sie trinken vor allem das Blut von Vieh und Vögeln.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_086",
+      "question": "Woraus besteht der Flügel einer Fledermaus im Kern?",
+      "answers": [
+        {
+          "text": "Aus stark verlängerten Fingern mit Flughaut",
+          "correct": true
+        },
+        {
+          "text": "Aus zusammengewachsenen Federn",
+          "correct": false
+        },
+        {
+          "text": "Aus verlängerten Rippen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Deshalb heißt ihre Ordnung auch „Handflügler“.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_087",
+      "question": "Welche Hirnregion spielt bei der Angstreaktion eine zentrale Rolle?",
+      "answers": [
+        {
+          "text": "Die Amygdala",
+          "correct": true
+        },
+        {
+          "text": "Das Kleinhirn",
+          "correct": false
+        },
+        {
+          "text": "Die Sehrinde",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Auf Deutsch heißt sie Mandelkern — wegen ihrer Form.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_088",
+      "question": "Was passiert bei einer Gänsehaut?",
+      "answers": [
+        {
+          "text": "Winzige Muskeln richten die Körperhaare auf",
+          "correct": true
+        },
+        {
+          "text": "Die Haut zieht sich in Falten",
+          "correct": false
+        },
+        {
+          "text": "Die Poren schließen sich",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bei Tieren mit Fell plustert das auf — deshalb wirkt eine erschrockene Katze plötzlich doppelt so groß.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_089",
+      "question": "Welches Tier heißt auf Deutsch Totenkopfschwärmer?",
+      "answers": [
+        {
+          "text": "Ein Nachtfalter",
+          "correct": true
+        },
+        {
+          "text": "Ein Käfer",
+          "correct": false
+        },
+        {
+          "text": "Eine Fledermaus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Er trägt eine totenkopfähnliche Zeichnung auf dem Rücken, kann piepsen und schleicht sich in Bienenstöcke, um Honig zu naschen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_090",
+      "question": "Wie heißt ein Kreis aus Pilzen auf einer Wiese im Volksmund?",
+      "answers": [
+        {
+          "text": "Hexenring",
+          "correct": true
+        },
+        {
+          "text": "Trollgarten",
+          "correct": false
+        },
+        {
+          "text": "Zwergenpfad",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Pilzgeflecht wächst unterirdisch von der Mitte nach außen — früher glaubte man, dort hätten Hexen getanzt.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_091",
+      "question": "Welcher Waldpilz kann morsches Holz nachts im Dunkeln leuchten lassen?",
+      "answers": [
+        {
+          "text": "Der Hallimasch",
+          "correct": true
+        },
+        {
+          "text": "Der Pfifferling",
+          "correct": false
+        },
+        {
+          "text": "Der Steinpilz",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Schuld ist dieselbe Leuchtchemie wie beim Glühwürmchen; schon Aristoteles beschrieb leuchtendes Holz.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_092",
+      "question": "Wie heißt der gerinnungshemmende Stoff im Speichel von Vampirfledermäusen?",
+      "answers": [
+        {
+          "text": "Draculin",
+          "correct": true
+        },
+        {
+          "text": "Nosferin",
+          "correct": false
+        },
+        {
+          "text": "Vampyrol",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Wirkstoff wird sogar als mögliches Medikament gegen Schlaganfälle erforscht.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_093",
+      "question": "Warum ziehen tote Spinnen ihre Beine zusammen?",
+      "answers": [
+        {
+          "text": "Ihre Beine werden zu Lebzeiten durch Flüssigkeitsdruck gestreckt",
+          "correct": true
+        },
+        {
+          "text": "Sie stellen sich tot",
+          "correct": false
+        },
+        {
+          "text": "Die Beine trocknen von außen nach innen aus",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Spinnen haben keine Streckmuskeln in den Beingelenken — fällt der Druck weg, klappen die Beugemuskeln die Beine ein.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_094",
+      "question": "Wovon ernährt sich der Vampirtintenfisch aus der Tiefsee?",
+      "answers": [
+        {
+          "text": "Von herabrieselnden Schwebeteilchen",
+          "correct": true
+        },
+        {
+          "text": "Vom Blut anderer Fische",
+          "correct": false
+        },
+        {
+          "text": "Von Fledermäusen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Trotz seines Namens ist er ein harmloser Resteverwerter und fängt „Meeresschnee“ mit klebrigen Fäden ein.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_095",
+      "question": "Welcher berühmte Entfesselungskünstler starb ausgerechnet an Halloween?",
+      "answers": [
+        {
+          "text": "Harry Houdini",
+          "correct": true
+        },
+        {
+          "text": "David Copperfield",
+          "correct": false
+        },
+        {
+          "text": "Siegfried Fischbacher",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Seine Witwe hielt danach zehn Jahre lang an Halloween Séancen ab — Houdini meldete sich nie.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_096",
+      "question": "Welche Radiosendung versetzte am Abend vor Halloween 1938 Hörer in den USA in Aufregung?",
+      "answers": [
+        {
+          "text": "Orson Welles' „Krieg der Welten“",
+          "correct": true
+        },
+        {
+          "text": "Eine Dracula-Lesung",
+          "correct": false
+        },
+        {
+          "text": "„Die Zeitmaschine“",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wie groß die Panik wirklich war, ist umstritten — Zeitungen haben sie wohl kräftig übertrieben.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_097",
+      "question": "Aus wie vielen Knochen besteht das Skelett eines erwachsenen Menschen?",
+      "type": "estimate",
+      "answer": 206,
+      "min": 0,
+      "max": 500,
+      "unit": "Knochen",
+      "difficulty": "medium",
+      "fun_fact": "Mehr als die Hälfte davon steckt in Händen und Füßen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_098",
+      "question": "In welchem Jahr erschien Bram Stokers Roman „Dracula“?",
+      "type": "estimate",
+      "answer": 1897,
+      "min": 1700,
+      "max": 2000,
+      "unit": "Jahr",
+      "difficulty": "medium",
+      "fun_fact": "In frühen Notizen sollte der Graf noch „Count Wampyr“ heißen.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_099",
+      "question": "In welchem Jahr kam Murnaus Stummfilm „Nosferatu“ in die Kinos?",
+      "type": "estimate",
+      "answer": 1922,
+      "min": 1850,
+      "max": 2020,
+      "unit": "Jahr",
+      "difficulty": "hard",
+      "fun_fact": "Die Premiere fand im Marmorsaal des Berliner Zoologischen Gartens statt.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_100",
+      "question": "In welchem Jahr veröffentlichte Martin Luther am 31. Oktober, dem Vorabend von Allerheiligen, seine 95 Thesen?",
+      "type": "estimate",
+      "answer": 1517,
+      "min": 1300,
+      "max": 1800,
+      "unit": "Jahr",
+      "difficulty": "easy",
+      "fun_fact": "Ob er sie wirklich an die Tür der Wittenberger Schlosskirche nagelte, ist unter Historikern umstritten.",
+      "category": "Halloween"
+    },
+    {
+      "id": "halloween_de_101",
+      "question": "In welchem Jahr kam John Carpenters Horrorfilm „Halloween“ ins Kino?",
+      "type": "estimate",
+      "answer": 1978,
+      "min": 1900,
+      "max": 2020,
+      "unit": "Jahr",
+      "difficulty": "medium",
+      "fun_fact": "Gedreht wurde in rund 20 Tagen im kalifornischen Frühling — das Herbstlaub war zum Teil künstlich.",
+      "category": "Halloween"
+    }
+  ]
+}
