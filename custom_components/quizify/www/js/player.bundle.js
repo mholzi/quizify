@@ -6283,10 +6283,16 @@
                 // countdown on the big screen BEFORE revealing the question.
                 // Pure tension/UX — works regardless of finale type. If timing
                 // data is missing or anything goes wrong, we reveal instantly.
+                // #941: the server's clock starts when it sends this frame,
+                // not when the flourish ends 2.5 s later. Stamped here so the
+                // countdown and the server's timer_tick agree on the digit.
+                var questionReceivedAt = Date.now();
                 if (isFinalRound(msg)) {
-                    playFinaleCountdown(function () { handleQuestionStarted(msg); });
+                    playFinaleCountdown(function () {
+                        handleQuestionStarted(msg, questionReceivedAt);
+                    });
                 } else {
-                    handleQuestionStarted(msg);
+                    handleQuestionStarted(msg, questionReceivedAt);
                 }
                 break;
 
@@ -6988,7 +6994,12 @@
         game.renderWagerWindow(msg);
     }
 
-    function handleQuestionStarted(msg) {
+    /**
+     * @param {Object} msg - question_started, or one rebuilt from a snapshot
+     * @param {number} [receivedAt] - when the live frame arrived (#941); a
+     *     snapshot's timer_duration is already what is left, so it omits this
+     */
+    function handleQuestionStarted(msg, receivedAt) {
         state.currentPhase = 'QUESTION_ACTIVE';
         currentQuestion = msg;
 
@@ -7034,7 +7045,11 @@
 
         // Timer
         if (msg.timer_duration) {
-            var deadline = Date.now() + (msg.timer_duration * 1000);
+            // #941: from the frame's arrival, not from now. On the final round
+            // now is 2.5 s later, and updateTimer (server ticks) and this
+            // countdown wrote two different digits into #timer every second.
+            var startedAt = (typeof receivedAt === 'number') ? receivedAt : Date.now();
+            var deadline = startedAt + (msg.timer_duration * 1000);
             game.startCountdown(deadline);
         }
 
