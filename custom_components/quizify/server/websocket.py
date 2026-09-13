@@ -1642,6 +1642,10 @@ class QuizifyWebSocketHandler:
                 return
             err = game_state.submit_guess(player.name, float(guess_raw))
             if err is None:
+                # #939: a guess moves the room's "N/M answered" exactly like a
+                # tap does (#619) — solo and team guess alike. Without this the
+                # tracker sat on 0/N for every estimate round.
+                self._mark_progress_dirty()
                 await self._conn.send(ws, {"type": "guess_accepted"})
             else:
                 # Fallback text comes from ERROR_FALLBACK_TEXT (#812).
