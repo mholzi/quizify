@@ -75,6 +75,11 @@ ESTIMATE_SETS: tuple[EstimateSet, ...] = (
         theme="new-year",
         packs=("silvester-de", "new-years-eve-en", "nochevieja-es"),
     ),
+    # October's seasonal packs (#948), same shape as the holiday packs above.
+    EstimateSet(
+        theme="halloween",
+        packs=("halloween-de", "halloween-en", "halloween-es"),
+    ),
 )
 
 PACKS_WITH_ESTIMATES = [p for s in ESTIMATE_SETS for p in s.packs]
