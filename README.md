@@ -570,6 +570,10 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 
 The complete history is in [`CHANGELOG.md`](CHANGELOG.md); [`docs/release-notes/`](docs/release-notes/) holds longer prose notes for some releases.
 
+### v1.19.0 — Halloween, and Nothing Gets Lost Mid-Game 🎃
+- **Three Halloween packs, 303 questions** in German, English and Spanish, pinned on the setup screen all October (#948)
+- **A team keeps its row when its last phone sleeps**, estimate questions show who has answered, the Hot Seat starts on a clean grid and the final clock no longer jumps (#936, #939, #940, #941); `game_active` stays on through the wager and the Hot Seat, and the options save with pickers left empty (#938, #937)
+
 ### v1.18.0 — One Score, and the Room Joins the Loud Parts 👥
 - **Team mode keeps one score, not two.** The podium showed the team while analytics, the leader sensors and the winner event read the person underneath — two events could name different winners for the same finale (#923). Playing the candidate on a television found the last two leaks: the head-to-head strip and a member's all-time line.
 - **Six holiday packs, 603 questions** in all three languages, 1 December to 6 January (#663) — and the lights and speakers finally join the auction, the betting window and Lightning (#708)
