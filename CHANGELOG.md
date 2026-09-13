@@ -3,6 +3,24 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.19.0-RC1] — 2026-09-13
+
+**Halloween, and Nothing Gets Lost Mid-Game**
+
+### Halloween packs for October
+
+German, English and Spanish, 101 questions each. From 1 to 31 October the Halloween pack is pinned on the setup screen.
+
+### Teams stay on the board, options save again
+
+A team whose last phone sleeps for a minute keeps its row and its points. The integration options save with the speaker, voice or finale scene left empty.
+
+### Phones and sensors follow the whole round
+
+Estimate questions show who has answered. The Hot Seat starts on a clean answer grid, the final question's clock no longer jumps, and `game_active` stays on through the betting window and the Hot Seat.
+
+Beta versions must be enabled in HACS.
+
 ## [1.18.0] — 2026-09-10
 
 **One Score, and the Room Joins the Loud Parts**
