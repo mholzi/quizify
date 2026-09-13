@@ -3709,6 +3709,13 @@
         // over, and here it would also be a free hint about a chair that is
         // still being bid on.
         paintQuestionImage('');
+        // #940: the same leftover one section down. The reveal painted the
+        // grid with correct/wrong/dimmed (★ and ×), and the only code that
+        // strips them runs when the next round or wager window opens — so
+        // the seat holder answered the chair's question with the last
+        // round's marks still on its buttons.
+        var game = window.QuizifyPlayerGame;
+        if (game && game.resetSubmissionState) game.resetSubmissionState();
 
         p.classList.remove('hidden');
         p.classList.remove('wager-panel--collapsed');
@@ -3866,6 +3873,13 @@
             return;
         }
 
+        // #940: everyone else stakes on the chair and answers nothing. The
+        // grid on their phone is the last round's, reveal marks and all;
+        // renderQuestion shows it again when the next round opens, the same
+        // way it does after the wager window hides it.
+        var spectatorAnswers = el('answers-container');
+        if (spectatorAnswers) spectatorAnswers.classList.add('hidden');
+
         _state.score = typeof msg.score === 'number' ? msg.score : _state.score;
 
         // #804: a teammate of the seat holder is neither seated nor a
@@ -3905,8 +3919,11 @@
             var text = answers[i];
             btn.dataset.index = String(i);
             btn.disabled = false;
+            // #940: 'correct'/'wrong'/'dimmed' are the reveal's marks. A
+            // reload lands here without the auction that clears them.
             btn.classList.remove(
-                'is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'hidden'
+                'is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'hidden',
+                'correct', 'wrong', 'dimmed'
             );
             var textEl = btn.querySelector('.answer-text');
             if (textEl) {
