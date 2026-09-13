@@ -563,9 +563,15 @@ class QuizifyGameState:
     def remove_player(self, name: str) -> None:
         """Remove a player from the game."""
         self._player_registry.remove_player(name)
-        # A player who leaves also leaves their team; a team whose last member
-        # goes is dissolved rather than left standing empty (#365).
-        self._team_registry.remove_player(name)
+        # A player who leaves the lobby also leaves their team; a team whose
+        # last member goes is dissolved rather than left standing empty (#365).
+        # Mid-game the team set is frozen (#936): a team of one whose phone
+        # slept past the grace period would otherwise lose its row and every
+        # point, and if it was the only team ``team_mode`` flipped off. The
+        # name stays in ``Team.members`` until the room is back in the lobby
+        # (see ``_drop_departed_team_members``).
+        if self.phase == GamePhase.LOBBY:
+            self._team_registry.remove_player(name)
         self._phase_controller.drop_timer(name)
         self._notify_state_callbacks()
 
@@ -763,6 +769,10 @@ class QuizifyGameState:
             # members had all gone dark therefore survived as a zombie row that
             # timed out every round and could never be dissolved.
             self.remove_player(name)
+        # Members removed during the previous game were kept on their team
+        # (#936) but are no longer in the roster, so the loop above never sees
+        # them.
+        self._drop_departed_team_members()
 
         # Reset player scores
         for player in self._player_registry.players.values():
@@ -2151,8 +2161,25 @@ class QuizifyGameState:
         # here, and a leaderboard that still reads Sofa 120 / Cara 0 before the
         # first question of the rematch is the bug this closes.
         self._team_registry.reset_for_new_game()
+        # Back in the lobby, so members who left mid-game (#936) leave their
+        # team now, and a team nobody is left in is dissolved.
+        self._drop_departed_team_members()
 
         self._notify_state_callbacks()
+
+    def _drop_departed_team_members(self) -> None:
+        """Detach team members who are no longer in the roster (#936).
+
+        ``remove_player`` keeps a mid-game leaver on their team so the row and
+        its points survive the game. Once the room returns to the lobby the
+        normal rule applies again: they leave the team, and an empty team is
+        dissolved (#365).
+        """
+        present = self._player_registry.players
+        for team in self._team_registry.all_teams():
+            for name in list(team.members):
+                if name not in present:
+                    self._team_registry.leave(name)
 
     # ------------------------------------------------------------------
     # Lightning Round (issue #42)
