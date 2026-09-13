@@ -359,7 +359,10 @@ async def test_options_flow_round_trips_finale_scene(hass: HomeAssistant) -> Non
 async def test_options_flow_defaults_finale_scene_from_existing(
     hass: HomeAssistant,
 ) -> None:
-    """Re-opening the options form pre-fills the finale_scene default."""
+    """Re-opening the options form pre-fills the finale_scene picker.
+
+    Pre-filled as a suggested_value, not a schema default (#937): an empty
+    default on an EntitySelector blocked saving the form."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         unique_id=DOMAIN,
@@ -370,7 +373,7 @@ async def test_options_flow_defaults_finale_scene_from_existing(
     result = await hass.config_entries.options.async_init(entry.entry_id)
     for marker in result["data_schema"].schema:
         if str(marker) == CONF_FINALE_SCENE:
-            assert marker.default() == "scene.preset"
+            assert marker.description["suggested_value"] == "scene.preset"
             break
     else:  # pragma: no cover
         pytest.fail("finale_scene marker not found in options schema")

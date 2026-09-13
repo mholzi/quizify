@@ -161,3 +161,70 @@ async def test_options_flow_defaults_from_existing_options(
             break
     else:  # pragma: no cover - the key must exist (checked above)
         pytest.fail("community_submit_url marker not found in options schema")
+
+
+async def test_options_flow_saves_with_entity_pickers_empty(
+    hass: HomeAssistant,
+) -> None:
+    """#937: leaving the TTS / speaker / finale-scene pickers empty must not
+    block saving. They used to carry ``default=""``, which EntitySelector
+    rejects, so an empty submit failed schema validation."""
+    entry = MockConfigEntry(domain=DOMAIN, unique_id=DOMAIN)
+    entry.add_to_hass(hass)
+
+    result = await hass.config_entries.options.async_init(entry.entry_id)
+    result2 = await hass.config_entries.options.async_configure(
+        result["flow_id"], user_input={}
+    )
+    assert result2["type"] == data_entry_flow.FlowResultType.CREATE_ENTRY
+    for key in (CONF_TTS_ENTITY, CONF_MEDIA_PLAYER_ENTITY, CONF_FINALE_SCENE):
+        assert key not in result2["data"]
+
+
+async def test_options_flow_saves_lobby_music_only(hass: HomeAssistant) -> None:
+    """#937: setting just one text option (lobby music) saves without picking
+    any of the single-entity options."""
+    entry = MockConfigEntry(domain=DOMAIN, unique_id=DOMAIN)
+    entry.add_to_hass(hass)
+
+    result = await hass.config_entries.options.async_init(entry.entry_id)
+    result2 = await hass.config_entries.options.async_configure(
+        result["flow_id"],
+        user_input={CONF_LOBBY_MUSIC_URL: "/local/quizify-lobby.mp3"},
+    )
+    assert result2["type"] == data_entry_flow.FlowResultType.CREATE_ENTRY
+    assert entry.options[CONF_LOBBY_MUSIC_URL] == "/local/quizify-lobby.mp3"
+
+
+async def test_options_flow_prefills_and_clears_entity_pickers(
+    hass: HomeAssistant,
+) -> None:
+    """#937: previously chosen entities are pre-filled as suggested values, and
+    a host can still clear them (the frontend omits a cleared picker)."""
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id=DOMAIN,
+        options={
+            CONF_TTS_ENTITY: "tts.test",
+            CONF_MEDIA_PLAYER_ENTITY: "media_player.test",
+            CONF_FINALE_SCENE: "scene.test",
+        },
+    )
+    entry.add_to_hass(hass)
+
+    result = await hass.config_entries.options.async_init(entry.entry_id)
+    suggested = {
+        str(marker): (marker.description or {}).get("suggested_value")
+        for marker in result["data_schema"].schema
+    }
+    assert suggested[CONF_TTS_ENTITY] == "tts.test"
+    assert suggested[CONF_MEDIA_PLAYER_ENTITY] == "media_player.test"
+    assert suggested[CONF_FINALE_SCENE] == "scene.test"
+
+    result2 = await hass.config_entries.options.async_configure(
+        result["flow_id"], user_input={CONF_MEDIA_PLAYER_ENTITY: "media_player.test"}
+    )
+    assert result2["type"] == data_entry_flow.FlowResultType.CREATE_ENTRY
+    assert entry.options[CONF_MEDIA_PLAYER_ENTITY] == "media_player.test"
+    assert CONF_TTS_ENTITY not in entry.options
+    assert CONF_FINALE_SCENE not in entry.options

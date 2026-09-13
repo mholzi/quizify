@@ -92,15 +92,21 @@ class QuizifyOptionsFlow(OptionsFlow):
             ): selector.EntitySelector(
                 selector.EntitySelectorConfig(domain="light", multiple=True),
             ),
+            # Single EntitySelectors reject "", so they must not carry a
+            # default (#937): an empty picker would fail schema validation and
+            # block saving the whole form. Pre-fill via suggested_value instead,
+            # which also lets the host clear a previously chosen entity.
             vol.Optional(
                 CONF_TTS_ENTITY,
-                default=current.get(CONF_TTS_ENTITY, ""),
+                description={"suggested_value": current.get(CONF_TTS_ENTITY)},
             ): selector.EntitySelector(
                 selector.EntitySelectorConfig(domain="tts"),
             ),
             vol.Optional(
                 CONF_MEDIA_PLAYER_ENTITY,
-                default=current.get(CONF_MEDIA_PLAYER_ENTITY, ""),
+                description={
+                    "suggested_value": current.get(CONF_MEDIA_PLAYER_ENTITY)
+                },
             ): selector.EntitySelector(
                 selector.EntitySelectorConfig(domain="media_player"),
             ),
@@ -186,9 +192,10 @@ class QuizifyOptionsFlow(OptionsFlow):
             # Optional scene fired on the finale/winner alongside the party-light
             # victory sweep (#280). Empty = no scene is touched. Lets the host
             # drive a whole-room "victory" look from one of their own HA scenes.
+            # suggested_value, not default — see the TTS entity above (#937).
             vol.Optional(
                 CONF_FINALE_SCENE,
-                default=current.get(CONF_FINALE_SCENE, ""),
+                description={"suggested_value": current.get(CONF_FINALE_SCENE)},
             ): selector.EntitySelector(
                 selector.EntitySelectorConfig(domain="scene"),
             ),
