@@ -54,32 +54,50 @@ def _make_state(
     return state
 
 
-@pytest.mark.parametrize(
-    ("game_id", "phase", "expected"),
-    [
-        # Active phases -> on (only when a game is actually running).
-        ("g1", GamePhase.QUESTION_ACTIVE, True),
-        ("g1", GamePhase.ANSWER_REVEAL, True),
-        ("g1", GamePhase.PAUSED, True),
-        # Mid-game Lightning Round detour (#285/#409) -> stays on so
-        # game_active automations don't toggle spuriously mid-game.
-        ("g1", GamePhase.LIGHTNING, True),
-        ("g1", GamePhase.LIGHTNING_RECAP, True),
-        # Idle / boundary phases -> off.
-        ("g1", GamePhase.LOBBY, False),
-        ("g1", GamePhase.FINALE, False),
-        # No game_id -> off even if the phase looks active.
-        (None, GamePhase.QUESTION_ACTIVE, False),
-        (None, GamePhase.LOBBY, False),
-    ],
-)
-def test_is_on_phase_mapping(
-    game_id: str | None, phase: GamePhase, expected: bool
-) -> None:
-    """``is_on`` is true only for active phases *and* a live game_id."""
-    state = _make_state(game_id=game_id, phase=phase)
+# Expected sensor state for EVERY GamePhase while a game is running. Adding a
+# phase to GamePhase without classifying it here fails
+# ``test_every_phase_is_classified`` — a new phase forces a decision instead of
+# silently reading as "game not active" (#938).
+_EXPECTED_ON_BY_PHASE: dict[GamePhase, bool] = {
+    # Idle / boundary phases -> off.
+    GamePhase.LOBBY: False,
+    GamePhase.FINALE: False,
+    # Main round.
+    GamePhase.QUESTION_ACTIVE: True,
+    GamePhase.ANSWER_REVEAL: True,
+    GamePhase.PAUSED: True,
+    # Final-round betting window (#656) -> on (#938).
+    GamePhase.WAGER_ACTIVE: True,
+    # Mid-game Lightning Round detour (#285/#409) -> stays on so
+    # game_active automations don't toggle spuriously mid-game.
+    GamePhase.LIGHTNING: True,
+    GamePhase.LIGHTNING_RECAP: True,
+    # Mid-game Hot Seat detour (#616) -> stays on (#938).
+    GamePhase.HOT_SEAT_AUCTION: True,
+    GamePhase.HOT_SEAT: True,
+    GamePhase.HOT_SEAT_REVEAL: True,
+}
+
+
+def test_every_phase_is_classified() -> None:
+    """Every GamePhase member has an explicit expected sensor state."""
+    assert set(_EXPECTED_ON_BY_PHASE) == set(GamePhase)
+
+
+@pytest.mark.parametrize("phase", list(GamePhase), ids=lambda p: p.value)
+def test_is_on_phase_mapping(phase: GamePhase) -> None:
+    """With a live game_id, ``is_on`` follows the phase classification."""
+    state = _make_state(game_id="g1", phase=phase)
     sensor = QuizifyGameActiveSensor(state, "entry-123")
-    assert sensor.is_on is expected
+    assert sensor.is_on is _EXPECTED_ON_BY_PHASE[phase]
+
+
+@pytest.mark.parametrize("phase", list(GamePhase), ids=lambda p: p.value)
+def test_is_off_without_game_id(phase: GamePhase) -> None:
+    """No game_id -> off, even if the phase looks active."""
+    state = _make_state(game_id=None, phase=phase)
+    sensor = QuizifyGameActiveSensor(state, "entry-123")
+    assert sensor.is_on is False
 
 
 def test_unique_id_and_static_attrs() -> None:

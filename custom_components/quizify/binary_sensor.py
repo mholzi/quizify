@@ -23,6 +23,14 @@ if TYPE_CHECKING:
 
 _LOGGER = logging.getLogger(__name__)
 
+# Phases in which no game is in progress (#938). The sensor is derived from
+# this set rather than from a list of "active" phases: the allow-list had to be
+# extended by hand for every new phase and silently missed WAGER_ACTIVE and the
+# whole Hot Seat detour, turning the sensor off mid-game. A new phase is now
+# "active" by default, and tests/test_binary_sensor_271.py fails until it is
+# classified explicitly.
+_IDLE_PHASES: frozenset[GamePhase] = frozenset({GamePhase.LOBBY, GamePhase.FINALE})
+
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -35,9 +43,9 @@ async def async_setup_entry(
 
 
 class QuizifyGameActiveSensor(BinarySensorEntity):
-    """On while a Quizify game is mid-flight (QUESTION_ACTIVE, ANSWER_REVEAL,
-    PAUSED, or the mid-game Lightning Round detour LIGHTNING/LIGHTNING_RECAP).
-    Off in LOBBY and FINALE."""
+    """On while a Quizify game is mid-flight: every phase except the idle
+    LOBBY and FINALE, so the wager window and the Lightning Round / Hot Seat
+    detours count as part of the game. Off whenever no game is running."""
 
     _attr_should_poll = False
     _attr_has_entity_name = True
@@ -60,12 +68,9 @@ class QuizifyGameActiveSensor(BinarySensorEntity):
 
     @property
     def is_on(self) -> bool:
-        return self._game_state.game_id is not None and self._game_state.phase in (
-            GamePhase.QUESTION_ACTIVE,
-            GamePhase.ANSWER_REVEAL,
-            GamePhase.PAUSED,
-            GamePhase.LIGHTNING,
-            GamePhase.LIGHTNING_RECAP,
+        return (
+            self._game_state.game_id is not None
+            and self._game_state.phase not in _IDLE_PHASES
         )
 
     @property
