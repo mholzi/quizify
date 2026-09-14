@@ -5363,6 +5363,18 @@
         if (estSubmitBtn) estSubmitBtn.disabled = false;
         var estConfirm = document.getElementById('estimate-submitted-confirmation');
         if (estConfirm) estConfirm.classList.add('hidden');
+
+        // #953: nobody has answered a question that just opened. The tracker
+        // is only redrawn by `answer_progress`, and none is sent at question
+        // start — so the row kept the last frame's marks (after a Lightning
+        // Round: everyone "answered") until the first tap of the new round.
+        // Same rows, marks cleared; a snapshot restore repaints the truth
+        // right after this.
+        if (_latestPlayers.length) {
+            renderSubmissionTracker(_latestPlayers.map(function (p) {
+                return Object.assign({}, p, { submitted: false });
+            }));
+        }
     }
 
     // ============================================
