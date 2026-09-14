@@ -91,9 +91,13 @@
             if (estimateEl) estimateEl.classList.remove('hidden');
             if (answerStripEl) answerStripEl.classList.add('hidden');
             renderEstimateReveal(data);
-            renderResultHero(myAnswerEntry || currentPlayer, data);
+            // #951: an estimate round ships no all_answers — the guess lives
+            // in data.estimate.guesses. Without this the hero read the
+            // players row, which never has an answer, and said "Time's up".
+            var estimateEntry = _estimateResultFor(data) || currentPlayer;
+            renderResultHero(estimateEntry, data);
             renderStandings(data.leaderboard || players, state.playerName);
-            playResultCue(myAnswerEntry || currentPlayer);
+            playResultCue(estimateEntry);
             _renderRevealAdminControls(data, currentPlayer);
             return;
         }
@@ -157,6 +161,54 @@
     // ============================================
     // Estimate number-line reveal (#275)
     // ============================================
+
+    /**
+     * This phone's result on an estimate round, in the shape the result hero
+     * reads (#951). The guess rows are per player, but a team's guess is
+     * carried by one member (#602) — the others' rows say no_guess although
+     * their team scored — so a teammate's scored row stands in for mine.
+     * Every ranked guess earns points, so a guess is never the "wrong" state.
+     * Returns null when this phone has no row at all (joined late).
+     */
+    function _estimateResultFor(data) {
+        var guesses = (data.estimate && data.estimate.guesses) || [];
+        var me = state.playerName;
+        var team = window.QuizifyPlayerTeam;
+        var mine = team && team.myTeam && team.myTeam();
+        var members = (mine && mine.members) || [];
+        var own = null;
+        var scored = null;
+        for (var i = 0; i < guesses.length; i++) {
+            var g = guesses[i];
+            var hasGuess = !g.no_guess && g.guess !== null && g.guess !== undefined;
+            if (g.player_name === me) own = g;
+            if (hasGuess && (g.player_name === me || members.indexOf(g.player_name) !== -1)) {
+                if (!scored || g.player_name === me) scored = g;
+            }
+        }
+        var row = scored || own;
+        if (!row) return null;
+        if (!scored) {
+            return { player_name: me, no_answer: true, correct: false, points_earned: 0 };
+        }
+        return {
+            player_name: me,
+            guess: row.guess,
+            correct: true,
+            // No base/speed/streak split on closeness scoring — the estimate
+            // card below carries the distance. Without this the hero's
+            // breakdown invents "Base score 10".
+            base_score: 0,
+            points_earned: row.points || 0
+        };
+    }
+
+    /** No answer and no estimate guess this round (#951). */
+    function _gaveNoAnswer(player) {
+        return player.missed_round === true || player.no_answer === true ||
+            ((player.answer_index === null || player.answer_index === undefined) &&
+             (player.guess === null || player.guess === undefined));
+    }
 
     function _fmtEstimate(val, unit) {
         if (val === null || val === undefined) return '—';
@@ -347,9 +399,7 @@
     function playResultCue(player) {
         var snd = window.QuizifyPlayerSound;
         if (!snd || !player) return;
-        var missed = player.missed_round === true || player.no_answer === true ||
-            player.answer_index === null || player.answer_index === undefined;
-        if (missed) return;
+        if (_gaveNoAnswer(player)) return;
         if (player.correct === true) snd.playCorrect();
         else snd.playWrong();
     }
@@ -371,7 +421,7 @@
             return;
         }
 
-        var missed = player.missed_round === true || player.no_answer === true || player.answer_index === null || player.answer_index === undefined;
+        var missed = _gaveNoAnswer(player);
         var correct = player.correct === true;
         var streak = player.streak || player.new_streak || 0;
         var roundScore = player.round_score || player.points_earned || 0;
