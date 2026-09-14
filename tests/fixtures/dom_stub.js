@@ -246,7 +246,10 @@ const documentStub = {
         });
     },
     createElement: function (tagName) { return makeElement(null, String(tagName).toUpperCase()); },
-    addEventListener: function () {}
+    addEventListener: function () {},
+    // The power-up target picker tears its document-level Escape listener
+    // down on every close (#952).
+    removeEventListener: function () {}
 };
 documentStub.body = makeElement('body', 'BODY');
 

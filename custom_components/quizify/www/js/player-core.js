@@ -1207,6 +1207,9 @@
         // the correct answer next to an image nobody can read.
         if (game.clearRevealBlur) game.clearRevealBlur();
         pu.showView('reveal-view');
+        // #952: the power-up picker is a page-level modal showView() does not
+        // hide; left open, it sat on top of the reveal.
+        if (game.closeTargetPicker) game.closeTargetPicker();
 
         // Pass question context to reveal
         if (currentQuestion) {
@@ -1297,6 +1300,7 @@
         updatePageTitle('FINALE', msg);
         game.stopCountdown();
         _clearFinaleCountdown();
+        if (game.closeTargetPicker) game.closeTargetPicker();  // #952
         // #803: the game is over — the end screen has its own New game button,
         // and a hatch armed on the stage we just left must not surface here a
         // minute later.
@@ -2259,7 +2263,7 @@
                 if (game && game.powerupNeedsTarget && game.powerupNeedsTarget(myPowerUp)) {
                     game.openTargetPicker(myPowerUp, function (targetName) {
                         send('use_powerup', { target_player_id: targetName });
-                    });
+                    }, _lastRoster);
                 } else {
                     send('use_powerup', { target_player_id: null });
                 }

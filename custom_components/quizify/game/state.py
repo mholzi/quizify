@@ -2597,6 +2597,16 @@ class QuizifyGameState:
             target_player = (
                 self._player_registry.get_player(target_id) if target_id else None
             )
+            # #952: in team mode a teammate is not an opponent. Freezing one
+            # locks out your own team's answer.
+            own_team = (
+                self._team_registry.get_by_member(player_id)
+                if self.team_mode
+                else None
+            )
+            teammates = set(own_team.members) if own_team is not None else set()
+            if target_id and target_id in teammates:
+                return ERR_INVALID_ACTION
             if (
                 not target_id
                 or target_id == player_id
@@ -2612,6 +2622,7 @@ class QuizifyGameState:
                     name
                     for name, p in self._player_registry.players.items()
                     if name != player_id and p.is_active
+                    and name not in teammates
                     and (held != PowerUpType.FREEZE or not p.submitted)
                     and (held != PowerUpType.STEAL or p.submitted)
                 ]
