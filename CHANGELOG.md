@@ -3,6 +3,24 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.20.0-RC1] — 2026-09-14
+
+**Scores, Freeze and the Answer Marks Tell the Truth**
+
+### Estimate reveal shows the round result
+
+A phone that won an estimate round no longer reads "Time's up · 0 Points" above its +75. Teammates who didn't set the guess see the team's result too.
+
+### Freeze works in team mode
+
+The picker lists the other team's players from the first round and closes at the reveal. Freezing your own teammate is refused, and the power-up is kept.
+
+### Every question starts clean
+
+Phones no longer carry the previous round's "answered" marks into the next question.
+
+Beta versions must be enabled in HACS.
+
 ## [1.19.0] — 2026-09-13
 
 **Halloween, and Nothing Gets Lost Mid-Game**
