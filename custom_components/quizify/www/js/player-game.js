@@ -1332,8 +1332,13 @@
     /**
      * Open the target-picker modal so the player can choose who to freeze
      * or steal from. Calls onConfirm(targetPlayerName) on selection.
+     *
+     * #952: `roster` is the per-player list from the last roster frame. The
+     * tracker's `_latestPlayers` is the wrong source twice over: it is empty
+     * until the round's first `answer_progress`, and in team mode its rows are
+     * teams (#835), whose names are not players the server can freeze.
      */
-    function openTargetPicker(powerupType, onConfirm) {
+    function openTargetPicker(powerupType, onConfirm, roster) {
         var modal = document.getElementById('powerup-target-modal');
         var titleEl = document.getElementById('powerup-target-title');
         var hintEl = document.getElementById('powerup-target-hint');
@@ -1351,10 +1356,23 @@
 
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
 
-        // Active opponents = connected, not the local player.
+        // Active opponents = connected, not the local player, not a teammate.
         var me = pu.state.playerName;
-        var opponents = (_latestPlayers || []).filter(function (p) {
-            return p && p.name && p.name !== me && p.connected !== false;
+        var teamApi = window.QuizifyPlayerTeam;
+        var myTeam = teamApi && teamApi.myTeam && teamApi.myTeam();
+        var teammates = (myTeam && myTeam.members) || [];
+        // Who has answered comes from the tracker (the steal badge); outside
+        // team mode its rows are players, so a name lookup is exact.
+        var submittedByName = {};
+        (_latestPlayers || []).forEach(function (p) {
+            if (p && p.name && p.submitted) submittedByName[p.name] = true;
+        });
+        var source = (roster && roster.length) ? roster : (_latestPlayers || []);
+        var opponents = source.filter(function (p) {
+            return p && p.name && p.name !== me && p.connected !== false &&
+                teammates.indexOf(p.name) === -1;
+        }).map(function (p) {
+            return { name: p.name, color: p.color, submitted: !!(p.submitted || submittedByName[p.name]) };
         });
 
         if (titleEl) {
