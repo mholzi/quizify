@@ -2007,10 +2007,20 @@
     // ============================================
 
     /**
+     * Whether a guess row is this phone's own entry (#962). In team mode the
+     * row is the team's — named after the team, carrying its ``members`` — so
+     * the name alone cannot say it: two teams may share one (#759).
+     */
+    function _isMyEstimateRow(g, me) {
+        if (g.members && g.members.length) return g.members.indexOf(me) !== -1;
+        return g.player_name === me;
+    }
+
+    /**
      * This phone's result on an estimate round, in the shape the result hero
-     * reads (#951). The guess rows are per player, but a team's guess is
-     * carried by one member (#602) — the others' rows say no_guess although
-     * their team scored — so a teammate's scored row stands in for mine.
+     * reads (#951). In team mode the row is the team's (#962); an older
+     * server sent one row per member with the team's guess carried by one of
+     * them (#602), so a teammate's scored row still stands in for mine.
      * Every ranked guess earns points, so a guess is never the "wrong" state.
      * Returns null when this phone has no row at all (joined late).
      */
@@ -2025,9 +2035,10 @@
         for (var i = 0; i < guesses.length; i++) {
             var g = guesses[i];
             var hasGuess = !g.no_guess && g.guess !== null && g.guess !== undefined;
-            if (g.player_name === me) own = g;
-            if (hasGuess && (g.player_name === me || members.indexOf(g.player_name) !== -1)) {
-                if (!scored || g.player_name === me) scored = g;
+            var isMine = _isMyEstimateRow(g, me);
+            if (isMine) own = g;
+            if (hasGuess && (isMine || members.indexOf(g.player_name) !== -1)) {
+                if (!scored || isMine) scored = g;
             }
         }
         var row = scored || own;
@@ -2121,7 +2132,7 @@
         sortedForMarkers.forEach(function (g, idx) {
             var left = pct(Number(g.guess));
             var isWinner = g.rank === 1;
-            var isMe = g.player_name === me;
+            var isMe = _isMyEstimateRow(g, me);
             var labelPos = (idx % 2 === 0) ? 'below' : 'above';
             var dotStyle = 'background:' + (g.color || 'var(--sky)') + ';';
             if (isWinner) dotStyle += 'width:18px;height:18px;border-color:var(--gold,#E8C47F);';
@@ -2151,7 +2162,7 @@
         });
         var rowsHtml = '';
         ranked.forEach(function (g) {
-            var isMe = g.player_name === me;
+            var isMe = _isMyEstimateRow(g, me);
             var swatch = '<span class="res-swatch" style="background:' + (g.color || 'var(--sky)') + '"></span>';
             var youTag = isMe ? '<span class="res-you-tag">' + pu.escapeHtml(t('estimate.you')) + '</span>' : '';
             rowsHtml +=
@@ -2166,7 +2177,7 @@
 
         var winnerBanner = '';
         if (winner) {
-            var winnerIsMe = winner.player_name === me;
+            var winnerIsMe = _isMyEstimateRow(winner, me);
             var winnerName = winnerIsMe ? t('estimate.youWon') : t('estimate.playerWon', { name: winner.player_name });
             winnerBanner =
                 '<div class="est-winner">' +

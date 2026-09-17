@@ -1805,7 +1805,9 @@ class QuizifyGameState:
         answer_text = self._format_estimate_value(question, answer_val)
         correct_answer = Answer(text=answer_text, correct=True)
 
-        estimate_block = self._build_estimate_reveal(question, answer_val, scores)
+        estimate_block = self._build_estimate_reveal(
+            question, answer_val, scores, carriers
+        )
 
         # Two correctness readings, on purpose (#810).
         #
@@ -1861,6 +1863,7 @@ class QuizifyGameState:
         question: Question,
         answer_val: float,
         scores: dict[str, dict],
+        carriers: dict[str, str] | None = None,
     ) -> dict[str, Any]:
         """Assemble the number-line reveal block for an estimate round (#275).
 
@@ -1868,12 +1871,70 @@ class QuizifyGameState:
         player's guess + distance + awarded points + rank, plus the winner
         (rank 1). Both the player reveal and the TV dashboard render the
         number line from this. The closest player(s) are rank 1; ties share it.
+
+        In team mode the entrant is the team (#962, the rule #923 applied to
+        podium, sensors and events): one row per team, named after the team,
+        with ``team_id`` and ``members`` so a phone can find its own row even
+        when two teams share a name (#759). A member who did not move the
+        slider is not "without a guess" — only a team that never guessed is.
+        A guest who joined no team keeps a row of their own.
         """
         guesses_out: list[dict[str, Any]] = []
         winner_name = ""
         best_rank: int | None = None
+        if self.team_mode:
+            carriers = carriers or {}
+            for team in self._team_registry.all_teams():
+                members = list(team.members)
+                if not any(
+                    (p := self._player_registry.get_player(m)) is not None
+                    and p.connected
+                    for m in members
+                ):
+                    continue
+                carrier_name = carriers.get(team.team_id)
+                carrier = (
+                    self._player_registry.get_player(carrier_name)
+                    if carrier_name
+                    else None
+                )
+                entry = scores.get(carrier_name) if carrier_name else None
+                row: dict[str, Any] = {
+                    "player_name": team.name,
+                    "team_id": team.team_id,
+                    "members": members,
+                    "color": team.color,
+                }
+                if entry is None or carrier is None:
+                    row.update({
+                        "guess": None,
+                        "distance": None,
+                        "points": 0,
+                        "rank": None,
+                        "exact": False,
+                        "no_guess": True,
+                    })
+                else:
+                    rank = entry["rank"]
+                    if best_rank is None or rank < best_rank:
+                        best_rank = rank
+                        winner_name = team.name
+                    row.update({
+                        "guess": carrier.current_guess,
+                        "distance": entry["distance"],
+                        "points": entry["points"],
+                        "rank": rank,
+                        "exact": entry["exact"],
+                        "no_guess": False,
+                    })
+                guesses_out.append(row)
         for player in self._player_registry.players.values():
             if not player.connected:
+                continue
+            if (
+                self.team_mode
+                and self._team_registry.get_by_member(player.name) is not None
+            ):
                 continue
             entry = scores.get(player.name)
             if entry is None or player.current_guess is None:
