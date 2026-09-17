@@ -1319,6 +1319,12 @@
             var icon = POWERUP_ICONS[powerupType] || '';
             var name = t('powerups.' + powerupType);
             label.textContent = icon ? icon + ' ' + name : name;
+            // #961: the label ships with data-i18n="game.powerup" as its
+            // placeholder, and showView() re-runs the i18n sweep on the view
+            // it reveals — a millisecond after powerup_assigned rendered the
+            // name, the sweep wrote "Power-Up" back over it. Once the phone
+            // holds a power-up the text is ours, so the sweep loses its key.
+            if (label !== powerupBtn) label.removeAttribute('data-i18n');
 
             if (hintEl) {
                 var hintKey = POWERUP_HINTS[powerupType];
