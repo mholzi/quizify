@@ -334,6 +334,16 @@ def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
             # the entrant id is simply their name.
             "entrant_id": getattr(p, "team_id", None) or p.name,
             "name": p.name,
+            # The people behind the row (#969). A team row stands for several
+            # players, a player row for one — so a count of the people who
+            # played is the sum of these, not the number of rows. The end
+            # screen used ``leaderboard.length`` and printed "2 players" for
+            # two teams of two.
+            "members": (
+                list(getattr(p, "members", []))
+                if getattr(p, "team_id", None)
+                else [p.name]
+            ),
             "score": p.score,
             "streak": p.streak,
             "round_score": p.round_score,
