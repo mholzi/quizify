@@ -6648,7 +6648,7 @@ body.is-admin .reaction-bar {
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-md);
-    padding: 54px 20px 30px;
+    padding: 54px 20px 12px;
     margin: 12px 0 16px;
     position: relative;
 }
@@ -6708,10 +6708,14 @@ body.is-admin .reaction-bar {
     border-radius: var(--radius-full);
     white-space: nowrap;
 }
+/* #967: the below-labels hang 18px under the dot and are ~16px tall, so they
+   reach ~29px under the axis. At 12px the lowest guess's label printed over
+   the left scale end; the band now starts under them (the TV did this in
+   #735). The card's bottom padding shrinks by the same amount. */
 .nl-scale-ends {
     display: flex;
     justify-content: space-between;
-    margin-top: 12px;
+    margin-top: 30px;
     font-family: var(--font-mono);
     font-size: 0.72rem;
     color: var(--color-text-light);

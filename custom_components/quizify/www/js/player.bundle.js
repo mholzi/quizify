@@ -2094,19 +2094,13 @@
         // (mirrors the mockup, which zoomed 100..260 around guesses of 150..240).
         // Clamp the zoomed window to the question range so we never imply a
         // value outside [min, max] is possible.
+        // #967: the ends snap to a round tick and stay inside [min, max];
+        // the arithmetic lives in render-shared so the TV prints the same.
         var dataVals = guesses.map(function (g) { return Number(g.guess); }).concat([answer]);
-        var lo = Math.min.apply(null, dataVals);
-        var hi = Math.max.apply(null, dataVals);
-        if (!(hi > lo)) { hi = lo + 1; }
-        var span = hi - lo;
-        // 18% padding each side gives the edge markers breathing room.
-        var pad = span * 0.18;
-        lo -= pad; hi += pad;
-        // Keep within the question's declared range.
-        if (isFinite(Number(est.min))) lo = Math.max(lo, Number(est.min) - span * 0.02);
-        if (isFinite(Number(est.max))) hi = Math.min(hi, Number(est.max) + span * 0.02);
-        span = hi - lo;
-        if (!(span > 0)) { hi = lo + 1; span = 1; }
+        var range = window.QuizifyRenderShared.numberLineRange(dataVals, est.min, est.max, est.step);
+        var lo = range.lo;
+        var hi = range.hi;
+        var span = range.span;
 
         function pct(v) {
             return Math.max(0, Math.min(100, ((v - lo) / span) * 100));
