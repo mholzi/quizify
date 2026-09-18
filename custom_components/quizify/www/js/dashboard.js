@@ -1409,15 +1409,10 @@
             return (n === Math.round(n)) ? String(Math.round(n)) : String(n);
         }
 
+        // #967: same rounded, clamped window as the phone (render-shared).
         var dataVals = guesses.map(function(g) { return Number(g.guess); }).concat([answer]);
-        var lo = Math.min.apply(null, dataVals), hi = Math.max.apply(null, dataVals);
-        if (!(hi > lo)) hi = lo + 1;
-        var span = hi - lo, pad = span * 0.18;
-        lo -= pad; hi += pad;
-        if (isFinite(Number(est.min))) lo = Math.max(lo, Number(est.min) - span * 0.02);
-        if (isFinite(Number(est.max))) hi = Math.min(hi, Number(est.max) + span * 0.02);
-        span = hi - lo;
-        if (!(span > 0)) { hi = lo + 1; span = 1; }
+        var range = window.QuizifyRenderShared.numberLineRange(dataVals, est.min, est.max, est.step);
+        var lo = range.lo, hi = range.hi, span = range.span;
         function pct(v) { return Math.max(0, Math.min(100, ((v - lo) / span) * 100)); }
 
         var sortedMarkers = guesses.slice().sort(function(a, b) { return Number(a.guess) - Number(b.guess); });

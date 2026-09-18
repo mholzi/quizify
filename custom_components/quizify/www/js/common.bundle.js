@@ -686,6 +686,61 @@
     }
 
     // ============================================
+    // Estimate number line scale (#967)
+    // ============================================
+
+    /** Round to 12 significant digits, so 0.1 * 3 prints as 0.3. */
+    function _clean(n) {
+        return parseFloat(n.toPrecision(12));
+    }
+
+    /**
+     * The window the estimate number line draws, shared by the phone and the
+     * television so both print the same two scale ends.
+     *
+     * The line zooms to the guesses and the true value, padded 18% each side so
+     * the edge markers have room. Those raw bounds were printed as they came
+     * out of the arithmetic — "17.84 ... 34.16" — and the clamp to the
+     * question's range allowed 2% of slack past it, which put "-1.56" under a
+     * question that starts at 0. The ends now snap outward to a round tick
+     * (1, 2 or 5 times a power of ten, never finer than the question's step)
+     * and are then clamped to the declared min/max exactly.
+     *
+     * @param {number[]} values  guesses plus the true answer
+     * @param {number} min       question min (optional)
+     * @param {number} max       question max (optional)
+     * @param {number} step      question step (optional)
+     * @returns {{lo: number, hi: number, span: number}}
+     */
+    function numberLineRange(values, min, max, step) {
+        var vals = (values || []).map(Number).filter(function (v) { return isFinite(v); });
+        if (!vals.length) vals = [0];
+        var lo = Math.min.apply(null, vals);
+        var hi = Math.max.apply(null, vals);
+        if (!(hi > lo)) hi = lo + 1;
+        var pad = (hi - lo) * 0.18;
+        lo -= pad;
+        hi += pad;
+
+        var raw = (hi - lo) / 10;
+        var mag = Math.pow(10, Math.floor(Math.log10(raw)));
+        var f = raw / mag;
+        var tick = (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * mag;
+        var st = Number(step);
+        if (isFinite(st) && st > 0 && tick < st) tick = st;
+
+        lo = _clean(Math.floor(lo / tick) * tick);
+        hi = _clean(Math.ceil(hi / tick) * tick);
+
+        var qMin = (min === null || min === undefined) ? NaN : Number(min);
+        var qMax = (max === null || max === undefined) ? NaN : Number(max);
+        if (isFinite(qMin)) lo = Math.max(lo, qMin);
+        if (isFinite(qMax)) hi = Math.min(hi, qMax);
+        if (!(hi > lo)) hi = _clean(lo + tick);
+        return { lo: lo, hi: hi, span: hi - lo };
+    }
+
+    // ============================================
     // Next-round image preload (#736)
     // ============================================
 
@@ -740,6 +795,7 @@
         powerUpSentenceHtml: powerUpSentenceHtml,
         createPowerUpApplied: createPowerUpApplied,
         createProgressiveReveal: createProgressiveReveal,
-        preloadNextImage: preloadNextImage
+        preloadNextImage: preloadNextImage,
+        numberLineRange: numberLineRange
     };
 })();
