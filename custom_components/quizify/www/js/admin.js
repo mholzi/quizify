@@ -1612,6 +1612,8 @@
                 selectedCategories = [];
             }
         }
+        // The update banner names packs of the picked language only (#968).
+        if (typeof renderPackNewsNames === 'function') renderPackNewsNames(v);
         // Re-evaluate pack-UI scaling: visible pack count may have
         // crossed a threshold (e.g. DE has 12 packs but EN has 3).
         updatePackUIScaling(v);
@@ -4277,7 +4279,9 @@
     });
 
     // ---- New packs that arrived with the last update (#649) ----
-    showPackNews();
+    // A getter, not the value: the banner renders after two awaits, and the
+    // host may have switched language by then (#968).
+    showPackNews(function () { return selectedLanguage; });
 
     // ---- Seasonal pack badges (#276) ----
     applySeasonalBadges();
@@ -4349,8 +4353,56 @@
     })();
 })();
 
+// The rendered update banner, its names line and the full pack list from the
+// server (#968). Declared without an initializer on purpose: the admin IIFE
+// above runs before this line executes, and `renderPackNewsNames` may be called
+// from it — a `let` would throw there, and `= null` would run after it.
+var _packNews;
+
+/**
+ * The new packs a host running the game in `lang` can actually pick (#968).
+ *
+ * The news endpoint reports every shipped pack of every language, and several
+ * seasonal packs share a display name across languages (`halloween-de`,
+ * `halloween-en`, `halloween-es` are all "Halloween"). Listing them all named
+ * Halloween three times and showed an English host packs the category list
+ * below hides from them. A pack without a language tag is kept — hiding it
+ * would hide news with no way to see it — and names are deduplicated as a
+ * second line of defence.
+ */
+function packNewsForLanguage(packs, lang) {
+    var want = String(lang || '').toLowerCase();
+    var seen = Object.create(null);
+    var out = [];
+    (packs || []).forEach(function (p) {
+        if (!p) return;
+        var packLang = String(p.language || '').toLowerCase();
+        if (packLang && want && packLang !== want) return;
+        var key = String(p.name == null ? '' : p.name).toLowerCase();
+        if (seen[key]) return;
+        seen[key] = true;
+        out.push(p);
+    });
+    return out;
+}
+
+/**
+ * Fill the banner's names line for `lang`, and hide the banner while that
+ * language has no new pack (#968). No-op before the banner exists.
+ */
+function renderPackNewsNames(lang) {
+    if (!_packNews) return;
+    var shown = packNewsForLanguage(_packNews.packs, lang);
+    var esc = _packNews.esc;
+    _packNews.namesEl.innerHTML = shown.map(function (p) {
+        return esc(p.name) + ' (' + esc(p.question_count) + ')';
+    }).join(', ');
+    _packNews.banner.style.display = shown.length ? 'flex' : 'none';
+}
+
 /**
  * Show a banner listing packs that arrived with the update the host just
+ * installed (#649).
  * installed (#649).
  *
  * Packs ship inside the integration, so by the time this runs the new packs
@@ -4359,8 +4411,11 @@
  * files by hand.
  *
  * Runs once on page load; silently does nothing if the request fails.
+ * `getLanguage` returns the game language the host is setting up; only that
+ * language's packs are named (#968), and a language switch re-renders the
+ * list through `renderPackNewsNames`.
  */
-async function showPackNews() {
+async function showPackNews(getLanguage) {
     try {
         // Wait for the language bundle before rendering (#648). This banner is
         // built as one shot of markup and is not re-rendered on its own, so
@@ -4388,10 +4443,6 @@ async function showPackNews() {
             ? window.QuizifyUtils.escapeHtml(String(s == null ? '' : s))
             : String(s == null ? '' : s));
 
-        const names = packs.map(p =>
-            esc(p.name) + ' (' + esc(p.question_count) + ')'
-        ).join(', ');
-
         // Build banner
         const banner = document.createElement('div');
         banner.id = 'pack-news-banner';
@@ -4418,7 +4469,7 @@ async function showPackNews() {
             '<span style="font-size:1.2rem;flex-shrink:0">🎁</span>' +
             '<div style="flex:1">' +
                 '<strong data-i18n="admin.packNewsTitle" style="color:#E88A7F;font-family:\'DM Sans\',sans-serif;font-weight:700">' + esc(tt('admin.packNewsTitle')) + '</strong>' +
-                '<div style="margin-top:3px;color:#2A2820">' + names + '</div>' +
+                '<div class="pack-news-names" style="margin-top:3px;color:#2A2820"></div>' +
                 '<div data-i18n="admin.packNewsBody" style="margin-top:5px;font-size:0.8rem;color:#6E6A5C">' + esc(tt('admin.packNewsBody')) + '</div>' +
             '</div>' +
             '<button type="button" id="pack-news-dismiss" ' +
@@ -4433,6 +4484,7 @@ async function showPackNews() {
         if (dismiss) {
             dismiss.addEventListener('click', function () {
                 banner.remove();
+                _packNews = undefined;
                 const headers = {};
                 const tok = window.QuizifyUtils && window.QuizifyUtils.readAdminToken
                     ? window.QuizifyUtils.readAdminToken()
@@ -4448,6 +4500,14 @@ async function showPackNews() {
         if (setupScreen) {
             setupScreen.insertBefore(banner, setupScreen.firstChild);
         }
+
+        _packNews = {
+            banner: banner,
+            namesEl: banner.querySelector('.pack-news-names'),
+            packs: packs,
+            esc: esc,
+        };
+        renderPackNewsNames(typeof getLanguage === 'function' ? getLanguage() : '');
     } catch (e) {
         // Offline or HA not ready — log so a real error (e.g. a future
         // refactor reintroducing an out-of-scope reference) is visible
