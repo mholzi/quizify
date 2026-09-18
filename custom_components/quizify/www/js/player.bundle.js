@@ -2065,6 +2065,12 @@
              (player.guess === null || player.guess === undefined));
     }
 
+    /** "A & B", "A, B & C" — the co-winners of a tied estimate (#966). */
+    function _joinNames(names) {
+        if (names.length < 2) return names.join('');
+        return names.slice(0, -1).join(', ') + ' & ' + names[names.length - 1];
+    }
+
     function _fmtEstimate(val, unit) {
         if (val === null || val === undefined) return '—';
         var n = Math.round(val * 1000) / 1000;
@@ -2106,13 +2112,10 @@
             return Math.max(0, Math.min(100, ((v - lo) / span) * 100));
         }
 
-        // Winner = the (first) rank-1 guesser.
-        var winner = null;
-        guesses.forEach(function (g) {
-            if (g.rank === 1 && (winner === null || false)) {
-                if (!winner) winner = g;
-            }
-        });
+        // Winners = every rank-1 guesser. A tie shares rank 1 (and the
+        // points), so the banner has to name all of them, not the first (#966).
+        var winners = guesses.filter(function (g) { return g.rank === 1; });
+        var winner = winners.length ? winners[0] : null;
 
         var me = state.playerName;
 
@@ -2171,14 +2174,27 @@
 
         var winnerBanner = '';
         if (winner) {
-            var winnerIsMe = _isMyEstimateRow(winner, me);
-            var winnerName = winnerIsMe ? t('estimate.youWon') : t('estimate.playerWon', { name: winner.player_name });
+            var winnerName;
+            if (winners.length > 1) {
+                winnerName = t('estimate.sharedWin', { names: _joinNames(winners.map(function (g) { return g.player_name; })) });
+            } else if (_isMyEstimateRow(winner, me)) {
+                winnerName = t('estimate.youWon');
+            } else {
+                winnerName = t('estimate.playerWon', { name: winner.player_name });
+            }
+            // Tied entrants can sit on either side of the answer (100 and 460
+            // around 280): one "Guess X" would be wrong for the other, so the
+            // sub-line only shows when every winner guessed the same number.
+            var sameGuess = winners.every(function (g) { return Number(g.guess) === Number(winner.guess); });
+            var winnerSub = sameGuess
+                ? '<div class="est-winner-sub">' + pu.escapeHtml(t('estimate.guessOff', { guess: _fmtEstimate(Number(winner.guess), ''), off: _fmtEstimate(winner.distance, '') })) + '</div>'
+                : '';
             winnerBanner =
                 '<div class="est-winner">' +
                     '<span class="est-winner-medal" aria-hidden="true">🏆</span>' +
                     '<div class="est-winner-text">' +
                         '<div class="est-winner-name">' + pu.escapeHtml(winnerName) + '</div>' +
-                        '<div class="est-winner-sub">' + pu.escapeHtml(t('estimate.guessOff', { guess: _fmtEstimate(Number(winner.guess), ''), off: _fmtEstimate(winner.distance, '') })) + '</div>' +
+                        winnerSub +
                     '</div>' +
                     '<div class="est-winner-pts">+' + (winner.points || 0) + '</div>' +
                 '</div>';

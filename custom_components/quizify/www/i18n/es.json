@@ -429,6 +429,7 @@
     "correctAnswer": "Respuesta correcta",
     "youWon": "Ganas la ronda",
     "playerWon": "{name} gana la ronda",
+    "sharedWin": "{names} comparten la ronda",
     "guessOff": "Apuesta {guess} · solo {off} de diferencia",
     "noGuessNote": "{count} sin apuesta",
     "dashRange": "Estima entre {min} y {max}"

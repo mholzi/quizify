@@ -429,6 +429,7 @@
     "correctAnswer": "Richtige Antwort",
     "youWon": "Du gewinnst die Runde",
     "playerWon": "{name} gewinnt die Runde",
+    "sharedWin": "{names} teilen sich die Runde",
     "guessOff": "Tipp {guess} · nur {off} daneben",
     "noGuessNote": "{count} ohne Tipp",
     "dashRange": "Schätzfrage zwischen {min} und {max}"

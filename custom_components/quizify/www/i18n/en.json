@@ -429,6 +429,7 @@
     "correctAnswer": "Correct answer",
     "youWon": "You win the round",
     "playerWon": "{name} wins the round",
+    "sharedWin": "{names} share the round",
     "guessOff": "Guess {guess} · only {off} off",
     "noGuessNote": "{count} without a guess",
     "dashRange": "Estimate between {min} and {max}"
