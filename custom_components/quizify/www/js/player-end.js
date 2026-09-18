@@ -118,7 +118,7 @@
     /**
      * Fill the "N Runden · M Spieler" meta line under the title.
      * Rounds come from total_rounds (or the max rounds_played fallback);
-     * players from the leaderboard length.
+     * players from the people behind the rows (a team row counts its members).
      */
     function renderEndHeader(leaderboard, data) {
         var metaEl = document.getElementById('end-meta-line');
@@ -131,7 +131,13 @@
                 if ((p.rounds_played || 0) > rounds) rounds = p.rounds_played;
             });
         }
-        var players = leaderboard.length;
+        // Count people, not rows (#969): in team mode a row is a team, and
+        // "2 players" for two teams of two undercounts the room by half.
+        var players = 0;
+        leaderboard.forEach(function (p) {
+            players += Array.isArray(p.members) ? p.members.length : 1;
+        });
+        if (!players) players = leaderboard.length;
 
         var parts = [];
         if (rounds) {
