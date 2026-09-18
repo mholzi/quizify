@@ -3,6 +3,30 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.20.0-RC4] — 2026-09-18
+
+**Scores, Freeze and the Answer Marks Tell the Truth**
+
+Nine fixes since 1.19.0: the five from RC3, and four that turned up when RC3 was played in a team game.
+
+### Estimates speak about teams
+
+A phone that won an estimate round no longer reads "Time's up · 0 Points". In team mode the reveal names the team, and a tie names every winning team. The number line ends on round numbers inside the question's range.
+
+### Freeze works in team mode
+
+The picker lists only the other team's players from the first round and closes at the reveal.
+
+### Every question starts clean
+
+Phones no longer carry the previous round's "answered" marks, and the power-up button names what you hold in every round.
+
+### Smaller things
+
+The end screen counts people, not teams, and the "New in this update" banner lists only packs in your language.
+
+Beta versions must be enabled in HACS.
+
 ## [1.20.0-RC3] — 2026-09-17
 
 **Scores, Freeze and the Answer Marks Tell the Truth**
