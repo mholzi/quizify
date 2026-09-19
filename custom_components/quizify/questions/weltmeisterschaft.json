@@ -1,7 +1,7 @@
 {
   "name": "Weltmeisterschaft",
   "language": "de",
-  "version": "1.4",
+  "version": "1.5",
   "theme": "worldcup",
   "season": {
     "start": "06-01",
@@ -515,7 +515,7 @@
     },
     {
       "id": "world_cup_de_026",
-      "question": "Welcher Spieler erzielte als bislang Einziger drei Tore in einem WM-Finale?",
+      "question": "Welcher Spieler erzielte als Erster drei Tore in einem WM-Finale?",
       "answers": [
         {
           "text": "Der Engländer Geoff Hurst 1966",
@@ -531,7 +531,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Hursts zweiter Treffer – der Ball sprang von der Unterkante der Latte herunter – gilt bis heute als eines der umstrittensten Tore der Fußballgeschichte.",
+      "fun_fact": "Hursts zweiter Treffer – der Ball sprang von der Unterkante der Latte herunter – gilt bis heute als eines der umstrittensten Tore der Fußballgeschichte. Nachgemacht hat es erst Kylian Mbappé 2022 – und verlor das Finale trotzdem.",
       "category": "Weltmeisterschaft"
     },
     {
@@ -2253,6 +2253,1077 @@
       "unit": "Sekunden",
       "difficulty": "hard",
       "fun_fact": "Elf Sekunden, Hakan Şükür 2002 im Spiel um Platz drei. Es war sein einziges Tor des Turniers.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_173",
+      "question": "Was hatte Jens Lehmann beim Elfmeterschießen gegen Argentinien im WM-Viertelfinale 2006 in seinem Stutzen stecken?",
+      "answers": [
+        {
+          "text": "Einen Zettel mit den bevorzugten Schussecken der argentinischen Schützen",
+          "correct": true
+        },
+        {
+          "text": "Ein Foto seiner Familie als Glücksbringer",
+          "correct": false
+        },
+        {
+          "text": "Einen Traubenzucker für die Nerven",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Energiekonzern EnBW ersteigerte den Zettel später für eine Million Euro. Heute liegt er im Haus der Geschichte in Bonn.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_174",
+      "question": "Wie hieß der sprechende Ball, der 2006 den WM-Löwen Goleo als Sidekick begleitete?",
+      "answers": [
+        {
+          "text": "Pille",
+          "correct": true
+        },
+        {
+          "text": "Kicki",
+          "correct": false
+        },
+        {
+          "text": "Balli",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Goleo lief ohne Hose herum, was in Deutschland für reichlich Spott sorgte. Der Plüschtier-Hersteller Nici, der die Lizenz hielt, musste noch im WM-Jahr Insolvenz anmelden.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_175",
+      "question": "Welches Tier war Zakumi, das Maskottchen der WM 2010 in Südafrika?",
+      "answers": [
+        {
+          "text": "Ein Leopard mit grünen Haaren",
+          "correct": true
+        },
+        {
+          "text": "Ein Löwe mit Vuvuzela",
+          "correct": false
+        },
+        {
+          "text": "Ein Springbock mit Trikot",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Name setzt sich aus 'ZA' für Südafrika und 'kumi' zusammen, dem Wort für 'zehn' in mehreren afrikanischen Sprachen, eine Anspielung auf das Jahr 2010.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_176",
+      "question": "Welches Tier diente bei der WM 2014 in Brasilien als Maskottchen Fuleco?",
+      "answers": [
+        {
+          "text": "Ein Gürteltier",
+          "correct": true
+        },
+        {
+          "text": "Ein Tukan",
+          "correct": false
+        },
+        {
+          "text": "Ein Jaguar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Dreibinden-Kugelgürteltier kann sich bei Gefahr zu einer fast perfekten Kugel einrollen, also ein Tier, das sich selbst in einen Ball verwandelt. Die Art gilt als gefährdet.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_177",
+      "question": "Was für eine Figur war Naranjito, das Maskottchen der WM 1982 in Spanien?",
+      "answers": [
+        {
+          "text": "Eine Orange im spanischen Trikot",
+          "correct": true
+        },
+        {
+          "text": "Ein Stier mit Fußballschuhen",
+          "correct": false
+        },
+        {
+          "text": "Eine Paella-Pfanne mit Gesicht",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Orange stand für die Obstplantagen rund um Valencia. Naranjito bekam sogar eine eigene Zeichentrickserie im spanischen Fernsehen.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_178",
+      "question": "Welcher WM-Ball wurde 2010 von Torhütern als flatterhaft und unberechenbar verflucht?",
+      "answers": [
+        {
+          "text": "Der Jabulani",
+          "correct": true
+        },
+        {
+          "text": "Der Brazuca",
+          "correct": false
+        },
+        {
+          "text": "Der Teamgeist",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Jabulani bestand aus nur acht thermisch verschweißten Panelen und war dadurch besonders rund. Genau das ließ ihn bei bestimmten Geschwindigkeiten unvorhersehbar flattern.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_179",
+      "question": "Wer sang den offiziellen Song der WM 2006 'Zeit, dass sich was dreht'?",
+      "answers": [
+        {
+          "text": "Herbert Grönemeyer",
+          "correct": true
+        },
+        {
+          "text": "Xavier Naidoo",
+          "correct": false
+        },
+        {
+          "text": "Die Sportfreunde Stiller",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Grönemeyer nahm das Lied zusammen mit dem malischen Duo Amadou & Mariam auf. Der heimliche Hit des Sommers war allerdings '54, '74, '90, 2006' der Sportfreunde Stiller.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_180",
+      "question": "Wer verwandelte 1990 im Finale gegen Argentinien den Elfmeter zum 1:0-Sieg Deutschlands?",
+      "answers": [
+        {
+          "text": "Andreas Brehme",
+          "correct": true
+        },
+        {
+          "text": "Lothar Matthäus",
+          "correct": false
+        },
+        {
+          "text": "Rudi Völler",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eigentlich war Kapitän Matthäus als Schütze vorgesehen. Er hatte aber in der Halbzeit die Schuhe wechseln müssen und fühlte sich unsicher, also trat Brehme an, beidfüßig wie kaum ein anderer, und schoss mit rechts.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_181",
+      "question": "Welcher Deutsche wurde sowohl als Spieler als auch als Trainer Weltmeister?",
+      "answers": [
+        {
+          "text": "Franz Beckenbauer",
+          "correct": true
+        },
+        {
+          "text": "Berti Vogts",
+          "correct": false
+        },
+        {
+          "text": "Joachim Löw",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beckenbauer holte den Titel 1974 als Spieler und 1990 als Teamchef. Vor ihm hatte das nur der Brasilianer Mário Zagallo geschafft, nach ihm gelang es 2018 Didier Deschamps mit Frankreich.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_182",
+      "question": "Was tat der Niederländer Frank Rijkaard 1990 im WM-Achtelfinale gegen Deutschland mit Rudi Völler?",
+      "answers": [
+        {
+          "text": "Er spuckte ihm in die Haare",
+          "correct": true
+        },
+        {
+          "text": "Er biss ihm in die Schulter",
+          "correct": false
+        },
+        {
+          "text": "Er zog ihm die Hose herunter",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Schiedsrichter Juan Carlos Loustau stellte am Ende beide vom Platz, also auch Völler, der sich nur beschwert hatte. Deutschland gewann trotzdem 2:1.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_183",
+      "question": "Was passierte 2010 im Achtelfinale zwischen Deutschland und England beim Stand von 2:1 für Deutschland?",
+      "answers": [
+        {
+          "text": "Ein Schuss von Frank Lampard sprang klar hinter die Torlinie, doch das Tor wurde nicht gegeben",
+          "correct": true
+        },
+        {
+          "text": "Ein Stromausfall legte das Stadion für eine halbe Stunde lahm",
+          "correct": false
+        },
+        {
+          "text": "Ein Flitzer köpfte den Ball ins englische Tor",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Viele sahen darin die späte Rache für das Wembley-Tor von 1966. Deutschland gewann 4:1, und der Fall trug dazu bei, dass die FIFA bald darauf die Torlinientechnik zuließ.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_184",
+      "question": "Bei welcher Männer-WM kam erstmals der Videoschiedsrichter (VAR) zum Einsatz?",
+      "answers": [
+        {
+          "text": "2018 in Russland",
+          "correct": true
+        },
+        {
+          "text": "2014 in Brasilien",
+          "correct": false
+        },
+        {
+          "text": "2010 in Südafrika",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Den ersten per Videobeweis gegebenen WM-Elfmeter verwandelte der Franzose Antoine Griezmann im Gruppenspiel gegen Australien.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_185",
+      "question": "Welche Panne leistete sich Diana Ross bei der Eröffnungsfeier der WM 1994?",
+      "answers": [
+        {
+          "text": "Sie schoss einen Elfmeter aus wenigen Metern am Tor vorbei, das Tor brach trotzdem wie geplant auseinander",
+          "correct": true
+        },
+        {
+          "text": "Sie stolperte über den Anstoßkreis und verlor ihren Schuh",
+          "correct": false
+        },
+        {
+          "text": "Ihr Mikrofon fiel aus, und sie sang ohne Ton im Playback",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Show sah vor, dass das Tor nach ihrem Treffer spektakulär zerbricht. Das tat es dann auch, obwohl der Ball deutlich daneben ging.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_186",
+      "question": "Warum musste Diego Maradona die WM 1994 mitten im Turnier verlassen?",
+      "answers": [
+        {
+          "text": "Er wurde positiv auf Ephedrin getestet",
+          "correct": true
+        },
+        {
+          "text": "Er hatte sich im Training das Bein gebrochen",
+          "correct": false
+        },
+        {
+          "text": "Er hatte einen Schiedsrichter geohrfeigt",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nach nur zwei Spielen und einem Tor gegen Griechenland war Schluss. Es war Maradonas letztes Spiel im argentinischen Nationaltrikot.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_187",
+      "question": "Welche Auszeichnung erhielt Oliver Kahn bei der WM 2002 als erster Torhüter überhaupt?",
+      "answers": [
+        {
+          "text": "Den Goldenen Ball als bester Spieler des Turniers",
+          "correct": true
+        },
+        {
+          "text": "Den Goldenen Schuh als bester Torschütze",
+          "correct": false
+        },
+        {
+          "text": "Den Fair-Play-Preis der FIFA",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ausgerechnet im Finale gegen Brasilien unterlief Kahn beim 0:1 durch Ronaldo ein Fehler, und das mit einem verletzten Finger an der rechten Hand.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_188",
+      "question": "Mit welcher auffälligen Frisur lief Brasiliens Ronaldo im Halbfinale der WM 2002 auf?",
+      "answers": [
+        {
+          "text": "Kahlgeschoren bis auf ein dreieckiges Haarbüschel über der Stirn",
+          "correct": true
+        },
+        {
+          "text": "Mit grün-gelb gefärbten Rastazöpfen",
+          "correct": false
+        },
+        {
+          "text": "Mit einem Irokesen in den Landesfarben",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ronaldo erzählte später, er habe den Schnitt absichtlich gewählt: Alle sollten über seine Haare reden statt über seine Oberschenkelverletzung.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_189",
+      "question": "Was legte der Emir von Katar Lionel Messi bei der Siegerehrung 2022 um, bevor dieser den Pokal stemmte?",
+      "answers": [
+        {
+          "text": "Einen Bischt, einen traditionellen arabischen Umhang",
+          "correct": true
+        },
+        {
+          "text": "Einen Lorbeerkranz aus Gold",
+          "correct": false
+        },
+        {
+          "text": "Eine argentinische Flagge mit Unterschriften",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der schwarze, goldbestickte Bischt wird in der Golfregion zu besonderen Anlässen getragen. Ein Abgeordneter aus Oman bot später eine Million Dollar für das Kleidungsstück.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_190",
+      "question": "Woraus wurde das 'Stadion 974' für die WM 2022 in Katar zu einem großen Teil gebaut?",
+      "answers": [
+        {
+          "text": "Aus Schiffscontainern",
+          "correct": true
+        },
+        {
+          "text": "Aus recycelten Plastikflaschen",
+          "correct": false
+        },
+        {
+          "text": "Aus Sandsteinblöcken aus der Wüste",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "974 ist die internationale Telefonvorwahl von Katar und zugleich etwa die Zahl der verbauten Container. Das Stadion war von Anfang an als zerlegbar geplant.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_191",
+      "question": "Welche Zuschauer-Welle wurde bei der WM 1986 weltweit bekannt, weshalb sie im Englischen nach dem Gastgeberland benannt ist?",
+      "answers": [
+        {
+          "text": "Die La Ola, auf Englisch 'Mexican Wave'",
+          "correct": true
+        },
+        {
+          "text": "Der Hampelmann-Jubel, auf Englisch 'Mexican Jump'",
+          "correct": false
+        },
+        {
+          "text": "Das Klatschen im Takt, auf Englisch 'Mexican Clap'",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Erfunden wurde die Welle vermutlich schon Anfang der 1980er in US-amerikanischen Stadien. Erst die TV-Bilder aus Mexiko machten sie aber zum weltweiten Ritual.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_192",
+      "question": "Was tat die US-Amerikanerin Brandi Chastain, nachdem sie 1999 den entscheidenden Elfmeter im Frauen-WM-Finale verwandelt hatte?",
+      "answers": [
+        {
+          "text": "Sie zog ihr Trikot aus und jubelte im Sport-BH",
+          "correct": true
+        },
+        {
+          "text": "Sie lief eine Ehrenrunde auf den Händen",
+          "correct": false
+        },
+        {
+          "text": "Sie sprang in den Wassergraben der Laufbahn",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Finale gegen China im Rose Bowl von Pasadena sahen über 90.000 Menschen im Stadion. Das Jubelfoto landete auf den Titelseiten von Time, Newsweek und Sports Illustrated.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_193",
+      "question": "Wie lange dauerte ein Spiel bei der allerersten Frauen-WM 1991 in China?",
+      "answers": [
+        {
+          "text": "80 Minuten",
+          "correct": true
+        },
+        {
+          "text": "70 Minuten",
+          "correct": false
+        },
+        {
+          "text": "90 Minuten",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die FIFA traute den Spielerinnen damals offenbar keine vollen 90 Minuten zu. Ab der zweiten Frauen-WM 1995 wurde regulär gespielt.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_194",
+      "question": "Wie entschied Nia Künzer das Finale der Frauen-WM 2003 gegen Schweden?",
+      "answers": [
+        {
+          "text": "Per Kopfball-Golden-Goal in der Verlängerung",
+          "correct": true
+        },
+        {
+          "text": "Mit dem entscheidenden Elfmeter im Elfmeterschießen",
+          "correct": false
+        },
+        {
+          "text": "Mit einem direkt verwandelten Eckball in der Nachspielzeit",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Künzer war erst kurz vor Ende der regulären Spielzeit eingewechselt worden. Mit dem Titel war Deutschland die erste Nation, die sowohl die Männer- als auch die Frauen-WM gewonnen hatte.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_195",
+      "question": "Was gelang der deutschen Frauen-Nationalmannschaft beim WM-Titel 2007 in China?",
+      "answers": [
+        {
+          "text": "Sie kassierte im ganzen Turnier kein einziges Gegentor",
+          "correct": true
+        },
+        {
+          "text": "Sie gewann jedes Spiel mit mindestens vier Toren Unterschied",
+          "correct": false
+        },
+        {
+          "text": "Sie spielte alle sechs Spiele mit derselben Startelf",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Finale gegen Brasilien hielt Torhüterin Nadine Angerer sogar einen Elfmeter von Marta. Deutschland gewann 2:0 und verteidigte damit seinen Titel von 2003.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_196",
+      "question": "Warum fand die Frauen-WM 2003 in den USA statt, obwohl China Gastgeber sein sollte?",
+      "answers": [
+        {
+          "text": "Wegen des Ausbruchs der Lungenkrankheit SARS in China",
+          "correct": true
+        },
+        {
+          "text": "Weil in China die Stadien nicht rechtzeitig fertig wurden",
+          "correct": false
+        },
+        {
+          "text": "Weil China die Ausrichtung wegen zu hoher Kosten zurückgab",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die USA sprangen nur wenige Monate vor dem Anpfiff ein. China bekam zum Ausgleich die Frauen-WM 2007 zugesprochen.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_197",
+      "question": "Worüber beschwerten sich viele Spielerinnen bei der Frauen-WM 2015 in Kanada schon vor dem Turnier?",
+      "answers": [
+        {
+          "text": "Alle Spiele fanden auf Kunstrasen statt",
+          "correct": true
+        },
+        {
+          "text": "Die Bälle waren kleiner als bei den Männern",
+          "correct": false
+        },
+        {
+          "text": "Die Spiele sollten nur 80 Minuten dauern",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Gruppe von Spielerinnen um die US-Stürmerin Abby Wambach reichte sogar Klage ein, zog sie aber vor dem Turnier zurück. Das Thema wurde zum Symbol dafür, wie unterschiedlich Frauen- und Männerturniere behandelt wurden.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_198",
+      "question": "Welches Land gewann 2011 die Frauen-WM in Deutschland, nachdem es die Gastgeberinnen im Viertelfinale ausgeschaltet hatte?",
+      "answers": [
+        {
+          "text": "Japan",
+          "correct": true
+        },
+        {
+          "text": "USA",
+          "correct": false
+        },
+        {
+          "text": "Schweden",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Japan hatte zuvor noch nie gegen die USA gewonnen und holte den Titel ausgerechnet gegen sie, nach 2:2 im Elfmeterschießen. Für Deutschland war das 0:1 nach Verlängerung das Ende der Heim-WM.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_199",
+      "question": "Was widerfuhr der deutschen Frauen-Nationalmannschaft bei der WM 2023 in Australien und Neuseeland zum ersten Mal?",
+      "answers": [
+        {
+          "text": "Sie schied bereits in der Gruppenphase aus",
+          "correct": true
+        },
+        {
+          "text": "Sie verlor ein Spiel mit fünf Toren Unterschied",
+          "correct": false
+        },
+        {
+          "text": "Sie musste ein Spiel wegen Unwetters abbrechen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein 1:1 gegen Südkorea im letzten Gruppenspiel reichte nicht. Marokko, gegen das Deutschland zum Auftakt noch 6:0 gewonnen hatte, zog stattdessen ins Achtelfinale ein.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_200",
+      "question": "Welches kuriose Kunststück gelang der Schweiz bei der WM 2006 in Deutschland?",
+      "answers": [
+        {
+          "text": "Sie schied aus, ohne ein einziges Gegentor kassiert zu haben",
+          "correct": true
+        },
+        {
+          "text": "Sie gewann alle Spiele mit genau 1:0",
+          "correct": false
+        },
+        {
+          "text": "Sie schoss alle Tore per Kopfball",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nach drei Vorrundenspielen ohne Gegentor und einem 0:0 gegen die Ukraine verlor die Schweiz das Elfmeterschießen mit 0:3. Sie verwandelte keinen einzigen Elfmeter.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_201",
+      "question": "Welcher Ausruf des Radioreporters Edi Finger wurde 1978 beim 3:2 Österreichs gegen Deutschland in Córdoba legendär?",
+      "answers": [
+        {
+          "text": "'I wer' narrisch!'",
+          "correct": true
+        },
+        {
+          "text": "'Das Wunder ist vollbracht!'",
+          "correct": false
+        },
+        {
+          "text": "'Servus, Deutschland!'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hans Krankl erzielte zwei Tore, darunter den Siegtreffer kurz vor Schluss. Für Österreich war es der erste Sieg gegen Deutschland seit 47 Jahren, bis heute heißt das Spiel 'Wunder von Córdoba'.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_202",
+      "question": "Wie endete das Gruppenspiel zwischen Deutschland und Ungarn bei der WM 1954, zwei Wochen vor dem Finale gegen denselben Gegner?",
+      "answers": [
+        {
+          "text": "Deutschland verlor 3:8",
+          "correct": true
+        },
+        {
+          "text": "Es endete 0:0",
+          "correct": false
+        },
+        {
+          "text": "Deutschland gewann 1:0",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bundestrainer Sepp Herberger hatte bewusst eine Reservemannschaft aufgestellt, weil Deutschland ohnehin noch ein Entscheidungsspiel bekam. Im Finale in Bern siegte Deutschland dann 3:2.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_203",
+      "question": "Wie viele Gelbe Karten sah der kroatische Verteidiger Josip Šimunić 2006 im Spiel gegen Australien, bevor er vom Platz musste?",
+      "answers": [
+        {
+          "text": "Drei",
+          "correct": true
+        },
+        {
+          "text": "Zwei",
+          "correct": false
+        },
+        {
+          "text": "Vier",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der englische Schiedsrichter Graham Poll vergaß nach der zweiten Gelben, Šimunić vom Platz zu schicken. Erst nach der dritten zeigte er Rot, und für Poll war es das letzte WM-Turnier.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_204",
+      "question": "Wie viele Spieler flogen bei der 'Schlacht von Nürnberg' zwischen Portugal und den Niederlanden bei der WM 2006 vom Platz?",
+      "answers": [
+        {
+          "text": "Vier",
+          "correct": true
+        },
+        {
+          "text": "Zwei",
+          "correct": false
+        },
+        {
+          "text": "Sechs",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der russische Schiedsrichter Valentin Iwanow zeigte 16 Gelbe Karten, darunter vier Gelb-Rote. Portugal gewann das Achtelfinale am Ende 1:0.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_205",
+      "question": "Warum verzichtete Schottland auf die WM 1950, obwohl es sich sportlich qualifiziert hatte?",
+      "answers": [
+        {
+          "text": "Der Verband wollte nur als britischer Meister fahren und war nur Zweiter geworden",
+          "correct": true
+        },
+        {
+          "text": "Die Spieler weigerten sich, mit dem Schiff nach Brasilien zu reisen",
+          "correct": false
+        },
+        {
+          "text": "Die FIFA hatte Schottland wegen unbezahlter Beiträge gesperrt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die britische Heimmeisterschaft diente als Qualifikation, und die ersten beiden durften fahren. Schottland verlor das entscheidende Spiel gegen England 0:1 und blieb aus Prinzip zu Hause.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_206",
+      "question": "Warum trat Titelverteidiger Uruguay bei der WM 1934 in Italien nicht an?",
+      "answers": [
+        {
+          "text": "Aus Protest, weil 1930 kaum europäische Teams nach Uruguay gereist waren",
+          "correct": true
+        },
+        {
+          "text": "Weil das Land kurz vor dem Turnier von der FIFA ausgeschlossen wurde",
+          "correct": false
+        },
+        {
+          "text": "Weil die halbe Mannschaft an einer Grippe erkrankt war",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Uruguay blieb auch 1938 fern und kehrte erst 1950 zurück, prompt mit dem nächsten Titel.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_207",
+      "question": "Unter welchem Namen lief die Münchner Allianz Arena während der WM 2006?",
+      "answers": [
+        {
+          "text": "FIFA WM-Stadion München",
+          "correct": true
+        },
+        {
+          "text": "Arena Bavaria",
+          "correct": false
+        },
+        {
+          "text": "Olympia-Arena München",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die FIFA erlaubt bei ihren Turnieren keine Stadionnamen von Firmen, die nicht zu ihren offiziellen Sponsoren gehören. Deshalb wurden auch andere WM-Stadien 2006 umbenannt.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_208",
+      "question": "Welche Regel führte die FIFA 1992 unter anderem als Reaktion auf die zähe, defensive WM 1990 ein?",
+      "answers": [
+        {
+          "text": "Der Torwart darf einen absichtlichen Rückpass mit dem Fuß nicht mehr mit der Hand aufnehmen",
+          "correct": true
+        },
+        {
+          "text": "Für einen Sieg gibt es drei statt zwei Punkte",
+          "correct": false
+        },
+        {
+          "text": "Jedes Team darf pro Spiel dreimal wechseln",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die WM 1990 kam auf gerade einmal 2,21 Tore pro Spiel. Zeitschinden per Rückpass zum Torwart war damals eine gängige Taktik.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_209",
+      "question": "Welche Verletzung hatte Franz Beckenbauer, als er im WM-Halbfinale 1970 gegen Italien mit dem Arm in der Schlinge weiterspielte?",
+      "answers": [
+        {
+          "text": "Eine ausgekugelte Schulter",
+          "correct": true
+        },
+        {
+          "text": "Ein gebrochenes Handgelenk",
+          "correct": false
+        },
+        {
+          "text": "Eine gerissene Bizepssehne",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Deutschland hatte sein Wechselkontingent bereits ausgeschöpft, also biss Beckenbauer auf die Zähne. Das 3:4 nach Verlängerung ging als 'Jahrhundertspiel' in die Geschichte ein.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_210",
+      "question": "Was schenkten die iranischen Spieler ihren US-amerikanischen Gegnern vor dem politisch aufgeladenen WM-Spiel 1998?",
+      "answers": [
+        {
+          "text": "Weiße Rosen",
+          "correct": true
+        },
+        {
+          "text": "Perserteppiche",
+          "correct": false
+        },
+        {
+          "text": "Säcke mit Pistazien",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die weißen Rosen galten als Zeichen des Friedens, und beide Teams stellten sich für ein gemeinsames Mannschaftsfoto auf. Iran gewann das Spiel in Lyon 2:1.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_211",
+      "question": "Wer leitete am 1. Dezember 2022 beim Spiel Costa Rica gegen Deutschland als erste Frau ein Spiel einer Männer-WM?",
+      "answers": [
+        {
+          "text": "Die Französin Stéphanie Frappart",
+          "correct": true
+        },
+        {
+          "text": "Die Deutsche Bibiana Steinhaus",
+          "correct": false
+        },
+        {
+          "text": "Die Schweizerin Nicole Petignat",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Auch ihre beiden Assistentinnen waren Frauen, Neuza Back aus Brasilien und Karen Díaz aus Mexiko. Deutschland gewann zwar 4:2, schied aber trotzdem in der Vorrunde aus.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_212",
+      "question": "Wie bewies Ausrüster Adidas bei der WM 2022, dass Cristiano Ronaldo beim 1:0 gegen Uruguay den Ball nicht berührt hatte?",
+      "answers": [
+        {
+          "text": "Mit einem Bewegungssensor im Inneren des Spielballs",
+          "correct": true
+        },
+        {
+          "text": "Mit einer Wärmebildkamera über dem Strafraum",
+          "correct": false
+        },
+        {
+          "text": "Mit einem Mikrofon im Tornetz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Sensor im Ball 'Al Rihla' misst 500-mal pro Sekunde und zeigte beim Flankenball keinen Ausschlag. Das Tor wurde Bruno Fernandes zugeschrieben, obwohl Ronaldo jubelnd abgedreht war.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_213",
+      "question": "Was passierte 1962 beim WM-Viertelfinale Brasilien gegen England, als ein Straßenhund aufs Feld lief?",
+      "answers": [
+        {
+          "text": "Jimmy Greaves fing ihn ein, wurde dabei angepinkelt und Garrincha nahm den Hund mit nach Hause",
+          "correct": true
+        },
+        {
+          "text": "Der Hund biss den Schiedsrichter, und das Spiel wurde wiederholt",
+          "correct": false
+        },
+        {
+          "text": "Der Hund stupste den Ball ins Tor, und der Treffer wurde gezählt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Greaves musste mit dem nassen Trikot weiterspielen, denn Ersatztrikots gab es damals nicht. Garrincha nannte den Hund 'Bi', kurz für bicampeonato, den zweiten WM-Titel in Folge.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_214",
+      "question": "Nach wem ist das Nationalstadion in Baku (Aserbaidschan) benannt?",
+      "answers": [
+        {
+          "text": "Nach Tofiq Bahramov, dem Linienrichter, der 1966 das Wembley-Tor gab",
+          "correct": true
+        },
+        {
+          "text": "Nach dem ersten aserbaidschanischen WM-Torschützen",
+          "correct": false
+        },
+        {
+          "text": "Nach dem sowjetischen Torhüter Lew Jaschin",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Stadion hieß ursprünglich nach Lenin und wurde 1993 nach Bahramovs Tod umbenannt. Vor dem Stadion steht heute eine Statue des Linienrichters.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_215",
+      "question": "Warum zählte Zicos Kopfballtor zum vermeintlichen 2:1 für Brasilien gegen Schweden bei der WM 1978 nicht?",
+      "answers": [
+        {
+          "text": "Der Schiedsrichter pfiff ab, während der Eckball noch in der Luft war",
+          "correct": true
+        },
+        {
+          "text": "Zico stand bei der Ecke im Abseits",
+          "correct": false
+        },
+        {
+          "text": "Der Ball war zuvor außerhalb der Eckfahne ins Aus geflogen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Waliser Clive Thomas nannte das später selbst die wohl umstrittenste Entscheidung, die je ein Schiedsrichter getroffen habe. Das Spiel endete 1:1.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_216",
+      "question": "Was passierte dem Polen Ernst Willimowski bei der WM 1938 gegen Brasilien?",
+      "answers": [
+        {
+          "text": "Er erzielte vier Tore und verlor trotzdem 5:6",
+          "correct": true
+        },
+        {
+          "text": "Er schoss drei Eigentore in einem Spiel",
+          "correct": false
+        },
+        {
+          "text": "Er wurde nach wenigen Sekunden vom Platz gestellt",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Willimowski stammte aus Kattowitz und spielte ab 1941 für die deutsche Nationalmannschaft. Das Spiel in Straßburg ging nach Verlängerung verloren.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_217",
+      "question": "Wer erzielte 1998 das erste Golden Goal der WM-Geschichte?",
+      "answers": [
+        {
+          "text": "Der Franzose Laurent Blanc gegen Paraguay",
+          "correct": true
+        },
+        {
+          "text": "Der Brasilianer Ronaldo gegen Chile",
+          "correct": false
+        },
+        {
+          "text": "Der Deutsche Oliver Bierhoff gegen Mexiko",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ausgerechnet ein Innenverteidiger traf in der 114. Minute. Das Golden Goal wurde nach der WM 2002 schon wieder abgeschafft.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_218",
+      "question": "Wie wurde 1954 entschieden, ob Spanien oder die Türkei zur WM fahren darf, nachdem auch das Entscheidungsspiel unentschieden endete?",
+      "answers": [
+        {
+          "text": "Ein 14-jähriger Junge zog mit verbundenen Augen ein Los",
+          "correct": true
+        },
+        {
+          "text": "Durch einen einzigen Elfmeter der beiden Kapitäne",
+          "correct": false
+        },
+        {
+          "text": "Durch Münzwurf des Schiedsrichters",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Entscheidungsspiel in Rom endete 2:2. Der Sohn eines Stadionangestellten zog den Zettel mit 'Türkei', und Spanien scheiterte zum ersten Mal in einer WM-Qualifikation.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_219",
+      "question": "Welche Serie beendete der Haitianer Emmanuel Sanon 1974 mit seinem Tor gegen Italien?",
+      "answers": [
+        {
+          "text": "Dino Zoffs über 1.100 Länderspielminuten ohne Gegentor",
+          "correct": true
+        },
+        {
+          "text": "Italiens Serie von 30 Spielen ohne Niederlage bei Weltmeisterschaften",
+          "correct": false
+        },
+        {
+          "text": "Die längste Serie ohne Elfmeter-Gegentor der WM-Geschichte",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Zoff war 1.142 Minuten lang unbezwungen geblieben. Haiti verlor das Spiel trotzdem 1:3, doch Sanon wurde in seiner Heimat zum Volkshelden.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_220",
+      "question": "Was war am Pontiac Silverdome bei Detroit während der WM 1994 eine Premiere?",
+      "answers": [
+        {
+          "text": "Es war das erste WM-Spiel in einer überdachten Halle",
+          "correct": true
+        },
+        {
+          "text": "Es wurde als erstes Stadion mit Flutlicht aus Solarstrom betrieben",
+          "correct": false
+        },
+        {
+          "text": "Es war das erste Stadion ohne Stehplätze",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Für die Spiele wurde Naturrasen in über 1.800 sechseckigen Modulen im Freien herangezogen und dann in die Halle gebracht. Das erste Hallenspiel war USA gegen die Schweiz, 1:1.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_221",
+      "question": "Nach welchem Sponsor war der Pokal der ersten Frauen-WM 1991 benannt?",
+      "answers": [
+        {
+          "text": "M&M's",
+          "correct": true
+        },
+        {
+          "text": "Coca-Cola",
+          "correct": false
+        },
+        {
+          "text": "Adidas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die FIFA mochte der Veranstaltung ihre Marke 'World Cup' noch nicht geben. Offiziell hieß das Turnier '1st FIFA World Championship for Women's Football for the M&M's Cup'.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_222",
+      "question": "Welche Regel probierte die FIFA bei der Frauen-WM 1995 in Schweden aus, die danach nie wieder bei einer WM galt?",
+      "answers": [
+        {
+          "text": "Jedes Team durfte pro Halbzeit eine zweiminütige Auszeit nehmen",
+          "correct": true
+        },
+        {
+          "text": "Abseits galt nur innerhalb des Strafraums",
+          "correct": false
+        },
+        {
+          "text": "Einwürfe durften auch mit dem Fuß ausgeführt werden",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Offiziell sollten Trainer so taktisch eingreifen können. Kritiker vermuteten eher, dass es um Platz für Werbepausen im Fernsehen ging, und die Idee wurde nach dem Turnier wieder begraben.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_223",
+      "question": "Welcher Spieler stand in zwei WM-Endspielen für zwei verschiedene Länder auf dem Platz?",
+      "answers": [
+        {
+          "text": "Luis Monti, 1930 für Argentinien und 1934 für Italien",
+          "correct": true
+        },
+        {
+          "text": "Ferenc Puskás, 1954 für Ungarn und 1962 für Spanien",
+          "correct": false
+        },
+        {
+          "text": "Alfredo Di Stéfano, 1950 für Argentinien und 1958 für Spanien",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Monti verlor 1930 mit Argentinien gegen Uruguay und wurde vier Jahre später mit Italien Weltmeister. Er hatte italienische Vorfahren, was damals für den Wechsel genügte.",
       "category": "Weltmeisterschaft"
     }
   ]

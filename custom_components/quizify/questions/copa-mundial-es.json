@@ -1,7 +1,7 @@
 {
   "name": "Copa Mundial",
   "language": "es",
-  "version": "1.2",
+  "version": "1.3",
   "theme": "worldcup",
   "season": {
     "start": "06-01",
@@ -2295,6 +2295,1035 @@
       "unit": "segundos",
       "difficulty": "hard",
       "fun_fact": "A los once segundos, obra de Hakan Şükür en el partido por el tercer puesto de 2002. Fue su único gol del torneo.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_112",
+      "question": "La mascota de España 82 era una fruta con la camiseta de la selección. ¿Cuál?",
+      "answers": [
+        {
+          "text": "Una naranja",
+          "correct": true
+        },
+        {
+          "text": "Un limón",
+          "correct": false
+        },
+        {
+          "text": "Una aceituna",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se llamaba Naranjito y tuvo su propia serie de dibujos animados, «Fútbol en acción», que se emitió en televisión durante el torneo.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_113",
+      "question": "¿Qué animal acertó los pronósticos de todos los partidos de Alemania y de la final en 2010?",
+      "answers": [
+        {
+          "text": "Un pulpo",
+          "correct": true
+        },
+        {
+          "text": "Un loro",
+          "correct": false
+        },
+        {
+          "text": "Un camello",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Paul vivía en un acuario de Oberhausen y elegía entre dos cajas con comida marcadas con las banderas. Acertó los ocho partidos, incluida la victoria de España en la final.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_114",
+      "question": "¿Qué canción de Shakira fue la canción oficial de Sudáfrica 2010?",
+      "answers": [
+        {
+          "text": "Waka Waka",
+          "correct": true
+        },
+        {
+          "text": "Hips Don't Lie",
+          "correct": false
+        },
+        {
+          "text": "La Tortura",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El estribillo viene de «Zangaléwa», una canción de 1986 del grupo camerunés Golden Sounds, que a su vez imitaba los cantos de los soldados.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_115",
+      "question": "¿Qué animal era Fuleco, la mascota de Brasil 2014?",
+      "answers": [
+        {
+          "text": "Un armadillo",
+          "correct": true
+        },
+        {
+          "text": "Un tucán",
+          "correct": false
+        },
+        {
+          "text": "Un jaguar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Era un armadillo de tres bandas, que se enrosca hasta parecer una pelota. El nombre mezcla «futebol» y «ecologia», porque la especie está amenazada.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_116",
+      "question": "¿Qué tuvo de insólito el calendario de Catar 2022?",
+      "answers": [
+        {
+          "text": "Se jugó en noviembre y diciembre",
+          "correct": true
+        },
+        {
+          "text": "Se jugó de noche",
+          "correct": false
+        },
+        {
+          "text": "Duró solo dos semanas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue el primer Mundial masculino fuera de junio y julio, por el calor del verano catarí. La final cayó el 18 de diciembre, día nacional de Catar.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_117",
+      "question": "En 2002 Ronaldo, el brasileño, lució un peinado inolvidable. ¿Cuál?",
+      "answers": [
+        {
+          "text": "Rapado con un mechón en la frente",
+          "correct": true
+        },
+        {
+          "text": "Trenzas teñidas de rubio",
+          "correct": false
+        },
+        {
+          "text": "Una larga melena rizada",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Años después contó que se lo hizo a propósito: mientras todo el mundo hablaba del pelo, nadie preguntaba por su lesión en el muslo.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_118",
+      "question": "¿Qué le hizo Luis Suárez a Giorgio Chiellini en el Uruguay-Italia de 2014?",
+      "answers": [
+        {
+          "text": "Morderle en el hombro",
+          "correct": true
+        },
+        {
+          "text": "Darle un cabezazo",
+          "correct": false
+        },
+        {
+          "text": "Escupirle",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Era la tercera vez que Suárez mordía a un rival. La FIFA lo sancionó con nueve partidos internacionales y cuatro meses sin ninguna actividad futbolística.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_119",
+      "question": "Argentina ganó el Mundial de 2022 pese a perder su primer partido. ¿Contra quién?",
+      "answers": [
+        {
+          "text": "Arabia Saudí",
+          "correct": true
+        },
+        {
+          "text": "Japón",
+          "correct": false
+        },
+        {
+          "text": "Camerún",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Arabia Saudí remontó y ganó 2-1. El rey Salmán declaró festivo el día siguiente para que el país pudiera celebrarlo.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_120",
+      "question": "¿Cómo celebró Brandi Chastain el penalti que dio a Estados Unidos el Mundial femenino de 1999?",
+      "answers": [
+        {
+          "text": "Quitándose la camiseta",
+          "correct": true
+        },
+        {
+          "text": "Haciendo una voltereta",
+          "correct": false
+        },
+        {
+          "text": "Besando el balón",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La final se jugó en el Rose Bowl de Pasadena ante unos 90.000 espectadores, una cifra enorme para un partido de fútbol femenino en aquella época.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_121",
+      "question": "¿Qué animal era Footix, la mascota de Francia 98?",
+      "answers": [
+        {
+          "text": "Un gallo",
+          "correct": true
+        },
+        {
+          "text": "Un caracol",
+          "correct": false
+        },
+        {
+          "text": "Un zorro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El nombre se quedó en el idioma: en Francia se llama «footix» al aficionado que solo aparece cuando su equipo gana.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_122",
+      "question": "¿Qué celebración de grada se hizo famosa en todo el mundo durante México 86?",
+      "answers": [
+        {
+          "text": "La ola",
+          "correct": true
+        },
+        {
+          "text": "El aplauso vikingo",
+          "correct": false
+        },
+        {
+          "text": "La conga",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Existía antes en estadios de Estados Unidos, pero las retransmisiones de México 86 la exportaron al resto del planeta. Por eso en muchos idiomas se llama «ola mexicana».",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_123",
+      "question": "¿Qué ritual repetía Laurent Blanc antes de cada partido de Francia en 1998?",
+      "answers": [
+        {
+          "text": "Besar la calva del portero Barthez",
+          "correct": true
+        },
+        {
+          "text": "Atarse las botas al revés",
+          "correct": false
+        },
+        {
+          "text": "Cantar el himno de rodillas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Blanc se perdió la final: le expulsaron en la semifinal ante Croacia. Francia ganó igualmente la Copa sin él.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_124",
+      "question": "¿Por qué tuvo que dejar Maradona el Mundial de 1994 a mitad del torneo?",
+      "answers": [
+        {
+          "text": "Dio positivo en un control antidopaje",
+          "correct": true
+        },
+        {
+          "text": "Se rompió el tobillo",
+          "correct": false
+        },
+        {
+          "text": "Le expulsaron dos veces",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tras el partido ante Nigeria, una enfermera lo sacó del campo de la mano para el control. Dio positivo por efedrina y él lo resumió así: «me cortaron las piernas».",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_125",
+      "question": "Al levantar la Copa en 2022, Messi llevaba puesta una prenda tradicional. ¿Cuál?",
+      "answers": [
+        {
+          "text": "Una túnica árabe",
+          "correct": true
+        },
+        {
+          "text": "Un poncho argentino",
+          "correct": false
+        },
+        {
+          "text": "Una capa de rey",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se llama bisht y se la puso el emir de Catar en el podio. Un diputado omaní ofreció después un millón de dólares por ella.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_126",
+      "question": "En Catar 2022, la francesa Stéphanie Frappart hizo historia. ¿Cómo?",
+      "answers": [
+        {
+          "text": "Arbitró un partido del Mundial masculino",
+          "correct": true
+        },
+        {
+          "text": "Entrenó a una selección",
+          "correct": false
+        },
+        {
+          "text": "Marcó el gol inaugural",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue la primera mujer al frente de un partido del Mundial masculino: el Costa Rica-Alemania de la fase de grupos, con un trío arbitral completamente femenino.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_127",
+      "question": "Nada más ganar el Mundial de 2010, Iker Casillas protagonizó un momento viral en una entrevista en directo. ¿Qué hizo?",
+      "answers": [
+        {
+          "text": "Besar a la periodista",
+          "correct": true
+        },
+        {
+          "text": "Llorar sin poder hablar",
+          "correct": false
+        },
+        {
+          "text": "Tirar el micrófono",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La periodista era Sara Carbonero, su pareja, que le estaba entrevistando a pie de campo para Telecinco.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_128",
+      "question": "Al marcar el gol de la final de 2010, Iniesta enseñó un mensaje en la camiseta interior. ¿A quién iba dedicado?",
+      "answers": [
+        {
+          "text": "A Dani Jarque",
+          "correct": true
+        },
+        {
+          "text": "A su abuelo",
+          "correct": false
+        },
+        {
+          "text": "A Luis Aragonés",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jarque, capitán del Espanyol y amigo suyo, había muerto de un infarto un año antes. Desde entonces Iniesta recibe aplausos en el estadio del Espanyol.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_129",
+      "question": "En la final de 2022, con 3-3 y a segundos del final de la prórroga, ¿qué hizo el Dibu Martínez?",
+      "answers": [
+        {
+          "text": "Parar un mano a mano de Kolo Muani",
+          "correct": true
+        },
+        {
+          "text": "Marcar de cabeza en un córner",
+          "correct": false
+        },
+        {
+          "text": "Detener un penalti de Mbappé",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La parada llegó en el minuto 123. Después, en la tanda de penaltis, detuvo el lanzamiento de Coman y Tchouaméni lo tiró fuera.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_130",
+      "question": "¿Qué regate inventó el mexicano Cuauhtémoc Blanco y lució en Francia 98?",
+      "answers": [
+        {
+          "text": "Saltar entre dos rivales con el balón entre los pies",
+          "correct": true
+        },
+        {
+          "text": "Un taconazo por encima de la cabeza",
+          "correct": false
+        },
+        {
+          "text": "Una bicicleta con los dos pies a la vez",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se bautizó como «cuauhtemiña». Lo hizo ante Corea del Sur y todavía hoy se le pregunta por él en cualquier entrevista.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_131",
+      "question": "En 1969 una eliminatoria para el Mundial coincidió con una guerra entre dos países. ¿Cuáles?",
+      "answers": [
+        {
+          "text": "El Salvador y Honduras",
+          "correct": true
+        },
+        {
+          "text": "Perú y Ecuador",
+          "correct": false
+        },
+        {
+          "text": "Colombia y Venezuela",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El periodista Ryszard Kapuściński la llamó «la guerra del fútbol». El Salvador se clasificó para México 70 y perdió sus tres partidos sin marcar.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_132",
+      "question": "Goleo, el león mascota de Alemania 2006, recibió críticas por un detalle de su vestuario. ¿Cuál?",
+      "answers": [
+        {
+          "text": "No llevaba pantalones",
+          "correct": true
+        },
+        {
+          "text": "Llevaba la camiseta de Brasil",
+          "correct": false
+        },
+        {
+          "text": "Llevaba gafas de sol",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Iba acompañado de un balón que hablaba, llamado Pille. Su nombre completo era Goleo VI.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_133",
+      "question": "¿Cuánto duraban los partidos del primer Mundial femenino, China 1991?",
+      "answers": [
+        {
+          "text": "80 minutos",
+          "correct": true
+        },
+        {
+          "text": "70 minutos",
+          "correct": false
+        },
+        {
+          "text": "90 minutos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ni siquiera se llamaba Mundial: su nombre oficial era «1.er Campeonato Mundial de Fútbol Femenino de la FIFA por la Copa M&M's», por el patrocinador.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_134",
+      "question": "En 2023 España se convirtió en el segundo país campeón del mundo tanto en hombres como en mujeres. ¿Cuál fue el primero?",
+      "answers": [
+        {
+          "text": "Alemania",
+          "correct": true
+        },
+        {
+          "text": "Estados Unidos",
+          "correct": false
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Alemania completó el doblete en 2003, al ganar su primer Mundial femenino. España lo logró en Sídney con un gol de Olga Carmona ante Inglaterra.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_135",
+      "question": "¿Qué tenía de particular el Estadio 974 de Catar 2022?",
+      "answers": [
+        {
+          "text": "Estaba construido con contenedores de barco",
+          "correct": true
+        },
+        {
+          "text": "No tenía gradas, solo césped",
+          "correct": false
+        },
+        {
+          "text": "Estaba construido sobre el mar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se diseñó para poder desmontarlo después del torneo. Su nombre es el prefijo telefónico de Catar.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_136",
+      "question": "Horas antes de la final de 1998, ¿qué le ocurrió a Ronaldo?",
+      "answers": [
+        {
+          "text": "Sufrió una convulsión",
+          "correct": true
+        },
+        {
+          "text": "Se escapó de la concentración",
+          "correct": false
+        },
+        {
+          "text": "Se rompió un dedo del pie",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brasil llegó a entregar una alineación sin él y luego la cambió para meterlo. Jugó apagado y Francia ganó 3-0.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_137",
+      "question": "Entre 1994 y 2018, México cayó en los octavos de final ¿cuántas veces seguidas?",
+      "answers": [
+        {
+          "text": "Siete",
+          "correct": true
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En México se conoce como «la maldición del quinto partido»: los cuartos solo los ha jugado en los Mundiales de 1970 y 1986, los dos que organizó.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_138",
+      "question": "España ganó el Mundial de 2010 tras perder su primer partido. ¿Contra quién?",
+      "answers": [
+        {
+          "text": "Suiza",
+          "correct": true
+        },
+        {
+          "text": "Chile",
+          "correct": false
+        },
+        {
+          "text": "Honduras",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue 0-1, con gol de Gelson Fernandes. España acabó el torneo con solo ocho goles a favor: ningún campeón había marcado tan pocos.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_139",
+      "question": "En el Francia-Kuwait de 1982, alguien bajó de la grada y logró que se anulara un gol. ¿Quién?",
+      "answers": [
+        {
+          "text": "Un jeque, presidente de la federación kuwaití",
+          "correct": true
+        },
+        {
+          "text": "El seleccionador francés",
+          "correct": false
+        },
+        {
+          "text": "El alcalde de Valladolid",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los kuwaitíes dijeron que se habían parado al oír un silbato desde la grada. El jeque Fahad amenazó con retirar al equipo y el árbitro anuló el gol de Giresse.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_140",
+      "question": "En cuartos de 2014, Louis van Gaal hizo un cambio justo antes de la tanda de penaltis ante Costa Rica. ¿Cuál?",
+      "answers": [
+        {
+          "text": "Metió a otro portero solo para los penaltis",
+          "correct": true
+        },
+        {
+          "text": "Quitó a Robben para que no tirara",
+          "correct": false
+        },
+        {
+          "text": "Cambió a los cinco lanzadores",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tim Krul salió en el minuto 120 y paró dos penaltis. Países Bajos pasó a semifinales.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_141",
+      "question": "En la final femenina de 2015, Carli Lloyd marcó uno de sus goles desde un lugar insólito. ¿Cuál?",
+      "answers": [
+        {
+          "text": "El centro del campo",
+          "correct": true
+        },
+        {
+          "text": "Su propia área",
+          "correct": false
+        },
+        {
+          "text": "El banderín de córner",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Completó un triplete en solo 16 minutos de partido, el primero en una final de un Mundial femenino. Estados Unidos ganó 5-2 a Japón.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_142",
+      "question": "En el Mundial femenino de 2019, ¿cuánto le ganó Estados Unidos a Tailandia?",
+      "answers": [
+        {
+          "text": "13-0",
+          "correct": true
+        },
+        {
+          "text": "7-0",
+          "correct": false
+        },
+        {
+          "text": "9-1",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Alex Morgan marcó cinco goles ella sola. Hubo críticas porque las estadounidenses siguieron celebrando cada gol como si fuera el primero.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_143",
+      "question": "¿Qué logró Alemania al ganar el Mundial femenino de 2007?",
+      "answers": [
+        {
+          "text": "No encajar ni un gol en todo el torneo",
+          "correct": true
+        },
+        {
+          "text": "Ganar todos los partidos por goleada",
+          "correct": false
+        },
+        {
+          "text": "Jugar con solo 14 futbolistas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La portera Nadine Angerer le paró un penalti a Marta en la final ante Brasil, que Alemania ganó 2-0.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_144",
+      "question": "¿Qué selección fue la primera de Asia en ganar un Mundial, masculino o femenino?",
+      "answers": [
+        {
+          "text": "Japón",
+          "correct": true
+        },
+        {
+          "text": "Corea del Sur",
+          "correct": false
+        },
+        {
+          "text": "China",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Japón ganó el Mundial femenino de 2011 meses después del tsunami. Homare Sawa empató en el minuto 117 la final ante Estados Unidos y lo ganaron en los penaltis.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_145",
+      "question": "Garrincha fue expulsado en la semifinal de 1962 ante Chile. ¿Qué pasó después?",
+      "answers": [
+        {
+          "text": "Le dejaron jugar la final igualmente",
+          "correct": true
+        },
+        {
+          "text": "Brasil jugó la final sin él",
+          "correct": false
+        },
+        {
+          "text": "Le sancionaron para el Mundial siguiente",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La sanción fue anulada y Garrincha jugó la final ante Checoslovaquia. Brasil ganó 3-1 y logró su segundo título seguido.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_146",
+      "question": "Antes del Mundial de 1970, el capitán inglés Bobby Moore fue detenido en Bogotá. ¿De qué lo acusaron?",
+      "answers": [
+        {
+          "text": "De robar una pulsera",
+          "correct": true
+        },
+        {
+          "text": "De conducir sin carné",
+          "correct": false
+        },
+        {
+          "text": "De pelearse en un bar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La acusación venía de una joyería del hotel donde se alojaba Inglaterra. Moore pasó varios días retenido y llegó a México a tiempo; nunca se probó nada.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_147",
+      "question": "En 2018 la afición de Panamá celebró un gol como si fuera un título, aunque su equipo perdía 6-0 ante Inglaterra. ¿Por qué?",
+      "answers": [
+        {
+          "text": "Era el primer gol de Panamá en un Mundial",
+          "correct": true
+        },
+        {
+          "text": "Lo marcó el portero",
+          "correct": false
+        },
+        {
+          "text": "Era el gol número 2.500 de los Mundiales",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo marcó Felipe Baloy, con 37 años. Panamá perdió 6-1, pero ese gol sigue siendo uno de los momentos más celebrados de su fútbol.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_148",
+      "question": "¿Cuál fue el mejor resultado de España en un Mundial antes de ganar el de 2010?",
+      "answers": [
+        {
+          "text": "Cuarta en 1950",
+          "correct": true
+        },
+        {
+          "text": "Subcampeona en 1934",
+          "correct": false
+        },
+        {
+          "text": "Semifinalista en 1982",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En aquel torneo Zarra le marcó a Inglaterra en Maracaná el gol del 1-0, uno de los más recordados de la historia de la selección.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_149",
+      "question": "¿Por qué Uruguay lleva cuatro estrellas en la camiseta si ha ganado dos Mundiales?",
+      "answers": [
+        {
+          "text": "Cuenta sus dos oros olímpicos",
+          "correct": true
+        },
+        {
+          "text": "Suma dos Copas Confederaciones",
+          "correct": false
+        },
+        {
+          "text": "Una por cada final perdida",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La FIFA lo permite porque los Juegos de 1924 y 1928 fueron, de hecho, el campeonato mundial de su época, organizado junto a la propia FIFA.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_150",
+      "question": "Chile organizó el Mundial de 1962 solo dos años después de sufrir ¿qué?",
+      "answers": [
+        {
+          "text": "El terremoto más fuerte jamás registrado",
+          "correct": true
+        },
+        {
+          "text": "Una guerra con Argentina",
+          "correct": false
+        },
+        {
+          "text": "Una sequía de cinco años",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El terremoto de Valdivia de 1960 alcanzó una magnitud de 9,5. El organizador, Carlos Dittborn, murió un mes antes del torneo; el estadio de Arica lleva su nombre.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_151",
+      "question": "En 1978 el árbitro galés Clive Thomas anuló un gol de Zico ante Suecia. ¿Por qué?",
+      "answers": [
+        {
+          "text": "Pitó el final con el córner en el aire",
+          "correct": true
+        },
+        {
+          "text": "Vio una mano que nadie más vio",
+          "correct": false
+        },
+        {
+          "text": "El balón no había cruzado la línea",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Zico remató de cabeza el saque de esquina, pero Thomas ya había señalado el final. El partido acabó 1-1 y el gol nunca subió al marcador.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_152",
+      "question": "El Portugal-Países Bajos de octavos de 2006 pasó a la historia como «la batalla de Núremberg». ¿Cuántas tarjetas rojas hubo?",
+      "answers": [
+        {
+          "text": "Cuatro",
+          "correct": true
+        },
+        {
+          "text": "Dos",
+          "correct": false
+        },
+        {
+          "text": "Seis",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El árbitro ruso Valentín Ivánov sacó además 16 amarillas. Dos jugadores de cada equipo acabaron expulsados y Portugal ganó 1-0.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_153",
+      "question": "¿Qué novedad trajo el Azteca, el balón de México 86?",
+      "answers": [
+        {
+          "text": "Fue el primero totalmente sintético",
+          "correct": true
+        },
+        {
+          "text": "Fue el primero de color blanco",
+          "correct": false
+        },
+        {
+          "text": "Fue el primero sin costuras",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hasta entonces los balones del Mundial llevaban cuero, que absorbía agua y pesaba más con la lluvia. El Azteca se decoró con motivos aztecas.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_154",
+      "question": "¿En qué Mundial tuvo que clasificarse el país anfitrión para poder jugarlo?",
+      "answers": [
+        {
+          "text": "Italia 1934",
+          "correct": true
+        },
+        {
+          "text": "Uruguay 1930",
+          "correct": false
+        },
+        {
+          "text": "Francia 1938",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Italia tuvo que ganar a Grecia en una eliminatoria previa. Después ganó el torneo en casa.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_155",
+      "question": "En el Argentina-Francia de 1930, el árbitro brasileño pitó el final antes de tiempo. ¿Cuánto antes?",
+      "answers": [
+        {
+          "text": "Seis minutos",
+          "correct": true
+        },
+        {
+          "text": "Un minuto",
+          "correct": false
+        },
+        {
+          "text": "Media parte entera",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lo hizo cuando el francés Marcel Langiller se iba solo hacia la portería. Tras las protestas, hizo volver a los jugadores, algunos ya en la ducha, pero Argentina aguantó el 1-0.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_156",
+      "question": "¿Cuál fue la primera selección asiática en jugar un Mundial, en 1938?",
+      "answers": [
+        {
+          "text": "Indias Orientales Neerlandesas",
+          "correct": true
+        },
+        {
+          "text": "Japón",
+          "correct": false
+        },
+        {
+          "text": "India",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hoy es Indonesia. Aquel Mundial era por eliminatorias directas, así que su único partido fue una derrota por 6-0 ante Hungría.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_157",
+      "question": "En 1950 Escocia se ganó un puesto en el Mundial y aun así no fue. ¿Por qué?",
+      "answers": [
+        {
+          "text": "Había prometido ir solo como campeona británica",
+          "correct": true
+        },
+        {
+          "text": "No pudo pagar el viaje en barco",
+          "correct": false
+        },
+        {
+          "text": "Sus jugadores se negaron a volar",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El torneo británico servía de clasificación y daba dos plazas. Escocia terminó segunda, detrás de Inglaterra, y su federación mantuvo la palabra.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_158",
+      "question": "¿Qué estadio acogió en 1994 los primeros partidos de un Mundial bajo techo?",
+      "answers": [
+        {
+          "text": "El Pontiac Silverdome",
+          "correct": true
+        },
+        {
+          "text": "El Rose Bowl",
+          "correct": false
+        },
+        {
+          "text": "El Giants Stadium",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Para jugar sobre hierba natural bajo cubierta, la cultivaron fuera en bandejas hexagonales que después se montaron sobre el campo como un puzle.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_159",
+      "question": "En los cuartos de 1938 ante Francia, la campeona Italia jugó con una camiseta de un color insólito. ¿Cuál?",
+      "answers": [
+        {
+          "text": "Negro",
+          "correct": true
+        },
+        {
+          "text": "Blanco",
+          "correct": false
+        },
+        {
+          "text": "Verde",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las dos selecciones vestían de azul y a la anfitriona le tocaba conservar el suyo. El color negro fue una exigencia del régimen de Mussolini.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_160",
+      "question": "En 1978, Francia y Hungría llegaron a su partido con la misma equipación blanca. ¿Cómo lo solucionaron?",
+      "answers": [
+        {
+          "text": "Francia jugó con camisetas de un club local",
+          "correct": true
+        },
+        {
+          "text": "Hungría jugó con petos de entrenamiento",
+          "correct": false
+        },
+        {
+          "text": "Los dos jugaron sin camiseta",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las prestó el Kimberley de Mar del Plata: rayas verdes y blancas. El partido empezó con unos cuarenta minutos de retraso y Francia ganó 3-1.",
       "category": "Copa Mundial"
     }
   ]
