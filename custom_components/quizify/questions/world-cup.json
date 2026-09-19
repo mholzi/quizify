@@ -1,7 +1,7 @@
 {
   "name": "World Cup",
   "language": "en",
-  "version": "1.4",
+  "version": "1.5",
   "theme": "worldcup",
   "season": {
     "start": "06-01",
@@ -452,7 +452,7 @@
     },
     {
       "id": "world_cup_en_022",
-      "question": "Which player scored a hat-trick in a men's World Cup final?",
+      "question": "Who scored the first hat-trick in a men's World Cup final?",
       "answers": [
         {
           "text": "Geoff Hurst",
@@ -468,7 +468,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "Hurst's three goals in the 1966 final remain the only hat-trick in any men's World Cup final, though Kylian Mbappé scored one in 2022 and still finished a runner-up.",
+      "fun_fact": "Hurst did it in 1966, and it took 56 years for anyone to match him: Kylian Mbappé scored three in the 2022 final and still finished a runner-up.",
       "category": "World Cup"
     },
     {
@@ -2274,6 +2274,1056 @@
       "unit": "seconds",
       "difficulty": "hard",
       "fun_fact": "Eleven seconds, by Hakan Şükür in the 2002 third-place match. It was his only goal of the tournament.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_185",
+      "question": "The 1994 final between Brazil and Italy made World Cup history in which way?",
+      "answers": [
+        {
+          "text": "First final decided on penalties",
+          "correct": true
+        },
+        {
+          "text": "First final refereed by a woman",
+          "correct": false
+        },
+        {
+          "text": "First final replayed a week later",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "After 120 goalless minutes Roberto Baggio, Italy's biggest star, blazed the decisive penalty over the bar in the heat of Pasadena.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_186",
+      "question": "In 2010, which animal 'predicted' the winner of all of Germany's matches and the final correctly?",
+      "answers": [
+        {
+          "text": "An octopus",
+          "correct": true
+        },
+        {
+          "text": "A parrot",
+          "correct": false
+        },
+        {
+          "text": "A tortoise",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Paul the Octopus lived in an aquarium in Oberhausen and picked from two food boxes marked with flags — he went eight for eight, including Spain's win in the final.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_187",
+      "question": "What was unusual about when the 2022 World Cup in Qatar was played?",
+      "answers": [
+        {
+          "text": "In November and December",
+          "correct": true
+        },
+        {
+          "text": "Entirely at night",
+          "correct": false
+        },
+        {
+          "text": "Spread across two summers",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The summer heat in Qatar forced the move, so European leagues paused mid-season — the first World Cup not played in May, June or July.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_188",
+      "question": "Stadium 974 at the 2022 World Cup was built largely out of what?",
+      "answers": [
+        {
+          "text": "Shipping containers",
+          "correct": true
+        },
+        {
+          "text": "Recycled plastic bottles",
+          "correct": false
+        },
+        {
+          "text": "Prefabricated wooden panels",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It used 974 containers — also Qatar's international dialling code — and was designed to be taken apart after the tournament, a first for a World Cup venue.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_189",
+      "question": "Which refereeing aid was used at a men's World Cup for the first time in 2018?",
+      "answers": [
+        {
+          "text": "The video assistant referee (VAR)",
+          "correct": true
+        },
+        {
+          "text": "Referee body cameras",
+          "correct": false
+        },
+        {
+          "text": "A sin bin for dissent",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "VAR helped award a record number of penalties in Russia, including one in the final that Antoine Griezmann converted for France.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_190",
+      "question": "Naranjito, the mascot of the 1982 World Cup in Spain, was what?",
+      "answers": [
+        {
+          "text": "An orange",
+          "correct": true
+        },
+        {
+          "text": "A bull",
+          "correct": false
+        },
+        {
+          "text": "A paella pan",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The name means 'little orange', a nod to Spain's famous citrus groves — he even got his own animated TV series.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_191",
+      "question": "Germany's 2006 mascot, Goleo VI the lion, drew mockery for missing what?",
+      "answers": [
+        {
+          "text": "Trousers",
+          "correct": true
+        },
+        {
+          "text": "A tail",
+          "correct": false
+        },
+        {
+          "text": "A mane",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Goleo wore only a Germany shirt, and his sidekick was a talking football called Pille — the toy company that held the licence went insolvent that same year.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_192",
+      "question": "Fuleco, the mascot of the 2014 World Cup in Brazil, was which animal?",
+      "answers": [
+        {
+          "text": "An armadillo",
+          "correct": true
+        },
+        {
+          "text": "A toucan",
+          "correct": false
+        },
+        {
+          "text": "A jaguar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The three-banded armadillo can roll itself into a ball — and it is a threatened species, which the mascot was meant to highlight.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_193",
+      "question": "What went wrong for singer Diana Ross at the opening ceremony of the 1994 World Cup?",
+      "answers": [
+        {
+          "text": "She missed a staged penalty",
+          "correct": true
+        },
+        {
+          "text": "Her microphone was switched off",
+          "correct": false
+        },
+        {
+          "text": "She fell off the stage",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "She shot wide from just a few yards out — and the goal was rigged to split open anyway, as if she had scored.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_194",
+      "question": "Why is the stadium crowd 'wave' called the Mexican wave in much of the world?",
+      "answers": [
+        {
+          "text": "TV beamed it worldwide from Mexico 1986",
+          "correct": true
+        },
+        {
+          "text": "It copies a traditional Mexican dance",
+          "correct": false
+        },
+        {
+          "text": "Mexico's 1970 team celebrated goals that way",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fans in North America had been doing the wave since the early 1980s, but viewers elsewhere first saw it on TV from the 1986 World Cup, and the name stuck.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_195",
+      "question": "Why did England's Paul Gascoigne burst into tears during the 1990 semi-final?",
+      "answers": [
+        {
+          "text": "A yellow card meant he'd miss the final",
+          "correct": true
+        },
+        {
+          "text": "He had just been substituted",
+          "correct": false
+        },
+        {
+          "text": "He missed a penalty",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "England lost the shootout to West Germany anyway, but the image of 'Gazza' in tears helped make him a national hero.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_196",
+      "question": "Before every match at the 1998 World Cup, French defender Laurent Blanc kissed what for luck?",
+      "answers": [
+        {
+          "text": "Goalkeeper Fabien Barthez's bald head",
+          "correct": true
+        },
+        {
+          "text": "The match ball",
+          "correct": false
+        },
+        {
+          "text": "His wedding ring",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Blanc was sent off in the semi-final and missed the final itself, but France still won the title on home soil.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_197",
+      "question": "Luis Suárez was sent home from the 2014 World Cup for what?",
+      "answers": [
+        {
+          "text": "Biting an opponent",
+          "correct": true
+        },
+        {
+          "text": "Headbutting a referee",
+          "correct": false
+        },
+        {
+          "text": "Breaking the team curfew",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Italy's Giorgio Chiellini was the victim — it was the third time Suárez had been punished for biting an opponent.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_198",
+      "question": "Frank Rijkaard and Rudi Völler were both sent off in a 1990 match after an incident involving what?",
+      "answers": [
+        {
+          "text": "Spitting",
+          "correct": true
+        },
+        {
+          "text": "A fistfight",
+          "correct": false
+        },
+        {
+          "text": "A stolen ball",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rijkaard spat at Völler twice; both were dismissed, and the pair later made up and filmed a butter commercial together.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_199",
+      "question": "What did Brandi Chastain do after scoring the winning penalty in the 1999 Women's World Cup final?",
+      "answers": [
+        {
+          "text": "Ripped off her shirt",
+          "correct": true
+        },
+        {
+          "text": "Jumped into the crowd",
+          "correct": false
+        },
+        {
+          "text": "Kissed the goalpost",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The final between the USA and China drew over 90,000 fans to the Rose Bowl, one of the biggest crowds ever for a women's sports event.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_200",
+      "question": "The 1970 World Cup ball, the Telstar, had black and white panels for what reason?",
+      "answers": [
+        {
+          "text": "To show up better on black-and-white TV",
+          "correct": true
+        },
+        {
+          "text": "To help referees spot handballs",
+          "correct": false
+        },
+        {
+          "text": "To copy the host's national colours",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The name came from the Telstar communications satellite, and its 32-panel design became the classic image of a football.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_201",
+      "question": "What did referees use at a World Cup for the first time in 2014 to mark where a wall must stand?",
+      "answers": [
+        {
+          "text": "Vanishing spray",
+          "correct": true
+        },
+        {
+          "text": "Laser pointers",
+          "correct": false
+        },
+        {
+          "text": "Plastic cones",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The foam disappears within about a minute, and it had already been used in South American football before FIFA adopted it.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_202",
+      "question": "What colour shirts did England wear when they won the 1966 World Cup final?",
+      "answers": [
+        {
+          "text": "Red",
+          "correct": true
+        },
+        {
+          "text": "White",
+          "correct": false
+        },
+        {
+          "text": "Blue",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Both teams normally played in white, so England changed into their red second kit while West Germany kept white shirts with black shorts.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_203",
+      "question": "Brazil's Rivaldo was fined at the 2002 World Cup after he did what against Turkey?",
+      "answers": [
+        {
+          "text": "Clutched his face after being hit on the leg",
+          "correct": true
+        },
+        {
+          "text": "Pretended to be the goalkeeper",
+          "correct": false
+        },
+        {
+          "text": "Kicked the ball into the crowd",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The ball struck his thigh, but he went down holding his face and got a Turkish player sent off — Brazil went on to win the whole tournament.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_204",
+      "question": "When a stray dog ran onto the pitch during Brazil v England in 1962, what happened to Jimmy Greaves after he caught it?",
+      "answers": [
+        {
+          "text": "It urinated on him",
+          "correct": true
+        },
+        {
+          "text": "It bit his hand",
+          "correct": false
+        },
+        {
+          "text": "It ran off with his boot",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "There were no spare shirts, so Greaves played on in the soiled one. The dog was later raffled among Brazil's squad, and Garrincha won it.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_205",
+      "question": "How long did matches last at the first Women's World Cup in 1991?",
+      "answers": [
+        {
+          "text": "80 minutes",
+          "correct": true
+        },
+        {
+          "text": "70 minutes",
+          "correct": false
+        },
+        {
+          "text": "90 minutes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Officials doubted women could play a full 90 minutes, so halves lasted 40 — from 1995 matches ran the standard length.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_206",
+      "question": "The official title of the first Women's World Cup in 1991 included the name of which sponsor?",
+      "answers": [
+        {
+          "text": "M&M's",
+          "correct": true
+        },
+        {
+          "text": "Coca-Cola",
+          "correct": false
+        },
+        {
+          "text": "Adidas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "FIFA was reluctant to lend the 'World Cup' brand, so it was called the FIFA World Championship for Women's Football for the M&M's Cup. China hosted, and the USA won.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_207",
+      "question": "Why was the 2003 Women's World Cup moved from China to the USA?",
+      "answers": [
+        {
+          "text": "An outbreak of the SARS virus",
+          "correct": true
+        },
+        {
+          "text": "China withdrew for lack of stadiums",
+          "correct": false
+        },
+        {
+          "text": "A boycott by other nations",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The switch came only four months before kick-off. China got the 2007 edition instead.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_208",
+      "question": "When Japan won the 2011 Women's World Cup, it became the first team from which continent to win a senior World Cup?",
+      "answers": [
+        {
+          "text": "Asia",
+          "correct": true
+        },
+        {
+          "text": "Africa",
+          "correct": false
+        },
+        {
+          "text": "Oceania",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Japan came from behind twice against the USA in the final, including a goal in the 117th minute, before winning the shootout.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_209",
+      "question": "Which was the first country to win both the men's and the women's World Cup?",
+      "answers": [
+        {
+          "text": "Germany",
+          "correct": true
+        },
+        {
+          "text": "USA",
+          "correct": false
+        },
+        {
+          "text": "Brazil",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Germany's women won in 2003 and again in 2007, and Spain became the second country to complete the double in 2023.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_210",
+      "question": "By what score did the USA beat Thailand at the 2019 Women's World Cup?",
+      "answers": [
+        {
+          "text": "13–0",
+          "correct": true
+        },
+        {
+          "text": "9–0",
+          "correct": false
+        },
+        {
+          "text": "7–0",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Alex Morgan scored five goals, and the USA faced criticism for celebrating each goal right up to the last one.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_211",
+      "question": "Germany's women won the 2007 World Cup with which remarkable record?",
+      "answers": [
+        {
+          "text": "They didn't concede a single goal",
+          "correct": true
+        },
+        {
+          "text": "They won every match on penalties",
+          "correct": false
+        },
+        {
+          "text": "They played only four matches",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Goalkeeper Nadine Angerer even saved a penalty from Brazil's Marta in the final, which Germany won 2–0.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_212",
+      "question": "Before the 1970 World Cup, England captain Bobby Moore was arrested in Colombia accused of stealing what?",
+      "answers": [
+        {
+          "text": "A bracelet",
+          "correct": true
+        },
+        {
+          "text": "A hotel painting",
+          "correct": false
+        },
+        {
+          "text": "A taxi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He was held for days in Bogotá before the case collapsed, then flew on to Mexico and played superbly all tournament.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_213",
+      "question": "What did FIFA demand of the USA in return for hosting the 1994 World Cup?",
+      "answers": [
+        {
+          "text": "Launch a professional league",
+          "correct": true
+        },
+        {
+          "text": "Build a national football stadium",
+          "correct": false
+        },
+        {
+          "text": "Put soccer in all public schools",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The promise became Major League Soccer, which kicked off in 1996.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_214",
+      "question": "What was unique about the 1994 World Cup match between the USA and Switzerland at the Pontiac Silverdome?",
+      "answers": [
+        {
+          "text": "It was the first World Cup game played indoors",
+          "correct": true
+        },
+        {
+          "text": "It was played on artificial turf",
+          "correct": false
+        },
+        {
+          "text": "It was played without spectators",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Grass was grown in hexagonal trays outside and wheeled into the domed stadium, and the teams drew 1–1.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_215",
+      "question": "What happened to South Korea's Ahn Jung-hwan after his golden goal knocked Italy out of the 2002 World Cup?",
+      "answers": [
+        {
+          "text": "His Italian club's owner vowed to sack him",
+          "correct": true
+        },
+        {
+          "text": "He was banned from playing in Italy",
+          "correct": false
+        },
+        {
+          "text": "Italy's federation sued him",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Perugia's owner said he would not pay a player who had 'ruined Italian football'. Ahn never played for the club again.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_216",
+      "question": "Spain won the 2010 World Cup despite losing their opening match. Who beat them?",
+      "answers": [
+        {
+          "text": "Switzerland",
+          "correct": true
+        },
+        {
+          "text": "Chile",
+          "correct": false
+        },
+        {
+          "text": "Honduras",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Spain were the first team to lose their opening game and still win the title, and Argentina did the same in 2022 after losing to Saudi Arabia.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_217",
+      "question": "In the 2014 semi-final, Germany led hosts Brazil by how much at half-time?",
+      "answers": [
+        {
+          "text": "5–0",
+          "correct": true
+        },
+        {
+          "text": "3–0",
+          "correct": false
+        },
+        {
+          "text": "2–0",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Four of the goals came in just six minutes, and the match finished 7–1, a result Brazilians call the 'Mineirazo'.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_218",
+      "question": "What did Dutch coach Louis van Gaal do just before the penalty shootout against Costa Rica in 2014?",
+      "answers": [
+        {
+          "text": "Brought on a new goalkeeper",
+          "correct": true
+        },
+        {
+          "text": "Left the stadium",
+          "correct": false
+        },
+        {
+          "text": "Let his players pick the takers by lot",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Substitute Tim Krul had been sent on only for the shootout, and he saved two penalties to send the Netherlands through.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_219",
+      "question": "How did Japan get past Senegal at the 2018 World Cup when both finished level on points, goals and head-to-head?",
+      "answers": [
+        {
+          "text": "They had fewer yellow cards",
+          "correct": true
+        },
+        {
+          "text": "They won a drawing of lots",
+          "correct": false
+        },
+        {
+          "text": "They won a penalty shootout",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was the first time the 'fair play' tiebreaker decided anything at a World Cup: Japan had four yellow cards, Senegal six.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_220",
+      "question": "What made French referee Stéphanie Frappart famous at the 2022 World Cup?",
+      "answers": [
+        {
+          "text": "First woman to referee a men's World Cup match",
+          "correct": true
+        },
+        {
+          "text": "First referee to show a red card via VAR",
+          "correct": false
+        },
+        {
+          "text": "Refereed the final aged just 25",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "She took charge of Costa Rica against Germany, with women as both assistant referees too.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_221",
+      "question": "Why did the 1982 match between France and Kuwait stop for several minutes after a French goal?",
+      "answers": [
+        {
+          "text": "A Kuwaiti sheikh marched onto the pitch",
+          "correct": true
+        },
+        {
+          "text": "The floodlights failed",
+          "correct": false
+        },
+        {
+          "text": "A fan stole the ball",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kuwait's players had stopped when they heard a whistle from the crowd. Sheikh Fahad came down from the stands, and the goal was actually disallowed.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_222",
+      "question": "What happened in the only World Cup meeting between West Germany and East Germany, in 1974?",
+      "answers": [
+        {
+          "text": "East Germany won 1–0",
+          "correct": true
+        },
+        {
+          "text": "West Germany won 6–0",
+          "correct": false
+        },
+        {
+          "text": "It ended in a goalless draw",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jürgen Sparwasser scored the winner in Hamburg, yet West Germany went on to win the tournament anyway.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_223",
+      "question": "After Brazil's shock loss at home in 1950, how was the new yellow national kit chosen?",
+      "answers": [
+        {
+          "text": "Through a newspaper design contest",
+          "correct": true
+        },
+        {
+          "text": "Through a vote by the players",
+          "correct": false
+        },
+        {
+          "text": "By the country's president",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The winner, Aldyr Schlee, was a 19-year-old illustrator from the border with Uruguay — the very team that had beaten Brazil.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_224",
+      "question": "What did Iran's players hand their opponents before their politically charged match against the USA in 1998?",
+      "answers": [
+        {
+          "text": "White roses",
+          "correct": true
+        },
+        {
+          "text": "Handwritten letters",
+          "correct": false
+        },
+        {
+          "text": "Their own shirts",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The teams posed together for a joint photo before kick-off. Iran won 2–1.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_225",
+      "question": "Which World Cup host is the only one ever required to play a qualifier to get into its own tournament?",
+      "answers": [
+        {
+          "text": "Italy in 1934",
+          "correct": true
+        },
+        {
+          "text": "Uruguay in 1930",
+          "correct": false
+        },
+        {
+          "text": "France in 1938",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "1934 was the first World Cup with qualifying at all, and Italy beat Greece 4–0 in a one-off game — before going on to win the title.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_226",
+      "question": "The linesman who allowed Geoff Hurst's famous 1966 final goal has a national stadium named after him. In which country?",
+      "answers": [
+        {
+          "text": "Azerbaijan",
+          "correct": true
+        },
+        {
+          "text": "Russia",
+          "correct": false
+        },
+        {
+          "text": "Switzerland",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tofiq Bahramov was often called 'the Russian linesman' in England, but he came from Baku, where the national stadium bears his name.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_227",
+      "question": "Why did France play Hungary at the 1978 World Cup in green-and-white striped shirts?",
+      "answers": [
+        {
+          "text": "Both teams had brought white kits",
+          "correct": true
+        },
+        {
+          "text": "Their kit bag was stolen",
+          "correct": false
+        },
+        {
+          "text": "In protest at the Argentine regime",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The shirts were borrowed from Kimberley, a local club in Mar del Plata, and the kick-off was delayed by about 40 minutes.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_228",
+      "question": "At the 1974 World Cup, Haiti's Emmanuel Sanon scored against Italy and ended what?",
+      "answers": [
+        {
+          "text": "Dino Zoff's run of 1,142 minutes without conceding",
+          "correct": true
+        },
+        {
+          "text": "Italy's 20-year unbeaten home record",
+          "correct": false
+        },
+        {
+          "text": "Italy's streak of 12 straight clean sheets at World Cups",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The goal silenced Italy's fans, but Italy still came back to win 3–1.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_229",
+      "question": "How did Wales qualify for the 1958 World Cup after finishing second in their group?",
+      "answers": [
+        {
+          "text": "Via a playoff against Israel",
+          "correct": true
+        },
+        {
+          "text": "As a replacement for a banned team",
+          "correct": false
+        },
+        {
+          "text": "Through a later appeal to FIFA",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Israel's opponents had all refused to play them, and FIFA wouldn't let a team qualify without a match. Wales were drawn out of the runners-up and beat Israel 2–0 twice.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_230",
+      "question": "Brazilian midfielder Formiga played at how many Women's World Cups?",
+      "answers": [
+        {
+          "text": "Seven",
+          "correct": true
+        },
+        {
+          "text": "Five",
+          "correct": false
+        },
+        {
+          "text": "Six",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Her tournaments ran from 1995 to 2019, and she was 41 when she played at the last one in France.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_231",
+      "question": "Garrincha was sent off in Brazil's 1962 semi-final. What happened next?",
+      "answers": [
+        {
+          "text": "The ban was lifted and he played the final",
+          "correct": true
+        },
+        {
+          "text": "Brazil won the final without him",
+          "correct": false
+        },
+        {
+          "text": "He was replaced by a teenage Pelé",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "He was the tournament's star after Pelé got injured, and Brazil beat Czechoslovakia 3–1 to defend their title.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_232",
+      "question": "Which team became the first from Asia to play at a World Cup, in 1938?",
+      "answers": [
+        {
+          "text": "Dutch East Indies",
+          "correct": true
+        },
+        {
+          "text": "Japan",
+          "correct": false
+        },
+        {
+          "text": "India",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The team from today's Indonesia played only one match, losing 6–0 to Hungary, and went straight home.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_233",
+      "question": "Why did Scotland skip the 1950 World Cup even though they had earned a place?",
+      "answers": [
+        {
+          "text": "They'd vowed to go only as British champions",
+          "correct": true
+        },
+        {
+          "text": "They couldn't afford the trip to Brazil",
+          "correct": false
+        },
+        {
+          "text": "They protested against the host",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The British Home Championship doubled as a qualifying group with two places. Scotland finished second behind England and stayed home.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_234",
+      "question": "How many players were sent off in the 2006 'Battle of Nuremberg' between Portugal and the Netherlands?",
+      "answers": [
+        {
+          "text": "Four",
+          "correct": true
+        },
+        {
+          "text": "Two",
+          "correct": false
+        },
+        {
+          "text": "Six",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Russian referee Valentin Ivanov also showed 16 yellow cards, and Portugal won 1–0.",
       "category": "World Cup"
     }
   ]
