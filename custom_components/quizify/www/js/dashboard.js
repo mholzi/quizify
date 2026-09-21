@@ -187,7 +187,7 @@
             // #428: the body is cream (#FAF6EC), so a white URL was invisible
             // when the vendor lib failed. Use the dark-ink token + bigger type.
             container.innerHTML = '<div style="padding:20px;word-break:break-all;' +
-                'font-size:20px;color:var(--dash-text-white);">' + escapeHtml(url) + '</div>';
+                'font-size:20px;color:var(--dash-text-white);">' + QuizifyUtils.escapeHtml(url) + '</div>';
         }
     }
     // The teams as of the last roster/snapshot (#365). Kept here rather
@@ -208,7 +208,7 @@
             var crown = (p && p.is_admin)
                 ? '<span aria-hidden="true">👑</span> ' : '';
             return '<div class="dashboard-player-chip">' + crown +
-                '<span>' + escapeHtml(name) + '</span></div>';
+                '<span>' + QuizifyUtils.escapeHtml(name) + '</span></div>';
         }
 
         if (!lobbyTeams.length) {
@@ -849,7 +849,7 @@
             var pct = (entry && typeof entry.percent === 'number') ? entry.percent : 0;
             return '<div class="' + cls + '" data-index="' + i + '">' +
                 '<span class="answer-label">' + (labels[i] || '') + '</span>' +
-                '<span class="answer-text">' + escapeHtml(text) + '</span>' +
+                '<span class="answer-text">' + QuizifyUtils.escapeHtml(text) + '</span>' +
                 '<div class="dashboard-answer-distribution" aria-hidden="true">' +
                     '<div class="dashboard-answer-bar">' +
                         '<div class="dashboard-answer-bar-fill" style="width: ' + pct + '%"></div>' +
@@ -898,7 +898,7 @@
                 var text = (answer && typeof answer === 'object') ? answer.text : answer;
                 return '<div class="dashboard-answer" data-index="' + i + '">' +
                     '<span class="answer-label">' + (labels[i] || '') + '</span>' +
-                    '<span class="answer-text">' + escapeHtml(text) + '</span>' +
+                    '<span class="answer-text">' + QuizifyUtils.escapeHtml(text) + '</span>' +
                     '</div>';
             }).join('');
         }
@@ -928,8 +928,8 @@
             els.lightningRecapGrid.innerHTML = questions.map(function(q, qi) {
                 return '<div class="dashboard-lightning-recap-row">' +
                     '<span class="lr-qnum">' + (qi + 1) + '.</span>' +
-                    escapeHtml(q.question_text) +
-                    ' <span class="lr-correct">→ ' + escapeHtml(q.correct_answer) + '</span>' +
+                    QuizifyUtils.escapeHtml(q.question_text) +
+                    ' <span class="lr-correct">→ ' + QuizifyUtils.escapeHtml(q.correct_answer) + '</span>' +
                     '</div>';
             }).join('');
         }
@@ -1088,7 +1088,7 @@
             els.answersGrid.innerHTML = msg.correct_answer
                 ? '<div class="dashboard-answer revealed correct">' +
                       '<span class="answer-text">' +
-                      escapeHtml(msg.correct_answer) + '</span>' +
+                      QuizifyUtils.escapeHtml(msg.correct_answer) + '</span>' +
                   '</div>'
                 : '';
         }
@@ -1187,7 +1187,7 @@
                 els.dashboardEstimate.innerHTML =
                     '<div class="dashboard-estimate-hint">' +
                         '<span class="dashboard-estimate-badge-dot" aria-hidden="true"></span>' +
-                        escapeHtml(rangeLabel) +
+                        QuizifyUtils.escapeHtml(rangeLabel) +
                     '</div>';
             }
             return;
@@ -1210,7 +1210,7 @@
             // the fill-width + percent-text change.
             return '<div class="dashboard-answer" data-index="' + i + '">' +
                 '<span class="answer-label">' + (labels[i] || '') + '</span>' +
-                '<span class="answer-text">' + escapeHtml(text) + '</span>' +
+                '<span class="answer-text">' + QuizifyUtils.escapeHtml(text) + '</span>' +
                 '<div class="dashboard-answer-distribution" aria-hidden="true">' +
                     '<div class="dashboard-answer-bar"><div class="dashboard-answer-bar-fill"></div></div>' +
                     '<span class="dashboard-answer-percent">0%</span>' +
@@ -1235,10 +1235,10 @@
         // prunes at RETENTION_DAYS, so calling this an all-time record
         // would be a claim the data cannot support.
         target.innerHTML =
-            '<span class="h2h-label">' + escapeHtml(t('dashboard.h2hLabel')) + '</span>'
-            + escapeHtml(msg.left) + ' ' + msg.left_wins
-            + ' – ' + msg.right_wins + ' ' + escapeHtml(msg.right)
-            + '<span class="h2h-scope">' + escapeHtml(t('dashboard.h2hRecent')) + '</span>';
+            '<span class="h2h-label">' + QuizifyUtils.escapeHtml(t('dashboard.h2hLabel')) + '</span>'
+            + QuizifyUtils.escapeHtml(msg.left) + ' ' + msg.left_wins
+            + ' – ' + msg.right_wins + ' ' + QuizifyUtils.escapeHtml(msg.right)
+            + '<span class="h2h-scope">' + QuizifyUtils.escapeHtml(t('dashboard.h2hRecent')) + '</span>';
         target.classList.remove('hidden');
         // #775: on the end screen this line takes a slice of the column the
         // awards were already sized against — it arrives a beat later, on
@@ -1265,13 +1265,13 @@
             var wins = entry.wins === 1
                 ? t('dashboard.tonightWinsOne')
                 : t('dashboard.tonightWins', { wins: entry.wins });
-            return escapeHtml(entry.name) + ' ' + wins;
+            return QuizifyUtils.escapeHtml(entry.name) + ' ' + wins;
         });
         // parts[] is already escaped per entry — escaping the joined
         // string again would turn a name like "Jan & Anna" into
         // "Jan &amp;amp; Anna" on screen.
         els.eveningTally.innerHTML =
-            '<span class="tally-label">' + escapeHtml(t('dashboard.tonightLabel'))
+            '<span class="tally-label">' + QuizifyUtils.escapeHtml(t('dashboard.tonightLabel'))
             + '</span>' + parts.join(' · ');
         els.eveningTally.classList.remove('hidden');
     }
@@ -1425,21 +1425,21 @@
             return '<div class="dnl-tick" style="left:' + left.toFixed(1) + '%;">' +
                 '<div class="dnl-dot" style="' + dotStyle + '"></div>' +
                 '<div class="dnl-lbl dnl-lbl--' + pos + (isWinner ? ' is-winner' : '') + '">' +
-                    escapeHtml(g.player_name) + (isWinner ? ' ★' : '') + ' ' + escapeHtml(fmt(Number(g.guess))) +
+                    QuizifyUtils.escapeHtml(g.player_name) + (isWinner ? ' ★' : '') + ' ' + QuizifyUtils.escapeHtml(fmt(Number(g.guess))) +
                 '</div></div>';
         }).join('');
 
         var truthLeft = pct(answer);
         var truth = '<div class="dnl-truth-line" style="left:' + truthLeft.toFixed(1) + '%;"></div>' +
-            '<div class="dnl-truth-flag" style="left:' + truthLeft.toFixed(1) + '%;">' + escapeHtml(fmt(answer)) + ' ✓</div>';
+            '<div class="dnl-truth-flag" style="left:' + truthLeft.toFixed(1) + '%;">' + QuizifyUtils.escapeHtml(fmt(answer)) + ' ✓</div>';
 
         var truthLabel = window.QuizifyI18n ? window.QuizifyI18n.t('estimate.correctAnswer') : 'Correct answer';
 
         els.dashboardEstimate.innerHTML =
-            '<div class="dnl-truth"><div class="dnl-truth-label">' + escapeHtml(truthLabel) + '</div>' +
-                '<div class="dnl-truth-value">' + escapeHtml(fmt(answer)) + (unit ? ' ' + escapeHtml(unit) : '') + '</div></div>' +
+            '<div class="dnl-truth"><div class="dnl-truth-label">' + QuizifyUtils.escapeHtml(truthLabel) + '</div>' +
+                '<div class="dnl-truth-value">' + QuizifyUtils.escapeHtml(fmt(answer)) + (unit ? ' ' + QuizifyUtils.escapeHtml(unit) : '') + '</div></div>' +
             '<div class="dnl-card"><div class="dnl-axis">' + markers + truth + '</div>' +
-                '<div class="dnl-scale-ends"><span>' + escapeHtml(fmt(lo)) + '</span><span>' + escapeHtml(fmt(hi)) + '</span></div></div>';
+                '<div class="dnl-scale-ends"><span>' + QuizifyUtils.escapeHtml(fmt(lo)) + '</span><span>' + QuizifyUtils.escapeHtml(fmt(hi)) + '</span></div></div>';
     }
 
     function handleFinale(msg) {
@@ -1543,12 +1543,12 @@
         }
         othersEl.removeAttribute('hidden');
         var title = window.QuizifyI18n ? window.QuizifyI18n.t('dashboard.runnersUp') : 'Also playing';
-        othersEl.innerHTML = '<div class="podium-others-title">' + escapeHtml(title) + '</div>' +
+        othersEl.innerHTML = '<div class="podium-others-title">' + QuizifyUtils.escapeHtml(title) + '</div>' +
             others.map(function(p, i) {
                 var rank = i + 4;  // 4th, 5th, \u2026
                 return '<div class="podium-other-row">' +
                     '<span class="podium-other-rank">#' + rank + '</span>' +
-                    '<span class="podium-other-name">' + escapeHtml(p.name) + '</span>' +
+                    '<span class="podium-other-name">' + QuizifyUtils.escapeHtml(p.name) + '</span>' +
                     '<span class="podium-other-score">' + p.score + '</span>' +
                 '</div>';
             }).join('');
@@ -1573,7 +1573,7 @@
         }
         section.classList.remove('hidden');
         var awardsLabel = window.QuizifyI18n ? window.QuizifyI18n.t('dashboard.awards') : 'Awards';
-        section.innerHTML = '<div class="awards-title">' + escapeHtml(awardsLabel) + '</div><div class="awards-grid"></div>';
+        section.innerHTML = '<div class="awards-title">' + QuizifyUtils.escapeHtml(awardsLabel) + '</div><div class="awards-grid"></div>';
         var grid = section.querySelector('.awards-grid');
 
         superlatives.forEach(function(s, i) {
@@ -1594,10 +1594,10 @@
             var awardName = translateOrFallback(s.award_key, null, s.award);
             var awardDetail = translateOrFallback(s.detail_key, s.detail_params, s.detail);
             card.innerHTML =
-                '<div class="award-icon">' + escapeHtml(s.icon) + '</div>' +
+                '<div class="award-icon">' + QuizifyUtils.escapeHtml(s.icon) + '</div>' +
                 '<div class="award-text">' +
-                    '<div class="award-name">' + escapeHtml(awardName) + ' · <span class="award-winner">' + escapeHtml(s.winner) + '</span></div>' +
-                    '<div class="award-detail">' + escapeHtml(awardDetail) + '</div>' +
+                    '<div class="award-name">' + QuizifyUtils.escapeHtml(awardName) + ' · <span class="award-winner">' + QuizifyUtils.escapeHtml(s.winner) + '</span></div>' +
+                    '<div class="award-detail">' + QuizifyUtils.escapeHtml(awardDetail) + '</div>' +
                 '</div>';
             grid.appendChild(card);
         });
@@ -1800,12 +1800,6 @@
         for (i = cards.length - 1; i > 0 && column.scrollHeight > column.clientHeight; i--) {
             cards[i].hidden = true;
         }
-    }
-
-    function escapeHtml(text) {
-        var el = document.createElement('span');
-        el.textContent = text || '';
-        return el.innerHTML;
     }
 
     // #215: hook for sw-update.js — is the TV/dashboard idle enough that a

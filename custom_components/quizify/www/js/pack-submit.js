@@ -44,12 +44,6 @@ window.QuizifyPackSubmit = (function () {
 
     function el(id) { return document.getElementById(id); }
 
-    function escapeHtml(str) {
-        return String(str).replace(/[&<>"']/g, function (c) {
-            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-        });
-    }
-
     /**
      * Validate a parsed pack object against the #179 schema.
      *
@@ -199,7 +193,7 @@ window.QuizifyPackSubmit = (function () {
         if (parsed === null) {
             resultEl.innerHTML = '<div class="pack-vgroup">' +
                 '<div class="pack-vg-head bad"><span class="pack-vg-ic">✕</span>' +
-                '<span>' + escapeHtml(t('packSubmit.err.json')) + '</span></div></div>';
+                '<span>' + QuizifyUtils.escapeHtml(t('packSubmit.err.json')) + '</span></div></div>';
             if (continueBtn) { continueBtn.disabled = true; }
             return false;
         }
@@ -212,14 +206,14 @@ window.QuizifyPackSubmit = (function () {
             html += '<div class="pack-vgroup">' +
                 '<div class="pack-vg-head ' + cls + '">' +
                 '<span class="pack-vg-ic">' + mark + '</span>' +
-                '<span class="pack-vg-title">' + escapeHtml(g.title) + '</span>' +
+                '<span class="pack-vg-title">' + QuizifyUtils.escapeHtml(g.title) + '</span>' +
                 '<span class="pack-vg-count">' + g.pass + '/' + g.total + '</span></div>' +
                 '<div class="pack-vg-body">';
             g.rows.forEach(function (r) {
                 html += '<div class="pack-vrow ' + (r.ok ? 'ok' : 'bad') + '">' +
                     '<span class="pack-vrow-ic">' + (r.ok ? '✓' : '✕') + '</span>' +
-                    '<span class="pack-vrow-f">' + escapeHtml(r.label) + '</span>' +
-                    (r.detail ? '<span class="pack-vrow-d">' + escapeHtml(r.detail) + '</span>' : '') +
+                    '<span class="pack-vrow-f">' + QuizifyUtils.escapeHtml(r.label) + '</span>' +
+                    (r.detail ? '<span class="pack-vrow-d">' + QuizifyUtils.escapeHtml(r.detail) + '</span>' : '') +
                     '</div>';
             });
             html += '</div></div>';
@@ -415,22 +409,22 @@ window.QuizifyPackSubmit = (function () {
             var html = '';
             subs.slice(0, 10).forEach(function (s) {
                 var meta = statusMeta(s.status);
-                var name = escapeHtml(s.name || '?');
+                var name = QuizifyUtils.escapeHtml(s.name || '?');
                 var title = s.issue_url
-                    ? '<a href="' + escapeHtml(s.issue_url) + '" target="_blank" rel="noopener">' + name + '</a>'
+                    ? '<a href="' + QuizifyUtils.escapeHtml(s.issue_url) + '" target="_blank" rel="noopener">' + name + '</a>'
                     : name;
                 // Records written before #579 carry no `kind` at all — a missing
                 // kind is a submission, never an unknown.
                 var kindChip = s.kind === 'request'
-                    ? '<span class="pack-tli-kind">' + escapeHtml(t('packSubmit.kind.request')) + '</span>'
+                    ? '<span class="pack-tli-kind">' + QuizifyUtils.escapeHtml(t('packSubmit.kind.request')) + '</span>'
                     : '';
                 var sub = '';
-                if (s.issue_number) { sub += '#' + escapeHtml(s.issue_number); }
+                if (s.issue_number) { sub += '#' + QuizifyUtils.escapeHtml(s.issue_number); }
                 html += '<div class="pack-tli ' + meta.cls + '">' +
                     '<div class="pack-tli-node"></div>' +
                     '<div class="pack-tli-t">' + kindChip + title + '</div>' +
                     (sub ? '<div class="pack-tli-m">' + sub + '</div>' : '') +
-                    '<div class="pack-tli-stat">' + meta.mark + ' ' + escapeHtml(statusLabel(s.status)) + '</div>' +
+                    '<div class="pack-tli-stat">' + meta.mark + ' ' + QuizifyUtils.escapeHtml(statusLabel(s.status)) + '</div>' +
                     '</div>';
             });
             listEl.innerHTML = html;

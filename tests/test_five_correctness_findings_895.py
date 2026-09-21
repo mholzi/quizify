@@ -652,7 +652,9 @@ var els = {{
 }};
 
 function t(key, fallback) {{ return fallback; }}
-function escapeHtml(s) {{ return String(s === undefined || s === null ? '' : s); }}
+var QuizifyUtils = {{ escapeHtml: function (s) {{
+    return String(s === undefined || s === null ? '' : s);
+}} }};
 function showView() {{}}
 function renderQuestionImage() {{}}
 var estimateRendered = null;

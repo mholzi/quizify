@@ -2153,25 +2153,16 @@
                     var r = q.results[entrant];
                     var mark = r === 'correct' ? '✓' : (r === 'wrong' ? '✗' : '–');
                     return '<span class="lr-admin-chip lr-admin-chip--' + r + '">' +
-                        escapeHtmlAdmin(names[entrant] || entrant) + ' ' + mark + '</span>';
+                        QuizifyUtils.escapeHtml(names[entrant] || entrant) + ' ' + mark + '</span>';
                 }).join('');
                 return '<div class="lr-admin-row">' +
                     '<div class="lr-admin-q"><span class="lr-admin-qnum">' + (qi + 1) +
-                    '.</span> ' + escapeHtmlAdmin(q.question_text) +
-                    ' <span class="lr-admin-correct">→ ' + escapeHtmlAdmin(q.correct_answer) +
+                    '.</span> ' + QuizifyUtils.escapeHtml(q.question_text) +
+                    ' <span class="lr-admin-correct">→ ' + QuizifyUtils.escapeHtml(q.correct_answer) +
                     '</span></div>' +
                     '<div class="lr-admin-chips">' + chips + '</div></div>';
             }).join('');
         }
-    }
-
-    function escapeHtmlAdmin(s) {
-        if (window.QuizifyUtils && window.QuizifyUtils.escapeHtml) {
-            return window.QuizifyUtils.escapeHtml(s);
-        }
-        var d = document.createElement('div');
-        d.textContent = s == null ? '' : String(s);
-        return d.innerHTML;
     }
 
     /**
@@ -2817,7 +2808,7 @@
                 els.participateBtn.classList.add('is-joined');
                 els.participateBtn.innerHTML =
                     '<span class="btn-icon" aria-hidden="true">✓</span>' +
-                    '<span>' + escapeHtml(_t('admin.joinedAs', { name: _adminJoinedAs })) + '</span>';
+                    '<span>' + QuizifyUtils.escapeHtml(_t('admin.joinedAs', { name: _adminJoinedAs })) + '</span>';
             }
         }
         if (els.lobbyPlayersEmpty) {
@@ -2825,9 +2816,9 @@
         }
         if (els.lobbyPlayerChips) {
             var hostBadge = '<span class="host-badge" title="'
-                + escapeHtml(_t('admin.hostBadge') || 'Host')
+                + QuizifyUtils.escapeHtml(_t('admin.hostBadge') || 'Host')
                 + '" aria-label="'
-                + escapeHtml(_t('admin.hostBadge') || 'Host')
+                + QuizifyUtils.escapeHtml(_t('admin.hostBadge') || 'Host')
                 + '">👑</span>';
             var card = function (p, idx) {
                     var name = typeof p === 'string' ? p : (p.name || p);
@@ -2845,15 +2836,15 @@
                     var kickBtn = isAdmin
                         ? ''
                         : '<button type="button" class="player-chip-kick" data-kick-name="'
-                            + escapeHtml(name)
+                            + QuizifyUtils.escapeHtml(name)
                             + '" aria-label="'
-                            + escapeHtml(_t('admin.kickPlayer') || ('Remove ' + name))
+                            + QuizifyUtils.escapeHtml(_t('admin.kickPlayer') || ('Remove ' + name))
                             + '" title="'
-                            + escapeHtml(_t('admin.kickPlayer') || ('Remove ' + name))
+                            + QuizifyUtils.escapeHtml(_t('admin.kickPlayer') || ('Remove ' + name))
                             + '">&times;</button>';
                     return '<div class="lobby-e-row-card' + (isAdmin ? ' is-host' : '') + '">'
-                        + '<span class="dot" style="background:' + color + '">' + escapeHtml(initial) + '</span>'
-                        + '<span class="name">' + escapeHtml(name) + '</span>'
+                        + '<span class="dot" style="background:' + color + '">' + QuizifyUtils.escapeHtml(initial) + '</span>'
+                        + '<span class="name">' + QuizifyUtils.escapeHtml(name) + '</span>'
                         + (isAdmin ? hostBadge : '')
                         + kickBtn
                         + '</div>';
@@ -3029,10 +3020,6 @@
             championLabel: championLabel,
             wrap: true
         });
-    }
-
-    function escapeHtml(text) {
-        return QuizifyUtils.escapeHtml(text);
     }
 
     // ---- QR Code ----
@@ -4393,9 +4380,9 @@ function packNewsForLanguage(packs, lang) {
 function renderPackNewsNames(lang) {
     if (!_packNews) return;
     var shown = packNewsForLanguage(_packNews.packs, lang);
-    var esc = _packNews.esc;
     _packNews.namesEl.innerHTML = shown.map(function (p) {
-        return esc(p.name) + ' (' + esc(p.question_count) + ')';
+        return window.QuizifyUtils.escapeHtml(p.name)
+            + ' (' + window.QuizifyUtils.escapeHtml(p.question_count) + ')';
     }).join(', ');
     _packNews.banner.style.display = shown.length ? 'flex' : 'none';
 }
@@ -4433,15 +4420,12 @@ async function showPackNews(getLanguage) {
         const packs = (data && data.new_packs) || [];
         if (packs.length === 0) return;
 
-        // showPackNews lives outside the admin IIFE, so the IIFE-local
-        // _t/escapeHtml helpers are out of scope here. Use the global
-        // window.t (i18n) and window.QuizifyUtils.escapeHtml instead, and
-        // escape all pack metadata before it touches innerHTML (defends
-        // against a malicious pack name → stored XSS).
+        // showPackNews lives outside the admin IIFE, so the IIFE-local `_t`
+        // is out of scope here — use the global window.t (i18n). Pack
+        // metadata is escaped through window.QuizifyUtils.escapeHtml, the one
+        // escape in the codebase (#982), before it touches innerHTML
+        // (defends against a malicious pack name → stored XSS).
         const tt = (key, params) => (window.t ? window.t(key, params) : key);
-        const esc = (s) => (window.QuizifyUtils && window.QuizifyUtils.escapeHtml
-            ? window.QuizifyUtils.escapeHtml(String(s == null ? '' : s))
-            : String(s == null ? '' : s));
 
         // Build banner
         const banner = document.createElement('div');
@@ -4468,13 +4452,13 @@ async function showPackNews(getLanguage) {
         banner.innerHTML =
             '<span style="font-size:1.2rem;flex-shrink:0">🎁</span>' +
             '<div style="flex:1">' +
-                '<strong data-i18n="admin.packNewsTitle" style="color:#E88A7F;font-family:\'DM Sans\',sans-serif;font-weight:700">' + esc(tt('admin.packNewsTitle')) + '</strong>' +
+                '<strong data-i18n="admin.packNewsTitle" style="color:#E88A7F;font-family:\'DM Sans\',sans-serif;font-weight:700">' + window.QuizifyUtils.escapeHtml(tt('admin.packNewsTitle')) + '</strong>' +
                 '<div class="pack-news-names" style="margin-top:3px;color:#2A2820"></div>' +
-                '<div data-i18n="admin.packNewsBody" style="margin-top:5px;font-size:0.8rem;color:#6E6A5C">' + esc(tt('admin.packNewsBody')) + '</div>' +
+                '<div data-i18n="admin.packNewsBody" style="margin-top:5px;font-size:0.8rem;color:#6E6A5C">' + window.QuizifyUtils.escapeHtml(tt('admin.packNewsBody')) + '</div>' +
             '</div>' +
             '<button type="button" id="pack-news-dismiss" ' +
                 'style="background:none;border:none;color:#6E6A5C;cursor:pointer;font-size:1rem;padding:0;flex-shrink:0" ' +
-                'data-i18n-title="common.close" title="' + esc(tt('common.close')) + '">✕</button>';
+                'data-i18n-title="common.close" title="' + window.QuizifyUtils.escapeHtml(tt('common.close')) + '">✕</button>';
 
         // Dismissing is persisted server-side: the packs stay announced across
         // reloads until the host actually acknowledges them, and stay gone
@@ -4505,7 +4489,6 @@ async function showPackNews(getLanguage) {
             banner: banner,
             namesEl: banner.querySelector('.pack-news-names'),
             packs: packs,
-            esc: esc,
         };
         renderPackNewsNames(typeof getLanguage === 'function' ? getLanguage() : '');
     } catch (e) {

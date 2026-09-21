@@ -235,7 +235,7 @@ def test_the_television_renders_awards_from_the_i18n_keys() -> None:
     # #829/#880: the television's code and styles are their own files now.
     dashboard = dashboard_script()
     start = dashboard.index("function renderAwards(")
-    end = dashboard.index("function escapeHtml(", start)
+    end = dashboard.index("function leaderboardNeedPx(", start)
     body = dashboard[start:end]
 
     ignored = [f for f in ("award_key", "detail_key", "detail_params") if f"s.{f}" not in body]
