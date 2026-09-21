@@ -1138,6 +1138,148 @@ class QuizifyWebSocketHandler:
     # Player join
     # ------------------------------------------------------------------
 
+    def _resolve_admin_claim(
+        self,
+        game_state: QuizifyGameState,
+        player_obj: PlayerSession,
+        name: str,
+        data: dict,
+    ) -> None:
+        """Decide whether *player_obj* holds the admin crown after a join.
+
+        The cases are early returns, not a nest, so the next security fix
+        lands beside the case it guards rather than one level deeper (#985):
+
+        * no claim, but the slot carries an inherited crown — strip it
+          unless the join proves ownership (#389);
+        * a *connected* admin under another name — refuse the claim (#208);
+        * first claim (no admin at all) or a same-name reclaim — granted,
+          token-free;
+        * a *stale* admin under a DIFFERENT name — transfer the crown only
+          against a valid admin token (#358).
+
+        Admin-as-player: trust `is_admin: true` in the join message.
+
+        This is the Beatify pattern (which has shipped without bugs
+        for years). Earlier Quizify releases tried to cryptographically
+        validate an admin token threaded through the player's join
+        message; that pattern created a brittle state machine where
+        browser sessionStorage and server token storage could drift
+        apart with no in-product recovery (8 betas worth of bugs).
+
+        Trust trade-off: a malicious client on the LAN could send
+        `is_admin: true` and become admin. Mitigations:
+          - The user's home LAN is generally trusted.
+          - Nabu Casa already requires HA auth to reach the
+            integration through its tunnel.
+          - "First admin claims it" still applies; only one admin
+            slot exists per game.
+        The persisted admin token is still validated for the pure
+        admin-dashboard WebSocket connect (`?role=admin&token=...`),
+        which is the higher-stakes path. Player joins are simpler.
+        See DESIGN.md for the full rationale.
+        """
+        if not data.get("is_admin"):
+            if not player_obj.is_admin:
+                # No claim, no crown on the slot: nothing to decide.
+                return
+
+            # #389 (P2 security): silent crown inheritance via a LOBBY
+            # name-rejoin. In LOBBY a disconnected player's slot can be
+            # reclaimed by simply re-typing the same name, with NO session
+            # token (PlayerRegistry.add_player, the ``phase_value ==
+            # "LOBBY"`` reconnect branch). If that slot was the host's, the
+            # reclaimer INHERITS is_admin — and because this join carries no
+            # ``is_admin: true`` claim, the #358 crown-gating below never runs
+            # to vet it. So an attacker who just types the host's exact name
+            # in the plain player-join form, while the host is briefly
+            # disconnected in the lobby, silently seizes the crown with no
+            # token.
+            #
+            # (Reaching this branch means the join did NOT claim admin, yet
+            # the resulting slot holds is_admin — a freshly added player
+            # starts non-admin, so the crown can only have been inherited
+            # from the reclaimed slot.)
+            #
+            # Strip the inherited crown unless the joiner proves ownership
+            # with a valid admin session token — same proof and FAIL-SOFT
+            # posture as #358 (never reject the join). The legit host's
+            # admin-as-player tab always re-sends ``is_admin: true`` on join
+            # (see player-core.js), so it takes the claim path below and is
+            # unaffected here; a token holder still keeps the crown even on
+            # this path.
+            claim_token = data.get("admin_token")
+            if claim_token and self._conn.validate_admin_token(claim_token):
+                return
+            _LOGGER.warning(
+                "Inherited admin crown stripped for %s: LOBBY "
+                "name-rejoin without a valid admin token (#389)",
+                name,
+            )
+            player_obj.is_admin = False
+            return
+
+        # Single-admin invariant (#208): exactly one player may hold the
+        # crown per game. Only grant admin if no *other* player is already
+        # admin. A re-claim by the same name (e.g. the admin's redirect from
+        # /quizify/admin to /quizify/player re-joining under the same name) is
+        # idempotent and still granted; a claim by a *different* player while
+        # an admin exists is rejected — the original admin keeps the crown.
+        # Rejecting rather than taking over is the safer behaviour: it stops
+        # any LAN client from seizing control mid-game by sending
+        # `is_admin: true`.
+        if game_state.has_other_admin(name):
+            _LOGGER.warning(
+                "Admin claim rejected for %s: a different player "
+                "already holds the single admin slot",
+                name,
+            )
+            return
+
+        # Crown-recovery (#207 regression of #209): if a *stale*
+        # (disconnected) admin slot still lingers under a different
+        # name — the host's old /admin slot during the
+        # /admin -> /player redirect — demote it before crowning the
+        # re-joining host. has_other_admin() no longer blocks on a
+        # disconnected admin, so without this demotion two players
+        # would briefly carry is_admin and break the #208 invariant.
+        stale_admin = game_state.get_admin()
+        if stale_admin is None or stale_admin.name == name:
+            # First claim (no admin at all) or a same-name reclaim: both stay
+            # token-free (the documented Beatify trust trade-off).
+            player_obj.is_admin = True
+            return
+
+        # #358: transferring the crown from a stale admin to a
+        # DIFFERENT name is the takeover vector. During the host's
+        # reload / wifi blip the real admin is momentarily
+        # disconnected (so has_other_admin() is False), and any LAN
+        # client sending `is_admin: true` under a new name would
+        # otherwise demote the host and seize control mid-game.
+        # Require proof: a valid admin session token in the join.
+        # Fail SOFT — no error, just no crown — so we don't
+        # reintroduce the brittle token state machine DESIGN.md
+        # warns about; the legit host still recovers via the
+        # token-based reconnect path, which preserves is_admin on
+        # their own slot.
+        claim_token = data.get("admin_token")
+        if not (claim_token and self._conn.validate_admin_token(claim_token)):
+            _LOGGER.warning(
+                "Crown transfer denied for %s: no valid admin "
+                "token; stale admin %s keeps the crown",
+                name,
+                stale_admin.name,
+            )
+            return
+
+        stale_admin.is_admin = False
+        player_obj.is_admin = True
+        _LOGGER.info(
+            "Crown transferred from stale admin %s to %s",
+            stale_admin.name,
+            name,
+        )
+
     async def _handle_join(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
@@ -1236,125 +1378,11 @@ class QuizifyWebSocketHandler:
             # Generate session token for reconnect
             session_token = self._conn.create_session_token(name)
 
-            # Admin-as-player: trust `is_admin: true` in the join message.
-            #
-            # This is the Beatify pattern (which has shipped without bugs
-            # for years). Earlier Quizify releases tried to cryptographically
-            # validate an admin token threaded through the player's join
-            # message; that pattern created a brittle state machine where
-            # browser sessionStorage and server token storage could drift
-            # apart with no in-product recovery (8 betas worth of bugs).
-            #
-            # Trust trade-off: a malicious client on the LAN could send
-            # `is_admin: true` and become admin. Mitigations:
-            #   - The user's home LAN is generally trusted.
-            #   - Nabu Casa already requires HA auth to reach the
-            #     integration through its tunnel.
-            #   - "First admin claims it" still applies; only one admin
-            #     slot exists per game.
-            # The persisted admin token is still validated for the pure
-            # admin-dashboard WebSocket connect (`?role=admin&token=...`),
-            # which is the higher-stakes path. Player joins are simpler.
-            # See DESIGN.md for the full rationale.
+            # Who wears the crown after this join is its own four-case
+            # decision (#985); ``_resolve_admin_claim`` holds it.
             player_obj = game_state.get_player(name)
-            if player_obj and data.get("is_admin"):
-                # Single-admin invariant (#208): exactly one player may hold
-                # the crown per game. Only grant admin if no *other* player is
-                # already admin. A re-claim by the same name (e.g. the admin's
-                # redirect from /quizify/admin to /quizify/player re-joining
-                # under the same name) is idempotent and still granted; a
-                # claim by a *different* player while an admin exists is
-                # rejected — the original admin keeps the crown. Rejecting
-                # rather than taking over is the safer behaviour: it stops any
-                # LAN client from seizing control mid-game by sending
-                # `is_admin: true`.
-                if game_state.has_other_admin(name):
-                    _LOGGER.warning(
-                        "Admin claim rejected for %s: a different player "
-                        "already holds the single admin slot",
-                        name,
-                    )
-                else:
-                    # Crown-recovery (#207 regression of #209): if a *stale*
-                    # (disconnected) admin slot still lingers under a different
-                    # name — the host's old /admin slot during the
-                    # /admin -> /player redirect — demote it before crowning the
-                    # re-joining host. has_other_admin() no longer blocks on a
-                    # disconnected admin, so without this demotion two players
-                    # would briefly carry is_admin and break the #208 invariant.
-                    #
-                    # #358: transferring the crown from a stale admin to a
-                    # DIFFERENT name is the takeover vector. During the host's
-                    # reload / wifi blip the real admin is momentarily
-                    # disconnected (so has_other_admin() is False), and any LAN
-                    # client sending `is_admin: true` under a new name would
-                    # otherwise demote the host and seize control mid-game.
-                    # Require proof: a valid admin session token in the join.
-                    # Fail SOFT — no error, just no crown — so we don't
-                    # reintroduce the brittle token state machine DESIGN.md
-                    # warns about; the legit host still recovers via the
-                    # token-based reconnect path, which preserves is_admin on
-                    # their own slot. A first claim (no admin yet) and a
-                    # same-name reclaim stay token-free (the documented Beatify
-                    # trust trade-off).
-                    stale_admin = game_state.get_admin()
-                    if stale_admin is not None and stale_admin.name != name:
-                        claim_token = data.get("admin_token")
-                        if claim_token and self._conn.validate_admin_token(
-                            claim_token
-                        ):
-                            stale_admin.is_admin = False
-                            player_obj.is_admin = True
-                            _LOGGER.info(
-                                "Crown transferred from stale admin %s to %s",
-                                stale_admin.name,
-                                name,
-                            )
-                        else:
-                            _LOGGER.warning(
-                                "Crown transfer denied for %s: no valid admin "
-                                "token; stale admin %s keeps the crown",
-                                name,
-                                stale_admin.name,
-                            )
-                    else:
-                        player_obj.is_admin = True
-            elif player_obj and player_obj.is_admin:
-                # #389 (P2 security): silent crown inheritance via a LOBBY
-                # name-rejoin. In LOBBY a disconnected player's slot can be
-                # reclaimed by simply re-typing the same name, with NO session
-                # token (PlayerRegistry.add_player, the ``phase_value ==
-                # "LOBBY"`` reconnect branch). If that slot was the host's, the
-                # reclaimer INHERITS is_admin — and because this join carries no
-                # ``is_admin: true`` claim, the #358 crown-gating block above
-                # never runs to vet it. So an attacker who just types the host's
-                # exact name in the plain player-join form, while the host is
-                # briefly disconnected in the lobby, silently seizes the crown
-                # with no token.
-                #
-                # (Reaching this branch means the join did NOT claim admin, yet
-                # the resulting slot holds is_admin — a freshly added player
-                # starts non-admin, so the crown can only have been inherited
-                # from the reclaimed slot.)
-                #
-                # Strip the inherited crown unless the joiner proves ownership
-                # with a valid admin session token — same proof and FAIL-SOFT
-                # posture as #358 (never reject the join). The legit host's
-                # admin-as-player tab always re-sends ``is_admin: true`` on join
-                # (see player-core.js), so it takes the #358 path above and is
-                # unaffected here; a token holder still keeps the crown even on
-                # this path.
-                claim_token = data.get("admin_token")
-                if not (
-                    claim_token
-                    and self._conn.validate_admin_token(claim_token)
-                ):
-                    _LOGGER.warning(
-                        "Inherited admin crown stripped for %s: LOBBY "
-                        "name-rejoin without a valid admin token (#389)",
-                        name,
-                    )
-                    player_obj.is_admin = False
+            if player_obj is not None:
+                self._resolve_admin_claim(game_state, player_obj, name, data)
 
             # If a lightning round is mid-flight, register the late joiner so
             # they can score from the next question on (issue #42).

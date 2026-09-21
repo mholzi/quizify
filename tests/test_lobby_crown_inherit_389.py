@@ -28,7 +28,10 @@ import pytest
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
 
-from custom_components.quizify.game.state import QuizifyGameState  # noqa: E402
+from custom_components.quizify.game.state import (  # noqa: E402
+    GamePhase,
+    QuizifyGameState,
+)
 from custom_components.quizify.server.connection import ConnectionManager  # noqa: E402
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
@@ -152,3 +155,43 @@ class TestLobbyCrownInherit389:
         )
 
         assert game.get_player("Host").is_admin is True
+
+    @pytest.mark.asyncio
+    async def test_ghost_reclaim_mid_game_does_not_inherit_crown(
+        self, tmp_path: Path
+    ) -> None:
+        """The strip is not LOBBY-only (#985).
+
+        Every other test here runs in the lobby, because that is the phase
+        ``add_player`` lets a name-rejoin through. It is not the only one: a
+        slot whose transport is already dead is reaped by ``_handle_join``
+        and reclaimed via ``reclaim_by_name`` in ANY phase (#448/#646). So
+        the host's ghost, mid-game, is reclaimable by name alone — and the
+        reclaimer inherits ``is_admin`` with no ``is_admin: true`` claim to
+        route the join through the #358 token gate.
+
+        Pinned here because the branch reads as a lobby rule (its comment
+        says "LOBBY name-rejoin") while it in fact guards the ghost path too;
+        narrowing it to ``phase == LOBBY`` would reopen #389 mid-game.
+        """
+        game = _make_game(tmp_path)
+        h, _tok = await _handler_with_token(game)
+
+        host_ws = _ws()
+        game.add_player("Host", h._conn.connection_id(host_ws))
+        game.get_player("Host").is_admin = True
+
+        game.start_game(language="de", num_rounds=3, difficulty="easy")
+        game.start_next_question()
+        assert game.phase != GamePhase.LOBBY
+
+        # The host's socket died without a disconnect: the slot still reads
+        # connected, so the join reaps it and treats the collision as a
+        # reclaim rather than refusing with ERR_NAME_TAKEN.
+        host_ws.closed = True
+
+        await h._handle_join(_ws(), {"name": "Host"}, game)
+
+        host = game.get_player("Host")
+        assert host.connected is True, "the ghost slot was not reclaimed"
+        assert host.is_admin is False
