@@ -435,25 +435,18 @@ def test_the_auction_snapshot_still_withholds_the_question(tmp_path: Path) -> No
 # — does NOT hold. Same contract as QUESTION_SOURCED_ELSEWHERE above: adding a
 # field to the live payload without adding it to the snapshot fails here.
 #
-# Two kinds of entry live in this map, and the difference matters:
-#
-# * genuinely sourced elsewhere — the field is reachable on the restore path
-#   under another name or by a one-line derivation; and
-# * NOT CARRIED — the field is simply absent from the snapshot. The television
-#   is the only client that reads the nested block (a phone gets the flat
-#   projection from ``project_snapshot_for_player``), and its
-#   ``renderRevealFromSnapshot`` (``www/js/dashboard.js``) happens not to read
-#   these. That is coverage, not a guarantee: the day the reveal view reads one
-#   of them after a reconnect it reads ``undefined``. Writing them down here is
-#   the point of #980 — whoever makes the TV read one has to come through this
-#   map and carry it in ``serialize_state_snapshot`` instead.
+# #996 emptied the second of the two kinds of entry this map used to hold.
+# What is left is genuinely sourced elsewhere: reachable on the restore path
+# under another name or by a one-line derivation. The three that were merely
+# NOT CARRIED — ``question_id``, ``question_type`` (which the block added for
+# estimates only) and ``next_image_url`` — are in the snapshot now, so the
+# assertion below covers them from here on. An entry added back has to say
+# which of the two kinds it is, because "the TV does not read it today" is
+# coverage rather than a guarantee.
 ROUND_SUMMARY_SOURCED_ELSEWHERE = {
     "type": "the message envelope — a snapshot is not a round_summary",
     "all_answers": 'reshaped: round_summary["results"], one row per player',
     "last_round": "derived: round >= total_rounds",
-    "question_id": "NOT carried — the TV reveal has no flag-question button",
-    "question_type": "NOT carried for MC; the block adds it for estimates (#275)",
-    "next_image_url": "NOT carried — a prefetch hint (#736), not a rendered field",
 }
 
 
@@ -518,6 +511,61 @@ def test_every_live_round_summary_field_reaches_the_snapshot(tmp_path: Path) -> 
         f"them. Listed as exceptions but no longer sent: "
         f"{sorted(set(ROUND_SUMMARY_SOURCED_ELSEWHERE) - missing)}."
     )
+
+
+def test_the_three_fields_996_added_carry_the_live_values(tmp_path: Path) -> None:
+    """Presence is half of it; the coverage map above cannot see the values.
+
+    A picture pack again, because it is the one whose live payload
+    deterministically carries ``next_image_url`` — a hint that is only
+    sometimes sent is a hint this comparison can only sometimes make.
+    """
+    state = _game_in_answer_reveal(tmp_path)
+    live = RoundMessageBuilder().build_round_summary(state)
+    assert live is not None
+    block = serialize_state_snapshot(state)["round_summary"]
+    question = state.get_round_summary().question
+
+    assert block["question_id"] == live["question_id"] == question.id
+    assert block["question_type"] == live["question_type"] == question.type
+    # The live payload omits the key when there is nothing to warm; the
+    # snapshot always carries it. Where the live one does send it, the two
+    # have to point at the same picture.
+    assert live["next_image_url"], "the picture pack warmed nothing"
+    assert block["next_image_url"] == live["next_image_url"]
+
+
+def test_the_reveal_block_names_the_type_on_a_multiple_choice_round(
+    tmp_path: Path,
+) -> None:
+    """The sharp half of #996: carried sometimes is worse than never carried.
+
+    ``dashboard.js`` decides between the number line and the answer grid on
+    ``msg.round_summary.question_type === 'estimate'``. Until #996 that read
+    ``undefined`` on every multiple-choice reveal and was right by luck. Both
+    rounds now say what they are.
+    """
+    mc = _game_in_answer_reveal(tmp_path)
+    assert serialize_state_snapshot(mc)["round_summary"]["question_type"] == (
+        "multiple_choice"
+    )
+
+    estimate = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
+    estimate.add_player("Alice")
+    estimate.add_player("Bob")
+    estimate.start_game(
+        category="estimation-en", language="en", num_rounds=3, difficulty="easy"
+    )
+    question = estimate.start_next_question()
+    assert question is not None and question.is_estimate
+    estimate.submit_guess("Alice", question.estimate_answer)
+    estimate.submit_guess("Bob", question.estimate_min)
+    estimate.evaluate_round()
+    assert estimate.phase == GamePhase.ANSWER_REVEAL
+
+    block = serialize_state_snapshot(estimate)["round_summary"]
+    assert block["question_type"] == "estimate"
+    assert block["estimate"] is not None, "the number line went missing"
 
 
 def test_both_reveal_builders_agree_on_the_tile_for_a_normal_shuffle(
