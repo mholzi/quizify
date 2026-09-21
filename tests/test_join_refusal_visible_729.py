@@ -181,10 +181,15 @@ def test_a_successful_join_clears_the_pending_flag() -> None:
 
 
 def test_the_refused_name_is_released() -> None:
-    """A held-but-refused name keeps the reconnect loop re-sending it."""
+    """A held-but-refused name keeps the reconnect loop re-sending it.
+
+    #981 gave the four fields one spelling, ``forgetIdentity()``; releasing
+    the name is now that call rather than an assignment written out here.
+    ``tests/test_forget_identity_981.py`` holds the helper to what it clears.
+    """
     source = PLAYER_CORE.read_text(encoding="utf-8")
     body = _function_body(source, "showJoinRefusal")
-    assert "state.playerName = null" in body, (
+    assert "forgetIdentity()" in body, (
         "a refused join keeps state.playerName, so player-utils keeps "
         "reconnecting and re-sending the refused name (#729)"
     )

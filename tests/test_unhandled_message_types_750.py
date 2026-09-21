@@ -110,10 +110,12 @@ class TestKickedScreen:
         idx = BUNDLE.index("case 'kicked':")
         case = BUNDLE[idx : idx + 1400]
         assert "showView('kicked-view')" in case
-        # The session token must die with the kick, or the reconnect ladder
-        # climbs straight back into the lobby we were thrown out of.
-        assert "clearSession()" in case
-        assert "state.playerName = null" in case
+        # The session token and the name must die with the kick, or the
+        # reconnect ladder climbs straight back into the lobby we were thrown
+        # out of. Since #981 both are one call — `forgetIdentity()`, shared
+        # with game_reset, reconnect_failed and a refused join — and
+        # tests/test_forget_identity_981.py holds it to what it clears.
+        assert "forgetIdentity()" in case
 
     @pytest.mark.parametrize("lang", ["en", "de", "es"])
     def test_removal_strings_exist_in_every_bundle(self, lang: str) -> None:
