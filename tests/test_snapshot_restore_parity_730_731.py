@@ -34,8 +34,9 @@ pin both halves:
 
 #980 added the third payload of the reveal to the second half. ``question`` and
 ``hot_seat`` had a coverage map; ``round_summary`` — what a television rebuilds
-a finished round from after a reconnect — had none, and five of its fields had
-quietly never been carried. It also collapsed the two resolutions of "which
+a finished round from after a reconnect — had none, and three of its fields
+(``question_id``, ``question_type``, ``next_image_url``) turned out never to
+have been carried at all. It also collapsed the two resolutions of "which
 tile is the correct one" into ``resolve_correct_indices``: the snapshot checked
 that the round's shuffle really was a permutation and the live builder did not,
 so on an unusable map the TV drew a grid and a set of vote bars in one order
@@ -492,8 +493,8 @@ def test_every_live_round_summary_field_reaches_the_snapshot(tmp_path: Path) -> 
 
     ``question`` and ``hot_seat`` have had a coverage map since #730/#731;
     ``round_summary`` — the payload a television rebuilds a reveal from after a
-    reconnect — had none, which is how five fields came to be absent without
-    anyone deciding they should be.
+    reconnect — had none, which is how three of its fields came to be absent
+    without anyone deciding they should be.
 
     A picture pack on purpose: it is the one whose live payload deterministically
     carries ``next_image_url`` (#736), and a field that is only sometimes sent is
