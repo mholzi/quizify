@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+from typing import Any
 
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
@@ -31,6 +32,7 @@ sys.path.insert(0, str(_REPO_ROOT))
 from custom_components.quizify.game.player import PlayerSession  # noqa: E402
 from custom_components.quizify.game.questions import Answer, Question  # noqa: E402
 from custom_components.quizify.game.state import RoundSummary  # noqa: E402
+from custom_components.quizify.game.team import TeamRegistry  # noqa: E402
 from custom_components.quizify.server.round_message_builder import (  # noqa: E402
     RoundMessageBuilder,
 )
@@ -82,6 +84,10 @@ class _FakeGameState:
         self.shuffle_map = shuffle_map
         self.shuffled_answers = [question.answers[i].text for i in shuffle_map]
         self._round_summary = round_summary
+        self.game_id: str | None = None
+        self.team_registry = TeamRegistry()
+        self._cached_key: tuple[str | None, int] | None = None
+        self._cached_msg: dict[str, Any] | None = None
 
     def get_players(self) -> list[PlayerSession]:
         return list(self._players)
@@ -100,6 +106,26 @@ class _FakeGameState:
 
     def get_round_summary(self) -> RoundSummary | None:
         return self._round_summary
+
+    def peek_next_image_url(self) -> str | None:
+        return None
+
+    # --- the surface ``build_round_summary`` reads by attribute (#984) ------
+    # These used to be resolved through ``getattr(game_state, "<name>", None)``
+    # so a double that skipped them simply skipped the feature. That hid a
+    # rename of the real method from mypy, so the builder reads them plainly
+    # now and the double carries them: an empty team registry, no preload
+    # hint, and the real one-slot memo keyed on ``(game_id, round)``.
+    def get_cached_round_summary_msg(
+        self, key: tuple[str | None, int]
+    ) -> dict[str, Any] | None:
+        return self._cached_msg if self._cached_key == key else None
+
+    def store_round_summary_msg(
+        self, key: tuple[str | None, int], msg: dict[str, Any]
+    ) -> None:
+        self._cached_key = key
+        self._cached_msg = msg
 
 
 def _summary(q: Question) -> RoundSummary:

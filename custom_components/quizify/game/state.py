@@ -154,6 +154,12 @@ class QuizifyGameState:
         self.round: int = 0
         self.total_rounds: int = 10
         self.category: str | None = None
+        # The multi-select the host picked (#369); ``category`` is the
+        # single-pick fallback. Declared here rather than only in
+        # ``start_game`` so every reader — ``resolve_pack_labels``, Lightning,
+        # Hot Seat — sees a list on a state that has not started a game yet
+        # instead of an ``AttributeError``.
+        self.categories: list[str] = []
         self.difficulty: str = DIFFICULTY_DEFAULT
         self.language: str = "de"
         self.join_url: str | None = None
@@ -2329,9 +2335,7 @@ class QuizifyGameState:
             language=language or self.language,
             category=category if category is not None else self.category,
             categories=(
-                categories
-                if categories is not None
-                else getattr(self, "categories", None)
+                categories if categories is not None else self.categories
             ),
             difficulty=difficulty,
             # A team answers lightning together, like a normal round (#552).
@@ -2514,7 +2518,7 @@ class QuizifyGameState:
             scores,
             language=self.language,
             category=self.category,
-            categories=getattr(self, "categories", None),
+            categories=self.categories,
             difficulty=self.difficulty,
             teams=self._team_registry.to_list(),
         )

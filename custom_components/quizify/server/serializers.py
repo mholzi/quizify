@@ -906,8 +906,8 @@ def resolve_pack_labels(game_state: QuizifyGameState) -> list[str]:
     end screen need it: the live frame and the FINALE snapshot a reloading
     phone restores from (#878).
     """
-    packs = list(getattr(game_state, "categories", None) or [])
-    if not packs and getattr(game_state, "category", None):
+    packs: list[str] = list(game_state.categories)
+    if not packs and game_state.category:
         packs = [game_state.category]
     try:
         meta = game_state.question_bank.get_pack_versions()
@@ -1085,20 +1085,14 @@ def _snapshot_answer_distribution(
 
     Team mode goes through ``entrant_of`` exactly as the live path does: a
     team is one vote however many phones carry its row (#853).
-
-    Everything is resolved through ``getattr`` because ``serialize_state_snapshot``
-    runs against lightweight game doubles in a good part of the suite; a double
-    that has no team registry simply gets one vote per player, and one that has
-    no players gets an empty distribution rather than an exception.
     """
-    registry = getattr(game_state, "team_registry", None)
-    team_of = getattr(registry, "get_by_member", None)
+    team_of = game_state.team_registry.get_by_member
 
     rows: list[dict[str, Any]] = []
     entrant_of: dict[str, str] = {}
     for player in game_state.get_players():
-        team = team_of(player.name) if team_of is not None else None
-        entrant_of[player.name] = getattr(team, "team_id", None) or player.name
+        team = team_of(player.name)
+        entrant_of[player.name] = team.team_id if team is not None else player.name
         if team is not None:
             index = team.current_answer
         else:
