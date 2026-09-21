@@ -147,8 +147,8 @@ def _render(snapshot: dict) -> dict:
     collaborators that are *not* — ``showView``, ``renderQuestionImage``,
     ``renderLeaderboard``, ``handleQuestionStarted`` — are recorded instead of
     executed, because they belong to other frames of the page and would drag
-    half the television in with them. ``escapeHtml`` is stubbed only because
-    dom_stub has no innerHTML serializer for text nodes.
+    half the television in with them. The escape is the real
+    ``QuizifyUtils.escapeHtml`` out of the loaded ``utils.js`` (#982).
     """
     source = _without_comments(_DASHBOARD.read_text(encoding="utf-8"))
     els_block = source[source.index("var els = {") :]
@@ -172,7 +172,7 @@ function renderLeaderboard(container, players) {{
     seen.leaderboards.push((players || []).length);
 }}
 function handleQuestionStarted(msg) {{ seen.questions.push(msg.question_text); }}
-function escapeHtml(text) {{ return String(text == null ? '' : text); }}
+var QuizifyUtils = window.QuizifyUtils;
 var currentPhase = 'UNSET';
 var timerDuration = 0;
 var timerRemaining = 0;
