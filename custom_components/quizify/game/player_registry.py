@@ -342,6 +342,15 @@ class PlayerRegistry:
         the same player (e.g. the admin's redirect from /admin to /player
         re-joining under the same name) is idempotent and not blocked.
 
+        "Other than ``name``" means the same thing here as it does in
+        :meth:`get_player`, i.e. case-insensitively (#995). The two used to
+        disagree: ``get_player`` resolves ``HOST`` to the stored ``Host``
+        slot, so the host reclaims their own slot — and then the
+        case-sensitive comparison here read that very slot as "a different
+        player", refusing the host's claim on their own crown. Compare on
+        ``.lower()``, the same fold ``get_player`` uses, so that a name this
+        registry treats as one player is one player in both answers.
+
         Crown-recovery (#207 regression of #209): a *disconnected/stale*
         admin slot must NOT block the legitimate host's re-claim. When the
         host's /admin -> /player redirect (or any reload) takes the
@@ -355,4 +364,8 @@ class PlayerRegistry:
         crown (the #208 anti-takeover guarantee is preserved).
         """
         admin = self.get_admin()
-        return admin is not None and admin.name != name and admin.connected
+        return (
+            admin is not None
+            and admin.name.lower() != name.lower()
+            and admin.connected
+        )

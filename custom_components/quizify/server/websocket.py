@@ -1244,9 +1244,22 @@ class QuizifyWebSocketHandler:
         # disconnected admin, so without this demotion two players
         # would briefly carry is_admin and break the #208 invariant.
         stale_admin = game_state.get_admin()
-        if stale_admin is None or stale_admin.name == name:
+        if stale_admin is None or stale_admin.name.lower() == name.lower():
             # First claim (no admin at all) or a same-name reclaim: both stay
             # token-free (the documented Beatify trust trade-off).
+            #
+            # ``.lower()`` (#995), the fold ``get_player`` used to find
+            # ``player_obj``: the host who types ``HOST`` reclaims the stored
+            # ``Host`` slot, so the slot in front of us and ``stale_admin``
+            # are the same object. Compared case-sensitively it read as a
+            # crown *transfer* between two people and fell through to the
+            # #358 token gate, which then denied the host their own crown
+            # ("Crown transfer denied for HOST ... stale admin Host keeps the
+            # crown" — about one slot). ``.lower()`` rather than
+            # ``.casefold()`` on purpose: this must match what the lookup
+            # did, and casefold matches names get_player does not (``Straße``
+            # / ``STRASSE``), which would be the same split in the other
+            # direction.
             player_obj.is_admin = True
             return
 
