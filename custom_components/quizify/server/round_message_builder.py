@@ -21,6 +21,7 @@ from typing import TYPE_CHECKING, Any
 
 from custom_components.quizify.game.phase_controller import GamePhase
 from custom_components.quizify.server.serializers import (
+    resolve_correct_indices,
     serialize_leaderboard,
     serialize_player_list,
     serialize_question_for_admin,
@@ -570,16 +571,21 @@ class RoundMessageBuilder:
         # Find the correct answer's shuffled index (canonical) AND its
         # original index in question.answers — dashboard needs the latter
         # because it renders unshuffled answer tiles (per #151 audit).
-        correct_shuffled_idx = -1
-        correct_original_idx = -1
-        for a in summary.question.answers:
-            if a.correct:
-                correct_original_idx = summary.question.answers.index(a)
-                for shuffled_idx, orig_idx in enumerate(game_state.shuffle_map):
-                    if orig_idx == correct_original_idx:
-                        correct_shuffled_idx = shuffled_idx
-                        break
-                break
+        #
+        # #980: through the same resolver the snapshot's nested
+        # ``round_summary`` uses, not the nested loop that used to stand here.
+        # The loop had no idea whether ``shuffle_map`` was a permutation of the
+        # answer indices, so an unusable map (pre-first-question, or malformed)
+        # left the highlight at ``-1`` while the vote bars underneath were drawn
+        # in question-JSON order by ``_compute_answer_distribution``, which has
+        # always checked. Same map, same check, same answer now.
+        #
+        # One statement, one line: ``test_the_map_reaches_the_serializer``
+        # (#853) reads the ``serialize_round_summary(...)`` call below out of
+        # this file with a non-greedy regex that stops at the first ``)`` on
+        # this indent, so a wrapped call here truncates what it sees.
+        resolved = resolve_correct_indices(summary.question, game_state.shuffle_map)
+        _, correct_shuffled_idx, correct_original_idx = resolved
 
         leaderboard = serialize_leaderboard(game_state.get_ranked_participants())
 
