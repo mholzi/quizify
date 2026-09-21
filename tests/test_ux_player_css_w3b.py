@@ -159,9 +159,10 @@ def test_conn_sr_live_region_present() -> None:
 
 
 def test_conn_indicator_updates_live_region() -> None:
-    js = (JS / "player-utils.js").read_text("utf-8")
-    block = js[js.index("function updateConnectionIndicator"):]
-    block = block[: block.index("Reconnecting Overlay")]
+    # The indicator moved into the shared client core in #983 — one dot for
+    # the phone and the host page — so the #424 guarantees live there now.
+    js = (JS / "client-core.js").read_text("utf-8")
+    block = js[js.index("// Connection indicator"):]
     assert "conn-status-announce" in block, (
         "updateConnectionIndicator must populate the sr-only live region (#424)"
     )

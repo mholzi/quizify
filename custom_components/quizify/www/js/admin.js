@@ -4178,48 +4178,19 @@
     }
 
     // ---- Connection status ----
-    // Soft Parlor palette: connected = sage (success/correct), warning = sun, error = warm brick.
+    // The dot itself lives in QuizifyClientCore since #983 — it was written
+    // twice, here and on the phone, and the two copies had drifted (the phone
+    // had the #424 accessibility work, this one the #290 retry). What stays
+    // here is the only part that is genuinely the host's: what "retry" does.
     function updateConnectionStatus(status) {
-        var indicator = document.getElementById('conn-status');
-        if (!indicator) {
-            indicator = document.createElement('div');
-            indicator.id = 'conn-status';
-            indicator.style.cssText = 'position:fixed;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:0.75rem;color:#6E6A5C;z-index:100;';
-            document.body.appendChild(indicator);
-        }
-        var colors = { connected: '#7FA897', reconnecting: '#E8C47F', disconnected: '#D66A6A' };
-        var glow = { connected: 'rgba(127,168,151,0.45)', reconnecting: 'rgba(232,196,127,0.45)', disconnected: 'rgba(214,106,106,0.45)' };
-        var color = colors[status] || '#6E6A5C';
-        var glowColor = glow[status] || 'rgba(110,106,92,0.25)';
-        var dot = '<span style="width:10px;height:10px;border-radius:50%;display:inline-block;flex:none;background:' +
-            color + ';box-shadow:0 0 10px ' + glowColor + ';"></span>';
-        // Visible label instead of a bare dot the host can't interpret: while
-        // reconnecting/disconnected, show the i18n connection text (and, when
-        // disconnected, a tappable retry affordance) so the host knows the
-        // tablet is trying to recover and can force it (#290). The existing
-        // connection.* keys are reused (no new i18n strings).
-        if (status === 'connected') {
-            indicator.style.cursor = '';
-            indicator.onclick = null;
-            indicator.innerHTML = dot;
-            return;
-        }
-        if (status === 'disconnected') {
-            indicator.style.cursor = 'pointer';
-            indicator.setAttribute('role', 'button');
-            indicator.onclick = function () {
+        window.QuizifyClientCore.updateConnectionIndicator(status, {
+            retryHandler: function () {
                 // Manual recovery: reset the budget and reconnect immediately.
                 reconnectAttempts = 0;
                 updateConnectionStatus('reconnecting');
                 connect();
-            };
-            indicator.innerHTML = dot + '<span>' + _t('connection.retryConnection') + '</span>';
-            return;
-        }
-        // reconnecting (or any other transient state)
-        indicator.style.cursor = '';
-        indicator.onclick = null;
-        indicator.innerHTML = dot + '<span>' + _t('connection.reconnecting') + '</span>';
+            }
+        });
     }
 
     // ---- Init ----

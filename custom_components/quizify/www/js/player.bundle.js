@@ -204,53 +204,30 @@
     // Connection Indicator
     // ============================================
 
-    function updateConnectionIndicator(status) {
-        var el = document.getElementById('conn-status');
-        if (!el) {
-            el = document.createElement('div');
-            el.id = 'conn-status';
-            el.style.cssText = 'position:fixed;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:0.75rem;color:#6E6A5C;z-index:100;';
-            document.body.appendChild(el);
-        }
-        // Soft Parlor palette: connected = sage, warning = sun, error = warm brick.
-        var colors = { connected: '#7FA897', reconnecting: '#E8C47F', disconnected: '#D66A6A' };
-        var glow = { connected: 'rgba(127,168,151,0.45)', reconnecting: 'rgba(232,196,127,0.45)', disconnected: 'rgba(214,106,106,0.45)' };
-        var color = colors[status] || '#6E6A5C';
-        var glowColor = glow[status] || 'rgba(110,106,92,0.25)';
-        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-        // A bare colored dot is invisible to screen readers and ambiguous for
-        // color-blind users (#424). Not-connected states get a shape/label,
-        // not hue alone: reconnecting shows an "…" glyph, disconnected an
-        // "offline" slash glyph next to the dot.
-        var glyph = { reconnecting: '…', disconnected: '⊘' };
-        var mark = glyph[status]
-            ? '<span aria-hidden="true" style="font-size:0.85rem;line-height:1;color:' + color + ';">' + glyph[status] + '</span>'
-            : '';
-        el.innerHTML = '<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:' +
-            color + ';box-shadow:0 0 10px ' + glowColor + ';"></span>' + mark;
-        // Announce the state to assistive tech via the polite live region.
-        var announce = document.getElementById('conn-status-announce');
-        if (announce) {
-            var key = 'connection.' + status;
-            var msg = t(key);
-            var translated = !!msg && msg !== key;
-            // #783: the line is written once, on connect, and a language
-            // change that lands afterwards re-renders every visible label but
-            // used to walk straight past this one — it carried no data-i18n,
-            // so initPageTranslations() could not see it. It is .sr-only, so
-            // the mismatch reached nobody except the people who depend on it:
-            // a screen-reader user in an English game heard "Verbunden". Same
-            // shape as the renderAllTime half of #776.
-            if (translated) {
-                announce.setAttribute('data-i18n', key);
-            } else {
-                // An unknown status has no key to re-render from; leaving a
-                // stale one would make the sweep announce the wrong state.
-                announce.removeAttribute('data-i18n');
-                msg = status;
-            }
-            announce.textContent = msg;
-        }
+    // The dot itself lives in QuizifyClientCore since #983 — it was written
+    // twice, here and on the host page, and the copies had drifted (this one
+    // had the #424 accessibility work, the host's the #290 retry). What stays
+    // here is the phone's own retry action, which player-core registers
+    // because only it owns the socket and the join view.
+
+    var _connRetry = null;
+
+    /** Register what the tappable disconnected dot should do (#983). */
+    function setConnectionRetry(fn) {
+        _connRetry = fn;
+    }
+
+    /**
+     * `opts.noRetry` suppresses the affordance for a disconnect there is
+     * nothing to retry about — being removed by the host (#750) closes the
+     * socket exactly like a lost network does, and offering "Retry
+     * connection" there would walk the guest back into a lobby they were
+     * just thrown out of.
+     */
+    function updateConnectionIndicator(status, opts) {
+        window.QuizifyClientCore.updateConnectionIndicator(status, {
+            retryHandler: (opts && opts.noRetry) ? null : _connRetry
+        });
     }
 
     // ============================================
@@ -603,6 +580,7 @@
         formatTime: formatTime,
         createWebSocket: createWebSocket,
         updateConnectionIndicator: updateConnectionIndicator,
+        setConnectionRetry: setConnectionRetry,
         // #750: the kicked screen has to take the reconnect overlay down
         // itself — nothing else will, since we never reconnect. #729: a join
         // refused mid-reconnect needs the same, or the reason lands on a
@@ -6311,7 +6289,10 @@
                 forgetIdentity();
                 if (game && game.stopFrozenOverlay) game.stopFrozenOverlay();
                 if (pu.hideReconnectingOverlay) pu.hideReconnectingOverlay();
-                pu.updateConnectionIndicator('disconnected');
+                // No retry affordance on the dot: the socket is not what
+                // failed, and re-opening it would re-join a lobby we were
+                // just removed from (#983).
+                pu.updateConnectionIndicator('disconnected', { noRetry: true });
                 // #838: same leftovers, same screen furniture — the reaction
                 // bar and the last toast are fixed to the page, not to the
                 // view we are leaving.
@@ -8013,15 +7994,20 @@
     // Retry Connection
     // ============================================
 
+    function retryConnection() {
+        state.reconnectAttempts = 0;
+        pu.showView('loading-view');
+        connect();
+    }
+
     function setupRetryConnection() {
         var retryBtn = document.getElementById('retry-connection-btn');
         if (retryBtn) {
-            retryBtn.addEventListener('click', function () {
-                state.reconnectAttempts = 0;
-                pu.showView('loading-view');
-                connect();
-            });
+            retryBtn.addEventListener('click', retryConnection);
         }
+        // #983: the connection dot offers the same action the host's has had
+        // since #290. Same function, so the two entry points cannot drift.
+        pu.setConnectionRetry(retryConnection);
     }
 
     // ============================================

@@ -295,7 +295,10 @@
                 forgetIdentity();
                 if (game && game.stopFrozenOverlay) game.stopFrozenOverlay();
                 if (pu.hideReconnectingOverlay) pu.hideReconnectingOverlay();
-                pu.updateConnectionIndicator('disconnected');
+                // No retry affordance on the dot: the socket is not what
+                // failed, and re-opening it would re-join a lobby we were
+                // just removed from (#983).
+                pu.updateConnectionIndicator('disconnected', { noRetry: true });
                 // #838: same leftovers, same screen furniture — the reaction
                 // bar and the last toast are fixed to the page, not to the
                 // view we are leaving.
@@ -1997,15 +2000,20 @@
     // Retry Connection
     // ============================================
 
+    function retryConnection() {
+        state.reconnectAttempts = 0;
+        pu.showView('loading-view');
+        connect();
+    }
+
     function setupRetryConnection() {
         var retryBtn = document.getElementById('retry-connection-btn');
         if (retryBtn) {
-            retryBtn.addEventListener('click', function () {
-                state.reconnectAttempts = 0;
-                pu.showView('loading-view');
-                connect();
-            });
+            retryBtn.addEventListener('click', retryConnection);
         }
+        // #983: the connection dot offers the same action the host's has had
+        // since #290. Same function, so the two entry points cannot drift.
+        pu.setConnectionRetry(retryConnection);
     }
 
     // ============================================

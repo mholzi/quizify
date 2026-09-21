@@ -273,6 +273,9 @@ def test_the_markup_puts_the_key_where_the_renderer_writes() -> None:
 _CONN_SCRIPT = _PRELUDE + """
 QZ.els(['conn-status', 'conn-status-announce', 'reconnecting-overlay']);
 window.QuizifyUtils = {{}};
+// The dot itself moved into the shared client core in #983; the phone still
+// drives it through QuizifyPlayerUtils, which is what this asserts on.
+QZ.load({core});
 QZ.load({utils});
 
 function announced() {{
@@ -320,6 +323,7 @@ def _conn() -> dict:
             stub=json.dumps(str(_STUB)),
             i18n=json.dumps(str(_I18N)),
             i18njs=json.dumps(str(_JS / "i18n.js")),
+            core=json.dumps(str(_JS / "client-core.js")),
             utils=json.dumps(str(_JS / "player-utils.js")),
         )
     )

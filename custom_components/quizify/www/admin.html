@@ -48,6 +48,13 @@
             <span id="conn-status" class="connection-indicator">
                 <span class="connection-dot"></span>
             </span>
+            <!-- Screen-reader announcement of the connection state. The dot
+                 above is color-only; this polite live region speaks the
+                 localized "Connected / Reconnecting / Disconnected" text. The
+                 phone has had it since #424; the host page was the other half
+                 of the same indicator and never got it (#983). -->
+            <div id="conn-status-announce" class="sr-only" role="status"
+                 aria-live="polite" aria-atomic="true"></div>
         </div>
     </header>
 
