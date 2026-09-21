@@ -3130,6 +3130,13 @@ class QuizifyWebSocketHandler:
             return
 
         side = data.get("side")
+        if not isinstance(side, str):
+            # Same refusal the round itself issues for an unknown side — this
+            # only moves it forward of the call so `side` reaches `record_bet`
+            # as a `str` (#986). A missing or non-string "side" already ended
+            # here with exactly this message, via `record_bet` returning False.
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Bet not accepted")
+            return
         try:
             pct = int(data.get("bet"))  # type: ignore[arg-type]
         except (TypeError, ValueError):

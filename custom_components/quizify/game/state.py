@@ -30,7 +30,7 @@ from ..const import (
 )
 from .calibration import GroupCalibrator
 from .highlights import compute_superlatives
-from .phase_controller import GamePhase, PhaseController
+from .phase_controller import GamePhase, PhaseController, TickResolution
 from .player import PlayerSession
 from .player_registry import PlayerRegistry
 from .powerups import (
@@ -2379,7 +2379,7 @@ class QuizifyGameState:
         return self._lightning_splash_pending
 
     @property
-    def lightning(self):
+    def lightning(self) -> LightningRound | None:
         """The active LightningRound, or None."""
         return self._lightning
 
@@ -2459,7 +2459,7 @@ class QuizifyGameState:
         return self._hot_seat_target_round
 
     @property
-    def hot_seat(self):
+    def hot_seat(self) -> HotSeatRound | None:
         """The active HotSeatRound, or None."""
         return self._hot_seat
 
@@ -2836,7 +2836,7 @@ class QuizifyGameState:
         """Public accessor for current round duration."""
         return self._round_duration
 
-    def get_player_timer(self, player_name: str):
+    def get_player_timer(self, player_name: str) -> QuestionTimer | None:
         """Return the authoritative QuestionTimer for a player, or None.
 
         Exposed so the WebSocket handler can broadcast per-player remaining
@@ -2844,7 +2844,7 @@ class QuizifyGameState:
         """
         return self._phase_controller.get_timer(player_name)
 
-    def resolve_tick(self, player_names: list[str]):
+    def resolve_tick(self, player_names: list[str]) -> TickResolution:
         """Resolve one countdown-tick's per-player remaining + dashboard min.
 
         Thin delegate to the PhaseController so all timing logic lives there
@@ -2880,7 +2880,7 @@ class QuizifyGameState:
         """
         return self._phase_controller.round_wall_clock_expired()
 
-    def get_player_powerup(self, player_name: str):
+    def get_player_powerup(self, player_name: str) -> PowerUpType | None:
         """Get the power-up held by a player."""
         return self._powerup_manager.get_powerup(player_name)
 
