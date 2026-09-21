@@ -55,6 +55,30 @@
     }
 
     // ============================================
+    // Identity
+    // ============================================
+
+    // One spelling of "this phone is nobody any more" (#981).
+    //
+    // Dropping the name is not bookkeeping. `createWebSocket`'s onclose in
+    // player-utils.js arms the reconnect ladder on `state.playerName`, and
+    // connect()'s onOpen above then re-sends `join` under it — with
+    // `is_admin: true` if this tab was the host's. So the four fields go
+    // together or not at all: a path that clears the token but keeps the
+    // name has not left the game, it has only forgotten how to prove who it
+    // was, and the next socket close walks it back in.
+    //
+    // Before #981 this was hand-spelled at five call sites and one of them
+    // (`reconnect_failed`) spelled it short.
+    function forgetIdentity() {
+        pu.clearSession();
+        state.sessionToken = null;
+        state.playerName = null;
+        state.playerId = null;
+        state.isAdmin = false;
+    }
+
+    // ============================================
     // Connect WebSocket
     // ============================================
 
@@ -243,11 +267,7 @@
                 // join screen deterministic instead of relying on the
                 // close + reconnect_failed race.
                 endJoinPending();
-                pu.clearSession();
-                state.sessionToken = null;
-                state.playerName = null;
-                state.playerId = null;
-                state.isAdmin = false;
+                forgetIdentity();
                 // Clear rank-delta memos (issue #257) so the next game's
                 // first leaderboard/reveal doesn't show phantom ▲/▼ deltas
                 // computed against the wiped game's standings.
@@ -272,11 +292,7 @@
                 // in createWebSocket's onclose (it only retries while a name
                 // is set), so we don't spend five backoff rounds climbing
                 // back into a lobby we were just thrown out of.
-                pu.clearSession();
-                state.sessionToken = null;
-                state.playerName = null;
-                state.playerId = null;
-                state.isAdmin = false;
+                forgetIdentity();
                 if (game && game.stopFrozenOverlay) game.stopFrozenOverlay();
                 if (pu.hideReconnectingOverlay) pu.hideReconnectingOverlay();
                 pu.updateConnectionIndicator('disconnected');
@@ -326,13 +342,20 @@
 
             case 'reconnect_failed':
                 // The stored session token no longer maps to a joinable game
-                // (game ended/reset, or token expired). Drop the stale token
+                // (game ended/reset, or token expired). Drop the identity
                 // and route back to the join screen — without this the client
                 // is left with every view hidden → blank screen (issue #227,
                 // same family as #207/#221). Mirror the deterministic return
                 // used by game_reset above.
-                pu.clearSession();
-                state.sessionToken = null;
+                //
+                // #981: this case used to clear the token alone, which left
+                // the name behind — and the name is what arms the reconnect
+                // ladder. A guest whose token had expired was therefore sent
+                // to the join screen and, on the next socket close, silently
+                // re-joined under the old name (as the host, if this tab was
+                // the host's). The server has just said this identity is not
+                // joinable; retrying it is the one thing not to do.
+                forgetIdentity();
                 pu.showView('join-view');
                 break;
 
@@ -1873,10 +1896,7 @@
         var text = joinRefusalText(code, serverMessage);
 
         if (JOIN_REFUSALS_CLEARING_NAME.indexOf(code) !== -1) {
-            state.playerName = null;
-            state.playerId = null;
-            state.sessionToken = null;
-            pu.clearSession();
+            forgetIdentity();
             // A refusal can arrive on an auto-rejoin, with the guest sitting
             // behind the reconnecting overlay or on the lobby. Put them back
             // on the form the message belongs to.
@@ -2435,7 +2455,11 @@
 
     window.QuizifyPlayer = {
         init: init,
-        send: send
+        send: send,
+        // #981: player-end.js's "New game" is the fifth place that drops this
+        // phone's identity, and it lives in another module. Exported so there
+        // is still only one spelling of it.
+        forgetIdentity: forgetIdentity
     };
 
     // #215: hook for sw-update.js — is the player screen idle enough that a

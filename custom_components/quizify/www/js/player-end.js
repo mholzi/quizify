@@ -427,7 +427,13 @@
                 // spelling the two keys out here was a second owner waiting
                 // to drift. `quizify_is_admin` went with it: nothing in the
                 // repo has ever set that key.
-                pu.clearSession();
+                //
+                // #981: and the in-memory half of the identity belongs to
+                // player-core's forgetIdentity(), the same call the kick, the
+                // reset and a refused join make. Resolved at click time
+                // because player-core.js loads after this module.
+                var forgetIdentity = window.QuizifyPlayer && window.QuizifyPlayer.forgetIdentity;
+                if (forgetIdentity) forgetIdentity(); else pu.clearSession();
                 try {
                     sessionStorage.removeItem('quizify_admin_name');
                 } catch (e) { /* ignore */ }
