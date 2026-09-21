@@ -570,6 +570,10 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 
 The complete history is in [`CHANGELOG.md`](CHANGELOG.md); [`docs/release-notes/`](docs/release-notes/) holds longer prose notes for some releases.
 
+### v1.20.0 — Scores, Freeze and the Answer Marks Tell the Truth 🧮
+- **The estimate round stopped lying to its winner**: a phone that guessed closest read "Time's up · 0 Points", a tie named only one team, and the number line drew ends nobody could have guessed (#951, #966, #967)
+- Freeze finds a target in team mode, every question starts without the last round's "answered" marks, the World Cup packs hold 160 questions each, and the end screen counts people — and says "1 round" (#952, #953, #969, #975, #976)
+
 ### v1.19.0 — Halloween, and Nothing Gets Lost Mid-Game 🎃
 - **Three Halloween packs, 303 questions** in German, English and Spanish, pinned on the setup screen all October (#948)
 - **A team keeps its row when its last phone sleeps**, estimate questions show who has answered, the Hot Seat starts on a clean grid and the final clock no longer jumps (#936, #939, #940, #941); `game_active` stays on through the wager and the Hot Seat, and the options save with pickers left empty (#938, #937)
