@@ -130,6 +130,137 @@
         return ws;
     }
 
+    // ============================================
+    // Connection indicator
+    // ============================================
+    //
+    // One dot, two surfaces (#983). The host page and the phone each carried
+    // their own copy — same `#conn-status` id, same inline `cssText`, same
+    // three hex values the stylesheet already had names for — and the copies
+    // drifted apart in opposite directions: the phone got the accessibility
+    // work from #424 (a shape next to the hue, and the polite live region),
+    // the host got the manual retry from #290. Neither got the other's, so a
+    // host could not hear a dropped connection and a guest could not force a
+    // reconnect, and nobody had decided either.
+    //
+    // What the surface still owns is the retry *action*: the host resets its
+    // own attempt counter and reopens its own socket, the phone resets its
+    // own and goes back through the join screen. That comes in as
+    // `opts.retryHandler`; leave it out and the dot is read-only, which is
+    // what a phone the host has kicked wants (there is nothing to retry).
+
+    var CONN_TONES = {
+        connected: {
+            color: 'var(--color-success)',
+            glow: 'var(--color-success-glow)'
+        },
+        reconnecting: {
+            color: 'var(--color-warning)',
+            glow: 'var(--color-warning-glow)',
+            // Not hue alone (#424): a shape a color-blind guest can read.
+            glyph: '\u2026',
+            label: 'connection.reconnecting'
+        },
+        disconnected: {
+            color: 'var(--color-error)',
+            glow: 'var(--color-error-glow)',
+            glyph: '\u2298',
+            label: 'connection.disconnected',
+            // With a handler the label doubles as the affordance (#290).
+            retryLabel: 'connection.retryConnection'
+        }
+    };
+
+    var CONN_TONE_UNKNOWN = {
+        color: 'var(--color-text-muted)',
+        glow: 'var(--color-text-muted-glow)'
+    };
+
+    function connIndicatorEl() {
+        var el = document.getElementById('conn-status');
+        if (el) return el;
+        // The host page ships the element in its markup (inside the header,
+        // placed by `.connection-indicator`); the phone does not, so the
+        // fallback keeps the corner it has always had. An element that is
+        // already on the page is never re-styled here.
+        el = document.createElement('div');
+        el.id = 'conn-status';
+        el.style.cssText = 'position:fixed;bottom:12px;right:12px;display:flex;' +
+            'align-items:center;gap:6px;font-size:0.75rem;' +
+            'color:var(--color-text-muted);z-index:100;';
+        document.body.appendChild(el);
+        return el;
+    }
+
+    /**
+     * Announce the state to assistive tech via the polite live region (#424).
+     *
+     * #783: the line is written from JS, so it has to carry the key it was
+     * written from — a language switch re-renders every visible label off
+     * `data-i18n` and used to walk straight past this one. It is `.sr-only`,
+     * so the mismatch reached nobody except the people who depend on it: a
+     * screen-reader user in an English game heard "Verbunden".
+     */
+    function announceConnection(status, t) {
+        var announce = document.getElementById('conn-status-announce');
+        if (!announce) return;
+        var key = 'connection.' + status;
+        var msg = t(key);
+        if (msg && msg !== key) {
+            announce.setAttribute('data-i18n', key);
+        } else {
+            // An unknown status has no key to re-render from; leaving a stale
+            // one would make the next sweep announce the wrong state.
+            announce.removeAttribute('data-i18n');
+            msg = status;
+        }
+        announce.textContent = msg;
+    }
+
+    /**
+     * Paint the connection dot.
+     *
+     *   status             'connected' | 'reconnecting' | 'disconnected'
+     *   opts.retryHandler  optional: makes the disconnected dot tappable.
+     */
+    function updateConnectionIndicator(status, opts) {
+        opts = opts || {};
+        var el = connIndicatorEl();
+        var tone = CONN_TONES[status] || CONN_TONE_UNKNOWN;
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) ||
+            function (k) { return k; };
+
+        var retry = (status === 'disconnected' && typeof opts.retryHandler === 'function')
+            ? opts.retryHandler : null;
+
+        var html = '<span style="width:10px;height:10px;border-radius:50%;' +
+            'display:inline-block;flex:none;background:' + tone.color +
+            ';box-shadow:0 0 10px ' + tone.glow + ';"></span>';
+        if (tone.glyph) {
+            html += '<span aria-hidden="true" style="font-size:0.85rem;' +
+                'line-height:1;color:' + tone.color + ';">' + tone.glyph + '</span>';
+        }
+        var labelKey = retry ? tone.retryLabel : tone.label;
+        if (labelKey) {
+            // A bare dot tells a host nothing about whether the tablet is
+            // still trying (#290). The existing connection.* keys are reused.
+            html += '<span data-i18n="' + labelKey + '">' + t(labelKey) + '</span>';
+        }
+        el.innerHTML = html;
+
+        el.onclick = retry;
+        el.style.cursor = retry ? 'pointer' : '';
+        if (retry) {
+            el.setAttribute('role', 'button');
+        } else {
+            // Removed, not left behind: a dot that says role="button" after
+            // the socket is back is a control that does nothing.
+            el.removeAttribute('role');
+        }
+
+        announceConnection(status, t);
+    }
+
     // The two key names and `socketUrl` stay private: saveSession /
     // getSession / clearSession are the only way in, which is the whole point
     // of #787 — one owner for the spelling — and `createSocket` is the only
@@ -139,6 +270,7 @@
         getSession: getSession,
         clearSession: clearSession,
         backoffDelay: backoffDelay,
-        createSocket: createSocket
+        createSocket: createSocket,
+        updateConnectionIndicator: updateConnectionIndicator
     };
 })();
