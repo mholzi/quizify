@@ -25,7 +25,6 @@ alone — which is the same entrant the counter above it counts.
 
 from __future__ import annotations
 
-import re
 from pathlib import Path
 
 from custom_components.quizify.game.state import QuizifyGameState
@@ -35,40 +34,53 @@ from custom_components.quizify.server.serializers import (
     serialize_round_summary,
 )
 
-REPO = Path(__file__).resolve().parent.parent
-BUILDER = (
-    REPO / "custom_components" / "quizify" / "server" / "round_message_builder.py"
-)
-
 
 class _Runtime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
 
 
-def _open_round(st: QuizifyGameState):  # noqa: ANN202
+def _open_round(st: QuizifyGameState, order: list[int] | None = None):  # noqa: ANN202
     """What ``_emit_question`` does, minus the sockets.
 
     The canonical shuffle has to be stored or ``num_answer_options`` is zero
     and there are no bars to count; the per-player shuffles are the identity
     here so a submitted button index is also the question-JSON index.
+
+    ``order`` is the CANONICAL shuffle — the order the television draws its
+    tiles in (#521). It defaults to the identity, which is what every test
+    about entrants wants. Pass a real permutation to tell the two index
+    spaces apart.
     """
     question = st.start_next_question()
     assert question is not None
-    order = list(range(len(question.answers)))
+    identity = list(range(len(question.answers)))
+    order = identity if order is None else list(order)
     st.set_round_shuffle(order, [question.answers[i].text for i in order])
     for player in st.get_players():
-        st.set_player_shuffle(player.name, list(order))
+        st.set_player_shuffle(player.name, list(identity))
     return question
 
 
-def _live_test_room(tmp_path: Path) -> QuizifyGameState:
-    """The room from the screenshot: a team of two and one solo guest."""
+def _live_test_room(
+    tmp_path: Path, *, extra_member: str | None = None
+) -> QuizifyGameState:
+    """The room from the screenshot: a team of two and one solo guest.
+
+    ``extra_member`` puts a third name on team Sofa before the game starts,
+    so heads and entrants disagree by more than the screenshot's 2:1.
+    """
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
-    for name in ("Anna", "Cleo", "Dan"):
+    names = ["Anna", "Cleo", "Dan"]
+    if extra_member is not None:
+        names.append(extra_member)
+    for name in names:
         st.add_player(name)
     st.create_team("Sofa", "Anna")
-    st.join_team(st.get_team_of("Anna")["team_id"], "Cleo")
+    team_id = st.get_team_of("Anna")["team_id"]
+    st.join_team(team_id, "Cleo")
+    if extra_member is not None:
+        st.join_team(team_id, extra_member)
     st.start_game(num_rounds=8, language="en")
     return st
 
@@ -179,15 +191,56 @@ def test_an_ordinary_game_is_untouched(tmp_path: Path) -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_the_map_reaches_the_serializer(tmp_path: Path) -> None:
-    """The serializer can only divide by what the builder hands it."""
-    source = BUILDER.read_text(encoding="utf-8")
-    call = re.search(r"msg = serialize_round_summary\((.*?)\n        \)", source, re.S)
-    assert call is not None
-    assert "entrant_of=entrant_of" in call.group(1), (
+def test_the_entrant_map_reaches_the_serializer(tmp_path: Path) -> None:
+    """The serializer can only divide by what the builder hands it.
+
+    Team **Sofa** is three phones here, not the screenshot's two, and Dan
+    still plays alone: four rows in ``all_answers``, two entrants. Counting
+    heads reads 75/25; counting entrants reads 50/50. If
+    ``build_round_summary`` stops handing ``entrant_of`` to
+    ``serialize_round_summary``, the 75/25 comes back — which is #853.
+    """
+    st = _live_test_room(tmp_path, extra_member="Eve")
+    _open_round(st)
+    st.submit_answer("Anna", 0)
+    st.submit_answer("Dan", 1)
+    st.evaluate_round()
+
+    summary = RoundMessageBuilder().build_round_summary(st)
+    assert summary is not None
+    # The room really is 3:1 — otherwise the assertions below prove nothing.
+    on_the_team_answer = [r for r in summary["all_answers"] if r["answer_index"] == 0]
+    assert len(on_the_team_answer) == 3
+
+    dist = {d["index"]: d for d in summary["answer_distribution"]}
+    assert (dist[0]["count"], dist[0]["percent"]) == (1, 50), (
         "build_round_summary stopped naming the entrants — the bars are back "
         "to counting heads"
     )
+    assert (dist[1]["count"], dist[1]["percent"]) == (1, 50)
+
+
+def test_the_display_map_reaches_the_serializer(tmp_path: Path) -> None:
+    """The other map in the same call: the bars hang off the drawn tiles.
+
+    The canonical shuffle is ``[2, 0, 1]``, so question-JSON answer 0 is the
+    second tile on the television and answer 1 is the third (#521). Drop
+    ``display_order`` from the builder's call and both votes slide back onto
+    tiles 0 and 1 — the right votes against the wrong answers.
+    """
+    st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
+    for name in ("Anna", "Ben"):
+        st.add_player(name)
+    st.start_game(num_rounds=8, language="en")
+    _open_round(st, order=[2, 0, 1])
+    st.submit_answer("Anna", 0)
+    st.submit_answer("Ben", 1)
+    st.evaluate_round()
+
+    dist = _distribution(st)
+    assert dist[1]["count"] == 1, "answer 0 is drawn on tile 1, not tile 0"
+    assert dist[2]["count"] == 1, "answer 1 is drawn on tile 2, not tile 1"
+    assert dist[0]["count"] == 0
 
 
 def test_teams_are_keyed_by_id_not_by_name(tmp_path: Path) -> None:
