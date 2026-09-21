@@ -31,6 +31,7 @@ from __future__ import annotations
 import re
 import sys
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -45,6 +46,7 @@ from custom_components.quizify.game.state import (  # noqa: E402
     QuizifyGameState,
     RoundSummary,
 )
+from custom_components.quizify.game.team import TeamRegistry  # noqa: E402
 from custom_components.quizify.server.round_message_builder import (  # noqa: E402
     RoundMessageBuilder,
 )
@@ -221,10 +223,17 @@ class TestRoundSummaryPayload:
 
 
 class _FakeGameState:
-    """Minimal stand-in exposing only what RoundMessageBuilder touches."""
+    """Minimal stand-in exposing what RoundMessageBuilder touches.
+
+    ``peek_next_image_url`` is always present (#984): the builder reads it as
+    a plain attribute now, so a rename on the real state is a mypy error
+    rather than a silently skipped hint. A state with nothing to warm answers
+    ``None`` — which is what the real state does on the last round.
+    """
 
     def __init__(self, question: Question, *, hint: str | None) -> None:
         self._question = question
+        self._hint = hint
         self.round = 3
         self.total_rounds = 10
         self.round_duration = 20.0
@@ -235,8 +244,10 @@ class _FakeGameState:
             correct_answer=question.answers[0],
             fun_fact=question.fun_fact,
         )
-        if hint is not None:
-            self.peek_next_image_url = lambda: hint  # noqa: E731
+        self.game_id: str | None = None
+        self.team_registry = TeamRegistry()
+        self._cached_key: tuple[str | None, int] | None = None
+        self._cached_msg: dict[str, Any] | None = None
 
     def get_players(self) -> list:
         return []
@@ -250,6 +261,20 @@ class _FakeGameState:
     def get_round_summary(self) -> RoundSummary:
         return self._summary
 
+    def peek_next_image_url(self) -> str | None:
+        return self._hint
+
+    def get_cached_round_summary_msg(
+        self, key: tuple[str | None, int]
+    ) -> dict[str, Any] | None:
+        return self._cached_msg if self._cached_key == key else None
+
+    def store_round_summary_msg(
+        self, key: tuple[str | None, int], msg: dict[str, Any]
+    ) -> None:
+        self._cached_key = key
+        self._cached_msg = msg
+
 
 class TestBuilderWiring:
     def test_builder_puts_the_hint_on_the_broadcast(self) -> None:
@@ -258,12 +283,12 @@ class TestBuilderWiring:
         )
         assert msg["next_image_url"] == IMG_NEXT
 
-    def test_a_state_without_the_peek_still_builds(self) -> None:
-        """Several tests drive the builder with a lightweight double.
+    def test_a_state_with_nothing_to_warm_omits_the_hint(self) -> None:
+        """No next picture, no key on the wire.
 
-        They implement only what they exercise, so the hint is resolved
-        through ``getattr`` — those states simply get no hint rather than an
-        AttributeError mid-broadcast.
+        The last round of a game, and any round whose successor carries no
+        image, answers ``None``; the broadcast then leaves ``next_image_url``
+        out entirely rather than shipping a null the clients have to guard.
         """
         msg = RoundMessageBuilder().build_round_summary(
             _FakeGameState(_question("q1"), hint=None)

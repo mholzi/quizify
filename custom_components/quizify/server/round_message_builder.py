@@ -517,25 +517,17 @@ class RoundMessageBuilder:
         # storm) is wasted work. Keyed on (game_id, round); invalidated by
         # ``start_next_question``/``reset_to_lobby``. Callers treat the returned
         # dict read-only or ``dict()``-copy it (``project_snapshot_for_player``
-        # copies before merging), so sharing the cached instance is safe. The
-        # cache accessors are resolved via getattr so lightweight test doubles
-        # that don't implement them simply skip memoization.
-        get_cached = getattr(game_state, "get_cached_round_summary_msg", None)
-        store_cached = getattr(game_state, "store_round_summary_msg", None)
-        cache_key = (getattr(game_state, "game_id", None), game_state.round)
-        if get_cached is not None:
-            cached = get_cached(cache_key)
-            if cached is not None:
-                return cached
+        # copies before merging), so sharing the cached instance is safe.
+        cache_key = (game_state.game_id, game_state.round)
+        cached = game_state.get_cached_round_summary_msg(cache_key)
+        if cached is not None:
+            return cached
 
         question = summary.question
 
         # #736: the picture the next round will show, so clients can warm it
-        # during the reveal. Resolved through getattr so the lightweight game
-        # doubles several tests use — which implement only what they exercise —
-        # keep working; they simply get no hint.
-        peek_next_image = getattr(game_state, "peek_next_image_url", None)
-        next_image_url = peek_next_image() if peek_next_image is not None else None
+        # during the reveal.
+        next_image_url = game_state.peek_next_image_url()
 
         # Estimate rounds (#275) carry no shuffled answers and no correct-tile
         # index — closeness is scored, and the reveal is a number line. Build a
@@ -564,8 +556,7 @@ class RoundMessageBuilder:
                 estimate=summary.estimate,
                 next_image_url=next_image_url,
             )
-            if store_cached is not None:
-                store_cached(cache_key, est_msg)
+            game_state.store_round_summary_msg(cache_key, est_msg)
             return est_msg
 
         # Find the correct answer's shuffled index (canonical) AND its
@@ -624,11 +615,10 @@ class RoundMessageBuilder:
         # the other members' reveal says "no answer given" for a round their
         # team answered. ``correct_button_index`` stays per player: it is about
         # their own button order, not about the answer.
-        _registry = getattr(game_state, "team_registry", None)
-        team_of = getattr(_registry, "get_by_member", None)
+        team_of = game_state.team_registry.get_by_member
 
         def _team_row(player_name: str) -> dict[str, Any] | None:
-            team = team_of(player_name) if team_of is not None else None
+            team = team_of(player_name)
             if team is None:
                 return None
             if team.current_answer is None:
@@ -667,8 +657,10 @@ class RoundMessageBuilder:
         # reason: nothing stops two teams from sharing a name.
         entrant_of: dict[str, str] = {}
         for player in game_state.get_players():
-            _team = team_of(player.name) if team_of is not None else None
-            entrant_of[player.name] = getattr(_team, "team_id", None) or player.name
+            _team = team_of(player.name)
+            entrant_of[player.name] = (
+                _team.team_id if _team is not None else player.name
+            )
             row = _team_row(player.name)
             if row is not None:
                 all_answers.append(row)
@@ -734,6 +726,5 @@ class RoundMessageBuilder:
             next_image_url=next_image_url,
             entrant_of=entrant_of,
         )
-        if store_cached is not None:
-            store_cached(cache_key, msg)
+        game_state.store_round_summary_msg(cache_key, msg)
         return msg
