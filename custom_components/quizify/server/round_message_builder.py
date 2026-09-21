@@ -570,11 +570,6 @@ class RoundMessageBuilder:
         # left the highlight at ``-1`` while the vote bars underneath were drawn
         # in question-JSON order by ``_compute_answer_distribution``, which has
         # always checked. Same map, same check, same answer now.
-        #
-        # One statement, one line: ``test_the_map_reaches_the_serializer``
-        # (#853) reads the ``serialize_round_summary(...)`` call below out of
-        # this file with a non-greedy regex that stops at the first ``)`` on
-        # this indent, so a wrapped call here truncates what it sees.
         resolved = resolve_correct_indices(summary.question, game_state.shuffle_map)
         _, correct_shuffled_idx, correct_original_idx = resolved
 
