@@ -31,6 +31,16 @@ pin both halves:
 2. the server snapshot carries every field the live payload does, with the
    handful of exceptions written out by name — so the client's forwarding has
    something to forward.
+
+#980 added the third payload of the reveal to the second half. ``question`` and
+``hot_seat`` had a coverage map; ``round_summary`` — what a television rebuilds
+a finished round from after a reconnect — had none, and three of its fields
+(``question_id``, ``question_type``, ``next_image_url``) turned out never to
+have been carried at all. It also collapsed the two resolutions of "which
+tile is the correct one" into ``resolve_correct_indices``: the snapshot checked
+that the round's shuffle really was a permutation and the live builder did not,
+so on an unusable map the TV drew a grid and a set of vote bars in one order
+and highlighted nothing at all.
 """
 
 from __future__ import annotations
@@ -413,3 +423,170 @@ def test_the_auction_snapshot_still_withholds_the_question(tmp_path: Path) -> No
     block = serialize_state_snapshot(state)["hot_seat"]
     assert block["stage"] == "auction"
     assert "question" not in block
+
+
+# ---------------------------------------------------------------------------
+# The reveal: one resolution, and a coverage map that looks at it (#980)
+# ---------------------------------------------------------------------------
+
+# Every field of the live ``round_summary`` broadcast that the snapshot's
+# nested ``round_summary`` block — plus the snapshot envelope around it, which
+# already carries ``round``, ``total_rounds``, ``leaderboard`` and ``players``
+# — does NOT hold. Same contract as QUESTION_SOURCED_ELSEWHERE above: adding a
+# field to the live payload without adding it to the snapshot fails here.
+#
+# Two kinds of entry live in this map, and the difference matters:
+#
+# * genuinely sourced elsewhere — the field is reachable on the restore path
+#   under another name or by a one-line derivation; and
+# * NOT CARRIED — the field is simply absent from the snapshot. The television
+#   is the only client that reads the nested block (a phone gets the flat
+#   projection from ``project_snapshot_for_player``), and its
+#   ``renderRevealFromSnapshot`` (``www/js/dashboard.js``) happens not to read
+#   these. That is coverage, not a guarantee: the day the reveal view reads one
+#   of them after a reconnect it reads ``undefined``. Writing them down here is
+#   the point of #980 — whoever makes the TV read one has to come through this
+#   map and carry it in ``serialize_state_snapshot`` instead.
+ROUND_SUMMARY_SOURCED_ELSEWHERE = {
+    "type": "the message envelope — a snapshot is not a round_summary",
+    "all_answers": 'reshaped: round_summary["results"], one row per player',
+    "last_round": "derived: round >= total_rounds",
+    "question_id": "NOT carried — the TV reveal has no flag-question button",
+    "question_type": "NOT carried for MC; the block adds it for estimates (#275)",
+    "next_image_url": "NOT carried — a prefetch hint (#736), not a rendered field",
+}
+
+
+def _game_in_answer_reveal(
+    tmp_path: Path, *, category: str = "picture-round-en"
+) -> QuizifyGameState:
+    """A finished round, with a fixed non-identity canonical shuffle.
+
+    The shuffle is pinned rather than random because both payloads under test
+    index into it: a random map is occasionally the identity, and an identity
+    map hides every ordering bug there is.
+    """
+    state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
+    state.add_player("Alice")
+    state.add_player("Bob")
+    state.start_game(
+        category=category, language="en", num_rounds=3, difficulty="easy"
+    )
+    question = state.start_next_question()
+    assert question is not None
+    base = list(range(len(question.answers)))
+    canonical = base[1:] + base[:1]
+    state.set_round_shuffle(
+        canonical, [question.answers[i].text for i in canonical]
+    )
+    correct = next(i for i, a in enumerate(question.answers) if a.correct)
+    # Alice answers correctly, Bob times out: one vote on the correct tile and
+    # one ``no_answer`` row, so the distribution below is unambiguous.
+    state.submit_answer("Alice", correct)
+    state.evaluate_round()
+    assert state.phase == GamePhase.ANSWER_REVEAL
+    return state
+
+
+def test_every_live_round_summary_field_reaches_the_snapshot(tmp_path: Path) -> None:
+    """The guard #980 found missing.
+
+    ``question`` and ``hot_seat`` have had a coverage map since #730/#731;
+    ``round_summary`` — the payload a television rebuilds a reveal from after a
+    reconnect — had none, which is how three of its fields came to be absent
+    without anyone deciding they should be.
+
+    A picture pack on purpose: it is the one whose live payload deterministically
+    carries ``next_image_url`` (#736), and a field that is only sometimes sent is
+    a field this map can only sometimes see.
+    """
+    state = _game_in_answer_reveal(tmp_path)
+    live = RoundMessageBuilder().build_round_summary(state)
+    assert live is not None
+    snapshot = serialize_state_snapshot(state)
+
+    # The envelope counts: the nested block is read next to the snapshot it
+    # arrives in, not on its own.
+    available = (set(snapshot) - {"round_summary"}) | set(snapshot["round_summary"])
+    missing = set(live) - available
+    assert missing == set(ROUND_SUMMARY_SOURCED_ELSEWHERE), (
+        "the live round_summary and the snapshot's nested block have drifted "
+        f"apart. Sent live, absent from the snapshot: "
+        f"{sorted(missing - set(ROUND_SUMMARY_SOURCED_ELSEWHERE))}. Either carry "
+        "them in serialize_state_snapshot(), or name them in "
+        "ROUND_SUMMARY_SOURCED_ELSEWHERE with the reason a restore does without "
+        f"them. Listed as exceptions but no longer sent: "
+        f"{sorted(set(ROUND_SUMMARY_SOURCED_ELSEWHERE) - missing)}."
+    )
+
+
+def test_both_reveal_builders_agree_on_the_tile_for_a_normal_shuffle(
+    tmp_path: Path,
+) -> None:
+    """The half of #980 that must not change: a valid map, same answer as before."""
+    state = _game_in_answer_reveal(tmp_path)
+    question = state.get_current_question()
+    assert question is not None
+    correct_original = next(i for i, a in enumerate(question.answers) if a.correct)
+
+    block = serialize_state_snapshot(state)["round_summary"]
+    live = RoundMessageBuilder().build_round_summary(state)
+    assert live is not None
+
+    assert block["answers"] == [
+        question.answers[i].text for i in state.shuffle_map
+    ]
+    assert block["correct_answer_index"] == state.shuffle_map.index(correct_original)
+    assert live["correct_answer_index"] == block["correct_answer_index"]
+    assert live["correct_answer_index_original"] == correct_original
+    assert block["correct_answer_index_original"] == correct_original
+
+
+def test_an_unusable_shuffle_map_still_highlights_the_right_tile(
+    tmp_path: Path,
+) -> None:
+    """#980: the half that does change, and why it is worth changing.
+
+    A ``shuffle_map`` that is not a permutation of the answer indices is not a
+    hypothetical — it is the state before the first question of a round, and it
+    is what a half-restored game can come back with. Three pieces of the reveal
+    read it, and until #980 only two of them checked it:
+    ``serialize_state_snapshot`` drew the grid in question-JSON order, and
+    ``_compute_answer_distribution`` hung the vote bars off that same order —
+    but ``build_round_summary`` resolved the highlight with an unchecked loop
+    and came back with ``-1``. So the television drew a correct answer, drew a
+    bar showing a vote on it, and highlighted nothing. One resolver now, so the
+    three agree or none of them do.
+    """
+    state = _game_in_answer_reveal(tmp_path)
+    question = state.get_current_question()
+    assert question is not None
+    correct_original = next(i for i, a in enumerate(question.answers) if a.correct)
+    # A map that cannot be a rendering order: right length, but one index
+    # drawn twice and the correct answer's index not drawn at all. Built from
+    # the correct index rather than hard-coded, because a hard-coded map is a
+    # map that might happen to contain it.
+    broken = [i for i in range(len(question.answers)) if i != correct_original]
+    state.shuffle_map = broken + broken[:1]
+    assert len(state.shuffle_map) == len(question.answers)
+    assert correct_original not in state.shuffle_map
+
+    block = serialize_state_snapshot(state)["round_summary"]
+    live = RoundMessageBuilder().build_round_summary(state)
+    assert live is not None
+
+    # Both fall back to question-JSON order — the grid and the highlight.
+    assert block["answers"] == [a.text for a in question.answers]
+    assert block["correct_answer_index"] == correct_original
+    assert live["correct_answer_index"] == block["correct_answer_index"], (
+        "the live reveal resolves the correct tile without checking the "
+        "shuffle map again, so the television highlights nothing while the "
+        "snapshot path highlights the right answer (#980)"
+    )
+
+    # And the bars under the tiles count the same order the highlight uses.
+    votes = {entry["index"]: entry["count"] for entry in live["answer_distribution"]}
+    assert votes[live["correct_answer_index"]] == 1, (
+        "Alice's correct answer must be drawn under the tile the reveal "
+        "highlights, not under a different one"
+    )

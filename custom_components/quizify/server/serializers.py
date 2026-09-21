@@ -367,6 +367,54 @@ def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
     return result
 
 
+def resolve_correct_indices(
+    question: Question, shuffle_map: list[int] | None
+) -> tuple[list[str], int, int]:
+    """Which tile is the right one, once the round's shuffle has been applied.
+
+    One question, three answers, two consumers that have to agree: the live
+    ``round_summary`` broadcast built by
+    :meth:`RoundMessageBuilder.build_round_summary` and the nested
+    ``round_summary`` block :func:`serialize_state_snapshot` hands a television
+    that (re)connects mid-reveal. Until #980 each resolved it for itself — the
+    snapshot here with the permutation check below, the builder with a nested
+    loop over ``question.answers`` x ``shuffle_map`` and no check at all. Two
+    builders in two layers is the shape behind #297, #434, #521 and #253, which
+    :func:`serialize_state_snapshot`'s own docstring names; for ``round_summary``
+    there were still two. There is one now.
+
+    Returns ``(answer_texts_in_display_order, correct_display, correct_original)``:
+
+    * the texts in the order the grid is drawn, which since #521 is the round's
+      canonical shuffle — in question-JSON order most packs keep the correct
+      answer first, which put it on tile A every single round;
+    * ``correct_display`` — that answer's index in the order above, the one the
+      reveal highlights;
+    * ``correct_original`` — its index in question-JSON order, still emitted as
+      ``correct_answer_index_original`` for clients cached from before #521.
+
+    ``shuffle_map`` is trusted only when it really is a permutation of the
+    answer indices. It is not one before the first question, and a malformed map
+    would otherwise scatter the texts or index out of range. In that case the
+    grid falls back to question-JSON order and the highlight follows it, because
+    a mis-ordered grid is worse than an unshuffled one. That fallback is also
+    what :func:`_compute_answer_distribution` has always applied to the vote
+    bars, with the identical check — so on an unusable map the builder's
+    highlight (``-1``: nothing highlighted) used to disagree with the bars drawn
+    right under it. Both now read the same order.
+    """
+    answers = list(getattr(question, "answers", None) or [])
+    correct_original = next((i for i, a in enumerate(answers) if a.correct), -1)
+    order = list(shuffle_map or [])
+    if len(order) == len(answers) and sorted(order) == list(range(len(answers))):
+        texts = [answers[i].text for i in order]
+        correct_display = order.index(correct_original) if correct_original >= 0 else -1
+    else:
+        texts = [a.text for a in answers]
+        correct_display = correct_original
+    return texts, correct_display, correct_original
+
+
 def serialize_state_snapshot(game_state: QuizifyGameState) -> dict[str, Any]:
     """Build the full client state snapshot (#747).
 
@@ -497,24 +545,13 @@ def serialize_state_snapshot(game_state: QuizifyGameState) -> dict[str, Any]:
         # order to the round shuffle in #521 — in JSON order most packs
         # keep the correct answer first, which put it on tile A every
         # round. ``correct_answer_index_original`` stays in the payload for
-        # clients cached from before that change.
-        correct_idx_original = next(
-            (i for i, a in enumerate(q.answers) if a.correct), -1
+        # clients cached from before that change. The resolution itself —
+        # including what to do with a map that is not a permutation — lives
+        # in ``resolve_correct_indices`` since #980, because the live
+        # broadcast has to reach the same three values.
+        reveal_answers, correct_idx_display, correct_idx_original = (
+            resolve_correct_indices(q, game_state.shuffle_map)
         )
-        order = game_state.shuffle_map
-        if len(order) == len(q.answers) and sorted(order) == list(
-            range(len(q.answers))
-        ):
-            reveal_answers = [q.answers[i].text for i in order]
-            if correct_idx_original >= 0:
-                correct_idx_display = order.index(correct_idx_original)
-            else:
-                correct_idx_display = -1
-        else:
-            # No usable shuffle (pre-first-question, or a malformed map):
-            # a mis-ordered grid is worse than an unshuffled one.
-            reveal_answers = [a.text for a in q.answers]
-            correct_idx_display = correct_idx_original
         snapshot["round_summary"] = {
             "question_text": q.question,
             "category": q.category,
