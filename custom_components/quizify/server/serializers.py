@@ -556,6 +556,35 @@ def serialize_state_snapshot(game_state: QuizifyGameState) -> dict[str, Any]:
             "question_text": q.question,
             "category": q.category,
             "image_url": q.image_url,
+            # #996: the last three fields the live ``round_summary`` carried
+            # and this block did not. Nothing rendered them today — the
+            # television's ``renderRevealFromSnapshot`` reads none of the
+            # three — so this closes a gap before it opens rather than fixing
+            # a visible bug. Each is sourced exactly where
+            # ``RoundMessageBuilder.build_round_summary`` sources it.
+            #
+            # ``question_id`` is what the 🚩 flag-question button POSTs back
+            # to ``/api/quizify/flag-question``; a reveal rebuilt from a
+            # snapshot had no id to send.
+            "question_id": q.id,
+            # ``question_type`` unconditionally, not just for estimates.
+            # "present for estimates, missing otherwise" is the exact
+            # carried-sometimes shape this function's docstring names as the
+            # source of #297/#434/#521/#253, and it is harder to notice than
+            # always-missing: the dashboard's own ANSWER_REVEAL branch already
+            # tests ``round_summary.question_type === 'estimate'``, which was
+            # right only because ``undefined`` happens not to equal it. The
+            # QUESTION_ACTIVE block above carries the type unconditionally for
+            # the same reason (#730/#731).
+            "question_type": q.type,
+            # ``next_image_url`` — the picture the NEXT round will show (#736),
+            # a prefetch hint and never a rendered field. The live payload
+            # omits the key when there is nothing to warm; the snapshot is a
+            # full state dump read field-by-field, so it carries an explicit
+            # ``None`` instead, which says "nothing to warm" rather than "this
+            # server predates the field". ``if (rs.next_image_url)`` reads the
+            # same either way.
+            "next_image_url": game_state.peek_next_image_url(),
             "answers": reveal_answers,
             "correct_answer_index": correct_idx_display,
             "correct_answer_index_original": correct_idx_original,
@@ -587,7 +616,6 @@ def serialize_state_snapshot(game_state: QuizifyGameState) -> dict[str, Any]:
         # Estimate reveal data (#275) so a reconnect during the reveal
         # rebuilds the number line instead of an empty answer grid.
         if s.estimate is not None:
-            snapshot["round_summary"]["question_type"] = q.type
             snapshot["round_summary"]["estimate"] = s.estimate
 
     if game_state.phase == GamePhase.FINALE:
