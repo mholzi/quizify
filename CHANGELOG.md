@@ -3,6 +3,20 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.21.0-RC1] — 2026-09-22
+
+**One Copy of the Truth**
+
+The week's theme was duplication: eleven places where the same thing was written twice and the copies had quietly grown apart.
+
+### The copies that had drifted
+
+Five escapeHtml implementations carried three different meanings — the one on the television escaped no quotes, so a player name containing one could break out of its attribute. The connection indicator existed twice as well: the host had no screenreader announcement, the player's phone no retry button. Both now share a single implementation and both behaviours. The reveal payload had two builders, and only one of them checked that the shuffle map was a real permutation.
+
+### Renames that mypy can see again
+
+Seven production sites reached into the game state by string, and three readers each carried their own getattr that hid the AttributeError underneath. They are typed attributes now, so a rename fails at the gate instead of at the party.
+
 ## [1.20.0] — 2026-09-21
 
 **Scores, Freeze and the Answer Marks Tell the Truth**
