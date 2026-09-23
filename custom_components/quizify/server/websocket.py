@@ -1385,6 +1385,17 @@ class QuizifyWebSocketHandler:
         )
 
         if success:
+            # #1004: a reclaim matches the slot case-insensitively, so the
+            # typed name ("HOSTIE") can differ from the slot's own ("Hostie").
+            # From here on everything is keyed on the slot's name: the pending
+            # removal, the session token, the power-up and lightning maps, and
+            # above all the ``player_id`` the phone stores as its identity. The
+            # phone matched that against the roster and, on a case-different
+            # reclaim, listed its own slot as another player.
+            player_obj = game_state.get_player(name)
+            if player_obj is not None:
+                name = player_obj.name
+
             # Cancel pending removal on reconnect
             self._conn.cancel_pending_removal(name)
 
@@ -1393,7 +1404,6 @@ class QuizifyWebSocketHandler:
 
             # Who wears the crown after this join is its own four-case
             # decision (#985); ``_resolve_admin_claim`` holds it.
-            player_obj = game_state.get_player(name)
             if player_obj is not None:
                 self._resolve_admin_claim(game_state, player_obj, name, data)
 
