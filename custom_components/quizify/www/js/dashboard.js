@@ -947,6 +947,16 @@
         currentPhase = 'WAGER_ACTIVE';
         showView('question');
         els.funFact.classList.remove('visible');
+        // #1007: the wager reuses the question view, so showView's #706
+        // clear never runs and the previous round's "2/2" stays in the
+        // header, directly above "0 of 2 have bet". The headline carries
+        // the betting tally; the answer tally has nothing to count until
+        // the question itself arrives (question_started clears it again).
+        if (els.answerProgress) {
+            els.answerProgress.textContent = '';
+            els.answerProgress.classList.add('hidden');
+            els.answerProgress.classList.remove('is-complete');
+        }
 
         els.roundIndicator.textContent = window.QuizifyI18n
             ? window.QuizifyI18n.t('dashboard.questionCounter', { current: msg.round_num, total: msg.total_rounds })
