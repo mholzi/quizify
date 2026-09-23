@@ -180,8 +180,9 @@ class TestBreakdownSums:
     @pytest.mark.parametrize("difficulty", list(Difficulty))
     @pytest.mark.parametrize("elapsed", [0.0, 3.7, 12.4, 29.9])
     @pytest.mark.parametrize("streak", [0, 1, 3, 5, 9])
+    @pytest.mark.parametrize("double", [False, True])
     def test_base_plus_bonuses_equal_points(
-        self, difficulty: Difficulty, elapsed: float, streak: int
+        self, difficulty: Difficulty, elapsed: float, streak: int, double: bool
     ) -> None:
         engine = ScoringEngine()
         comp = engine.score_submission(
@@ -190,18 +191,29 @@ class TestBreakdownSums:
             round_duration=30.0,
             difficulty=difficulty,
             streak=streak,
-            double_points_active=False,
+            double_points_active=double,
             is_final_round=False,
             wager=None,
             score_before_wager=0,
         )
-        # base(10) + speed_bonus + streak_bonus must equal points minus the
-        # discrete milestone spike (which is surfaced separately).
+        # base(10) + every named part must equal points minus the discrete
+        # milestone spike (which is surfaced separately). Since #1005 the
+        # difficulty uplift and the Double power-up are parts of their own
+        # rather than folded into streak_bonus.
         base = 10
-        reconstructed = base + comp.speed_bonus + comp.streak_bonus + comp.milestone_bonus
+        reconstructed = (
+            base
+            + comp.speed_bonus
+            + comp.difficulty_bonus
+            + comp.streak_bonus
+            + comp.double_bonus
+            + comp.milestone_bonus
+        )
         assert reconstructed == comp.points
         assert comp.speed_bonus >= 0
+        assert comp.difficulty_bonus >= 0
         assert comp.streak_bonus >= 0
+        assert comp.double_bonus >= 0
 
 
 # ---------------------------------------------------------------------------

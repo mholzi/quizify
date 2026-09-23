@@ -192,6 +192,8 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         "speed_bonus",
         "streak_bonus",
         "difficulty_multiplier",
+        "difficulty_bonus",
+        "double_bonus",
         "new_streak",
         "new_total",
         "milestone_bonus",

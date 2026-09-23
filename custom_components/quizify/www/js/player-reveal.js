@@ -453,12 +453,19 @@
         var baseScore = (typeof player.base_score === 'number') ? player.base_score : (correct ? BASE_POINTS : 0);
         var speedBonus = player.speed_bonus || 0;
         var streakBonus = player.streak_bonus || 0;
-        var difficultyMult = player.difficulty_multiplier || 1.0;
+        // #1005: the difficulty uplift and the Double power-up arrive as their
+        // own points. They used to sit inside streak_bonus, so a first correct
+        // answer read "1-streak bonus! +9" (mostly the 1.5x) and a doubled
+        // round showed its doubling nowhere. Each part is the points that
+        // factor added, and base + all parts is the round score.
+        var difficultyBonus = player.difficulty_bonus || 0;
+        var doubleBonus = player.double_bonus || 0;
         var breakdownBits = [];
         if (baseScore) breakdownBits.push(t('reveal.baseScore') + ' <b>' + baseScore + '</b>');
         if (speedBonus) breakdownBits.push(pu.feedbackLabel('reveal.speedBonus', pu.escapeHtml(t('reveal.speedBonus'))) + ' <b>+' + speedBonus + '</b>');
+        if (difficultyBonus) breakdownBits.push(pu.feedbackLabel('reveal.difficulty', pu.escapeHtml(t('reveal.difficulty'))) + ' <b>+' + difficultyBonus + '</b>');
         if (streakBonus) breakdownBits.push(pu.feedbackLabel('reveal.streakBonus', pu.escapeHtml(t('reveal.streakBonus', { count: streak }))) + ' <b>+' + streakBonus + '</b>');
-        if (difficultyMult > 1.0) breakdownBits.push(pu.feedbackLabel('reveal.difficulty', pu.escapeHtml(t('reveal.difficulty'))) + ' <b>' + difficultyMult.toFixed(1) + 'x</b>');
+        if (doubleBonus) breakdownBits.push('\u2728 ' + pu.escapeHtml(t('powerups.double_points')) + ' <b>+' + doubleBonus + '</b>');
         var breakdownHtml = breakdownBits.length
             ? '<div class="pl-result-breakdown">' + breakdownBits.join(' &middot; ') + '</div>'
             : '';

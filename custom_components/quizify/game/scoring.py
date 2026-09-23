@@ -80,6 +80,44 @@ def calculate_round_score(
     return int(score)
 
 
+def round_score_parts(
+    elapsed: float,
+    time_limit: float,
+    difficulty: Difficulty,
+    streak: int,
+    double_points_active: bool = False,
+) -> dict[str, int]:
+    """Split a correct answer's points into what produced each of them (#1005).
+
+    Follows :func:`calculate_round_score` step by step — the same floats in
+    the same order — and books each factor as the whole points it added on
+    top of the step before it::
+
+        base + speed     = int(10 + speed)
+        difficulty_bonus = int(x difficulty) - int(before)
+        streak_bonus     = int(x streak)     - int(before)
+        double_bonus     = int(x 2)          - int(before)
+
+    The parts telescope, so ``base + speed_bonus + difficulty_bonus +
+    streak_bonus + double_bonus`` is exactly the awarded score (#308), and a
+    factor that paid nothing is 0. Before this, everything past base and speed
+    was one remainder labelled "streak bonus" — the difficulty uplift and the
+    Double power-up included.
+    """
+    time_fraction = max(0.0, 1.0 - elapsed / time_limit) if time_limit > 0 else 0.0
+    with_speed = BASE_POINTS + MAX_SPEED_BONUS * time_fraction
+    with_difficulty = with_speed * DIFFICULTY_MULTIPLIERS.get(difficulty, 1.0)
+    with_streak = with_difficulty * get_streak_multiplier(streak)
+    with_double = with_streak * 2 if double_points_active else with_streak
+    return {
+        "base": BASE_POINTS,
+        "speed_bonus": int(with_speed) - BASE_POINTS,
+        "difficulty_bonus": int(with_difficulty) - int(with_speed),
+        "streak_bonus": int(with_streak) - int(with_difficulty),
+        "double_bonus": int(with_double) - int(with_streak),
+    }
+
+
 # ---------------------------------------------------------------------------
 # Estimate / closest-guess scoring (#275)
 # ---------------------------------------------------------------------------
