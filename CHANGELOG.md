@@ -3,6 +3,22 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.21.0-RC2] — 2026-09-23
+
+**One Copy of the Truth**
+
+Everything from RC1, plus four fixes from the first live test on a real Home Assistant.
+
+### The copies that had drifted
+
+Names are escaped the same way on the television, the host page and the phones. Host and player share one connection indicator, with a screenreader announcement and a retry button on both. The reveal payload has a single builder, and it checks the shuffle map.
+
+### What the live test found
+
+A host who rejoins with different capitalisation gets their own slot and the crown back. The score breakdown names difficulty and Double points instead of calling them a streak bonus, and its chips add up to the round score. The difficulty pill in the question header is no longer empty, and the television drops the previous answer count when the final wager opens.
+
+Beta versions must be enabled in HACS.
+
 ## [1.21.0-RC1] — 2026-09-22
 
 **One Copy of the Truth**
