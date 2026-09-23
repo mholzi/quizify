@@ -4840,6 +4840,34 @@
     // shared reset/submit paths know which input is live.
     var _isEstimateRound = false;
 
+    /**
+     * The purple pill next to "Round 1 of 10" (#1006).
+     *
+     * ``#game-difficulty-badge`` shipped with the player.html port and nothing
+     * ever wrote into it, so every question showed an empty capsule. It now
+     * carries the question's own difficulty — the same icon + word the lobby
+     * badge uses, built from a data-i18n span so a later language change
+     * re-renders it (#809/#851). Anything we have no label for hides the pill
+     * instead of drawing it hollow.
+     */
+    var DIFFICULTY_ICONS = { 'easy': '🌱', 'medium': '🎯', 'hard': '🔥' };
+
+    function paintDifficultyBadge(difficulty) {
+        var badge = document.getElementById('game-difficulty-badge');
+        if (!badge) return;
+        var diff = String(difficulty || '').toLowerCase();
+        if (!DIFFICULTY_ICONS[diff]) {
+            badge.textContent = '';
+            badge.classList.add('hidden');
+            return;
+        }
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        var key = 'difficulties.' + diff;
+        badge.innerHTML = DIFFICULTY_ICONS[diff] + ' <span data-i18n="' + key + '">'
+            + pu.escapeHtml(t(key)) + '</span>';
+        badge.classList.remove('hidden');
+    }
+
     function renderQuestion(data) {
         var questionText = document.getElementById('question-text');
         var questionCategory = document.getElementById('question-category');
@@ -4847,6 +4875,7 @@
 
         if (questionText) questionText.textContent = data.question_text || '';
         if (questionCategory) questionCategory.textContent = data.category || '';
+        paintDifficultyBadge(data.difficulty);
 
         // Issue #25 + #183 (Variant 1): question image as a fixed-height
         // banner preview with tap-to-zoom. Only absolute http(s) URLs are
