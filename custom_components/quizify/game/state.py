@@ -89,6 +89,10 @@ class AnswerResult:
     speed_bonus: int = 0
     streak_bonus: int = 0
     difficulty_multiplier: float = 1.0
+    # #1005: what the difficulty and the Double power-up added, so the reveal
+    # stops calling them a streak bonus.
+    difficulty_bonus: int = 0
+    double_bonus: int = 0
     # Milestone bonus (0 unless this round's streak landed exactly on a
     # value in STREAK_MILESTONES). Surfaced separately so the client can
     # render a celebratory toast instead of folding it into the breakdown.
@@ -1161,6 +1165,8 @@ class QuizifyGameState:
             speed_bonus=speed_bonus,
             streak_bonus=streak_bonus,
             difficulty_multiplier=diff_mult,
+            difficulty_bonus=computation.difficulty_bonus,
+            double_bonus=computation.double_bonus,
             milestone_bonus=milestone_bonus,
             milestone_streak=player.streak if milestone_bonus else 0,
         )

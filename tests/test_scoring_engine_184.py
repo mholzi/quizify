@@ -105,7 +105,9 @@ class TestScoringEngineMatchesLegacy:
             "speed_bonus",
             "streak_bonus",
             "difficulty_multiplier",
+            "difficulty_bonus",
             "double_points",
+            "double_bonus",
             "wager",
             "milestone_bonus",
         }

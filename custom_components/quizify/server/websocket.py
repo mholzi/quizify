@@ -1743,6 +1743,8 @@ class QuizifyWebSocketHandler:
                 "speed_bonus": result.speed_bonus,
                 "streak_bonus": result.streak_bonus,
                 "difficulty_multiplier": result.difficulty_multiplier,
+                "difficulty_bonus": result.difficulty_bonus,
+                "double_bonus": result.double_bonus,
                 "new_streak": result.new_streak,
                 "new_total": result.new_total,
                 "milestone_bonus": result.milestone_bonus,

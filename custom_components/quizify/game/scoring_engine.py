@@ -22,10 +22,9 @@ from dataclasses import dataclass
 from typing import Any
 
 from .scoring import (
-    BASE_POINTS,
-    MAX_SPEED_BONUS,
     calculate_round_score,
     get_streak_milestone_bonus,
+    round_score_parts,
 )
 from .types import DIFFICULTY_MULTIPLIERS, Difficulty
 
@@ -62,6 +61,10 @@ class ScoreComputation:
     streak_bonus: int = 0
     difficulty_multiplier: float = 1.0
     double_points: bool = False
+    # #1005: the points the difficulty and the Double power-up added, booked
+    # on their own instead of inside ``streak_bonus``.
+    difficulty_bonus: int = 0
+    double_bonus: int = 0
     # Set to the absolute wager points when a final-round wager replaced the
     # normal scoring; None otherwise. Surfaced in the breakdown.
     wager_used: int | None = None
@@ -76,7 +79,9 @@ class ScoreComputation:
             "speed_bonus": self.speed_bonus,
             "streak_bonus": self.streak_bonus,
             "difficulty_multiplier": self.difficulty_multiplier,
+            "difficulty_bonus": self.difficulty_bonus,
             "double_points": self.double_points,
+            "double_bonus": self.double_bonus,
             "wager": self.wager_used,
             "milestone_bonus": self.milestone_bonus,
         }
@@ -122,35 +127,30 @@ class ScoringEngine:
             double_points_active=double_points_active,
         )
 
-        # Calculate breakdown for client display. The client renders the
-        # components additively (base + speed + streak, then "× difficulty"),
-        # so the three integer parts must reconstruct ``points`` exactly —
-        # otherwise the breakdown visibly fails to add up to the awarded score
-        # (#308: "off by 1-2"). The bug was independent int() truncation:
-        # ``points`` truncates the full float once, while speed_bonus and
-        # streak_bonus each truncated separately, leaving a 1-2pt remainder
-        # unaccounted for. Fix: derive streak_bonus as the exact remainder so
-        # base + speed_bonus + streak_bonus == points (pre-milestone).
+        # Breakdown for client display. The client renders the parts
+        # additively, so they must reconstruct ``points`` exactly (#308: "off
+        # by 1-2"), and each must be named after what produced it (#1005:
+        # the difficulty uplift and the Double power-up used to land in one
+        # remainder labelled "streak bonus"). ``round_score_parts`` walks the
+        # same multiplication as ``calculate_round_score`` and books each
+        # factor's contribution separately; the parts telescope to ``points``.
         speed_bonus = 0
         streak_bonus = 0
+        difficulty_bonus = 0
+        double_bonus = 0
         diff_mult = DIFFICULTY_MULTIPLIERS.get(difficulty, 1.0)
         if correct:
-            time_fraction = (
-                max(0.0, 1.0 - elapsed / round_duration)
-                if round_duration > 0
-                else 0.0
+            parts = round_score_parts(
+                elapsed=elapsed,
+                time_limit=round_duration,
+                difficulty=difficulty,
+                streak=streak,
+                double_points_active=double_points_active,
             )
-            speed_bonus = int(MAX_SPEED_BONUS * time_fraction)
-            # ``points`` is the authoritative awarded score (the milestone spike
-            # is added separately below and surfaced as ``milestone_bonus``).
-            # Back streak_bonus out of it so base + speed + streak == points,
-            # making the breakdown sum exactly.
-            streak_bonus = points - BASE_POINTS - speed_bonus
-            if streak_bonus < 0:
-                # Defensive: a 0-streak hard-difficulty edge could in principle
-                # leave the speed truncation slightly above points. Never show a
-                # negative bonus; clamp and let speed absorb the difference.
-                streak_bonus = 0
+            speed_bonus = parts["speed_bonus"]
+            difficulty_bonus = parts["difficulty_bonus"]
+            streak_bonus = parts["streak_bonus"]
+            double_bonus = parts["double_bonus"]
 
         # Wager override (Jeopardy-style final round). On the final round, if
         # the player submitted a wager (0-100% of their pre-round score), it
@@ -191,6 +191,8 @@ class ScoringEngine:
                 # Clear bonuses since the wager overrides them.
                 speed_bonus = 0
                 streak_bonus = 0
+                difficulty_bonus = 0
+                double_bonus = 0
 
         # Streak milestone bonus — discrete spike awarded the round the streak
         # EXACTLY equals a milestone value (3, 5, 10, 15, 20, 25). Wager rounds
@@ -207,6 +209,8 @@ class ScoringEngine:
             streak_bonus=streak_bonus,
             difficulty_multiplier=diff_mult,
             double_points=double_points_active,
+            difficulty_bonus=difficulty_bonus,
+            double_bonus=double_bonus,
             wager_used=wager_used,
             milestone_bonus=milestone_bonus,
         )

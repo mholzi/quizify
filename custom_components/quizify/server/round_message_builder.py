@@ -639,7 +639,9 @@ class RoundMessageBuilder:
                 "speed_bonus": breakdown.get("speed_bonus", 0),
                 "streak_bonus": breakdown.get("streak_bonus", 0),
                 "difficulty_multiplier": breakdown.get("difficulty_multiplier", 1.0),
+                "difficulty_bonus": breakdown.get("difficulty_bonus", 0),
                 "double_points": breakdown.get("double_points", False),
+                "double_bonus": breakdown.get("double_bonus", 0),
                 "streak": team.streak,
             }
 
@@ -684,7 +686,9 @@ class RoundMessageBuilder:
                     "difficulty_multiplier": breakdown.get(
                         "difficulty_multiplier", 1.0
                     ),
+                    "difficulty_bonus": breakdown.get("difficulty_bonus", 0),
                     "double_points": breakdown.get("double_points", False),
+                    "double_bonus": breakdown.get("double_bonus", 0),
                     "streak": player.streak,
                 })
             else:

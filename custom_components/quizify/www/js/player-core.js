@@ -1252,6 +1252,8 @@
                         speed_bonus: lastResult.speed_bonus || 0,
                         streak_bonus: lastResult.streak_bonus || 0,
                         difficulty_multiplier: lastResult.difficulty_multiplier || 1.0,
+                        difficulty_bonus: lastResult.difficulty_bonus || 0,
+                        double_bonus: lastResult.double_bonus || 0,
                         round_score: lastResult.points_earned || 0,
                         streak: lastResult.new_streak || 0,
                     });
