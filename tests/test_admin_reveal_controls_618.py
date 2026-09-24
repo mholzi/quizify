@@ -50,14 +50,16 @@ def _function_body(source: str, signature: str) -> str:
     raise AssertionError(f"unbalanced braces after {signature!r}")
 
 
-def test_question_start_still_hides_the_controls() -> None:
-    """Guards the premise. Without this the rest proves nothing."""
+def test_question_start_still_hides_next_question() -> None:
+    """Guards the premise. Without this the rest proves nothing.
+
+    End Game is no longer hidden here: #1017 keeps it reachable during a live
+    question (see ``tests/test_admin_live_controls_1017.py``)."""
     body = _function_body(
         _ADMIN_JS.read_text("utf-8"), "function handleQuestionStarted("
     )
 
     assert "nextQuestionBtn.classList.add('hidden')" in body
-    assert "endGameBtn.classList.add('hidden')" in body
 
 
 def test_the_reveal_brings_both_controls_back() -> None:

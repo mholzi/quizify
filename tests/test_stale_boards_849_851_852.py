@@ -127,6 +127,8 @@ function scoreDeltaHtml() {{ return ''; }}
 // #830 put the submission tracker on the host page, and the reveal
 // clears it. Not the subject here — the board is.
 function clearAnswerProgress() {{}}
+// #1017: the reveal hides the live-question controls. Not the subject here.
+function setLiveControls() {{}}
 
 {render}
 {reveal}

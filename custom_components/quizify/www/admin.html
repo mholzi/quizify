@@ -907,6 +907,15 @@
 
             <!-- Admin Actions — Sticky -->
             <div class="admin-actions lobby-actions--sticky mt-lg">
+                <!-- #1017: the live-question controls the phone's host bar
+                     and the Lovelace host card have had all along. Which of
+                     them shows is decided per phase in admin.js
+                     (LIVE_CONTROLS); the row itself hides when none does. -->
+                <div id="admin-live-controls" class="admin-live-controls hidden">
+                    <button type="button" id="admin-skip-btn" class="btn btn-secondary hidden" data-i18n="admin.skip">Skip</button>
+                    <button type="button" id="admin-pause-btn" class="btn btn-secondary hidden" data-i18n="admin.pause">Pause</button>
+                    <button type="button" id="admin-resume-btn" class="btn btn-primary hidden" data-i18n="admin.resume">Resume</button>
+                </div>
                 <button type="button" id="next-question-btn" class="btn btn-primary" data-i18n="admin.nextQuestion">Next Question</button>
                 <button type="button" id="end-game-btn" class="btn btn-danger hidden" data-i18n="admin.endGame">End Game</button>
             </div>

@@ -2180,6 +2180,19 @@ button, .btn {
     flex: 1;
 }
 
+/* #1017: Skip / Pause / Resume share one row above Next and End, so a live
+   question adds one line to the sticky bar instead of two. `min-width: 0`
+   lets the two halves shrink at 390px rather than push past the gutter. */
+.admin-live-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.admin-live-controls .btn {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
 /* Admin content wrapper */
 .admin-content {
     padding: 0 var(--space-md) calc(var(--space-md) + 80px); /* extra bottom for sticky button */

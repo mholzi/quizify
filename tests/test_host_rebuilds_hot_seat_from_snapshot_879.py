@@ -320,6 +320,9 @@ def _run() -> dict:
     parts += [
         _js_block(source, signature, required=False)
         for signature in (
+            # #1017: the handlers now set the live-question controls.
+            "var LIVE_CONTROLS = {",
+            "function setLiveControls(phase) {",
             "function renderHotSeatFromSnapshot(hs, round, totalRounds) {",
             "function _detourWindow(full, hs) {",
             "function _resumeDetourClock(hs) {",
