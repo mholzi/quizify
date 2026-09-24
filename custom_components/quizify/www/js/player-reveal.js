@@ -768,6 +768,8 @@
                     question_id: _currentQuestionId,
                     player_name: state.playerName || '',
                     reason: '',
+                    // #1016: the flag endpoint is gated on the room code.
+                    room_code: state.roomCode || '',
                 }),
             }).then(function (r) {
                 if (!r.ok) throw new Error('flag failed: ' + r.status);

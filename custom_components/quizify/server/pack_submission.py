@@ -49,6 +49,7 @@ from ..const import (
     ERR_SUBMIT_GITHUB_ERROR,
     ERR_SUBMIT_INVALID_FORMAT,
     ERR_SUBMIT_RATE_LIMITED,
+    ERR_SUBMIT_UNAUTHORIZED,
     RECORD_KIND_REQUEST,
     RECORD_KIND_SUBMISSION,
     REQUEST_MAX_LANGUAGE_CHARS,
@@ -66,7 +67,7 @@ from ..const import (
     SUBMIT_STATUS_DECLINED,
     SUBMIT_STATUS_PENDING,
 )
-from .context import APP_CTX_KEY
+from .context import APP_CTX_KEY, request_has_admin_token
 from .origin import check_unauthenticated_post
 from .rate_limit import SlidingWindowLimiter
 
@@ -435,7 +436,8 @@ def _get_ctx(request: web.Request) -> AppContext:
 
 
 def _check_gates(request: web.Request, ctx: AppContext) -> web.Response | None:
-    """Shared pre-flight for both POST paths: feature enabled + rate limit.
+    """Shared pre-flight for both POST paths: CSRF, admin token, feature
+    enabled, rate limit.
 
     Returns the error response to send, or None when the request may proceed.
     Submissions and requests deliberately share **one** rate-limit bucket: they
@@ -450,6 +452,16 @@ def _check_gates(request: web.Request, ctx: AppContext) -> web.Response | None:
     refusal = check_unauthenticated_post(request, ctx.runtime)
     if refusal is not None:
         return refusal
+
+    # #1016: host-only, like the presets. Composing a pack is done on the
+    # admin page, which holds the admin token; without this gate anybody who
+    # can reach the integration — over the Nabu Casa tunnel, the internet —
+    # could file GitHub issues through the host's worker secret.
+    if not request_has_admin_token(request, ctx):
+        return web.json_response(
+            {"code": ERR_SUBMIT_UNAUTHORIZED, "message": "Admin token required."},
+            status=401,
+        )
 
     if not (ctx.community_submit_url or "").strip():
         return web.json_response(

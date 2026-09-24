@@ -150,16 +150,53 @@
     // ---- #374: TV lobby join QR + live player roster ----
     // The join URL is derived exactly like admin.js's initJoinUrl():
     // origin + '/quizify/player' (same origin as this dashboard). The QR
-    // is rendered once (the URL never changes for a running server) and the
-    // roster refreshes on every LOBBY snapshot / player_joined / player_left.
-    var _lobbyQrRendered = false;
+    // is redrawn only when the room code changes, and the roster refreshes
+    // on every LOBBY snapshot / player_joined / player_left.
+    //
+    // #1016: the join link carries the game's room code. The server tells
+    // this screen the code (a `room_code` frame) only when the TV is on the
+    // home LAN or was opened with the current `?room=` from the admin page —
+    // `role=dashboard` has no credential, and over the Nabu Casa tunnel a
+    // stranger could otherwise read the code off this socket. Until the code
+    // is known the QR is not drawn: a code-less link would only take guests
+    // to a refusal.
+    var _urlRoom = (function () {
+        try { return new URLSearchParams(location.search).get('room'); } catch (e) { return null; }
+    })();
+    var _roomCode = null;
+    var _lobbyQrRenderedFor = null;
     function lobbyJoinUrl() {
-        return window.location.origin + '/quizify/player';
+        return window.location.origin + '/quizify/player' +
+            '?room=' + encodeURIComponent(_roomCode);
+    }
+    function setRoomCode(code) {
+        if (!code || code === _roomCode) return;
+        _roomCode = code;
+        // A TV opened with ?room= keeps a link that survives a reload after
+        // the next reset rotates the code.
+        if (_urlRoom !== null && window.history && window.history.replaceState) {
+            _urlRoom = code;
+            var here = new URL(location.href);
+            here.searchParams.set('room', code);
+            try { window.history.replaceState(null, '', here.toString()); } catch (e) { /* keep going */ }
+        }
+        renderLobbyQr();
     }
     function renderLobbyQr() {
-        if (_lobbyQrRendered) return;
         var container = els.lobbyQrCode;
         if (!container) return;
+        if (!_roomCode) {
+            // Not trusted with the code: say how to get it, never a dead QR.
+            if (_lobbyQrRenderedFor === '') return;
+            container.innerHTML = '<div class="dashboard-waiting-text">' +
+                QuizifyUtils.escapeHtml(t('lobby.roomCodeMissing',
+                    "Open this screen from the TV link on the host's admin page to show the join code.")) +
+                '</div>';
+            if (els.lobbyJoinUrlEl) els.lobbyJoinUrlEl.textContent = '';
+            _lobbyQrRenderedFor = '';
+            return;
+        }
+        if (_lobbyQrRenderedFor === _roomCode) return;
         container.innerHTML = '';
         var url = lobbyJoinUrl();
         // Written whether or not the QR renders: the text is the fallback
@@ -171,7 +208,7 @@
         // cannot tell a display strip from the scheme test that caused #540.
         if (els.lobbyJoinUrlEl) {
             els.lobbyJoinUrlEl.textContent =
-                window.location.host + '/quizify/player';
+                window.location.host + '/quizify/player?room=' + _roomCode;
         }
         if (typeof QRCode !== 'undefined') {
             // Large, high-contrast code so it scans from across the room.
@@ -180,7 +217,7 @@
                 colorDark: '#0b0e1a', colorLight: '#ffffff',
                 correctLevel: QRCode.CorrectLevel.M,
             });
-            _lobbyQrRendered = true;
+            _lobbyQrRenderedFor = _roomCode;
         } else {
             // Defensive fallback if the vendor lib failed to load — show
             // the raw URL so players can still type it in.
@@ -384,7 +421,10 @@
     var DASHBOARD_RETRY_MS = 2000;
 
     function connect() {
-        ws = window.QuizifyClientCore.createSocket('/api/quizify/ws?role=dashboard', {
+        // #1016: present the room code this TV was opened with, if any.
+        var wsPath = '/api/quizify/ws?role=dashboard' +
+            (_urlRoom ? '&room=' + encodeURIComponent(_urlRoom) : '');
+        ws = window.QuizifyClientCore.createSocket(wsPath, {
             logPrefix: '[Dashboard]',
             onOpen: function () {
                 // #421: socket is back — hide the reconnect pill. State is
@@ -472,6 +512,10 @@
                 break;
             case 'finale':
                 handleFinale(msg);
+                break;
+            case 'room_code':
+                // #1016: first code on connect, a new one after every reset.
+                setRoomCode(msg.room_code);
                 break;
             case 'game_reset':
                 currentPhase = 'LOBBY';

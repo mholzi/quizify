@@ -30,6 +30,12 @@
         isReconnecting: false,
         intentionalLeave: false,
         playerColor: '',  // assigned by server on join
+        // #1016: the per-game room code from the join link (?room=). Sent on
+        // every fresh join and with a question flag; the server repeats it
+        // on joined/reconnected, which keeps a token-only tab supplied.
+        roomCode: (function () {
+            try { return new URLSearchParams(location.search).get('room'); } catch (e) { return null; }
+        })(),
     };
 
     // ============================================

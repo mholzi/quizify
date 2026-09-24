@@ -1201,10 +1201,11 @@ _flag_rate_limiter = SlidingWindowLimiter(
 async def flag_question_view(request: web.Request) -> web.Response:
     """Record a player's flag on a question.
 
-    POST body: {"question_id": "geo_037", "reason": "...", "player_name": "..."}
-    All fields optional except question_id. reason is truncated; player_name
-    is best-effort (clients without an auth model can lie, but that's fine
-    for a "raise the maintainer's attention" signal).
+    POST body: {"question_id": "geo_037", "reason": "...", "player_name": "...",
+    "room_code": "..."}. ``room_code`` (or the admin token) is required since
+    #1016; of the rest, all fields are optional except question_id. reason is
+    truncated; player_name is best-effort (clients without an auth model can
+    lie, but that's fine for a "raise the maintainer's attention" signal).
     """
     ctx = _get_ctx(request)
 
@@ -1225,15 +1226,28 @@ async def flag_question_view(request: web.Request) -> web.Response:
         body = await request.json()
     except (ValueError, TypeError):
         return web.json_response({"error": "invalid_json"}, status=400)
+    # #1016: any JSON value parses — ``[1]``, ``"x"``, ``5`` — and every
+    # ``.get`` below raised AttributeError on it, which aiohttp answered 500.
+    if not isinstance(body, dict):
+        return web.json_response({"error": "invalid_body"}, status=400)
 
-    question_id = (body or {}).get("question_id")
+    # #1016: only someone in the room may write to the flag log — a player
+    # holding the current room code (the phone sends it with the flag), or
+    # the host with the admin token. The route has no HA auth, and over the
+    # Nabu Casa tunnel it is reachable from the internet.
+    game = getattr(ctx, "game", None)
+    in_room = game is not None and game.is_room_code_valid(body.get("room_code"))
+    if not (in_room or _is_admin_authenticated(request)):
+        return web.json_response({"error": "room_code_invalid"}, status=403)
+
+    question_id = body.get("question_id")
     if not isinstance(question_id, str) or not question_id:
         return web.json_response({"error": "missing_question_id"}, status=400)
 
     entry = await _flag_store(request).add(
         question_id,
-        reason=str((body or {}).get("reason", "")),
-        player_name=str((body or {}).get("player_name", "")),
+        reason=str(body.get("reason", "")),
+        player_name=str(body.get("player_name", "")),
         remote=request.remote or "",
     )
     _LOGGER.info(

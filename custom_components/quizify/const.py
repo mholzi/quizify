@@ -73,6 +73,10 @@ ERR_ALREADY_JOINED = "ALREADY_JOINED"
 #: ERR_INVALID_ACTION so a whole room behind one NAT that trips the window is
 #: told to wait, rather than being shown a generic failure it cannot act on.
 ERR_JOIN_RATE_LIMITED = "JOIN_RATE_LIMITED"
+#: A fresh join carried no room code, or one that is not this game's (#1016):
+#: an old link, a link from before the last reset, or a guess. The join form
+#: tells the guest to scan the current QR code.
+ERR_ROOM_CODE_INVALID = "ROOM_CODE_INVALID"
 
 #: English fallback text for every error code above (#812).
 #:
@@ -111,6 +115,7 @@ ERROR_FALLBACK_TEXT: dict[str, str] = {
     ERR_NO_QUESTIONS_REMAINING: "No questions remaining",
     ERR_ALREADY_JOINED: "Already joined",
     ERR_JOIN_RATE_LIMITED: "Too many join attempts",
+    ERR_ROOM_CODE_INVALID: "Link out of date — scan the current QR code",
 }
 
 # Question structure
@@ -225,4 +230,6 @@ SUBMIT_STATUS_DECLINED = "declined"  # issue closed as not_planned
 ERR_SUBMIT_INVALID_FORMAT = "INVALID_FORMAT"
 ERR_SUBMIT_RATE_LIMITED = "RATE_LIMITED"
 ERR_SUBMIT_GITHUB_ERROR = "GITHUB_ERROR"
+#: The POST did not carry the admin token (#1016) — submitting is host-only.
+ERR_SUBMIT_UNAUTHORIZED = "UNAUTHORIZED"
 ERR_SUBMIT_DISABLED = "SUBMIT_DISABLED"

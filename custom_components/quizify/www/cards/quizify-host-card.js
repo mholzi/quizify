@@ -199,6 +199,7 @@
             this.attachShadow({ mode: 'open' });
             this._config = { mode: 'compact' };
             this._state = null;
+            this._joinUrl = null;
             this._ws = null;
             this._status = 'connecting';
             this._token = undefined;   // undefined = not looked up yet, null = none
@@ -308,6 +309,12 @@
                     window.QuizifyUtils.writeAdminToken(msg.admin_session_token);
                     self._token = msg.admin_session_token;
                 }
+                // #1016: the join link carries the room code. It arrives on
+                // the admin_connect frame and again on `room_code` after a
+                // reset — kept apart from _state, which every later
+                // game_state broadcast (without the link) replaces.
+                if (msg.join_url) self._joinUrl = msg.join_url;
+                if (msg.type === 'room_code') self._render();
                 if (msg.type === 'game_state') {
                     self._state = msg;
                     self._render();
@@ -461,7 +468,7 @@
                     '</div>';
             }
 
-            var joinUrl = (s && s.join_url) || '/quizify/player';
+            var joinUrl = this._joinUrl || (s && s.join_url) || '/quizify/player';
             var footNote = primary.blockedReason
                 || (this._status === 'offline' ? t.offline : '');
             html += '<div class="foot"><a href="' + esc(joinUrl) + '">' + esc(t.join) + '</a>' +

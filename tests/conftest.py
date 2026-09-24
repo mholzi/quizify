@@ -348,6 +348,45 @@ def _sockets_enabled():
     yield
 
 
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers",
+        "room_code_gate: exercise the real #1016 join gate — the join is NOT "
+        "handed the current room code automatically",
+    )
+
+
+@pytest.fixture(autouse=True)
+def _joins_carry_the_room_code(request, monkeypatch):
+    """Pre-#1016 join tests join as if they had scanned the QR code.
+
+    #1016 made a fresh ``join`` carry the per-game room code from the join
+    link. Several dozen older tests (crown rules, name canonicalization, ghost
+    reclaim...) join with ``{"name": ...}`` alone because the link had no
+    secret when they were written; what they test is unrelated to the gate.
+    For them, a join that names no ``room`` gets the game's current code, so
+    the rest of ``_handle_join`` is exercised exactly as before.
+
+    Tests about the gate itself carry ``@pytest.mark.room_code_gate`` and get
+    the handler untouched — see ``tests/test_room_code_gate_1016.py``.
+    """
+    if request.node.get_closest_marker("room_code_gate"):
+        yield
+        return
+    from custom_components.quizify.server.websocket import QuizifyWebSocketHandler
+
+    original = QuizifyWebSocketHandler._handle_join
+
+    async def _handle_join(self, ws, data, game_state):  # noqa: ANN001, ANN202
+        code = getattr(game_state, "room_code", None)
+        if isinstance(data, dict) and "room" not in data and isinstance(code, str):
+            data = {**data, "room": code}
+        return await original(self, ws, data, game_state)
+
+    monkeypatch.setattr(QuizifyWebSocketHandler, "_handle_join", _handle_join)
+    yield
+
+
 # ---------------------------------------------------------------------------
 # Shared source-slicing helper (#811)
 #

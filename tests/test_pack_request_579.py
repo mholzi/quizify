@@ -21,6 +21,7 @@ import asyncio
 import json
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
 
 import pytest
@@ -91,6 +92,9 @@ class _CapturingSession:
         return _FakeResponse()
 
 
+_HOST_TOKEN = "host-token"
+
+
 class _FakeRuntime:
     def __init__(self, data_dir: Path) -> None:
         self.data_dir = data_dir
@@ -113,6 +117,10 @@ class _FakeCtx:
         self.runtime = _FakeRuntime(data_dir)
         self.community_submit_url = submit_url
         self.community_submit_secret = submit_secret
+        # #1016: both POSTs are host-only; the fake host holds this token.
+        self.ws_handler = SimpleNamespace(
+            conn=SimpleNamespace(validate_admin_token=lambda t: t == _HOST_TOKEN)
+        )
 
 
 class _FakeRequest:
@@ -124,7 +132,12 @@ class _FakeRequest:
         self._body = body
         self.host = "homeassistant.local:8123"
         # #785: the POST views require a declared JSON body.
-        self.headers = {"Content-Type": "application/json"}
+        # #1016: and the admin token, like every host-only request.
+        self.headers = {
+            "Content-Type": "application/json",
+            "X-Quizify-Token": _HOST_TOKEN,
+        }
+        self.query: dict[str, str] = {}
 
     async def json(self) -> Any:
         if isinstance(self._body, Exception):

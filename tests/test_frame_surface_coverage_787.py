@@ -217,6 +217,17 @@ COVERAGE: dict[str, Coverage] = {
     "player_joined": _c("broadcast", "tv", "host", "phone"),
     "player_left": _c("broadcast", "tv", "host", "phone"),
     "game_reset": _c("broadcast", "tv", "host", "phone"),
+    "room_code": _c(
+        "host_and_tv",
+        "tv",
+        "host",
+        ignored={
+            "phone": (
+                "sent only to host sockets and trusted televisions (#1016); the"
+                " phone reads the code off joined/reconnected instead"
+            ),
+        },
+    ),
     "host_presence": _c(
         "broadcast",
         "phone",

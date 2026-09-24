@@ -95,3 +95,22 @@ class AppContext:
     # ``hass.data[DOMAIN]``, which this class exists to replace; the unload path
     # detaches them from here.
     house: HouseConsumers | None = None
+
+
+def request_has_admin_token(request: object, ctx: AppContext) -> bool:
+    """Whether *request* carries the current admin session token (#356, #1016).
+
+    Read from the ``X-Quizify-Token`` header or the ``?token=`` query param —
+    the same credential as the admin WebSocket, checked the same way as
+    ``views._is_admin_authenticated``. Lives here for the pack-submission
+    POSTs, whose module ``views`` imports (so it cannot import ``views``).
+    """
+    headers = getattr(request, "headers", None) or {}
+    query = getattr(request, "query", None) or {}
+    token = query.get("token") or headers.get("X-Quizify-Token")
+    if not token:
+        return False
+    conn = getattr(getattr(ctx, "ws_handler", None), "conn", None)
+    if conn is None:
+        return False
+    return bool(conn.validate_admin_token(token))

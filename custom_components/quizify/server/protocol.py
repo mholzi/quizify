@@ -85,6 +85,7 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         "is_admin",
         "powerup",
         "all_time",
+        "room_code",
         note=(
             "Unicast to the player whose WS just authenticated. ``all_time`` "
             "is that one player's standing (#371) and rides this frame rather "
@@ -97,6 +98,7 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         "session_token",
         "powerup",
         "all_time",
+        "room_code",
         note=(
             "The resume twin of ``joined`` — and deliberately NOT the same "
             "shape: colour and admin flag are already on the client that is "
@@ -127,6 +129,16 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         note="Unicast to the removed player before their socket is closed.",
     ),
     "game_reset": _spec(note="Broadcast when the host resets the game."),
+    "room_code": _spec(
+        "room_code",
+        "join_url",
+        note=(
+            "The per-game join secret and the link built from it (#1016). "
+            "Sent only to host sockets and to television sockets on the home "
+            "LAN or holding the current code — never broadcast — on connect "
+            "and again whenever reset_game rotates it."
+        ),
+    ),
     "host_presence": _spec(
         "host_connected",
         note=(

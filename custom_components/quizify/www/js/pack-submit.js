@@ -253,6 +253,16 @@ window.QuizifyPackSubmit = (function () {
         goToStep(2);
     }
 
+    // #1016: both POSTs file a GitHub issue through the host's worker, so
+    // they carry the admin token like every other host-only request (#608:
+    // as a header, never in the URL).
+    function postHeaders() {
+        var headers = { 'Content-Type': 'application/json' };
+        var tok = QuizifyUtils.readAdminToken();
+        if (tok) headers['X-Quizify-Token'] = tok;
+        return headers;
+    }
+
     async function doSubmit() {
         var parsed = validatedPack;
         if (!parsed) { goToStep(2); return; }
@@ -264,7 +274,7 @@ window.QuizifyPackSubmit = (function () {
         try {
             var resp = await fetch(SUBMIT_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: postHeaders(),
                 body: JSON.stringify({ pack: parsed })
             });
             var data = {};
@@ -346,7 +356,7 @@ window.QuizifyPackSubmit = (function () {
         try {
             var resp = await fetch(REQUEST_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: postHeaders(),
                 body: JSON.stringify({
                     request: {
                         theme: theme,

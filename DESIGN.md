@@ -268,54 +268,88 @@ Warm, soft, welcoming. Easings are longer than Broadcast Living Room, transforms
 > Reviewed 2026-06-11 (#259, part of the #252 code review). Captures the
 > *intentional* exposure posture so future changes don't accidentally weaken it
 > or "fix" something that is a deliberate trade-off.
+>
+> Corrected 2026-09-24 (#1016): an earlier version said Nabu Casa Remote UI puts
+> an HA login in front of these routes. It does not — see below.
 
-**Threat model: a trusted home LAN.** Quizify is a party game played by people
-in the same room. Players join from their own phones by scanning a QR / opening
-a URL — **they have no Home Assistant login** and must not need one. Because of
-that, the player-facing HTTP and WebSocket endpoints are intentionally **open on
-the LAN**: they are registered directly on HA's aiohttp router (not as
-auth-gated `HomeAssistantView`s), so they answer without HA credentials. This is
-by design and must stay that way — gating the game WebSocket, `flag-question`,
-or `pack-submit` behind HA auth would lock every player out of the game.
+**Threat model: a trusted home LAN, reachable from the internet.** Quizify is a
+party game played by people in the same room. Players join from their own
+phones by scanning a QR / opening a URL — **they have no Home Assistant login**
+and must not need one. Because of that, the player-facing HTTP and WebSocket
+endpoints are registered directly on HA's aiohttp router (not as auth-gated
+`HomeAssistantView`s), so they answer without HA credentials. That part is by
+design and must stay that way — gating the game WebSocket behind HA auth would
+lock every player out of the game.
 
-**Endpoint exposure map** (all reachable without HA auth on the LAN):
+**No HA login protects these routes, not even over Nabu Casa.** HA's auth
+middleware only enforces on `HomeAssistantView.requires_auth`; raw router
+handlers are never checked. Nabu Casa Remote UI tunnels the whole HTTP server,
+so every Quizify route answers on the `*.ui.nabu.casa` host without a login —
+`server/origin.py` allow-lists that host as a page origin, and the loopback
+socket cap (#701) is sized so a whole room can play through the tunnel. The same
+is true for a port-forward or an un-authenticated reverse proxy. Access control
+therefore lives in Quizify itself:
 
-| Endpoint | Method | Effect | Why it stays open |
-|----------|--------|--------|-------------------|
-| `/quizify/api/.../ws` (game WebSocket) | WS | Play the game; admin-as-player join (see below) | Players have no HA login. |
-| `/api/quizify/flag-question` | POST | **Writes** a flag record to disk | A player must be able to report a bad question mid-game. |
-| `/api/quizify/flags` | GET | **Discloses** flagged questions | Low-sensitivity game metadata; host reads it from the same un-authed admin page. |
-| `/api/quizify/pack-submit` | POST | Proxies a composed pack to the worker (rate-limited, optional shared secret) | Composed by the host in the un-authed admin UI; inert until `community_submit_url` is configured. |
-| `/api/quizify/analytics/data`, `/all-time`, `/question-stats` | GET | **Discloses** game/leaderboard analytics | Shown on the un-authed TV/analytics surfaces. |
+- **Room code (#1016).** Each game has a random six-character room code, minted
+  server-side and rotated on every `reset_game`. The join link the host page, the
+  television and the host card show is `/quizify/player?room=<code>`. A fresh
+  WebSocket `join` must carry the current code, otherwise it is refused with
+  `ROOM_CODE_INVALID` and the phone tells the guest to scan the current QR code.
+  Exempt: a player reconnecting with a valid session token (the reconnect path
+  never asks), a WS-level admin socket, and a join that carries a valid admin
+  token (the host's own admin-as-player tab). A link from an earlier game, or
+  from before the last reset, stops working.
+- **Who is told the code.** The host page and the host card get it on the
+  admin-token-authenticated `admin_connect` frame. A television (`role=dashboard`,
+  no credential) gets it only when its socket comes from a private/link-local
+  LAN address (judged on the peer address, never on `Host`, which a scripted
+  client can forge; loopback — the Nabu Casa tunnel — does not count), or when it
+  was opened with the current `?room=` (the admin page's TV link carries it).
+  Players get it on `joined` / `reconnected` — they are already in the room.
+- **Admin token (#356).** Host-only reads and writes (analytics, flags list,
+  presets, TTS/house entity lists, pack submissions) require the persisted admin
+  session token. Unchanged.
 
-**Remote exposure rule (CRITICAL).** Because these endpoints are un-authed,
-**remote exposure must be fronted by Home Assistant auth — or not done at all.**
-- **Nabu Casa Remote UI** already requires HA login to reach *any* integration
-  HTTP path, so it satisfies this requirement out of the box.
-- A **self-hosted reverse proxy** (nginx / Traefik / Cloudflare Tunnel) that
-  forwards `/quizify/*` or `/api/quizify/*` to HA **without** an auth layer in
-  front would expose the write/disclosure endpoints above to the internet. Do
-  not do this. If you proxy, require auth at the proxy (or rely on Nabu Casa).
+**Endpoint exposure map** (none of these has HA auth):
+
+| Endpoint | Method | Gate | Effect |
+|----------|--------|------|--------|
+| `/api/quizify/ws` (game WebSocket) | WS | Room code on fresh `join`; session token on `reconnect`; admin token for the admin role | Play the game |
+| `/api/quizify/flag-question` | POST | Room code in the body **or** admin token (#1016) | **Writes** a flag record to disk |
+| `/api/quizify/pack-submit`, `/pack-submit/request` | POST | Admin token (#1016) | Files a GitHub issue through the host's worker (inert until `community_submit_url` is configured) |
+| `/api/quizify/flags`, `/analytics/data`, `/all-time`, `/question-stats`, presets | GET/POST/DELETE | Admin token (#356, #433) | Host-only data |
+| `/quizify/player`, `/quizify/dashboard`, `/quizify/admin` | GET | none | Static pages; they hold no game data of their own |
+
+**What is still open, deliberately.** A `role=dashboard` socket needs no code:
+anybody who reaches the integration can watch the television view (questions
+without their answers, the roster, scores). And the #207 reset escape hatch
+(`_is_reset_authorized` in `server/websocket.py`) still lets any connected
+client reset a game that nobody is hosting.
+Neither lets a stranger join or take the admin role. If that is too much for an
+install, do not expose Home Assistant publicly without an auth layer in front
+of `/quizify/*` and `/api/quizify/*`.
+
 - When a reverse proxy *is* in play, configure HA's
   `http.use_x_forwarded_for` + `trusted_proxies` so the pack-submit rate-limiter
-  keys on the real client IP rather than the proxy's single address. We
-  deliberately do **not** parse `X-Forwarded-For` ourselves (an attacker-set
-  header would let any client spoof the bucket key) — see
+  (and the LAN check for the television) sees the real client IP rather than the
+  proxy's address. We deliberately do **not** parse `X-Forwarded-For` ourselves
+  (an attacker-set header would let any client spoof the bucket key) — see
   `server/pack_submission.py`.
 
 **Admin-as-player join (`is_admin: true`) — accepted #208 trade-off.** The
 server trusts `is_admin: true` in the join message at face value rather than
 requiring the admin session token on the player join (see the 2026-04-28
-Decisions Log entry). A malicious LAN client can therefore claim the single
-admin slot. This is an accepted LAN trade-off, not a bug: the home LAN is
-trusted, remote access is gated by HA auth per the rule above, and only one
-admin slot exists per game. Behaviour is intentionally left unchanged.
+Decisions Log entry). A client that is already in the room (it holds the room
+code) can therefore claim the single admin slot if nobody holds it. This is an
+accepted trade-off, not a bug: the claim needs the room code since #1016, a
+stale admin's crown is only transferred against the admin token (#358), and only
+one admin slot exists per game. Behaviour is intentionally left unchanged.
 
 **Hardened in #259** (defence-in-depth, no behaviour change for legitimate use):
 the admin session-token comparison now uses `hmac.compare_digest`
 (constant-time, no timing oracle — `server/connection.py`), and the pack-submit
 rate-limit IP resolution is documented as proxy-aware via HA's trusted-proxy
-config.
+config. The room-code comparison is constant-time as well (#1016).
 
 ## Decisions Log
 
@@ -333,4 +367,5 @@ config.
 | 2026-06-10 | App-wide icon system → **"Rounded Duotone" SVG line icons** (#212) | Follow-up to #211's hero icons: the rest of the app still used emoji as UI icons (inconsistent per-OS, off-palette, clash with the SVG hero). A shared icon helper (`www/js/icons.js`, `window.QuizifyIcons`) now serves the theme glyph set to both admin and player JS. Style = Option 2 from the #212 shotgun: 2px rounded strokes over a soft accent-tinted backing disc (warmer than Option 1 hairline, softer than Option 3 geometric-bold). P1 surfaces (pack cards + theme tabs) shipped first; emoji pulled out of `theme.*` i18n strings (text-only). P2 (presets/awards) + P3 (reveal-feedback strings) descoped to follow-ups. |
 | 2026-06-09 | Player-phone podium → "Podium Reborn" (gradient rising blocks) | Design-shotgun explored 4 phone-finale directions; user picked B over the shipped cream-shelf ("Family Trophy Shelf"). Player phone now uses rising blocks with muted single-hue tonal gradient fills + a halo rising from the champion, for a more celebratory finale payoff. Admin/TV keeps the cream shelf. Tonal gradients are a scoped, user-approved exception to the no-gradient rule. |
 | 2026-06-11 | Security model documented; constant-time admin-token compare (#259) | Code review (#252/#259) confirmed the LAN-first exposure posture is intentional: player endpoints stay un-authed (players have no HA login), remote exposure must be fronted by HA auth (Nabu Casa or a proxy auth layer). Added a "Security model" section with an endpoint exposure map + remote-exposure rule. Hardened the admin session-token compare with `hmac.compare_digest` and documented the proxy-aware rate-limit IP resolution. No player-facing behaviour changed. |
+| 2026-09-24 | Per-game room code in the join link; Nabu Casa claim corrected (#1016) | The 2026-06-11 section rested on "Nabu Casa Remote UI requires HA login", which is false for routes on the raw aiohttp router. A fresh join now needs the room code (`/quizify/player?room=<code>`, rotated on reset); reconnects with a session token and the admin token are unchanged. `flag-question` needs the room code or the admin token, `pack-submit` / `pack-submit/request` need the admin token. The mitigation (b) in the 2026-04-28 row below no longer holds; the room code replaces it. |
 | 2026-04-28 | Admin-as-player trust model (Beatify pattern) | Server trusts `is_admin: true` in the join message at face value. No more cryptographic token threading through player joins. The persisted admin token is still validated for the pure admin-dashboard WebSocket connect (`?role=admin&token=...`), but player joins are simpler. **Trade-off:** a malicious LAN client can spoof admin by sending `is_admin: true`. Mitigations: (a) the user's home LAN is generally trusted; (b) Nabu Casa already requires HA auth to reach the integration; (c) "first admin claims it" still applies — only one admin slot per game. Adopting the same pattern as Beatify (which has shipped this without issues for years) closed 8 betas worth of admin-as-player lockout bugs. v1.1.2. |

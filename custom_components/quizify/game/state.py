@@ -46,6 +46,7 @@ from .questions import (
     Question,
     QuestionBank,
 )
+from .room_code import new_room_code, room_code_matches
 from .scoring import (
     calculate_estimate_scores,
     calculate_podium,
@@ -167,6 +168,9 @@ class QuizifyGameState:
         self.difficulty: str = DIFFICULTY_DEFAULT
         self.language: str = "de"
         self.join_url: str | None = None
+        # Per-game secret carried in the join link (#1016). Required on a
+        # fresh player join; rotated by ``rotate_room_code`` on reset_game.
+        self.room_code: str = new_room_code()
         # Optional URL of an audio file looped on the configured HA
         # media_player while waiting for players. None unless the user
         # configures one in the options flow; a missing/empty value means
@@ -584,6 +588,15 @@ class QuizifyGameState:
             self._team_registry.remove_player(name)
         self._phase_controller.drop_timer(name)
         self._notify_state_callbacks()
+
+    def rotate_room_code(self) -> str:
+        """Mint a new room code, invalidating every old join link (#1016)."""
+        self.room_code = new_room_code()
+        return self.room_code
+
+    def is_room_code_valid(self, supplied: object) -> bool:
+        """Whether *supplied* is this game's current room code (#1016)."""
+        return room_code_matches(self.room_code, supplied)
 
     def clear_all_players(self) -> None:
         """Drop every player from the registry.

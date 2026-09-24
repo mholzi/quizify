@@ -21,6 +21,7 @@
       "JOIN_RATE_LIMITED": "Demasiados intentos de unirse desde tu red. Espera un minuto y pulsa Unirse al juego otra vez.",
       "NO_CONNECTION": "No podemos conectar con la partida. Comprueba que estás en la misma wifi que el anfitrión y pulsa Reintentar conexión; si sigue fallando, pide al anfitrión un código QR nuevo.",
       "INVALID_ACTION": "No se ha podido procesar tu entrada. Pulsa Unirse al juego otra vez; si sigue fallando, pide al anfitrión un código QR nuevo.",
+      "ROOM_CODE_INVALID": "Este enlace no es de la partida actual. Vuelve a escanear el código QR de la tele o de la pantalla del anfitrión y pulsa Unirse al juego.",
       "UNKNOWN": "No hemos podido meterte en la partida. Pulsa Unirse al juego otra vez; si sigue fallando, pide al anfitrión un código QR nuevo."
     }
   },
@@ -47,6 +48,7 @@
     "joinGameQr": "Código QR para unirse",
     "scanToJoin": "Escanea para unirte a la partida",
     "orTypeUrl": "O escríbelo en el navegador",
+    "roomCodeMissing": "Abre esta pantalla desde el enlace para la tele de la página de administración del anfitrión y aparecerá el código para unirte.",
     "sameWifiHint": "La misma wifi que esta pantalla",
     "startGame": "Empezar partida",
     "copied": "¡Copiado!",
@@ -523,6 +525,7 @@
     "TEAM_CLOSED": "Los equipos ya están fijados — juegas por tu cuenta.",
     "GAME_ENDED": "Partida terminada",
     "NO_QUESTIONS_REMAINING": "No quedan preguntas",
+    "ROOM_CODE_INVALID": "Enlace caducado: escanea el código QR actual",
     "UNKNOWN": "Se ha producido un error",
     "unknownMessageType": "Tipo de mensaje desconocido",
     "CONNECTION_LOST": "Conexión perdida",

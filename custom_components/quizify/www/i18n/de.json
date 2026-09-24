@@ -21,6 +21,7 @@
       "JOIN_RATE_LIMITED": "Zu viele Beitritts-Versuche aus deinem Netz. Warte etwa eine Minute und tippe dann wieder auf Beitreten.",
       "NO_CONNECTION": "Wir erreichen das Spiel nicht. Prüf, ob du im selben WLAN wie der Host bist, und tippe auf Erneut verbinden — wenn es weiter nicht klappt, bitte den Host um einen neuen QR-Code.",
       "INVALID_ACTION": "Der Beitritt konnte nicht verarbeitet werden. Tippe noch einmal auf Beitreten — wenn es weiter nicht klappt, bitte den Host um einen neuen QR-Code.",
+      "ROOM_CODE_INVALID": "Dieser Link gehört nicht zum aktuellen Spiel. Scanne den QR-Code am Fernseher oder beim Host noch einmal und tippe dann auf Beitreten.",
       "UNKNOWN": "Wir konnten dich nicht ins Spiel holen. Tippe noch einmal auf Beitreten — wenn es weiter nicht klappt, bitte den Host um einen neuen QR-Code."
     }
   },
@@ -47,6 +48,7 @@
     "joinGameQr": "Spiel beitreten – QR-Code",
     "scanToJoin": "Scannen, um beizutreten",
     "orTypeUrl": "Oder im Browser eingeben",
+    "roomCodeMissing": "Öffne diesen Bildschirm über den TV-Link auf der Admin-Seite des Hosts, dann erscheint hier der Code zum Beitreten.",
     "sameWifiHint": "Gleiches WLAN wie dieser Bildschirm",
     "startGame": "Spiel starten",
     "copied": "Kopiert!",
@@ -523,6 +525,7 @@
     "TEAM_CLOSED": "Teams stehen für dieses Spiel — du spielst allein mit.",
     "GAME_ENDED": "Spiel beendet",
     "NO_QUESTIONS_REMAINING": "Keine Fragen mehr",
+    "ROOM_CODE_INVALID": "Link veraltet — scanne den aktuellen QR-Code",
     "UNKNOWN": "Ein Fehler ist aufgetreten",
     "unknownMessageType": "Unbekannter Nachrichtentyp",
     "CONNECTION_LOST": "Verbindung verloren",

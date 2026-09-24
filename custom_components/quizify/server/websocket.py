@@ -23,6 +23,7 @@ from custom_components.quizify.const import (
     ERR_NAME_INVALID,
     ERR_NO_QUESTIONS_REMAINING,
     ERR_NOT_IN_GAME,
+    ERR_ROOM_CODE_INVALID,
     ERR_TEAM_CLOSED,
     LOBBY_DISCONNECT_GRACE_PERIOD,
     MAX_PLAYERS,
@@ -42,6 +43,7 @@ from custom_components.quizify.game.powerups import (
     PowerUpEffect,
     PowerUpType,
 )
+from custom_components.quizify.game.room_code import ROOM_CODE_PARAM, join_path
 from custom_components.quizify.game.state import (
     AnswerResult,
     GamePhase,
@@ -449,6 +451,11 @@ class QuizifyWebSocketHandler:
         self._runtime = runtime
         self._get_game_state = game_state_provider
         self._conn = ConnectionManager(runtime, game_state_provider)
+        # Television sockets that may be told the room code (#1016): those
+        # opened from the home LAN, or with a valid ``?room=`` of their own.
+        # ``role=dashboard`` carries no credential, so a TV page reached over
+        # the Nabu Casa tunnel must not be handed the code that gates the join.
+        self._room_code_sockets: set[web.WebSocketResponse] = set()
         # Public alias for the connection manager so collaborators (e.g.
         # __init__.py setup/teardown) use a contract-bearing accessor instead
         # of reaching into the private ``_conn`` attribute. Backed by
@@ -713,6 +720,79 @@ class QuizifyWebSocketHandler:
         except ValueError:
             return False
 
+    def _is_home_lan_remote(self, remote: str | None) -> bool:
+        """Whether *remote* is a device on the home network (#1016).
+
+        Judged on the socket's peer address, never on ``Host``: a scripted
+        client over the Nabu Casa tunnel can send any ``Host`` it likes, but
+        it always arrives from loopback (#701). A private or link-local
+        address that is not loopback is a phone or TV on the LAN. Loopback
+        counts as LAN only on the standalone dev server (no ``hass``), where
+        there is no tunnel to confuse it with.
+        """
+        if not remote:
+            return False
+        try:
+            addr = ipaddress.ip_address(remote.split("%", 1)[0])
+        except ValueError:
+            return False
+        if addr.is_loopback:
+            return getattr(self._runtime, "hass", None) is None
+        return addr.is_private or addr.is_link_local
+
+    def _room_code_frame(self, game_state: QuizifyGameState) -> dict[str, Any]:
+        """The ``room_code`` frame: the code and the join link built from it."""
+        return {
+            "type": "room_code",
+            "room_code": game_state.room_code,
+            "join_url": join_path(game_state.room_code),
+        }
+
+    async def _offer_room_code_to_dashboard(
+        self, ws: web.WebSocketResponse, request: web.Request
+    ) -> None:
+        """Send the room code to a television that may see it (#1016)."""
+        game_state = self._get_game_state()
+        if game_state is None:
+            return
+        if not (
+            self._is_home_lan_remote(request.remote)
+            or game_state.is_room_code_valid(request.query.get(ROOM_CODE_PARAM))
+        ):
+            return
+        self._room_code_sockets.add(ws)
+        await self._conn.send(ws, self._room_code_frame(game_state))
+
+    async def _push_room_code(self, game_state: QuizifyGameState) -> None:
+        """Tell the host screens and trusted TVs about a new room code."""
+        frame = self._room_code_frame(game_state)
+        for sock, is_admin in self._conn.iter_admin_and_dashboard_ws():
+            if sock.closed:
+                continue
+            if is_admin or sock in self._room_code_sockets:
+                await self._conn.send(sock, frame)
+
+    def _join_room_allowed(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> bool:
+        """Whether a fresh ``join`` may proceed (#1016).
+
+        A join must carry the current room code, unless it comes from the
+        host: a WS-level admin socket, or a join that proves the admin token
+        (the host's own admin-as-player tab). Reconnects with a session token
+        never reach this — they take ``_handle_reconnect``.
+        """
+        if self._conn.is_admin_connection(ws):
+            return True
+        claim_token = data.get("admin_token")
+        if (
+            isinstance(claim_token, str)
+            and claim_token
+            and self._conn.validate_admin_token(claim_token)
+        ):
+            return True
+        return game_state.is_room_code_valid(data.get(ROOM_CODE_PARAM))
+
     def _connection_cap(self, remote: str) -> int:
         """Concurrent-socket cap that applies to ``remote`` (#361, #701)."""
         if self._is_loopback(remote):
@@ -780,6 +860,11 @@ class QuizifyWebSocketHandler:
         is_admin = await self._grant_admin(role, admin_token, request)
 
         self._conn.add_connection(ws, is_admin=is_admin, is_dashboard=is_dashboard)
+
+        # #1016: a television learns the room code only when it is on the
+        # home LAN or already holds the current code (the admin's TV link).
+        if is_dashboard:
+            await self._offer_room_code_to_dashboard(ws, request)
 
         _LOGGER.debug(
             "WebSocket connected (admin=%s), total: %d",
@@ -886,6 +971,7 @@ class QuizifyWebSocketHandler:
             # cancel_admin_disconnect was equally dead).
             was_admin = self._conn.is_admin_connection(ws)
             self._conn.remove_connection(ws)
+            self._room_code_sockets.discard(ws)
             self._forget_rate_limit(ws)
             # #361: release this connection's slot in the per-IP counter; drop
             # the key entirely when it hits zero so the dict stays bounded by
@@ -1113,7 +1199,9 @@ class QuizifyWebSocketHandler:
 
         state = self._snapshot(game_state)
         state["type"] = "game_state"
-        state["join_url"] = "/quizify/player"
+        # #1016: the join link carries this game's room code.
+        state["join_url"] = join_path(game_state.room_code)
+        state["room_code"] = game_state.room_code
         state["admin_session_token"] = admin_token
         # Ride the TTS-engine + media-player lists for the narration dropdowns
         # (#281) on this already-authenticated admin frame, so the panel never
@@ -1170,8 +1258,10 @@ class QuizifyWebSocketHandler:
         Trust trade-off: a malicious client on the LAN could send
         `is_admin: true` and become admin. Mitigations:
           - The user's home LAN is generally trusted.
-          - Nabu Casa already requires HA auth to reach the
-            integration through its tunnel.
+          - A fresh join needs the per-game room code from the QR
+            link (#1016), so a stranger who reaches the integration
+            through the Nabu Casa tunnel cannot join at all. (Nabu
+            Casa does NOT put an HA login in front of these routes.)
           - "First admin claims it" still applies; only one admin
             slot exists per game.
         The persisted admin token is still validated for the pure
@@ -1301,6 +1391,14 @@ class QuizifyWebSocketHandler:
         # down any slot whose transport is already dead before deciding
         # whether this name is taken. ``reaped`` is what turns a collision
         # with the caller's own ghost into a reclaim rather than a refusal.
+        # #1016: the join link carries a per-game room code. Checked first,
+        # so a guest holding an old link is told to rescan rather than being
+        # shown a name problem they do not have.
+        if not self._join_room_allowed(ws, data, game_state):
+            _LOGGER.info("Refused join without a valid room code")
+            await self._conn.send_error(ws, ERR_ROOM_CODE_INVALID)
+            return
+
         reaped = self._reap_closed_connections(game_state)
         connection_id = self._conn.connection_id(ws)
 
@@ -1441,6 +1539,8 @@ class QuizifyWebSocketHandler:
                 # it in the coalesced roster frame would ship everyone's
                 # history to every phone. ``None`` for a first-timer.
                 "all_time": self._all_time_standing(name),
+                # #1016: the phone keeps the code for the flag POST.
+                "room_code": game_state.room_code,
             })
 
             # Send current state to the joining player. Project the
@@ -1567,6 +1667,9 @@ class QuizifyWebSocketHandler:
             # Same per-player standing as the join frame (#371) — a player who
             # reloads their phone in the lobby must not lose the line.
             "all_time": self._all_time_standing(name),
+            # #1016: a phone that came back on its token alone (an old tab
+            # with no ``?room=``) learns the code it needs for flagging.
+            "room_code": game_state.room_code,
         })
 
         # Send full game state, projected into THIS player's frame (#253):
@@ -2887,6 +2990,9 @@ class QuizifyWebSocketHandler:
         # Drop every player from the registry (full wipe — not just score reset).
         game_state.clear_all_players()
         game_state.reset_to_lobby()
+        # #1016: a reset is a new room. Every join link handed out so far
+        # stops working; the host screens and trusted TVs get the new one.
+        game_state.rotate_room_code()
 
         # Tell every currently-connected client to reset its view to the
         # initial screen (admin → setup, players → join). This MUST run
@@ -2896,6 +3002,7 @@ class QuizifyWebSocketHandler:
         state = self._snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
+        await self._push_room_code(game_state)
 
         # Now close the (snapshotted) player sockets so abandoned/stale
         # connections actually die. Real clients have already received the

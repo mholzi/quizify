@@ -50,11 +50,17 @@ class _Req:
         return self._body
 
 
+_ROOM = "ROOM42"
+
+
 def _ctx(tmp_path: Path):
-    return SimpleNamespace(runtime=_Runtime(tmp_path))
+    # #1016: the flag POST is gated on the game's room code.
+    game = SimpleNamespace(is_room_code_valid=lambda code: code == _ROOM)
+    return SimpleNamespace(runtime=_Runtime(tmp_path), game=game)
 
 
 async def _post(ctx, remote: str, body: dict):  # noqa: ANN001
+    body = {"room_code": _ROOM, **body}
     return await views.flag_question_view(_Req(ctx, remote, body))
 
 

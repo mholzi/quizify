@@ -22,6 +22,10 @@
     // /quizify/player once the phase leaves LOBBY (so admin can
     // actually answer questions).
     let _adminJoinedAs = null;
+    // #1016: this game's room code, from the admin_connect frame and every
+    // `room_code` frame after a reset. The join link is useless without it,
+    // so the QR is drawn only once it is known.
+    let _roomCode = null;
 
     // Settings (from chips)
     let selectedCategory = 'mixed';
@@ -245,6 +249,8 @@
         var url = new URL('/quizify/player', location.href);
         url.searchParams.set('name', name);
         url.searchParams.set('admin', 'true');
+        // #1016: the phone view flags questions with the room code.
+        if (_roomCode) url.searchParams.set('room', _roomCode);
         // When the admin already registered as a player on the admin WS
         // (via "Als Spieler beitreten"), the player page must reconnect
         // with the fresh session_token instead of doing a fresh join —
@@ -1792,6 +1798,10 @@
             case 'game_reset':
                 handleGameReset();
                 break;
+            case 'room_code':
+                // #1016: a reset rotated the code; redraw every join link.
+                setRoomCode(msg.room_code);
+                break;
             case 'lightning_splash':
                 handleAdminLightningSplash(msg);
                 break;
@@ -1903,6 +1913,8 @@
 
     function handleGameState(msg) {
         currentPhase = msg.phase;
+        // #1016: the admin_connect frame carries the room code.
+        if (msg.room_code) setRoomCode(msg.room_code);
         if (msg.admin_session_token) {
             QuizifyUtils.writeAdminToken(msg.admin_session_token);
             // #433: load the saved presets once the token exists. Doing it on
@@ -3035,7 +3047,7 @@
         var urlEl = document.getElementById('admin-join-url');
         // location.host, not a scheme-stripping regex — see the note in
         // dashboard.html's renderLobbyQr and the #540 guard.
-        if (urlEl) urlEl.textContent = window.location.host + '/quizify/player';
+        if (urlEl) urlEl.textContent = window.location.host + '/quizify/player' + roomQuery();
         if (typeof QRCode !== 'undefined') {
             _qrInstance = new QRCode(container, {
                 text: url, width: 180, height: 180,
@@ -4106,12 +4118,30 @@
         });
     }
 
+    // #1016: every link a guest or the television gets carries the room code.
+    function roomQuery() {
+        return _roomCode ? '?room=' + encodeURIComponent(_roomCode) : '';
+    }
+    function playerJoinUrl() {
+        return window.location.origin + '/quizify/player' + roomQuery();
+    }
+    function dashboardJoinUrl() {
+        return window.location.origin + '/quizify/dashboard' + roomQuery();
+    }
+
+    // A new code (first admin frame, or a reset rotated it) redraws the QR,
+    // the address under it and the TV link. Old links stop working on reset.
+    function setRoomCode(code) {
+        if (!code || code === _roomCode) return;
+        _roomCode = code;
+        generateQR(playerJoinUrl());
+        if (els.dashboardLink) els.dashboardLink.href = dashboardJoinUrl();
+    }
+
     function initJoinUrl() {
-        var joinUrl = window.location.origin + '/quizify/player';
-        generateQR(joinUrl);
+        if (_roomCode) generateQR(playerJoinUrl());
         if (els.dashboardLink) {
-            var dashboardUrl = window.location.origin + '/quizify/dashboard';
-            els.dashboardLink.href = dashboardUrl;
+            els.dashboardLink.href = dashboardJoinUrl();
             // #622: the button never cast anything — it opened this URL in a
             // tab on the host's own phone. A first-time host tapped it, got the
             // TV view at 390px in their hand, and no hint how it reaches the
@@ -4123,7 +4153,7 @@
             // action, for a host who IS sitting at the TV device.
             els.dashboardLink.addEventListener('click', function (evt) {
                 evt.preventDefault();
-                openCastModal(dashboardUrl, els.dashboardLink);
+                openCastModal(dashboardJoinUrl(), els.dashboardLink);
             });
         }
     }
@@ -4132,19 +4162,22 @@
         var urlEl = document.getElementById('cast-tv-url');
         // location.host, not a scheme regex — see the #540 guard note in
         // generateQR. Same reason, same shape.
-        if (urlEl) urlEl.textContent = window.location.host + '/quizify/dashboard';
+        if (urlEl) urlEl.textContent = window.location.host + '/quizify/dashboard' + roomQuery();
 
         var openBtn = document.getElementById('cast-tv-open-btn');
         if (openBtn && !openBtn._castWired) {
             openBtn._castWired = true;
             openBtn.addEventListener('click', function () {
                 closeConfirmModal('cast-tv-modal');
+                // Wired once, so read the link now: a reset since the first
+                // open has rotated the room code in it (#1016).
+                var target = dashboardJoinUrl();
                 // Android Companion swallows target="_blank" (#377), so
                 // navigate the frame there instead of opening a tab.
                 if (isAndroidCompanion()) {
-                    window.location.href = dashboardUrl;
+                    window.location.href = target;
                 } else {
-                    window.open(dashboardUrl, '_blank');
+                    window.open(target, '_blank');
                 }
             });
         }

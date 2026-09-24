@@ -21,6 +21,7 @@
       "JOIN_RATE_LIMITED": "Too many join attempts from your network. Wait about a minute, then tap Join Game again.",
       "NO_CONNECTION": "We can't reach the game. Check that you are on the same Wi-Fi as the host and tap Retry connection — if it keeps failing, ask the host for a fresh QR code.",
       "INVALID_ACTION": "The game couldn't process your join. Tap Join Game again — if it keeps failing, ask the host for a fresh QR code.",
+      "ROOM_CODE_INVALID": "This link doesn't belong to the current game. Scan the QR code on the TV or on the host's screen again, then tap Join Game.",
       "UNKNOWN": "We couldn't get you into the game. Tap Join Game again — if it keeps failing, ask the host for a fresh QR code."
     }
   },
@@ -47,6 +48,7 @@
     "joinGameQr": "Join Game QR Code",
     "scanToJoin": "Scan to join the game",
     "orTypeUrl": "Or type it into a browser",
+    "roomCodeMissing": "Open this screen from the TV link on the host's admin page to show the join code.",
     "sameWifiHint": "Same Wi-Fi as this screen",
     "startGame": "Start Game",
     "copied": "Copied!",
@@ -523,6 +525,7 @@
     "TEAM_CLOSED": "Teams are set for this game — you play on your own.",
     "GAME_ENDED": "Game ended",
     "NO_QUESTIONS_REMAINING": "No questions remaining",
+    "ROOM_CODE_INVALID": "Link out of date — scan the current QR code",
     "UNKNOWN": "An error occurred",
     "unknownMessageType": "Unknown message type",
     "CONNECTION_LOST": "Connection Lost",

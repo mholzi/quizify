@@ -273,9 +273,11 @@ class _PostReq:
 
 
 def _flag(tmp_path: Path, headers: dict):  # noqa: ANN001, ANN202
-    ctx = SimpleNamespace(runtime=_PostRuntime(tmp_path))
+    # #1016: the flag POST also needs the game's room code.
+    game = SimpleNamespace(is_room_code_valid=lambda code: code == "ROOM42")
+    ctx = SimpleNamespace(runtime=_PostRuntime(tmp_path), game=game)
     views._flag_rate_limiter.forget("203.0.113.55")
-    req = _PostReq(ctx, headers, {"question_id": "geo_037"})
+    req = _PostReq(ctx, headers, {"question_id": "geo_037", "room_code": "ROOM42"})
     return asyncio.run(views.flag_question_view(req))  # type: ignore[arg-type]
 
 

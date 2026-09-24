@@ -136,6 +136,8 @@
                     if (isAdminSelfJoin) {
                         state.isAdmin = true;
                     }
+                    // #1016: the room code from the join link.
+                    if (state.roomCode) joinMsg.room = state.roomCode;
                     if (state.isAdmin) {
                         joinMsg.is_admin = true;
                         // #358: attach the admin session token (if this tab
@@ -316,6 +318,7 @@
                     pu.saveSession(msg.session_token, state.playerName);
                 }
                 if (msg.is_admin) state.isAdmin = true;
+                if (msg.room_code) state.roomCode = msg.room_code;
                 // #288: restore the assigned power-up on (re)join. The server
                 // sends the current power-up in `msg.powerup`; without this a
                 // reconnecting player whose power-up was assigned earlier never
@@ -1856,7 +1859,9 @@
     // state.playerName) and re-sends the very name the server just refused,
     // so the guest watches a silent retry storm instead of a join form.
     var JOIN_REFUSALS_CLEARING_NAME = [
-        'NAME_TAKEN', 'NAME_INVALID', 'GAME_FULL', 'GAME_ENDED', 'ALREADY_JOINED'
+        'NAME_TAKEN', 'NAME_INVALID', 'GAME_FULL', 'GAME_ENDED', 'ALREADY_JOINED',
+        // #1016: an old link. Retrying it cannot succeed; rescanning can.
+        'ROOM_CODE_INVALID'
     ];
 
     function _t() {
@@ -1974,6 +1979,8 @@
 
         if (state.ws && state.ws.readyState === WebSocket.OPEN) {
             var joinMsg = { name: result.name };
+            // #1016: the room code from the join link.
+            if (state.roomCode) joinMsg.room = state.roomCode;
             // Admin self-join: server trusts `is_admin: true` in the
             // join message (Beatify pattern). No token validation in
             // this path — see player-core.js connect() for rationale.
