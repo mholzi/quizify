@@ -92,6 +92,12 @@ _RECONNECT_FAILED = (
     "            case 'host_presence':",
 )
 
+#: The route back to the join form that `reconnect_failed` now takes (#1018).
+_JOIN_HELPERS = (
+    "    function lastPlayerName() {",
+    "    // Put the join form back in a usable state",
+)
+
 _LADDER_SCRIPT = """
 require({stub});
 
@@ -178,8 +184,11 @@ var joinPendings = 0;
 function beginJoinPending() {{ joinPendings++; state.joinPending = true; }}
 function endJoinPending() {{ state.joinPending = false; }}
 function clearGameChrome() {{}}
+function _t() {{ return function (k) {{ return k; }}; }}
 
 {connect}
+
+{join_helpers}
 
 function handleMessage(msg) {{
     switch (msg.type || msg.event) {{
@@ -250,6 +259,7 @@ def _run_ladder() -> dict:
             utils=json.dumps(str(_UTILS)),
             connect=_slice(_CORE, *_CONNECT),
             reconnect_failed=_slice(_CORE, *_RECONNECT_FAILED),
+            join_helpers=_slice(_CORE, *_JOIN_HELPERS),
         )
     )
 

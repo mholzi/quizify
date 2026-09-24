@@ -8,6 +8,8 @@
   "join": {
     "title": "Quizify — Join",
     "enterName": "Enter your name to play",
+    "resetHint": "The host started a new game — enter your name to join again.",
+    "reconnectFailedHint": "We couldn't bring you back into the game — enter your name to join again.",
     "namePlaceholder": "Your name",
     "joinButton": "Join Game",
     "joining": "Joining…",
