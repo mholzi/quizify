@@ -1095,24 +1095,10 @@
      */
     var _prevLeaderboardRanks = {}; // entrant id -> rank
 
-    /**
-     * The leaderboard row that is mine: my team's when I'm in one, my own
-     * otherwise. Mirrors player-lightning.js's myEntrant() — see #728 there
-     * and #759 here: two teams may carry the same name, so matching rows by
-     * the printed name lit up the "you" badge on both of them, collapsed them
-     * into one entry in the rank-delta memo and made the FLIP animation swap
-     * their positions at random.
-     */
-    function myEntrant() {
-        var team = window.QuizifyPlayerTeam;
-        var mine = team && team.myTeam && team.myTeam();
-        return (mine && (mine.team_id || mine.name)) || state.playerName;
-    }
-
-    /** The stable key of one leaderboard row; falls back to the name. */
-    function entrantKey(entry) {
-        return entry.entrant_id || entry.name;
-    }
+    // Which row is mine, and the stable key of a row (#759): shared with the
+    // lightning recap and the reveal standings, so they live in player-utils.
+    var myEntrant = pu.myEntrant;
+    var entrantKey = pu.entrantKey;
 
     // Clear the rank-delta memo (issue #257). Without this a game_reset
     // leaves stale ranks behind, so the first leaderboard of the *next*

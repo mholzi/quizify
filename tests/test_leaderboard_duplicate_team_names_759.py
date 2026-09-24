@@ -114,9 +114,14 @@ def _src(name: str) -> str:
 
 
 def test_the_player_leaderboard_matches_on_the_entrant_id() -> None:
+    # The helpers live in player-utils.js since #1015 — the reveal standings
+    # and the lightning recap use the same pair.
+    shared = _src("player-utils.js")
+    assert "function entrantKey(" in shared
+    assert "function myEntrant(" in shared
     src = _src("player-game.js")
-    assert "function entrantKey(" in src
-    assert "function myEntrant(" in src
+    assert "var entrantKey = pu.entrantKey;" in src
+    assert "var myEntrant = pu.myEntrant;" in src
     assert "entry.is_current = (entrantKey(entry) === me)" in src
     assert "entry.name === state.playerName" not in src, (
         "a leaderboard row is still identified by its printed name"

@@ -73,7 +73,15 @@ window.QuizifyPlayerUtils = {{
     state: {{ isAdmin: true, playerName: 'Markus' }},
     showView: function () {{}},
     escapeHtml: function (s) {{ return String(s); }},
-    renderMedalStandings: function () {{}}
+    renderMedalStandings: function () {{}},
+    // The shared entrant helpers from player-utils.js (#1015), same shape.
+    myEntrant: function () {{
+        var t = window.QuizifyPlayerTeam;
+        var m = t && t.myTeam && t.myTeam();
+        return (m && (m.team_id || m.name))
+            || window.QuizifyPlayerUtils.state.playerName;
+    }},
+    entrantKey: function (e) {{ return (e && (e.entrant_id || e.name)) || ''; }}
 }};
 
 QZ.load({lightning});

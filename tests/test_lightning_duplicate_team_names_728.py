@@ -217,9 +217,13 @@ def test_the_phone_looks_itself_up_by_team_id() -> None:
     """A phone that still looked itself up by name would find the wrong
     Sofa's row — or its own, half the time, which is worse."""
     src = (_WWW_JS / "player-lightning.js").read_text("utf-8")
+    # The helpers are shared with the leaderboard and the reveal since #1015.
+    shared = (_WWW_JS / "player-utils.js").read_text("utf-8")
 
-    assert "mine.team_id" in src
-    assert "p.entrant_id || p.name" in src
+    assert "var myEntrant = pu.myEntrant;" in src
+    assert "pu.entrantKey(p) === meRow" in src
+    assert "mine.team_id" in shared
+    assert "entry.entrant_id || entry.name" in shared
 
 
 def test_the_host_screen_prints_the_name_not_the_key() -> None:

@@ -276,11 +276,7 @@
      * what gets drawn — it arrives in `recap.names` and in each leaderboard
      * row — but it is no longer what anything is looked up by.
      */
-    function myEntrant() {
-        var team = window.QuizifyPlayerTeam;
-        var mine = team && team.myTeam();
-        return (mine && (mine.team_id || mine.name)) || state.playerName;
-    }
+    var myEntrant = pu.myEntrant;  // mine.team_id, else my name (player-utils)
 
     function renderRecap(recap) {
         var lb = recap.leaderboard || [];
@@ -297,7 +293,7 @@
                     // Match on the entrant key, not the printed name — two
                     // teams may share a name (#728), and only one of them
                     // is mine.
-                    isYou: (p.entrant_id || p.name) === meRow
+                    isYou: pu.entrantKey(p) === meRow
                 };
             });
             pu.renderMedalStandings(lbEl, rows, { youLabel: youLabel });
