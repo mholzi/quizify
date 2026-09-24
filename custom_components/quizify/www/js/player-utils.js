@@ -480,57 +480,6 @@
     }
 
     // ============================================
-    // Score Animation
-    // ============================================
-
-    function easeOutQuart(t) {
-        return 1 - Math.pow(1 - t, 4);
-    }
-
-    /**
-     * Animate a numeric value in a DOM element from start to end
-     */
-    function animateValue(element, start, end, duration) {
-        if (!element) return;
-        if (start === end) { element.textContent = end; return; }
-        var startTime = null;
-        function step(timestamp) {
-            if (!startTime) startTime = timestamp;
-            var progress = Math.min((timestamp - startTime) / duration, 1);
-            var value = Math.round(start + (end - start) * easeOutQuart(progress));
-            element.textContent = value;
-            if (progress < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-    }
-
-    /**
-     * Show a floating +N pts popup above a target element
-     */
-    function showPointsPopup(targetElement, points, options) {
-        if (!targetElement || !points) return;
-        options = options || {};
-        var popup = document.createElement('div');
-        popup.className = 'points-popup' + (options.isStreak ? ' points-popup--streak' : '');
-        popup.textContent = (points > 0 ? '+' : '') + points;
-        document.body.appendChild(popup);
-
-        var rect = targetElement.getBoundingClientRect();
-        popup.style.cssText = [
-            'position:fixed',
-            'left:' + (rect.left + rect.width / 2) + 'px',
-            'top:' + (rect.top - 10) + 'px',
-            'transform:translateX(-50%)',
-            'pointer-events:none',
-            'z-index:9999',
-        ].join(';');
-
-        popup.addEventListener('animationend', function () {
-            if (popup.parentNode) popup.parentNode.removeChild(popup);
-        });
-    }
-
-    // ============================================
     // Shared standings rows — medal cards (Standings A, approved 2026-06-10).
     // One rounded row card per player: a 30px round medal disc with the rank
     // number (top-3 tinted gold/silver/bronze, rank 4+ neutral), the name, a
@@ -594,8 +543,6 @@
         clearSession: clearSession,
         validateName: validateName,
         MAX_RECONNECT_ATTEMPTS: MAX_RECONNECT_ATTEMPTS,
-        animateValue: animateValue,
-        showPointsPopup: showPointsPopup,
         renderMedalStandings: renderMedalStandings
     };
 

@@ -136,26 +136,6 @@
   letter-spacing: 0.05em;
 }
 
-/* ── Score animation & points popup ── */
-.points-popup {
-  position: fixed;
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: #E88A7F;
-  pointer-events: none;
-  animation: points-float 1.2s ease-out forwards;
-  z-index: 9999;
-}
-
-.points-popup--streak {
-  color: #E8C47F;
-}
-
-@keyframes points-float {
-  0%   { opacity: 1; transform: translateX(-50%) translateY(0); }
-  100% { opacity: 0; transform: translateX(-50%) translateY(-60px); }
-}
-
 /* ── Rank delta badges ── */
 .rank-delta {
   font-size: 0.7rem;
