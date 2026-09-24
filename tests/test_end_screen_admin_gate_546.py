@@ -84,7 +84,6 @@ global.window = {
     showView() {},
     paintUiIcons() {},
     feedbackIconHtml: () => '',
-    animateValue() {},
     renderLeaderboard() {},
     setupCollapsibles() {},
   },

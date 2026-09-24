@@ -69,6 +69,13 @@ REMOVED_FUNCTIONS = {
         "#894 (the only source of `class=\"player-card\"`, which no stylesheet "
         "styled and no page ever contained)"
     ),
+    "showPointsPopup": (
+        "#1014 (its last caller went with the reveal renderers in #916; it was "
+        "the only thing spelling `points-popup`, which kept that CSS alive "
+        "past the #797 guard)"
+    ),
+    "animateValue": "#1014 (its last caller went with the reveal renderers in #916)",
+    "easeOutQuart": "#1014 (only ever called by animateValue)",
 }
 
 
