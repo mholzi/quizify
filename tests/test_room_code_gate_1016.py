@@ -493,3 +493,29 @@ def test_pack_submit_with_admin_token_passes_the_gate(
     resp = asyncio.run(view(_Req(ctx, {}, token=ADMIN_TOKEN, remote="198.51.100.7")))
     assert resp.status == 403
     assert json.loads(resp.body)["code"] != ERR_SUBMIT_UNAUTHORIZED
+
+
+# --- TV lobby without the code ----------------------------------------------
+# A TV that was not given the room code shows how to get it instead of a QR.
+# The scan caption and typed-URL block around the QR must go with it, or the
+# screen asks guests to scan something that is not there; and the message is
+# a sentence, not the uppercase monospace caption style.
+
+_WWW = _REPO_ROOT / "custom_components" / "quizify" / "www"
+
+
+def test_tv_without_code_hides_the_join_block_and_reads_as_a_sentence() -> None:
+    js = (_WWW / "js" / "dashboard.js").read_text(encoding="utf-8")
+    body = js.split("function renderLobbyQr()", 1)[1].split("\n    function ", 1)[0]
+    assert "classList.toggle('is-code-missing', !_roomCode)" in body
+    missing = body.split("if (!_roomCode) {", 1)[1].split("return;\n        }", 1)[0]
+    assert "dashboard-room-code-missing" in missing
+    assert "dashboard-waiting-text" not in missing
+
+    css = (_WWW / "css" / "tv.css").read_text(encoding="utf-8")
+    assert "#lobby-qr.is-code-missing > .dashboard-waiting-text" in css
+    assert "#lobby-qr.is-code-missing .dashboard-join-fallback" in css
+    rule = css.split(".dashboard-room-code-missing {", 1)[1].split("}", 1)[0]
+    assert "text-align: center" in rule
+    assert "max-width" in rule
+    assert "text-transform" not in rule

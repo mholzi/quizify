@@ -160,6 +160,24 @@ body.dashboard-body {
     margin-top: 4px;
 }
 
+/* #1016: a TV that was not given the room code shows how to get it instead
+   of a QR. The scan caption and the typed-URL block around it would then
+   point at nothing, so they go; the message reads as a sentence, centred
+   like the rest of the lobby, not as the uppercase ticker of a caption. */
+#lobby-qr.is-code-missing > .dashboard-waiting-text,
+#lobby-qr.is-code-missing .dashboard-join-fallback {
+    display: none;
+}
+
+.dashboard-room-code-missing {
+    max-width: 32em;
+    margin: 0 auto;
+    text-align: center;
+    font-size: clamp(1rem, 1.6vw, 1.35rem);
+    line-height: 1.45;
+    color: var(--dash-text-white);
+}
+
 .dashboard-h2h {
     margin-top: 14px;
     text-align: center;

@@ -185,13 +185,20 @@
     function renderLobbyQr() {
         var container = els.lobbyQrCode;
         if (!container) return;
+        // The whole join block (scan caption, typed-URL fallback) only makes
+        // sense around a QR; without the code it would ask guests to scan
+        // something that is not there.
+        var section = container.parentNode;
+        if (section && section.classList) {
+            section.classList.toggle('is-code-missing', !_roomCode);
+        }
         if (!_roomCode) {
             // Not trusted with the code: say how to get it, never a dead QR.
             if (_lobbyQrRenderedFor === '') return;
-            container.innerHTML = '<div class="dashboard-waiting-text">' +
+            container.innerHTML = '<p class="dashboard-room-code-missing">' +
                 QuizifyUtils.escapeHtml(t('lobby.roomCodeMissing',
                     "Open this screen from the TV link on the host's admin page to show the join code.")) +
-                '</div>';
+                '</p>';
             if (els.lobbyJoinUrlEl) els.lobbyJoinUrlEl.textContent = '';
             _lobbyQrRenderedFor = '';
             return;
