@@ -2097,8 +2097,13 @@ class QuizifyGameState:
         history_path = self._runtime.data_dir / "question_history.json"
         await self._question_bank.load_history_async(history_path, self._runtime)
 
-    def _flush_history(self) -> None:
+    def _flush_history(self, *, end_of_game: bool = True) -> None:
         """Persist question history without blocking the event loop (#222).
+
+        ``end_of_game=False`` is the mid-game write after a detour (Lightning
+        recap, Hot Seat reveal): it persists the history but keeps the
+        per-game shown set, which later detours use to avoid repeating a
+        question from this game (#1019). Only ``end_game`` clears it.
 
         When a runtime is available (HA or standalone), the blocking
         ``write_text`` of ``question_history.json`` is offloaded to an
@@ -2113,18 +2118,21 @@ class QuizifyGameState:
         # No runtime, or no running event loop (bare synchronous unit tests):
         # fall back to the synchronous write. The on-disk result is identical;
         # there is no loop to block in that path.
+        if end_of_game:
+            bank.reset_shown_this_game()
+
         if runtime is None:
-            bank.flush_shown_history()
+            bank.save_history()
             return
         try:
             asyncio.get_running_loop()
         except RuntimeError:
-            bank.flush_shown_history()
+            bank.save_history()
             return
 
         async def _do_flush() -> None:
             try:
-                await bank.flush_shown_history_async(runtime)
+                await bank.save_history_async(runtime)
             except Exception:  # noqa: BLE001
                 _LOGGER.exception("Failed to save question history")
 
@@ -2226,6 +2234,10 @@ class QuizifyGameState:
         self._hot_seat_target_round = None
         self._hot_seat_fired = False
         self._hot_seat_round_to_resume = 0
+
+        # A game abandoned before the finale never ran end_game; its shown
+        # set must not follow the room into the next game (#1019).
+        self._question_bank.reset_shown_this_game()
 
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
@@ -2397,7 +2409,8 @@ class QuizifyGameState:
         """Transition out of an active lightning round into its recap screen."""
         if self.phase == GamePhase.LIGHTNING:
             self.phase = GamePhase.LIGHTNING_RECAP
-            self._flush_history()
+            # Mid-game: persist, but keep this game's shown set (#1019).
+            self._flush_history(end_of_game=False)
             self._notify_state_callbacks()
 
     @property
@@ -2579,7 +2592,8 @@ class QuizifyGameState:
                 participant.score = 0
         if self.phase == GamePhase.HOT_SEAT:
             self.phase = GamePhase.HOT_SEAT_REVEAL
-            self._flush_history()
+            # Mid-game: persist, but keep this game's shown set (#1019).
+            self._flush_history(end_of_game=False)
             self._notify_state_callbacks()
         return deltas
 
