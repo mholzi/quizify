@@ -1196,6 +1196,16 @@ class QuestionBank:
         self._history[question_id] = time.time()
         self._shown_this_game.append(question_id)
 
+    def reset_shown_this_game(self) -> None:
+        """Forget which questions the current game has shown.
+
+        Only for a game boundary — ``end_game`` or ``reset_to_lobby``. A
+        mid-game history write must leave the set alone: every detour passes
+        it as ``exclude_ids``, and clearing it mid-game let the Hot Seat serve
+        a question this very game had already asked (#1019).
+        """
+        self._shown_this_game = []
+
     def flush_shown_history(self) -> None:
         """Save history at end of game and reset the shown-this-game list.
 
