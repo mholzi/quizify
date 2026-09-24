@@ -240,6 +240,31 @@
     }
 
     // ============================================
+    // Entrant identity (#759, #728, #1015)
+    // ============================================
+
+    /**
+     * The leaderboard row that is mine: my team's when I'm in one, my own
+     * otherwise. Two teams may carry the same name, so matching rows by the
+     * printed name lit up the "you" badge on both of them and collapsed them
+     * into one entry in a rank-delta memo (#759). In team mode no row carries
+     * my player name at all, so a name match highlights nothing (#1015).
+     *
+     * Shared by the in-game leaderboard, the lightning recap and the reveal
+     * standings — it used to be copied into each of them.
+     */
+    function myEntrant() {
+        var team = window.QuizifyPlayerTeam;
+        var mine = team && team.myTeam && team.myTeam();
+        return (mine && (mine.team_id || mine.name)) || state.playerName;
+    }
+
+    /** The stable key of one leaderboard row; falls back to the name. */
+    function entrantKey(entry) {
+        return (entry && (entry.entrant_id || entry.name)) || '';
+    }
+
+    // ============================================
     // Leaderboard Rendering
     // ============================================
 
@@ -543,7 +568,9 @@
         clearSession: clearSession,
         validateName: validateName,
         MAX_RECONNECT_ATTEMPTS: MAX_RECONNECT_ATTEMPTS,
-        renderMedalStandings: renderMedalStandings
+        renderMedalStandings: renderMedalStandings,
+        myEntrant: myEntrant,
+        entrantKey: entrantKey
     };
 
 })();

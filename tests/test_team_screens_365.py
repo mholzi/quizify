@@ -111,6 +111,14 @@ global.window = {
     showView() {},
     setupCollapsibles() {},
     formatPoints: (n) => String(n),
+    // The shared entrant helpers from player-utils.js (#1015), same shape.
+    myEntrant() {
+      const t = global.window.QuizifyPlayerTeam;
+      const m = t && t.myTeam && t.myTeam();
+      const S0 = global.window.QuizifyPlayerUtils.state;
+      return (m && (m.team_id || m.name)) || S0.playerName;
+    },
+    entrantKey: (e) => (e && (e.entrant_id || e.name)) || '',
   },
   QuizifyI18n: { t: (k, p) => (p && p.name ? k + ':' + p.name : k) },
 };
@@ -254,6 +262,14 @@ global.window = {
     showView() {},
     renderMedalStandings(el, rows) { medalRows = rows; },
     setupCollapsibles() {},
+    // The shared entrant helpers from player-utils.js (#1015), same shape.
+    myEntrant() {
+      const t = global.window.QuizifyPlayerTeam;
+      const m = t && t.myTeam && t.myTeam();
+      const S0 = global.window.QuizifyPlayerUtils.state;
+      return (m && (m.team_id || m.name)) || S0.playerName;
+    },
+    entrantKey: (e) => (e && (e.entrant_id || e.name)) || '',
   },
   QuizifyI18n: { t: (k) => k },
 };

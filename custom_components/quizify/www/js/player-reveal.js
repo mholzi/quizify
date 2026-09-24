@@ -33,7 +33,7 @@
      * @param {Object} data - State data from server
      */
     // Memo of the previous round's leaderboard so we can compute rank deltas
-    // ("↑1", "↓1", "—") without server help. Keyed by lowercased player name.
+    // ("↑1", "↓1", "—") without server help. Keyed by entrant id (#1015).
     var _prevRanks = null;
 
     // Clear the rank-delta memo on game_reset (issue #257) — otherwise the
@@ -96,7 +96,7 @@
             // players row, which never has an answer, and said "Time's up".
             var estimateEntry = _estimateResultFor(data) || currentPlayer;
             renderResultHero(estimateEntry, data);
-            renderStandings(data.leaderboard || players, state.playerName);
+            renderStandings(data.leaderboard || players);
             playResultCue(estimateEntry);
             _renderRevealAdminControls(data, currentPlayer);
             return;
@@ -117,7 +117,7 @@
         var resultPlayer = myAnswerEntry || currentPlayer;
         renderResultHero(resultPlayer, data);
         renderAnswerStrip(myAnswerEntry, data.correct_answer);
-        renderStandings(data.leaderboard || players, state.playerName);
+        renderStandings(data.leaderboard || players);
 
         // Audio cue on the player's own device: a chime when they got it
         // right, a buzzer when wrong. Skipped for players who joined late /
@@ -567,55 +567,74 @@
         return _PLAYER_COLORS[(c + idx) % _PLAYER_COLORS.length];
     }
 
-    function renderStandings(leaderboard, myName) {
+    function renderStandings(leaderboard) {
         var container = document.getElementById('reveal-standings');
         if (!container) return;
 
         // Normalize: leaderboard may be an array of player objects with
-        // {name, score} or {player_name, total_score}. Sort by score desc.
-        var rows = (Array.isArray(leaderboard) ? leaderboard : []).map(function(p) {
+        // {name, score} or {player_name, total_score}. The server sends the
+        // leaderboard already sorted with a competition `rank` (#308); the
+        // local sort only orders the `players` fallback, and is stable so a
+        // server-sorted list keeps its order.
+        var rows = (Array.isArray(leaderboard) ? leaderboard : []).map(function(p, idx) {
             var name = p.name || p.player_name || '';
             var score = (typeof p.score === 'number') ? p.score
                       : (typeof p.total_score === 'number') ? p.total_score
                       : (typeof p.points === 'number') ? p.points : 0;
             var color = p.color || null;
-            return { name: name, score: score, color: color };
+            return {
+                // Keyed by entrant, not by the printed name (#1015, as #759
+                // did for the in-game leaderboard): rows are teams in team
+                // mode, and two teams may share a name.
+                key: pu.entrantKey({ entrant_id: p.entrant_id, name: name }),
+                name: name, score: score, color: color,
+                rank: (typeof p.rank === 'number') ? p.rank : null,
+                idx: idx
+            };
         });
-        rows.sort(function(a, b) { return b.score - a.score; });
+        rows.sort(function(a, b) { return (b.score - a.score) || (a.idx - b.idx); });
+
+        // The printed place is the server's tied rank — the same "1, 1, 3"
+        // every other leaderboard shows. Without one (the `players`
+        // fallback), rank the same way: equal scores share a place.
+        rows.forEach(function(r, i) {
+            if (r.rank !== null) return;
+            r.rank = (i > 0 && rows[i - 1].score === r.score) ? rows[i - 1].rank : i + 1;
+        });
 
         // Build new rank map for next round's delta computation.
         var newRanks = {};
-        rows.forEach(function(r, i) { newRanks[(r.name || '').toLowerCase()] = i + 1; });
+        rows.forEach(function(r) { newRanks[r.key] = r.rank; });
 
         // Compute delta vs. previous round's snapshot (if any).
-        function deltaFor(name) {
+        function deltaFor(key) {
             if (!_prevRanks) return null;
-            var key = (name || '').toLowerCase();
             var prev = _prevRanks[key];
             var now = newRanks[key];
             if (typeof prev !== 'number' || typeof now !== 'number') return null;
             return prev - now;  // positive = moved up
         }
 
-        var medalClass = ['pl-result-srow--gold','pl-result-srow--silver','pl-result-srow--bronze'];
+        var medalClass = { 1: 'pl-result-srow--gold', 2: 'pl-result-srow--silver', 3: 'pl-result-srow--bronze' };
         var youLabel = t('lobby.you') !== 'lobby.you' ? t('lobby.you') : 'Du';
+        var me = pu.myEntrant();
 
         container.innerHTML = rows.map(function(r, i) {
-            var isMe = r.name === myName;
+            var isMe = r.key === me;
             var classes = ['pl-result-srow'];
-            if (i < 3) classes.push(medalClass[i]);
+            if (medalClass[r.rank]) classes.push(medalClass[r.rank]);
             if (isMe) classes.push('pl-result-srow--me');
             var initial = (r.name || '?').charAt(0).toUpperCase();
             var bg = r.color || _colorFor(r.name, i);
             var displayName = isMe ? youLabel : (r.name || '');
-            var d = deltaFor(r.name);
+            var d = deltaFor(r.key);
             var deltaHtml = '<span class="pl-result-delta pl-result-delta--flat">—</span>';
             if (d !== null) {
                 if (d > 0) deltaHtml = '<span class="pl-result-delta pl-result-delta--up">↑' + d + '</span>';
                 else if (d < 0) deltaHtml = '<span class="pl-result-delta pl-result-delta--down">↓' + Math.abs(d) + '</span>';
             }
             return '<div class="' + classes.join(' ') + '">' +
-                '<span class="pl-result-pos">' + (i + 1) + '.</span>' +
+                '<span class="pl-result-pos">' + r.rank + '.</span>' +
                 '<span class="pl-result-av" style="background:' + pu.escapeHtml(bg) + '">' + pu.escapeHtml(initial) + '</span>' +
                 '<span class="pl-result-nm">' + pu.escapeHtml(displayName) + '</span>' +
                 deltaHtml +

@@ -245,6 +245,31 @@
     }
 
     // ============================================
+    // Entrant identity (#759, #728, #1015)
+    // ============================================
+
+    /**
+     * The leaderboard row that is mine: my team's when I'm in one, my own
+     * otherwise. Two teams may carry the same name, so matching rows by the
+     * printed name lit up the "you" badge on both of them and collapsed them
+     * into one entry in a rank-delta memo (#759). In team mode no row carries
+     * my player name at all, so a name match highlights nothing (#1015).
+     *
+     * Shared by the in-game leaderboard, the lightning recap and the reveal
+     * standings — it used to be copied into each of them.
+     */
+    function myEntrant() {
+        var team = window.QuizifyPlayerTeam;
+        var mine = team && team.myTeam && team.myTeam();
+        return (mine && (mine.team_id || mine.name)) || state.playerName;
+    }
+
+    /** The stable key of one leaderboard row; falls back to the name. */
+    function entrantKey(entry) {
+        return (entry && (entry.entrant_id || entry.name)) || '';
+    }
+
+    // ============================================
     // Leaderboard Rendering
     // ============================================
 
@@ -548,7 +573,9 @@
         clearSession: clearSession,
         validateName: validateName,
         MAX_RECONNECT_ATTEMPTS: MAX_RECONNECT_ATTEMPTS,
-        renderMedalStandings: renderMedalStandings
+        renderMedalStandings: renderMedalStandings,
+        myEntrant: myEntrant,
+        entrantKey: entrantKey
     };
 
 })();
@@ -1802,7 +1829,7 @@
      * @param {Object} data - State data from server
      */
     // Memo of the previous round's leaderboard so we can compute rank deltas
-    // ("↑1", "↓1", "—") without server help. Keyed by lowercased player name.
+    // ("↑1", "↓1", "—") without server help. Keyed by entrant id (#1015).
     var _prevRanks = null;
 
     // Clear the rank-delta memo on game_reset (issue #257) — otherwise the
@@ -1865,7 +1892,7 @@
             // players row, which never has an answer, and said "Time's up".
             var estimateEntry = _estimateResultFor(data) || currentPlayer;
             renderResultHero(estimateEntry, data);
-            renderStandings(data.leaderboard || players, state.playerName);
+            renderStandings(data.leaderboard || players);
             playResultCue(estimateEntry);
             _renderRevealAdminControls(data, currentPlayer);
             return;
@@ -1886,7 +1913,7 @@
         var resultPlayer = myAnswerEntry || currentPlayer;
         renderResultHero(resultPlayer, data);
         renderAnswerStrip(myAnswerEntry, data.correct_answer);
-        renderStandings(data.leaderboard || players, state.playerName);
+        renderStandings(data.leaderboard || players);
 
         // Audio cue on the player's own device: a chime when they got it
         // right, a buzzer when wrong. Skipped for players who joined late /
@@ -2336,55 +2363,74 @@
         return _PLAYER_COLORS[(c + idx) % _PLAYER_COLORS.length];
     }
 
-    function renderStandings(leaderboard, myName) {
+    function renderStandings(leaderboard) {
         var container = document.getElementById('reveal-standings');
         if (!container) return;
 
         // Normalize: leaderboard may be an array of player objects with
-        // {name, score} or {player_name, total_score}. Sort by score desc.
-        var rows = (Array.isArray(leaderboard) ? leaderboard : []).map(function(p) {
+        // {name, score} or {player_name, total_score}. The server sends the
+        // leaderboard already sorted with a competition `rank` (#308); the
+        // local sort only orders the `players` fallback, and is stable so a
+        // server-sorted list keeps its order.
+        var rows = (Array.isArray(leaderboard) ? leaderboard : []).map(function(p, idx) {
             var name = p.name || p.player_name || '';
             var score = (typeof p.score === 'number') ? p.score
                       : (typeof p.total_score === 'number') ? p.total_score
                       : (typeof p.points === 'number') ? p.points : 0;
             var color = p.color || null;
-            return { name: name, score: score, color: color };
+            return {
+                // Keyed by entrant, not by the printed name (#1015, as #759
+                // did for the in-game leaderboard): rows are teams in team
+                // mode, and two teams may share a name.
+                key: pu.entrantKey({ entrant_id: p.entrant_id, name: name }),
+                name: name, score: score, color: color,
+                rank: (typeof p.rank === 'number') ? p.rank : null,
+                idx: idx
+            };
         });
-        rows.sort(function(a, b) { return b.score - a.score; });
+        rows.sort(function(a, b) { return (b.score - a.score) || (a.idx - b.idx); });
+
+        // The printed place is the server's tied rank — the same "1, 1, 3"
+        // every other leaderboard shows. Without one (the `players`
+        // fallback), rank the same way: equal scores share a place.
+        rows.forEach(function(r, i) {
+            if (r.rank !== null) return;
+            r.rank = (i > 0 && rows[i - 1].score === r.score) ? rows[i - 1].rank : i + 1;
+        });
 
         // Build new rank map for next round's delta computation.
         var newRanks = {};
-        rows.forEach(function(r, i) { newRanks[(r.name || '').toLowerCase()] = i + 1; });
+        rows.forEach(function(r) { newRanks[r.key] = r.rank; });
 
         // Compute delta vs. previous round's snapshot (if any).
-        function deltaFor(name) {
+        function deltaFor(key) {
             if (!_prevRanks) return null;
-            var key = (name || '').toLowerCase();
             var prev = _prevRanks[key];
             var now = newRanks[key];
             if (typeof prev !== 'number' || typeof now !== 'number') return null;
             return prev - now;  // positive = moved up
         }
 
-        var medalClass = ['pl-result-srow--gold','pl-result-srow--silver','pl-result-srow--bronze'];
+        var medalClass = { 1: 'pl-result-srow--gold', 2: 'pl-result-srow--silver', 3: 'pl-result-srow--bronze' };
         var youLabel = t('lobby.you') !== 'lobby.you' ? t('lobby.you') : 'Du';
+        var me = pu.myEntrant();
 
         container.innerHTML = rows.map(function(r, i) {
-            var isMe = r.name === myName;
+            var isMe = r.key === me;
             var classes = ['pl-result-srow'];
-            if (i < 3) classes.push(medalClass[i]);
+            if (medalClass[r.rank]) classes.push(medalClass[r.rank]);
             if (isMe) classes.push('pl-result-srow--me');
             var initial = (r.name || '?').charAt(0).toUpperCase();
             var bg = r.color || _colorFor(r.name, i);
             var displayName = isMe ? youLabel : (r.name || '');
-            var d = deltaFor(r.name);
+            var d = deltaFor(r.key);
             var deltaHtml = '<span class="pl-result-delta pl-result-delta--flat">—</span>';
             if (d !== null) {
                 if (d > 0) deltaHtml = '<span class="pl-result-delta pl-result-delta--up">↑' + d + '</span>';
                 else if (d < 0) deltaHtml = '<span class="pl-result-delta pl-result-delta--down">↓' + Math.abs(d) + '</span>';
             }
             return '<div class="' + classes.join(' ') + '">' +
-                '<span class="pl-result-pos">' + (i + 1) + '.</span>' +
+                '<span class="pl-result-pos">' + r.rank + '.</span>' +
                 '<span class="pl-result-av" style="background:' + pu.escapeHtml(bg) + '">' + pu.escapeHtml(initial) + '</span>' +
                 '<span class="pl-result-nm">' + pu.escapeHtml(displayName) + '</span>' +
                 deltaHtml +
@@ -3460,11 +3506,7 @@
      * what gets drawn — it arrives in `recap.names` and in each leaderboard
      * row — but it is no longer what anything is looked up by.
      */
-    function myEntrant() {
-        var team = window.QuizifyPlayerTeam;
-        var mine = team && team.myTeam();
-        return (mine && (mine.team_id || mine.name)) || state.playerName;
-    }
+    var myEntrant = pu.myEntrant;  // mine.team_id, else my name (player-utils)
 
     function renderRecap(recap) {
         var lb = recap.leaderboard || [];
@@ -3481,7 +3523,7 @@
                     // Match on the entrant key, not the printed name — two
                     // teams may share a name (#728), and only one of them
                     // is mine.
-                    isYou: (p.entrant_id || p.name) === meRow
+                    isYou: pu.entrantKey(p) === meRow
                 };
             });
             pu.renderMedalStandings(lbEl, rows, { youLabel: youLabel });
@@ -5462,24 +5504,10 @@
      */
     var _prevLeaderboardRanks = {}; // entrant id -> rank
 
-    /**
-     * The leaderboard row that is mine: my team's when I'm in one, my own
-     * otherwise. Mirrors player-lightning.js's myEntrant() — see #728 there
-     * and #759 here: two teams may carry the same name, so matching rows by
-     * the printed name lit up the "you" badge on both of them, collapsed them
-     * into one entry in the rank-delta memo and made the FLIP animation swap
-     * their positions at random.
-     */
-    function myEntrant() {
-        var team = window.QuizifyPlayerTeam;
-        var mine = team && team.myTeam && team.myTeam();
-        return (mine && (mine.team_id || mine.name)) || state.playerName;
-    }
-
-    /** The stable key of one leaderboard row; falls back to the name. */
-    function entrantKey(entry) {
-        return entry.entrant_id || entry.name;
-    }
+    // Which row is mine, and the stable key of a row (#759): shared with the
+    // lightning recap and the reveal standings, so they live in player-utils.
+    var myEntrant = pu.myEntrant;
+    var entrantKey = pu.entrantKey;
 
     // Clear the rank-delta memo (issue #257). Without this a game_reset
     // leaves stale ranks behind, so the first leaderboard of the *next*
