@@ -216,6 +216,8 @@
         skipBtn: document.getElementById('admin-skip-btn'),
         pauseBtn: document.getElementById('admin-pause-btn'),
         resumeBtn: document.getElementById('admin-resume-btn'),
+        // #1024 review: the "game paused" line under the frozen clock.
+        pausedIndicator: document.getElementById('admin-paused-indicator'),
         resetGameBtn: document.getElementById('reset-game-btn'),
         // Finale
         adminPodium: document.getElementById('admin-podium'),
@@ -2624,6 +2626,16 @@
                 'hidden', !(allowed.skip || allowed.pause || allowed.resume)
             );
         }
+        // #1024 review: a paused clock looks exactly like a stuck one. Say
+        // so under it, and grey the frozen seconds so they stop reading as
+        // a countdown. Every phase change runs through here, so leaving
+        // PAUSED clears both.
+        var paused = phase === 'PAUSED';
+        if (els.pausedIndicator) els.pausedIndicator.classList.toggle('hidden', !paused);
+        ['admin-timer-bar', 'admin-timer-bar-text'].forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) el.classList.toggle('is-paused', paused);
+        });
     }
 
     function handleWagerProgress(msg) {

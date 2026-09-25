@@ -43,6 +43,7 @@ CONTROLS = {
     "liveControls": "admin-live-controls",
     "nextQuestionBtn": "next-question-btn",
     "endGameBtn": "end-game-btn",
+    "pausedIndicator": "admin-paused-indicator",
 }
 
 
@@ -93,7 +94,8 @@ Object.keys(CLASSES).forEach(function (id) {
     (CLASSES[id] || []).forEach(function (c) { el.classList.add(c); });
 });
 QZ.els(['game-view', 'setup-screen', 'admin-finale-view', 'game-leaderboard',
-        'admin-round', 'admin-question', 'admin-correct']);
+        'admin-round', 'admin-question', 'admin-correct',
+        'admin-timer-bar', 'admin-timer-bar-text']);
 
 var views = {
     game: document.getElementById('game-view'),
@@ -146,6 +148,10 @@ function visible(key) {
 function snap() {
     var out = { phase: currentPhase, view: currentView };
     Object.keys(CONTROLS).forEach(function (k) { out[k] = visible(k); });
+    out.clockGreyed = ['admin-timer-bar', 'admin-timer-bar-text'].every(
+        function (id) {
+            return document.getElementById(id).classList.contains('is-paused');
+        });
     return out;
 }
 
@@ -160,6 +166,9 @@ handleWagerProgress({ round_num: 10, total_rounds: 10, locked_in: 1,
 R.WAGER_ACTIVE = snap();
 handleGameState({ phase: 'PAUSED', pause_reason: 'admin_paused' });
 R.PAUSED = snap();
+handleQuestionStarted({ question_text: 'Q?', timer_duration: 20,
+                        round_num: 3, total_rounds: 10 });
+R.RESUMED = snap();
 if (typeof setDetourNotice === 'function') {
     setDetourNotice('HOT_SEAT_AUCTION');
     R.HOT_SEAT_AUCTION = snap();
@@ -246,6 +255,51 @@ def test_a_paused_game_offers_resume_and_end_on_the_game_view() -> None:
     assert p["skipBtn"] is False
     assert p["pauseBtn"] is False
     assert p["nextQuestionBtn"] is False
+
+
+@_NEEDS_NODE
+def test_a_paused_game_says_so_and_the_line_goes_with_the_pause() -> None:
+    """#1024 review: the frozen clock alone ("14s") read like a stuck page.
+    PAUSED shows the paused line and greys the clock; the next live phase
+    takes both away again."""
+    phases = _run()["phases"]
+
+    assert phases["PAUSED"]["pausedIndicator"] is True
+    assert phases["PAUSED"]["clockGreyed"] is True
+    for phase in ("QUESTION_ACTIVE", "ANSWER_REVEAL", "WAGER_ACTIVE", "RESUMED"):
+        assert phases[phase]["pausedIndicator"] is False, phase
+        assert phases[phase]["clockGreyed"] is False, phase
+
+
+def test_the_paused_line_reuses_the_existing_paused_title() -> None:
+    """The phone's pause overlay already says "Spiel pausiert" through
+    admin.pausedTitle; the host page says the same words, in all three
+    languages, rather than a near-duplicate key."""
+    html = _ADMIN_HTML.read_text("utf-8")
+    block = re.search(
+        r'<div[^>]*id="admin-paused-indicator"[^>]*>(.*?)</div>', html, re.S
+    )
+    assert block, "admin.html has no paused indicator"
+    assert 'data-i18n="admin.pausedTitle"' in block.group(1)
+    for code in ("de", "en", "es"):
+        bundle = json.loads((_WWW / "i18n" / f"{code}.json").read_text("utf-8"))
+        assert bundle["admin"].get("pausedTitle"), f"{code}: admin.pausedTitle"
+
+
+def test_resume_does_not_share_a_look_with_end_game() -> None:
+    """#1024 review: coral-primary Resume next to brick-danger End read as
+    the same button. Resume is sage (the accent token), End is outlined."""
+    classes = _html_classes()
+    resume = classes["admin-resume-btn"] or []
+    assert "btn-resume" in resume
+    assert "btn-primary" not in resume and "btn-danger" not in resume
+
+    css = (_WWW / "css" / "src" / "04-lobby.css").read_text("utf-8")
+    resume_rule = _block(css, ".btn-resume {")
+    assert "var(--color-accent-secondary)" in resume_rule
+    end_rule = _block(css, ".admin-actions #end-game-btn {")
+    assert "var(--color-bg-surface)" in end_rule
+    assert "border:" in end_rule
 
 
 @_NEEDS_NODE

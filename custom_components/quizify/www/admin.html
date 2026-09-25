@@ -882,6 +882,13 @@
                 <div class="timer-bar-fill"></div>
             </div>
             <div id="admin-timer-bar-text" class="timer-text mt-md"></div>
+            <!-- #1024 review: while PAUSED the clock just stands still, which
+                 reads like a stuck page. This line says why it stands still.
+                 Shown only in PAUSED (setLiveControls in admin.js). -->
+            <div id="admin-paused-indicator" class="admin-paused-indicator hidden" role="status">
+                <span class="qz-icon qz-icon--sky" data-ui-icon="pause" aria-hidden="true">⏸</span>
+                <span data-i18n="admin.pausedTitle">Game paused</span>
+            </div>
             <!-- #830: the submission tracker the phone and the television have
                  had since #619. The host is the one who decides to move on
                  early, and was the only screen not told who the room is still
@@ -914,7 +921,7 @@
                 <div id="admin-live-controls" class="admin-live-controls hidden">
                     <button type="button" id="admin-skip-btn" class="btn btn-secondary hidden" data-i18n="admin.skip">Skip</button>
                     <button type="button" id="admin-pause-btn" class="btn btn-secondary hidden" data-i18n="admin.pause">Pause</button>
-                    <button type="button" id="admin-resume-btn" class="btn btn-primary hidden" data-i18n="admin.resume">Resume</button>
+                    <button type="button" id="admin-resume-btn" class="btn btn-resume hidden" data-i18n="admin.resume">Resume</button>
                 </div>
                 <button type="button" id="next-question-btn" class="btn btn-primary" data-i18n="admin.nextQuestion">Next Question</button>
                 <button type="button" id="end-game-btn" class="btn btn-danger hidden" data-i18n="admin.endGame">End Game</button>
