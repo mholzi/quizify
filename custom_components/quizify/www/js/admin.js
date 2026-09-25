@@ -211,6 +211,13 @@
         reactionLayer: document.getElementById('reaction-layer'),
         nextQuestionBtn: document.getElementById('next-question-btn'),
         endGameBtn: document.getElementById('end-game-btn'),
+        // #1017: the live-question controls and the row that holds them.
+        liveControls: document.getElementById('admin-live-controls'),
+        skipBtn: document.getElementById('admin-skip-btn'),
+        pauseBtn: document.getElementById('admin-pause-btn'),
+        resumeBtn: document.getElementById('admin-resume-btn'),
+        // #1024 review: the "game paused" line under the frozen clock.
+        pausedIndicator: document.getElementById('admin-paused-indicator'),
         resetGameBtn: document.getElementById('reset-game-btn'),
         // Finale
         adminPodium: document.getElementById('admin-podium'),
@@ -1981,7 +1988,24 @@
                         round_num: msg.round,
                         total_rounds: msg.total_rounds,
                     });
+                    // #1017: resume_game (and any reconnect) arrives as this
+                    // snapshot. Draw what is left of the clock, not a full
+                    // bar for a question that has been running.
+                    if (typeof msg.question.time_remaining === 'number') {
+                        adminTimer.update(msg.question.time_remaining);
+                    }
                 }
+                if (msg.leaderboard) renderLeaderboard(els.gameLeaderboard, msg.leaderboard);
+                break;
+            case 'PAUSED':
+                // #1017: the pause is the host's own doing, so the host page
+                // has to show the way out of it. The server stops the ticks,
+                // which leaves the clock where it froze; Resume and End are
+                // the two things the phase accepts.
+                showView('game');
+                if (els.nextQuestionBtn) els.nextQuestionBtn.classList.add('hidden');
+                if (els.endGameBtn) els.endGameBtn.classList.remove('hidden');
+                setLiveControls('PAUSED');
                 if (msg.leaderboard) renderLeaderboard(els.gameLeaderboard, msg.leaderboard);
                 break;
             case 'ANSWER_REVEAL':
@@ -2084,7 +2108,8 @@
                 // #846, generalized. Every phase above earns its landing by
                 // being listed; the cost of not being listed was the setup
                 // screen — offered, mid-game, with a Start Game that wipes the
-                // room. PAUSED is the one that reaches this today. Whatever
+                // room. (PAUSED used to be the one that reached this; it has
+                // its own arm since #1017.) Whatever
                 // arrives here, the room is playing, so the host page belongs
                 // on the game view and not on an invitation to start over.
                 showView('game');
@@ -2229,6 +2254,7 @@
             els.nextQuestionBtn.classList.toggle('hidden', !advanceable);
         }
         if (els.endGameBtn) els.endGameBtn.classList.remove('hidden');
+        setLiveControls(phase);
     }
 
     /** The detour's second line, under the notice. '' hides it. */
@@ -2567,6 +2593,51 @@
         target.style.display = '';
     }
 
+    /*
+     * #1017: which live-question control the host page offers, per phase.
+     *
+     * The same table the Lovelace host card runs on (cards/quizify-host-card.js
+     * PHASE_ACTIONS + SKIPPABLE_PHASES) and the phone's host bar
+     * (player-core.js): admin_skip closes the betting window in WAGER_ACTIVE
+     * and evaluates the round now in QUESTION_ACTIVE; pause_game only does
+     * anything in QUESTION_ACTIVE (PhaseController.pause); resume_game only in
+     * PAUSED. A phase that is not listed gets none of the three, so nothing
+     * is ever offered that the server answers with ERR_INVALID_ACTION or a
+     * silent no-op.
+     *
+     * Before this the host who started without joining (#846) had no way to
+     * skip a broken question or cut a stuck bet window short: both handlers
+     * below hid every control and the only thing left was the header Reset.
+     */
+    var LIVE_CONTROLS = {
+        WAGER_ACTIVE: { skip: true },
+        QUESTION_ACTIVE: { skip: true, pause: true },
+        PAUSED: { resume: true }
+    };
+
+    /** Show the controls ``LIVE_CONTROLS`` allows in ``phase``, hide the rest. */
+    function setLiveControls(phase) {
+        var allowed = LIVE_CONTROLS[phase] || {};
+        if (els.skipBtn) els.skipBtn.classList.toggle('hidden', !allowed.skip);
+        if (els.pauseBtn) els.pauseBtn.classList.toggle('hidden', !allowed.pause);
+        if (els.resumeBtn) els.resumeBtn.classList.toggle('hidden', !allowed.resume);
+        if (els.liveControls) {
+            els.liveControls.classList.toggle(
+                'hidden', !(allowed.skip || allowed.pause || allowed.resume)
+            );
+        }
+        // #1024 review: a paused clock looks exactly like a stuck one. Say
+        // so under it, and grey the frozen seconds so they stop reading as
+        // a countdown. Every phase change runs through here, so leaving
+        // PAUSED clears both.
+        var paused = phase === 'PAUSED';
+        if (els.pausedIndicator) els.pausedIndicator.classList.toggle('hidden', !paused);
+        ['admin-timer-bar', 'admin-timer-bar-text'].forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) el.classList.toggle('is-paused', paused);
+        });
+    }
+
     function handleWagerProgress(msg) {
         if (_redirecting) return;
         currentPhase = 'WAGER_ACTIVE';
@@ -2589,8 +2660,11 @@
         if (typeof msg.window_duration === 'number') {
             adminTimer.start(msg.window_duration);
         }
+        // #1017: End stays reachable — the room can be ended mid-bet the same
+        // way the phone's host bar and the host card always allowed.
         if (els.nextQuestionBtn) els.nextQuestionBtn.classList.add('hidden');
-        if (els.endGameBtn) els.endGameBtn.classList.add('hidden');
+        if (els.endGameBtn) els.endGameBtn.classList.remove('hidden');
+        setLiveControls('WAGER_ACTIVE');
     }
 
     function handleQuestionStarted(msg) {
@@ -2616,8 +2690,11 @@
         clearAnswerProgress();
 
         adminTimer.start(msg.timer_duration);
+        // next_question is refused while a question is live, so Next stays
+        // hidden; End does not (#1017), and Skip / Pause take Next's place.
         if (els.nextQuestionBtn) els.nextQuestionBtn.classList.add('hidden');
-        if (els.endGameBtn) els.endGameBtn.classList.add('hidden');
+        if (els.endGameBtn) els.endGameBtn.classList.remove('hidden');
+        setLiveControls('QUESTION_ACTIVE');
     }
 
     // The full admin reveal view (showReveal / renderAnswerDistribution) was
@@ -2677,6 +2754,7 @@
             els.nextQuestionBtn.classList.remove('hidden');
         }
         if (els.endGameBtn) els.endGameBtn.classList.remove('hidden');
+        setLiveControls('ANSWER_REVEAL');
     }
 
     function handleFinale(msg) {
@@ -2684,6 +2762,7 @@
         currentPhase = 'FINALE';
         adminTimer.stop();
         showView('finale');
+        setLiveControls(currentPhase);
 
         // #787: the same two reads the television does, in one place — the
         // `all_players` alias is wire-format knowledge, not page logic.
@@ -2702,6 +2781,7 @@
         _adminJoinedAs = null;
         _redirecting = false;
         showView('setup');
+        setLiveControls(currentPhase);
     }
 
     // ---- Renderers ----
@@ -3898,6 +3978,10 @@
         setTimeout(function () { btn.disabled = false; }, 1500);
     }
     on(els.nextQuestionBtn, 'click', function () { _debouncedSend(els.nextQuestionBtn, 'next_question'); });
+    // #1017: the same three messages the phone's host bar sends.
+    on(els.skipBtn, 'click', function () { _debouncedSend(els.skipBtn, 'admin_skip'); });
+    on(els.pauseBtn, 'click', function () { _debouncedSend(els.pauseBtn, 'pause_game'); });
+    on(els.resumeBtn, 'click', function () { _debouncedSend(els.resumeBtn, 'resume_game'); });
 
     // #479: focus management for the destructive confirm dialogs. Opening one
     // by toggling .hidden left keyboard focus behind the backdrop; on close it

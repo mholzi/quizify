@@ -302,6 +302,9 @@ def _run() -> dict:
     parts += [
         _js_function(source, signature, required=False)
         for signature in (
+            # #1017: the handlers now set the live-question controls.
+            "var LIVE_CONTROLS = {",
+            "function setLiveControls(phase) {",
             "function _tOr(key, params, fallback) {",
             # #830 put the submission tracker on this page, and both
             # question_started and round_summary clear it.

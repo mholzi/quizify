@@ -2180,6 +2180,97 @@ button, .btn {
     flex: 1;
 }
 
+/* #1017: Skip / Pause / Resume share one row above Next and End, so a live
+   question adds one line to the sticky bar instead of two. `min-width: 0`
+   lets the two halves shrink at 390px rather than push past the gutter. */
+.admin-live-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.admin-live-controls .btn {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* #1024 review: Resume must not look like End Game. Both used to be warm
+   fills (coral primary next to brick danger) and read as the same button.
+   Resume takes the sage accent — the app's "go on / correct" colour — and a
+   play glyph; End Game (below) steps back to an outlined destructive
+   secondary, so the only filled button in a paused bar is the way back in. */
+.btn-resume {
+    background: var(--color-accent-secondary);
+    color: #FFFFFF;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px var(--color-success-light);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-resume::before {
+    content: "";
+    width: 1em;
+    height: 1em;
+    flex: none;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5.5v13l10.5-6.5z'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5.5v13l10.5-6.5z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.btn-resume:hover:not(:disabled) {
+    background: var(--color-success-hover);
+    transform: translateY(-1px);
+}
+
+.admin-actions #end-game-btn {
+    background: var(--color-bg-surface);
+    color: var(--color-error-dark);
+    border: 1.5px solid var(--color-error);
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-actions #end-game-btn:hover:not(:disabled) {
+    background: var(--color-error-bg);
+}
+
+/* #1024 review: the paused line under the frozen clock. Calm on purpose —
+   a pause is the host's own choice, not an error. */
+.admin-paused-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto var(--space-sm);
+    padding: 6px 14px 6px 6px;
+    border-radius: 999px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+.admin-paused-indicator .qz-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+}
+
+.timer-text.is-paused {
+    color: var(--color-text-muted);
+    animation: none;
+}
+
+.timer-bar-container.is-paused {
+    opacity: 0.45;
+}
+
 /* Admin content wrapper */
 .admin-content {
     padding: 0 var(--space-md) calc(var(--space-md) + 80px); /* extra bottom for sticky button */
