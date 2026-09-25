@@ -290,12 +290,14 @@ or `pack-submit` behind HA auth would lock every player out of the game.
 
 **Remote exposure rule (CRITICAL).** Because these endpoints are un-authed,
 **remote exposure must be fronted by Home Assistant auth — or not done at all.**
-- **Nabu Casa Remote UI** already requires HA login to reach *any* integration
-  HTTP path, so it satisfies this requirement out of the box.
+- **Nabu Casa Remote UI does not satisfy this requirement.** Quizify registers
+  its routes as raw handlers, which HA's auth middleware does not check, and the
+  origin guard allow-lists the Nabu Casa host. Anyone holding the join link can
+  reach the game routes through the tunnel without an HA login.
 - A **self-hosted reverse proxy** (nginx / Traefik / Cloudflare Tunnel) that
   forwards `/quizify/*` or `/api/quizify/*` to HA **without** an auth layer in
   front would expose the write/disclosure endpoints above to the internet. Do
-  not do this. If you proxy, require auth at the proxy (or rely on Nabu Casa).
+  not do this. If you proxy, require auth at the proxy.
 - When a reverse proxy *is* in play, configure HA's
   `http.use_x_forwarded_for` + `trusted_proxies` so the pack-submit rate-limiter
   keys on the real client IP rather than the proxy's single address. We
