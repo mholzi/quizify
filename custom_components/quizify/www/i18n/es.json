@@ -8,6 +8,8 @@
   "join": {
     "title": "Quizify — Unirse",
     "enterName": "Escribe tu nombre para jugar",
+    "resetHint": "El anfitrión ha empezado una partida nueva: escribe tu nombre para volver a unirte.",
+    "reconnectFailedHint": "No hemos podido devolverte a la partida: escribe tu nombre para volver a unirte.",
     "namePlaceholder": "Tu nombre",
     "joinButton": "Unirse al juego",
     "joining": "Uniéndose…",

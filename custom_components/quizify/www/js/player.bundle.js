@@ -6272,6 +6272,9 @@
                 // join screen deterministic instead of relying on the
                 // close + reconnect_failed race.
                 endJoinPending();
+                // #1018: read the name before it is forgotten, so the form
+                // can hand it back.
+                var resetName = lastPlayerName();
                 forgetIdentity();
                 // Clear rank-delta memos (issue #257) so the next game's
                 // first leaderboard/reveal doesn't show phantom ▲/▼ deltas
@@ -6284,7 +6287,7 @@
                 // #838: the join screen is not a game screen. Everything the
                 // game hung outside the view stack goes with the game.
                 clearGameChrome();
-                pu.showView('join-view');
+                returnToJoin('join.resetHint', resetName);
                 break;
 
             case 'kicked':
@@ -6314,6 +6317,7 @@
             case 'joined':
             case 'reconnected':
                 endJoinPending();
+                hideJoinHint();
                 state.playerName = msg.player_id || state.playerName;
                 state.playerId = msg.player_id;
                 if (msg.session_token) {
@@ -6363,8 +6367,9 @@
                 // re-joined under the old name (as the host, if this tab was
                 // the host's). The server has just said this identity is not
                 // joinable; retrying it is the one thing not to do.
+                var failedName = lastPlayerName();
                 forgetIdentity();
-                pu.showView('join-view');
+                returnToJoin('join.reconnectFailedHint', failedName);
                 break;
 
             case 'host_presence':
@@ -7894,6 +7899,39 @@
     function endJoinPending() {
         state.joinPending = false;
         if (_joinTimeout) { clearTimeout(_joinTimeout); _joinTimeout = null; }
+    }
+
+    // #1018: the phone was put out of a game it did not leave — the host
+    // reset it, or the server would not take the stored session back. The
+    // bare form looked like a fresh page, so every guest had to be told out
+    // loud to type their name again. Say why, and hand the name back.
+    function lastPlayerName() {
+        var stored = pu.getSession ? pu.getSession() : null;
+        return state.playerName || (stored && stored.name) || '';
+    }
+
+    function returnToJoin(reasonKey, lastName) {
+        var t = _t();
+        var hint = document.getElementById('join-hint');
+        if (hint) {
+            // data-i18n so a language switch on the form re-translates it.
+            hint.setAttribute('data-i18n', reasonKey);
+            hint.textContent = t(reasonKey);
+            hint.classList.remove('hidden');
+        }
+        if (lastName && els.nameInput) els.nameInput.value = lastName;
+        if (els.joinBtn) {
+            // The button still reads "Joining…" from the last join.
+            els.joinBtn.textContent = t('join.joinButton');
+            els.joinBtn.disabled = !(els.nameInput &&
+                pu.validateName(els.nameInput.value).valid);
+        }
+        pu.showView('join-view');
+    }
+
+    function hideJoinHint() {
+        var hint = document.getElementById('join-hint');
+        if (hint) hint.classList.add('hidden');
     }
 
     // Put the join form back in a usable state AND leave the reason on

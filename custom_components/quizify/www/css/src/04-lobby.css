@@ -13,6 +13,19 @@
     text-align: center;
 }
 
+/* Why the phone is back on the join form (#1018): after a game reset or a
+   failed reconnect. A quiet callout, not an error — nothing went wrong on the
+   guest's side. */
+.join-hint {
+    margin: 0;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--color-accent-brand-bg);
+    color: var(--color-text-primary);
+    font-weight: 600;
+    line-height: 1.4;
+}
+
 /* Per-player UI-language chips on the join screen (#492). The chip visuals
    come from .chip-group--flags in 02-shared.css; this only places the row.
    Centred to match the form's text-align, and wrapping is inherited so a
