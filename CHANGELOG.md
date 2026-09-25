@@ -3,6 +3,22 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.21.0-RC3] — 2026-09-25
+
+**One Copy of the Truth**
+
+Everything from RC1 and RC2, plus six fixes from a code review across the whole integration.
+
+### The copies that had drifted
+
+Names are escaped the same way on the television, the host page and the phones. Host and player share one connection indicator, and the reveal payload has a single builder. The reveal standings now follow the server's ranking by player, so team games keep "(you)" and ties show the same place.
+
+### What else changed
+
+The host tab can skip, pause and resume a question, says clearly when the game is paused, and keeps End Game in reach. After a reset, phones explain why they are back on the join form. The Hot Seat no longer repeats a question from the same game, and the live-test fixes from RC2 are included.
+
+Beta versions must be enabled in HACS.
+
 ## [1.21.0-RC2] — 2026-09-23
 
 **One Copy of the Truth**
