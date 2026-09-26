@@ -74,9 +74,14 @@ class TestLoadCategory:
         # has been verified one file at a time. Both get a 10-20 window of
         # their own instead of the themed-pack floor — the floor still catches
         # gross truncation, just at a size that fits the content.
-        small_packs = {
+        # The estimate packs started at 15 and were grown to 40 once play data
+        # showed the default (medium) filter cycling through only six of them;
+        # they get a 30-60 window so a gross truncation still fails.
+        estimate_packs = {
             "schaetzfragen-de", "estimation-en",       # estimate (#275)
             "estimacion-es",                           # estimate (es)
+        }
+        small_packs = {
             "bilderraetsel-de", "picture-round-en",    # picture round (#537)
             "imagenes-es",                             # picture round (es)
         }
@@ -84,6 +89,10 @@ class TestLoadCategory:
             if cat.startswith("community-"):
                 continue
             count = bank.get_question_count(cat)
+            if cat in estimate_packs:
+                assert count >= 30, f"{cat} has only {count} questions (floor: 30)"
+                assert count <= 60, f"{cat} has {count} questions (ceiling: 60)"
+                continue
             if cat in small_packs:
                 assert count >= 10, f"{cat} has only {count} questions (floor: 10)"
                 assert count <= 20, f"{cat} has {count} questions (ceiling: 20)"
