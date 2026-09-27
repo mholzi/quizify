@@ -211,15 +211,19 @@
         if (!announce) return;
         var key = 'connection.' + status;
         var msg = t(key);
-        if (msg && msg !== key) {
+        var translated = !!msg && msg !== key;
+        // #1034: a known status keeps its key even when t() has no word for
+        // it yet. The socket can open before the bundle has loaded; the
+        // raw status stands in until the sweep that follows i18n init
+        // re-renders the line off `data-i18n`.
+        if (translated || Object.prototype.hasOwnProperty.call(CONN_TONES, status)) {
             announce.setAttribute('data-i18n', key);
         } else {
             // An unknown status has no key to re-render from; leaving a stale
             // one would make the next sweep announce the wrong state.
             announce.removeAttribute('data-i18n');
-            msg = status;
         }
-        announce.textContent = msg;
+        announce.textContent = translated ? msg : status;
     }
 
     /**
