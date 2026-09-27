@@ -5493,6 +5493,14 @@
         }).join('');
     }
 
+    // #1032: forget the room. `_latestPlayers` outlives the game it was drawn
+    // from — resetSubmissionState repaints it when a question opens (#953) —
+    // so after a reset the first question of the next game showed the last
+    // game's entrants (a dissolved team included) until the first tap.
+    function resetSubmissionRoster() {
+        renderSubmissionTracker([]);
+    }
+
     // ============================================
     // Leaderboard
     // ============================================
@@ -5983,6 +5991,7 @@
         lockSubmitted: lockSubmitted,
         resetSubmissionState: resetSubmissionState,
         renderSubmissionTracker: renderSubmissionTracker,
+        resetSubmissionRoster: resetSubmissionRoster,
         updateLeaderboard: updateLeaderboard,
         resetRankMemo: resetRankMemo,
         renderLeaderboardEntry: renderLeaderboardEntry,
@@ -6726,6 +6735,10 @@
 
         switch (msg.phase) {
             case 'LOBBY':
+                // #1032: a lobby has no answered row yet. The next game's
+                // entrants arrive with its first answer_progress; until then
+                // the last game's roster must not be repainted.
+                if (game && game.resetSubmissionRoster) game.resetSubmissionRoster();
                 if (!state.playerName) {
                     pu.showView('join-view');
                 } else {
@@ -7318,6 +7331,8 @@
         // it was judged against belongs to a game that no longer exists.
         setResetStage(null);
         _lastRoster = [];
+        // #1032: the answered row belongs to that game too.
+        if (game && game.resetSubmissionRoster) game.resetSubmissionRoster();
         _hostSeenInRoster = false;
         _hostConnectedFlag = null;
     }

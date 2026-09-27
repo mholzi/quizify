@@ -721,6 +721,10 @@
 
         switch (msg.phase) {
             case 'LOBBY':
+                // #1032: a lobby has no answered row yet. The next game's
+                // entrants arrive with its first answer_progress; until then
+                // the last game's roster must not be repainted.
+                if (game && game.resetSubmissionRoster) game.resetSubmissionRoster();
                 if (!state.playerName) {
                     pu.showView('join-view');
                 } else {
@@ -1313,6 +1317,8 @@
         // it was judged against belongs to a game that no longer exists.
         setResetStage(null);
         _lastRoster = [];
+        // #1032: the answered row belongs to that game too.
+        if (game && game.resetSubmissionRoster) game.resetSubmissionRoster();
         _hostSeenInRoster = false;
         _hostConnectedFlag = null;
     }
