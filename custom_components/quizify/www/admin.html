@@ -912,8 +912,10 @@
                 <div id="admin-answer-status" class="admin-answer-status mt-sm"></div>
             </div>
 
-            <!-- Admin Actions — Sticky -->
-            <div class="admin-actions lobby-actions--sticky mt-lg">
+            <!-- Admin Actions — Sticky. data-end-game-slot (#1030): End Game
+                 lives here and follows the host into the Lightning views
+                 (showView in admin.js) — one button, not three copies. -->
+            <div class="admin-actions lobby-actions--sticky mt-lg" data-end-game-slot>
                 <!-- #1017: the live-question controls the phone's host bar
                      and the Lovelace host card have had all along. Which of
                      them shows is decided per phase in admin.js
@@ -983,6 +985,11 @@
                 <div id="admin-lightning-question" class="question-text" style="font-size:1.1rem;"></div>
                 <div id="admin-lightning-timer" class="timer-text mt-md"></div>
             </section>
+            <!-- #1030: End Game's slot while the round runs. Empty in the
+                 markup: showView('lightning') moves #end-game-btn in here.
+                 No Pause — the server only pauses QUESTION_ACTIVE
+                 (PhaseController.pause), not the lightning loop. -->
+            <div class="admin-actions lobby-actions--sticky mt-lg" data-end-game-slot></div>
         </div>
 
         <!-- Lightning Round recap view -->
@@ -998,7 +1005,7 @@
             <!-- The Lightning Round is a mid-game detour now (#285): the recap's
                  primary action resumes the paused main game. The old "Another
                  Lightning Round" rematch button (a #294 dead-end) was retired. -->
-            <div class="admin-actions lobby-actions--sticky mt-lg">
+            <div class="admin-actions lobby-actions--sticky mt-lg" data-end-game-slot>
                 <button type="button" id="admin-lightning-continue-btn" class="btn btn-primary btn-lg btn-block">
                     ▶︎ <span data-i18n="lightning.continueGame">Continue game</span>
                 </button>

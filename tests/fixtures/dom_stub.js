@@ -165,7 +165,25 @@ function makeElement(id, tagName) {
             });
         },
         click: function () { el.dispatch('click'); },
-        appendChild: function (child) { children.push(child); all.push(child); return child; },
+        // A node has one parent, as in the browser: appending a node that
+        // already sits elsewhere moves it (#1030 moves End Game between the
+        // host page's action bars this way).
+        appendChild: function (child) {
+            if (child.parentNode && typeof child.parentNode.removeChild === 'function') {
+                child.parentNode.removeChild(child);
+            }
+            children.push(child);
+            child.parentNode = el;
+            if (all.indexOf(child) === -1) all.push(child);
+            return child;
+        },
+        removeChild: function (child) {
+            const at = children.indexOf(child);
+            if (at !== -1) children.splice(at, 1);
+            if (child.parentNode === el) child.parentNode = null;
+            return child;
+        },
+        parentNode: null,
         // The subtree, depth-first — `children` is reassigned by the innerHTML
         // setter, so it is read through the closure rather than captured.
         querySelectorAll: function (selector) {
