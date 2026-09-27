@@ -3,6 +3,22 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.21.0-RC4] — 2026-09-27
+
+**One Copy of the Truth**
+
+Everything from RC1 to RC3, plus bigger estimation packs.
+
+### The copies that had drifted
+
+Names are escaped the same way on the television, the host page and the phones. Host and player share one connection indicator, and the reveal payload has a single builder. The reveal standings follow the server's ranking by player, so team games keep "(you)" and ties show the same place.
+
+### What else changed
+
+The three estimation packs grow from 15 to 40 questions each, so estimation rounds stop repeating the same six. The host tab can skip, pause and resume a question and keeps End Game in reach. After a reset, phones explain why they are back on the join form, and the Hot Seat no longer repeats a question from the same game.
+
+Beta versions must be enabled in HACS.
+
 ## [1.21.0-RC3] — 2026-09-25
 
 **One Copy of the Truth**
