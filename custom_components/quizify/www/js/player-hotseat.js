@@ -61,6 +61,31 @@
         return el('hotseat-panel');
     }
 
+    /**
+     * Clear the last round's question off the game view (#1033).
+     *
+     * The auction opens straight from that round's reveal, and #802/#940
+     * only took its picture and its reveal marks away: the category, the
+     * question text, the answered row and the whole answer grid (power-up
+     * button included) stayed standing under the bid card. On the winner's
+     * phone the grid survived the award too, so a quick tap in that gap
+     * landed on a question that was already over. The chair's own question
+     * puts the grid back (``renderSeatAnswers``) and the next round's
+     * ``renderQuestion`` restores all of it, the same way it does after the
+     * final round's wager window, which clears the same furniture.
+     */
+    function clearPreviousQuestion() {
+        var category = el('question-category');
+        if (category) category.textContent = '';
+        var text = el('question-text');
+        if (text) text.textContent = '';
+        ['answers-container', 'estimate-container', 'submission-tracker',
+            'submitted-confirmation'].forEach(function (id) {
+            var node = el(id);
+            if (node) node.classList.add('hidden');
+        });
+    }
+
     function stage(id, show) {
         var node = el(id);
         if (node) node.classList.toggle('hidden', !show);
@@ -165,6 +190,8 @@
         // round's marks still on its buttons.
         var game = window.QuizifyPlayerGame;
         if (game && game.resetSubmissionState) game.resetSubmissionState();
+        // #1033: and the rest of that question — text, answered row, grid.
+        clearPreviousQuestion();
 
         p.classList.remove('hidden');
         p.classList.remove('wager-panel--collapsed');
@@ -673,6 +700,9 @@
         }
 
         if (stage === 'awarded') {
+            // #1033: a reload between award and question skips the auction
+            // that clears the grid; the chair's question is still to come.
+            clearPreviousQuestion();
             handleAwarded({
                 winner: hs.winner,
                 pct: hs.pct,
