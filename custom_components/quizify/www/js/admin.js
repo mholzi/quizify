@@ -274,6 +274,28 @@
         if (els.resetGameBtn) {
             els.resetGameBtn.classList.toggle('hidden', name === 'setup');
         }
+        // #1030: End Game follows the host into the Lightning Round.
+        //
+        // #1017 kept End reachable through every phase the game view shows,
+        // but the Lightning Round has views of its own, and #end-game-btn
+        // lives in the game view's sticky bar — so from the splash to the
+        // recap the only control left was the header Reset. Each view that
+        // should offer End carries a [data-end-game-slot] action bar; showing
+        // that view moves the one button into it (same id, same click wiring,
+        // same confirm modal). On the game view the phase handlers decide its
+        // visibility as before; the lightning views always offer it, because
+        // end_game has no phase guard server-side. Pause is deliberately not
+        // carried along: the server only pauses QUESTION_ACTIVE
+        // (PhaseController.pause), so it would be a dead button.
+        var endBtn = els.endGameBtn;
+        var slot = (endBtn && views[name] && typeof views[name].querySelector === 'function')
+            ? views[name].querySelector('[data-end-game-slot]') : null;
+        if (slot) {
+            if (endBtn.parentNode !== slot) slot.appendChild(endBtn);
+            if (name === 'lightning' || name === 'lightningRecap') {
+                endBtn.classList.remove('hidden');
+            }
+        }
     }
 
     // ---- Collapsible sections ----
