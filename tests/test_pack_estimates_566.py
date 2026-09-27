@@ -30,7 +30,7 @@ QUESTIONS = REPO / "custom_components" / "quizify" / "questions"
 EXPECTED_ESTIMATE_QUESTIONS = 5
 
 # The two packs that are entirely estimates (#275). They predate #566 and are
-# not part of it — they hold 15 each and are excluded from the per-pack count.
+# not part of it — they hold 40 each and are excluded from the per-pack count.
 DEDICATED_ESTIMATE_PACKS = frozenset(
     {"schaetzfragen-de", "estimation-en", "estimacion-es"}
 )
@@ -176,4 +176,4 @@ class TestRegistryCoversTheLibrary:
     def test_dedicated_packs_are_left_alone(self) -> None:
         """#566 adds to themed packs; it does not touch the dedicated ones."""
         for pack in DEDICATED_ESTIMATE_PACKS:
-            assert len(estimates(pack)) == 15
+            assert len(estimates(pack)) == 40

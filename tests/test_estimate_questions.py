@@ -157,7 +157,7 @@ class TestEstimatePackLoads:
         bank = QuestionBank()
         for slug in ("schaetzfragen-de", "estimation-en", "estimacion-es"):
             qs = bank.load_category(slug)
-            assert 10 <= len(qs) <= 20
+            assert 30 <= len(qs) <= 60
             assert all(q.is_estimate for q in qs)
             for q in qs:
                 assert q.estimate_min < q.estimate_max
@@ -166,8 +166,8 @@ class TestEstimatePackLoads:
     def test_no_estimate_question_is_dropped_on_load(self) -> None:
         """An answer outside min/max is discarded without a word by
         ``_parse_estimate_question`` — the pack simply loads one question
-        shorter. The window above cannot see that (14 of 15 is still inside
-        10-20), so compare against the file instead."""
+        shorter. The window above cannot see that (39 of 40 is still inside
+        30-60), so compare against the file instead."""
         bank = QuestionBank()
         for slug in ("schaetzfragen-de", "estimation-en", "estimacion-es"):
             path = QUESTIONS_DIR / f"{slug}.json"
