@@ -623,7 +623,9 @@ class RoundMessageBuilder:
                     "answer_text": "—",
                     "correct": False,
                     "correct_button_index": _correct_button_index(player_name),
-                    "points_earned": 0,
+                    # #1031: not a literal 0 — a lost final-round bet (#653)
+                    # already took the stake off the team's round score.
+                    "points_earned": team.round_score,
                     "no_answer": True,
                 }
             answers = summary.question.answers
@@ -698,7 +700,11 @@ class RoundMessageBuilder:
                     "answer_text": "—",
                     "correct": False,
                     "correct_button_index": _correct_button_index(player.name),
-                    "points_earned": 0,
+                    # #1031: the round score, as for an answered row. A
+                    # timeout on the final round loses the wager (#653) and a
+                    # pre-submit steal (#472) can add points; both are booked
+                    # in round_score, and the phone prints this figure.
+                    "points_earned": player.round_score,
                     "no_answer": True,
                 })
 

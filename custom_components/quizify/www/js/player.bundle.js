@@ -2202,8 +2202,8 @@
     // Result Hero — picks 1 of 4 states (Soft Parlor redesign, 2026-05-24):
     //   X = streak hero (≥2 correct in a row + this round correct)
     //   Y = big +N points (correct, streak < 2)
-    //   Z = wrong  (soft brick verdict + 0)
-    //   W = missed (muted clock + Zeit abgelaufen + 0)
+    //   Z = wrong  (soft brick verdict + the round's points, 0 or a lost wager)
+    //   W = missed (muted clock + Zeit abgelaufen + the round's points)
     // ============================================
 
     var STREAK_HERO_THRESHOLD = 2;  // streak ≥ 2 promotes to the streak headline
@@ -2219,6 +2219,20 @@
         if (_gaveNoAnswer(player)) return;
         if (player.correct === true) snd.playCorrect();
         else snd.playWrong();
+    }
+
+    /**
+     * The round's points as the wrong / missed states print them (#1031).
+     * Usually 0, but a lost final-round wager books a negative round score
+     * (a wrong answer and, since #653, no answer both cost the stake), and a
+     * steal (#472) can fold points into a round that was otherwise lost. A
+     * literal 0 there contradicted the standings on the same screen.
+     */
+    function _signedPoints(points) {
+        var n = Number(points) || 0;
+        if (n < 0) return '\u2212' + Math.abs(n);
+        if (n > 0) return '+' + n;
+        return '0';
     }
 
     function renderResultHero(player, data) {
@@ -2273,7 +2287,7 @@
                 '<span class="pl-result-verdict-circle pl-result-verdict-circle--missed" aria-hidden="true">⏱</span>' +
                 '<div class="pl-result-verdict">' + pu.escapeHtml(t('reveal.timeUp')) + '</div>' +
                 '<div class="pl-result-sub">' + pu.escapeHtml(t('reveal.correctAnswerWas')) + ' <b>' + pu.escapeHtml(correctAnswer) + '</b></div>' +
-                '<div class="pl-result-zero">0<span class="pl-result-zero-unit">' + pu.escapeHtml(t('game.points')) + '</span></div>';
+                '<div class="pl-result-zero">' + _signedPoints(roundScore) + '<span class="pl-result-zero-unit">' + pu.escapeHtml(t('game.points')) + '</span></div>';
             return;
         }
 
@@ -2285,7 +2299,7 @@
                 '<span class="pl-result-verdict-circle pl-result-verdict-circle--wrong" aria-hidden="true">✗</span>' +
                 '<div class="pl-result-verdict">' + pu.escapeHtml(t('reveal.wrongHeadline')) + '</div>' +
                 '<div class="pl-result-sub">' + pu.escapeHtml(t('reveal.correctAnswerWas')) + ' <b>' + pu.escapeHtml(correctAnswer) + '</b></div>' +
-                '<div class="pl-result-zero">0<span class="pl-result-zero-unit">' + pu.escapeHtml(t('game.points')) + '</span></div>' +
+                '<div class="pl-result-zero">' + _signedPoints(roundScore) + '<span class="pl-result-zero-unit">' + pu.escapeHtml(t('game.points')) + '</span></div>' +
                 (prevStreak >= 2 ? '<div class="pl-result-streak-lost">' + pu.feedbackLabel('reveal.streakLost', pu.escapeHtml(t('reveal.streakLost', { count: prevStreak }))) + '</div>' : '');
             return;
         }
