@@ -3,6 +3,22 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.21.0-RC5] — 2026-09-28
+
+**One Copy of the Truth**
+
+Everything from RC1 to RC4, plus five fixes from the RC4 live test.
+
+### The copies that had drifted
+
+Names are escaped the same way on the television, the host page and the phones. Host and player share one connection indicator, and the reveal payload has a single builder. The reveal standings follow the server's ranking by player, so team games keep "(you)" and ties show the same place.
+
+### What else changed
+
+End Game stays in reach during the Lightning Round, and a lost final wager shows as a minus on the phone instead of zero. The Hot Seat auction clears the previous question, and the first question after a reset no longer lists last game's players. The estimation packs grow from 15 to 40 questions each.
+
+Beta versions must be enabled in HACS.
+
 ## [1.21.0-RC4] — 2026-09-27
 
 **One Copy of the Truth**
