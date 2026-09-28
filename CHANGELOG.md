@@ -3,6 +3,28 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.21.0] — 2026-09-28
+
+**One Copy of the Truth**
+
+The theme was duplication: things written twice whose copies had grown apart. Two live tests on a real Home Assistant added their own fixes.
+
+### One copy each
+
+Player names are escaped the same way on the television, the host page and the phones. Host and player share one connection indicator with a screenreader announcement, and the reveal has a single builder, so team games keep "(you)" and ties show the same place.
+
+### The host stays in control
+
+The host tab can skip, pause and resume a question and keeps End Game in reach, the Lightning Round included.
+
+### The estimation packs grew
+
+English, German and Spanish now hold 40 estimation questions each, up from 15.
+
+### Smaller things
+
+A lost final wager shows as a minus instead of zero. After a reset, phones explain why they are back on the join form, and the Hot Seat never repeats a question within a game.
+
 ## [1.21.0-RC5] — 2026-09-28
 
 **One Copy of the Truth**

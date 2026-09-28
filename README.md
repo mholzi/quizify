@@ -570,6 +570,10 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 
 The complete history is in [`CHANGELOG.md`](CHANGELOG.md); [`docs/release-notes/`](docs/release-notes/) holds longer prose notes for some releases.
 
+### v1.21.0 — One Copy of the Truth 🪞
+- **Things written twice had grown apart**: five name-escaping helpers with three meanings, two connection indicators, two reveal builders. Each now exists once, so a name with quotes renders the same on the television, the host page and the phones (#980, #982)
+- The host keeps End Game in reach in every phase including Lightning, a lost final wager shows as a minus, and the estimation packs hold 40 questions per language (#1017, #1030, #1031, #1028)
+
 ### v1.20.0 — Scores, Freeze and the Answer Marks Tell the Truth 🧮
 - **The estimate round stopped lying to its winner**: a phone that guessed closest read "Time's up · 0 Points", a tie named only one team, and the number line drew ends nobody could have guessed (#951, #966, #967)
 - Freeze finds a target in team mode, every question starts without the last round's "answered" marks, the World Cup packs hold 160 questions each, and the end screen counts people — and says "1 round" (#952, #953, #969, #975, #976)
