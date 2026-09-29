@@ -570,6 +570,10 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 
 The complete history is in [`CHANGELOG.md`](CHANGELOG.md); [`docs/release-notes/`](docs/release-notes/) holds longer prose notes for some releases.
 
+### v1.22.0 — The Lightning Round under Watch ⚡
+- **The host page and the television no longer stay frozen in the Lightning Round**: after five seconds without a frame they reconnect by themselves and rejoin the round where it stands (#1035)
+- With debug logging on, every Lightning frame records which screens it reached, so a returning freeze names its own cause in the Home Assistant log (#1044)
+
 ### v1.21.0 — One Copy of the Truth 🪞
 - **Things written twice had grown apart**: five name-escaping helpers with three meanings, two connection indicators, two reveal builders. Each now exists once, so a name with quotes renders the same on the television, the host page and the phones (#980, #982)
 - The host keeps End Game in reach in every phase including Lightning, a lost final wager shows as a minus, and the estimation packs hold 40 questions per language (#1017, #1030, #1031, #1028)
