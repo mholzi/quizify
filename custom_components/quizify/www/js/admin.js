@@ -22,6 +22,11 @@
     // /quizify/player once the phase leaves LOBBY (so admin can
     // actually answer questions).
     let _adminJoinedAs = null;
+    // #1035: true between a Lightning question and its recap, the stretch in
+    // which the server ticks every second. The intro splash is excluded: it
+    // holds for seconds with no frame at all. createSocket's stall watchdog
+    // reads this through stallGuard.
+    let _lightningLive = false;
 
     // Settings (from chips)
     let selectedCategory = 'mixed';
@@ -1716,6 +1721,9 @@
                 _pushDifficulty();
             },
             onMessage: handleMessage,
+            stallGuard: function () {
+                return _lightningLive && currentPhase === 'LIGHTNING';
+            },
             onClose: function () {
                 ws = null;
                 if (reconnectAttempts < MAX_RECONNECT) {
@@ -1828,6 +1836,7 @@
                 handleAdminLightningQuestion(msg);
                 break;
             case 'lightning_tick':
+                _lightningLive = true;
                 if (els.adminLightningTimer && typeof msg.remaining === 'number') {
                     els.adminLightningTimer.textContent = Math.ceil(msg.remaining) + 's';
                 }
@@ -2155,6 +2164,7 @@
         if (_redirecting) return;
         msg = msg || {};
         currentPhase = 'LIGHTNING';
+        _lightningLive = false;
         showView('lightning');
         _toggleAdminLightningSplash(true);
         if (els.adminLightningSplashRules) {
@@ -2172,6 +2182,7 @@
     function handleAdminLightningQuestion(msg) {
         if (_redirecting) return;
         currentPhase = 'LIGHTNING';
+        _lightningLive = true;
         showView('lightning');
         _toggleAdminLightningSplash(false);
         if (els.adminLightningProgress) {

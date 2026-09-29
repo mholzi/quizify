@@ -34,6 +34,11 @@
     // tracked the phase before — handleGameState read msg.phase and threw
     // it away. Mirrors admin.js's currentPhase, set from the same events.
     var currentPhase = 'LOBBY';
+    // #1035: true between a Lightning question and its recap, the stretch in
+    // which the server ticks every second. The intro splash is excluded: it
+    // holds for seconds with no frame at all. createSocket's stall watchdog
+    // reads this through stallGuard.
+    var lightningLive = false;
 
     // ---- DOM ----
     var views = {
@@ -393,6 +398,9 @@
                 ws.send(JSON.stringify({ type: 'get_state' }));
             },
             onMessage: handleMessage,
+            stallGuard: function () {
+                return lightningLive && currentPhase === 'LIGHTNING';
+            },
             onClose: function () {
                 ws = null;
                 // #421: surface the dead socket so a mid-question freeze doesn't
@@ -865,6 +873,7 @@
     // ---- Lightning (#296) — mirrors admin.js handlers for the TV. ----
     function handleLightningSplash(msg) {
         currentPhase = 'LIGHTNING';
+        lightningLive = false;
         showView('lightning');
         if (els.lightningSplash) els.lightningSplash.hidden = false;
         if (els.lightningQuestionSection) els.lightningQuestionSection.hidden = true;
@@ -881,6 +890,7 @@
 
     function handleLightningQuestion(msg) {
         currentPhase = 'LIGHTNING';
+        lightningLive = true;
         showView('lightning');
         if (els.lightningSplash) els.lightningSplash.hidden = true;
         if (els.lightningQuestionSection) els.lightningQuestionSection.hidden = false;
@@ -907,6 +917,7 @@
     function handleLightningTick(msg) {
         // Lightning has its own clock; show it on the shared timer bar so
         // the room sees the countdown. The server sends remaining seconds.
+        lightningLive = true;
         if (typeof msg.remaining !== 'number') return;
         // #425: use the round's real seconds_per_question (seeded from the
         // splash / game_state payload) so a non-15s round scales correctly.

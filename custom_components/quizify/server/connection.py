@@ -459,23 +459,87 @@ class ConnectionManager:
     # Broadcast helpers
     # ------------------------------------------------------------------
 
-    async def broadcast(self, message: dict) -> None:
-        """Broadcast *message* to all connected clients in parallel."""
+    def _role_of(self, ws: web.WebSocketResponse) -> str:
+        """Name the socket's role for a log line (#1035)."""
+        if ws in self._admin_connections:
+            return "admin"
+        if ws in self._dashboard_connections:
+            return "dashboard"
+        return "player"
+
+    def _log_fanout(
+        self,
+        frame: str,
+        targets: list[web.WebSocketResponse],
+        results: list[bool],
+        skipped_closed: list[web.WebSocketResponse],
+    ) -> None:
+        """One DEBUG line per diagnosed frame: who it went to, what failed (#1035).
+
+        The live test in #1035 saw the host page and the television freeze on
+        a Lightning question while the phones, served by the same broadcast,
+        reached the recap. The log could not say whether the server still
+        wrote to those two sockets; this line can. Counted per role, because
+        the question is precisely whether the admin and dashboard sockets were
+        among the targets, and whether their sends went through.
+        """
+        if not _LOGGER.isEnabledFor(logging.DEBUG):
+            return
+        sent = {"admin": 0, "dashboard": 0, "player": 0}
+        failed = {"admin": 0, "dashboard": 0, "player": 0}
+        for ws, ok in zip(targets, results, strict=True):
+            role = self._role_of(ws)
+            sent[role] += 1
+            if not ok:
+                failed[role] += 1
+        closed = {"admin": 0, "dashboard": 0, "player": 0}
+        for ws in skipped_closed:
+            closed[self._role_of(ws)] += 1
+        _LOGGER.debug(
+            "Fan-out %s: admin=%d dashboard=%d player=%d; "
+            "failed admin=%d dashboard=%d player=%d; "
+            "skipped closed admin=%d dashboard=%d player=%d",
+            frame,
+            sent["admin"], sent["dashboard"], sent["player"],
+            failed["admin"], failed["dashboard"], failed["player"],
+            closed["admin"], closed["dashboard"], closed["player"],
+        )
+
+    async def broadcast(
+        self, message: dict, *, diagnose: bool = False
+    ) -> None:
+        """Broadcast *message* to all connected clients in parallel.
+
+        ``diagnose`` adds the per-role DEBUG line from :meth:`_log_fanout`
+        (#1035). Only the Lightning frames ask for it, so a normal game's
+        fan-outs cost nothing extra.
+        """
         if not self.connections:
             return
         # Serialize once, then send_str to every client (#258) — avoids
         # re-encoding the same payload N times via per-client send_json.
         payload = json.dumps(message)
-        tasks = [
-            self._safe_send_str(ws, payload)
-            for ws in list(self.connections)
-            if not ws.closed
-        ]
-        if tasks:
-            await asyncio.gather(*tasks)
+        sockets = list(self.connections)
+        targets = [ws for ws in sockets if not ws.closed]
+        results: list[bool] = []
+        if targets:
+            results = list(await asyncio.gather(
+                *(self._safe_send_str(ws, payload) for ws in targets)
+            ))
+        if diagnose:
+            self._log_fanout(
+                str(message.get("type")),
+                targets,
+                results,
+                [ws for ws in sockets if ws.closed],
+            )
 
     async def broadcast_to_admins_and_dashboards(
-        self, message: dict, *, dashboard_message: dict | None = None
+        self,
+        message: dict,
+        *,
+        dashboard_message: dict | None = None,
+        diagnose: bool = False,
     ) -> None:
         """Broadcast to pure admin connections and the TV-dashboard spectators.
 
@@ -509,6 +573,8 @@ class ConnectionManager:
             json.dumps(dashboard_message) if dashboard_message is not None else payload
         )
         tasks = []
+        targets: list[web.WebSocketResponse] = []
+        skipped_closed: list[web.WebSocketResponse] = []
         seen: set[web.WebSocketResponse] = set()
         # Admins first, so a socket that is registered as both admin and
         # dashboard is served the full payload exactly once: it authenticated,
@@ -519,29 +585,47 @@ class ConnectionManager:
             (self._dashboard_connections, dash_payload),
         ):
             for ws in group:
-                if ws.closed or ws in admin_as_player_ws or ws in seen:
+                if ws in admin_as_player_ws or ws in seen:
                     continue
                 seen.add(ws)
+                if ws.closed:
+                    skipped_closed.append(ws)
+                    continue
+                targets.append(ws)
                 tasks.append(self._safe_send_str(ws, group_payload))
+        results: list[bool] = []
         if tasks:
-            await asyncio.gather(*tasks)
+            results = list(await asyncio.gather(*tasks))
+        if diagnose:
+            self._log_fanout(
+                str(message.get("type")), targets, results, skipped_closed
+            )
 
-    async def send(self, ws: web.WebSocketResponse, message: dict) -> None:
+    async def send(self, ws: web.WebSocketResponse, message: dict) -> bool:
         """Send *message* to *ws*, swallowing any send errors.
 
         The public single-socket send primitive. Errors are intentionally
         swallowed (and logged) so one dead/slow client can't break a fan-out.
         A per-send timeout (#307) bounds a half-dead client so the per-player
         gather fan-outs (timer ticks, question sends) can't stall room-wide.
+        Returns whether the send went through (#1035).
         """
         try:
             await asyncio.wait_for(ws.send_json(message), timeout=self._SEND_TIMEOUT)
         except TimeoutError:
-            _LOGGER.warning("Timed out sending to WebSocket (slow/dead client)")
+            _LOGGER.warning(
+                "Timed out sending to WebSocket (slow/dead client, role=%s)",
+                self._role_of(ws),
+            )
+            return False
         except Exception as err:  # noqa: BLE001
-            _LOGGER.warning("Failed to send to WebSocket: %s", err)
+            _LOGGER.warning(
+                "Failed to send to WebSocket (role=%s): %s", self._role_of(ws), err
+            )
+            return False
+        return True
 
-    async def send_to_player(self, player: PlayerSession, message: dict) -> None:
+    async def send_to_player(self, player: PlayerSession, message: dict) -> bool:
         """Send *message* to whatever socket *player* is bound to.
 
         The one place the game layer's opaque ``connection_id`` is turned back
@@ -551,14 +635,14 @@ class ConnectionManager:
         """
         ws = self.socket_for(player.connection_id)
         if ws is None:
-            return
-        await self.send(ws, message)
+            return False
+        return await self.send(ws, message)
 
     # Backwards-compatible alias for the former private name. Some tests still
     # patch ``_safe_send``; keep it pointing at the public method.
     _safe_send = send
 
-    async def _safe_send_str(self, ws: web.WebSocketResponse, payload: str) -> None:
+    async def _safe_send_str(self, ws: web.WebSocketResponse, payload: str) -> bool:
         """Send a pre-serialized JSON *payload* to *ws*, swallowing errors.
 
         Used by the broadcast helpers so the same fan-out message is
@@ -566,13 +650,26 @@ class ConnectionManager:
         Wrapped in a per-send timeout (#307) so one stalled socket can't pin
         the whole fan-out; a TimeoutError is swallowed like any other send
         error so the broadcast still reaches the healthy clients.
+
+        Returns whether the send went through. The warning names the socket's
+        role (#1035): a failed send to the host page or the television is the
+        one thing the #1035 log could not show, and "which client" is the
+        first question such a line raises.
         """
         try:
             await asyncio.wait_for(ws.send_str(payload), timeout=self._SEND_TIMEOUT)
         except TimeoutError:
-            _LOGGER.warning("Timed out sending to WebSocket (slow/dead client)")
+            _LOGGER.warning(
+                "Timed out sending to WebSocket (slow/dead client, role=%s)",
+                self._role_of(ws),
+            )
+            return False
         except Exception as err:  # noqa: BLE001
-            _LOGGER.warning("Failed to send to WebSocket: %s", err)
+            _LOGGER.warning(
+                "Failed to send to WebSocket (role=%s): %s", self._role_of(ws), err
+            )
+            return False
+        return True
 
     async def send_error(
         self, ws: web.WebSocketResponse, code: str, message: str | None = None

@@ -84,12 +84,23 @@
     }
 
     /**
+     * #1035: how long a live round may go without a single frame before the
+     * socket is presumed dead. The Lightning Round ticks at 1 Hz, so five
+     * seconds is five missed ticks: well clear of a slow network, well short
+     * of the 30 s the server heartbeat needs to notice a dead peer.
+     */
+    var STALL_TIMEOUT_MS = 5000;
+    var STALL_CHECK_MS = 1000;
+
+    /**
      * Open a socket with the three rules every surface shares.
      *
      *   opts.onOpen(ws)     — after the socket opens.
      *   opts.onMessage(msg) — one parsed frame.
      *   opts.onClose()      — after close; the caller decides about retrying.
      *   opts.logPrefix      — tag for the bad-frame console line.
+     *   opts.stallGuard()   — optional; true while the page expects a steady
+     *                         stream of frames (see STALL_TIMEOUT_MS below).
      *
      * `onMessage` runs INSIDE the parse try/catch, which is how all three
      * surfaces already had it and is load-bearing: a renderer that throws on
@@ -100,12 +111,51 @@
         opts = opts || {};
         var prefix = opts.logPrefix || '[Quizify]';
         var ws = new WebSocket(socketUrl(path));
+        var lastFrameAt = Date.now();
+        var stallTimer = null;
+
+        function stopStallWatch() {
+            if (stallTimer !== null) {
+                clearInterval(stallTimer);
+                stallTimer = null;
+            }
+        }
+
+        // #1035: the stall watchdog. The host page and the television froze
+        // on a Lightning question while the phones, served by the same
+        // broadcast, carried on to the recap. Neither page had any liveness
+        // check: they only react to onclose/onerror, and a half-open socket
+        // (or a tab the browser froze and thawed) fires neither. While the
+        // caller says a steady stream is due, silence longer than the window
+        // is treated as a dead socket: drop it and hand over to the page's
+        // own onClose, i.e. the reconnect path it already has, whose
+        // get_state restores the right view.
+        if (opts.stallGuard) {
+            stallTimer = setInterval(function () {
+                if (ws.readyState !== 1 /* OPEN */) return;
+                if (!opts.stallGuard()) return;
+                if (Date.now() - lastFrameAt < STALL_TIMEOUT_MS) return;
+                stopStallWatch();
+                if (window.console && console.warn) {
+                    console.warn(prefix + ' No frame for ' + STALL_TIMEOUT_MS +
+                        'ms during a live round, reconnecting (#1035)');
+                }
+                // Detach first: a half-open socket may take long to report
+                // its close, and when it finally does it must not schedule a
+                // second reconnect next to the one started here.
+                ws.onopen = ws.onmessage = ws.onclose = ws.onerror = null;
+                try { ws.close(); } catch (e) { /* already gone */ }
+                if (opts.onClose) opts.onClose();
+            }, STALL_CHECK_MS);
+        }
 
         ws.onopen = function () {
+            lastFrameAt = Date.now();
             if (opts.onOpen) opts.onOpen(ws);
         };
 
         ws.onmessage = function (evt) {
+            lastFrameAt = Date.now();
             try {
                 var msg = JSON.parse(evt.data);
                 if (opts.onMessage) opts.onMessage(msg);
@@ -117,6 +167,7 @@
         };
 
         ws.onclose = function () {
+            stopStallWatch();
             if (opts.onClose) opts.onClose();
         };
 
@@ -275,6 +326,7 @@
         clearSession: clearSession,
         backoffDelay: backoffDelay,
         createSocket: createSocket,
+        STALL_TIMEOUT_MS: STALL_TIMEOUT_MS,
         updateConnectionIndicator: updateConnectionIndicator
     };
 })();
