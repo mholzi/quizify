@@ -3,6 +3,20 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.22.0-RC1] — 2026-09-29
+
+**The Lightning Round under Watch**
+
+Once in a live test, the host page and the television froze on the first Lightning question while the phones moved on to the recap. The cause is not proven yet, so this release candidate does two things about it.
+
+### The screens recover on their own
+
+If the host page or the television receives nothing for five seconds during a Lightning question, it reconnects by itself and picks the game up where it is.
+
+### The log can name the cause
+
+With debug logging on, every Lightning frame records which screens it reached and which sends failed, so the next freeze shows up in the Home Assistant log.
+
 ## [1.21.0] — 2026-09-28
 
 **One Copy of the Truth**
