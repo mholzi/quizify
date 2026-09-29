@@ -36,6 +36,7 @@ constructed directly in a test can pass the manager itself; the handler passes
 from __future__ import annotations
 
 import asyncio
+import logging
 from collections.abc import Awaitable, Callable
 from typing import TYPE_CHECKING, Any
 
@@ -57,6 +58,8 @@ if TYPE_CHECKING:
     from custom_components.quizify.server.round_message_builder import (
         RoundMessageBuilder,
     )
+
+_LOGGER = logging.getLogger(__name__)
 
 __all__ = [
     "HotSeatBroadcaster",
@@ -137,7 +140,13 @@ class LightningBroadcaster(_Broadcaster):
                 "image_url": q.image_url,
             }))
         if lightning_sends:
-            await asyncio.gather(*lightning_sends)
+            results = await asyncio.gather(*lightning_sends)
+            # #1035: the per-player half of this frame. The admin/dashboard
+            # half logs its own line below, via ``diagnose``.
+            _LOGGER.debug(
+                "Fan-out lightning_question (players): sent=%d failed=%d",
+                len(results), sum(1 for ok in results if ok is False),
+            )
         await self._conn.broadcast_to_admins_and_dashboards({
             "type": "lightning_question",
             "question_text": q.question,
@@ -147,7 +156,7 @@ class LightningBroadcaster(_Broadcaster):
             "seconds": lr.seconds_per_question,
             "category": q.category,
             "image_url": q.image_url,
-        })
+        }, diagnose=True)
 
     async def send_lightning_tick(
         self, game_state: QuizifyGameState, lr: LightningRound
@@ -158,7 +167,7 @@ class LightningBroadcaster(_Broadcaster):
             "type": "lightning_tick",
             "remaining": remaining,
             "index": lr.index,
-        })
+        }, diagnose=True)
 
     async def send_lightning_recap(self, game_state: QuizifyGameState) -> None:
         """Push the end-of-mode recap."""
@@ -168,7 +177,7 @@ class LightningBroadcaster(_Broadcaster):
         await self._conn.broadcast({
             "type": "lightning_recap",
             "recap": lr.build_recap(),
-        })
+        }, diagnose=True)
 
     async def send_lightning_answer_result(
         self,
@@ -473,7 +482,7 @@ class RoundBroadcaster(_Broadcaster):
         copy is pre-serialized ONCE and goes out over the broadcast string path
         (admin-as-player is already excluded there).
         """
-        sends = []
+        sends: list[Awaitable[object]] = []
         if remaining_by_player:
             by_name = {p.name: p for p in game_state.get_players()}
             for name, remaining in remaining_by_player.items():
