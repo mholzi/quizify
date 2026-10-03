@@ -1,7 +1,7 @@
 {
   "name": "Picture Round",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "trivia",
   "questions": [
     {
@@ -376,6 +376,512 @@
       "difficulty": "medium",
       "fun_fact": "Only about 35 works by Vermeer are known — this was the first to enter an American collection.",
       "image_url": "/quizify/static/img/packs/picture-round/young-woman-water-pitcher.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-018",
+      "question": "Which space mission took this photograph of an astronaut on the Moon?",
+      "answers": [
+        {
+          "text": "Apollo 11",
+          "correct": true
+        },
+        {
+          "text": "Apollo 13",
+          "correct": false
+        },
+        {
+          "text": "Apollo 17",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Neil Armstrong took the picture of Buzz Aldrin in July 1969. Armstrong himself is reflected in the visor.",
+      "image_url": "/quizify/static/img/packs/picture-round/aldrin-visor.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-019",
+      "question": "What was this brass instrument used for?",
+      "answers": [
+        {
+          "text": "Telling time by the stars and sun",
+          "correct": true
+        },
+        {
+          "text": "Measuring distances on land",
+          "correct": false
+        },
+        {
+          "text": "Predicting the weather",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Astronomers in the medieval Islamic world refined the astrolabe and added scales for prayer times and the direction of Mecca.",
+      "image_url": "/quizify/static/img/packs/picture-round/astrolabe.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-020",
+      "question": "What is this 1972 photograph of the whole Earth called?",
+      "answers": [
+        {
+          "text": "The Blue Marble",
+          "correct": true
+        },
+        {
+          "text": "Earthrise",
+          "correct": false
+        },
+        {
+          "text": "The Pale Blue Dot",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Apollo 17 crew took it on the way to the Moon, with the Sun behind them, so the whole disc is lit.",
+      "image_url": "/quizify/static/img/packs/picture-round/blue-marble.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-021",
+      "question": "What does the surface of this 17th-century globe show?",
+      "answers": [
+        {
+          "text": "The stars and constellations",
+          "correct": true
+        },
+        {
+          "text": "The ocean currents",
+          "correct": false
+        },
+        {
+          "text": "The continents and oceans",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Dutch mapmaker Willem Blaeu made globes in pairs: one of the Earth and one of the sky.",
+      "image_url": "/quizify/static/img/packs/picture-round/celestial-globe.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-022",
+      "question": "Which Roman landmark appears in this photograph from the 1850s?",
+      "answers": [
+        {
+          "text": "The Colosseum",
+          "correct": true
+        },
+        {
+          "text": "The Pantheon",
+          "correct": false
+        },
+        {
+          "text": "The Circus Maximus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Built around AD 70 to 80, the Colosseum could hold an estimated 50,000 spectators.",
+      "image_url": "/quizify/static/img/packs/picture-round/colosseum-photo.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-023",
+      "question": "Which instrument is this, built in Florence in 1720?",
+      "answers": [
+        {
+          "text": "A piano",
+          "correct": true
+        },
+        {
+          "text": "A harpsichord",
+          "correct": false
+        },
+        {
+          "text": "A clavichord",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bartolomeo Cristofori invented the piano around 1700. This is the oldest surviving example.",
+      "image_url": "/quizify/static/img/packs/picture-round/cristofori-piano.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-024",
+      "question": "Which robot took this selfie on Mars?",
+      "answers": [
+        {
+          "text": "Curiosity",
+          "correct": true
+        },
+        {
+          "text": "Perseverance",
+          "correct": false
+        },
+        {
+          "text": "Opportunity",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A rover selfie is stitched together from dozens of photos. The robotic arm that held the camera is edited out.",
+      "image_url": "/quizify/static/img/packs/picture-round/curiosity-selfie.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-025",
+      "question": "Who created this sculpture of a young ballet dancer?",
+      "answers": [
+        {
+          "text": "Edgar Degas",
+          "correct": true
+        },
+        {
+          "text": "Auguste Rodin",
+          "correct": false
+        },
+        {
+          "text": "Camille Claudel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Degas showed the wax original in 1881, dressed in real fabric. The bronze casts were made after his death.",
+      "image_url": "/quizify/static/img/packs/picture-round/degas-little-dancer.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-026",
+      "question": "Which Paris landmark is shown in this photograph from the 1890s?",
+      "answers": [
+        {
+          "text": "The Eiffel Tower",
+          "correct": true
+        },
+        {
+          "text": "The Arc de Triomphe",
+          "correct": false
+        },
+        {
+          "text": "Notre-Dame",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The tower was built for the 1889 World's Fair and was originally meant to be taken down after 20 years.",
+      "image_url": "/quizify/static/img/packs/picture-round/eiffel-tower.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-027",
+      "question": "Which Spanish city did El Greco paint under this stormy sky?",
+      "answers": [
+        {
+          "text": "Toledo",
+          "correct": true
+        },
+        {
+          "text": "Seville",
+          "correct": false
+        },
+        {
+          "text": "Granada",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El Greco lived in Toledo for decades. This is one of only two landscapes he is known to have painted.",
+      "image_url": "/quizify/static/img/packs/picture-round/el-greco-toledo.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-028",
+      "question": "Which painter built this park scene from thousands of tiny dots of colour?",
+      "answers": [
+        {
+          "text": "Georges Seurat",
+          "correct": true
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        },
+        {
+          "text": "Camille Pissarro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Seurat worked on the painting from 1884 to 1886. His dot technique is called pointillism.",
+      "image_url": "/quizify/static/img/packs/picture-round/grande-jatte.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-029",
+      "question": "Which ancient monument is shown in this photograph from the 1850s?",
+      "answers": [
+        {
+          "text": "The Great Pyramid of Giza",
+          "correct": true
+        },
+        {
+          "text": "The Step Pyramid of Djoser",
+          "correct": false
+        },
+        {
+          "text": "The Pyramid of the Sun",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "For about 3,800 years it was the tallest human-made structure in the world.",
+      "image_url": "/quizify/static/img/packs/picture-round/great-pyramid-giza.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-030",
+      "question": "Which ancient civilization made this marble statue of a standing youth?",
+      "answers": [
+        {
+          "text": "The Greeks",
+          "correct": true
+        },
+        {
+          "text": "The Etruscans",
+          "correct": false
+        },
+        {
+          "text": "The Romans",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Greek kouros statues copy the rigid pose of Egyptian figures. This one dates from about 590 BCE.",
+      "image_url": "/quizify/static/img/packs/picture-round/greek-kouros.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-031",
+      "question": "Whose face does this granite sphinx carry?",
+      "answers": [
+        {
+          "text": "Hatshepsut",
+          "correct": true
+        },
+        {
+          "text": "Ramesses II",
+          "correct": false
+        },
+        {
+          "text": "Tutankhamun",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hatshepsut ruled Egypt as pharaoh around 3,500 years ago and is shown here with the ceremonial royal beard.",
+      "image_url": "/quizify/static/img/packs/picture-round/hatshepsut-sphinx.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-032",
+      "question": "Which animal is this famous 4,000-year-old Egyptian figurine?",
+      "answers": [
+        {
+          "text": "A hippopotamus",
+          "correct": true
+        },
+        {
+          "text": "A crocodile",
+          "correct": false
+        },
+        {
+          "text": "A rhinoceros",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nicknamed William, it is the unofficial mascot of the museum that owns it. Marsh plants are painted on its body.",
+      "image_url": "/quizify/static/img/packs/picture-round/hippo-william.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-033",
+      "question": "Which painter made a famous oil copy of this Japanese woodblock print?",
+      "answers": [
+        {
+          "text": "Vincent van Gogh",
+          "correct": true
+        },
+        {
+          "text": "Paul Gauguin",
+          "correct": false
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Van Gogh painted his version in 1887 and added a decorative border in imitation of Japanese calligraphy.",
+      "image_url": "/quizify/static/img/packs/picture-round/hiroshige-shin-ohashi.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-034",
+      "question": "Who painted this rainy Paris street corner with umbrellas?",
+      "answers": [
+        {
+          "text": "Gustave Caillebotte",
+          "correct": true
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        },
+        {
+          "text": "Pierre-Auguste Renoir",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 1877 canvas shows the new Haussmann boulevards and is more than 2.7 metres wide.",
+      "image_url": "/quizify/static/img/packs/picture-round/paris-street-rainy-day.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-035",
+      "question": "What is the name of this famous bronze sculpture of a brooding seated man?",
+      "answers": [
+        {
+          "text": "The Thinker",
+          "correct": true
+        },
+        {
+          "text": "The Kiss",
+          "correct": false
+        },
+        {
+          "text": "The Discus Thrower",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rodin first conceived it around 1880 as the figure of Dante above his monumental Gates of Hell.",
+      "image_url": "/quizify/static/img/packs/picture-round/rodin-thinker.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-036",
+      "question": "Which planet did the Cassini spacecraft photograph here?",
+      "answers": [
+        {
+          "text": "Saturn",
+          "correct": true
+        },
+        {
+          "text": "Jupiter",
+          "correct": false
+        },
+        {
+          "text": "Neptune",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cassini orbited Saturn for 13 years, from 2004 to 2017.",
+      "image_url": "/quizify/static/img/packs/picture-round/saturn-portrait.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-037",
+      "question": "Which rocket is being carried to its launch pad here?",
+      "answers": [
+        {
+          "text": "Saturn V",
+          "correct": true
+        },
+        {
+          "text": "Ariane 5",
+          "correct": false
+        },
+        {
+          "text": "Space Shuttle",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Saturn V stood about 110 metres tall and sent astronauts to the Moon on Apollo 8 and Apollo 10 to 17.",
+      "image_url": "/quizify/static/img/packs/picture-round/saturn-v-rollout.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-038",
+      "question": "Which vehicle is lifting off from Cape Canaveral in this photograph?",
+      "answers": [
+        {
+          "text": "The Space Shuttle",
+          "correct": true
+        },
+        {
+          "text": "A Saturn V",
+          "correct": false
+        },
+        {
+          "text": "A Soyuz rocket",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "This is Atlantis on 27 June 1995, flying to the first docking of a shuttle with Russia's Mir station.",
+      "image_url": "/quizify/static/img/packs/picture-round/shuttle-atlantis-launch.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-039",
+      "question": "Which famous mausoleum is shown in this 19th-century photograph?",
+      "answers": [
+        {
+          "text": "The Taj Mahal",
+          "correct": true
+        },
+        {
+          "text": "Humayun's Tomb",
+          "correct": false
+        },
+        {
+          "text": "The Lotus Temple",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Shah Jahan commissioned it in 1631 as a tomb for his wife Mumtaz Mahal.",
+      "image_url": "/quizify/static/img/packs/picture-round/taj-mahal.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-en-040",
+      "question": "In which museum does this ancient Egyptian temple stand today?",
+      "answers": [
+        {
+          "text": "The Metropolitan Museum, New York",
+          "correct": true
+        },
+        {
+          "text": "The British Museum, London",
+          "correct": false
+        },
+        {
+          "text": "The Louvre, Paris",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Egypt gave it to the United States in 1965 as thanks for help saving monuments from the Aswan High Dam flooding.",
+      "image_url": "/quizify/static/img/packs/picture-round/temple-of-dendur.webp",
       "reveal_style": "progressive"
     }
   ]
