@@ -99,4 +99,6 @@ def test_packs_are_registered_in_versions_json() -> None:
 def test_images_stay_within_a_sane_budget() -> None:
     """HACS downloads the whole repository on every install."""
     total_kb = sum(p.stat().st_size for p in IMAGES.glob("*.webp")) / 1024
-    assert total_kb < 4096, f"picture-round images grew to {total_kb:.0f} KB"
+    # 17 images were 2.3 MB; the packs now hold 40 (4.4 MB). The cap moved from
+    # 4096 to 6144 KB with them, so the next batch has to argue for its weight.
+    assert total_kb < 6144, f"picture-round images grew to {total_kb:.0f} KB"

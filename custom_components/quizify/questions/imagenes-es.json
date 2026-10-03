@@ -1,7 +1,7 @@
 {
   "name": "Ronda de Imágenes",
   "language": "es",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "trivia",
   "questions": [
     {
@@ -376,6 +376,512 @@
       "difficulty": "medium",
       "fun_fact": "De Vermeer solo se conocen unas 35 obras; esta fue la primera que llegó a una colección estadounidense.",
       "image_url": "/quizify/static/img/packs/picture-round/young-woman-water-pitcher.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-018",
+      "question": "¿Qué misión espacial tomó esta fotografía de un astronauta en la Luna?",
+      "answers": [
+        {
+          "text": "Apollo 11",
+          "correct": true
+        },
+        {
+          "text": "Apollo 13",
+          "correct": false
+        },
+        {
+          "text": "Apollo 17",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Neil Armstrong fotografió a Buzz Aldrin en julio de 1969. En la visera se refleja el propio Armstrong.",
+      "image_url": "/quizify/static/img/packs/picture-round/aldrin-visor.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-019",
+      "question": "¿Para qué se utilizaba este instrumento de latón?",
+      "answers": [
+        {
+          "text": "Para medir la hora por los astros",
+          "correct": true
+        },
+        {
+          "text": "Para medir distancias en tierra",
+          "correct": false
+        },
+        {
+          "text": "Para predecir el tiempo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los astrónomos del mundo islámico medieval perfeccionaron el astrolabio y le añadieron escalas para las horas de oración y la dirección de La Meca.",
+      "image_url": "/quizify/static/img/packs/picture-round/astrolabe.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-020",
+      "question": "¿Cómo se llama esta fotografía de la Tierra entera de 1972?",
+      "answers": [
+        {
+          "text": "La canica azul (Blue Marble)",
+          "correct": true
+        },
+        {
+          "text": "Salida de la Tierra (Earthrise)",
+          "correct": false
+        },
+        {
+          "text": "Un punto azul pálido (Pale Blue Dot)",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La tripulación del Apollo 17 la tomó de camino a la Luna, con el Sol a la espalda, por eso todo el disco aparece iluminado.",
+      "image_url": "/quizify/static/img/packs/picture-round/blue-marble.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-021",
+      "question": "¿Qué muestra la superficie de este globo del siglo XVII?",
+      "answers": [
+        {
+          "text": "Las estrellas y constelaciones",
+          "correct": true
+        },
+        {
+          "text": "Las corrientes oceánicas",
+          "correct": false
+        },
+        {
+          "text": "Los continentes y océanos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cartógrafo neerlandés Willem Blaeu fabricaba los globos por parejas: uno de la Tierra y otro del cielo.",
+      "image_url": "/quizify/static/img/packs/picture-round/celestial-globe.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-022",
+      "question": "¿Qué monumento romano aparece en esta fotografía de la década de 1850?",
+      "answers": [
+        {
+          "text": "El Coliseo",
+          "correct": true
+        },
+        {
+          "text": "El Panteón",
+          "correct": false
+        },
+        {
+          "text": "El Circo Máximo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Coliseo se construyó entre los años 70 y 80 d. C. y tenía capacidad para unos 50 000 espectadores.",
+      "image_url": "/quizify/static/img/packs/picture-round/colosseum-photo.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-023",
+      "question": "¿Qué instrumento es este, construido en Florencia en 1720?",
+      "answers": [
+        {
+          "text": "Un piano",
+          "correct": true
+        },
+        {
+          "text": "Un clavecín",
+          "correct": false
+        },
+        {
+          "text": "Un clavicordio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bartolomeo Cristofori inventó el piano hacia 1700. Este es el ejemplar más antiguo que se conserva.",
+      "image_url": "/quizify/static/img/packs/picture-round/cristofori-piano.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-024",
+      "question": "¿Qué robot se hizo este selfi en Marte?",
+      "answers": [
+        {
+          "text": "Curiosity",
+          "correct": true
+        },
+        {
+          "text": "Perseverance",
+          "correct": false
+        },
+        {
+          "text": "Opportunity",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El selfi de un róver se compone con decenas de fotos. El brazo robótico que sujeta la cámara se elimina de la imagen.",
+      "image_url": "/quizify/static/img/packs/picture-round/curiosity-selfie.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-025",
+      "question": "¿Quién creó esta escultura de una joven bailarina de ballet?",
+      "answers": [
+        {
+          "text": "Edgar Degas",
+          "correct": true
+        },
+        {
+          "text": "Auguste Rodin",
+          "correct": false
+        },
+        {
+          "text": "Camille Claudel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Degas expuso el original de cera en 1881, vestido con tejidos reales. Los bronces se fundieron después de su muerte.",
+      "image_url": "/quizify/static/img/packs/picture-round/degas-little-dancer.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-026",
+      "question": "¿Qué monumento de París aparece en esta fotografía de la década de 1890?",
+      "answers": [
+        {
+          "text": "La Torre Eiffel",
+          "correct": true
+        },
+        {
+          "text": "El Arco del Triunfo",
+          "correct": false
+        },
+        {
+          "text": "Notre-Dame",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La torre se levantó para la Exposición Universal de 1889 y en principio debía desmontarse a los 20 años.",
+      "image_url": "/quizify/static/img/packs/picture-round/eiffel-tower.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-027",
+      "question": "¿Qué ciudad española pintó El Greco bajo este cielo tormentoso?",
+      "answers": [
+        {
+          "text": "Toledo",
+          "correct": true
+        },
+        {
+          "text": "Sevilla",
+          "correct": false
+        },
+        {
+          "text": "Granada",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El Greco vivió en Toledo durante décadas. Es uno de los dos únicos paisajes que se le conocen.",
+      "image_url": "/quizify/static/img/packs/picture-round/el-greco-toledo.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-028",
+      "question": "¿Qué pintor construyó esta escena de parque con miles de diminutos puntos de color?",
+      "answers": [
+        {
+          "text": "Georges Seurat",
+          "correct": true
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        },
+        {
+          "text": "Camille Pissarro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Seurat trabajó en el cuadro de 1884 a 1886. Su técnica de puntos se llama puntillismo.",
+      "image_url": "/quizify/static/img/packs/picture-round/grande-jatte.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-029",
+      "question": "¿Qué monumento antiguo aparece en esta fotografía de la década de 1850?",
+      "answers": [
+        {
+          "text": "La Gran Pirámide de Guiza",
+          "correct": true
+        },
+        {
+          "text": "La pirámide escalonada de Dyoser",
+          "correct": false
+        },
+        {
+          "text": "La Pirámide del Sol",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Durante unos 3800 años fue la construcción humana más alta del mundo.",
+      "image_url": "/quizify/static/img/packs/picture-round/great-pyramid-giza.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-030",
+      "question": "¿Qué civilización antigua hizo esta estatua de mármol de un joven de pie?",
+      "answers": [
+        {
+          "text": "Los griegos",
+          "correct": true
+        },
+        {
+          "text": "Los etruscos",
+          "correct": false
+        },
+        {
+          "text": "Los romanos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los kuroi griegos imitan la pose rígida de las figuras egipcias. Este data de hacia el 590 a. C.",
+      "image_url": "/quizify/static/img/packs/picture-round/greek-kouros.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-031",
+      "question": "¿De quién es el rostro de esta esfinge de granito?",
+      "answers": [
+        {
+          "text": "Hatshepsut",
+          "correct": true
+        },
+        {
+          "text": "Ramsés II",
+          "correct": false
+        },
+        {
+          "text": "Tutankamón",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hatshepsut gobernó Egipto como faraón hace unos 3500 años y aquí lleva la barba ceremonial real.",
+      "image_url": "/quizify/static/img/packs/picture-round/hatshepsut-sphinx.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-032",
+      "question": "¿Qué animal representa esta famosa figura egipcia de 4000 años?",
+      "answers": [
+        {
+          "text": "Un hipopótamo",
+          "correct": true
+        },
+        {
+          "text": "Un cocodrilo",
+          "correct": false
+        },
+        {
+          "text": "Un rinoceronte",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Apodada William, es la mascota no oficial del museo que la posee. En el cuerpo lleva pintadas plantas de pantano.",
+      "image_url": "/quizify/static/img/packs/picture-round/hippo-william.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-033",
+      "question": "¿Qué pintor hizo una célebre copia al óleo de este grabado japonés en madera?",
+      "answers": [
+        {
+          "text": "Vincent van Gogh",
+          "correct": true
+        },
+        {
+          "text": "Paul Gauguin",
+          "correct": false
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Van Gogh pintó su versión en 1887 y le añadió un marco decorativo a imitación de la caligrafía japonesa.",
+      "image_url": "/quizify/static/img/packs/picture-round/hiroshige-shin-ohashi.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-034",
+      "question": "¿Quién pintó esta esquina lluviosa de París con paraguas?",
+      "answers": [
+        {
+          "text": "Gustave Caillebotte",
+          "correct": true
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        },
+        {
+          "text": "Pierre-Auguste Renoir",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El lienzo de 1877 muestra los nuevos bulevares de Haussmann y mide más de 2,7 metros de ancho.",
+      "image_url": "/quizify/static/img/packs/picture-round/paris-street-rainy-day.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-035",
+      "question": "¿Cómo se llama esta famosa escultura de bronce de un hombre sentado y pensativo?",
+      "answers": [
+        {
+          "text": "El pensador",
+          "correct": true
+        },
+        {
+          "text": "El beso",
+          "correct": false
+        },
+        {
+          "text": "El discóbolo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rodin la concibió hacia 1880 como la figura de Dante sobre su monumental Puerta del Infierno.",
+      "image_url": "/quizify/static/img/packs/picture-round/rodin-thinker.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-036",
+      "question": "¿Qué planeta fotografió aquí la sonda Cassini?",
+      "answers": [
+        {
+          "text": "Saturno",
+          "correct": true
+        },
+        {
+          "text": "Júpiter",
+          "correct": false
+        },
+        {
+          "text": "Neptuno",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cassini orbitó Saturno durante 13 años, de 2004 a 2017.",
+      "image_url": "/quizify/static/img/packs/picture-round/saturn-portrait.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-037",
+      "question": "¿Qué cohete se traslada aquí hacia su plataforma de lanzamiento?",
+      "answers": [
+        {
+          "text": "Saturn V",
+          "correct": true
+        },
+        {
+          "text": "Ariane 5",
+          "correct": false
+        },
+        {
+          "text": "Transbordador espacial",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Saturn V medía unos 110 metros y llevó astronautas a la Luna en el Apollo 8 y del Apollo 10 al 17.",
+      "image_url": "/quizify/static/img/packs/picture-round/saturn-v-rollout.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-038",
+      "question": "¿Qué vehículo despega de Cabo Cañaveral en esta fotografía?",
+      "answers": [
+        {
+          "text": "El transbordador espacial",
+          "correct": true
+        },
+        {
+          "text": "Un Saturn V",
+          "correct": false
+        },
+        {
+          "text": "Un cohete Soyuz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es el Atlantis el 27 de junio de 1995, en el vuelo del primer acoplamiento de un transbordador con la estación rusa Mir.",
+      "image_url": "/quizify/static/img/packs/picture-round/shuttle-atlantis-launch.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-039",
+      "question": "¿Qué famoso mausoleo aparece en esta fotografía del siglo XIX?",
+      "answers": [
+        {
+          "text": "El Taj Mahal",
+          "correct": true
+        },
+        {
+          "text": "La tumba de Humayun",
+          "correct": false
+        },
+        {
+          "text": "El Templo del Loto",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Shah Jahan lo encargó en 1631 como tumba para su esposa Mumtaz Mahal.",
+      "image_url": "/quizify/static/img/packs/picture-round/taj-mahal.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-040",
+      "question": "¿En qué museo se encuentra hoy este templo del antiguo Egipto?",
+      "answers": [
+        {
+          "text": "Museo Metropolitano, Nueva York",
+          "correct": true
+        },
+        {
+          "text": "Museo Británico, Londres",
+          "correct": false
+        },
+        {
+          "text": "Museo del Louvre, París",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Egipto lo regaló a Estados Unidos en 1965 en agradecimiento por la ayuda para salvar monumentos de las aguas de la presa de Asuán.",
+      "image_url": "/quizify/static/img/packs/picture-round/temple-of-dendur.webp",
       "reveal_style": "progressive"
     }
   ]

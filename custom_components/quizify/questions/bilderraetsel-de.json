@@ -1,7 +1,7 @@
 {
   "name": "Bilderrätsel",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "trivia",
   "questions": [
     {
@@ -376,6 +376,512 @@
       "difficulty": "medium",
       "fun_fact": "Von Vermeer sind nur etwa 35 Werke bekannt — dieses war das erste, das in eine amerikanische Sammlung kam.",
       "image_url": "/quizify/static/img/packs/picture-round/young-woman-water-pitcher.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-018",
+      "question": "Welche Raumfahrtmission hat dieses Foto eines Astronauten auf dem Mond aufgenommen?",
+      "answers": [
+        {
+          "text": "Apollo 11",
+          "correct": true
+        },
+        {
+          "text": "Apollo 13",
+          "correct": false
+        },
+        {
+          "text": "Apollo 17",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Neil Armstrong fotografierte Buzz Aldrin im Juli 1969. Im Visier spiegelt sich Armstrong selbst.",
+      "image_url": "/quizify/static/img/packs/picture-round/aldrin-visor.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-019",
+      "question": "Wofür wurde dieses Messinginstrument benutzt?",
+      "answers": [
+        {
+          "text": "Zeitbestimmung nach Sternen und Sonne",
+          "correct": true
+        },
+        {
+          "text": "Entfernungsmessung an Land",
+          "correct": false
+        },
+        {
+          "text": "Wettervorhersage",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Astronomen der mittelalterlichen islamischen Welt verfeinerten das Astrolabium und ergänzten Skalen für die Gebetszeiten und die Richtung nach Mekka.",
+      "image_url": "/quizify/static/img/packs/picture-round/astrolabe.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-020",
+      "question": "Wie heißt dieses Foto der ganzen Erde aus dem Jahr 1972?",
+      "answers": [
+        {
+          "text": "Blue Marble",
+          "correct": true
+        },
+        {
+          "text": "Earthrise",
+          "correct": false
+        },
+        {
+          "text": "Pale Blue Dot",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Besatzung von Apollo 17 nahm es auf dem Weg zum Mond auf. Die Sonne stand hinter ihr, deshalb ist die ganze Scheibe beleuchtet.",
+      "image_url": "/quizify/static/img/packs/picture-round/blue-marble.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-021",
+      "question": "Was zeigt die Oberfläche dieses Globus aus dem 17. Jahrhundert?",
+      "answers": [
+        {
+          "text": "Die Sterne und Sternbilder",
+          "correct": true
+        },
+        {
+          "text": "Die Meeresströmungen",
+          "correct": false
+        },
+        {
+          "text": "Die Kontinente und Ozeane",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der niederländische Kartograf Willem Blaeu fertigte Globen paarweise an: einen der Erde und einen des Himmels.",
+      "image_url": "/quizify/static/img/packs/picture-round/celestial-globe.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-022",
+      "question": "Welches römische Bauwerk ist auf diesem Foto aus den 1850er-Jahren zu sehen?",
+      "answers": [
+        {
+          "text": "Das Kolosseum",
+          "correct": true
+        },
+        {
+          "text": "Das Pantheon",
+          "correct": false
+        },
+        {
+          "text": "Der Circus Maximus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Kolosseum entstand um 70 bis 80 n. Chr. und bot geschätzt 50.000 Zuschauern Platz.",
+      "image_url": "/quizify/static/img/packs/picture-round/colosseum-photo.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-023",
+      "question": "Um welches Instrument handelt es sich, das 1720 in Florenz gebaut wurde?",
+      "answers": [
+        {
+          "text": "Ein Klavier",
+          "correct": true
+        },
+        {
+          "text": "Ein Cembalo",
+          "correct": false
+        },
+        {
+          "text": "Ein Clavichord",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bartolomeo Cristofori erfand das Klavier um 1700. Dies ist das älteste erhaltene Exemplar.",
+      "image_url": "/quizify/static/img/packs/picture-round/cristofori-piano.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-024",
+      "question": "Welcher Roboter hat dieses Selfie auf dem Mars aufgenommen?",
+      "answers": [
+        {
+          "text": "Curiosity",
+          "correct": true
+        },
+        {
+          "text": "Perseverance",
+          "correct": false
+        },
+        {
+          "text": "Opportunity",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein Rover-Selfie wird aus Dutzenden Einzelfotos zusammengesetzt. Der Roboterarm, der die Kamera hält, wird herausgerechnet.",
+      "image_url": "/quizify/static/img/packs/picture-round/curiosity-selfie.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-025",
+      "question": "Wer schuf diese Skulptur einer jungen Balletttänzerin?",
+      "answers": [
+        {
+          "text": "Edgar Degas",
+          "correct": true
+        },
+        {
+          "text": "Auguste Rodin",
+          "correct": false
+        },
+        {
+          "text": "Camille Claudel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Degas zeigte das Wachsoriginal 1881 mit echten Stoffen bekleidet. Die Bronzeabgüsse entstanden erst nach seinem Tod.",
+      "image_url": "/quizify/static/img/packs/picture-round/degas-little-dancer.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-026",
+      "question": "Welches Pariser Wahrzeichen ist auf diesem Foto aus den 1890er-Jahren zu sehen?",
+      "answers": [
+        {
+          "text": "Der Eiffelturm",
+          "correct": true
+        },
+        {
+          "text": "Der Triumphbogen",
+          "correct": false
+        },
+        {
+          "text": "Notre-Dame",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Turm entstand für die Weltausstellung 1889 und sollte eigentlich nach 20 Jahren wieder abgebaut werden.",
+      "image_url": "/quizify/static/img/packs/picture-round/eiffel-tower.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-027",
+      "question": "Welche spanische Stadt malte El Greco unter diesem stürmischen Himmel?",
+      "answers": [
+        {
+          "text": "Toledo",
+          "correct": true
+        },
+        {
+          "text": "Sevilla",
+          "correct": false
+        },
+        {
+          "text": "Granada",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El Greco lebte jahrzehntelang in Toledo. Dies ist eine von nur zwei Landschaften, die von ihm bekannt sind.",
+      "image_url": "/quizify/static/img/packs/picture-round/el-greco-toledo.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-028",
+      "question": "Welcher Maler setzte diese Parkszene aus Tausenden winziger Farbpunkte zusammen?",
+      "answers": [
+        {
+          "text": "Georges Seurat",
+          "correct": true
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        },
+        {
+          "text": "Camille Pissarro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Seurat arbeitete von 1884 bis 1886 an dem Bild. Seine Punkttechnik heißt Pointillismus.",
+      "image_url": "/quizify/static/img/packs/picture-round/grande-jatte.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-029",
+      "question": "Welches antike Monument ist auf diesem Foto aus den 1850er-Jahren zu sehen?",
+      "answers": [
+        {
+          "text": "Die Cheops-Pyramide von Gizeh",
+          "correct": true
+        },
+        {
+          "text": "Die Stufenpyramide des Djoser",
+          "correct": false
+        },
+        {
+          "text": "Die Sonnenpyramide",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rund 3800 Jahre lang war sie das höchste von Menschen errichtete Bauwerk der Welt.",
+      "image_url": "/quizify/static/img/packs/picture-round/great-pyramid-giza.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-030",
+      "question": "Welche antike Kultur schuf diese Marmorstatue eines stehenden Jünglings?",
+      "answers": [
+        {
+          "text": "Die Griechen",
+          "correct": true
+        },
+        {
+          "text": "Die Etrusker",
+          "correct": false
+        },
+        {
+          "text": "Die Römer",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Griechische Kuroi übernehmen die starre Haltung ägyptischer Figuren. Dieser stammt von etwa 590 v. Chr.",
+      "image_url": "/quizify/static/img/packs/picture-round/greek-kouros.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-031",
+      "question": "Wessen Gesicht trägt diese Sphinx aus Granit?",
+      "answers": [
+        {
+          "text": "Hatschepsut",
+          "correct": true
+        },
+        {
+          "text": "Ramses II.",
+          "correct": false
+        },
+        {
+          "text": "Tutanchamun",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hatschepsut regierte Ägypten vor rund 3500 Jahren als Pharao und trägt hier den zeremoniellen Königsbart.",
+      "image_url": "/quizify/static/img/packs/picture-round/hatshepsut-sphinx.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-032",
+      "question": "Welches Tier stellt diese berühmte, 4000 Jahre alte ägyptische Figur dar?",
+      "answers": [
+        {
+          "text": "Ein Nilpferd",
+          "correct": true
+        },
+        {
+          "text": "Ein Krokodil",
+          "correct": false
+        },
+        {
+          "text": "Ein Nashorn",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Figur hat den Spitznamen William und ist das inoffizielle Maskottchen des Museums, das sie besitzt. Auf dem Körper sind Sumpfpflanzen aufgemalt.",
+      "image_url": "/quizify/static/img/packs/picture-round/hippo-william.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-033",
+      "question": "Welcher Maler fertigte eine berühmte Ölkopie dieses japanischen Holzschnitts an?",
+      "answers": [
+        {
+          "text": "Vincent van Gogh",
+          "correct": true
+        },
+        {
+          "text": "Paul Gauguin",
+          "correct": false
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Van Gogh malte seine Fassung 1887 und fügte einen dekorativen Rand nach dem Vorbild japanischer Schriftzeichen hinzu.",
+      "image_url": "/quizify/static/img/packs/picture-round/hiroshige-shin-ohashi.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-034",
+      "question": "Wer malte diese regnerische Pariser Straßenecke mit Regenschirmen?",
+      "answers": [
+        {
+          "text": "Gustave Caillebotte",
+          "correct": true
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        },
+        {
+          "text": "Pierre-Auguste Renoir",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Gemälde von 1877 zeigt die neuen Haussmann-Boulevards und ist über 2,7 Meter breit.",
+      "image_url": "/quizify/static/img/packs/picture-round/paris-street-rainy-day.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-035",
+      "question": "Wie heißt diese berühmte Bronzeskulptur eines grübelnd sitzenden Mannes?",
+      "answers": [
+        {
+          "text": "Der Denker",
+          "correct": true
+        },
+        {
+          "text": "Der Kuss",
+          "correct": false
+        },
+        {
+          "text": "Der Diskuswerfer",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rodin entwarf sie um 1880 als Figur Dantes über seinem monumentalen Höllentor.",
+      "image_url": "/quizify/static/img/packs/picture-round/rodin-thinker.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-036",
+      "question": "Welchen Planeten hat die Raumsonde Cassini hier fotografiert?",
+      "answers": [
+        {
+          "text": "Saturn",
+          "correct": true
+        },
+        {
+          "text": "Jupiter",
+          "correct": false
+        },
+        {
+          "text": "Neptun",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cassini umkreiste den Saturn 13 Jahre lang, von 2004 bis 2017.",
+      "image_url": "/quizify/static/img/packs/picture-round/saturn-portrait.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-037",
+      "question": "Welche Rakete wird hier zur Startrampe gefahren?",
+      "answers": [
+        {
+          "text": "Saturn V",
+          "correct": true
+        },
+        {
+          "text": "Ariane 5",
+          "correct": false
+        },
+        {
+          "text": "Space Shuttle",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Saturn V war etwa 110 Meter hoch und brachte Astronauten mit Apollo 8 und Apollo 10 bis 17 zum Mond.",
+      "image_url": "/quizify/static/img/packs/picture-round/saturn-v-rollout.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-038",
+      "question": "Welches Raumfahrzeug hebt auf diesem Foto in Cape Canaveral ab?",
+      "answers": [
+        {
+          "text": "Das Space Shuttle",
+          "correct": true
+        },
+        {
+          "text": "Eine Saturn V",
+          "correct": false
+        },
+        {
+          "text": "Eine Sojus-Rakete",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es ist die Atlantis am 27. Juni 1995 auf dem Flug zur ersten Kopplung eines Shuttles mit der russischen Raumstation Mir.",
+      "image_url": "/quizify/static/img/packs/picture-round/shuttle-atlantis-launch.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-039",
+      "question": "Welches berühmte Mausoleum ist auf diesem Foto aus dem 19. Jahrhundert zu sehen?",
+      "answers": [
+        {
+          "text": "Das Taj Mahal",
+          "correct": true
+        },
+        {
+          "text": "Humayuns Mausoleum",
+          "correct": false
+        },
+        {
+          "text": "Der Lotostempel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Schah Jahan ließ es 1631 als Grabmal für seine Frau Mumtaz Mahal in Auftrag geben.",
+      "image_url": "/quizify/static/img/packs/picture-round/taj-mahal.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-de-040",
+      "question": "In welchem Museum steht dieser altägyptische Tempel heute?",
+      "answers": [
+        {
+          "text": "Metropolitan Museum, New York",
+          "correct": true
+        },
+        {
+          "text": "British Museum, London",
+          "correct": false
+        },
+        {
+          "text": "Louvre, Paris",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ägypten schenkte ihn 1965 den USA als Dank für die Hilfe bei der Rettung von Denkmälern vor den Fluten des Assuan-Staudamms.",
+      "image_url": "/quizify/static/img/packs/picture-round/temple-of-dendur.webp",
       "reveal_style": "progressive"
     }
   ]
