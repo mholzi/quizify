@@ -63,6 +63,7 @@ ESTIMATE_SETS: tuple[EstimateSet, ...] = (
     EstimateSet(theme="world-cup", packs=("weltmeisterschaft", "world-cup", "copa-mundial-es")),
     EstimateSet(theme="music", packs=("musik-de", "music-en", "musica-es")),
     EstimateSet(theme="pop-culture", packs=("popkultur", "pop-culture", "cultura-pop-es")),
+    EstimateSet(theme="film", packs=("film-serien-de", "film-tv-en", "cine-series-es")),
     # The holiday packs of #663. They carry no pictures, so they appear here
     # and not in the #554 registry — the slider questions are the only part of
     # the per-pack shape they took over, and they inherit the whole checklist
