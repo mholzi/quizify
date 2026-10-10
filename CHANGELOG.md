@@ -3,6 +3,24 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.23.0-RC1] — 2026-10-10
+
+**A Pack for Film Night, and More Pictures to Guess**
+
+Two things grew since 1.22.0: the library and the picture round.
+
+### Film & TV, in three languages
+
+Film and television used to be a corner of the Pop Culture packs. They now have packs of their own in German, English and Spanish, about 160 questions each: how films are made, silent cinema, animation, and series from early television to streaming. Each language was written on its own rather than translated. You find them under the Pop filter.
+
+### More pictures to guess
+
+The three picture packs grew from 17 to 40 questions each.
+
+### Ready for Home Assistant 2026.10
+
+Home Assistant 2026.10 changed the library it validates settings with. Quizify follows, and nothing changes in how it behaves.
+
 ## [1.22.0] — 2026-09-29
 
 **The Lightning Round under Watch**
