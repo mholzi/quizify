@@ -1,0 +1,1916 @@
+{
+  "name": "Film & Serien",
+  "language": "de",
+  "version": "1.0",
+  "theme": "popculture",
+  "questions": [
+    {
+      "id": "film_de_001",
+      "question": "Wo fand 1895 die berühmte erste Vorführung der Brüder Lumière vor zahlendem Publikum in Paris statt?",
+      "answers": [
+        {"text": "In einem Café-Salon", "correct": true},
+        {"text": "In einem Opernhaus", "correct": false},
+        {"text": "In einem Zirkuszelt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Eintritt kostete einen Franc, und jeder der Filme war kürzer als eine Minute. Trotzdem sprach sich das Spektakel in Paris binnen Tagen herum.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_002",
+      "question": "Welcher Film von 1927 gilt als erster Spielfilm mit gesungenen und gesprochenen Szenen und leitete das Ende der Stummfilmzeit ein?",
+      "answers": [
+        {"text": "Der Jazzsänger", "correct": true},
+        {"text": "Lichter der Großstadt", "correct": false},
+        {"text": "Der blaue Engel", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Film war größtenteils noch stumm, nur die Gesangsnummern und wenige Dialogstellen waren vertont. Warner-Mitgründer Sam Warner starb am Tag vor der Premiere und erlebte den Triumph nicht mehr.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_003",
+      "question": "Welcher Chaplin-Film war sein erster mit durchgehend gesprochenem Dialog?",
+      "answers": [
+        {"text": "Der große Diktator", "correct": true},
+        {"text": "Moderne Zeiten", "correct": false},
+        {"text": "Goldrausch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Charlie Chaplin und Adolf Hitler kamen im April 1889 nur vier Tage nacheinander zur Welt, und beide trugen ein Bärtchen unter der Nase. Chaplin spielte in dem Film gleich beide Rollen: den Diktator und einen jüdischen Friseur.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_004",
+      "question": "Wie viel Spielraum hatte Buster Keaton in „Steamboat Bill, Jr.“ (1928), als eine ganze Hausfassade um ihn herum einstürzte und er exakt auf den Fensterausschnitt gestellt war?",
+      "answers": [
+        {"text": "Nur wenige Zentimeter", "correct": true},
+        {"text": "Etwa einen halben Meter", "correct": false},
+        {"text": "Ungefähr einen ganzen Meter", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es gab weder Trick noch Doppelgänger: Die Fassade war echt, und ein Fehler beim Aufstellen hätte Keaton schwer verletzt oder getötet.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_005",
+      "question": "Wofür war der Hollywood-Schriftzug 1923 ursprünglich gedacht?",
+      "answers": [
+        {"text": "Als Werbung für eine neue Wohnsiedlung", "correct": true},
+        {"text": "Als Logo eines großen Filmstudios", "correct": false},
+        {"text": "Als Orientierungshilfe für Flugzeuge", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Buchstaben lauteten zuerst „Hollywoodland“ und sollten nur etwa eineinhalb Jahre stehen bleiben. Erst später wurde das Wahrzeichen daraus, und die vier letzten Buchstaben fielen weg.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_006",
+      "question": "Wie wurden die Szenen in Kansas am Anfang von „Der Zauberer von Oz“ (1939) eingefärbt?",
+      "answers": [
+        {"text": "In Sepiatönen", "correct": true},
+        {"text": "In Blautönen", "correct": false},
+        {"text": "In blassen Pastellfarben", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Viele halten diesen Teil für schwarzweiß, tatsächlich wirkt er braun-gelblich getönt. Dorothys Schuhe sind im Buch übrigens silbern und wurden im Film rubinrot, weil das in Technicolor besser leuchtete.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_007",
+      "question": "Was musste laut dem Hollywood-Production-Code ab 1934 am Ende eines Films gelten?",
+      "answers": [
+        {"text": "Verbrechen durfte sich nicht auszahlen", "correct": true},
+        {"text": "Das Liebespaar musste heiraten", "correct": false},
+        {"text": "Der Held musste unverletzt bleiben", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Regelwerk legte bis in die 1960er fest, was Hollywood zeigen durfte. Für ein einziges „damn“ im Schlusssatz von „Vom Winde verweht“ zahlte Produzent David O. Selznick eine Strafe von 5.000 Dollar.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_008",
+      "question": "Was entpuppt sich am Ende von „Citizen Kane“ (1941) als „Rosebud“?",
+      "answers": [
+        {"text": "Ein Kinderschlitten", "correct": true},
+        {"text": "Ein Rosenstock", "correct": false},
+        {"text": "Eine Spieluhr", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Orson Welles war bei den Dreharbeiten erst 25 Jahre alt. Obwohl der Film oft als bester aller Zeiten gilt, gewann er bei den Oscars nur den Preis für das Drehbuch.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_009",
+      "question": "Was war das Besondere an Thomas Edisons ältestem Filmstudio, der „Black Maria“?",
+      "answers": [
+        {"text": "Das ganze Gebäude ließ sich drehen", "correct": true},
+        {"text": "Es stand auf Eisenbahnschienen", "correct": false},
+        {"text": "Seine Wände bestanden aus Spiegeln", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "So konnte man das Gebäude dem Sonnenlicht nachführen, denn Kunstlicht war zu schwach. Den Namen erhielt es wegen der schwarzen Teerpappe, die an die Gefangenentransporter („Black Maria“) erinnerte.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_010",
+      "question": "Welche Frage sollte Eadweard Muybridge 1878 mit Serienfotos eines galoppierenden Pferdes klären?",
+      "answers": [
+        {"text": "Ob alle vier Hufe gleichzeitig in der Luft sind", "correct": true},
+        {"text": "Ob Pferde beim Laufen die Augen schließen", "correct": false},
+        {"text": "Ob ein Pferd im Trab schneller ist als im Galopp", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ja, es gibt einen Moment ohne Bodenkontakt. Aber die Beine sind dabei unter den Bauch gezogen, nicht gestreckt, wie es Maler bis dahin zeigten. Muybridge löste die Kameras mit Stolperdrähten aus.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_011",
+      "question": "Gegen welche neue Konkurrenz setzte Hollywood in den 1950er-Jahren auf Breitwand, 3D und größere Leinwände?",
+      "answers": [
+        {"text": "Gegen das Fernsehen", "correct": true},
+        {"text": "Gegen das Radio", "correct": false},
+        {"text": "Gegen das Theater", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "„Das Gewand“ (1953) war der erste in CinemaScope veröffentlichte Film. Das Kino sollte bieten, was das kleine Bild im Wohnzimmer nicht konnte.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_012",
+      "question": "Was baute Alfred Hitchcock in fast jeden seiner Filme ein?",
+      "answers": [
+        {"text": "Einen kurzen Gastauftritt von sich selbst", "correct": true},
+        {"text": "Eine Szene mit einem roten Ballon", "correct": false},
+        {"text": "Eine Verfolgungsjagd auf einer Treppe", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In „Das Rettungsboot“ (1944) spielt fast alles auf einem Boot, wo er nicht auftauchen konnte. Er erschien als Foto in einer Zeitungsanzeige für ein Abnehmmittel, nachdem er selbst viel Gewicht verloren hatte.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_013",
+      "question": "Was diente in der berühmten Duschszene von „Psycho“ (1960) als Blut?",
+      "answers": [
+        {"text": "Schokoladensirup", "correct": true},
+        {"text": "Rote-Bete-Saft", "correct": false},
+        {"text": "Rote Tinte", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Film ist in Schwarzweiß gedreht, deshalb reichte dunkle Flüssigkeit. Das Geräusch der Messerstiche entstand, so wird berichtet, beim Einstechen in eine Melone.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_014",
+      "question": "Was meldete die Schauspielerin Hedy Lamarr 1941 gemeinsam mit dem Komponisten George Antheil zum Patent an?",
+      "answers": [
+        {"text": "Ein Frequenzsprungverfahren für Funksteuerung", "correct": true},
+        {"text": "Eine Halterung für Kamerakräne", "correct": false},
+        {"text": "Ein Farbverfahren für Filmaufnahmen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Idee sollte Torpedos vor Störsendern schützen. Die US-Marine nahm sie zunächst nicht ernst, doch das Prinzip taucht später in moderner Funktechnik wieder auf. Lamarr stammte aus Wien.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_015",
+      "question": "Woher hatten die ersten festen Kleinkinos der USA aus den 1900er-Jahren ihren Namen?",
+      "answers": [
+        {"text": "Vom Eintrittspreis von fünf Cent", "correct": true},
+        {"text": "Vom Metall der Filmprojektoren", "correct": false},
+        {"text": "Vom Gründer Nicholas Odeon", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Kinos hießen „Nickelodeon“: Ein Nickel waren fünf Cent. „Odeon“ ist das griechische Wort für Theater oder Konzertsaal. Um 1910 gab es in den USA mehrere Tausend solcher Kleinkinos.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_016",
+      "question": "Woraus bestand Filmmaterial bis in die 1950er-Jahre, das so leicht brannte, dass Vorführkabinen feuerfest gebaut sein mussten?",
+      "answers": [
+        {"text": "Aus Zellulosenitrat", "correct": true},
+        {"text": "Aus Gummi und Wachs", "correct": false},
+        {"text": "Aus Papier mit Silberbeschichtung", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nitratfilm kann sich selbst entzünden und brennt sogar unter Wasser weiter. Der Brand im Film „Cinema Paradiso“ erzählt genau davon. Später ersetzte man ihn durch schwer entflammbare Träger.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_017",
+      "question": "Welche Rolle spielten im Japan der Stummfilmzeit die „Benshi“?",
+      "answers": [
+        {"text": "Sie sprachen und kommentierten den Film live im Saal", "correct": true},
+        {"text": "Sie bedienten die Projektoren hinter der Leinwand", "correct": false},
+        {"text": "Sie zeichneten die Zwischentitel von Hand", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Manche Benshi waren eigene Stars, deren Namen auf den Plakaten standen. Weil das Publikum sie so liebte, setzte sich der Tonfilm in Japan deutlich später durch als im Westen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_018",
+      "question": "Unter welchem Künstlernamen wurde der als Archibald Leach geborene Brite zum Hollywoodstar?",
+      "answers": [
+        {"text": "Cary Grant", "correct": true},
+        {"text": "Gary Cooper", "correct": false},
+        {"text": "Clark Gable", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Er kam in Bristol zur Welt und trat zunächst als Akrobat auf. In einem seiner Filme baute er später einen Gag auf seinen Geburtsnamen ein.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_019",
+      "question": "Was fehlte Stummfilmstar Harold Lloyd an einer Hand, obwohl er selbst an Hochhausfassaden kletterte?",
+      "answers": [
+        {"text": "Daumen und Zeigefinger", "correct": true},
+        {"text": "Der Ringfinger", "correct": false},
+        {"text": "Die Fingerspitzen aller Finger", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Er verlor sie 1919 bei einem Unfall mit einer Requisitenbombe. Danach trug er einen kosmetischen Handschuh, den im Kino fast niemand bemerkte. In „Ausgerechnet Wolkenkratzer!“ hängt er an einem Uhrzeiger über der Straße.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_020",
+      "question": "Wofür stand das „B“ ursprünglich im Wort „B-Movie“?",
+      "answers": [
+        {"text": "Für den günstig gedrehten Zweitfilm im Programm", "correct": true},
+        {"text": "Für Filme in Schwarzweiß („black“)", "correct": false},
+        {"text": "Für Filme mit schlechter Bildqualität", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Im Doppelprogramm der 1930er und 40er lief vor oder nach dem großen Hauptfilm ein billiger zweiter Film. Die Studios produzierten solche Filme am Fließband und erprobten dort ihren Nachwuchs.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_021",
+      "question": "Warum gründeten Mary Pickford, Charlie Chaplin, Douglas Fairbanks und D. W. Griffith 1919 das Studio United Artists?",
+      "answers": [
+        {"text": "Um ihre Filme selbst zu kontrollieren", "correct": true},
+        {"text": "Um den Tonfilm zu erforschen", "correct": false},
+        {"text": "Um in Europa zu drehen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein Branchenkonkurrent spottete damals, nun übernähmen die Irren die Anstalt. Das Unternehmen vertrieb ihre Filme trotzdem jahrzehntelang erfolgreich.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_022",
+      "question": "Was trieb viele unabhängige Filmproduzenten von der US-Ostküste nach Kalifornien, neben dem sonnigen Wetter?",
+      "answers": [
+        {"text": "Der Patentstreit mit Edisons Firmenverbund", "correct": true},
+        {"text": "Ein Steuergesetz für Filmstudios", "correct": false},
+        {"text": "Ein Verbot von Filmen in New York", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Edisons Verbund verlangte Gebühren für Kameras und Projektoren. Im Westen lagen außerdem Wüste, Berge und Meer nah beisammen, was die Drehorte vielfältig und billig machte.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_023",
+      "question": "Wozu dient die Filmklappe, die vor jeder Aufnahme zugeschlagen wird?",
+      "answers": [
+        {"text": "Um Bild und Ton später exakt aufeinander abzustimmen", "correct": true},
+        {"text": "Um die Kamera scharfzustellen", "correct": false},
+        {"text": "Um die Szene für die Zensur zu kennzeichnen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Schlag ist auf der Tonspur als Spitze zu sehen und im Bild als geschlossene Klappe, so findet der Schnitt den gemeinsamen Punkt. Auf der Tafel stehen außerdem Szene, Einstellung und Take.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_024",
+      "question": "Womit erzeugen Geräuschemacher häufig das Knacken eines Knochenbruchs?",
+      "answers": [
+        {"text": "Mit Sellerie", "correct": true},
+        {"text": "Mit Marshmallows", "correct": false},
+        {"text": "Mit Gummiringen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Beruf trägt den Namen von Jack Foley, der bei Universal schon zum Übergang in die Tonfilmzeit Geräusche live zum Film erzeugte. Zerbrochen wird dabei vor allem Gemüse.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_025",
+      "question": "Woher stammt hauptsächlich der Brummton des Laserschwerts in „Star Wars“?",
+      "answers": [
+        {"text": "Aus dem Motor eines alten Filmprojektors", "correct": true},
+        {"text": "Aus einer verstimmten E-Gitarre", "correct": false},
+        {"text": "Aus einem laufenden Staubsauger", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tondesigner Ben Burtt mischte das Brummen mit dem Summen eines Röhrenfernsehers im Mikrofon. Das Auf- und Abschwellen beim Schwingen entstand, indem er das Mikrofon an der Tonquelle vorbeibewegte.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_026",
+      "question": "Was ist ein „Matte Painting“?",
+      "answers": [
+        {"text": "Ein auf Glas gemalter Bildteil", "correct": true},
+        {"text": "Ein Gemälde, das als Requisit im Bild hängt", "correct": false},
+        {"text": "Ein Filter, der die Kulisse abdunkelt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lange vor Computern ließen Filmmaler so Paläste, Städte und Landschaften entstehen, die nie gebaut wurden. Die Kamera filmte durch die Glasscheibe, nur der Teil mit den Schauspielern blieb frei.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_027",
+      "question": "Woraus bestehen traditionell Scheiben, die bei Filmstunts zersplittern, ohne zu verletzen?",
+      "answers": [
+        {"text": "Aus gekochtem Zucker", "correct": true},
+        {"text": "Aus gefrorenem Wasser", "correct": false},
+        {"text": "Aus gepresstem Salz", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Zuckerglas ist leicht und hat kaum scharfe Kanten. Weil es unter heißen Scheinwerfern oder in feuchter Luft weich wird, nehmen Stuntteams heute meist Kunstharz.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_028",
+      "question": "Wie nannte die Crew den mechanischen Hai aus „Der weiße Hai“ (1975)?",
+      "answers": [
+        {"text": "Bruce", "correct": true},
+        {"text": "Larry", "correct": false},
+        {"text": "Jaws Junior", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Spitzname geht auf Steven Spielbergs Anwalt zurück. Weil die Technik im Salzwasser ständig ausfiel, zeigte Spielberg den Hai kaum, und genau das machte den Film so spannend.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_029",
+      "question": "Welche Süßigkeit lockt Elliott in „E.T.“ (1982) an, nachdem der Hersteller von M&M's abgelehnt hatte?",
+      "answers": [
+        {"text": "Reese's Pieces", "correct": true},
+        {"text": "Smarties", "correct": false},
+        {"text": "Skittles", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Hersteller Hershey nutzte den Film für eine große Werbekampagne, und die Verkäufe der Erdnussbonbons stiegen nach dem Kinostart spürbar.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_030",
+      "question": "Aus welchen Tierlauten mischte Tonmeister Gary Rydstrom das Brüllen des T. rex in „Jurassic Park“?",
+      "answers": [
+        {"text": "Babyelefant, Tiger und Alligator", "correct": true},
+        {"text": "Löwe, Bär und Seelöwe", "correct": false},
+        {"text": "Wolf, Stier und Pferd", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Auch die Laute der Velociraptoren sind zusammengesetzt, unter anderem aus den Geräuschen sich paarender Schildkröten.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_031",
+      "question": "Wie entstehen die kreisenden Kamerafahrten um eingefrorene Bewegungen („Bullet Time“) in „Matrix“ (1999)?",
+      "answers": [
+        {"text": "Viele Fotokameras im Bogen lösen nacheinander aus", "correct": true},
+        {"text": "Ein extrem schneller Kamerakran dreht sich", "correct": false},
+        {"text": "Alles wird komplett am Computer gezeichnet", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Bilder der einzelnen Kameras werden zu einer Fahrt aneinandergereiht, Lücken füllt der Computer. Vorläufer gab es schon in Werbespots und Musikvideos der 1990er.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_032",
+      "question": "Wie heißt der Kameratrick, mit dem Hitchcock in „Vertigo“ die Höhenangst des Helden sichtbar machte?",
+      "answers": [
+        {"text": "Dolly-Zoom", "correct": true},
+        {"text": "Match Cut", "correct": false},
+        {"text": "Split Screen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Steven Spielberg nutzte denselben Trick in „Der weiße Hai“, als Polizeichef Brody am Strand den Angriff bemerkt. Die Person bleibt gleich groß, der Raum um sie verzerrt sich.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_033",
+      "question": "Wovon ließ sich Andy Serkis für Gollums würgendes Krächzen in „Der Herr der Ringe“ inspirieren?",
+      "answers": [
+        {"text": "Von seiner Katze beim Auswürgen von Fellknäueln", "correct": true},
+        {"text": "Von seinem hustenden Großvater", "correct": false},
+        {"text": "Von einer Krähe vor seinem Fenster", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Serkis spielte die Szenen am Set mit den anderen Darstellern, später wurde er im Bild digital durch die animierte Figur ersetzt.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_034",
+      "question": "Warum erschießt Indiana Jones in „Jäger des verlorenen Schatzes“ (1981) den Schwertkämpfer, statt wie geplant mit der Peitsche zu kämpfen?",
+      "answers": [
+        {"text": "Harrison Ford war krank und wollte die Szene kürzen", "correct": true},
+        {"text": "Die Peitsche riss während des Drehs", "correct": false},
+        {"text": "Das Budget war aufgebraucht", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ford litt an einem Magen-Darm-Infekt, ein langer Kampf hätte Tage gekostet. Der Einfall von Ford und Regisseur Steven Spielberg wurde zu einer der berühmtesten Szenen des Films.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_035",
+      "question": "Wer spielte zunächst Marty McFly in „Zurück in die Zukunft“, bevor er nach mehreren Wochen Dreharbeiten ersetzt wurde?",
+      "answers": [
+        {"text": "Eric Stoltz", "correct": true},
+        {"text": "Matthew Broderick", "correct": false},
+        {"text": "Charlie Sheen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Michael J. Fox stand wegen seiner Serie „Familienbande“ erst später zur Verfügung. Er drehte dann tagsüber die Serie und nachts den Film, wobei er kaum schlief.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_036",
+      "question": "Was war den Darstellern vor der Brustplatzer-Szene in „Alien“ (1979) nicht gesagt worden?",
+      "answers": [
+        {"text": "Wie viel Kunstblut aus der Attrappe spritzen würde", "correct": true},
+        {"text": "Wie viele Kameras die Szene gleichzeitig filmen würden", "correct": false},
+        {"text": "Wie lange die Szene am Stück gedreht würde", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "John Hurt lag mit dem Oberkörper unter dem Tisch, die falsche Brust war aufgesetzt. Das Blut wurde mit Druck herausgepresst, die Schreckreaktionen der anderen sind deshalb echt.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_037",
+      "question": "Wie nennt man den Trick, Nachtszenen bei Tageslicht zu drehen und nachträglich abzudunkeln?",
+      "answers": [
+        {"text": "Amerikanische Nacht", "correct": true},
+        {"text": "Blaue Stunde", "correct": false},
+        {"text": "Kalter Schatten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Technik spart Beleuchtung und Nachtschichten. François Truffaut machte sie zum Titel seines Films über das Filmemachen, „Die amerikanische Nacht“ (1973).",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_038",
+      "question": "Was fiel Zuschauern auf, als der Regisseur Lew Kuleschow dieselbe Großaufnahme eines Schauspielers mit Bildern von Suppe, Sarg und einer Frau auf einem Sofa kombinierte?",
+      "answers": [
+        {"text": "Sie lasen im gleichen Gesicht Hunger, Trauer und Verlangen", "correct": true},
+        {"text": "Sie bemerkten sofort, dass es dasselbe Gesicht war", "correct": false},
+        {"text": "Sie hielten die Bilder für zufällig zusammengesetzt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Montage-Effekt ist nach Kuleschow benannt. Hitchcock erklärte später in Interviews, dass er genau dieses Prinzip beim Schneiden nutzt.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_039",
+      "question": "Mit welchem Trick lässt Peter Jackson in „Der Herr der Ringe“ Gandalf neben den Hobbits riesig wirken, obwohl die Darsteller im selben Raum stehen?",
+      "answers": [
+        {"text": "Erzwungene Perspektive mit versetzten Kulissen", "correct": true},
+        {"text": "Plateauschuhe für Gandalf", "correct": false},
+        {"text": "Eine Grube für die Hobbit-Darsteller", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Darsteller stehen in unterschiedlicher Entfernung zur Kamera, die Kulisse ist so gebaut, dass es wie ein einziger Raum aussieht. Für manche Szenen gab es zusätzlich kleinere Doubles.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_041",
+      "question": "Wo hängt das Tonangel-Mikrofon („Boom“) am Filmset meist?",
+      "answers": [
+        {"text": "Über den Schauspielern, knapp außerhalb des Bildes", "correct": true},
+        {"text": "Im Kostüm der Darsteller versteckt", "correct": false},
+        {"text": "Auf dem Boden vor der Kamera", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Tonassistent hält die Stange oft stundenlang über Kopf. Rutscht sie zu tief, landet das Mikrofon im Bild, und es gibt eine der klassischen Filmpannen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_042",
+      "question": "Wen ersetzte der Cowboy-Darsteller Slim Pickens als Bomberpilot in „Dr. Seltsam“ (1964), der auf einer Atombombe reitet?",
+      "answers": [
+        {"text": "Peter Sellers", "correct": true},
+        {"text": "Alec Guinness", "correct": false},
+        {"text": "Terry-Thomas", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sellers spielte bereits mehrere Rollen im Film und sollte auch den Piloten geben, fiel aber verletzt aus. Pickens spielte völlig ernst, genau das macht die Szene so komisch.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_043",
+      "question": "Wie organisierten sich die Darsteller am Set von „Planet der Affen“ (1968) beim Mittagessen von selbst?",
+      "answers": [
+        {"text": "Nach Affenart an getrennten Tischen", "correct": true},
+        {"text": "Nach Alter in kleinen Gruppen", "correct": false},
+        {"text": "Nach Gehalt in zwei Kantinen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die aufwendigen Masken von John Chambers brachten ihm einen Ehren-Oscar ein, weil es damals noch keine reguläre Kategorie für Maske gab.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_044",
+      "question": "In welchem Maßstab ließ James Cameron das Schiff für „Titanic“ im Studio nachbauen?",
+      "answers": [
+        {"text": "Etwa 90 Prozent der Originalgröße", "correct": true},
+        {"text": "Als Modell im Maßstab 1:100", "correct": false},
+        {"text": "Nur als Bug und Heck in Originalgröße", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gedreht wurde in einem eigens gebauten riesigen Wasserbecken in Mexiko. Das Schiff stand auf Hydraulik, damit es sich neigen konnte.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_045",
+      "question": "Wo drehte George Miller den Großteil von „Mad Max: Fury Road“ (2015), nachdem Regen die Wüste Australiens zum Blühen gebracht hatte?",
+      "answers": [
+        {"text": "In Namibia", "correct": true},
+        {"text": "In Marokko", "correct": false},
+        {"text": "In Arizona", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Dreh in Australien war geplant, doch Wüste voller grüner Pflanzen passte nicht zur Geschichte. Gefahren wurde fast alles mit echten Fahrzeugen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_046",
+      "question": "Welches Kamerasystem erfand Garrett Brown, das 1976 in „Rocky“ den Lauf die Museumstreppen hinauf ermöglichte?",
+      "answers": [
+        {"text": "Die Steadicam", "correct": true},
+        {"text": "Die Skycam", "correct": false},
+        {"text": "Der Louma-Kran", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das System entkoppelt die Kamera von den Bewegungen des Trägers und macht ruhige Aufnahmen beim Laufen möglich. Stanley Kubrick setzte es in „Shining“ ausgiebig ein.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_047",
+      "question": "Womit erzeugt man klassisch das Hufgeklapper von Pferden im Film?",
+      "answers": [
+        {"text": "Mit halbierten Kokosnüssen", "correct": true},
+        {"text": "Mit Holzschuhen auf Sand", "correct": false},
+        {"text": "Mit Kastagnetten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Monty Python machte daraus in „Die Ritter der Kokosnuss“ (1975) einen Running Gag: Die Ritter reiten nicht, sondern ihre Diener klappern mit Kokosnüssen hinter ihnen her, weil das Geld für Pferde fehlte.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_048",
+      "question": "In welcher Reihenfolge werden Filme meistens gedreht?",
+      "answers": [
+        {"text": "Nach Drehorten und Verfügbarkeit, nicht chronologisch", "correct": true},
+        {"text": "Streng in der Reihenfolge der Handlung", "correct": false},
+        {"text": "Von der letzten zur ersten Szene", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eine Ausnahme war „E.T.“: Spielberg drehte ihn weitgehend chronologisch, damit die Kinderdarsteller den Abschied am Ende echt empfanden.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_049",
+      "question": "Wie wurden in vielen alten Studiofilmen die Landschaften erzeugt, die hinter den Fenstern eines Autos vorbeizogen?",
+      "answers": [
+        {"text": "Durch Rückprojektion hinter dem stehenden Wagen", "correct": true},
+        {"text": "Durch gemalte Kulissen, die Helfer vorbeizogen", "correct": false},
+        {"text": "Durch Spiegel, die eine echte Straße ins Studio holten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hinter der Windschutzscheibe lief ein vorher gedrehter Film. So konnten die Schauspieler im Studio „fahren“, und die Dialoge ließen sich ungestört aufnehmen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_050",
+      "question": "Wofür dienten die kleinen Punkte, die kurz vor dem Ende einer Filmrolle in der Bildecke aufblitzten?",
+      "answers": [
+        {"text": "Als Signal zum Rollenwechsel an den Vorführer", "correct": true},
+        {"text": "Als Hinweis an die Zensur zum Szenenende", "correct": false},
+        {"text": "Als Kopierschutz gegen Raubkopien", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Vorführer wechselte damit zum Projektor mit der nächsten Rolle. „Fight Club“ spielt mit diesem Wissen: Dort nennt der Erzähler die Markierungen „Zigarettenbrandmarken“.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_051",
+      "question": "Welcher südkoreanische Film war 2020 der erste nicht englischsprachige Gewinner des Oscars als bester Film?",
+      "answers": [
+        {"text": "Parasite", "correct": true},
+        {"text": "Roma", "correct": false},
+        {"text": "Drive My Car", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Film von Bong Joon-ho hatte zuvor auch die Goldene Palme in Cannes gewonnen. Die beiden Titel zusammen holte vorher nur ein einziger anderer Film.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_052",
+      "question": "Welchen Kurosawa-Film verarbeitete Sergio Leone fast Szene für Szene zu „Für eine Handvoll Dollar“?",
+      "answers": [
+        {"text": "Yojimbo – Der Leibwächter", "correct": true},
+        {"text": "Rashomon", "correct": false},
+        {"text": "Ran", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kurosawa klagte und erreichte eine Beteiligung an den Einnahmen. Der Samurai-Film selbst beruht lose auf einem amerikanischen Kriminalroman von Dashiell Hammett.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_053",
+      "question": "Welcher Kurosawa-Film mit zwei zankenden Bauern diente George Lucas als Vorbild für R2-D2 und C-3PO?",
+      "answers": [
+        {"text": "Die verborgene Festung", "correct": true},
+        {"text": "Die sieben Samurai", "correct": false},
+        {"text": "Das Schloss im Spinnwebwald", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Auch die Szenenübergänge, bei denen ein neues Bild das alte seitlich wegschiebt, übernahm Lucas von Kurosawa. Er hat die Verbindung stets offen zugegeben.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_054",
+      "question": "Wofür steht der vom Film „Rashomon“ (1950) abgeleitete Begriff „Rashomon-Effekt“?",
+      "answers": [
+        {"text": "Mehrere Zeugen schildern dasselbe Ereignis ganz unterschiedlich", "correct": true},
+        {"text": "Eine Handlung wird ausschließlich in Rückblenden erzählt", "correct": false},
+        {"text": "Ein Schauspieler spielt mehrere Rollen gleichzeitig", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Film gewann 1951 den Goldenen Löwen in Venedig und öffnete dem westlichen Publikum die Tür zum japanischen Kino. Die Frage, wer die Wahrheit sagt, bleibt am Ende offen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_055",
+      "question": "Was gehört bei langen Hindi-Filmen im indischen Kino traditionell fest zur Vorführung?",
+      "answers": [
+        {"text": "Eine Pause mitten im Film", "correct": true},
+        {"text": "Ein Tanzwettbewerb im Publikum", "correct": false},
+        {"text": "Eine Live-Band vor dem Start", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die „Intermission“ ist bis heute üblich, auch bei modernen Produktionen. Die Filme sind oft über drei Stunden lang und mischen Liebe, Action, Komödie und Musik in einem einzigen Film.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_056",
+      "question": "In welchem Format verbreiteten sich die Filme der nigerianischen „Nollywood“-Industrie in den 1990er-Jahren zuerst?",
+      "answers": [
+        {"text": "Auf Videokassetten", "correct": true},
+        {"text": "Im Kino auf 35-mm-Film", "correct": false},
+        {"text": "Im Fernsehen als Serie", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name lehnt sich an Hollywood und Bollywood an. Die Filme entstanden schnell und billig und gingen direkt in den Verleih, ohne den Umweg über die Leinwand.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_057",
+      "question": "Was geschah mit Bruce Lee kurz vor dem Kinostart seines letzten fertigen Films „Der Mann mit der Todeskralle“ (1973)?",
+      "answers": [
+        {"text": "Er starb völlig überraschend", "correct": true},
+        {"text": "Er verletzte sich schwer", "correct": false},
+        {"text": "Er zog sich aus dem Filmgeschäft zurück", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Film wurde sein größter Erfolg und machte ihn weltweit unsterblich. Er gilt als eine der ersten großen Koproduktionen zwischen Hongkong und Hollywood.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_058",
+      "question": "Mit wem spielt der Ritter Antonius Block in Ingmar Bergmans „Das siebente Siegel“ (1957) um sein Leben Schach?",
+      "answers": [
+        {"text": "Mit dem Tod", "correct": true},
+        {"text": "Mit dem Teufel", "correct": false},
+        {"text": "Mit einem Narren", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Szene wurde in unzähligen Filmen zitiert, unter anderem in „Bill & Teds verrückte Reise“ (1991), wo die beiden Helden den Tod bei Brettspielen besiegen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_059",
+      "question": "Wie entstand der Jump-Cut-Stil von Godards „Außer Atem“ (1960)?",
+      "answers": [
+        {"text": "Der Rohschnitt war zu lang, also kürzte Godard mitten in den Szenen", "correct": true},
+        {"text": "Beschädigtes Filmmaterial musste überbrückt werden", "correct": false},
+        {"text": "Die Kamera lief durch einen Fehler zeitweise nicht", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Regisseur Jean-Pierre Melville soll Godard geraten haben, innerhalb der Einstellungen zu schneiden, statt ganze Szenen zu streichen. Der Bruch mit den Regeln wurde zum Markenzeichen der Nouvelle Vague.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_060",
+      "question": "Was erfährt das Publikum über den Inhalt des leuchtenden Koffers in „Pulp Fiction“ (1994)?",
+      "answers": [
+        {"text": "Es sieht ihn nie", "correct": true},
+        {"text": "Es sind Diamanten", "correct": false},
+        {"text": "Es ist Gold", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Leuchten erzeugte laut Berichten einfach eine Lampe im Koffer. Quentin Tarantino hat gesagt, jeder dürfe sich selbst ausdenken, was darin steckt.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_061",
+      "question": "Mit welchem Licht drehte Stanley Kubrick viele Innenszenen von „Barry Lyndon“ (1975)?",
+      "answers": [
+        {"text": "Fast nur mit Kerzenlicht", "correct": true},
+        {"text": "Mit schwachem Neonlicht", "correct": false},
+        {"text": "Mit Tageslicht aus großen Fenstern", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dafür ließ er extrem lichtstarke Objektive verwenden, ursprünglich für Mondaufnahmen der NASA entwickelt. Sie sind so lichtstark, dass kaum ein Objektiv sonst mithalten kann.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_062",
+      "question": "Wie entstand die Szene in „2001: Odyssee im Weltraum“ (1968), in der ein Astronaut im Raumschiff rund um die Wand joggt, ohne Computertricks?",
+      "answers": [
+        {"text": "Mit einer riesigen, rotierenden Trommel als Kulisse", "correct": true},
+        {"text": "Mit einer kopfüber hängenden Kamera", "correct": false},
+        {"text": "Mit Rückprojektion hinter den Darstellern", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Rad hatte mehr als zehn Meter Durchmesser, die Kamera war darin befestigt. Der Film kam ein Jahr vor der ersten Mondlandung in die Kinos.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_063",
+      "question": "Welche berühmte Zeile wird im Original von „Casablanca“ (1942) so nie gesagt?",
+      "answers": [
+        {"text": "„Play it again, Sam“", "correct": true},
+        {"text": "„Here's looking at you, kid“", "correct": false},
+        {"text": "„We'll always have Paris“", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ilsa sagt „Play it once, Sam, for old times' sake“, Rick später „You played it for her, you can play it for me. Play it!“. Der Satz hat sich im Gedächtnis zu einem anderen Wortlaut verschoben.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_064",
+      "question": "Wie drehte Peter Jackson die drei „Herr der Ringe“-Filme?",
+      "answers": [
+        {"text": "Alle drei am Stück als ein einziges Projekt", "correct": true},
+        {"text": "Jeden Teil einzeln mit jahrelanger Pause", "correct": false},
+        {"text": "Zuerst Teil drei, dann die ersten beiden", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Dreh in Neuseeland dauerte mehr als ein Jahr. In den Jahren danach gab es noch Nachdrehs, mit denen die Filme verfeinert wurden.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_065",
+      "question": "Woher stammen die herabregnenden grünen Zeichen im Vorspann und in den Szenen von „Matrix“ (1999)?",
+      "answers": [
+        {"text": "Aus Rezepten in japanischen Sushi-Kochbüchern", "correct": true},
+        {"text": "Aus alter Computer-Binärschrift", "correct": false},
+        {"text": "Aus Sanskrit-Schriftrollen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Designer Simon Whiteley nahm Zeichen aus den Kochbüchern seiner Frau. Manche Zeichen sind gespiegelt.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_066",
+      "question": "Wo entstanden viele Wüstenszenen der Spaghetti-Western?",
+      "answers": [
+        {"text": "Bei Almería in Südspanien", "correct": true},
+        {"text": "In den italienischen Dolomiten", "correct": false},
+        {"text": "In der toskanischen Hügellandschaft", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Kulissen aus Holz stehen dort teils noch heute als Besucherattraktion, manche Western-Städte dienen auch als Freizeitpark.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_067",
+      "question": "Welche Besonderheit hat Alexander Sokurows „Russian Ark“ (2002), gedreht in der Eremitage in Sankt Petersburg?",
+      "answers": [
+        {"text": "Der Film besteht aus einer einzigen ungeschnittenen Einstellung", "correct": true},
+        {"text": "Der Film kommt komplett ohne Darsteller aus", "correct": false},
+        {"text": "Der Film wurde komplett nachts gedreht", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der deutsche Kameramann Tilman Büttner trug die Steadicam durch viele Säle. Drei frühere Anläufe scheiterten, erst der vierte Durchlauf gelang.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_068",
+      "question": "Wie ist „Memento“ (2000) erzählt?",
+      "answers": [
+        {"text": "Die Hauptszenen laufen in Blöcken rückwärts", "correct": true},
+        {"text": "Dieselbe Handlung wird dreimal aus anderer Sicht erzählt", "correct": false},
+        {"text": "Der ganze Film ist ein einziger Traum", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dazwischen laufen in Schwarzweiß Szenen in normaler Reihenfolge. Die Vorlage war eine Kurzgeschichte von Christopher Nolans Bruder Jonathan.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_069",
+      "question": "Wie führte das Regieteam von „Blair Witch Project“ (1999) seine Darsteller durch den Dreh?",
+      "answers": [
+        {"text": "Mit Zetteln, die im Wald versteckt lagen", "correct": true},
+        {"text": "Per Kopfhörer aus einem Kontrollwagen", "correct": false},
+        {"text": "Mit Regisseuren, die ständig mitgingen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dialoge wurden improvisiert, die Verpflegung nach und nach gekürzt, um die gereizte Stimmung zu fördern. Die Darsteller filmten sich großteils selbst.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_070",
+      "question": "Warum enthält Hitchcocks „Cocktail für eine Leiche“ (1948) trotz scheinbar durchgehender Aufnahme mehrere versteckte Schnitte?",
+      "answers": [
+        {"text": "Eine Filmrolle fasste nur etwa zehn Minuten", "correct": true},
+        {"text": "Die Zensur verlangte Schnitte", "correct": false},
+        {"text": "Die Darsteller konnten den Text nicht so lange behalten", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hitchcock versteckte die Schnitte hinter dunklen Rücken oder Möbeln. So wirkt der Film wie ein einziger Take, der in Echtzeit durch eine Wohnung gleitet.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_071",
+      "question": "Was ließ Sergio Leone bei den Dreharbeiten zu „Spiel mir das Lied vom Tod“ (1968) am Set abspielen?",
+      "answers": [
+        {"text": "Die fertige Musik von Ennio Morricone", "correct": true},
+        {"text": "Aufnahmen von Pferdehufen", "correct": false},
+        {"text": "Alte Westernfilme zur Inspiration", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Musik entstand schon vor dem Dreh, und Leone ließ sie am Set laufen, damit Schauspieler und Kamera sich nach ihrem Rhythmus richteten.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_072",
+      "question": "Welche Farbe hebt Steven Spielberg in den sonst schwarzweißen Bildern von „Schindlers Liste“ (1993) hervor?",
+      "answers": [
+        {"text": "Rot", "correct": true},
+        {"text": "Gelb", "correct": false},
+        {"text": "Blau", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es ist der Mantel eines kleinen Mädchens. Die Darstellerin war bei den Dreharbeiten erst drei Jahre alt.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_073",
+      "question": "Wie entstand der Film „Taxi Teheran“ (2015), obwohl dem Regisseur Jafar Panahi das Filmemachen in seiner Heimat verboten war?",
+      "answers": [
+        {"text": "Er fuhr selbst ein Taxi und filmte mit kleinen Kameras im Auto", "correct": true},
+        {"text": "Er drehte heimlich in einer Schule", "correct": false},
+        {"text": "Er ließ einen Freund unter falschem Namen Regie führen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Film gewann den Goldenen Bären der Berlinale. Panahi durfte das Land nicht verlassen, seine Nichte nahm den Preis entgegen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_074",
+      "question": "Welcher französische Film von 2011 kam fast ganz ohne gesprochene Worte aus und gewann den Oscar als bester Film?",
+      "answers": [
+        {"text": "The Artist", "correct": true},
+        {"text": "Hugo Cabret", "correct": false},
+        {"text": "Midnight in Paris", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Hund Uggie bekam in Cannes die „Palm Dog“, den Preis für den besten Hundedarsteller. Der Film ist in Schwarzweiß und weitgehend stumm gedreht.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_075",
+      "question": "Wie entstand die Sprache der Na'vi in „Avatar“ (2009)?",
+      "answers": [
+        {"text": "Ein Linguist erfand sie mit eigener Grammatik", "correct": true},
+        {"text": "Sie ist eine abgewandelte Maori-Sprache", "correct": false},
+        {"text": "Ein Computerprogramm erzeugte sie", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Linguist Paul Frommer entwickelte Wortschatz, Grammatik und Aussprache. Fans lernen und sprechen die Sprache bis heute.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_076",
+      "question": "Wer sang in „My Fair Lady“ (1964) die Lieder für Audrey Hepburn, weil deren Stimme ersetzt wurde?",
+      "answers": [
+        {"text": "Marni Nixon", "correct": true},
+        {"text": "Julie Andrews", "correct": false},
+        {"text": "Barbra Streisand", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Julie Andrews hatte die Rolle auf der Bühne gespielt, bekam sie im Film aber nicht. Im selben Jahr gewann sie den Oscar für „Mary Poppins“, Hepburn wurde nicht einmal nominiert.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_077",
+      "question": "Welchen spöttischen Namen gab Hollywood Walt Disneys Plan, mit „Schneewittchen“ einen abendfüllenden Zeichentrickfilm zu drehen?",
+      "answers": [
+        {"text": "„Disney's Folly“ (Disneys Torheit)", "correct": true},
+        {"text": "„Mouse Opera“ (Mäuse-Oper)", "correct": false},
+        {"text": "„Cartoon Palace“ (Zeichentrick-Palast)", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Film wurde ein Riesenerfolg. Disney bekam dafür 1939 einen Ehren-Oscar: eine normale Statuette und sieben kleine.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_078",
+      "question": "Welche Figur verlor Walt Disney 1928 an den Verleih Universal, bevor er Micky Maus erfand?",
+      "answers": [
+        {"text": "Oswald, den glücklichen Hasen", "correct": true},
+        {"text": "Felix, den Kater", "correct": false},
+        {"text": "Betty Boop", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Disney hatte die Rechte nie selbst gesichert. Erst 2006 kam Oswald zurück zu Disney, im Tausch gegen einen Sportkommentator, den NBC haben wollte.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_079",
+      "question": "Welcher Gegenstand hüpft im Pixar-Vorspann auf den Buchstaben I und zerdrückt ihn?",
+      "answers": [
+        {"text": "Eine Schreibtischlampe", "correct": true},
+        {"text": "Ein Gummiball", "correct": false},
+        {"text": "Ein Stuhl", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Lampe heißt Luxo Jr. und stammt aus einem Kurzfilm von 1986. Er war der erste computeranimierte Film, der für einen Oscar nominiert wurde.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_080",
+      "question": "Welche Kombination aus Buchstabe und Zahl versteckt sich in zahlreichen Pixar-Filmen?",
+      "answers": [
+        {"text": "A113", "correct": true},
+        {"text": "B612", "correct": false},
+        {"text": "K9", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A113 war der Name eines Klassenzimmers an der Kunsthochschule CalArts, wo viele Pixar-Köpfe studierten. Man findet die Zahl auf Nummernschildern, Türen und Maschinen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_081",
+      "question": "Nach wem benannte Matt Groening Homer, Marge, Lisa und Maggie Simpson?",
+      "answers": [
+        {"text": "Nach Mitgliedern seiner eigenen Familie", "correct": true},
+        {"text": "Nach Figuren aus Homers „Odyssee“", "correct": false},
+        {"text": "Nach seinen Lieblingsschauspielern", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nur Bart passt nicht ins Muster: Sein Name ist ein Anagramm des englischen Worts „brat“ für Balg.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_082",
+      "question": "Wie wurden die ersten South-Park-Folgen 1997 hergestellt?",
+      "answers": [
+        {"text": "Aus fotografierten Papierausschnitten", "correct": true},
+        {"text": "Komplett von Hand gezeichnet", "correct": false},
+        {"text": "Mit Knetfiguren aus Plastilin", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Später wechselte das Team auf Computer, ahmte den Papierlook aber weiter nach. Eine Folge entsteht seitdem in nur wenigen Tagen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_083",
+      "question": "In welchem Film treffen Figuren der Konkurrenzstudios Disney und Warner Bros. erstmals gemeinsam auf der Leinwand aufeinander?",
+      "answers": [
+        {"text": "Falsches Spiel mit Roger Rabbit", "correct": true},
+        {"text": "Space Jam", "correct": false},
+        {"text": "Cool World", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Donald Duck und Daffy Duck duellieren sich am Klavier. Beide Studios bestanden angeblich auf exakt gleicher Sprechzeit und Leinwandpräsenz für ihre Figuren.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_084",
+      "question": "Warum blieb Hayao Miyazaki 2003 der Oscarverleihung fern, bei der „Chihiros Reise ins Zauberland“ ausgezeichnet wurde?",
+      "answers": [
+        {"text": "Aus Protest gegen den Irakkrieg", "correct": true},
+        {"text": "Wegen Flugangst", "correct": false},
+        {"text": "Wegen Visaproblemen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Miyazaki wollte nach eigener Aussage kein Land besuchen, das gerade Krieg beginnt. Der Preis wurde stellvertretend vom Produzenten John Lasseter entgegengenommen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_085",
+      "question": "Was passiert in der Natur mit einem Clownfisch-Männchen, wenn das Weibchen des Paares stirbt?",
+      "answers": [
+        {"text": "Es wird selbst zum Weibchen", "correct": true},
+        {"text": "Die Kinder übernehmen die Rolle der Mutter", "correct": false},
+        {"text": "Das Paar zieht an einen anderen Ort", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Clownfische sind Zwitter und wechseln bei Bedarf das Geschlecht. Im Film „Findet Nemo“ bleibt Marlin natürlich Vater, nachdem Nemos Mutter nicht mehr da ist.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_086",
+      "question": "Welches Theaterstück von Shakespeare gilt als Vorbild von „Der König der Löwen“ (1994)?",
+      "answers": [
+        {"text": "Hamlet", "correct": true},
+        {"text": "Romeo und Julia", "correct": false},
+        {"text": "Der Sturm", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Arbeitstitel des Films lautete „King of the Jungle“. Am Ende steht ein Prinz, der den Mörder seines Vaters stellt, wie bei Hamlet.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_087",
+      "question": "Was fehlt Gromit, dem Hund aus „Wallace & Gromit“, im Gesicht?",
+      "answers": [
+        {"text": "Ein Mund", "correct": true},
+        {"text": "Eine Nase", "correct": false},
+        {"text": "Die Augen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gromit zeigt seine Gefühle nur mit Stirn und Augenbrauen. Die Figuren bestehen aus Plastilin und werden Bild für Bild bewegt, oft schaffen die Animatoren nur wenige Sekunden pro Tag.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_088",
+      "question": "Welcher Disney-Film wurde als erster Animationsfilm für den Oscar als bester Film nominiert?",
+      "answers": [
+        {"text": "Die Schöne und das Biest", "correct": true},
+        {"text": "Aladdin", "correct": false},
+        {"text": "Arielle, die Meerjungfrau", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Den Oscar gewann er nicht, wohl aber den Golden Globe als bester Film in der Kategorie Komödie oder Musical.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_089",
+      "question": "Warum wurde die Pokémon-Folge „Dennō Senshi Porygon“ 1997 in Japan nie wieder ausgestrahlt?",
+      "answers": [
+        {"text": "Blitzende Lichteffekte lösten bei Kindern Krämpfe aus", "correct": true},
+        {"text": "Wegen eines Streits um Urheberrechte", "correct": false},
+        {"text": "Wegen zu viel Gewalt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hunderte Kinder kamen ins Krankenhaus. Seitdem blenden japanische Sender oft Warnhinweise zu Flackerlicht ein.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_090",
+      "question": "Wie hieß die Mehrkanal-Tontechnik, die Disney 1940 für „Fantasia“ entwickelte?",
+      "answers": [
+        {"text": "Fantasound", "correct": true},
+        {"text": "Vitaphone", "correct": false},
+        {"text": "Movietone", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nur wenige Kinos rüsteten die teure Technik nach. Der Dirigent Leopold Stokowski nahm für das Orchester viele Spuren auf, um den Raumklang zu ermöglichen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_091",
+      "question": "Welchen Akzent nahm Mike Myers für den Oger Shrek erst nach abgeschlossenen Aufnahmen neu auf?",
+      "answers": [
+        {"text": "Schottisch", "correct": true},
+        {"text": "Irisch", "correct": false},
+        {"text": "Walisisch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Myers hatte alle Dialoge schon eingesprochen und wollte die Figur dann noch einmal anders anlegen. Zuvor hatte Chris Farley die Rolle gesprochen, er starb 1997.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_092",
+      "question": "Wie heißt das von Max Fleischer erfundene Verfahren, bei dem Zeichner gefilmte Schauspieler Bild für Bild nachzeichnen?",
+      "answers": [
+        {"text": "Rotoskopie", "correct": true},
+        {"text": "Fotogrammetrie", "correct": false},
+        {"text": "Pantographie", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Auch Disney orientierte sich für „Schneewittchen“ an gefilmten Darstellern, um Bewegungen natürlich wirken zu lassen. Moderne Spielfilme nutzen das Prinzip heute digital.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_093",
+      "question": "Womit erzeugt das Studio Laika („Coraline“) die Mimik seiner Stop-Motion-Figuren?",
+      "answers": [
+        {"text": "Mit ausgetauschten, 3D-gedruckten Gesichtsteilen", "correct": true},
+        {"text": "Mit Knetmasse, die ständig neu geformt wird", "correct": false},
+        {"text": "Mit digital aufgesetzten Computergesichtern", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„Coraline“ (2009) gilt als erster in Stereo-3D gedrehter Stop-Motion-Spielfilm. Für jede Bewegung von Augenbraue oder Mund wird ein neues Gesichtsteil getauscht.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_094",
+      "question": "Welche Hunderasse ist Scooby-Doo?",
+      "answers": [
+        {"text": "Eine Deutsche Dogge", "correct": true},
+        {"text": "Ein Bernhardiner", "correct": false},
+        {"text": "Ein Dackel", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Name soll auf Frank Sinatras Scat-Gesang „scooby-dooby-doo“ in „Strangers in the Night“ zurückgehen. Senderchef Fred Silverman soll den Namen von dort übernommen haben.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_095",
+      "question": "Welche Sitcom wurde scherzhaft als „Serie über nichts“ bekannt?",
+      "answers": [
+        {"text": "Seinfeld", "correct": true},
+        {"text": "Cheers", "correct": false},
+        {"text": "Frasier", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Feiertag Festivus stammt aus einer Folge der Serie und geht auf die Familie eines Drehbuchautors zurück. Er wird bis heute am 23. Dezember von Fans gefeiert.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_096",
+      "question": "Womit beginnen fast alle Folgentitel der Sitcom „Friends“?",
+      "answers": [
+        {"text": "Mit „The One …“", "correct": true},
+        {"text": "Mit „The Day …“", "correct": false},
+        {"text": "Mit „Friends …“", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Meist folgt auf „The One“ ein „with“ oder „Where“, etwa „The One with the Embryos“ oder „The One Where Ross Finds Out“. Ausnahmen wie das Finale „The Last One“ sind selten.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_097",
+      "question": "Wer entpuppte sich 1980 in „Dallas“ als Schütze auf J.R. Ewing?",
+      "answers": [
+        {"text": "Kristin Shepard, seine Schwägerin", "correct": true},
+        {"text": "Sue Ellen Ewing, seine Ehefrau", "correct": false},
+        {"text": "Cliff Barnes, sein Rivale", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Frage „Wer erschoss J.R.?“ beschäftigte monatelang die Welt, Wettbüros nahmen Wetten an. Die Auflösung gehörte zu den meistgesehenen Folgen der damaligen Zeit.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_098",
+      "question": "Wer tötete in „Twin Peaks“ Laura Palmer?",
+      "answers": [
+        {"text": "Ihr Vater Leland", "correct": true},
+        {"text": "Ihr Freund Bobby Briggs", "correct": false},
+        {"text": "Der Geschäftsmann Ben Horne", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der unheimliche Bob wurde von Frank Silva gespielt, einem Set-Dekorateur, der versehentlich im Spiegel einer Szene zu sehen war. Regisseur David Lynch besetzte ihn daraufhin.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_099",
+      "question": "In welcher Stadt wurde „Akte X“ in den ersten Staffeln gedreht?",
+      "answers": [
+        {"text": "Vancouver", "correct": true},
+        {"text": "Seattle", "correct": false},
+        {"text": "Washington D.C.", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ab der sechsten Staffel zog die Produktion nach Los Angeles um. Die Geschichten spielen aber weiter an der Ostküste der USA.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_100",
+      "question": "Wie endet die letzte Folge der „Sopranos“ (2007) in einem Restaurant?",
+      "answers": [
+        {"text": "Mit einem plötzlichen Schwarzbild mitten in der Szene", "correct": true},
+        {"text": "Mit einer Schießerei am Tisch", "correct": false},
+        {"text": "Mit einem Rückblick auf die erste Folge", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Hintergrund läuft Journeys „Don't Stop Believin'“. Serienschöpfer David Chase hat die Deutung bewusst offengelassen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_101",
+      "question": "Welcher Gegenstand stand 2019 versehentlich im Bild einer Mittelalter-Szene von „Game of Thrones“?",
+      "answers": [
+        {"text": "Ein Pappkaffeebecher", "correct": true},
+        {"text": "Eine Plastikflasche", "correct": false},
+        {"text": "Eine Armbanduhr", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Sender HBO entfernte ihn nachträglich per Computer aus der Folge. Die Szene spielt beim Fest in Winterfell, Fans entdeckten den Becher nach der Ausstrahlung sofort.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_102",
+      "question": "Woraus bestand das blaue „Meth“ in „Breaking Bad“ am Set?",
+      "answers": [
+        {"text": "Aus gefärbtem Zucker", "correct": true},
+        {"text": "Aus zerstoßenem Glas", "correct": false},
+        {"text": "Aus Speisesalz", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Als wissenschaftliche Beraterin las die Chemieprofessorin Donna Nelson Drehbücher gegen. Die Serie sollte plausibel klingen, aber keine Anleitung liefern.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_103",
+      "question": "Wie viele Folgen gibt es von der britischen Kultsitcom „Fawlty Towers“?",
+      "answers": [
+        {"text": "Zwölf", "correct": true},
+        {"text": "Achtzehn", "correct": false},
+        {"text": "Vierundzwanzig", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die erste Staffel lief 1975, die zweite erst 1979 bei der BBC. Der Hotelier Basil Fawlty hat ein reales Vorbild: Hotelbesitzer Donald Sinclair, den John Cleese in Torquay kennenlernte.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_104",
+      "question": "Woher stammt der Begriff „Spam“ für unerwünschte Massen-E-Mails?",
+      "answers": [
+        {"text": "Aus einem Sketch von Monty Python", "correct": true},
+        {"text": "Aus der Abkürzung eines Mail-Standards", "correct": false},
+        {"text": "Aus dem Namen eines frühen Programmierers", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In dem Sketch steht auf jedem Gericht das Dosenfleisch „Spam“, bis ein Wikingerchor das Wort immer wieder grölt. Genau so wiederholen sich Massen-Mails.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_105",
+      "question": "Warum sind viele Folgen der frühen BBC-Serie „Doctor Who“ bis heute verschollen?",
+      "answers": [
+        {"text": "Die BBC löschte die Bänder aus Kosten- und Platzgründen", "correct": true},
+        {"text": "Ein Brand im Archiv zerstörte sie", "correct": false},
+        {"text": "Ein Gericht ordnete ihre Vernichtung an", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Einige verloren geglaubte Folgen tauchten Jahrzehnte später bei Sammlern oder ausländischen Sendern wieder auf.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_106",
+      "question": "Aus welchem Stoff entstand Jim Hensons erster Kermit?",
+      "answers": [
+        {"text": "Aus dem alten Mantel seiner Mutter", "correct": true},
+        {"text": "Aus einem Wohnzimmervorhang", "correct": false},
+        {"text": "Aus einem Stück Teppich", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Augen bestanden aus Hälften eines Tischtennisballs. Kermit trat zuerst 1955 in Hensons Fernsehshow „Sam and Friends“ auf.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_107",
+      "question": "Woher stammt die Redewendung „Jump the Shark“ für den Moment, in dem eine Serie ihren Höhepunkt überschritten hat?",
+      "answers": [
+        {"text": "Aus der Sitcom „Happy Days“", "correct": true},
+        {"text": "Aus der Serie „Baywatch“", "correct": false},
+        {"text": "Aus der Tierserie „Flipper“", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In einer Folge von 1977 springt Fonzie auf Wasserskiern über einen Hai. Der Begriff selbst wurde erst 1985 von Studienfreunden geprägt.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_108",
+      "question": "Wie hieß die Maschine, mit der Charles Douglass seit den 1950er-Jahren Gelächter in Fernsehserien einspielte?",
+      "answers": [
+        {"text": "Laff Box", "correct": true},
+        {"text": "Chuckle Machine", "correct": false},
+        {"text": "Laugh-O-Matic", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Gerät hatte Tasten für verschiedene Lachtypen. Das Lachen stammte aus alten Aufnahmen echten Publikums und wurde so immer wieder verwendet.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_109",
+      "question": "Auf welcher Inselgruppe wurde die Mystery-Serie „Lost“ gedreht?",
+      "answers": [
+        {"text": "Auf Hawaii", "correct": true},
+        {"text": "Auf Fidschi", "correct": false},
+        {"text": "In der Karibik", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Für den Pilotfilm wurde der Rumpf einer echten Passagiermaschine vom Typ Lockheed L-1011 auf die Insel gebracht.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_110",
+      "question": "Was gilt für Columbos ständig erwähnte Ehefrau?",
+      "answers": [
+        {"text": "Sie ist in der Serie nie zu sehen", "correct": true},
+        {"text": "Sie taucht in jeder Folge kurz auf", "correct": false},
+        {"text": "Sie ist selbst Polizistin", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Peter Falk hatte schon mit drei Jahren wegen eines Tumors ein Auge verloren, das Glasauge prägte seinen schiefen Blick. Im Original ist „Just one more thing“ das Markenzeichen der Figur.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_111",
+      "question": "Welche Zeichentrickserie lief 1960 als erste im US-Fernsehen zur besten Sendezeit am Abend?",
+      "answers": [
+        {"text": "„Familie Feuerstein“", "correct": true},
+        {"text": "„Die Jetsons“", "correct": false},
+        {"text": "„Die Simpsons“", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Arbeitstitel lautete „The Flagstones“. Vorbild war die Sitcom „The Honeymooners“, die Zeichner übertrugen die Familienkomödie in die Steinzeit.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_112",
+      "question": "Welche Besonderheit gilt für die Hunde, die in Film und Fernsehen die Hündin „Lassie“ spielten?",
+      "answers": [
+        {"text": "Es waren durchweg Rüden", "correct": true},
+        {"text": "Es waren immer Hündinnen", "correct": false},
+        {"text": "Es waren Neufundländer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rüden sind meist größer und behalten im Sommer mehr von ihrem dichten Fell, was vor der Kamera besser aussah.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_113",
+      "question": "Welche Produktionsweise der Sitcom „I Love Lucy“ (1951) wurde zum Vorbild für spätere Sitcoms?",
+      "answers": [
+        {"text": "Dreh mit mehreren Kameras vor Studiopublikum auf Film", "correct": true},
+        {"text": "Dreh live ohne Aufzeichnung", "correct": false},
+        {"text": "Dreh ausschließlich in Außenkulissen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Weil auf Film aufgenommen wurde, ließen sich Folgen wiederholen und weltweit verkaufen. Das Studio Desilu verdiente an diesen Rechten jahrelang.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_114",
+      "question": "Welcher berühmten literarischen Detektivfigur ist Dr. Gregory House nachempfunden?",
+      "answers": [
+        {"text": "Sherlock Holmes", "correct": true},
+        {"text": "Hercule Poirot", "correct": false},
+        {"text": "Miss Marple", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sein Name klingt wie „Holmes“, sein Freund Wilson ist ein Watson-Ersatz, und seine Wohnung trägt die Nummer 221B, wie Holmes' Adresse in der Baker Street.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_115",
+      "question": "Welchen Titel trug die „Ellen“-Folge von 1997, in der sich die Hauptfigur als lesbisch outet?",
+      "answers": [
+        {"text": "„The Puppy Episode“", "correct": true},
+        {"text": "„The Closet Door“", "correct": false},
+        {"text": "„The Truth Hurts“", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der harmlose Titel diente zur Tarnung vor der Presse. In der Folge spielt Oprah Winfrey Ellens Therapeutin.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_116",
+      "question": "Was teilten sich die „Golden Girls“ nachts traditionell in der Küche?",
+      "answers": [
+        {"text": "Käsekuchen", "correct": true},
+        {"text": "Pizza", "correct": false},
+        {"text": "Eiscreme", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Alle vier Hauptdarstellerinnen gewannen mindestens einen Emmy für ihre Rolle.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_117",
+      "question": "Wie verhält sich die Laufzeit der Serie M*A*S*H zur Dauer des Koreakriegs, den sie erzählt?",
+      "answers": [
+        {"text": "Die Serie lief mehr als dreimal so lang", "correct": true},
+        {"text": "Beide dauerten etwa gleich lang", "correct": false},
+        {"text": "Die Serie lief nur halb so lang", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eigentlich wollten die Macher gar kein Lachband. Der Sender bestand darauf, nur im Operationssaal blieb es still.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_118",
+      "question": "Wo drehte HBO die Miniserie „Chernobyl“ (2019) hauptsächlich?",
+      "answers": [
+        {"text": "In Litauen", "correct": true},
+        {"text": "In Rumänien", "correct": false},
+        {"text": "In Polen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gedreht wurde unter anderem im stillgelegten Kernkraftwerk Ignalina, das denselben Reaktortyp hatte wie Tschernobyl.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_119",
+      "question": "Welches reale Schloss diente als „Downton Abbey“?",
+      "answers": [
+        {"text": "Highclere Castle", "correct": true},
+        {"text": "Blenheim Palace", "correct": false},
+        {"text": "Windsor Castle", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Highclere war der Sitz des Lord Carnarvon, der die Entdeckung von Tutanchamuns Grab finanzierte. Auf dem Schloss gibt es bis heute eine Ausstellung dazu.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_120",
+      "question": "Wofür steht die Abkürzung ALF im Namen der gleichnamigen Sitcom-Figur?",
+      "answers": [
+        {"text": "Alien Life Form", "correct": true},
+        {"text": "Alpha Lifeform", "correct": false},
+        {"text": "Alien Landed Friend", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Puppenspieler stand unter dem Set, deshalb war es erhöht gebaut und hatte Falltüren. Seine Figur kommt vom Planeten Melmac.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_121",
+      "question": "Was fiel Fans von „Mord ist ihr Hobby“ (1984–1996) über den beschaulichen Heimatort Cabot Cove auf?",
+      "answers": [
+        {"text": "Dort gab es auffällig viele Morde", "correct": true},
+        {"text": "Dort lebten keine Kinder", "correct": false},
+        {"text": "Dort gab es keine Polizei", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cabot Cove soll in Maine liegen, gedreht wurde aber im kalifornischen Mendocino.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_122",
+      "question": "Aus welchem Land stammt das Fernsehformat „Big Brother“, das im Jahr 2000 auch in Deutschland startete?",
+      "answers": [
+        {"text": "Aus den Niederlanden", "correct": true},
+        {"text": "Aus Großbritannien", "correct": false},
+        {"text": "Aus den USA", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name geht auf George Orwells „1984“ zurück. In Deutschland wurde die erste Staffel mit dem Bewohner Zlatko zum Gesprächsthema.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_123",
+      "question": "Wofür lief 1941 in den USA der erste offizielle Fernsehspot?",
+      "answers": [
+        {"text": "Für eine Armbanduhr", "correct": true},
+        {"text": "Für Zigaretten", "correct": false},
+        {"text": "Für Seife", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Spot lief vor einem Baseballspiel in New York. Fernsehgeräte waren damals noch eine große Seltenheit.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_124",
+      "question": "Was ist in den Bauch jedes Teletubbies eingebaut?",
+      "answers": [
+        {"text": "Ein Fernsehbildschirm", "correct": true},
+        {"text": "Ein Radio", "correct": false},
+        {"text": "Eine Spieluhr", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Bildschirme zeigen kurze Filme mit echten Kindern. Die Kinderserie der BBC startete 1997.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_125",
+      "question": "Wie oft malte Bob Ross jedes Bild aus „The Joy of Painting“?",
+      "answers": [
+        {"text": "Dreimal", "correct": true},
+        {"text": "Einmal", "correct": false},
+        {"text": "Zweimal", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Fassung entstand vorab, eine vor der Kamera, eine später für die Buchfotos. Seine Dauerwelle sparte ihm angeblich Friseurkosten.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_126",
+      "question": "Welche Farbvorgabe machte Michael Mann für die Optik von „Miami Vice“ (1984–1990)?",
+      "answers": [
+        {"text": "Keine Erdtöne, nur Pastell- und Neonfarben", "correct": true},
+        {"text": "Alles in Schwarzweiß-Kontrast", "correct": false},
+        {"text": "Ausschließlich Rottöne", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Don Johnsons Auto war zuerst ein Nachbau auf Chevrolet-Basis, bis Ferrari klagte. Danach stellte Ferrari der Produktion echte Testarossa zur Verfügung.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_127",
+      "question": "Was ist das Markenzeichen von Nachbar Wilson in „Hör mal, wer da hämmert“?",
+      "answers": [
+        {"text": "Sein Gesicht ist nie ganz zu sehen", "correct": true},
+        {"text": "Er spricht nur in Reimen", "correct": false},
+        {"text": "Er redet ausschließlich Fremdsprachen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wilson gibt Tim jede Woche über den Gartenzaun Ratschläge, dabei ist sein Gesicht hinter Zaun oder Hut versteckt.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_128",
+      "question": "Wofür steht die Abkürzung UFA, die Filmfirma hinter Klassikern wie „Metropolis“?",
+      "answers": [
+        {"text": "Universum Film AG", "correct": true},
+        {"text": "Union Filmanstalt", "correct": false},
+        {"text": "Universal Film Association", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gegründet wurde sie 1917 auf Betreiben der Obersten Heeresleitung, die den Film als Mittel der Propaganda nutzen wollte. Später wurde Babelsberg bei Potsdam ihr größter Standort.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_129",
+      "question": "In welcher Stadt wurden 2008 verschollen geglaubte Szenen von Fritz Langs „Metropolis“ entdeckt?",
+      "answers": [
+        {"text": "In Buenos Aires", "correct": true},
+        {"text": "In Moskau", "correct": false},
+        {"text": "In Los Angeles", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Szenen lagen auf einer 16-mm-Kopie in einem Filmmuseum. Nach der Restaurierung war der Film wieder deutlich näher an der Urfassung.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_130",
+      "question": "Was macht die Optik von „Das Cabinet des Dr. Caligari“ (1920) so besonders?",
+      "answers": [
+        {"text": "Gemalte, schief verzerrte Kulissen", "correct": true},
+        {"text": "Aufnahmen in echten Berglandschaften", "correct": false},
+        {"text": "Dreidimensionale Bilder mit Spezialbrillen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Darsteller des Schlafwandlers Cesare, Conrad Veidt, spielte später in „Casablanca“ den Major Strasser.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_131",
+      "question": "Was geschah mit Marlene Dietrich kurz nach der Premiere von „Der blaue Engel“ (1930)?",
+      "answers": [
+        {"text": "Sie reiste nach Hollywood ab", "correct": true},
+        {"text": "Sie zog sich ans Theater zurück", "correct": false},
+        {"text": "Sie heiratete den Regisseur", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Film wurde gleichzeitig in einer deutschen und einer englischen Fassung gedreht. Regisseur Josef von Sternberg holte sie nach Hollywood, wo sie zum Weltstar wurde.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_132",
+      "question": "Wie viele Minuten bleiben Lola in „Lola rennt“ (1998), um 100.000 Mark aufzutreiben?",
+      "answers": [
+        {"text": "20 Minuten", "correct": true},
+        {"text": "30 Minuten", "correct": false},
+        {"text": "10 Minuten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Handlung läuft dreimal ab, jedes Mal mit anderem Ausgang, ausgelöst durch kleine Zufälle auf dem Weg.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_133",
+      "question": "Wie bekam Werner Herzog für „Fitzcarraldo“ (1982) das Dampfschiff über den Berg?",
+      "answers": [
+        {"text": "Er ließ ein echtes Schiff über einen Hügel ziehen", "correct": true},
+        {"text": "Er nutzte ein kleines Modell vor Gemälden", "correct": false},
+        {"text": "Er ließ es per Hubschrauber transportieren", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die ursprünglich geplanten Darsteller Jason Robards und Mick Jagger fielen im Lauf der langen Dreharbeiten aus. Klaus Kinski übernahm die Hauptrolle.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_134",
+      "question": "Welcher Film über einen Stasi-Hauptmann gewann 2007 den Oscar als bester fremdsprachiger Film?",
+      "answers": [
+        {"text": "Das Leben der Anderen", "correct": true},
+        {"text": "Good Bye, Lenin!", "correct": false},
+        {"text": "Sonnenallee", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hauptdarsteller Ulrich Mühe starb nur wenige Monate nach der Oscarverleihung. Der Film ist das Debüt des Regisseurs Florian Henckel von Donnersmarck.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_135",
+      "question": "In welchem Land ist der Silvester-Klassiker „Dinner for One“ kaum bekannt?",
+      "answers": [
+        {"text": "Großbritannien", "correct": true},
+        {"text": "Schweden", "correct": false},
+        {"text": "Österreich", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Sketch wurde 1963 in Hamburg für den NDR vor Publikum aufgezeichnet. In Deutschland läuft er jedes Jahr, in seiner Heimat kennt ihn dagegen kaum jemand.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_136",
+      "question": "Aus welchem Land stammt das Quizformat „Wer wird Millionär?“?",
+      "answers": [
+        {"text": "Aus Großbritannien", "correct": true},
+        {"text": "Aus den USA", "correct": false},
+        {"text": "Aus den Niederlanden", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das britische Original lief ab 1998 mit Chris Tarrant. Die deutsche Fassung startete ein Jahr später mit Günther Jauch.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_137",
+      "question": "Welchen Tabubruch wagte die „Lindenstraße“ 1990 im deutschen Fernsehen?",
+      "answers": [
+        {"text": "Einen Kuss zwischen zwei Männern", "correct": true},
+        {"text": "Eine Live-Gerichtsszene", "correct": false},
+        {"text": "Einen Hauptdarsteller im Rollstuhl", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Serie startete 1985 und lief bis 2020. Die Folge sorgte für lebhafte Diskussionen, weil ein solcher Kuss im deutschen Serienfernsehen bis dahin nicht gezeigt worden war.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_138",
+      "question": "Wer verlieh dem Kobold Pumuckl in den Fernsehserien seine Stimme?",
+      "answers": [
+        {"text": "Hans Clarin", "correct": true},
+        {"text": "Otto Waalkes", "correct": false},
+        {"text": "Dieter Hallervorden", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In der Serie wirbelt der Zeichentrick-Kobold durch die reale Werkstatt von Meister Eder. Erfunden hatte ihn Ellis Kaut für ein Hörspiel im Radio.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_139",
+      "question": "Welche Eigenheit von Raketenstarts wird häufig auf Fritz Langs Stummfilm „Frau im Mond“ zurückgeführt?",
+      "answers": [
+        {"text": "Der rückwärts gezählte Countdown", "correct": true},
+        {"text": "Das Anstoßen mit Sekt vor dem Start", "correct": false},
+        {"text": "Das Winken der Mannschaft", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Als Berater half der Raumfahrtpionier Hermann Oberth. Den Countdown erfand Lang der Überlieferung nach für mehr Spannung, die Raumfahrt übernahm ihn später.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_140",
+      "question": "Wie zeigt Wim Wenders in „Der Himmel über Berlin“ (1987) die Sicht der Engel?",
+      "answers": [
+        {"text": "In Schwarzweiß, während die Menschen farbig sind", "correct": true},
+        {"text": "Mit verzerrten Weitwinkelbildern", "correct": false},
+        {"text": "In Sepiatönen, während die Menschen schwarzweiß sind", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Peter Falk, bekannt als Columbo, spielt sich selbst und verrät, dass er früher selbst ein Engel war.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_141",
+      "question": "Welche historische Figur verkörperte Romy Schneider in den 1950er-Jahren in drei Filmen, von deren Image sie sich später lösen wollte?",
+      "answers": [
+        {"text": "Kaiserin Elisabeth von Österreich", "correct": true},
+        {"text": "Kaiserin Maria Theresia", "correct": false},
+        {"text": "Königin Victoria", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Filme laufen in Deutschland bis heute jedes Jahr zu Weihnachten im Fernsehen. Schneider ging später nach Frankreich, um andere Rollen zu spielen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_142",
+      "question": "Woraus bestanden die Oscar-Statuetten in den letzten Kriegsjahren, weil Metall knapp war?",
+      "answers": [
+        {"text": "Aus bemaltem Gips", "correct": true},
+        {"text": "Aus lackiertem Holz", "correct": false},
+        {"text": "Aus gepresstem Papier", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nach Kriegsende konnten die Preisträger sie gegen Metallversionen eintauschen. Der Ritter auf der Statuette steht auf einer Filmrolle mit fünf Speichen für die fünf Gründungssparten.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_143",
+      "question": "Wo fand die erste Verleihung der „Goldenen Himbeere“ für die schlechtesten Filme statt?",
+      "answers": [
+        {"text": "Im Wohnzimmer des Gründers", "correct": true},
+        {"text": "In einem Kino in Hollywood", "correct": false},
+        {"text": "In einem Hotelballsaal", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "2010 holte Sandra Bullock die Himbeere persönlich ab und gewann am nächsten Tag den Oscar. Ausgezeichnet wurde sie für „All About Steve“.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_144",
+      "question": "Wie lautet der offizielle Name der Oscar-Statuette?",
+      "answers": [
+        {"text": "Academy Award of Merit", "correct": true},
+        {"text": "Golden Knight Trophy", "correct": false},
+        {"text": "Hollywood Silver Statue", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Statue wiegt gut dreieinhalb Kilogramm. Der Spitzname „Oscar“ setzte sich erst Jahre nach der ersten Verleihung durch.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_145",
+      "question": "Was machte Popcorn in den USA der 1930er-Jahre zum festen Begleiter des Kinobesuchs?",
+      "answers": [
+        {"text": "Es war billig und brachte Gewinn", "correct": true},
+        {"text": "Ein Gesetz schrieb den Verkauf vor", "correct": false},
+        {"text": "Die Studios verschenkten es", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Vornehme Kinopaläste wollten es zunächst nicht, weil es Krümel und Geruch brachte. Doch die Betreiber entdeckten, dass sich am Popcorn gut verdienen ließ.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_146",
+      "question": "Welches Symbol kennzeichnet auf dem Hollywood Walk of Fame Sterne für Fernseharbeit?",
+      "answers": [
+        {"text": "Ein Fernsehgerät", "correct": true},
+        {"text": "Eine Filmkamera", "correct": false},
+        {"text": "Ein Mikrofon", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Auch Trickfiguren haben einen Stern. Micky Maus bekam seinen 1978 und steht neben echten Stars.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_147",
+      "question": "Wie sollte das Publikum 1974 im Katastrophenfilm „Erdbeben“ das Beben körperlich spüren?",
+      "answers": [
+        {"text": "Mit tiefem Bass aus Zusatzlautsprechern", "correct": true},
+        {"text": "Mit beweglichen Kinosesseln", "correct": false},
+        {"text": "Mit Windmaschinen an der Saaldecke", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das System hieß Sensurround. Manche Kinobetreiber fürchteten um ihre Deckenverkleidung, weil der Bass so stark durch den Saal dröhnte.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_148",
+      "question": "Was ließ William Castle 1959 bei „The Tingler“ in einige Kinosessel einbauen?",
+      "answers": [
+        {"text": "Kleine Vibrationsmotoren", "correct": true},
+        {"text": "Wassersprüher", "correct": false},
+        {"text": "Eingebaute Lautsprecher", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Gag hieß „Percepto“ und sollte zeigen, was der Film behauptet: ein Wesen, das Menschen beim Fürchten das Rückgrat kitzelt.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_149",
+      "question": "Wofür bekam Stanley Kubrick den einzigen Oscar seines Lebens?",
+      "answers": [
+        {"text": "Für die Spezialeffekte von „2001“", "correct": true},
+        {"text": "Für die Regie von „Uhrwerk Orange“", "correct": false},
+        {"text": "Für das Drehbuch von „Dr. Seltsam“", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Auch Alfred Hitchcock wurde fünfmal als bester Regisseur nominiert und gewann nie. Er bekam später nur den Ehrenpreis Thalberg Award.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_150",
+      "question": "Wie verweigerte Marlon Brando 1973 die Annahme seines Oscars für „Der Pate“?",
+      "answers": [
+        {"text": "Er schickte eine Frau, die in seinem Namen ablehnte", "correct": true},
+        {"text": "Er verbrannte den Preis vor der Presse", "correct": false},
+        {"text": "Er blieb ohne Begründung zu Hause", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Frau hieß Sacheen Littlefeather. Der Protest galt der Darstellung der amerikanischen Ureinwohner in Hollywood.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_151",
+      "question": "Welche für damalige Zeiten ungewöhnliche Regel setzte Alfred Hitchcock 1960 bei „Psycho“ in den Kinos durch?",
+      "answers": [
+        {"text": "Kein Einlass nach Beginn der Vorstellung", "correct": true},
+        {"text": "Freier Eintritt für Kinder", "correct": false},
+        {"text": "Ein Verbot von Popcorn im Saal", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bis dahin gingen viele Besucher mitten im Film ins Kino. Hitchcock ließ Hinweisschilder aufstellen und bat das Publikum, das Ende nicht zu verraten.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_152",
+      "question": "Was verhinderte 1939 den ersten Start des Filmfestivals von Cannes?",
+      "answers": [
+        {"text": "Der Beginn des Zweiten Weltkriegs", "correct": true},
+        {"text": "Ein Streik der französischen Filmtechniker", "correct": false},
+        {"text": "Eine Absage der Hollywood-Studios", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das erste Festival fand erst 1946 statt. Erst 2002 kürte man nachträglich einen Gewinner für den ausgefallenen Jahrgang 1939.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_153",
+      "question": "Als was verstand sich die Berlinale bei ihrer Gründung 1951 im geteilten Berlin?",
+      "answers": [
+        {"text": "Als „Schaufenster der freien Welt“", "correct": true},
+        {"text": "Als Filmmesse des Ostblocks", "correct": false},
+        {"text": "Als reines Kinderfilmfest", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Eröffnungsfilm war Hitchcocks „Rebecca“.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_154",
+      "question": "Welches Filmfestival ist das älteste der Welt?",
+      "answers": [
+        {"text": "Venedig", "correct": true},
+        {"text": "Cannes", "correct": false},
+        {"text": "Berlin", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es wurde 1932 gegründet. In den 1930er-Jahren hieß der Hauptpreis noch „Coppa Mussolini“.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_155",
+      "question": "Woher stammte der Pferdekopf in der berüchtigten Bettszene von „Der Pate“ (1972)?",
+      "answers": [
+        {"text": "Von einem echten Pferd aus einer Futterfabrik", "correct": true},
+        {"text": "Aus Wachs und Latex gefertigt", "correct": false},
+        {"text": "Von einer Puppe mit echtem Fell", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nach Coppolas Aussage wurde dafür kein Pferd getötet, es wäre ohnehin geschlachtet worden. Die Szene blieb eine der verstörendsten der Filmgeschichte.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_156",
+      "question": "Wie viele Folgen hat „Die Sopranos“ insgesamt?",
+      "type": "estimate",
+      "answer": 86,
+      "min": 10,
+      "max": 300,
+      "unit": "Folgen",
+      "difficulty": "medium",
+      "fun_fact": "Serienschöpfer David Chase hatte die Geschichte zunächst als Kinofilm über einen Mafioso in Therapie geplant.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_157",
+      "question": "Wie viele Folgen hat „Game of Thrones“ insgesamt?",
+      "type": "estimate",
+      "answer": 73,
+      "min": 10,
+      "max": 300,
+      "unit": "Folgen",
+      "difficulty": "medium",
+      "fun_fact": "Die ersten sechs Staffeln hatten je zehn Folgen. Die letzte kam mit sechs aus, die meisten davon fast in Spielfilmlänge.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_158",
+      "question": "Wie viele Folgen hat die Serie „Breaking Bad“ insgesamt?",
+      "type": "estimate",
+      "answer": 62,
+      "min": 10,
+      "max": 200,
+      "unit": "Folgen",
+      "difficulty": "medium",
+      "fun_fact": "Verteilt auf nur fünf Staffeln. Die letzten sechzehn Folgen liefen in zwei Blöcken mit fast einem Jahr Pause dazwischen.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_159",
+      "question": "Wie viele Zentimeter ist eine Oscar-Statuette hoch?",
+      "type": "estimate",
+      "answer": 34,
+      "min": 5,
+      "max": 100,
+      "unit": "cm",
+      "difficulty": "medium",
+      "fun_fact": "Seit den 1950er-Jahren müssen Preisträger die Figur zuerst der Academy anbieten, bevor sie sie verkaufen dürfen – für einen Dollar.",
+      "category": "Film & Serien"
+    },
+    {
+      "id": "film_de_160",
+      "question": "Mit wie vielen Bildern pro Sekunde läuft ein klassischer Kinofilm mit Ton?",
+      "type": "estimate",
+      "answer": 24,
+      "min": 5,
+      "max": 120,
+      "unit": "Bilder pro Sekunde",
+      "difficulty": "easy",
+      "fun_fact": "Zu Stummfilmzeiten lief man oft langsamer, mit dem Ton wurde das Tempo vereinheitlicht, weil die Tonspur eine konstante Geschwindigkeit braucht. Einige Regisseure drehen heute auch schneller.",
+      "category": "Film & Serien"
+    }
+  ]
+}

@@ -1,0 +1,3302 @@
+{
+  "name": "Cine y series",
+  "language": "es",
+  "version": "1.0",
+  "theme": "popculture",
+  "questions": [
+    {
+      "id": "film_es_001",
+      "question": "¿Qué hermanos franceses patentaron el cinematógrafo en 1895 y lo mostraron al público en el Grand Café de París?",
+      "answers": [
+        {
+          "text": "Los hermanos Lumière",
+          "correct": true
+        },
+        {
+          "text": "Los hermanos Pathé",
+          "correct": false
+        },
+        {
+          "text": "Los hermanos Michelin",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su familia fabricaba placas fotográficas en Lyon, y sus primeras películas duraban menos de un minuto cada una.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_002",
+      "question": "¿Qué animal fotografió Eadweard Muybridge en 1878 para comprobar si, al galopar, llegaba a tener las cuatro patas en el aire?",
+      "answers": [
+        {
+          "text": "Un caballo",
+          "correct": true
+        },
+        {
+          "text": "Un galgo",
+          "correct": false
+        },
+        {
+          "text": "Un camello",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Leland Stanford, gobernador de California y aficionado a los caballos, encargó el experimento. Muybridge alineó una hilera de cámaras que disparaban con hilos que el propio animal rompía al pasar.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_003",
+      "question": "¿Qué razón práctica empujó a muchos productores a mudarse de Nueva York a California en los años diez?",
+      "answers": [
+        {
+          "text": "La luz del sol abundante casi todo el año",
+          "correct": true
+        },
+        {
+          "text": "Una ley que prohibía rodar en Nueva York",
+          "correct": false
+        },
+        {
+          "text": "Un nuevo impuesto sobre las películas rodadas en la costa este",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Otra razón fue que California quedaba lejos de la Motion Picture Patents Company de Edison, que perseguía a quien usara cámaras sin licencia.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_004",
+      "question": "¿Cómo se llamó el código de autocensura que, entre 1934 y finales de los sesenta, limitó lo que Hollywood podía mostrar en pantalla?",
+      "answers": [
+        {
+          "text": "Código Hays",
+          "correct": true
+        },
+        {
+          "text": "Código Lubitsch",
+          "correct": false
+        },
+        {
+          "text": "Código Selznick",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Debe su nombre a Will H. Hays, expolítico republicano que presidía la asociación de productoras. Se abandonó en 1968, cuando lo sustituyó un sistema de clasificación por edades.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_005",
+      "question": "¿Qué estudio de Hollywood abre sus películas con un león que ruge dentro de un marco circular?",
+      "answers": [
+        {
+          "text": "Metro-Goldwyn-Mayer",
+          "correct": true
+        },
+        {
+          "text": "Paramount",
+          "correct": false
+        },
+        {
+          "text": "Warner Bros.",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El primer león del logotipo, Slats, apareció en películas mudas de los años veinte, así que su rugido nunca se oyó en el cine de la época.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_006",
+      "question": "¿Qué musical de 1952 con Gene Kelly parodia los problemas de Hollywood al pasar del cine mudo al sonoro?",
+      "answers": [
+        {
+          "text": "Cantando bajo la lluvia",
+          "correct": true
+        },
+        {
+          "text": "Un americano en París",
+          "correct": false
+        },
+        {
+          "text": "Sombrero de copa",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kelly rodó el célebre número de la lluvia con fiebre alta. Para que el agua se viera en pantalla, se la iluminaba a contraluz.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_007",
+      "question": "¿Qué edad tenía aproximadamente Orson Welles cuando rodó 'Ciudadano Kane'?",
+      "answers": [
+        {
+          "text": "Unos 25 años",
+          "correct": true
+        },
+        {
+          "text": "Unos 35 años",
+          "correct": false
+        },
+        {
+          "text": "Unos 45 años",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Además de dirigirla y protagonizarla, coescribió el guion, que le dio el único Óscar que ganó en competición. El magnate William Randolph Hearst, en quien se inspira Kane, intentó frenar su estreno.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_008",
+      "question": "Una de las frases más citadas del cine no se pronuncia tal cual en 'Casablanca'. ¿Cuál?",
+      "answers": [
+        {
+          "text": "«Tócala otra vez, Sam»",
+          "correct": true
+        },
+        {
+          "text": "«Siempre nos quedará París»",
+          "correct": false
+        },
+        {
+          "text": "«Creo que este es el comienzo de una hermosa amistad»",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ilsa pide a Sam que la toque una vez, y más tarde Rick grita «¡Tócala!». La versión «otra vez» se popularizó después, entre otras cosas por 'Play It Again, Sam', obra de Woody Allen de 1969 llevada al cine en 1972.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_009",
+      "question": "¿Qué hacía Alfred Hitchcock en casi todas las películas que dirigió?",
+      "answers": [
+        {
+          "text": "Aparecer unos segundos como figurante",
+          "correct": true
+        },
+        {
+          "text": "Doblar la voz del villano",
+          "correct": false
+        },
+        {
+          "text": "Cantar la canción de los créditos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En 'Lifeboat' (1944), ambientada casi entera en un bote salvavidas, resolvió el problema apareciendo en un anuncio de adelgazamiento en el periódico que lee un náufrago.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_010",
+      "question": "¿Qué se usó como sangre falsa en la escena de la ducha de 'Psicosis', rodada en blanco y negro?",
+      "answers": [
+        {
+          "text": "Jarabe de chocolate",
+          "correct": true
+        },
+        {
+          "text": "Salsa de soja",
+          "correct": false
+        },
+        {
+          "text": "Tinta de calamar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Para abaratar el rodaje, Hitchcock usó el equipo técnico de su serie de televisión y puso él mismo buena parte del dinero.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_011",
+      "question": "¿Cómo se animó al King Kong original de 1933 en la mayoría de sus escenas?",
+      "answers": [
+        {
+          "text": "Con maquetas movidas fotograma a fotograma",
+          "correct": true
+        },
+        {
+          "text": "Con un actor disfrazado de gorila",
+          "correct": false
+        },
+        {
+          "text": "Con un gorila real adiestrado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las maquetas medían unos 45 centímetros y estaban cubiertas de piel de conejo. Su creador, Willis O'Brien, también animó la película 'El mundo perdido' en 1925.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_012",
+      "question": "¿Qué movimiento del cine francés de finales de los cincuenta, con Truffaut y Godard, rompió con el cine de estudio y rodó en plena calle?",
+      "answers": [
+        {
+          "text": "La nueva ola (Nouvelle Vague)",
+          "correct": true
+        },
+        {
+          "text": "El neorrealismo",
+          "correct": false
+        },
+        {
+          "text": "El expresionismo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Muchos de sus directores habían empezado como críticos en la revista 'Cahiers du Cinéma', y escribían sobre cine antes de dirigirlo.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_013",
+      "question": "¿Qué hizo el neorrealismo italiano de posguerra, con títulos como 'Ladrón de bicicletas', frente al cine de estudio?",
+      "answers": [
+        {
+          "text": "Rodó en calles reales con actores sin formación",
+          "correct": true
+        },
+        {
+          "text": "Rodó en estudios con estrellas internacionales",
+          "correct": false
+        },
+        {
+          "text": "Rodó solo películas de ciencia ficción",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El protagonista de 'Ladrón de bicicletas', Lamberto Maggiorani, era un obrero metalúrgico al que De Sica eligió precisamente por no ser actor.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_014",
+      "question": "En los años cincuenta, ¿cómo siguió escribiendo para el cine el guionista Dalton Trumbo, vetado por la lista negra de Hollywood?",
+      "answers": [
+        {
+          "text": "Firmando con seudónimos o a través de testaferros",
+          "correct": true
+        },
+        {
+          "text": "Dirigiendo películas bajo el nombre de su esposa",
+          "correct": false
+        },
+        {
+          "text": "Escribiendo solo novelas, sin volver al cine",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ganó dos Óscar a la mejor historia sin poder recogerlos: uno por 'Roman Holiday', cuyo crédito fue a otro, y otro por 'The Brave One' con el seudónimo Robert Rich. La Academia reparó el reconocimiento años después.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_015",
+      "question": "¿Qué peligro tenían las películas antiguas en soporte de nitrato de celulosa?",
+      "answers": [
+        {
+          "text": "Ardían con muchísima facilidad",
+          "correct": true
+        },
+        {
+          "text": "Se disolvían con la humedad del ambiente",
+          "correct": false
+        },
+        {
+          "text": "Se imantaban y borraban el sonido",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Muchas películas mudas se perdieron por incendios y descomposición. A partir de los años cincuenta se impuso el acetato, mucho menos inflamable.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_016",
+      "question": "¿Qué apodo recibió Buster Keaton por su rostro imperturbable, incluso en medio de catástrofes?",
+      "answers": [
+        {
+          "text": "Cara de Piedra",
+          "correct": true
+        },
+        {
+          "text": "Sonrisa de Cera",
+          "correct": false
+        },
+        {
+          "text": "Ojos de Búho",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En 'Steamboat Bill, Jr.' (1928) dejó que le cayera encima la fachada entera de una casa, de unas dos toneladas, y se salvó porque el hueco de una ventana abierta le pasó alrededor con apenas unos centímetros de margen.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_017",
+      "question": "¿Qué superproducción de 1963, con Elizabeth Taylor, estuvo a punto de llevar a la quiebra a la 20th Century Fox?",
+      "answers": [
+        {
+          "text": "Cleopatra",
+          "correct": true
+        },
+        {
+          "text": "Ben-Hur",
+          "correct": false
+        },
+        {
+          "text": "Espartaco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Taylor firmó uno de los primeros contratos de un millón de dólares para una actriz, y los costes se dispararon al mudar el rodaje de Londres a Roma.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_018",
+      "question": "¿Qué distinguía al kinetoscopio de Edison del cinematógrafo de los Lumière?",
+      "answers": [
+        {
+          "text": "Lo veía una sola persona a la vez, mirando por un visor",
+          "correct": true
+        },
+        {
+          "text": "Proyectaba las imágenes en una pantalla gigante",
+          "correct": false
+        },
+        {
+          "text": "Solo funcionaba al aire libre, con luz solar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las primeras salas de kinetoscopios abrieron en Nueva York en 1894: se pagaba por ver cada rollo, que duraba menos de un minuto.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_019",
+      "question": "¿Qué francesa empezó a dirigir películas de ficción en 1896, trabajando para Gaumont, y se la considera la primera directora de la historia?",
+      "answers": [
+        {
+          "text": "Alice Guy-Blaché",
+          "correct": true
+        },
+        {
+          "text": "Germaine Dulac",
+          "correct": false
+        },
+        {
+          "text": "Leni Riefenstahl",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Era secretaria de Léon Gaumont antes de pedirle permiso para rodar. Dirigió cientos de cortos y más tarde fundó su propio estudio, Solax, en Nueva Jersey.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_020",
+      "question": "¿Qué compañía fundaron en 1919 Charles Chaplin, Mary Pickford, Douglas Fairbanks y D. W. Griffith para controlar sus propias películas?",
+      "answers": [
+        {
+          "text": "United Artists",
+          "correct": true
+        },
+        {
+          "text": "Universal Pictures",
+          "correct": false
+        },
+        {
+          "text": "Columbia Pictures",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pickford fue además socia fundadora de la Academia de Cine de Hollywood y una de las actrices mejor pagadas de su época.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_021",
+      "question": "¿Qué apodo recibió Lon Chaney, estrella del cine mudo célebre por sus transformaciones con maquillaje?",
+      "answers": [
+        {
+          "text": "El gran camaleón",
+          "correct": false
+        },
+        {
+          "text": "El rey del miedo",
+          "correct": false
+        },
+        {
+          "text": "El hombre de las mil caras",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se maquillaba él mismo y ideó muchos de sus efectos. Para 'El jorobado de Notre Dame' (1923) cargó con un pesado arnés que le deformaba la espalda.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_022",
+      "question": "¿Cómo se llama el oficio de quien recrea en un estudio ruidos como pasos o crujidos mientras ve la película proyectada?",
+      "answers": [
+        {
+          "text": "Artista de foley",
+          "correct": true
+        },
+        {
+          "text": "Operador de claqueta",
+          "correct": false
+        },
+        {
+          "text": "Gaffer",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El nombre viene de Jack Foley, técnico de Universal que a partir de los años treinta desarrolló este sistema de sonidos grabados a medida.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_023",
+      "question": "¿Qué se usa tradicionalmente para imitar en el estudio el trote de un caballo?",
+      "answers": [
+        {
+          "text": "Mitades de cáscara de coco",
+          "correct": true
+        },
+        {
+          "text": "Dos ladrillos",
+          "correct": false
+        },
+        {
+          "text": "Cucharas de metal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Monty Python and the Holy Grail' (1975) convirtió el truco en chiste: sus caballeros entrechocan cocos y no tienen caballos.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_024",
+      "question": "¿Cómo se llama el efecto de sonido, un grito de hombre, que Hollywood reutiliza desde los años cincuenta en cientos de películas?",
+      "answers": [
+        {
+          "text": "Grito de Wilhelm",
+          "correct": true
+        },
+        {
+          "text": "Grito de Foley",
+          "correct": false
+        },
+        {
+          "text": "Grito de McCoy",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lleva el nombre de un personaje de 'The Charge at Feather River' (1953) que lo suelta al ser alcanzado por una flecha. El diseñador de sonido Ben Burtt lo recuperó y lo coló en 'La guerra de las galaxias'.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_025",
+      "question": "¿Qué actor puso voz y movimientos al personaje de Gollum en las películas de 'El Señor de los Anillos'?",
+      "answers": [
+        {
+          "text": "Andy Serkis",
+          "correct": true
+        },
+        {
+          "text": "Ian McKellen",
+          "correct": false
+        },
+        {
+          "text": "Viggo Mortensen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Al principio se pensó que solo pondría la voz, pero su forma de moverse en el rodaje convenció a Peter Jackson de capturar también su interpretación física.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_026",
+      "question": "¿Qué actor se hizo famoso por interpretar al monstruo de 'Frankenstein' en 1931, con el maquillaje de Jack Pierce?",
+      "answers": [
+        {
+          "text": "Boris Karloff",
+          "correct": true
+        },
+        {
+          "text": "Bela Lugosi",
+          "correct": false
+        },
+        {
+          "text": "Lon Chaney Jr.",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El maquillaje requería unas cuatro horas diarias, y las botas con plataforma que le hacían caminar con rigidez pesaban varios kilos.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_027",
+      "question": "¿Qué actor de Hong Kong es famoso por rodar sus propias escenas de riesgo y por enseñar los fallos durante los créditos finales?",
+      "answers": [
+        {
+          "text": "Jackie Chan",
+          "correct": true
+        },
+        {
+          "text": "Jet Li",
+          "correct": false
+        },
+        {
+          "text": "Chow Yun-fat",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En 1986, durante el rodaje de 'Armour of God', se cayó de un árbol y se fracturó el cráneo; le quedaron secuelas permanentes de aquel golpe.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_028",
+      "question": "¿De qué suelen estar hechos los 'cristales' que se rompen en las peleas de las películas?",
+      "answers": [
+        {
+          "text": "De azúcar o de resina",
+          "correct": true
+        },
+        {
+          "text": "De plástico de burbujas",
+          "correct": false
+        },
+        {
+          "text": "De papel de aluminio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El llamado cristal de azúcar se fabricaba cociendo azúcar hasta endurecerlo y se rompe en trozos que cortan mucho menos que el vidrio real. Hoy se usan sobre todo resinas.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_029",
+      "question": "¿Qué suelen beber los actores cuando fingen tomar whisky en pantalla?",
+      "answers": [
+        {
+          "text": "Té o zumo de manzana",
+          "correct": true
+        },
+        {
+          "text": "Agua con colorante rojo",
+          "correct": false
+        },
+        {
+          "text": "Café cargado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beber alcohol de verdad en cada toma sería un problema: una escena puede repetirse veinte veces, y el nivel del vaso tiene que ser idéntico.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_030",
+      "question": "¿Para qué sirve la claqueta que se golpea al empezar cada toma?",
+      "answers": [
+        {
+          "text": "Para sincronizar imagen y sonido e identificar la toma",
+          "correct": true
+        },
+        {
+          "text": "Para medir la luz de la escena",
+          "correct": false
+        },
+        {
+          "text": "Para pedir silencio a los extras",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El golpe seco marca un punto exacto en la imagen y en el audio, y el montador los alinea después. Si se rueda sin sonido, se enseña la claqueta con los dedos sujetando la pala: la llamada claqueta muda.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_031",
+      "question": "¿Cómo se llama la técnica que aleja la cámara mientras el zoom se acerca al sujeto, y que se hizo célebre en una película de Hitchcock de 1958?",
+      "answers": [
+        {
+          "text": "Dolly zoom, o efecto Vértigo",
+          "correct": true
+        },
+        {
+          "text": "Plano secuencia",
+          "correct": false
+        },
+        {
+          "text": "Cámara lenta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se atribuye al operador Irmin Roberts, que la ideó para la escena del campanario. Spielberg la usó en el plano de la playa de 'Tiburón'.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_032",
+      "question": "Hitchcock rodó 'La soga' (1948) para que pareciera un único plano continuo. ¿Por qué tuvo que esconder cortes?",
+      "answers": [
+        {
+          "text": "Porque cada rollo de película duraba unos diez minutos",
+          "correct": true
+        },
+        {
+          "text": "Porque la cámara se sobrecalentaba al rodar sin parar",
+          "correct": false
+        },
+        {
+          "text": "Porque el estudio prohibía los planos de más de dos minutos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los cortes se disimulan acercando la cámara a la espalda oscura de un actor o a un mueble. En realidad la película se compone de unos diez planos largos.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_033",
+      "question": "¿Cómo se consigue la cámara lenta al filmar?",
+      "answers": [
+        {
+          "text": "Grabando más imágenes por segundo",
+          "correct": true
+        },
+        {
+          "text": "Grabando menos imágenes por segundo",
+          "correct": false
+        },
+        {
+          "text": "Alargando la exposición de cada imagen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En el cine mudo se rodaba a manivela, con velocidades que variaban de una escena a otra, y el proyeccionista ajustaba la velocidad a su gusto.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_034",
+      "question": "¿En qué orden se ruedan normalmente las escenas de una película?",
+      "answers": [
+        {
+          "text": "Agrupadas por localización y por actor",
+          "correct": true
+        },
+        {
+          "text": "En orden estricto de la historia",
+          "correct": false
+        },
+        {
+          "text": "De la última escena a la primera",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Agrupar escenas ahorra dinero: cada actor y cada decorado se contratan solo los días necesarios, así que el final de una película puede rodarse antes que el principio.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_035",
+      "question": "¿Qué descubrió el cineasta soviético Lev Kuleshov al intercalar el mismo primer plano de un actor con imágenes distintas, como un plato de sopa o un ataúd?",
+      "answers": [
+        {
+          "text": "Que el público leía emociones distintas en la misma cara",
+          "correct": true
+        },
+        {
+          "text": "Que el público no distinguía a un actor de otro",
+          "correct": false
+        },
+        {
+          "text": "Que las imágenes cortas cansaban la vista",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se conoce como efecto Kuleshov y es una de las bases de la teoría del montaje soviético, desarrollada por Pudovkin y Eisenstein.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_036",
+      "question": "¿Qué le ocurrió a Martin Sheen durante el rodaje de 'Apocalypse Now'?",
+      "answers": [
+        {
+          "text": "Sufrió un infarto",
+          "correct": true
+        },
+        {
+          "text": "Se rompió una pierna al saltar de un helicóptero",
+          "correct": false
+        },
+        {
+          "text": "Se quedó sin voz tras un tifón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El rodaje en Filipinas, previsto para pocos meses, se alargó más de un año. Un tifón destruyó decorados y Marlon Brando llegó con sobrepeso y sin conocer bien el papel.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_037",
+      "question": "¿Qué hizo Werner Herzog en 'Fitzcarraldo' (1982) en lugar de recurrir a una maqueta?",
+      "answers": [
+        {
+          "text": "Arrastrar un barco de verdad por una colina de la selva",
+          "correct": true
+        },
+        {
+          "text": "Rodar la escena dentro de un tanque de estudio",
+          "correct": false
+        },
+        {
+          "text": "Pintar el barco sobre un cristal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jason Robards iba a ser Fitzcarraldo, pero enfermó; Mick Jagger, que iba a ser su amigo Wilbur, tuvo que irse por una gira. Klaus Kinski acabó interpretando al protagonista.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_038",
+      "question": "¿Qué tuvo que soportar Tippi Hedren durante la escena del desván de 'Los pájaros' (1963)?",
+      "answers": [
+        {
+          "text": "Aves vivas lanzadas contra ella durante varios días",
+          "correct": true
+        },
+        {
+          "text": "Una tormenta real sobre un decorado exterior",
+          "correct": false
+        },
+        {
+          "text": "Una caída desde el techo del estudio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Acabó agotada y el médico le ordenó reposo, lo que obligó a parar el rodaje durante una semana.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_039",
+      "question": "¿Quién puso la voz cantada a Natalie Wood en 'West Side Story' y a Audrey Hepburn en 'My Fair Lady'?",
+      "answers": [
+        {
+          "text": "Marni Nixon",
+          "correct": true
+        },
+        {
+          "text": "Julie Andrews",
+          "correct": false
+        },
+        {
+          "text": "Barbra Streisand",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nixon fue durante años la voz fantasma de Hollywood. Sí apareció en pantalla en 'The Sound of Music' (1965), como la hermana Sofía.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_040",
+      "question": "¿Qué se pinchaba para recrear el sonido de las puñaladas en la ducha de 'Psicosis'?",
+      "answers": [
+        {
+          "text": "Un melón",
+          "correct": true
+        },
+        {
+          "text": "Una col",
+          "correct": false
+        },
+        {
+          "text": "Un coco",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hitchcock no quería música en esa escena. Bernard Herrmann compuso los violines chirriantes por su cuenta, y el director acabó cambiando de opinión.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_041",
+      "question": "¿De qué se encarga en un rodaje el 'gaffer'?",
+      "answers": [
+        {
+          "text": "De la iluminación",
+          "correct": true
+        },
+        {
+          "text": "Del vestuario",
+          "correct": false
+        },
+        {
+          "text": "Del sonido directo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su mano derecha es el 'best boy'. Otro puesto, el 'key grip', se ocupa de mover y asegurar cámaras y soportes.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_042",
+      "question": "¿Cómo llamaba Hitchcock al objeto o dato que pone en marcha la trama pero importa poco al espectador?",
+      "answers": [
+        {
+          "text": "MacGuffin",
+          "correct": true
+        },
+        {
+          "text": "Cameo",
+          "correct": false
+        },
+        {
+          "text": "Plano holandés",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hitchcock popularizó el término, que atribuía al guionista Angus MacPhail. En 'North by Northwest' es un microfilm escondido dentro de una estatuilla.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_043",
+      "question": "¿Qué equipo usó el sonidista Ben Burtt para crear la respiración de Darth Vader?",
+      "answers": [
+        {
+          "text": "Un regulador de buceo",
+          "correct": true
+        },
+        {
+          "text": "Un fuelle de acordeón",
+          "correct": false
+        },
+        {
+          "text": "Una pecera con micrófono",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Burtt también mezcló el zumbido de un proyector de cine antiguo con el de un televisor para crear el sonido de los sables láser.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_044",
+      "question": "¿Por qué las reacciones de espanto del reparto en la escena del 'chestburster' de 'Alien' (1979) son tan genuinas?",
+      "answers": [
+        {
+          "text": "Porque no sabían cuánta sangre iba a salir",
+          "correct": true
+        },
+        {
+          "text": "Porque habían visto antes un monstruo real",
+          "correct": false
+        },
+        {
+          "text": "Porque se grabó con un truco de montaje inverso",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "John Hurt se escondió bajo la mesa, y un torso falso ocupó su lugar mientras la criatura salía disparada.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_045",
+      "question": "¿Qué recurso se usó, junto a los dobles de escala, para que Gandalf pareciera mucho más alto que los hobbits en 'La comunidad del anillo'?",
+      "answers": [
+        {
+          "text": "Perspectiva forzada",
+          "correct": true
+        },
+        {
+          "text": "Hobbits interpretados por niños",
+          "correct": false
+        },
+        {
+          "text": "Gandalf sobre zancos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En algunas escenas los actores rodaron en decorados gemelos de distinto tamaño, y los planos se unieron después con cámaras sincronizadas.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_046",
+      "question": "¿Qué actor canadiense puso voz a HAL 9000 en '2001: Una odisea del espacio'?",
+      "answers": [
+        {
+          "text": "Douglas Rain",
+          "correct": true
+        },
+        {
+          "text": "Peter Ustinov",
+          "correct": false
+        },
+        {
+          "text": "Alec Guinness",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se grabó antes con Martin Balsam, pero Kubrick buscaba un tono más neutro y lo sustituyó.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_047",
+      "question": "¿De dónde salió el gato que acaricia Vito Corleone en la primera escena de 'El padrino'?",
+      "answers": [
+        {
+          "text": "Era un gato callejero hallado en el estudio",
+          "correct": true
+        },
+        {
+          "text": "Era un gato amaestrado durante meses",
+          "correct": false
+        },
+        {
+          "text": "Era un gato mecánico",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brando lo acarició durante toda la escena, y su ronroneo se oye en la banda sonora.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_048",
+      "question": "¿Dónde se rodó casi toda 'La ventana indiscreta' (1954)?",
+      "answers": [
+        {
+          "text": "En un decorado gigante de estudio",
+          "correct": true
+        },
+        {
+          "text": "En un patio real del Greenwich Village",
+          "correct": false
+        },
+        {
+          "text": "En el piso del propio Hitchcock",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El decorado incluía más de treinta apartamentos, doce de ellos amueblados por completo.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_049",
+      "question": "¿Cómo se rodó el 'tiempo bala' de 'Matrix'?",
+      "answers": [
+        {
+          "text": "Con decenas de cámaras fijas dispuestas en arco",
+          "correct": true
+        },
+        {
+          "text": "Con una sola cámara muy rápida",
+          "correct": false
+        },
+        {
+          "text": "Con un dron girando alrededor",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La idea parte de Muybridge, el de los caballos: cada cámara disparaba una fracción de segundo después de la anterior.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_050",
+      "question": "¿Qué película de Akira Kurosawa de 1954 inspiró 'Los siete magníficos'?",
+      "answers": [
+        {
+          "text": "Los siete samuráis",
+          "correct": true
+        },
+        {
+          "text": "Rashomon",
+          "correct": false
+        },
+        {
+          "text": "Ran",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sergio Leone copió después 'Yojimbo' (1961) en 'Por un puñado de dólares' (1964), y Kurosawa logró una compensación.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_051",
+      "question": "Una película de Kurosawa de 1950 da nombre al efecto por el que varios testigos cuentan versiones contradictorias de un mismo suceso. ¿Cuál es?",
+      "answers": [
+        {
+          "text": "Rashomon",
+          "correct": true
+        },
+        {
+          "text": "Ikiru",
+          "correct": false
+        },
+        {
+          "text": "Dersu Uzala",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ganó el León de Oro en Venecia en 1951 y abrió la puerta del cine japonés al público occidental.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_052",
+      "question": "¿Cómo se llama el estilo característico del director japonés Yasujirō Ozu, que coloca la cámara muy baja, a la altura de alguien sentado en el suelo?",
+      "answers": [
+        {
+          "text": "Plano tatami",
+          "correct": true
+        },
+        {
+          "text": "Plano subjetivo",
+          "correct": false
+        },
+        {
+          "text": "Plano cenital",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En 'Cuentos de Tokio' (1953) casi no mueve la cámara; prefería una óptica de 50 mm.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_053",
+      "question": "¿A qué juega el caballero con la Muerte en 'El séptimo sello' (1957)?",
+      "answers": [
+        {
+          "text": "Al ajedrez",
+          "correct": true
+        },
+        {
+          "text": "A las damas",
+          "correct": false
+        },
+        {
+          "text": "A los dados",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En la parodia 'Bill & Ted's Bogus Journey' (1991) la Muerte acaba perdiendo juegos como Twister.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_054",
+      "question": "¿Qué director italiano retrató su crisis creativa en '8½' (1963)?",
+      "answers": [
+        {
+          "text": "Federico Fellini",
+          "correct": true
+        },
+        {
+          "text": "Luchino Visconti",
+          "correct": false
+        },
+        {
+          "text": "Michelangelo Antonioni",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su título cuenta las películas que había dirigido hasta entonces: ocho y media, porque los cortos y codirecciones contaban como medias.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_055",
+      "question": "¿Qué película surcoreana de 2019 fue la primera de habla no inglesa en ganar el Óscar a mejor película?",
+      "answers": [
+        {
+          "text": "Parásitos",
+          "correct": true
+        },
+        {
+          "text": "Oldboy",
+          "correct": false
+        },
+        {
+          "text": "Tren a Busan",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La lujosa casa de la familia rica no existía: se construyó entera como decorado en un estudio.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_056",
+      "question": "¿En qué barrio de París transcurre 'Amélie' (2001)?",
+      "answers": [
+        {
+          "text": "Montmartre",
+          "correct": true
+        },
+        {
+          "text": "El Marais",
+          "correct": false
+        },
+        {
+          "text": "El Barrio Latino",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Café des 2 Moulins, donde trabaja Amélie, existe de verdad y recibe visitas de aficionados.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_057",
+      "question": "¿Qué recortaba el cura del pueblo de las películas en 'Cinema Paradiso'?",
+      "answers": [
+        {
+          "text": "Las escenas de besos",
+          "correct": true
+        },
+        {
+          "text": "Las escenas de violencia",
+          "correct": false
+        },
+        {
+          "text": "Los créditos finales",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Aquellos besos censurados se reúnen en un montaje final que emociona al protagonista. La película ganó el Óscar a mejor película extranjera en 1990.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_058",
+      "question": "¿Cómo protege Guido a su hijo en el campo de concentración de 'La vida es bella'?",
+      "answers": [
+        {
+          "text": "Haciéndole creer que todo es un juego",
+          "correct": true
+        },
+        {
+          "text": "Escondiéndolo en un barril",
+          "correct": false
+        },
+        {
+          "text": "Disfrazándolo de soldado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Benigni se inspiró en la historia de su padre, que estuvo internado en un campo de trabajo alemán.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_059",
+      "question": "¿En qué ciudad transcurre 'Ciudad de Dios' (2002)?",
+      "answers": [
+        {
+          "text": "Río de Janeiro",
+          "correct": true
+        },
+        {
+          "text": "São Paulo",
+          "correct": false
+        },
+        {
+          "text": "Salvador de Bahía",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Buena parte del reparto eran jóvenes de las favelas sin experiencia previa; Cidade de Deus es también el nombre de un barrio real.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_060",
+      "question": "¿Qué película de Ang Lee de 2000 popularizó en Occidente el cine wuxia, con combates que vuelan sobre tejados y bosques de bambú?",
+      "answers": [
+        {
+          "text": "Crouching Tiger, Hidden Dragon",
+          "correct": true
+        },
+        {
+          "text": "Hero",
+          "correct": false
+        },
+        {
+          "text": "House of Flying Daggers",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ganó cuatro Óscar, entre ellos el de película de habla no inglesa. Los actores volaban colgados de cables, que luego se borraron digitalmente.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_061",
+      "question": "¿Qué película fue la primera secuela en ganar el Óscar a mejor película?",
+      "answers": [
+        {
+          "text": "El padrino II",
+          "correct": true
+        },
+        {
+          "text": "El imperio contraataca",
+          "correct": false
+        },
+        {
+          "text": "Terminator 2",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Robert De Niro ganó el Óscar a mejor actor de reparto por interpretar al joven Vito Corleone, hablando en buena parte en siciliano.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_062",
+      "question": "¿De qué programa de televisión tomó Jack Nicholson, improvisando, el «¡Aquí está Johnny!» de 'El resplandor'?",
+      "answers": [
+        {
+          "text": "The Tonight Show",
+          "correct": true
+        },
+        {
+          "text": "The Ed Sullivan Show",
+          "correct": false
+        },
+        {
+          "text": "Saturday Night Live",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La expresión era el saludo con el que Ed McMahon presentaba cada noche a Johnny Carson.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_063",
+      "question": "¿Qué actor recortó y reescribió él mismo el monólogo de «lágrimas en la lluvia» de 'Blade Runner' durante el rodaje?",
+      "answers": [
+        {
+          "text": "Rutger Hauer",
+          "correct": true
+        },
+        {
+          "text": "Harrison Ford",
+          "correct": false
+        },
+        {
+          "text": "Edward James Olmos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El texto original era más largo y técnico. Hauer lo condensó en pocas frases y añadió el «Es hora de morir» final.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_064",
+      "question": "¿Cuántos papeles interpretó Peter Sellers en 'Dr. Strangelove' (1964)?",
+      "answers": [
+        {
+          "text": "Tres",
+          "correct": true
+        },
+        {
+          "text": "Uno",
+          "correct": false
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Iba a hacer también el del piloto del bombardero, pero se lesionó un tobillo y lo sustituyó Slim Pickens, un auténtico vaquero de rodeo.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_065",
+      "question": "¿Cuál es la última frase de 'Con faldas y a lo loco' (1959)?",
+      "answers": [
+        {
+          "text": "«Nadie es perfecto»",
+          "correct": true
+        },
+        {
+          "text": "«Qué más da»",
+          "correct": false
+        },
+        {
+          "text": "«Así es la vida»",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wilder la rodó en blanco y negro porque, en las pruebas de color, el maquillaje de Tony Curtis y Jack Lemmon vestidos de mujer salía con un tono verdoso.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_066",
+      "question": "¿De qué película alemana de 2004 procede la escena que sirvió para miles de parodias de Hitler furioso en su búnker?",
+      "answers": [
+        {
+          "text": "El hundimiento (Der Untergang)",
+          "correct": true
+        },
+        {
+          "text": "El gran dictador",
+          "correct": false
+        },
+        {
+          "text": "El submarino (Das Boot)",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las parodias cambian los subtítulos y se hicieron tan numerosas que la productora logró retirar muchas de YouTube en 2010.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_067",
+      "question": "¿Qué prenda destaca en color dentro del blanco y negro de 'La lista de Schindler' durante el desalojo del gueto?",
+      "answers": [
+        {
+          "text": "El abrigo rojo de una niña",
+          "correct": true
+        },
+        {
+          "text": "Un sombrero verde",
+          "correct": false
+        },
+        {
+          "text": "Una bufanda azul",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Spielberg se negó a cobrar por dirigirla: decía que sería como cobrar dinero manchado de sangre.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_068",
+      "question": "¿Qué tiene de singular el musical francés 'Los paraguas de Cherburgo' (1964)?",
+      "answers": [
+        {
+          "text": "Todos sus diálogos son cantados",
+          "correct": true
+        },
+        {
+          "text": "Es una película completamente muda",
+          "correct": false
+        },
+        {
+          "text": "Está rodada entera en un solo decorado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ganó la Palma de Oro en Cannes. Los actores principales fueron doblados en las canciones por cantantes profesionales; Catherine Deneuve, por Danielle Licari.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_069",
+      "question": "¿Cómo termina 'Los cuatrocientos golpes' (1959), de Truffaut?",
+      "answers": [
+        {
+          "text": "Con la imagen congelada del niño",
+          "correct": true
+        },
+        {
+          "text": "Con un amanecer en un puerto",
+          "correct": false
+        },
+        {
+          "text": "Con una puerta que se cierra",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El niño es Antoine Doinel, alter ego de Truffaut, al que Jean-Pierre Léaud volvería a interpretar en varias películas durante unos veinte años.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_070",
+      "question": "¿Qué técnica de montaje, con cortes bruscos dentro de una misma escena, hizo célebre 'À bout de souffle' de Godard?",
+      "answers": [
+        {
+          "text": "El jump cut",
+          "correct": true
+        },
+        {
+          "text": "El fundido encadenado",
+          "correct": false
+        },
+        {
+          "text": "El plano contraplano",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Según contó el propio Godard, el primer montaje era demasiado largo y optó por quitar trozos dentro de los planos en vez de eliminar escenas enteras.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_071",
+      "question": "¿Cómo se llama la jerga inventada que hablan los jóvenes de 'La naranja mecánica'?",
+      "answers": [
+        {
+          "text": "Nadsat",
+          "correct": true
+        },
+        {
+          "text": "Neolengua",
+          "correct": false
+        },
+        {
+          "text": "Klingon",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Anthony Burgess, autor de la novela, la construyó con palabras rusas adaptadas. Kubrick retiró la película de los cines británicos en 1973, y allí no volvió a verse hasta después de su muerte.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_072",
+      "question": "¿Qué recurso visual usa 'El gran hotel Budapest' (2014) para distinguir las épocas en que transcurre?",
+      "answers": [
+        {
+          "text": "Cambia la proporción de la pantalla",
+          "correct": true
+        },
+        {
+          "text": "Alterna color y blanco y negro",
+          "correct": false
+        },
+        {
+          "text": "Usa una voz en off distinta cada vez",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Emplea tres formatos: 1,37:1 para los años treinta, 2,35:1 para los sesenta y 1,85:1 para los ochenta. Se inspira en la obra de Stefan Zweig.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_073",
+      "question": "¿Cómo está estructurada 'Memento' (2000)?",
+      "answers": [
+        {
+          "text": "Casi en orden inverso, de atrás hacia delante",
+          "correct": true
+        },
+        {
+          "text": "En un único plano secuencia",
+          "correct": false
+        },
+        {
+          "text": "Con tres narradores distintos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Christopher Nolan la basó en un relato de su hermano Jonathan, 'Memento Mori'.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_074",
+      "question": "¿Qué actor empezó a rodar el papel de Marty McFly en 'Regreso al futuro' y fue sustituido por Michael J. Fox semanas después?",
+      "answers": [
+        {
+          "text": "Eric Stoltz",
+          "correct": true
+        },
+        {
+          "text": "Matthew Broderick",
+          "correct": false
+        },
+        {
+          "text": "Rob Lowe",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fox grabó la serie 'Enredos de familia' de día y 'Regreso al futuro' de noche durante meses.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_075",
+      "question": "¿En qué ciudad se rodaron casi todas las escenas ambientadas en Viena de 'Amadeus' (1984)?",
+      "answers": [
+        {
+          "text": "Praga",
+          "correct": true
+        },
+        {
+          "text": "Budapest",
+          "correct": false
+        },
+        {
+          "text": "Salzburgo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Milos Forman, nacido en Checoslovaquia, no había vuelto a filmar allí desde su exilio en 1968.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_076",
+      "question": "¿Qué novedad de sonido estrenó 'Fantasía' (1940) en algunas salas?",
+      "answers": [
+        {
+          "text": "Sonido estéreo multicanal",
+          "correct": true
+        },
+        {
+          "text": "Sonido grabado en directo en la sala",
+          "correct": false
+        },
+        {
+          "text": "Sonido mono comprimido",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Leopold Stokowski dirigió la orquesta. El sistema, llamado Fantasound, necesitaba tanto equipo que solo unas pocas salas pudieron proyectarla con él.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_077",
+      "question": "¿Cómo se llama la técnica de calcar fotograma a fotograma imágenes filmadas de actores reales para animarlas?",
+      "answers": [
+        {
+          "text": "Rotoscopia",
+          "correct": true
+        },
+        {
+          "text": "Pixilación",
+          "correct": false
+        },
+        {
+          "text": "Cel shading",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La inventó Max Fleischer hacia 1915 y la usó para animar a Koko el Payaso, a partir de su hermano Dave disfrazado.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_078",
+      "question": "¿De qué material están hechos Wallace y Gromit?",
+      "answers": [
+        {
+          "text": "Plastilina",
+          "correct": true
+        },
+        {
+          "text": "Silicona",
+          "correct": false
+        },
+        {
+          "text": "Fieltro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gromit no tiene boca: toda su expresión sale de las cejas y de la mirada.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_079",
+      "question": "¿Quién dirigió 'The Nightmare Before Christmas' (1993), película ideada y producida por Tim Burton?",
+      "answers": [
+        {
+          "text": "Henry Selick",
+          "correct": true
+        },
+        {
+          "text": "Tim Burton",
+          "correct": false
+        },
+        {
+          "text": "Brad Bird",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se animó fotograma a fotograma con muñecos de cabezas intercambiables para cambiar de expresión.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_080",
+      "question": "¿Qué actor puso voz al Genio en 'Aladdín' (1992)?",
+      "answers": [
+        {
+          "text": "Robin Williams",
+          "correct": true
+        },
+        {
+          "text": "Eddie Murphy",
+          "correct": false
+        },
+        {
+          "text": "Jim Carrey",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Williams improvisó tanto que el equipo trabajó con montañas de grabaciones. Se enfadó con Disney por usar su voz en la publicidad y no volvió hasta 1996, tras una disculpa del estudio.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_081",
+      "question": "¿Qué plato sirve una rata cocinera al crítico Anton Ego en una película de Pixar de 2007, y le transporta a su infancia?",
+      "answers": [
+        {
+          "text": "Un ratatouille",
+          "correct": true
+        },
+        {
+          "text": "Un soufflé",
+          "correct": false
+        },
+        {
+          "text": "Un cassoulet",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La versión de la película la preparó el chef Thomas Keller, con las verduras cortadas en láminas finas.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_082",
+      "question": "¿Qué flor guía a las almas de los difuntos hasta el mundo de los vivos en 'Coco' (2017)?",
+      "answers": [
+        {
+          "text": "El cempasúchil",
+          "correct": true
+        },
+        {
+          "text": "El hibisco",
+          "correct": false
+        },
+        {
+          "text": "El girasol",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En la tradición mexicana del Día de Muertos, sus pétalos naranjas y su olor marcan el camino hacia las ofrendas.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_083",
+      "question": "¿En qué idioma está la expresión «hakuna matata» de 'El Rey León'?",
+      "answers": [
+        {
+          "text": "Suajili",
+          "correct": true
+        },
+        {
+          "text": "Zulú",
+          "correct": false
+        },
+        {
+          "text": "Afrikáans",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En suajili 'pumba' significa más o menos 'tonto' o 'despistado', y 'Rafiki' significa 'amigo'.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_084",
+      "question": "¿Qué serie de cortos de Hanna y Barbera ganó siete Óscar al mejor cortometraje animado?",
+      "answers": [
+        {
+          "text": "Tom y Jerry",
+          "correct": true
+        },
+        {
+          "text": "Pixie y Dixie",
+          "correct": false
+        },
+        {
+          "text": "El oso Yogui",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En el primer corto, de 1940, el gato y el ratón se llamaban todavía Jasper y Jinx.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_085",
+      "question": "¿Qué personaje aparece en el logotipo de Studio Ghibli?",
+      "answers": [
+        {
+          "text": "Totoro",
+          "correct": true
+        },
+        {
+          "text": "Kiki",
+          "correct": false
+        },
+        {
+          "text": "Ponyo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Miyazaki eligió el nombre de un avión militar italiano, el Caproni Ca.309 Ghibli, que a su vez se llama así por el viento cálido del Sáhara.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_086",
+      "question": "¿En qué país crece la protagonista de 'Persépolis' (2007), película animada en blanco y negro basada en el cómic autobiográfico de Marjane Satrapi?",
+      "answers": [
+        {
+          "text": "Irán",
+          "correct": true
+        },
+        {
+          "text": "Irak",
+          "correct": false
+        },
+        {
+          "text": "Afganistán",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Satrapi la codirigió con Vincent Paronnaud, y se rodó en francés.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_087",
+      "question": "¿Cuántos dedos, contando el pulgar, tienen en cada mano Mickey Mouse y muchos personajes clásicos de dibujos animados?",
+      "answers": [
+        {
+          "text": "Cuatro",
+          "correct": true
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dibujar un dedo menos ahorraba tiempo y dinero, y con cinco las manos parecían demasiado cargadas para un personaje tan simple.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_088",
+      "question": "¿Qué película de animación de Disney de 1991 fue la primera nominada al Óscar a mejor película?",
+      "answers": [
+        {
+          "text": "La bella y la bestia",
+          "correct": true
+        },
+        {
+          "text": "El rey león",
+          "correct": false
+        },
+        {
+          "text": "La sirenita",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se proyectó sin terminar, con partes aún a lápiz, en el festival de cine de Nueva York de 1991 y recibió una ovación del público.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_089",
+      "question": "¿Quién dirigió la serie de anime 'Heidi' (1974), con un joven Hayao Miyazaki en el equipo?",
+      "answers": [
+        {
+          "text": "Isao Takahata",
+          "correct": true
+        },
+        {
+          "text": "Osamu Tezuka",
+          "correct": false
+        },
+        {
+          "text": "Mamoru Oshii",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Takahata fundaría después Studio Ghibli junto a Miyazaki, que en 'Heidi' se ocupó de la composición de escenas. El equipo viajó a Suiza para documentarse.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_090",
+      "question": "En la naturaleza, si muere la hembra dominante de un grupo de peces payaso como el padre de Nemo, ¿qué ocurre?",
+      "answers": [
+        {
+          "text": "El macho dominante se convierte en hembra",
+          "correct": true
+        },
+        {
+          "text": "El grupo se dispersa y se separa",
+          "correct": false
+        },
+        {
+          "text": "Los huevos dejan de desarrollarse",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Biológicamente, tras la muerte de Coral en 'Buscando a Nemo', Marlin habría cambiado de sexo, y Nemo, con el tiempo, habría pasado a ser el macho dominante.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_091",
+      "question": "¿A qué actor de Hollywood parodia la forma de comer zanahorias de Bugs Bunny?",
+      "answers": [
+        {
+          "text": "Clark Gable",
+          "correct": true
+        },
+        {
+          "text": "Humphrey Bogart",
+          "correct": false
+        },
+        {
+          "text": "Cary Grant",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gable masca una zanahoria mientras charla con Claudette Colbert en 'Sucedió una noche' (1934).",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_092",
+      "question": "¿Qué objeto aparece saltando sobre la «i» del logotipo animado de Pixar?",
+      "answers": [
+        {
+          "text": "Una lámpara de escritorio",
+          "correct": true
+        },
+        {
+          "text": "Una pelota de colores",
+          "correct": false
+        },
+        {
+          "text": "Un pequeño cohete",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es Luxo Jr., protagonista de un cortometraje de 1986 que fue nominado al Óscar.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_093",
+      "question": "¿Qué comedia de situación en imagen real de los años cincuenta inspiró 'Los Picapiedra'?",
+      "answers": [
+        {
+          "text": "The Honeymooners",
+          "correct": true
+        },
+        {
+          "text": "I Love Lucy",
+          "correct": false
+        },
+        {
+          "text": "Father Knows Best",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La serie de Hanna-Barbera se estrenó en 1960 pensada para el horario de máxima audiencia, y su título de trabajo era 'The Flagstones'.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_094",
+      "question": "¿Qué palabra evitó pronunciar la cadena durante el embarazo de Lucille Ball en 'I Love Lucy'?",
+      "answers": [
+        {
+          "text": "Embarazada",
+          "correct": true
+        },
+        {
+          "text": "Bebé",
+          "correct": false
+        },
+        {
+          "text": "Hospital",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El episodio del nacimiento del hijo de Lucy y Ricky se emitió en enero de 1953, la misma noche en que nació el hijo real de Lucille Ball.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_095",
+      "question": "¿En quién se inspiró el personaje de George Costanza en 'Seinfeld'?",
+      "answers": [
+        {
+          "text": "En Larry David, cocreador de la serie",
+          "correct": true
+        },
+        {
+          "text": "En Jason Alexander, su intérprete",
+          "correct": false
+        },
+        {
+          "text": "En Michael Richards, el actor de Kramer",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Larry David puso además, sin salir en cámara, la voz de George Steinbrenner, el dueño de los Yankees.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_096",
+      "question": "¿Cómo termina el último capítulo de 'Los Soprano' (2007)?",
+      "answers": [
+        {
+          "text": "Con un corte brusco a negro en mitad de una escena",
+          "correct": true
+        },
+        {
+          "text": "Con la muerte en pantalla de Tony",
+          "correct": false
+        },
+        {
+          "text": "Con un salto de diez años al futuro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La escena transcurre en un restaurante mientras suena «Don't Stop Believin'» de Journey. El creador, David Chase, siempre se negó a explicar qué ocurre.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_097",
+      "question": "¿Qué aspecto tiene por fuera la TARDIS, la nave del Doctor en 'Doctor Who'?",
+      "answers": [
+        {
+          "text": "El de una cabina de policía azul británica",
+          "correct": true
+        },
+        {
+          "text": "El de un ascensor de cristal",
+          "correct": false
+        },
+        {
+          "text": "El de una cabina de teléfono roja",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El primer episodio se emitió el 23 de noviembre de 1963, un día después del asesinato de Kennedy.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_098",
+      "question": "¿Cuántos episodios se hicieron en total de 'Fawlty Towers' ('Hotel Fawlty')?",
+      "answers": [
+        {
+          "text": "Doce",
+          "correct": true
+        },
+        {
+          "text": "Treinta y seis",
+          "correct": false
+        },
+        {
+          "text": "Setenta y dos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "John Cleese se inspiró en el dueño de un hotel real de Torquay donde se alojaron los Monty Python durante un rodaje.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_099",
+      "question": "¿Qué grupo de humoristas británicos creó 'El circo volador' y 'La vida de Brian'?",
+      "answers": [
+        {
+          "text": "Monty Python",
+          "correct": true
+        },
+        {
+          "text": "The Goodies",
+          "correct": false
+        },
+        {
+          "text": "The Two Ronnies",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Antes de decidirse barajaron nombres como 'Owl Stretching Time' y 'A Horse, a Spoon and a Basin'.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_100",
+      "question": "¿En qué ciudad de Estados Unidos está el bar de 'Cheers'?",
+      "answers": [
+        {
+          "text": "Boston",
+          "correct": true
+        },
+        {
+          "text": "Chicago",
+          "correct": false
+        },
+        {
+          "text": "Nueva York",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "De ese bar salió el psiquiatra Frasier Crane, que protagonizó su propia serie derivada durante más de una década.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_101",
+      "question": "¿En qué guerra transcurre la serie 'M*A*S*H'?",
+      "answers": [
+        {
+          "text": "En la de Vietnam",
+          "correct": false
+        },
+        {
+          "text": "En la de Corea",
+          "correct": true
+        },
+        {
+          "text": "En la Segunda Guerra Mundial",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se emitió entre 1972 y 1983, durante y después de la guerra de Vietnam, que criticaba de forma implícita. Se mantuvo en antena más del triple de años que duró el conflicto real.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_102",
+      "question": "¿De qué planeta procede Spock en 'Star Trek'?",
+      "answers": [
+        {
+          "text": "Vulcano",
+          "correct": true
+        },
+        {
+          "text": "Marte",
+          "correct": false
+        },
+        {
+          "text": "Rigel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Leonard Nimoy ideó el saludo vulcano a partir de un gesto de la bendición sacerdotal judía que recordaba de su infancia.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_103",
+      "question": "¿Cómo aparece el cadáver de Laura Palmer al principio de 'Twin Peaks'?",
+      "answers": [
+        {
+          "text": "Envuelto en plástico, en la orilla de un lago",
+          "correct": true
+        },
+        {
+          "text": "Colgado de un árbol",
+          "correct": false
+        },
+        {
+          "text": "Dentro de un coche hundido",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "David Lynch no quería resolver el misterio, pero la cadena presionó para desvelar al asesino durante la segunda temporada.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_104",
+      "question": "¿A qué se refiere el título de 'Black Mirror'?",
+      "answers": [
+        {
+          "text": "A la pantalla apagada de móviles y televisores",
+          "correct": true
+        },
+        {
+          "text": "A un espejo mágico de cuento",
+          "correct": false
+        },
+        {
+          "text": "A un lago oscuro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su creador, Charlie Brooker, lo explicó como el espejo negro que hay en cada mano, en cada mesa y en cada pared.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_105",
+      "question": "¿A qué sector se dedican los protagonistas de 'Mad Men'?",
+      "answers": [
+        {
+          "text": "A la publicidad",
+          "correct": true
+        },
+        {
+          "text": "A la banca",
+          "correct": false
+        },
+        {
+          "text": "Al periodismo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El título viene de «Madison Avenue», la calle de Nueva York donde tenían sus oficinas las grandes agencias de publicidad.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_106",
+      "question": "¿Qué se estrella al principio de 'Perdidos' ('Lost') y deja a los supervivientes en una isla?",
+      "answers": [
+        {
+          "text": "Un avión comercial",
+          "correct": true
+        },
+        {
+          "text": "Un barco de crucero",
+          "correct": false
+        },
+        {
+          "text": "Un helicóptero militar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se rodó en la isla hawaiana de Oahu, y para el piloto se usó el fuselaje real de un avión Lockheed L-1011.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_107",
+      "question": "¿En qué país se rodó la mayor parte de la miniserie 'Chernobyl' (2019)?",
+      "answers": [
+        {
+          "text": "Lituania",
+          "correct": true
+        },
+        {
+          "text": "Ucrania",
+          "correct": false
+        },
+        {
+          "text": "Rusia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se usó la central nuclear de Ignalina, de tipo RBMK como la de Chernóbil, hoy ya cerrada.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_108",
+      "question": "¿En qué ciudad inglesa transcurre 'Peaky Blinders'?",
+      "answers": [
+        {
+          "text": "Birmingham",
+          "correct": true
+        },
+        {
+          "text": "Liverpool",
+          "correct": false
+        },
+        {
+          "text": "Manchester",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los Peaky Blinders existieron de verdad como banda del Birmingham victoriano, aunque los historiadores discuten la leyenda de las cuchillas cosidas en las gorras.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_109",
+      "question": "¿Qué actor británico creó a Mr. Bean y lo interpreta?",
+      "answers": [
+        {
+          "text": "Rowan Atkinson",
+          "correct": true
+        },
+        {
+          "text": "Stephen Fry",
+          "correct": false
+        },
+        {
+          "text": "John Cleese",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Atkinson estudió ingeniería eléctrica antes de dedicarse a la comedia. Bean apenas habla, lo que facilitó vender la serie en muchos países.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_110",
+      "question": "¿Qué nacionalidad tiene Hugh Laurie, que interpretó al doctor House con acento estadounidense?",
+      "answers": [
+        {
+          "text": "Británica",
+          "correct": true
+        },
+        {
+          "text": "Australiana",
+          "correct": false
+        },
+        {
+          "text": "Irlandesa",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Grabó la prueba para el papel en el baño de un hotel de Namibia, donde estaba rodando otra película.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_111",
+      "question": "¿Qué pregunta tuvo en vilo al público en 1980, tras el final de temporada de 'Dallas'?",
+      "answers": [
+        {
+          "text": "¿Quién disparó a J. R.?",
+          "correct": true
+        },
+        {
+          "text": "¿Quién heredará el rancho Southfork?",
+          "correct": false
+        },
+        {
+          "text": "¿Dónde está Bobby?",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La respuesta tardó meses en llegar, en parte por una huelga de actores en 1980.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_112",
+      "question": "¿De quién toman su nombre los protagonistas Sheldon y Leonard de 'The Big Bang Theory'?",
+      "answers": [
+        {
+          "text": "De Sheldon Leonard, productor y actor de televisión",
+          "correct": true
+        },
+        {
+          "text": "De dos premios Nobel de Física",
+          "correct": false
+        },
+        {
+          "text": "De dos amigos de la infancia del actor Jim Parsons",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sheldon Leonard fue un pionero de las comedias de situación, productor de 'El show de Dick Van Dyke'.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_113",
+      "question": "¿De qué ciudad se muda Will a casa de sus tíos en 'The Fresh Prince of Bel-Air'?",
+      "answers": [
+        {
+          "text": "Filadelfia",
+          "correct": true
+        },
+        {
+          "text": "Chicago",
+          "correct": false
+        },
+        {
+          "text": "Detroit",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Quincy Jones fue uno de los productores de la serie.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_114",
+      "question": "¿Qué profesión tiene David J. Peterson, creador de los idiomas dothraki y alto valyrio de 'Juego de tronos'?",
+      "answers": [
+        {
+          "text": "Lingüista",
+          "correct": true
+        },
+        {
+          "text": "Actor de doblaje",
+          "correct": false
+        },
+        {
+          "text": "Historiador",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "HBO convocó un concurso entre creadores de lenguas, y él lo ganó.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_115",
+      "question": "¿De qué nacionalidad es Wagner Moura, el actor que interpretó a Pablo Escobar en 'Narcos'?",
+      "answers": [
+        {
+          "text": "Brasileña",
+          "correct": true
+        },
+        {
+          "text": "Colombiana",
+          "correct": false
+        },
+        {
+          "text": "Mexicana",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Aprendió español para el papel y se instaló en Colombia antes del rodaje.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_116",
+      "question": "¿Qué personaje de 'Sesame Street' vive dentro de un cubo de basura?",
+      "answers": [
+        {
+          "text": "Óscar el Gruñón",
+          "correct": true
+        },
+        {
+          "text": "Elmo",
+          "correct": false
+        },
+        {
+          "text": "Kermit",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En la primera temporada, en 1969, Óscar era de color naranja; pasó a ser verde en la segunda.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_117",
+      "question": "¿Cómo se llama la empresa de papel en la que transcurre la 'The Office' británica original?",
+      "answers": [
+        {
+          "text": "Wernham Hogg",
+          "correct": true
+        },
+        {
+          "text": "Dunder Mifflin",
+          "correct": false
+        },
+        {
+          "text": "Sterling Cooper",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La serie de Ricky Gervais y Stephen Merchant solo tuvo dos temporadas y un especial doble de Navidad.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_118",
+      "question": "¿Quién presentaba y escribió muchos de los guiones de 'La dimensión desconocida' ('The Twilight Zone'), la serie de 1959?",
+      "answers": [
+        {
+          "text": "Rod Serling",
+          "correct": true
+        },
+        {
+          "text": "Alfred Hitchcock",
+          "correct": false
+        },
+        {
+          "text": "Orson Welles",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Serling escribió más de la mitad de los episodios de la serie original, que se hizo famosa por sus finales con giro sorpresa.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_119",
+      "question": "¿Qué científico presentó la serie documental 'Cosmos' de 1980?",
+      "answers": [
+        {
+          "text": "Carl Sagan",
+          "correct": true
+        },
+        {
+          "text": "Stephen Hawking",
+          "correct": false
+        },
+        {
+          "text": "Richard Feynman",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sagan recorría el universo a bordo de la «Nave de la Imaginación», cuya forma recordaba a una semilla de diente de león.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_120",
+      "question": "¿Cómo se llama el coche inteligente de 'Knight Rider'?",
+      "answers": [
+        {
+          "text": "KITT",
+          "correct": true
+        },
+        {
+          "text": "HAL",
+          "correct": false
+        },
+        {
+          "text": "Herbie",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La luz roja que recorre su morro se inspiró en los cylons de 'Battlestar Galactica', serie creada por el mismo productor, Glen A. Larson.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_121",
+      "question": "¿Qué herramienta es inseparable de MacGyver en la serie original (1985-1992)?",
+      "answers": [
+        {
+          "text": "Una navaja suiza multiusos",
+          "correct": true
+        },
+        {
+          "text": "Un cuchillo de combate",
+          "correct": false
+        },
+        {
+          "text": "Un martillo de bolsillo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El personaje se negaba a usar armas de fuego y resolvía los problemas con ciencia y objetos cotidianos.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_122",
+      "question": "¿En qué castillo se rodaron los exteriores y gran parte de los interiores de 'Downton Abbey'?",
+      "answers": [
+        {
+          "text": "Highclere Castle",
+          "correct": true
+        },
+        {
+          "text": "El castillo de Windsor",
+          "correct": false
+        },
+        {
+          "text": "Blenheim Palace",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Allí viven los condes de Carnarvon, cuyo antepasado financió en 1922 la excavación de la tumba de Tutankamón.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_123",
+      "question": "¿Cuál es el lema de 'Expediente X'?",
+      "answers": [
+        {
+          "text": "«La verdad está ahí fuera»",
+          "correct": true
+        },
+        {
+          "text": "«El pasado no muere»",
+          "correct": false
+        },
+        {
+          "text": "«La fe mueve montañas»",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En el despacho de Mulder cuelga un póster de ovni con el texto «I want to believe» («Quiero creer»).",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_124",
+      "question": "En 'The Golden Girls', Dorothy es hija de Sofía. ¿Cómo eran las edades reales de las dos actrices que las interpretaban?",
+      "answers": [
+        {
+          "text": "La actriz de la madre era un año más joven",
+          "correct": true
+        },
+        {
+          "text": "Tenían exactamente la misma edad",
+          "correct": false
+        },
+        {
+          "text": "La actriz de la madre era veinte años mayor",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Estelle Getty, la actriz de Sofía, se maquillaba con arrugas y canas para parecer mayor. Ganó un Emmy por el papel.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_125",
+      "question": "¿Con qué técnica se animó el piloto original de 'South Park' (1997)?",
+      "answers": [
+        {
+          "text": "Con figuras de papel recortado",
+          "correct": true
+        },
+        {
+          "text": "Con plastilina",
+          "correct": false
+        },
+        {
+          "text": "Con dibujo a mano sobre celuloide",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Más tarde pasaron a un programa que imita el recorte, lo que les permite producir cada episodio en cuestión de días, a veces con temas de la actualidad.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_126",
+      "question": "¿Qué grupo cantó «All You Need Is Love» en la primera emisión televisiva mundial por satélite, en 1967?",
+      "answers": [
+        {
+          "text": "The Beatles",
+          "correct": true
+        },
+        {
+          "text": "The Rolling Stones",
+          "correct": false
+        },
+        {
+          "text": "The Who",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La canción se escribió por encargo para el programa 'Our World'. En el estudio los acompañaban amigos como Mick Jagger y Eric Clapton.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_127",
+      "question": "¿Qué director de 'Alien' y 'Blade Runner' dirigió el famoso anuncio '1984' de Apple?",
+      "answers": [
+        {
+          "text": "Ridley Scott",
+          "correct": true
+        },
+        {
+          "text": "James Cameron",
+          "correct": false
+        },
+        {
+          "text": "Steven Spielberg",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se emitió a nivel nacional una sola vez, durante la Super Bowl de 1984. Parte de la directiva de Apple quería cancelarlo.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_128",
+      "question": "¿Qué esperan recibir los vecinos del pueblo de 'Bienvenido, Mister Marshall' (1953)?",
+      "answers": [
+        {
+          "text": "La visita de unos delegados estadounidenses",
+          "correct": true
+        },
+        {
+          "text": "La visita del rey y su corte",
+          "correct": false
+        },
+        {
+          "text": "La llegada de un circo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Villar del Río, el pueblo de la película, es inventado: se rodó en Guadalix de la Sierra, en Madrid.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_129",
+      "question": "¿Qué película de terror proyectan en el pueblo en 'El espíritu de la colmena' (1973)?",
+      "answers": [
+        {
+          "text": "Frankenstein",
+          "correct": true
+        },
+        {
+          "text": "Drácula",
+          "correct": false
+        },
+        {
+          "text": "La momia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ana Torrent tenía unos seis años durante el rodaje, y su personaje se llama como ella.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_130",
+      "question": "¿Qué película de Luis Buñuel de 1961 ganó la Palma de Oro de Cannes y fue prohibida en España?",
+      "answers": [
+        {
+          "text": "Viridiana",
+          "correct": true
+        },
+        {
+          "text": "Tristana",
+          "correct": false
+        },
+        {
+          "text": "El ángel exterminador",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "No se estrenó en España hasta 1977, dos años después de la muerte de Franco.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_131",
+      "question": "¿Qué director mexicano debutó en el largometraje con 'Amores perros' (2000)?",
+      "answers": [
+        {
+          "text": "Alejandro González Iñárritu",
+          "correct": true
+        },
+        {
+          "text": "Guillermo del Toro",
+          "correct": false
+        },
+        {
+          "text": "Alfonso Cuarón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La película lanzó la carrera internacional de Gael García Bernal y fue nominada al Óscar a mejor película extranjera.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_132",
+      "question": "¿Dónde se esconde el Chavo del 8 cuando se asusta?",
+      "answers": [
+        {
+          "text": "En un barril",
+          "correct": true
+        },
+        {
+          "text": "En un baúl",
+          "correct": false
+        },
+        {
+          "text": "En un armario",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su creador, Roberto Gómez Bolaños, firmaba como Chespirito, o sea 'Shakespearito', apodo que le puso un productor.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_133",
+      "question": "¿Qué actor mexicano ganó un Globo de Oro por interpretar a Passepartout en 'La vuelta al mundo en 80 días' (1956)?",
+      "answers": [
+        {
+          "text": "Cantinflas",
+          "correct": true
+        },
+        {
+          "text": "Pedro Infante",
+          "correct": false
+        },
+        {
+          "text": "Jorge Negrete",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su nombre real era Mario Moreno, y el verbo «cantinflear», hablar mucho sin decir nada, figura en el diccionario de la RAE.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_134",
+      "question": "¿Quiénes firmaron el guion de 'Un perro andaluz', corto surrealista rodado en Francia?",
+      "answers": [
+        {
+          "text": "Luis Buñuel y Salvador Dalí",
+          "correct": true
+        },
+        {
+          "text": "Federico García Lorca y Luis Buñuel",
+          "correct": false
+        },
+        {
+          "text": "Salvador Dalí y Pablo Picasso",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Buñuel contó que nació de dos sueños: uno suyo, con una nube cortando la luna, y otro de Dalí, con una mano llena de hormigas.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_135",
+      "question": "¿En qué localidad costera se rodó la serie 'Verano azul' (1981)?",
+      "answers": [
+        {
+          "text": "Nerja",
+          "correct": true
+        },
+        {
+          "text": "Marbella",
+          "correct": false
+        },
+        {
+          "text": "Benidorm",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La serie tuvo diecinueve capítulos y se convirtió en un fenómeno de audiencia en la televisión española.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_136",
+      "question": "¿Qué actor protagoniza 'La cabina' (1972), el telefilme de TVE sobre un hombre atrapado en una cabina telefónica?",
+      "answers": [
+        {
+          "text": "José Luis López Vázquez",
+          "correct": true
+        },
+        {
+          "text": "Fernando Fernán Gómez",
+          "correct": false
+        },
+        {
+          "text": "Alfredo Landa",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dirigida por Antonio Mercero, ganó un Emmy Internacional en 1973.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_137",
+      "question": "¿Qué película argentina de Juan José Campanella ganó el Óscar a mejor película extranjera en 2010?",
+      "answers": [
+        {
+          "text": "El secreto de sus ojos",
+          "correct": true
+        },
+        {
+          "text": "Nueve reinas",
+          "correct": false
+        },
+        {
+          "text": "Relatos salvajes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue el segundo Óscar de Argentina en esa categoría, tras 'La historia oficial' (1986).",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_138",
+      "question": "¿Qué plato lleva somníferos en 'Mujeres al borde de un ataque de nervios'?",
+      "answers": [
+        {
+          "text": "El gazpacho",
+          "correct": true
+        },
+        {
+          "text": "La tortilla",
+          "correct": false
+        },
+        {
+          "text": "La paella",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue la película que dio a Almodóvar su primera nominación al Óscar a mejor película extranjera, en 1989.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_139",
+      "question": "¿Qué actor estadounidense, que no hablaba español, interpretó al Fauno y al Hombre Pálido en 'El laberinto del fauno'?",
+      "answers": [
+        {
+          "text": "Doug Jones",
+          "correct": true
+        },
+        {
+          "text": "Ron Perlman",
+          "correct": false
+        },
+        {
+          "text": "Andy Serkis",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Jones aprendió sus frases de forma fonética. La voz que se oye en la versión original del Fauno es la del actor Pere Ponce.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_140",
+      "question": "¿Qué país es tradicionalmente el principal centro de doblaje al español para Latinoamérica?",
+      "answers": [
+        {
+          "text": "México",
+          "correct": true
+        },
+        {
+          "text": "Argentina",
+          "correct": false
+        },
+        {
+          "text": "Colombia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "España dobla aparte, con su propio castellano, por eso los mismos personajes tienen a menudo voces y hasta nombres distintos a ambos lados del Atlántico.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_141",
+      "question": "¿Qué luchador mexicano protagonizó decenas de películas y fue enterrado con su máscara plateada?",
+      "answers": [
+        {
+          "text": "El Santo",
+          "correct": true
+        },
+        {
+          "text": "Blue Demon",
+          "correct": false
+        },
+        {
+          "text": "Mil Máscaras",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se quitó la máscara en televisión en 1984, poco antes de morir, un gesto muy comentado en su momento.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_142",
+      "question": "¿Quién fue el primer actor en ganar un Óscar a título póstumo, por 'Network' (1976)?",
+      "answers": [
+        {
+          "text": "Peter Finch",
+          "correct": true
+        },
+        {
+          "text": "Richard Burton",
+          "correct": false
+        },
+        {
+          "text": "James Dean",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Murió de un infarto semanas antes de la ceremonia, y recogió la estatuilla su viuda, Eletha.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_143",
+      "question": "¿A quién envió Marlon Brando a rechazar su Óscar de 1973 por 'El padrino'?",
+      "answers": [
+        {
+          "text": "A Sacheen Littlefeather",
+          "correct": true
+        },
+        {
+          "text": "A su hijo mayor, Christian",
+          "correct": false
+        },
+        {
+          "text": "A Al Pacino",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Brando protestaba por cómo el cine retrataba a los pueblos indígenas de Estados Unidos. La Academia pidió disculpas formales a Littlefeather en 2022.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_144",
+      "question": "¿De qué material fueron las estatuillas del Óscar durante la Segunda Guerra Mundial?",
+      "answers": [
+        {
+          "text": "Yeso pintado de dorado",
+          "correct": true
+        },
+        {
+          "text": "Madera dorada",
+          "correct": false
+        },
+        {
+          "text": "Cerámica esmaltada",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Acabada la guerra, la Academia dejó que los ganadores las cambiaran por las de bronce chapado en oro.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_145",
+      "question": "¿Cuántos Óscar a mejor director ganó Alfred Hitchcock?",
+      "answers": [
+        {
+          "text": "Ninguno",
+          "correct": true
+        },
+        {
+          "text": "Uno",
+          "correct": false
+        },
+        {
+          "text": "Dos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue nominado cinco veces. 'Rebeca' (1940) ganó el Óscar a mejor película, pero el premio fue para su productor, David O. Selznick.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_146",
+      "question": "Stanley Kubrick, director de 'El resplandor', ganó un único Óscar en toda su carrera. ¿En qué categoría?",
+      "answers": [
+        {
+          "text": "Efectos visuales",
+          "correct": true
+        },
+        {
+          "text": "Mejor director",
+          "correct": false
+        },
+        {
+          "text": "Mejor guion adaptado",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fue por '2001: Una odisea del espacio'. El premio fue solo para Kubrick, aunque en los efectos trabajaron supervisores como Douglas Trumbull.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_147",
+      "question": "¿Qué es «Rosebud», la última palabra de Charles Foster Kane en 'Ciudadano Kane'?",
+      "answers": [
+        {
+          "text": "El nombre de su trineo de la infancia",
+          "correct": true
+        },
+        {
+          "text": "El nombre de su primera esposa",
+          "correct": false
+        },
+        {
+          "text": "El nombre de su periódico",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Steven Spielberg compró en 1982 uno de los trineos de la película en una subasta.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_148",
+      "question": "¿Qué premios paródicos distinguen cada año lo peor del cine?",
+      "answers": [
+        {
+          "text": "Los premios Razzie",
+          "correct": true
+        },
+        {
+          "text": "Los premios Tony",
+          "correct": false
+        },
+        {
+          "text": "Los Globos de Oro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Halle Berry y Sandra Bullock recogieron en persona su Razzie, la primera en 2005 y la segunda en 2010.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_149",
+      "question": "¿Qué frase de los dibujos animados figura en la lápida de Mel Blanc, voz de Bugs Bunny y del Pato Lucas?",
+      "answers": [
+        {
+          "text": "«Eso es todo, amigos» (That's all, folks)",
+          "correct": true
+        },
+        {
+          "text": "«¿Qué hay de nuevo, viejo?»",
+          "correct": false
+        },
+        {
+          "text": "«Pórtate bien, muchacho»",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tras un accidente de coche en 1961 estuvo en coma, y solo respondió cuando el médico le habló llamándole Bugs Bunny.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_151",
+      "question": "¿Quién fue la primera persona afroamericana en ganar un Óscar, por 'Lo que el viento se llevó'?",
+      "answers": [
+        {
+          "text": "Hattie McDaniel",
+          "correct": true
+        },
+        {
+          "text": "Dorothy Dandridge",
+          "correct": false
+        },
+        {
+          "text": "Sidney Poitier",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En la ceremonia de 1940 la sentaron en una mesa aparte, al fondo del salón.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_152",
+      "question": "¿Qué tenía de particular el Óscar honorífico que recibió Walt Disney en 1939?",
+      "answers": [
+        {
+          "text": "Una estatuilla grande y siete pequeñas",
+          "correct": true
+        },
+        {
+          "text": "Una estatuilla de oro macizo",
+          "correct": false
+        },
+        {
+          "text": "Una estatuilla el doble de alta",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se las entregó la actriz infantil Shirley Temple, y premiaba una película estrenada en 1937.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_153",
+      "question": "¿Qué película francesa casi muda y en blanco y negro ganó el Óscar a mejor película en 2012?",
+      "answers": [
+        {
+          "text": "The Artist",
+          "correct": true
+        },
+        {
+          "text": "Hugo",
+          "correct": false
+        },
+        {
+          "text": "Medianoche en París",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jean Dujardin fue el primer francés en ganar el Óscar a mejor actor, y su perro Uggie ganó la Palm Dog en Cannes.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_154",
+      "question": "¿Qué ponía originalmente el gran cartel de la colina de Hollywood cuando se levantó en 1923?",
+      "answers": [
+        {
+          "text": "Hollywoodland",
+          "correct": true
+        },
+        {
+          "text": "Hollywood Studios",
+          "correct": false
+        },
+        {
+          "text": "Welcome to Hollywood",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Era un anuncio inmobiliario, pensado para durar año y medio. En 1949 se retiró la parte «land».",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_155",
+      "question": "¿Cómo se rodó la trilogía de 'El Señor de los Anillos'?",
+      "answers": [
+        {
+          "text": "Las tres películas a la vez, en Nueva Zelanda",
+          "correct": true
+        },
+        {
+          "text": "Cada una por separado, con años de diferencia",
+          "correct": false
+        },
+        {
+          "text": "Cada película en un país distinto",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El rodaje principal duró más de un año, y después hubo rodajes adicionales cada año para completar escenas.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_156",
+      "question": "¿Cuántos episodios tiene en total 'Los Soprano'?",
+      "type": "estimate",
+      "answer": 86,
+      "min": 10,
+      "max": 300,
+      "unit": "episodios",
+      "difficulty": "medium",
+      "fun_fact": "Su creador, David Chase, imaginó primero la historia como una película sobre un mafioso que va a terapia.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_157",
+      "question": "¿Cuántos episodios tiene en total 'Juego de tronos'?",
+      "type": "estimate",
+      "answer": 73,
+      "min": 10,
+      "max": 300,
+      "unit": "episodios",
+      "difficulty": "medium",
+      "fun_fact": "Las seis primeras temporadas tuvieron diez episodios cada una. La última se quedó en seis, casi todos con duración de largometraje.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_158",
+      "question": "¿Cuántos episodios tiene en total 'Breaking Bad'?",
+      "type": "estimate",
+      "answer": 62,
+      "min": 10,
+      "max": 200,
+      "unit": "episodios",
+      "difficulty": "medium",
+      "fun_fact": "La última temporada se emitió partida en dos tandas de ocho episodios, con casi un año de pausa entre ambas.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_159",
+      "question": "¿Cuántos centímetros mide de alto una estatuilla del Óscar?",
+      "type": "estimate",
+      "answer": 34,
+      "min": 5,
+      "max": 100,
+      "unit": "cm",
+      "difficulty": "medium",
+      "fun_fact": "Desde los años cincuenta, quien quiera vender la suya debe ofrecérsela antes a la Academia por un dólar.",
+      "category": "Cine y series"
+    },
+    {
+      "id": "film_es_160",
+      "question": "¿A cuántos fotogramas por segundo se ruedan y proyectan las películas sonoras de cine estándar?",
+      "type": "estimate",
+      "answer": 24,
+      "min": 5,
+      "max": 120,
+      "unit": "fotogramas por segundo",
+      "difficulty": "medium",
+      "fun_fact": "'El hobbit: Un viaje inesperado' se rodó y estrenó en algunas salas al doble de esa velocidad, y muchos espectadores se quejaron de que se veía como televisión.",
+      "category": "Cine y series"
+    }
+  ]
+}

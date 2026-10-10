@@ -1,0 +1,1928 @@
+{
+  "name": "Film & TV",
+  "language": "en",
+  "version": "1.0",
+  "theme": "popculture",
+  "questions": [
+    {
+      "id": "film_en_001",
+      "question": "Which 1927 film is credited as the first feature-length movie with synchronized spoken and sung sequences, shaking the silent era?",
+      "answers": [
+        {"text": "The Jazz Singer", "correct": true},
+        {"text": "Metropolis", "correct": false},
+        {"text": "Wings", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Only a small share of the film is actually spoken or sung; most of it still uses title cards. Its star Al Jolson ad-libbed the line 'You ain't heard nothin' yet'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_002",
+      "question": "The Lumière brothers' famous paid film screening in December 1895 took place in a room in which kind of Parisian venue?",
+      "answers": [
+        {"text": "A café", "correct": true},
+        {"text": "A church", "correct": false},
+        {"text": "A railway station", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Their films were only around 50 seconds long, because the Cinématographe camera held roughly 17 metres of film.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_003",
+      "question": "Which 1935 film was the first full-length live-action feature shot in three-strip Technicolor?",
+      "answers": [
+        {"text": "Becky Sharp", "correct": true},
+        {"text": "Gone with the Wind", "correct": false},
+        {"text": "The Adventures of Robin Hood", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It was directed by Rouben Mamoulian and adapted from Thackeray's novel 'Vanity Fair'. Three-strip Technicolor exposed three separate black-and-white negatives, one per primary colour.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_004",
+      "question": "What was the name of the set of self-censorship rules that Hollywood studios followed from the 1930s until the late 1960s?",
+      "answers": [
+        {"text": "The Hays Code", "correct": true},
+        {"text": "The Comstock Code", "correct": false},
+        {"text": "The Warner Pledge", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was named after Will H. Hays, a former US postmaster general turned film-industry chief. Even Rhett Butler's 'damn' at the end of 'Gone with the Wind' needed special approval.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_005",
+      "question": "Which silent-era comedian was nicknamed 'The Great Stone Face' for his deadpan expression?",
+      "answers": [
+        {"text": "Buster Keaton", "correct": true},
+        {"text": "Charlie Chaplin", "correct": false},
+        {"text": "Harold Lloyd", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In 'Steamboat Bill, Jr.' (1928) the front of a two-ton house falls over him, and he stands on a mark where an open attic window passes with only a few inches to spare.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_006",
+      "question": "Which silent comedian dangled from a clock face high above a city street in 'Safety Last!' (1923)?",
+      "answers": [
+        {"text": "Harold Lloyd", "correct": true},
+        {"text": "Buster Keaton", "correct": false},
+        {"text": "Fatty Arbuckle", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lloyd had lost a thumb and forefinger in a prop-bomb accident in 1919 and performed the stunt wearing a special prosthetic glove.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_007",
+      "question": "Which 1927 German silent film gave cinema one of its first memorable robots, in the form of a machine double of a woman named Maria?",
+      "answers": [
+        {"text": "Metropolis", "correct": true},
+        {"text": "Nosferatu", "correct": false},
+        {"text": "M", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fritz Lang's original cut was long thought lost for good. In 2008 an almost complete 16 mm print was found in a film museum in Buenos Aires.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_008",
+      "question": "Which film won the first-ever Academy Award for 'Outstanding Picture'?",
+      "answers": [
+        {"text": "Wings", "correct": true},
+        {"text": "The Jazz Singer", "correct": false},
+        {"text": "Sunrise", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It is a silent First World War aerial drama. Only one mostly silent film has won Best Picture since: the French production 'The Artist' in 2011.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_009",
+      "question": "Which newspaper magnate was the thinly veiled inspiration for the title character of 'Citizen Kane' (1941)?",
+      "answers": [
+        {"text": "William Randolph Hearst", "correct": true},
+        {"text": "Joseph Pulitzer", "correct": false},
+        {"text": "Lord Northcliffe", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hearst's newspapers tried to smother the film by refusing to run its advertisements. Its director and star, Orson Welles, was only 25 when it came out.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_010",
+      "question": "Edison's Kinetoscope of the 1890s, the first commercial motion-picture viewer, could be watched by how many people at a time?",
+      "answers": [
+        {"text": "One", "correct": true},
+        {"text": "Four", "correct": false},
+        {"text": "About twenty", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The viewer looked through a peephole at a film loop. The films were shot in the 'Black Maria', a tar-paper-covered studio that could be rotated to follow the sun.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_011",
+      "question": "How was the sound of 'The Jazz Singer' (1927) played back in cinemas?",
+      "answers": [
+        {"text": "From large discs synchronised with the projector", "correct": true},
+        {"text": "From a magnetic tape strip on the film", "correct": false},
+        {"text": "By a live band following a cue sheet", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Vitaphone system used 16-inch discs that spun at 33 and a third rpm, the first widespread use of that speed. If the needle skipped, picture and sound drifted apart.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_012",
+      "question": "During the Second World War metal shortage, what were Oscar statuettes made of between 1943 and 1945?",
+      "answers": [
+        {"text": "Painted plaster", "correct": true},
+        {"text": "Wood", "correct": false},
+        {"text": "Cardboard", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "After the war, winners could swap their plaster figures for proper metal ones in exchange for the plaster version.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_013",
+      "question": "Which of Charlie Chaplin's films was his first with full spoken dialogue, despite his long resistance to talkies?",
+      "answers": [
+        {"text": "The Great Dictator", "correct": true},
+        {"text": "Modern Times", "correct": false},
+        {"text": "City Lights", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Chaplin and Adolf Hitler were born just four days apart in April 1889. Chaplin later said he could not have made the film had he known the true horror of the Nazi camps.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_014",
+      "question": "Which silent horror star was nicknamed 'The Man of a Thousand Faces' because of the make-up he applied himself?",
+      "answers": [
+        {"text": "Lon Chaney", "correct": true},
+        {"text": "Boris Karloff", "correct": false},
+        {"text": "Bela Lugosi", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Chaney wrote the 'Motion Pictures' make-up entry of the Encyclopaedia Britannica in the late 1920s.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_015",
+      "question": "Which 1953 biblical epic was the first feature released in the widescreen CinemaScope process?",
+      "answers": [
+        {"text": "The Robe", "correct": true},
+        {"text": "Ben-Hur", "correct": false},
+        {"text": "Quo Vadis", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "CinemaScope was based on the anamorphic lens idea of the French inventor Henri Chrétien, who had shown it in the 1920s. Fox bought the rights and used it to lure viewers away from television.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_016",
+      "question": "Which 1952 jungle adventure kicked off the 1950s 3D craze, advertised with the slogan 'A lion in your lap!'?",
+      "answers": [
+        {"text": "Bwana Devil", "correct": true},
+        {"text": "House of Wax", "correct": false},
+        {"text": "Creature from the Black Lagoon", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It was shot with polarised-light 3D cameras. The later hits House of Wax and Creature from the Black Lagoon rode the wave it started.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_017",
+      "question": "A 1948 US Supreme Court ruling forced the big Hollywood studios to sell off what?",
+      "answers": [
+        {"text": "Their cinema chains", "correct": true},
+        {"text": "Their star contracts", "correct": false},
+        {"text": "Their sound stages", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The case, 'United States v. Paramount Pictures', ended the practice of studios owning the theatres that showed their films. It also ended block booking, which had forced cinemas to buy films in bundles.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_018",
+      "question": "Eadweard Muybridge's photo sequences of the 1870s settled an old argument about galloping horses. What did they show?",
+      "answers": [
+        {"text": "At one moment all four hooves are off the ground", "correct": true},
+        {"text": "At least one hoof always touches the ground", "correct": false},
+        {"text": "The front legs are always stretched out ahead in flight", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Muybridge was hired by Leland Stanford for the job. The horse is airborne when its legs are tucked beneath it, not stretched out the way painters had shown for centuries.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_019",
+      "question": "Why was old cellulose nitrate film stock such a threat to film archives?",
+      "answers": [
+        {"text": "It could keep burning even under water", "correct": true},
+        {"text": "It turned into liquid at room temperature", "correct": false},
+        {"text": "It shrank to half its size within a year", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nitrate film supplies its own oxygen as it burns. Vault fires destroyed countless silent films, and most such stock was later copied to safer material.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_020",
+      "question": "Blacklisted in the 1950s, how did screenwriter Dalton Trumbo still win an Oscar for 'The Brave One'?",
+      "answers": [
+        {"text": "He wrote it under the pseudonym Robert Rich", "correct": true},
+        {"text": "A studio boss sent in his script under the boss's own name", "correct": false},
+        {"text": "He won by write-in vote", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Trumbo finally got on-screen credit again with 'Spartacus' (1960). The Academy replaced the false-name award and presented him with his Oscar in 1975.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_021",
+      "question": "How was the Spanish-language version of Universal's 'Dracula' (1931) made?",
+      "answers": [
+        {"text": "Filmed at night on the same sets by a separate cast and crew", "correct": true},
+        {"text": "The English version was dubbed by the original cast", "correct": false},
+        {"text": "It was shot in Madrid with local sets", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The English crew went home each evening and the Spanish crew took over the sets. Some critics find the Spanish version better paced than the one with Bela Lugosi.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_022",
+      "question": "What was the name of the triple-screen finale process used in Abel Gance's 1927 epic 'Napoléon'?",
+      "answers": [
+        {"text": "Polyvision", "correct": true},
+        {"text": "Cinerama", "correct": false},
+        {"text": "Vitascope", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "For the climax, three projectors showed a panorama across three side-by-side screens. Gance had cameras strapped to a horse's back and swung on a pendulum to get the action shots.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_023",
+      "question": "Which child star was awarded a miniature Oscar in 1935?",
+      "answers": [
+        {"text": "Shirley Temple", "correct": true},
+        {"text": "Judy Garland", "correct": false},
+        {"text": "Mickey Rooney", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was the first Juvenile Award. Judy Garland and Mickey Rooney received the same kind of miniature statuette a few years later.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_024",
+      "question": "What unusual admission rule did Alfred Hitchcock demand for 'Psycho' (1960)?",
+      "answers": [
+        {"text": "No one was admitted after the film had started", "correct": true},
+        {"text": "Viewers had to sign an age waiver", "correct": false},
+        {"text": "Nobody could sit in the front row", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "At the time, many people strolled into cinemas mid-film and stayed until the programme came round again. Theatres put up lobby signs and used cardboard standees of Hitchcock to enforce the rule.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_025",
+      "question": "How did inventor Richard Hollingshead test his idea of a drive-in cinema in his own driveway?",
+      "answers": [
+        {"text": "He nailed a screen to trees and put a projector on his car", "correct": true},
+        {"text": "He projected a film onto the side of a barn", "correct": false},
+        {"text": "He rented a movie-screen at a fairground", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hollingshead's first real drive-in opened in Camden, New Jersey, in 1933. He was granted a patent for the idea that same year.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_026",
+      "question": "What is the name of the stock sound effect of a man's scream, first recorded for the 1951 western 'Distant Drums' and reused in hundreds of films?",
+      "answers": [
+        {"text": "The Wilhelm scream", "correct": true},
+        {"text": "The Howdy yelp", "correct": false},
+        {"text": "The Warner wail", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It is named after Private Wilhelm, a character who lets it out in the 1953 western 'The Charge at Feather River'. Sound designers have slipped it into everything from Star Wars to Toy Story.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_027",
+      "question": "What have Foley artists traditionally clopped together to imitate the sound of galloping horses?",
+      "answers": [
+        {"text": "Coconut halves", "correct": true},
+        {"text": "Rolling pins", "correct": false},
+        {"text": "Bicycle bells", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Foley work is named after Jack Foley, a sound-effects pioneer at Universal Studios who recorded sounds live while watching the film.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_028",
+      "question": "Foley artists often snap which vegetable to imitate the sound of breaking bones?",
+      "answers": [
+        {"text": "Celery", "correct": true},
+        {"text": "Cucumber", "correct": false},
+        {"text": "Banana", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Foley artists build entire soundscapes from household items. Footsteps in snow, for example, can come from squeezing a bag of cornstarch.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_029",
+      "question": "What was the crew's nickname for the temperamental mechanical shark in 'Jaws' (1975)?",
+      "answers": [
+        {"text": "Bruce", "correct": true},
+        {"text": "Larry", "correct": false},
+        {"text": "Sid", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It was named after director Steven Spielberg's lawyer, Bruce Ramer. Because the salt-water-prone shark broke down so often, it appears far less than planned, which made the film scarier.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_030",
+      "question": "What stood in for blood in the black-and-white shower scene of 'Psycho' (1960)?",
+      "answers": [
+        {"text": "Chocolate syrup", "correct": true},
+        {"text": "Tomato soup", "correct": false},
+        {"text": "Beetroot juice", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The scene runs under a minute but needed about 78 camera setups and 52 cuts.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_031",
+      "question": "A zoo bear named Tarik supplied part of the voice of which Star Wars character?",
+      "answers": [
+        {"text": "Chewbacca", "correct": true},
+        {"text": "R2-D2", "correct": false},
+        {"text": "Jabba the Hutt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sound designer Ben Burtt recorded Tarik at a California zoo and blended the bear with other animals' sounds to build Chewbacca's growl.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_032",
+      "question": "Which animal's sound was mixed into the roar of the Tyrannosaurus rex in 'Jurassic Park' (1993)?",
+      "answers": [
+        {"text": "A baby elephant", "correct": true},
+        {"text": "A grizzly bear", "correct": false},
+        {"text": "A gorilla", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sound designer Gary Rydstrom blended it with a tiger and an alligator. The raptors' noises include mating tortoises.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_033",
+      "question": "Which stop-motion master animated the sword-fighting skeletons in 'Jason and the Argonauts' (1963)?",
+      "answers": [
+        {"text": "Ray Harryhausen", "correct": true},
+        {"text": "Willis O'Brien", "correct": false},
+        {"text": "Phil Tippett", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The skeleton fight lasts only a few minutes of screen time but took about four and a half months to animate.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_034",
+      "question": "How tall was the Kong puppet that was animated for most of the 1933 'King Kong'?",
+      "answers": [
+        {"text": "About 18 inches (45 cm)", "correct": true},
+        {"text": "About 6 feet (1.8 m)", "correct": false},
+        {"text": "About 3 feet (0.9 m)", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Animator Willis O'Brien's metal-skeleton model was covered in rabbit fur. When the animators touched it, their fingerprints were left in the fur and show up as ripples on screen.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_035",
+      "question": "What kind of instrument created the screeching bird sounds in Hitchcock's 'The Birds' (1963), which has no conventional music score?",
+      "answers": [
+        {"text": "An early electronic instrument called the Trautonium", "correct": true},
+        {"text": "A theremin", "correct": false},
+        {"text": "A pipe organ", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The sounds were made by Oskar Sala, a German electronic-music pioneer. Composer Bernard Herrmann acted as the film's sound consultant.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_036",
+      "question": "Which actor was originally cast as the Tin Man in 'The Wizard of Oz' but had to leave after the aluminium make-up damaged his lungs?",
+      "answers": [
+        {"text": "Buddy Ebsen", "correct": true},
+        {"text": "Ray Bolger", "correct": false},
+        {"text": "Jack Haley", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Jack Haley took over the role. The make-up was switched to an aluminium paste, but Haley also suffered an eye infection from it.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_037",
+      "question": "In which country was most of 'Apocalypse Now' shot, standing in for Vietnam?",
+      "answers": [
+        {"text": "The Philippines", "correct": true},
+        {"text": "Thailand", "correct": false},
+        {"text": "Mexico", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Philippine Air Force's helicopters were used in the film, but they were sometimes called away to fight rebels in the middle of a take. A typhoon also wrecked the sets.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_038",
+      "question": "For which Werner Herzog film did the crew actually haul a steamship over a mountain in the Peruvian jungle?",
+      "answers": [
+        {"text": "Fitzcarraldo", "correct": true},
+        {"text": "Aguirre, the Wrath of God", "correct": false},
+        {"text": "Cobra Verde", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The original lead actor Jason Robards fell ill, and Mick Jagger, cast as a supporting role, had to leave because of a Rolling Stones tour. Klaus Kinski was brought in for the lead.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_039",
+      "question": "Why did Hitchcock need hidden cuts, for example into dark backs or jackets, in his 'continuous-take' film 'Rope' (1948)?",
+      "answers": [
+        {"text": "A film reel in the camera lasted only about ten minutes", "correct": true},
+        {"text": "The actors could not memorise longer takes", "correct": false},
+        {"text": "The studio's lights overheated after a few minutes", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "'Rope' was Hitchcock's first colour film. Its walls and furniture were built to be moved out of the way so the camera could glide through the apartment set.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_040",
+      "question": "What was kept from most of the cast before the filming of the chestburster scene in 'Alien' (1979)?",
+      "answers": [
+        {"text": "That blood would spray at them", "correct": true},
+        {"text": "That the set would shake", "correct": false},
+        {"text": "That the scene was in the script", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Their shocked reactions in the final cut are real. John Hurt lay with his body through a hole in the table while the creature was pushed up through his shirt.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_041",
+      "question": "How were the visible breath clouds of the actors made in the bedroom scenes of 'The Exorcist' (1973)?",
+      "answers": [
+        {"text": "The set was refrigerated well below freezing", "correct": true},
+        {"text": "Dry ice in the actors' mouths", "correct": false},
+        {"text": "Digital effects added later", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The crew wore winter clothing between takes. Ellen Burstyn hurt her spine when a wire stunt went wrong, and her real scream remained in the finished film.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_042",
+      "question": "Which Stanley Kubrick film used lenses originally built for NASA to shoot scenes lit only by candles?",
+      "answers": [
+        {"text": "Barry Lyndon", "correct": true},
+        {"text": "2001: A Space Odyssey", "correct": false},
+        {"text": "Full Metal Jacket", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "They were Zeiss lenses with a very wide f/0.7 aperture, made for NASA's Apollo programme to take photos in extremely low light. Kubrick bought them and had them adapted to a film camera.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_043",
+      "question": "How were the landscape backdrops of the 'Dawn of Man' sequence in '2001: A Space Odyssey' created?",
+      "answers": [
+        {"text": "By front projection onto a reflective screen", "correct": true},
+        {"text": "By matte paintings on glass", "correct": false},
+        {"text": "By blue-screen compositing", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The reflective Scotchlite screen sent light back to the camera lens so that the projected image blended seamlessly with the foreground.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_044",
+      "question": "What animal does Marlon Brando stroke in the opening scene of 'The Godfather' (1972)?",
+      "answers": [
+        {"text": "A cat", "correct": true},
+        {"text": "A dog", "correct": false},
+        {"text": "A parrot", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The cat was not in the script. Coppola found it wandering around the studio and placed it in Brando's lap just before the take.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_045",
+      "question": "How did Alfred Hitchcock manage his cameo appearance in 'Lifeboat' (1944), a film set entirely in a small boat?",
+      "answers": [
+        {"text": "In a newspaper ad for a weight-loss product", "correct": true},
+        {"text": "As a voice on a radio", "correct": false},
+        {"text": "As a corpse floating by", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "He had just lost a lot of weight, so his before-and-after photographs appeared in a fake advert for 'Reduco-Obesity Slayer'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_046",
+      "question": "Which film technique uses filters and underexposure to make a sunlit shoot pass as a moonlit scene?",
+      "answers": [
+        {"text": "Day for night", "correct": true},
+        {"text": "Dutch angle", "correct": false},
+        {"text": "Match cut", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In French the technique is called 'la nuit américaine', and François Truffaut named his 1973 film about film-making after it, with the English title 'Day for Night'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_047",
+      "question": "Which 1958 Hitchcock film introduced the camera trick in which the background seems to stretch while the subject stays the same size?",
+      "answers": [
+        {"text": "Vertigo", "correct": true},
+        {"text": "Rear Window", "correct": false},
+        {"text": "Psycho", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The trick, called the dolly zoom, was later used in 'Jaws' for the moment the police chief realises a shark attack is happening on the beach.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_048",
+      "question": "Which camera-stabilising invention allowed the smooth, running shots of Rocky climbing the steps in 'Rocky' (1976)?",
+      "answers": [
+        {"text": "The Steadicam", "correct": true},
+        {"text": "The camera dolly", "correct": false},
+        {"text": "The camera crane", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Inventor Garrett Brown operated the rig himself on the film. Kubrick used it for the hotel hallway chases in 'The Shining'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_049",
+      "question": "Why does Indiana Jones simply shoot the sword-swinging swordsman in 'Raiders of the Lost Ark'?",
+      "answers": [
+        {"text": "Harrison Ford was ill with dysentery and a long fight was scrapped", "correct": true},
+        {"text": "The sword prop broke on the first day", "correct": false},
+        {"text": "The studio cut the sequence for being too violent", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The stunt had been planned as an elaborate whip-versus-sword fight over several days, but the shortened scene gets one of the film's biggest laughs.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_050",
+      "question": "The 'bullet time' shots in 'The Matrix' (1999) were created with arrays of what?",
+      "answers": [
+        {"text": "Still cameras triggered in sequence", "correct": true},
+        {"text": "One camera spinning on a rail", "correct": false},
+        {"text": "Pure computer animation", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Michel Gondry had used a similar technique in the 1995 video 'Like a Rolling Stone' for the Rolling Stones.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_051",
+      "question": "Which Japanese classic of 1954 was remade in Hollywood as the 1960 western 'The Magnificent Seven'?",
+      "answers": [
+        {"text": "Seven Samurai", "correct": true},
+        {"text": "Rashomon", "correct": false},
+        {"text": "Ran", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Akira Kurosawa was so pleased with the western that he sent director John Sturges a ceremonial sword as a gift.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_052",
+      "question": "Which Kurosawa film did Sergio Leone remake without permission as 'A Fistful of Dollars' (1964)?",
+      "answers": [
+        {"text": "Yojimbo", "correct": true},
+        {"text": "Ran", "correct": false},
+        {"text": "Sanjuro", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kurosawa's studio sued, and the settlement gave them a share of the worldwide profits. Yojimbo itself was inspired by American hard-boiled crime novels.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_053",
+      "question": "Which 1950 Japanese film gave its name to the storytelling device in which one event is retold in conflicting versions?",
+      "answers": [
+        {"text": "Rashomon", "correct": true},
+        {"text": "Ikiru", "correct": false},
+        {"text": "Throne of Blood", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It won the top prize at the Venice Film Festival in 1951 and an honorary Oscar, helping to introduce Western audiences to Japanese cinema.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_054",
+      "question": "Which Soviet silent film made the staircase sequence in the port of Odessa famous?",
+      "answers": [
+        {"text": "Battleship Potemkin", "correct": true},
+        {"text": "October", "correct": false},
+        {"text": "Mother", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The massacre on the steps never happened in that form; director Sergei Eisenstein invented the scene for dramatic effect.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_055",
+      "question": "To which postwar Italian film movement, known for non-professional actors and real city streets, does 'Bicycle Thieves' (1948) belong?",
+      "answers": [
+        {"text": "Neorealism", "correct": true},
+        {"text": "The French New Wave", "correct": false},
+        {"text": "Dogme 95", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The lead actor, Lamberto Maggiorani, was a factory worker rather than a trained actor.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_056",
+      "question": "Which director's debut 'The 400 Blows' (1959) helped launch the French New Wave?",
+      "answers": [
+        {"text": "François Truffaut", "correct": true},
+        {"text": "Jean Renoir", "correct": false},
+        {"text": "Claude Chabrol", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Truffaut had been a sharp-tongued critic at the magazine Cahiers du Cinéma before making films. The film is dedicated to his mentor André Bazin, who died as shooting began.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_057",
+      "question": "Which film became the first non-English-language winner of the Best Picture Oscar?",
+      "answers": [
+        {"text": "Parasite", "correct": true},
+        {"text": "Roma", "correct": false},
+        {"text": "Crouching Tiger, Hidden Dragon", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The South Korean film by Bong Joon-ho had also won the Palme d'Or at Cannes. Roma and Crouching Tiger had both been nominated, but neither won.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_058",
+      "question": "Which Japanese director was known for filming with the camera very low, roughly at the height of a person sitting on a tatami mat?",
+      "answers": [
+        {"text": "Yasujirō Ozu", "correct": true},
+        {"text": "Kenji Mizoguchi", "correct": false},
+        {"text": "Akira Kurosawa", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "His 'Tokyo Story' (1953) topped the directors' poll of the Sight & Sound magazine in 2012.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_059",
+      "question": "Which 1957 Indian film was the first from that country to be nominated for the Best Foreign Language Film Oscar?",
+      "answers": [
+        {"text": "Mother India", "correct": true},
+        {"text": "Pather Panchali", "correct": false},
+        {"text": "Sholay", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was a remake of director Mehboob Khan's own earlier film 'Aurat' from 1940.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_060",
+      "question": "How did Satyajit Ray keep his debut 'Pather Panchali' going when the money ran out?",
+      "answers": [
+        {"text": "He pawned his wife's jewellery", "correct": true},
+        {"text": "He won a lottery", "correct": false},
+        {"text": "He sold the family's film studio", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The West Bengal government eventually stepped in to fund the final stretch. The film won a Cannes prize in 1956 as 'Best Human Document'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_061",
+      "question": "Which classical piece does the child murderer whistle in Fritz Lang's 'M' (1931)?",
+      "answers": [
+        {"text": "'In the Hall of the Mountain King'", "correct": true},
+        {"text": "'Ode to Joy'", "correct": false},
+        {"text": "'Flight of the Bumblebee'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Peter Lorre could not whistle, so the whistling is reported to be Lang's own.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_062",
+      "question": "In Ingmar Bergman's 'The Seventh Seal' (1957), a knight challenges Death to which game?",
+      "answers": [
+        {"text": "Chess", "correct": true},
+        {"text": "Dice", "correct": false},
+        {"text": "Backgammon", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bergman took the image from medieval church paintings of Death playing chess.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_063",
+      "question": "Which Bruce Lee film premiered in Hong Kong only days after his death in 1973?",
+      "answers": [
+        {"text": "Enter the Dragon", "correct": true},
+        {"text": "Fist of Fury", "correct": false},
+        {"text": "The Way of the Dragon", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lee never saw the finished film, and his project 'Game of Death' stayed unfinished at his death.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_064",
+      "question": "Which country's film industry is nicknamed 'Nollywood'?",
+      "answers": [
+        {"text": "Nigeria", "correct": true},
+        {"text": "Namibia", "correct": false},
+        {"text": "Nepal", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 1992 straight-to-video release 'Living in Bondage' is often credited with kick-starting the video film boom.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_065",
+      "question": "The nickname 'Bollywood' combines Hollywood with the former name of which city?",
+      "answers": [
+        {"text": "Bombay", "correct": true},
+        {"text": "Calcutta", "correct": false},
+        {"text": "Madras", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The industries in other Indian cities got similar nicknames: Tollywood began in Calcutta's district Tollygunge, and Kollywood stems from Chennai's Kodambakkam.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_066",
+      "question": "Which of these was forbidden by the 'Vow of Chastity' of the Danish Dogme 95 movement?",
+      "answers": [
+        {"text": "Added music that is not part of the scene", "correct": true},
+        {"text": "Handheld cameras", "correct": false},
+        {"text": "Shooting on location", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lars von Trier and Thomas Vinterberg wrote the rules, and Vinterberg's 'Festen' (1998) was the first Dogme film.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_067",
+      "question": "In which country's Almería desert region were many 'spaghetti westerns' filmed?",
+      "answers": [
+        {"text": "Spain", "correct": true},
+        {"text": "Greece", "correct": false},
+        {"text": "Morocco", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The same landscape stood in for the Middle East in 'Indiana Jones and the Last Crusade'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_068",
+      "question": "What was reportedly the physical condition of Gene Kelly while he filmed the title number of 'Singin' in the Rain'?",
+      "answers": [
+        {"text": "He had a fever", "correct": true},
+        {"text": "He had a sprained ankle", "correct": false},
+        {"text": "He was drunk", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Costar Debbie Reynolds was 19 and had hardly danced before. Kelly co-directed the film with Stanley Donen.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_069",
+      "question": "Why was 'Some Like It Hot' (1959) shot in black and white?",
+      "answers": [
+        {"text": "Colour tests made the make-up of the two leads look green", "correct": true},
+        {"text": "To save money", "correct": false},
+        {"text": "The studio had run out of colour film", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Billy Wilder's comedy ends with the line 'Nobody's perfect'. Both Tony Curtis and Jack Lemmon are dressed as women for most of the film.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_070",
+      "question": "Which instrument plays the unmistakable theme of 'The Third Man' (1949)?",
+      "answers": [
+        {"text": "The zither", "correct": true},
+        {"text": "The accordion", "correct": false},
+        {"text": "The harmonica", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Composer Anton Karas was discovered playing in a Vienna wine tavern. Orson Welles wrote his own famous 'cuckoo clock' speech, which gets Swiss history wrong.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_071",
+      "question": "Where was 'Casablanca' (1942) actually filmed?",
+      "answers": [
+        {"text": "In a studio in Burbank, California", "correct": true},
+        {"text": "In Casablanca, Morocco", "correct": false},
+        {"text": "In Algiers", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "No cast or crew member travelled to Africa. The airport scene was shot on a soundstage with a mock-up plane.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_072",
+      "question": "Which Stanley Kubrick film did he himself withdraw from British cinemas in 1973, leaving it unavailable in the UK for decades?",
+      "answers": [
+        {"text": "A Clockwork Orange", "correct": true},
+        {"text": "Lolita", "correct": false},
+        {"text": "The Shining", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It returned to British cinemas in 2000, after Kubrick's death.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_073",
+      "question": "Monty Python's 'Life of Brian' (1979) was banned in which Scandinavian country, inspiring Sweden's slogan 'So funny that it was banned in...'?",
+      "answers": [
+        {"text": "Norway", "correct": true},
+        {"text": "Denmark", "correct": false},
+        {"text": "Iceland", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Britain, several local councils banned it as well. George Harrison's company HandMade Films financed it after the original backer pulled out.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_074",
+      "question": "Which song from 'The Sound of Music' is often mistaken for an Austrian folk song?",
+      "answers": [
+        {"text": "'Edelweiss'", "correct": true},
+        {"text": "'Do-Re-Mi'", "correct": false},
+        {"text": "'My Favorite Things'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was written for the 1959 stage musical by Rodgers and Hammerstein. It was the last song lyricist Oscar Hammerstein wrote before his death.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_075",
+      "question": "Martin Scorsese's first Best Director Oscar came for a remake of which Hong Kong thriller?",
+      "answers": [
+        {"text": "Infernal Affairs", "correct": true},
+        {"text": "Hard Boiled", "correct": false},
+        {"text": "Chungking Express", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He had been nominated for Best Director five times before without winning. The film also took Best Picture.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_076",
+      "question": "In the original 1954 Japanese 'Godzilla', what did the monster represent?",
+      "answers": [
+        {"text": "Nuclear weapons", "correct": true},
+        {"text": "Typhoons", "correct": false},
+        {"text": "Industrial pollution", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The film was prompted by the Lucky Dragon No. 5 incident, when a Japanese fishing boat was contaminated by a US hydrogen-bomb test.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_077",
+      "question": "From whom did Ian Fleming borrow the name 'James Bond'?",
+      "answers": [
+        {"text": "An American ornithologist", "correct": true},
+        {"text": "A British spy", "correct": false},
+        {"text": "A Jamaican cricketer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The real James Bond wrote 'Birds of the West Indies', a book Fleming owned in Jamaica. Fleming later sent him a copy of a novel inscribed 'To the real James Bond, from the thief of his identity'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_078",
+      "question": "Before its release in 1937, what did Hollywood insiders nickname Disney's plan for a full-length animated 'Snow White'?",
+      "answers": [
+        {"text": "Disney's Folly", "correct": true},
+        {"text": "The Mouse's Gamble", "correct": false},
+        {"text": "Walt's Waterloo", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The film was a smash hit. The Academy gave Walt Disney one full-size Oscar and seven miniature ones for it.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_079",
+      "question": "What did Disney's multiplane camera add to animated films?",
+      "answers": [
+        {"text": "A sense of depth, by shooting through layered panes of glass", "correct": true},
+        {"text": "Smoother motion, by shooting twice as many frames", "correct": false},
+        {"text": "Lifelike skin tones, by filming through coloured glass", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was first used in the 1937 short 'The Old Mill'. The artwork sat on several glass levels that could be moved separately.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_080",
+      "question": "Which technique, invented by Max Fleischer in 1915, lets animators trace over live-action film frame by frame?",
+      "answers": [
+        {"text": "Rotoscoping", "correct": true},
+        {"text": "The zoetrope", "correct": false},
+        {"text": "Pantographing", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fleischer first used it for his Koko the Clown cartoons. Disney later used live-action reference footage for the human characters in 'Snow White'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_081",
+      "question": "Which household object hops across the screen in Pixar's logo animation?",
+      "answers": [
+        {"text": "A desk lamp", "correct": true},
+        {"text": "An alarm clock", "correct": false},
+        {"text": "A toaster", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The lamp is 'Luxo Jr.' from a 1986 short of the same name, the first computer-animated film to be nominated for an Oscar.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_082",
+      "question": "The name 'Studio Ghibli' comes from an Italian word for what?",
+      "answers": [
+        {"text": "A hot desert wind", "correct": true},
+        {"text": "A mythical forest spirit", "correct": false},
+        {"text": "A cherry blossom", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hayao Miyazaki, a plane enthusiast, took it from the Italian scout aircraft Caproni Ca.309 Ghibli, itself named after the Libyan desert wind.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_083",
+      "question": "Which Miyazaki film won the Oscar for Best Animated Feature in 2003?",
+      "answers": [
+        {"text": "Spirited Away", "correct": true},
+        {"text": "Princess Mononoke", "correct": false},
+        {"text": "My Neighbor Totoro", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Miyazaki did not attend the ceremony. He has said he did not want to travel to the United States at the time because of the Iraq war.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_084",
+      "question": "Who was called 'The Man of a Thousand Voices' and spoke Bugs Bunny, Daffy Duck and Porky Pig?",
+      "answers": [
+        {"text": "Mel Blanc", "correct": true},
+        {"text": "Paul Frees", "correct": false},
+        {"text": "Don Messick", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Blanc reportedly disliked carrots and had to chew and spit them out while voicing Bugs Bunny. His gravestone reads 'That's all, folks'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_085",
+      "question": "From which material are Aardman's Wallace and Gromit made?",
+      "answers": [
+        {"text": "Plasticine", "correct": true},
+        {"text": "Wax", "correct": false},
+        {"text": "Silicone", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The dog Gromit has no mouth and expresses himself through his eyes and brow. The first film, 'A Grand Day Out' (1989), began as Nick Park's student project.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_086",
+      "question": "Tim Burton conceived and produced 'The Nightmare Before Christmas' (1993). Who directed it?",
+      "answers": [
+        {"text": "Henry Selick", "correct": true},
+        {"text": "Nick Park", "correct": false},
+        {"text": "Brad Bird", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jack Skellington's face was swapped frame by frame using hundreds of replacement heads.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_087",
+      "question": "Which cryptic code appears as an Easter egg in nearly every Pixar film?",
+      "answers": [
+        {"text": "A113", "correct": true},
+        {"text": "B52", "correct": false},
+        {"text": "K9", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It is the number of a classroom at the California Institute of the Arts, where many Pixar animators studied. It appears as a licence plate in 'Toy Story'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_088",
+      "question": "What did Disney's 1940 film 'Fantasia' pioneer in cinema sound?",
+      "answers": [
+        {"text": "Multi-channel stereophonic sound", "correct": true},
+        {"text": "Dolby noise reduction", "correct": false},
+        {"text": "Optical soundtracks on film", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The system was called Fantasound. Mickey Mouse famously shakes hands with the conductor Leopold Stokowski in the film.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_089",
+      "question": "Which duo of ducks, Donald and Daffy, stage a piano duel together in which 1988 film?",
+      "answers": [
+        {"text": "Who Framed Roger Rabbit", "correct": true},
+        {"text": "Space Jam", "correct": false},
+        {"text": "Looney Tunes: Back in Action", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Disney and Warner Bros. negotiated equal treatment for their cartoon stars in the film, so that neither one got more screen time.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_090",
+      "question": "Which cartoon cat-and-mouse duo, created by Hanna and Barbera, won seven Oscars for animated shorts?",
+      "answers": [
+        {"text": "Tom and Jerry", "correct": true},
+        {"text": "Sylvester and Tweety", "correct": false},
+        {"text": "Itchy and Scratchy", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Their working names were originally 'Jasper and Jinx'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_091",
+      "question": "Which sound designer provided the voice of WALL-E and the beeps of R2-D2?",
+      "answers": [
+        {"text": "Ben Burtt", "correct": true},
+        {"text": "Gary Rydstrom", "correct": false},
+        {"text": "Walter Murch", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Burtt recorded WALL-E's voice with his own mouth and processed it. He also recorded Darth Vader's mechanical breathing, reportedly through a scuba regulator.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_092",
+      "question": "Which Disney animation was the first animated film to be nominated for the Best Picture Oscar?",
+      "answers": [
+        {"text": "Beauty and the Beast", "correct": true},
+        {"text": "The Lion King", "correct": false},
+        {"text": "Aladdin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A rough work-in-progress version was shown at the New York Film Festival before the animation was finished.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_093",
+      "question": "Who spoke the voice of Mickey Mouse for the character's first two decades?",
+      "answers": [
+        {"text": "Walt Disney himself", "correct": true},
+        {"text": "Mel Blanc", "correct": false},
+        {"text": "Clarence Nash", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Walt stopped in 1947 because he was too busy. Sound-effects man Jimmy MacDonald took over.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_094",
+      "question": "How did cartoonist Winsor McCay present 'Gertie the Dinosaur' (1914) in vaudeville theatres?",
+      "answers": [
+        {"text": "He stood on stage and gave 'commands' to the dinosaur on screen", "correct": true},
+        {"text": "He read the story aloud in the dark", "correct": false},
+        {"text": "A live orchestra played the soundtrack of the cartoon", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "McCay hand-drew around 10,000 drawings for the short film. At the end he appeared to step into the picture.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_095",
+      "question": "Which cartoon cat was used as a television test image in 1928?",
+      "answers": [
+        {"text": "Felix the Cat", "correct": true},
+        {"text": "Krazy Kat", "correct": false},
+        {"text": "Puss in Boots", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "RCA put a Felix doll on a rotating turntable in front of an experimental TV camera, because its high-contrast black-and-white shape showed up well on the primitive system.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_096",
+      "question": "Which 1963 Japanese series by Osamu Tezuka pioneered the cost-saving 'limited animation' style in TV anime?",
+      "answers": [
+        {"text": "Astro Boy", "correct": true},
+        {"text": "Speed Racer", "correct": false},
+        {"text": "Doraemon", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tezuka, nicknamed the 'God of Manga', deliberately kept the animation sparse to meet the weekly schedule and low budget.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_097",
+      "question": "Which 1950s sitcom pioneered filming with several cameras in front of a live audience on 35 mm film, which made reruns easy?",
+      "answers": [
+        {"text": "I Love Lucy", "correct": true},
+        {"text": "Leave It to Beaver", "correct": false},
+        {"text": "Our Miss Brooks", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lucille Ball's real pregnancy was written into the show, and Lucy and Desi Arnaz insisted on filming in Los Angeles rather than New York.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_098",
+      "question": "What was the working title of the pilot of 'Seinfeld' in 1989?",
+      "answers": [
+        {"text": "The Seinfeld Chronicles", "correct": true},
+        {"text": "Stand-Up Nights", "correct": false},
+        {"text": "Four on the Floor", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Elaine did not appear in the pilot; the character was added when the network asked for a female lead.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_099",
+      "question": "The Boston bar whose exterior opens the sitcom 'Cheers' is real. What was its name before it became a tourist attraction?",
+      "answers": [
+        {"text": "The Bull & Finch Pub", "correct": true},
+        {"text": "The Beacon Arms", "correct": false},
+        {"text": "The Salty Dog", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The interior is not the real pub: the bar set was built in a Los Angeles studio. The pub was later renamed after the show.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_100",
+      "question": "How did set decorator Frank Silva get the role of the killer BOB in 'Twin Peaks'?",
+      "answers": [
+        {"text": "David Lynch noticed his reflection in a mirror and cast him", "correct": true},
+        {"text": "He won an audition at a local diner", "correct": false},
+        {"text": "He was picked by a fan vote", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Silva had no acting background, yet he played BOB in the series and again in the 1992 film 'Twin Peaks: Fire Walk with Me'. He died in 1995.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_101",
+      "question": "Whose encouragement reportedly persuaded Nichelle Nichols to stay on 'Star Trek' when she wanted to leave?",
+      "answers": [
+        {"text": "Martin Luther King Jr.", "correct": true},
+        {"text": "Rosa Parks", "correct": false},
+        {"text": "Malcolm X", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mae Jemison, the first Black woman in space, has said Nichols' Uhura inspired her. Jemison later appeared in an episode of 'Star Trek: The Next Generation'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_102",
+      "question": "Britain's 'Doctor Who' first aired in 1963, one day after which world event?",
+      "answers": [
+        {"text": "The assassination of John F. Kennedy", "correct": true},
+        {"text": "The Great Train Robbery", "correct": false},
+        {"text": "The Cuban Missile Crisis", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Because the news coverage had disrupted viewing, the BBC repeated the first episode a week later.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_103",
+      "question": "Which of the six Monty Python members was born in the United States?",
+      "answers": [
+        {"text": "Terry Gilliam", "correct": true},
+        {"text": "Graham Chapman", "correct": false},
+        {"text": "John Cleese", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gilliam made the show's cut-out animations, assembled from Victorian engravings and photos.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_104",
+      "question": "How many episodes of 'Fawlty Towers' were made?",
+      "answers": [
+        {"text": "12", "correct": true},
+        {"text": "6", "correct": false},
+        {"text": "24", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "John Cleese based the hotel owner Basil on a real rude hotelier he met in Torquay while the Monty Python team was staying there.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_105",
+      "question": "What colour was Oscar the Grouch in the first season of 'Sesame Street'?",
+      "answers": [
+        {"text": "Orange", "correct": true},
+        {"text": "Purple", "correct": false},
+        {"text": "Brown", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Caroll Spinney, the puppeteer who played Oscar, also performed Big Bird.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_106",
+      "question": "The phrase for a show that has passed its peak, 'jump the shark', comes from which sitcom?",
+      "answers": [
+        {"text": "Happy Days", "correct": true},
+        {"text": "Laverne & Shirley", "correct": false},
+        {"text": "Mork & Mindy", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In the 1977 episode, the Fonz water-skis over a shark in his leather jacket. The phrase was coined in 1985 by a college student, Sean J. Connolly, and later popularised by Jon Hein's website.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_107",
+      "question": "In the 'Twilight Zone' episode 'To Serve Man', what is the book of that title revealed to be?",
+      "answers": [
+        {"text": "A cookbook", "correct": true},
+        {"text": "A peace treaty", "correct": false},
+        {"text": "A diary", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The alien Kanamit was played by Richard Kiel, who later played the villain Jaws in two James Bond films.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_108",
+      "question": "Which HBO drama, which ended in 2008, was created by a former newspaper crime reporter?",
+      "answers": [
+        {"text": "The Wire", "correct": true},
+        {"text": "The Sopranos", "correct": false},
+        {"text": "Oz", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Crime novelists George Pelecanos, Richard Price and Dennis Lehane wrote episodes.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_109",
+      "question": "Who invented the 'laff box', a machine that added canned laughter to 1950s TV comedies?",
+      "answers": [
+        {"text": "Charley Douglass", "correct": true},
+        {"text": "Norman Lear", "correct": false},
+        {"text": "Ernie Kovacs", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Many of the laughs in his library were recorded in the 1950s, so later shows were partly laughing along with audiences from decades earlier.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_110",
+      "question": "Which song was the first music video shown on MTV on 1 August 1981?",
+      "answers": [
+        {"text": "'Video Killed the Radio Star'", "correct": true},
+        {"text": "'Money for Nothing'", "correct": false},
+        {"text": "'Thriller'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hans Zimmer, later a film composer, appears in the music video as a keyboard player for the Buggles.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_111",
+      "question": "Why are daytime serial dramas called 'soap operas'?",
+      "answers": [
+        {"text": "They were originally sponsored by soap manufacturers", "correct": true},
+        {"text": "They were first shown in public bathhouses", "correct": false},
+        {"text": "Their theme tunes were sung by opera singers", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Companies such as Procter & Gamble and Colgate-Palmolive sponsored the early radio serials to reach housewives.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_112",
+      "question": "Which TV series of 1980 made 'Who shot J.R.?' a worldwide question?",
+      "answers": [
+        {"text": "Dallas", "correct": true},
+        {"text": "Dynasty", "correct": false},
+        {"text": "Knots Landing", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "British bookmakers took bets on the answer.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_113",
+      "question": "Gerry Anderson's 1960s series 'Thunderbirds' was filmed with what?",
+      "answers": [
+        {"text": "Marionette puppets", "correct": true},
+        {"text": "Clay figures", "correct": false},
+        {"text": "Cut-out animation", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The puppets' mouths were moved by electronics in their heads that responded to the recorded voice, a system dubbed 'Supermarionation'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_114",
+      "question": "The reality format 'Survivor' is based on a 1997 series from which country?",
+      "answers": [
+        {"text": "Sweden", "correct": true},
+        {"text": "Australia", "correct": false},
+        {"text": "Denmark", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Swedish original was called 'Expedition Robinson'. Mark Burnett produced the US version in 2000.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_115",
+      "question": "Which Colombian telenovela inspired 'Ugly Betty'?",
+      "answers": [
+        {"text": "Yo soy Betty, la fea", "correct": true},
+        {"text": "La Reina del Sur", "correct": false},
+        {"text": "Rubí", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The format has been adapted in many countries, including Germany ('Verliebt in Berlin') and Russia.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_116",
+      "question": "Which colour TV standard was jokingly said to stand for 'Never Twice the Same Color'?",
+      "answers": [
+        {"text": "NTSC", "correct": true},
+        {"text": "PAL", "correct": false},
+        {"text": "SECAM", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "French SECAM got a joke of its own: 'Something Essentially Contrary to the American Method'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_117",
+      "question": "The girl who appears on the BBC's Test Card F is whose daughter?",
+      "answers": [
+        {"text": "The card's designer", "correct": true},
+        {"text": "A BBC newsreader", "correct": false},
+        {"text": "A prime minister", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Carole Hersee posed with a toy clown called Bubbles. The card was shown during gaps in the schedule, when there were no programmes.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_118",
+      "question": "Who knitted the cardigans worn by Fred Rogers in 'Mister Rogers' Neighborhood'?",
+      "answers": [
+        {"text": "His mother", "correct": true},
+        {"text": "His wife", "correct": false},
+        {"text": "A fan club", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rogers was an ordained Presbyterian minister, and the show ran for 33 years.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_119",
+      "question": "Who was captain of the Enterprise in the rejected first pilot of 'Star Trek', 'The Cage'?",
+      "answers": [
+        {"text": "Christopher Pike", "correct": true},
+        {"text": "Jean-Luc Picard", "correct": false},
+        {"text": "Jonathan Archer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "NBC found the pilot 'too cerebral' and ordered a second one. The pilot's female second-in-command was dropped in the rewrite.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_120",
+      "question": "What was the working title of 'Stranger Things', before the setting moved to Indiana?",
+      "answers": [
+        {"text": "Montauk", "correct": true},
+        {"text": "Hawkins", "correct": false},
+        {"text": "Roanoke", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The creators' pitch was turned down by more than a dozen networks before Netflix said yes.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_121",
+      "question": "On which sketch show did 'The Simpsons' first appear, as shorts, in 1987?",
+      "answers": [
+        {"text": "The Tracey Ullman Show", "correct": true},
+        {"text": "Saturday Night Live", "correct": false},
+        {"text": "In Living Color", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Creator Matt Groening named the family after his own: Homer, Marge, Lisa and Maggie are his father, mother and sisters. Bart is an anagram of 'brat'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_122",
+      "question": "Which character in the original run of 'Frasier' is often talked about but never appears on screen?",
+      "answers": [
+        {"text": "Maris", "correct": true},
+        {"text": "Lilith", "correct": false},
+        {"text": "Daphne", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Maris is described as impossibly thin and sickly, and the writers kept her unseen for the entire original series.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_123",
+      "question": "Which sitcom set in a Second World War prison camp starred several actors who had fled or survived Nazi persecution?",
+      "answers": [
+        {"text": "Hogan's Heroes", "correct": true},
+        {"text": "M*A*S*H", "correct": false},
+        {"text": "McHale's Navy", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Robert Clary, who played Corporal LeBeau, was a Holocaust survivor. Werner Klemperer, who played Colonel Klink, had fled Germany as a child.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_124",
+      "question": "Which city stood in for Washington, D.C., during the first seasons of 'The X-Files'?",
+      "answers": [
+        {"text": "Vancouver", "correct": true},
+        {"text": "Toronto", "correct": false},
+        {"text": "Seattle", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The production moved to Los Angeles after the fifth season.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_125",
+      "question": "The role of the collie Lassie, a female character, was actually played by dogs of which sex?",
+      "answers": [
+        {"text": "Male", "correct": true},
+        {"text": "Female", "correct": false},
+        {"text": "Both, alternating", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Male collies keep a fuller coat and are bigger. Generations of the original dog Pal's descendants played the role.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_126",
+      "question": "Which Journey song plays in the final diner scene of 'The Sopranos'?",
+      "answers": [
+        {"text": "'Don't Stop Believin''", "correct": true},
+        {"text": "'Faithfully'", "correct": false},
+        {"text": "'Open Arms'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The scene cuts to black mid-song, and many viewers thought their TV had failed.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_127",
+      "question": "Who hosted the very first episode of 'Saturday Night Live' in 1975?",
+      "answers": [
+        {"text": "George Carlin", "correct": true},
+        {"text": "Richard Pryor", "correct": false},
+        {"text": "Steve Martin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Andy Kaufman performed his 'Mighty Mouse' lip-sync act in that first episode. Carlin refused to wear a costume and wore a T-shirt under his suit.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_128",
+      "question": "Which cartoon series, premiering in 1960, was the first animated sitcom in US prime time?",
+      "answers": [
+        {"text": "The Flintstones", "correct": true},
+        {"text": "The Jetsons", "correct": false},
+        {"text": "Top Cat", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The family was originally going to be called the Flagstones.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_129",
+      "question": "What did Bob Ross famously call mistakes in his paintings?",
+      "answers": [
+        {"text": "Happy accidents", "correct": true},
+        {"text": "Gentle corrections", "correct": false},
+        {"text": "Bonus strokes", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "For each episode he painted the picture three times: once beforehand as a reference, once on air and once afterwards for his books. His curly hair was a perm to save on haircuts.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_130",
+      "question": "Before nature shows, David Attenborough oversaw which TV milestone as a BBC executive in 1967?",
+      "answers": [
+        {"text": "The start of colour broadcasting in Britain", "correct": true},
+        {"text": "The first live satellite link", "correct": false},
+        {"text": "The launch of ITV", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The first colour broadcasts on BBC Two included the Wimbledon tennis championships.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_131",
+      "question": "Kermit the Frog's first body was made from what?",
+      "answers": [
+        {"text": "His creator's mother's old coat", "correct": true},
+        {"text": "A green sock", "correct": false},
+        {"text": "A pair of gloves", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jim Henson cut the eyes from a ping-pong ball. Kermit first appeared on the local show 'Sam and Friends' in 1955.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_132",
+      "question": "Which metal forms the core of a modern Oscar statuette before it is gold-plated?",
+      "answers": [
+        {"text": "Bronze", "correct": true},
+        {"text": "Solid gold", "correct": false},
+        {"text": "Silver", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The knight standing on a film reel was designed by Cedric Gibbons. The five spokes of the reel stand for the original branches of the Academy: actors, directors, producers, technicians and writers.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_133",
+      "question": "Who was the first African American to win an Oscar, for 'Gone with the Wind'?",
+      "answers": [
+        {"text": "Hattie McDaniel", "correct": true},
+        {"text": "Dorothy Dandridge", "correct": false},
+        {"text": "Lena Horne", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "At the ceremony she was seated at a separate table by the wall of the hotel because of segregation rules.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_134",
+      "question": "Which actor refused his 1973 Best Actor Oscar by sending Sacheen Littlefeather in his place?",
+      "answers": [
+        {"text": "Marlon Brando", "correct": true},
+        {"text": "Jack Nicholson", "correct": false},
+        {"text": "Dustin Hoffman", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Academy publicly apologised to Littlefeather in 2022.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_135",
+      "question": "At the 2017 Oscars, which film was mistakenly announced as Best Picture before the error was corrected?",
+      "answers": [
+        {"text": "La La Land", "correct": true},
+        {"text": "Arrival", "correct": false},
+        {"text": "Manchester by the Sea", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Warren Beatty had been handed the wrong envelope, which was the one for Best Actress.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_136",
+      "question": "The 'Razzies' honour the worst in film. What is the full name of the award?",
+      "answers": [
+        {"text": "Golden Raspberry Award", "correct": true},
+        {"text": "Golden Turkey Award", "correct": false},
+        {"text": "Leaden Globe", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The first Razzies were held in founder John Wilson's living room in 1981, the night before the Oscars.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_137",
+      "question": "Which 1960 film was released with 'Smell-O-Vision', a system that piped scents to the seats?",
+      "answers": [
+        {"text": "Scent of Mystery", "correct": true},
+        {"text": "Behind the Great Wall", "correct": false},
+        {"text": "House of Wax", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Smell-O-Vision was used in only this one film, and the scents hissed through pipes and arrived late.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_138",
+      "question": "For the horror film 'The Tingler' (1959), director William Castle wired some seats in cinemas to do what?",
+      "answers": [
+        {"text": "Give viewers a mild buzz", "correct": true},
+        {"text": "Heat up", "correct": false},
+        {"text": "Tip backwards", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "For a previous film Castle took out an insurance policy with Lloyd's of London that paid out in case a viewer died of fright.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_139",
+      "question": "Which 1963 epic nearly bankrupted 20th Century Fox?",
+      "answers": [
+        {"text": "Cleopatra", "correct": true},
+        {"text": "Ben-Hur", "correct": false},
+        {"text": "The Ten Commandments", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Elizabeth Taylor was the first actress paid a million dollars for a film.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_140",
+      "question": "The flop of which 1980 western is blamed for ending United Artists as an independent studio?",
+      "answers": [
+        {"text": "Heaven's Gate", "correct": true},
+        {"text": "Once Upon a Time in the West", "correct": false},
+        {"text": "Shane", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Its budget swelled to more than three times the original estimate. Director Michael Cimino had won the Best Director Oscar two years earlier for 'The Deer Hunter'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_141",
+      "question": "How is the last known print of Lon Chaney's vampire mystery 'London After Midnight' (1927) believed to have been lost?",
+      "answers": [
+        {"text": "In an MGM vault fire in the 1960s", "correct": true},
+        {"text": "It was stolen from a train", "correct": false},
+        {"text": "It was melted down for its silver", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It is one of the most sought-after lost films. Only still photos and a reconstruction from them remain.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_142",
+      "question": "To keep curious fans away, 'Return of the Jedi' was shot under which fake working title?",
+      "answers": [
+        {"text": "Blue Harvest", "correct": true},
+        {"text": "Night Falls", "correct": false},
+        {"text": "Silent Orbit", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Crew badges and caps for the fake horror film carried the tagline 'Horror beyond imagination'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_143",
+      "question": "Why did 'It's a Wonderful Life' become a Christmas staple on US television in the 1980s?",
+      "answers": [
+        {"text": "Its copyright lapsed, so stations could show it for free", "correct": true},
+        {"text": "Frank Capra donated it to the networks", "correct": false},
+        {"text": "It won a rights lottery", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The film flopped on its original release in 1946. The rights holder later regained control, and the film is now tightly licensed.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_144",
+      "question": "Which director was nominated five times for a Best Director Oscar but never won the competitive award?",
+      "answers": [
+        {"text": "Alfred Hitchcock", "correct": true},
+        {"text": "Orson Welles", "correct": false},
+        {"text": "Frank Capra", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In 1968 he received the Irving G. Thalberg Memorial Award and kept his speech very short.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_145",
+      "question": "Which Indiana Jones film, together with 'Gremlins', helped trigger the creation of the PG-13 rating?",
+      "answers": [
+        {"text": "Indiana Jones and the Temple of Doom", "correct": true},
+        {"text": "Raiders of the Lost Ark", "correct": false},
+        {"text": "Indiana Jones and the Last Crusade", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Steven Spielberg suggested a new rating between PG and R. The first film released as PG-13 was 'Red Dawn'.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_146",
+      "question": "Critics of which nationality first used the label 'film noir' for dark American crime films in 1946?",
+      "answers": [
+        {"text": "French", "correct": true},
+        {"text": "German", "correct": false},
+        {"text": "Italian", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "French critics saw a flood of American films at once in 1946, after the wartime ban on them in occupied France had ended.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_147",
+      "question": "Which term, popularised by Alfred Hitchcock, describes a plot device that drives the characters but matters little to the audience?",
+      "answers": [
+        {"text": "MacGuffin", "correct": true},
+        {"text": "Red herring", "correct": false},
+        {"text": "Chekhov's gun", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hitchcock credited the term to the screenwriter Angus MacPhail.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_148",
+      "question": "In film scoring, what does 'Mickey Mousing' mean?",
+      "answers": [
+        {"text": "Music that mirrors the on-screen action beat for beat", "correct": true},
+        {"text": "Music written only for cartoons", "correct": false},
+        {"text": "Music whistled by the characters", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The term comes from early cartoons. Composer Max Steiner, who scored 'King Kong', was famous for the style.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_149",
+      "question": "What does the winged woman on the Emmy statuette hold?",
+      "answers": [
+        {"text": "An atom", "correct": true},
+        {"text": "A camera lens", "correct": false},
+        {"text": "A lightning bolt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The name 'Emmy' comes from 'Immy', a nickname for the image-orthicon camera tube, turned into a female form to fit the statuette.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_150",
+      "question": "What does the Latin motto 'Ars Gratia Artis' on the MGM logo mean?",
+      "answers": [
+        {"text": "Art for art's sake", "correct": true},
+        {"text": "Art through struggle", "correct": false},
+        {"text": "Beauty needs no lens", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The first lion in the logo, Slats, appeared in silent films. Jackie, who followed him, was the first lion to roar in an MGM sound film.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_151",
+      "question": "What is the name for the effect in which viewers read different emotions into the same neutral face depending on the shot cut next to it?",
+      "answers": [
+        {"text": "The Kuleshov effect", "correct": true},
+        {"text": "The Griffith effect", "correct": false},
+        {"text": "The Méliès effect", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Soviet filmmaker Lev Kuleshov tested the idea in the 1910s and 1920s with an actor's expressionless face.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_152",
+      "question": "In 1952 the United States did what to Charlie Chaplin while he was sailing to London for a premiere?",
+      "answers": [
+        {"text": "Revoked his re-entry permit", "correct": true},
+        {"text": "Knighted him", "correct": false},
+        {"text": "Seized his studio", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He did not return to the US until 1972, when he received an honorary Oscar.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_153",
+      "question": "Which 1930s adventure serial inspired the opening text crawl of 'Star Wars'?",
+      "answers": [
+        {"text": "Flash Gordon", "correct": true},
+        {"text": "The Lone Ranger", "correct": false},
+        {"text": "Captain Marvel", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "George Lucas wanted to remake the serials, could not get the rights and created his own story instead.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_154",
+      "question": "Which singer was the uncredited singing voice for Natalie Wood in 'West Side Story' and Audrey Hepburn in 'My Fair Lady'?",
+      "answers": [
+        {"text": "Marni Nixon", "correct": true},
+        {"text": "Julie Andrews", "correct": false},
+        {"text": "Ella Fitzgerald", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "She also dubbed Deborah Kerr in 'The King and I' and later appeared on screen in 'The Sound of Music' as Sister Sophia.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_155",
+      "question": "What do the brief round marks in the corner of a film print, nicknamed 'cigarette burns' in 'Fight Club', tell the projectionist?",
+      "answers": [
+        {"text": "Time to switch to the next reel", "correct": true},
+        {"text": "The film is about to end", "correct": false},
+        {"text": "A rating warning", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A reel holds roughly 20 minutes of film, so a feature needs several projectors or a quick changeover. Two marks appear, one as a warning and one for the changeover.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_156",
+      "question": "How many episodes does 'The Sopranos' have in total?",
+      "type": "estimate",
+      "answer": 86,
+      "min": 10,
+      "max": 300,
+      "unit": "episodes",
+      "difficulty": "medium",
+      "fun_fact": "Creator David Chase first imagined the story as a feature film about a mobster in therapy.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_157",
+      "question": "How many episodes does 'Game of Thrones' have in total?",
+      "type": "estimate",
+      "answer": 73,
+      "min": 10,
+      "max": 300,
+      "unit": "episodes",
+      "difficulty": "medium",
+      "fun_fact": "The first six seasons ran ten episodes each. The final season had only six, most of them close to feature length.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_158",
+      "question": "How many episodes does the series 'Breaking Bad' have in total?",
+      "type": "estimate",
+      "answer": 62,
+      "min": 10,
+      "max": 200,
+      "unit": "episodes",
+      "difficulty": "medium",
+      "fun_fact": "Creator Vince Gilligan originally set the show in Riverside, California, and moved it to Albuquerque because of New Mexico's film tax incentives.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_159",
+      "question": "How tall is an Oscar statuette, in centimetres?",
+      "type": "estimate",
+      "answer": 34,
+      "min": 5,
+      "max": 100,
+      "unit": "cm",
+      "difficulty": "medium",
+      "fun_fact": "That is thirteen and a half inches. Since the 1950s, winners have had to offer the statuette back to the Academy for one dollar before selling it.",
+      "category": "Film & TV"
+    },
+    {
+      "id": "film_en_160",
+      "question": "How many frames per second does standard cinema film run at?",
+      "type": "estimate",
+      "answer": 24,
+      "min": 5,
+      "max": 120,
+      "unit": "frames per second",
+      "difficulty": "easy",
+      "fun_fact": "Silent films ran slower, usually between 16 and 20 frames per second. The rate was fixed for sound because it gave a steady pitch to the soundtrack.",
+      "category": "Film & TV"
+    }
+  ]
+}
