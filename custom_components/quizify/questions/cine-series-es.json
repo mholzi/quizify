@@ -42,7 +42,7 @@
           "correct": false
         }
       ],
-      "difficulty": "medium",
+      "difficulty": "easy",
       "fun_fact": "Leland Stanford, gobernador de California y aficionado a los caballos, encargó el experimento. Muybridge alineó una hilera de cámaras que disparaban con hilos que el propio animal rompía al pasar.",
       "category": "Cine y series"
     },
@@ -190,12 +190,12 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "En 'Náufragos' (1944), ambientada casi entera en un bote salvavidas, resolvió el problema saliendo en el anuncio de un periódico flotando en el agua.",
+      "fun_fact": "En 'Lifeboat' (1944), ambientada casi entera en un bote salvavidas, resolvió el problema apareciendo en un anuncio de adelgazamiento en el periódico que lee un náufrago.",
       "category": "Cine y series"
     },
     {
       "id": "film_es_010",
-      "question": "¿Qué se usó como sangre falsa en la escena de la ducha de 'Psicosis', ya que el blanco y negro no pedía color?",
+      "question": "¿Qué se usó como sangre falsa en la escena de la ducha de 'Psicosis', rodada en blanco y negro?",
       "answers": [
         {
           "text": "Jarabe de chocolate",
@@ -295,7 +295,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "Ganó dos Óscar de guion sin poder subir a recogerlos: uno por 'Vacaciones en Roma', cuyo crédito fue a otro, y otro con el seudónimo Robert Rich. La Academia reparó el reconocimiento años después.",
+      "fun_fact": "Ganó dos Óscar a la mejor historia sin poder recogerlos: uno por 'Roman Holiday', cuyo crédito fue a otro, y otro por 'The Brave One' con el seudónimo Robert Rich. La Academia reparó el reconocimiento años después.",
       "category": "Cine y series"
     },
     {
@@ -324,11 +324,11 @@
       "question": "¿Qué apodo recibió Buster Keaton por su rostro imperturbable, incluso en medio de catástrofes?",
       "answers": [
         {
-          "text": "La Gran Cara de Piedra",
+          "text": "Cara de Piedra",
           "correct": true
         },
         {
-          "text": "El Gran Sonriente",
+          "text": "Sonrisa de Cera",
           "correct": false
         },
         {
@@ -484,7 +484,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "'Los caballeros de la mesa cuadrada y sus locos seguidores' convirtió el truco en chiste: sus caballeros entrechocan cocos y no tienen caballos.",
+      "fun_fact": "'Monty Python and the Holy Grail' (1975) convirtió el truco en chiste: sus caballeros entrechocan cocos y no tienen caballos.",
       "category": "Cine y series"
     },
     {
@@ -568,7 +568,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "En 1986, durante el rodaje de 'Armour of God' ('Operación Trueno' en España), se cayó de un árbol y se fracturó el cráneo; aún conserva una secuela de aquel golpe.",
+      "fun_fact": "En 1986, durante el rodaje de 'Armour of God', se cayó de un árbol y se fracturó el cráneo; le quedaron secuelas permanentes de aquel golpe.",
       "category": "Cine y series"
     },
     {
@@ -589,7 +589,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "El llamado cristal de azúcar se fabricaba cociendo azúcar hasta endurecerlo y se rompe en trozos que no cortan. Hoy se usan sobre todo resinas.",
+      "fun_fact": "El llamado cristal de azúcar se fabricaba cociendo azúcar hasta endurecerlo y se rompe en trozos que cortan mucho menos que el vidrio real. Hoy se usan sobre todo resinas.",
       "category": "Cine y series"
     },
     {
@@ -715,7 +715,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "'Boyhood' (2014) llevó la idea al extremo: se rodó unas semanas cada año durante doce años, para ver crecer de verdad a sus actores.",
+      "fun_fact": "Agrupar escenas ahorra dinero: cada actor y cada decorado se contratan solo los días necesarios, así que el final de una película puede rodarse antes que el principio.",
       "category": "Cine y series"
     },
     {
@@ -778,7 +778,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "El papel iba a ser de Jason Robards, pero este enfermó, y Mick Jagger tuvo que irse por una gira. Lo acabó interpretando Klaus Kinski.",
+      "fun_fact": "Jason Robards iba a ser Fitzcarraldo, pero enfermó; Mick Jagger, que iba a ser su amigo Wilbur, tuvo que irse por una gira. Klaus Kinski acabó interpretando al protagonista.",
       "category": "Cine y series"
     },
     {
@@ -820,7 +820,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "Nixon fue durante años la voz fantasma de Hollywood. Sí apareció en pantalla en 'Sonrisas y lágrimas' (1965), como la hermana Sofía.",
+      "fun_fact": "Nixon fue durante años la voz fantasma de Hollywood. Sí apareció en pantalla en 'The Sound of Music' (1965), como la hermana Sofía.",
       "category": "Cine y series"
     },
     {
@@ -883,12 +883,12 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Hitchcock popularizó el término, que atribuía al guionista Angus MacPhail. En 'Con la muerte en los talones' es un microfilm escondido dentro de una estatuilla.",
+      "fun_fact": "Hitchcock popularizó el término, que atribuía al guionista Angus MacPhail. En 'North by Northwest' es un microfilm escondido dentro de una estatuilla.",
       "category": "Cine y series"
     },
     {
       "id": "film_es_043",
-      "question": "¿Qué objeto submarino usó el sonidista Ben Burtt para crear la respiración de Darth Vader?",
+      "question": "¿Qué equipo usó el sonidista Ben Burtt para crear la respiración de Darth Vader?",
       "answers": [
         {
           "text": "Un regulador de buceo",
@@ -1113,8 +1113,8 @@
           "correct": false
         }
       ],
-      "difficulty": "medium",
-      "fun_fact": "En la parodia 'Bill y Ted: ¡Dos tipos de cuidado!' (1991) la Muerte acaba perdiendo juegos como Twister.",
+      "difficulty": "easy",
+      "fun_fact": "En la parodia 'Bill & Ted's Bogus Journey' (1991) la Muerte acaba perdiendo juegos como Twister.",
       "category": "Cine y series"
     },
     {
@@ -1248,7 +1248,7 @@
       "question": "¿Qué película de Ang Lee de 2000 popularizó en Occidente el cine wuxia, con combates que vuelan sobre tejados y bosques de bambú?",
       "answers": [
         {
-          "text": "Tigre y dragón",
+          "text": "Crouching Tiger, Hidden Dragon",
           "correct": true
         },
         {
@@ -1256,7 +1256,7 @@
           "correct": false
         },
         {
-          "text": "La casa de las dagas voladoras",
+          "text": "House of Flying Daggers",
           "correct": false
         }
       ],
@@ -1424,12 +1424,12 @@
           "correct": false
         },
         {
-          "text": "Los actores no cantan nunca",
+          "text": "Está rodada entera en un solo decorado",
           "correct": false
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Ganó la Palma de Oro en Cannes. Catherine Deneuve fue doblada en las canciones por otra cantante, Danielle Licari.",
+      "fun_fact": "Ganó la Palma de Oro en Cannes. Los actores principales fueron doblados en las canciones por cantantes profesionales; Catherine Deneuve, por Danielle Licari.",
       "category": "Cine y series"
     },
     {
@@ -1455,7 +1455,7 @@
     },
     {
       "id": "film_es_070",
-      "question": "¿Qué técnica de montaje, con cortes bruscos dentro de una misma escena, hizo célebre 'Al final de la escapada' de Godard?",
+      "question": "¿Qué técnica de montaje, con cortes bruscos dentro de una misma escena, hizo célebre 'À bout de souffle' de Godard?",
       "answers": [
         {
           "text": "El jump cut",
@@ -1644,7 +1644,7 @@
     },
     {
       "id": "film_es_079",
-      "question": "¿Quién dirigió 'Pesadilla antes de Navidad' (1993), cuyo título original lleva el nombre de Tim Burton?",
+      "question": "¿Quién dirigió 'The Nightmare Before Christmas' (1993), película ideada y producida por Tim Burton?",
       "answers": [
         {
           "text": "Henry Selick",
@@ -1686,7 +1686,7 @@
     },
     {
       "id": "film_es_081",
-      "question": "¿Qué plato sirve Rémy al crítico Anton Ego en 'Ratatouille' (2007), y le transporta a su infancia?",
+      "question": "¿Qué plato sirve una rata cocinera al crítico Anton Ego en una película de Pixar de 2007, y le transporta a su infancia?",
       "answers": [
         {
           "text": "Un ratatouille",
@@ -1756,11 +1756,11 @@
           "correct": true
         },
         {
-          "text": "Popeye",
+          "text": "Pixie y Dixie",
           "correct": false
         },
         {
-          "text": "Betty Boop",
+          "text": "El oso Yogui",
           "correct": false
         }
       ],
@@ -1806,13 +1806,13 @@
           "correct": false
         }
       ],
-      "difficulty": "easy",
+      "difficulty": "medium",
       "fun_fact": "Satrapi la codirigió con Vincent Paronnaud, y se rodó en francés.",
       "category": "Cine y series"
     },
     {
       "id": "film_es_087",
-      "question": "¿Cuántos dedos tienen en cada mano Mickey Mouse y muchos personajes clásicos de dibujos animados?",
+      "question": "¿Cuántos dedos, contando el pulgar, tienen en cada mano Mickey Mouse y muchos personajes clásicos de dibujos animados?",
       "answers": [
         {
           "text": "Cuatro",
@@ -1949,7 +1949,7 @@
           "correct": false
         },
         {
-          "text": "Perry Mason",
+          "text": "Father Knows Best",
           "correct": false
         }
       ],
@@ -1974,7 +1974,7 @@
           "correct": false
         }
       ],
-      "difficulty": "hard",
+      "difficulty": "medium",
       "fun_fact": "El episodio del nacimiento del hijo de Lucy y Ricky se emitió en enero de 1953, la misma noche en que nació el hijo real de Lucille Ball.",
       "category": "Cine y series"
     },
@@ -2232,7 +2232,7 @@
     },
     {
       "id": "film_es_107",
-      "question": "¿En qué país se rodó la mayor parte de la miniserie 'Chernóbil' (2019)?",
+      "question": "¿En qué país se rodó la mayor parte de la miniserie 'Chernobyl' (2019)?",
       "answers": [
         {
           "text": "Lituania",
@@ -2358,7 +2358,7 @@
     },
     {
       "id": "film_es_113",
-      "question": "¿De qué ciudad se muda Will a casa de sus tíos en 'El príncipe de Bel-Air'?",
+      "question": "¿De qué ciudad se muda Will a casa de sus tíos en 'The Fresh Prince of Bel-Air'?",
       "answers": [
         {
           "text": "Filadelfia",
@@ -2421,7 +2421,7 @@
     },
     {
       "id": "film_es_116",
-      "question": "¿Qué personaje de 'Barrio Sésamo' vive dentro de un cubo de basura?",
+      "question": "¿Qué personaje de 'Sesame Street' vive dentro de un cubo de basura?",
       "answers": [
         {
           "text": "Óscar el Gruñón",
@@ -2505,7 +2505,7 @@
     },
     {
       "id": "film_es_120",
-      "question": "¿Cómo se llama el coche inteligente de 'El coche fantástico'?",
+      "question": "¿Cómo se llama el coche inteligente de 'Knight Rider'?",
       "answers": [
         {
           "text": "KITT",
@@ -2589,7 +2589,7 @@
     },
     {
       "id": "film_es_124",
-      "question": "En 'Las chicas de oro', Dorothy es hija de Sofía. ¿Qué pasaba con las edades de sus actrices?",
+      "question": "En 'The Golden Girls', Dorothy es hija de Sofía. ¿Cómo eran las edades reales de las dos actrices que las interpretaban?",
       "answers": [
         {
           "text": "La actriz de la madre era un año más joven",
@@ -2925,7 +2925,7 @@
     },
     {
       "id": "film_es_140",
-      "question": "¿Qué país es el principal centro de doblaje al español para Latinoamérica?",
+      "question": "¿Qué país es tradicionalmente el principal centro de doblaje al español para Latinoamérica?",
       "answers": [
         {
           "text": "México",
@@ -3134,27 +3134,6 @@
       "category": "Cine y series"
     },
     {
-      "id": "film_es_150",
-      "question": "¿Qué forma tiene la estatuilla de los premios Goya del cine español?",
-      "answers": [
-        {
-          "text": "Un busto de bronce de Francisco de Goya",
-          "correct": true
-        },
-        {
-          "text": "Una cámara dorada",
-          "correct": false
-        },
-        {
-          "text": "Una máscara de teatro",
-          "correct": false
-        }
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Los premios se entregan desde 1987, y la estatuilla es obra del escultor José Luis Fernández.",
-      "category": "Cine y series"
-    },
-    {
       "id": "film_es_151",
       "question": "¿Quién fue la primera persona afroamericana en ganar un Óscar, por 'Lo que el viento se llevó'?",
       "answers": [
@@ -3292,7 +3271,7 @@
       "max": 200,
       "unit": "episodios",
       "difficulty": "medium",
-      "fun_fact": "La última temporada se emitió partida en dos tandas de ocho episodios, con unos meses de pausa entre ambas.",
+      "fun_fact": "La última temporada se emitió partida en dos tandas de ocho episodios, con casi un año de pausa entre ambas.",
       "category": "Cine y series"
     },
     {
@@ -3315,7 +3294,7 @@
       "min": 5,
       "max": 120,
       "unit": "fotogramas por segundo",
-      "difficulty": "easy",
+      "difficulty": "medium",
       "fun_fact": "'El hobbit: Un viaje inesperado' se rodó y estrenó en algunas salas al doble de esa velocidad, y muchos espectadores se quejaron de que se veía como televisión.",
       "category": "Cine y series"
     }

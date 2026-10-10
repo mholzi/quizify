@@ -133,7 +133,7 @@
         {"text": "Gegen das Theater", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "„Das Gewand“ (1953) war der erste Film, der in CinemaScope gedreht wurde. Das Kino sollte bieten, was das kleine Bild im Wohnzimmer nicht konnte.",
+      "fun_fact": "„Das Gewand“ (1953) war der erste in CinemaScope veröffentlichte Film. Das Kino sollte bieten, was das kleine Bild im Wohnzimmer nicht konnte.",
       "category": "Film & Serien"
     },
     {
@@ -156,7 +156,7 @@
         {"text": "Rote-Bete-Saft", "correct": false},
         {"text": "Rote Tinte", "correct": false}
       ],
-      "difficulty": "easy",
+      "difficulty": "medium",
       "fun_fact": "Der Film ist in Schwarzweiß gedreht, deshalb reichte dunkle Flüssigkeit. Das Geräusch der Messerstiche entstand, so wird berichtet, beim Einstechen in eine Melone.",
       "category": "Film & Serien"
     },
@@ -174,14 +174,14 @@
     },
     {
       "id": "film_de_015",
-      "question": "Woher haben die amerikanischen „Nickelodeon“-Kinos der 1900er-Jahre ihren Namen?",
+      "question": "Woher hatten die ersten festen Kleinkinos der USA aus den 1900er-Jahren ihren Namen?",
       "answers": [
-        {"text": "Vom Eintrittspreis von einem Nickel", "correct": true},
-        {"text": "Vom Nickel der Filmprojektoren", "correct": false},
+        {"text": "Vom Eintrittspreis von fünf Cent", "correct": true},
+        {"text": "Vom Metall der Filmprojektoren", "correct": false},
         {"text": "Vom Gründer Nicholas Odeon", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Ein Nickel waren fünf Cent. „Odeon“ ist das griechische Wort für Theater oder Konzertsaal. Um 1910 gab es in den USA mehrere Tausend solcher Kleinkinos.",
+      "fun_fact": "Die Kinos hießen „Nickelodeon“: Ein Nickel waren fünf Cent. „Odeon“ ist das griechische Wort für Theater oder Konzertsaal. Um 1910 gab es in den USA mehrere Tausend solcher Kleinkinos.",
       "category": "Film & Serien"
     },
     {
@@ -318,7 +318,7 @@
     },
     {
       "id": "film_de_027",
-      "question": "Woraus bestehen Scheiben, die für Filmstunts zersplittern, ohne zu verletzen, traditionell?",
+      "question": "Woraus bestehen traditionell Scheiben, die bei Filmstunts zersplittern, ohne zu verletzen?",
       "answers": [
         {"text": "Aus gekochtem Zucker", "correct": true},
         {"text": "Aus gefrorenem Wasser", "correct": false},
@@ -378,7 +378,7 @@
     },
     {
       "id": "film_de_032",
-      "question": "Wie heißt der Kameratrick, bei dem Fahrt und Zoom gegenläufig laufen und der Hintergrund scheinbar wächst oder schrumpft, bekannt aus Hitchcocks „Vertigo“?",
+      "question": "Wie heißt der Kameratrick, mit dem Hitchcock in „Vertigo“ die Höhenangst des Helden sichtbar machte?",
       "answers": [
         {"text": "Dolly-Zoom", "correct": true},
         {"text": "Match Cut", "correct": false},
@@ -429,8 +429,8 @@
       "question": "Was war den Darstellern vor der Brustplatzer-Szene in „Alien“ (1979) nicht gesagt worden?",
       "answers": [
         {"text": "Wie viel Kunstblut aus der Attrappe spritzen würde", "correct": true},
-        {"text": "Dass überhaupt eine Alienszene gedreht wird", "correct": false},
-        {"text": "Wer von ihnen in der Szene stirbt", "correct": false}
+        {"text": "Wie viele Kameras die Szene gleichzeitig filmen würden", "correct": false},
+        {"text": "Wie lange die Szene am Stück gedreht würde", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "John Hurt lag mit dem Oberkörper unter dem Tisch, die falsche Brust war aufgesetzt. Das Blut wurde mit Druck herausgepresst, die Schreckreaktionen der anderen sind deshalb echt.",
@@ -450,13 +450,13 @@
     },
     {
       "id": "film_de_038",
-      "question": "Was fiel Zuschauern auf, als der Regisseur Lew Kuleschow dieselbe Großaufnahme eines Schauspielers mit Bildern von Suppe, Sarg und einem Kind kombinierte?",
+      "question": "Was fiel Zuschauern auf, als der Regisseur Lew Kuleschow dieselbe Großaufnahme eines Schauspielers mit Bildern von Suppe, Sarg und einer Frau auf einem Sofa kombinierte?",
       "answers": [
-        {"text": "Sie lasen im gleichen Gesicht Hunger, Trauer und Zuneigung", "correct": true},
+        {"text": "Sie lasen im gleichen Gesicht Hunger, Trauer und Verlangen", "correct": true},
         {"text": "Sie bemerkten sofort, dass es dasselbe Gesicht war", "correct": false},
         {"text": "Sie hielten die Bilder für zufällig zusammengesetzt", "correct": false}
       ],
-      "difficulty": "hard",
+      "difficulty": "medium",
       "fun_fact": "Der Montage-Effekt ist nach Kuleschow benannt. Hitchcock erklärte später in Interviews, dass er genau dieses Prinzip beim Schneiden nutzt.",
       "category": "Film & Serien"
     },
@@ -470,18 +470,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Die Darsteller stehen in unterschiedlicher Entfernung zur Kamera, die Kulisse ist so gebaut, dass es wie ein einziger Raum aussieht. Für manche Szenen gab es zusätzlich kleinere Doubles.",
-      "category": "Film & Serien"
-    },
-    {
-      "id": "film_de_040",
-      "question": "Woraus bestand der „Schnee“, der in „Der Zauberer von Oz“ (1939) im Mohnfeld auf Dorothy fällt?",
-      "answers": [
-        {"text": "Aus Asbest", "correct": true},
-        {"text": "Aus Baumwolle", "correct": false},
-        {"text": "Aus Seifenflocken", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Asbest diente in Hollywood lange als Kunstschnee, weil er nicht brannte. Die Gesundheitsgefahren erkannte man erst Jahrzehnte später.",
       "category": "Film & Serien"
     },
     {
@@ -546,7 +534,7 @@
     },
     {
       "id": "film_de_046",
-      "question": "Welches Kamerasystem erfand Garrett Brown, das 1976 in „Rocky“ die Verfolgung auf den Museumstreppen ermöglichte?",
+      "question": "Welches Kamerasystem erfand Garrett Brown, das 1976 in „Rocky“ den Lauf die Museumstreppen hinauf ermöglichte?",
       "answers": [
         {"text": "Die Steadicam", "correct": true},
         {"text": "Die Skycam", "correct": false},
@@ -582,14 +570,14 @@
     },
     {
       "id": "film_de_049",
-      "question": "Wie sah man in vielen alten Studiofilmen Landschaften hinter den Fenstern eines Autos vorbeiziehen, in dem die Schauspieler saßen?",
+      "question": "Wie wurden in vielen alten Studiofilmen die Landschaften erzeugt, die hinter den Fenstern eines Autos vorbeizogen?",
       "answers": [
         {"text": "Durch Rückprojektion hinter dem stehenden Wagen", "correct": true},
         {"text": "Durch gemalte Kulissen, die Helfer vorbeizogen", "correct": false},
         {"text": "Durch Spiegel, die eine echte Straße ins Studio holten", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Hinter der Windschutzscheibe lief ein vorher gedrehter Film. Die Technik hielt sich bis in die 1960er, dann lösten Blue- und Greenscreen sie ab.",
+      "fun_fact": "Hinter der Windschutzscheibe lief ein vorher gedrehter Film. So konnten die Schauspieler im Studio „fahren“, und die Dialoge ließen sich ungestört aufnehmen.",
       "category": "Film & Serien"
     },
     {
@@ -990,7 +978,7 @@
     },
     {
       "id": "film_de_083",
-      "question": "In welchem Film von 1988 treffen Figuren der Konkurrenzstudios Disney und Warner Bros. erstmals gemeinsam auf der Leinwand zusammen?",
+      "question": "In welchem Film treffen Figuren der Konkurrenzstudios Disney und Warner Bros. erstmals gemeinsam auf der Leinwand aufeinander?",
       "answers": [
         {"text": "Falsches Spiel mit Roger Rabbit", "correct": true},
         {"text": "Space Jam", "correct": false},
@@ -1045,7 +1033,7 @@
         {"text": "Die Augen", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Gromit zeigt seine Gefühle nur mit Stirn und Augenbrauen. Die Figuren bestehen aus Plastilin und werden Bild für Bild bewegt, oft schaffen die Animatoren nur wenige Sekunden pro Woche.",
+      "fun_fact": "Gromit zeigt seine Gefühle nur mit Stirn und Augenbrauen. Die Figuren bestehen aus Plastilin und werden Bild für Bild bewegt, oft schaffen die Animatoren nur wenige Sekunden pro Tag.",
       "category": "Film & Serien"
     },
     {
@@ -1146,14 +1134,14 @@
     },
     {
       "id": "film_de_096",
-      "question": "Womit beginnt fast jeder Folgentitel der Sitcom „Friends“?",
+      "question": "Womit beginnen fast alle Folgentitel der Sitcom „Friends“?",
       "answers": [
-        {"text": "Mit „The One with …“", "correct": true},
-        {"text": "Mit „The Day when …“", "correct": false},
-        {"text": "Mit „Friends of …“", "correct": false}
+        {"text": "Mit „The One …“", "correct": true},
+        {"text": "Mit „The Day …“", "correct": false},
+        {"text": "Mit „Friends …“", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Nur die allererste Folge heißt schlicht „The Pilot“. Der gleichbleibende Auftakt wurde zum Markenzeichen der Serie.",
+      "fun_fact": "Meist folgt auf „The One“ ein „with“ oder „Where“, etwa „The One with the Embryos“ oder „The One Where Ross Finds Out“. Ausnahmen wie das Finale „The Last One“ sind selten.",
       "category": "Film & Serien"
     },
     {
@@ -1170,14 +1158,14 @@
     },
     {
       "id": "film_de_098",
-      "question": "Wer hatte in „Twin Peaks“ Laura Palmer getötet?",
+      "question": "Wer tötete in „Twin Peaks“ Laura Palmer?",
       "answers": [
         {"text": "Ihr Vater Leland", "correct": true},
         {"text": "Ihr Freund Bobby Briggs", "correct": false},
         {"text": "Der Geschäftsmann Ben Horne", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Der unheimliche Bob wurde von Frank Silva gespielt, einem Requisiteur, der versehentlich im Spiegel einer Szene zu sehen war. Regisseur David Lynch besetzte ihn daraufhin.",
+      "fun_fact": "Der unheimliche Bob wurde von Frank Silva gespielt, einem Set-Dekorateur, der versehentlich im Spiegel einer Szene zu sehen war. Regisseur David Lynch besetzte ihn daraufhin.",
       "category": "Film & Serien"
     },
     {
@@ -1233,11 +1221,11 @@
       "question": "Wie viele Folgen gibt es von der britischen Kultsitcom „Fawlty Towers“?",
       "answers": [
         {"text": "Zwölf", "correct": true},
-        {"text": "Sechsunddreißig", "correct": false},
-        {"text": "Zweiundsiebzig", "correct": false}
+        {"text": "Achtzehn", "correct": false},
+        {"text": "Vierundzwanzig", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Die Serie entstand in zwei Staffeln mit je sechs Folgen. Der Hotelier Basil Fawlty hat ein reales Vorbild: Hotelbesitzer Donald Sinclair, den John Cleese in Torquay kennenlernte.",
+      "fun_fact": "Die erste Staffel lief 1975, die zweite erst 1979 bei der BBC. Der Hotelier Basil Fawlty hat ein reales Vorbild: Hotelbesitzer Donald Sinclair, den John Cleese in Torquay kennenlernte.",
       "category": "Film & Serien"
     },
     {
@@ -1321,7 +1309,7 @@
         {"text": "Sie ist selbst Polizistin", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Peter Falk hatte schon mit drei Jahren wegen eines Tumors ein Auge verloren, das Glasauge prägte seinen schiefen Blick. Sein Satz „Ach, noch eine Sache“ wurde zum Markenzeichen der Figur.",
+      "fun_fact": "Peter Falk hatte schon mit drei Jahren wegen eines Tumors ein Auge verloren, das Glasauge prägte seinen schiefen Blick. Im Original ist „Just one more thing“ das Markenzeichen der Figur.",
       "category": "Film & Serien"
     },
     {
@@ -1342,7 +1330,7 @@
       "answers": [
         {"text": "Es waren durchweg Rüden", "correct": true},
         {"text": "Es waren immer Hündinnen", "correct": false},
-        {"text": "Es waren Schäferhunde", "correct": false}
+        {"text": "Es waren Neufundländer", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Rüden sind meist größer und behalten im Sommer mehr von ihrem dichten Fell, was vor der Kamera besser aussah.",
@@ -1434,7 +1422,7 @@
     },
     {
       "id": "film_de_120",
-      "question": "Wofür steht die Abkürzung ALF im Namen des Außerirdischen aus der gleichnamigen Sitcom?",
+      "question": "Wofür steht die Abkürzung ALF im Namen der gleichnamigen Sitcom-Figur?",
       "answers": [
         {"text": "Alien Life Form", "correct": true},
         {"text": "Alpha Lifeform", "correct": false},
@@ -1558,7 +1546,7 @@
       "answers": [
         {"text": "Gemalte, schief verzerrte Kulissen", "correct": true},
         {"text": "Aufnahmen in echten Berglandschaften", "correct": false},
-        {"text": "Eine frühe Farbtönung des ganzen Films", "correct": false}
+        {"text": "Dreidimensionale Bilder mit Spezialbrillen", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Der Darsteller des Schlafwandlers Cesare, Conrad Veidt, spielte später in „Casablanca“ den Major Strasser.",
@@ -1614,7 +1602,7 @@
     },
     {
       "id": "film_de_135",
-      "question": "Welches Land kennt den Silvester-Klassiker „Dinner for One“ kaum, obwohl der Sketch britisch ist?",
+      "question": "In welchem Land ist der Silvester-Klassiker „Dinner for One“ kaum bekannt?",
       "answers": [
         {"text": "Großbritannien", "correct": true},
         {"text": "Schweden", "correct": false},
@@ -1662,7 +1650,7 @@
     },
     {
       "id": "film_de_139",
-      "question": "Welche Eigenheit von Raketenstarts geht auf Fritz Langs Stummfilm „Frau im Mond“ zurück?",
+      "question": "Welche Eigenheit von Raketenstarts wird häufig auf Fritz Langs Stummfilm „Frau im Mond“ zurückgeführt?",
       "answers": [
         {"text": "Der rückwärts gezählte Countdown", "correct": true},
         {"text": "Das Anstoßen mit Sekt vor dem Start", "correct": false},
@@ -1821,10 +1809,10 @@
       "question": "Was verhinderte 1939 den ersten Start des Filmfestivals von Cannes?",
       "answers": [
         {"text": "Der Beginn des Zweiten Weltkriegs", "correct": true},
-        {"text": "Ein Brand im Festivalpalast", "correct": false},
-        {"text": "Ein Boykott der Hollywood-Studios", "correct": false}
+        {"text": "Ein Streik der französischen Filmtechniker", "correct": false},
+        {"text": "Eine Absage der Hollywood-Studios", "correct": false}
       ],
-      "difficulty": "easy",
+      "difficulty": "medium",
       "fun_fact": "Das erste Festival fand erst 1946 statt. Erst 2002 kürte man nachträglich einen Gewinner für den ausgefallenen Jahrgang 1939.",
       "category": "Film & Serien"
     },

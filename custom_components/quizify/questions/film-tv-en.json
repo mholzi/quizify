@@ -226,7 +226,7 @@
       "answers": [
         {"text": "It could keep burning even under water", "correct": true},
         {"text": "It turned into liquid at room temperature", "correct": false},
-        {"text": "It exploded when exposed to sound", "correct": false}
+        {"text": "It shrank to half its size within a year", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Nitrate film supplies its own oxygen as it burns. Vault fires destroyed countless silent films, and most such stock was later copied to safer material.",
@@ -288,20 +288,20 @@
         {"text": "Viewers had to sign an age waiver", "correct": false},
         {"text": "Nobody could sit in the front row", "correct": false}
       ],
-      "difficulty": "easy",
+      "difficulty": "medium",
       "fun_fact": "At the time, many people strolled into cinemas mid-film and stayed until the programme came round again. Theatres put up lobby signs and used cardboard standees of Hitchcock to enforce the rule.",
       "category": "Film & TV"
     },
     {
       "id": "film_en_025",
-      "question": "How did inventor Richard Hollingshead test his idea of a drive-in cinema in 1933?",
+      "question": "How did inventor Richard Hollingshead test his idea of a drive-in cinema in his own driveway?",
       "answers": [
-        {"text": "He hung bedsheets between trees and ran a projector on his car", "correct": true},
+        {"text": "He nailed a screen to trees and put a projector on his car", "correct": true},
         {"text": "He projected a film onto the side of a barn", "correct": false},
         {"text": "He rented a movie-screen at a fairground", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Hollingshead's first real drive-in opened in Camden, New Jersey. Ramps raised cars so everyone could see over the vehicle in front.",
+      "fun_fact": "Hollingshead's first real drive-in opened in Camden, New Jersey, in 1933. He was granted a patent for the idea that same year.",
       "category": "Film & TV"
     },
     {
@@ -444,7 +444,7 @@
         {"text": "Thailand", "correct": false},
         {"text": "Mexico", "correct": false}
       ],
-      "difficulty": "easy",
+      "difficulty": "medium",
       "fun_fact": "The Philippine Air Force's helicopters were used in the film, but they were sometimes called away to fight rebels in the middle of a take. A typhoon also wrecked the sets.",
       "category": "Film & TV"
     },
@@ -469,7 +469,7 @@
         {"text": "The studio's lights overheated after a few minutes", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "The film appears to be one single take, but it is made of about ten long takes. Some of the cuts hide in a sudden close-up of a jacket or a dark piece of furniture.",
+      "fun_fact": "'Rope' was Hitchcock's first colour film. Its walls and furniture were built to be moved out of the way so the camera could glide through the apartment set.",
       "category": "Film & TV"
     },
     {
@@ -477,7 +477,7 @@
       "question": "What was kept from most of the cast before the filming of the chestburster scene in 'Alien' (1979)?",
       "answers": [
         {"text": "That blood would spray at them", "correct": true},
-        {"text": "That a camera was filming", "correct": false},
+        {"text": "That the set would shake", "correct": false},
         {"text": "That the scene was in the script", "correct": false}
       ],
       "difficulty": "medium",
@@ -546,7 +546,7 @@
     },
     {
       "id": "film_en_046",
-      "question": "What name is given to the trick of shooting daytime scenes with filters and underexposure to make them look like night?",
+      "question": "Which film technique uses filters and underexposure to make a sunlit shoot pass as a moonlit scene?",
       "answers": [
         {"text": "Day for night", "correct": true},
         {"text": "Dutch angle", "correct": false},
@@ -852,7 +852,7 @@
         {"text": "In Casablanca, Morocco", "correct": false},
         {"text": "In Algiers", "correct": false}
       ],
-      "difficulty": "easy",
+      "difficulty": "medium",
       "fun_fact": "No cast or crew member travelled to Africa. The airport scene was shot on a soundstage with a mock-up plane.",
       "category": "Film & TV"
     },
@@ -945,8 +945,8 @@
       "question": "What did Disney's multiplane camera add to animated films?",
       "answers": [
         {"text": "A sense of depth, by shooting through layered panes of glass", "correct": true},
-        {"text": "Colour film stock", "correct": false},
-        {"text": "Synchronised sound", "correct": false}
+        {"text": "Smoother motion, by shooting twice as many frames", "correct": false},
+        {"text": "Lifelike skin tones, by filming through coloured glass", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "It was first used in the 1937 short 'The Old Mill'. The artwork sat on several glass levels that could be moved separately.",
@@ -1137,8 +1137,8 @@
       "question": "Which cartoon cat was used as a television test image in 1928?",
       "answers": [
         {"text": "Felix the Cat", "correct": true},
-        {"text": "Tom", "correct": false},
-        {"text": "Garfield", "correct": false}
+        {"text": "Krazy Kat", "correct": false},
+        {"text": "Puss in Boots", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "RCA put a Felix doll on a rotating turntable in front of an experimental TV camera, because its high-contrast black-and-white shape showed up well on the primitive system.",
@@ -1201,7 +1201,7 @@
         {"text": "He was picked by a fan vote", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Silva was moving furniture in a room being filmed when his reflection appeared in a mirror shot. Lynch liked the effect and wrote him into the story.",
+      "fun_fact": "Silva had no acting background, yet he played BOB in the series and again in the 1992 film 'Twin Peaks: Fire Walk with Me'. He died in 1995.",
       "category": "Film & TV"
     },
     {
@@ -1236,7 +1236,7 @@
         {"text": "Graham Chapman", "correct": false},
         {"text": "John Cleese", "correct": false}
       ],
-      "difficulty": "easy",
+      "difficulty": "medium",
       "fun_fact": "Gilliam made the show's cut-out animations, assembled from Victorian engravings and photos.",
       "category": "Film & TV"
     },
@@ -1290,7 +1290,7 @@
     },
     {
       "id": "film_en_108",
-      "question": "Which HBO drama set in Baltimore, which ended in 2008, was created by a former Baltimore Sun reporter?",
+      "question": "Which HBO drama, which ended in 2008, was created by a former newspaper crime reporter?",
       "answers": [
         {"text": "The Wire", "correct": true},
         {"text": "The Sopranos", "correct": false},
@@ -1308,7 +1308,7 @@
         {"text": "Norman Lear", "correct": false},
         {"text": "Ernie Kovacs", "correct": false}
       ],
-      "difficulty": "medium",
+      "difficulty": "hard",
       "fun_fact": "Many of the laughs in his library were recorded in the 1950s, so later shows were partly laughing along with audiences from decades earlier.",
       "category": "Film & TV"
     },
@@ -1434,7 +1434,7 @@
     },
     {
       "id": "film_en_120",
-      "question": "What was the working title of 'Stranger Things', before the setting moved from Long Island to Indiana?",
+      "question": "What was the working title of 'Stranger Things', before the setting moved to Indiana?",
       "answers": [
         {"text": "Montauk", "correct": true},
         {"text": "Hawkins", "correct": false},
@@ -1476,7 +1476,7 @@
         {"text": "M*A*S*H", "correct": false},
         {"text": "McHale's Navy", "correct": false}
       ],
-      "difficulty": "hard",
+      "difficulty": "medium",
       "fun_fact": "Robert Clary, who played Corporal LeBeau, was a Holocaust survivor. Werner Klemperer, who played Colonel Klink, had fled Germany as a child.",
       "category": "Film & TV"
     },
@@ -1530,7 +1530,7 @@
     },
     {
       "id": "film_en_128",
-      "question": "Which prehistoric family starred in the first animated sitcom in US prime time?",
+      "question": "Which cartoon series, premiering in 1960, was the first animated sitcom in US prime time?",
       "answers": [
         {"text": "The Flintstones", "correct": true},
         {"text": "The Jetsons", "correct": false},
@@ -1572,7 +1572,7 @@
         {"text": "A green sock", "correct": false},
         {"text": "A pair of gloves", "correct": false}
       ],
-      "difficulty": "easy",
+      "difficulty": "medium",
       "fun_fact": "Jim Henson cut the eyes from a ping-pong ball. Kermit first appeared on the local show 'Sam and Friends' in 1955.",
       "category": "Film & TV"
     },
@@ -1584,7 +1584,7 @@
         {"text": "Solid gold", "correct": false},
         {"text": "Silver", "correct": false}
       ],
-      "difficulty": "easy",
+      "difficulty": "medium",
       "fun_fact": "The knight standing on a film reel was designed by Cedric Gibbons. The five spokes of the reel stand for the original branches of the Academy: actors, directors, producers, technicians and writers.",
       "category": "Film & TV"
     },
@@ -1642,7 +1642,7 @@
       "answers": [
         {"text": "Scent of Mystery", "correct": true},
         {"text": "Behind the Great Wall", "correct": false},
-        {"text": "The Tingler", "correct": false}
+        {"text": "House of Wax", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Smell-O-Vision was used in only this one film, and the scents hissed through pipes and arrived late.",
@@ -1722,19 +1722,19 @@
     },
     {
       "id": "film_en_144",
-      "question": "Which master of suspense was nominated five times for a Best Director Oscar but never won the competitive award?",
+      "question": "Which director was nominated five times for a Best Director Oscar but never won the competitive award?",
       "answers": [
         {"text": "Alfred Hitchcock", "correct": true},
         {"text": "Orson Welles", "correct": false},
         {"text": "Frank Capra", "correct": false}
       ],
-      "difficulty": "easy",
+      "difficulty": "medium",
       "fun_fact": "In 1968 he received the Irving G. Thalberg Memorial Award and kept his speech very short.",
       "category": "Film & TV"
     },
     {
       "id": "film_en_145",
-      "question": "Which 1984 Indiana Jones sequel, together with 'Gremlins', helped trigger the creation of the PG-13 rating?",
+      "question": "Which Indiana Jones film, together with 'Gremlins', helped trigger the creation of the PG-13 rating?",
       "answers": [
         {"text": "Indiana Jones and the Temple of Doom", "correct": true},
         {"text": "Raiders of the Lost Ark", "correct": false},
@@ -1746,13 +1746,13 @@
     },
     {
       "id": "film_en_146",
-      "question": "Which nationality of film critics coined the term 'film noir' for dark American crime films?",
+      "question": "Critics of which nationality first used the label 'film noir' for dark American crime films in 1946?",
       "answers": [
         {"text": "French", "correct": true},
         {"text": "German", "correct": false},
         {"text": "Italian", "correct": false}
       ],
-      "difficulty": "medium",
+      "difficulty": "easy",
       "fun_fact": "French critics saw a flood of American films at once in 1946, after the wartime ban on them in occupied France had ended.",
       "category": "Film & TV"
     },
@@ -1801,7 +1801,7 @@
         {"text": "Beauty needs no lens", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "The first lion in the logo, Slats, appeared in silent films, so the famous roar belongs to Jackie, who followed him.",
+      "fun_fact": "The first lion in the logo, Slats, appeared in silent films. Jackie, who followed him, was the first lion to roar in an MGM sound film.",
       "category": "Film & TV"
     },
     {
