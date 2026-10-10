@@ -5,7 +5,6 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-import voluptuous as vol
 from homeassistant.config_entries import (
     ConfigEntry,
     ConfigFlow,
@@ -33,6 +32,12 @@ from .const import (
     DEFAULT_HOUSE_EVENTS_ENABLED,
     DOMAIN,
 )
+
+# probatio on Home Assistant 2026.10+, voluptuous before — see services.py.
+try:
+    import probatio as vol
+except ImportError:  # Home Assistant before 2026.10
+    import voluptuous as vol  # type: ignore[no-redef]
 
 _LOGGER = logging.getLogger(__name__)
 
