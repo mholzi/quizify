@@ -18,7 +18,6 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING, Any
 
-import voluptuous as vol
 from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import config_validation as cv
 
@@ -29,6 +28,17 @@ if TYPE_CHECKING:
 
     from .game.state import QuizifyGameState
     from .server.websocket import QuizifyWebSocketHandler
+
+# Home Assistant 2026.10 moved its schema layer from voluptuous to probatio and
+# types its APIs (``async_show_form``, ``services.async_register``) accordingly.
+# probatio is a drop-in with the same public API, and core aliases
+# ``import voluptuous`` to it at startup, so this changes nothing at runtime —
+# it names the library the installed core actually uses, which is what mypy
+# checks against. Older cores do not ship probatio and keep voluptuous.
+try:
+    import probatio as vol
+except ImportError:  # Home Assistant before 2026.10
+    import voluptuous as vol  # type: ignore[no-redef]
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -73,6 +73,7 @@ module = [
     "homeassistant.*",
     "aiohttp.*",
     "voluptuous.*",
+    "probatio.*",
     "pytest_homeassistant_custom_component.*",
 ]
 ignore_missing_imports = true
