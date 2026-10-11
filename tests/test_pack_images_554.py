@@ -88,7 +88,9 @@ PACK_SETS = (
     ImageSet(
         "popculture",
         ("popkultur.json", "pop-culture.json", "cultura-pop-es.json"),
-        149,
+        # 149 -> 144: twelve English questions that duplicate a fact already
+        # asked in a fitting pack were removed on purpose (#1054).
+        144,
         4,
     ),
 )

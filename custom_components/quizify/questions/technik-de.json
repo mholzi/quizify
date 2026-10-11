@@ -1,7 +1,7 @@
 {
   "name": "Technik",
   "language": "de",
-  "version": "1.2",
+  "version": "1.3",
   "theme": "tech",
   "questions": [
     {
@@ -1262,18 +1262,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Helium-Atome sind so klein, dass sie sich durch die mikroskopischen Poren der Latexhülle hindurchzwängen. Folienballons aus metallbeschichtetem Kunststoff haben engere Strukturen und halten deshalb tagelang oder wochenlang die Luft.",
-      "category": "Technik"
-    },
-    {
-      "id": "technik_de_109",
-      "question": "Was passiert chemisch, wenn eine aufgeschnittene Apfelhälfte braun wird?",
-      "answers": [
-        {"text": "Sauerstoff reagiert mit Enzymen im Fruchtfleisch", "correct": true},
-        {"text": "Der Zucker im Apfel beginnt zu gären", "correct": false},
-        {"text": "Das Tageslicht bleicht die Schnittfläche aus", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Beim Schneiden treten Enzyme aus zerstörten Zellen aus und reagieren mit Luftsauerstoff zu braunen Melaninen — derselbe enzymatische Vorgang lässt auch geschnittene Avocados und Bananen nachdunkeln. Zitronensaft stoppt es, weil die Säure das Enzym lahmlegt.",
       "category": "Technik"
     },
     {

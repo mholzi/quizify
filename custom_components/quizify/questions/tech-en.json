@@ -1,7 +1,7 @@
 {
   "name": "Technology",
   "language": "en",
-  "version": "1.2",
+  "version": "1.3",
   "theme": "tech",
   "questions": [
     {
@@ -2126,27 +2126,6 @@
       "category": "Technology"
     },
     {
-      "id": "tech_en_102",
-      "question": "Why does adding salt to icy roads actually melt the ice?",
-      "answers": [
-        {
-          "text": "Salt lowers the temperature at which water freezes",
-          "correct": true
-        },
-        {
-          "text": "Salt crystals generate heat as they dissolve into the ice",
-          "correct": false
-        },
-        {
-          "text": "Salt is darker than ice and absorbs more sunlight",
-          "correct": false
-        }
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Dissolved salt gets in the way of water molecules trying to lock into a solid crystal, so the freezing point drops below 0 °C. That's also why seawater stays liquid well below the point where fresh water would turn to ice.",
-      "category": "Technology"
-    },
-    {
       "id": "tech_en_103",
       "question": "Why does a stick of dynamite need a separate small detonator to go off?",
       "answers": [
@@ -2228,27 +2207,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Ordinary light spreads out fast because its waves are jumbled. Laser light is 'coherent' — the waves are aligned and the same colour — so the beam stays tight. That's why a laser fired at the Moon still lands in a spot only a few kilometres wide.",
-      "category": "Technology"
-    },
-    {
-      "id": "tech_en_107",
-      "question": "Why does an ordinary glass window let visible light through but block most of the Sun's ultraviolet rays?",
-      "answers": [
-        {
-          "text": "The glass absorbs the higher-energy ultraviolet but not visible light",
-          "correct": true
-        },
-        {
-          "text": "Ultraviolet light is too large to fit through the glass",
-          "correct": false
-        },
-        {
-          "text": "A reflective metal layer bounces the ultraviolet back outside",
-          "correct": false
-        }
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Glass molecules happily absorb the energy of ultraviolet photons but let visible light slip through. That's why you can get a tan outdoors but rarely sunburn through a closed car window — though the longer UVA rays do sneak through.",
       "category": "Technology"
     },
     {
@@ -2543,27 +2501,6 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Side and rear car windows are 'tempered': the surface is cooled fast while the inside stays hot, leaving the whole pane under tension. When it breaks, that stored stress makes it disintegrate into harmless pebbles. The front windscreen is different — it's two layers bonded to a plastic film so it holds together.",
-      "category": "Technology"
-    },
-    {
-      "id": "tech_en_122",
-      "question": "Why does a tuning fork keep ringing a clear single note long after it has been struck?",
-      "answers": [
-        {
-          "text": "Its shape is built to vibrate at one frequency with little energy loss",
-          "correct": true
-        },
-        {
-          "text": "A tiny battery in the base sustains the vibration electronically",
-          "correct": false
-        },
-        {
-          "text": "The metal continues to expand and contract from the heat of the strike",
-          "correct": false
-        }
-      ],
-      "difficulty": "medium",
-      "fun_fact": "The two prongs swing in and out together, cancelling sideways forces so almost no energy leaks into the handle. That's why a tuning fork holds one steady pitch for a long time, and why it was the gold standard for tuning instruments before electronics.",
       "category": "Technology"
     },
     {
