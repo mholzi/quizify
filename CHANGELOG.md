@@ -3,6 +3,22 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.23.0-RC2] — 2026-10-11
+
+**A Pack for Film Night, and More Pictures to Guess**
+
+Everything from RC1, plus three things from the live test on a real Home Assistant.
+
+### What the live test found
+
+An admin page opened on a device that is not the host looked like a working host page: it offered setup and a lobby that reached nobody. It now says "This device isn't the host" and points to the player page, the TV view and the way back for the real host. In an English game on a German browser, the standings line under the question stayed German for the whole first round, and with unlucky timing the entire page did. The game language now wins.
+
+### Tidier packs
+
+Twenty questions left five packs. Nineteen were everyday-science questions sitting in Pop Culture, Animals & Nature and Technology (English and German) that a fitting pack already asks. One was a World Cup question asked twice.
+
+Beta versions must be enabled in HACS.
+
 ## [1.23.0-RC1] — 2026-10-10
 
 **A Pack for Film Night, and More Pictures to Guess**
