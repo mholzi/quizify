@@ -2200,6 +2200,12 @@
         QuizifyI18n.setLanguage(msg.language).then(function () {
             QuizifyI18n.initPageTranslations();
             _markActiveLangChip();
+            // #1055: the two header toggles paint their own aria-label and
+            // title, out of the sweep's reach. The picker below has always
+            // repainted them; the game language arriving did not, so a
+            // German browser in an English game kept announcing
+            // "Soundeffekte stummschalten" for the whole evening.
+            _flushToggleLabels();
             updatePageTitle(msg.phase, msg);
         });
         return true;

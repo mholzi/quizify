@@ -1229,8 +1229,13 @@
         // helper here, so a bare `_t` would be a ReferenceError that takes the
         // whole leaderboard render down with it.
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        // #1055: the word sits in its own data-i18n span. A row painted from
+        // the first game_state after a page load is painted in the browser's
+        // language (see updateLeaderboardSummary below), and only an element
+        // carrying the key is repainted when the game language lands.
         var youBadge = entry.is_current
-            ? '<span class="you-badge">(' + t('lobby.you') + ')</span>'
+            ? '<span class="you-badge">(<span data-i18n="lobby.you">'
+                + pu.escapeHtml(t('lobby.you')) + '</span>)</span>'
             : '';
         var streakBadge = entry.streak > 1
             ? '<span class="leaderboard-streak">' + entry.streak + 'x</span>'
@@ -1274,6 +1279,17 @@
      * just reads "Alice: 19" and players 2-N have no signal that the
      * full board exists. Singular vs plural matters in German ("1
      * weiterer" / "2 weitere").
+     *
+     * #1055: the hint is its own data-i18n span, not part of one composed
+     * string. handleGameState paints the board BEFORE _syncServerLanguage has
+     * loaded the game's bundle, so on a freshly loaded page (the host's tab
+     * right after the redirect from the admin page, a phone reloading or
+     * reconnecting mid-game) this line is written in the browser's language.
+     * A plain textContent write left the sweep that follows the switch
+     * nothing to find, and "+ 1 weiterer" stood in an English game until the
+     * next round repainted it. Name and score are the same in every language
+     * and stay plain text; the count rides along as data-i18n-params. Same
+     * shape as #776 / #809 in player-lobby.js.
      */
     function updateLeaderboardSummary(leaderboard) {
         var summaryIds = ['leaderboard-summary', 'reveal-leaderboard-summary'];
@@ -1288,12 +1304,19 @@
 
             var summary = leader.name + ': ' + leader.score;
             var others = leaderboard.length - 1;
-            if (others === 1) {
-                summary += '  ' + t('lobby.andOthersOne');
-            } else if (others > 1) {
-                summary += '  ' + t('lobby.andOthers', { count: others });
+            if (others < 1) {
+                summaryEl.textContent = summary;
+                return;
             }
-            summaryEl.textContent = summary;
+            var key = others === 1 ? 'lobby.andOthersOne' : 'lobby.andOthers';
+            var params = others === 1 ? null : { count: others };
+            var more = document.createElement('span');
+            more.setAttribute('data-i18n', key);
+            if (params) more.setAttribute('data-i18n-params', JSON.stringify(params));
+            more.textContent = t(key, params);
+            // Setting textContent first drops the previous hint span with it.
+            summaryEl.textContent = summary + '  ';
+            summaryEl.appendChild(more);
         });
     }
 

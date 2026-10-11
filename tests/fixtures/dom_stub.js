@@ -45,8 +45,6 @@ function makeClassList() {
     };
 }
 
-const SPAN_RE = () => /<span([^>]*)>([\s\S]*?)<\/span>/g;
-
 /**
  * A selector matcher for the subset the tests actually write: a tag name, any
  * number of `.class` steps and any number of `[attr]` / `[attr="value"]`
@@ -76,21 +74,61 @@ function matchesSelector(node, selector) {
     return true;
 }
 
+// Drop a subtree from the document-wide list — the whole subtree, because a
+// span parsed out of innerHTML can hold spans of its own (#1055) and a
+// grandchild left behind would still answer document.querySelectorAll.
+function forget(nodes) {
+    nodes.forEach(function (node) {
+        if (node.children && node.children.length) forget(node.children);
+        const at = all.indexOf(node);
+        if (at !== -1) all.splice(at, 1);
+    });
+}
+
+/**
+ * The top-level <span> elements of an HTML string, matched by depth so a span
+ * inside a span belongs to its parent instead of ending it early. The
+ * leaderboard's "(you)" badge is exactly that shape since #1055: a styled span
+ * holding a data-i18n span, and a first-`</span>`-wins regex handed the sweep
+ * a child with no attribute and half a tag for text.
+ */
+function topLevelSpans(html) {
+    const out = [];
+    const tagRe = /<span([^>]*)>|<\/span>/g;
+    let depth = 0;
+    let open = null;
+    let m;
+    while ((m = tagRe.exec(html)) !== null) {
+        if (m[0] !== '</span>') {
+            if (depth === 0) open = { start: m.index, attrs: m[1], innerStart: tagRe.lastIndex };
+            depth++;
+        } else if (depth > 0) {
+            depth--;
+            if (depth === 0) {
+                out.push({
+                    start: open.start,
+                    end: tagRe.lastIndex,
+                    attrs: open.attrs,
+                    inner: html.slice(open.innerStart, m.index)
+                });
+            }
+        }
+    }
+    return out;
+}
+
 // Only <span> children are parsed, because the only markup the player modules
 // build with innerHTML that the i18n sweep has to see is a row of spans.
 function parseSpans(html) {
-    const out = [];
-    const spanRe = SPAN_RE();
-    let m;
-    while ((m = spanRe.exec(html)) !== null) {
+    return topLevelSpans(html).map(function (span) {
         const child = makeElement(null, 'SPAN');
         const attrRe = /([a-zA-Z0-9:-]+)="([^"]*)"/g;
         let a;
-        while ((a = attrRe.exec(m[1])) !== null) child.setAttribute(a[1], a[2]);
-        child.textContent = m[2];
-        out.push(child);
-    }
-    return out;
+        while ((a = attrRe.exec(span.attrs)) !== null) child.setAttribute(a[1], a[2]);
+        if (span.inner.indexOf('<span') !== -1) child.innerHTML = span.inner;
+        else child.textContent = span.inner;
+        return child;
+    });
 }
 
 function makeElement(id, tagName) {
@@ -208,7 +246,7 @@ function makeElement(id, tagName) {
         set: function (value) {
             html = String(value);
             ownText = '';
-            all = all.filter(function (node) { return children.indexOf(node) === -1; });
+            forget(children);
             children = parseSpans(html);
             el.children = children;
             children.forEach(function (child) { all.push(child); });
@@ -220,17 +258,27 @@ function makeElement(id, tagName) {
     // parent line says — which is the entire mechanism #809 relies on.
     Object.defineProperty(el, 'textContent', {
         get: function () {
-            if (!html) return ownText;
-            let i = 0;
-            return html
-                .replace(SPAN_RE(), function () {
-                    const child = children[i++];
-                    return child ? child.textContent : '';
-                })
-                .replace(/<[^>]*>/g, '');
+            // Text written with textContent, followed by whatever was
+            // appended after it — `summary.textContent = 'Anna: 3  '` and
+            // then `appendChild(span)` reads back as both (#1055).
+            if (!html) {
+                return ownText + children.map(function (child) {
+                    return child.textContent;
+                }).join('');
+            }
+            const spans = topLevelSpans(html);
+            let out = '';
+            let at = 0;
+            spans.forEach(function (span, i) {
+                out += html.slice(at, span.start);
+                out += children[i] ? children[i].textContent : '';
+                at = span.end;
+            });
+            out += html.slice(at);
+            return out.replace(/<[^>]*>/g, '');
         },
         set: function (value) {
-            all = all.filter(function (node) { return children.indexOf(node) === -1; });
+            forget(children);
             children = [];
             el.children = children;
             html = '';
