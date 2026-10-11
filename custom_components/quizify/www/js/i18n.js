@@ -10,6 +10,7 @@ window.QuizifyI18n = (function() {
     var fallbackTranslations = {};
     var isLoaded = false;
     var loadPromise = null;
+    var latestLoad = null;
 
     async function fetchTranslations(langCode) {
         try {
@@ -37,15 +38,28 @@ window.QuizifyI18n = (function() {
         }
     }
 
+    // #1055: a load only installs its bundle if its language is still the
+    // one asked for when the bundle arrives. Two loads overlap whenever the
+    // game language lands while the page is still fetching the browser's —
+    // the host's tab right after the redirect from the admin page, any phone
+    // loading the page mid-game. The newer one (English, already held as the
+    // fallback) finished first, and the older one then wrote its German
+    // bundle over it: getLanguage() said "en", every label said German, and
+    // nothing corrected it, because each later game_state saw the language
+    // already "matching" and skipped the switch.
     async function loadTranslations() {
+        var lang = currentLanguage;
         if (Object.keys(fallbackTranslations).length === 0) {
-            fallbackTranslations = await fetchTranslations('en');
+            var fallback = await fetchTranslations('en');
+            if (Object.keys(fallbackTranslations).length === 0) {
+                fallbackTranslations = fallback;
+            }
         }
-        if (currentLanguage === 'en') {
-            translations = fallbackTranslations;
-        } else {
-            translations = await fetchTranslations(currentLanguage);
-        }
+        var loaded = (lang === 'en')
+            ? fallbackTranslations
+            : await fetchTranslations(lang);
+        if (lang !== currentLanguage) return;  // superseded while on the wire
+        translations = loaded;
         isLoaded = true;
     }
 
@@ -88,7 +102,15 @@ window.QuizifyI18n = (function() {
         }
         if (langCode === currentLanguage && isLoaded) return;
         currentLanguage = langCode;
-        await loadTranslations();
+        var mine = latestLoad = loadTranslations();
+        await mine;
+        // Superseded mid-flight (#1055): resolve only once the language that
+        // won is in, so a caller that sweeps the page on resolve — init()'s
+        // does — paints from the bundle that is actually active.
+        while (latestLoad !== mine) {
+            mine = latestLoad;
+            await mine;
+        }
     }
 
     function getLanguage() {
