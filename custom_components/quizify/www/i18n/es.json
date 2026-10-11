@@ -551,6 +551,16 @@
     "ALREADY_JOINED": "Ya te has unido",
     "JOIN_RATE_LIMITED": "Demasiados intentos de unirse"
   },
+  "notHost": {
+    "titleLine1": "Este dispositivo",
+    "titleLine2": "no es el anfitrión.",
+    "body": "La partida se dirige desde otro dispositivo. Aun así puedes jugar.",
+    "join": "Unirse como jugador",
+    "tv": "Abrir la pantalla de la tele",
+    "hostTitle": "¿Eres el anfitrión?",
+    "hostBefore": "Abre esta página en el dispositivo con el que empezaste. Para dirigir la partida desde aquí, ejecuta",
+    "hostAfter": "en Home Assistant y recarga la página."
+  },
   "page": {
     "titleAdmin": "Quizify — Administración",
     "titleJoin": "Quizify — Unirse a la partida",

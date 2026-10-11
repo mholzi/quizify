@@ -174,6 +174,7 @@
         finale: document.getElementById('admin-finale-view'),
         lightning: document.getElementById('admin-lightning-view'),
         lightningRecap: document.getElementById('admin-lightning-recap-view'),
+        notHost: document.getElementById('not-host-screen'),
     };
 
     const els = {
@@ -277,7 +278,13 @@
         // the setup screen (nothing to reset) and reveal it everywhere
         // else. handleGameReset returns us to 'setup', re-hiding it.
         if (els.resetGameBtn) {
-            els.resetGameBtn.classList.toggle('hidden', name === 'setup');
+            // #1053: nor on the "not the host" page, which carries no control
+            // that changes the game. reset_game is the one command the server
+            // lets ANY connection send while no host is connected (#207), so
+            // this button in particular must not be offered there.
+            els.resetGameBtn.classList.toggle(
+                'hidden', name === 'setup' || name === 'notHost'
+            );
         }
         // #1030: End Game follows the host into the Lightning Round.
         //
@@ -1720,7 +1727,7 @@
                 // way — only at start_game.
                 _pushDifficulty();
             },
-            onMessage: handleMessage,
+            onMessage: routeMessage,
             stallGuard: function () {
                 return _lightningLive && currentPhase === 'LIGHTNING';
             },
@@ -1758,6 +1765,10 @@
     // button for 1.5s afterwards, which is a success animation for something
     // that never happened.
     function send(type, payload) {
+        // #1053: a page the server refused as host sends the handshake and
+        // nothing else. The server would refuse the rest anyway; not asking is
+        // what keeps this page free of anything that could change the game.
+        if (_notHost && !NOT_HOST_SENDABLE[type]) return false;
         if (ws && ws.readyState === WebSocket.OPEN) {
             ws.send(JSON.stringify(Object.assign({ type: type }, payload)));
             return true;
@@ -1773,6 +1784,67 @@
         if (window.console && console.warn) {
             console.warn('[quizify] command not sent, socket not open:', type);
         }
+    }
+
+    // ---- "This device isn't the host" (#1053) ----
+    //
+    // /quizify/admin can be opened by anyone on the network, but only one
+    // browser holds the host token. The server never rejects the socket of the
+    // others (#359, fail soft); it withholds the admin role and answers their
+    // `admin_connect` with INVALID_ACTION / "Admin only". That pair is sent for
+    // nothing else (#586 moved every refused COMMAND to ADMIN_REQUIRED), so it
+    // is the server saying "you are not the host" — whether the browser had no
+    // token, a stale one, or the token store could not be read (#873).
+    //
+    // The page used to swallow that answer as handshake noise and stay on its
+    // default setup view: a setup and a lobby wired to nothing. Now it says
+    // so. The state is decided by the server's answer alone, never by whether
+    // a token happens to sit in this browser: a first visit to a fresh install
+    // has no token either, and is granted the host role (try_bootstrap_admin).
+    var _notHost = false;
+    // The handshake is all a refused page may send. It is repeated on every
+    // reconnect, which is how the page finds its way back by itself once the
+    // server does recognise it.
+    var NOT_HOST_SENDABLE = { admin_auth: true, admin_connect: true };
+
+    function isHostRefusal(msg) {
+        return (msg.type || msg.event) === 'error'
+            && msg.code === 'INVALID_ACTION' && msg.message === 'Admin only';
+    }
+
+    function enterNotHost() {
+        if (_notHost) return;
+        _notHost = true;
+        // The setup view was on screen for the moment the answer took; a
+        // dialog opened in that moment must not stay on top of this page.
+        if (typeof closeAdminJoinModal === 'function') closeAdminJoinModal();
+        showView('notHost');
+    }
+
+    function leaveNotHost() {
+        _notHost = false;
+        // Back to the view a host page starts on; the frame that brought us
+        // here goes through handleGameState next and picks the real one.
+        showView('setup');
+    }
+
+    // Everything the socket delivers passes through here first.
+    function routeMessage(msg) {
+        if (isHostRefusal(msg)) {
+            enterNotHost();
+            return;
+        }
+        if (_notHost) {
+            // Only the host's own connect frame ends the state: it carries
+            // the session token, which the server hands to nobody else.
+            // Anything else (the refusals of what onOpen sent before the
+            // answer was in, a stray broadcast) has no view to land on.
+            if (!((msg.type || msg.event) === 'game_state' && msg.admin_session_token)) {
+                return;
+            }
+            leaveNotHost();
+        }
+        handleMessage(msg);
     }
 
     // ---- Message router ----

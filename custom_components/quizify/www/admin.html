@@ -774,6 +774,36 @@
             </div>
         </div>
 
+        <!-- ========== NOT THE HOST (#1053, hidden initially) ==========
+             Shown instead of setup and lobby when the server refuses this
+             page's admin_connect: the browser holds no valid host token, so
+             nothing on a setup or a lobby here would reach the game.
+             Deliberately no <button> and no form control in this view — only
+             plain links to the two pages anyone on the network may open
+             anyway. tests/test_not_host_page_1053.py holds it to that. -->
+        <div id="not-host-screen" class="view">
+            <div class="setup-hero not-host">
+                <span class="qz-icon qz-icon--sun not-host-icon" data-ui-icon="lock" aria-hidden="true"></span>
+                <h2 class="setup-hero-headline">
+                    <span data-i18n="notHost.titleLine1">This device</span><br>
+                    <span class="accent" data-i18n="notHost.titleLine2">isn't the host.</span>
+                </h2>
+                <p class="not-host-lead" data-i18n="notHost.body">The game is run from another device. You can still play along.</p>
+                <a id="not-host-join-link" class="btn btn-primary btn-lg btn-block" href="/quizify/player"
+                   data-i18n="notHost.join">Join as a player</a>
+                <a id="not-host-tv-link" class="setup-tweak-link" href="/quizify/dashboard"
+                   data-i18n="notHost.tv">Open the TV screen</a>
+                <div class="card not-host-card">
+                    <h3 class="not-host-card-title" data-i18n="notHost.hostTitle">Are you the host?</h3>
+                    <p class="not-host-card-body">
+                        <span data-i18n="notHost.hostBefore">Open this page on the device you started on. To host from here instead, run</span>
+                        <code class="not-host-code">quizify.reset_admin_session</code>
+                        <span data-i18n="notHost.hostAfter">in Home Assistant, then reload.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <!-- ========== LOBBY SCREEN (hidden initially) ========== -->
         <div id="lobby-screen" class="view">
             <!-- Lobby — variant E "Game-Show Countdown" layout.
