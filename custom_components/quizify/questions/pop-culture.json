@@ -1,7 +1,7 @@
 {
   "name": "Pop Culture",
   "language": "en",
-  "version": "1.4",
+  "version": "1.5",
   "theme": "popculture",
   "questions": [
     {
@@ -1205,126 +1205,6 @@
       "category": "Pop Culture"
     },
     {
-      "id": "pop_en_110",
-      "question": "Why do glow-in-the-dark stars keep shining after you turn off the light?",
-      "answers": [
-        {"text": "They slowly release stored light energy as a delayed glow", "correct": true},
-        {"text": "They contain a tiny battery that powers a faint bulb", "correct": false},
-        {"text": "They react chemically with oxygen in the dark", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "This is called phosphorescence. The material absorbs light and traps that energy in its atoms, then leaks it back out slowly over minutes. It's the same principle behind old watch dials, just without the radioactive paint that early ones used.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_114",
-      "question": "Why does a stuck jar lid loosen more easily after you run it under hot water?",
-      "answers": [
-        {"text": "The metal lid expands faster than the glass jar", "correct": true},
-        {"text": "The hot water dissolves the seal between lid and jar", "correct": false},
-        {"text": "The heat softens the metal so it stretches", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Metal expands more than glass for the same rise in temperature. Warming the lid makes it grow slightly larger in diameter than the glass neck beneath it, loosening the grip just enough to twist it free.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_117",
-      "question": "Why does cutting a chilli pepper sometimes leave a burning sensation on your fingers for hours?",
-      "answers": [
-        {"text": "Capsaicin is oily and clings to skin, triggering heat-sensing nerves", "correct": true},
-        {"text": "The pepper's acid slowly dissolves the top layer of skin", "correct": false},
-        {"text": "Pepper juice raises the actual temperature of your skin", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Capsaicin tricks the same nerve receptors that detect real heat, so your brain feels a burn with no actual temperature change. Because it's oil-based, water won't wash it off well, but fats like milk or oil dissolve and lift it away.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_118",
-      "question": "Why does a hot-air balloon rise into the sky?",
-      "answers": [
-        {"text": "Heated air inside is less dense than the cooler air outside", "correct": true},
-        {"text": "The burner produces a lighter-than-air gas called balloon gas", "correct": false},
-        {"text": "The fabric repels gravity once it reaches a high temperature", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Heating the air inside the envelope spreads its molecules apart, making that air lighter than the same volume of cool air around it. The balloon floats up for the same reason a cork rises in water, just with air instead of liquid.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_122",
-      "question": "Why does a struck match suddenly burst into flame?",
-      "answers": [
-        {"text": "Friction heat ignites chemicals on the match head", "correct": true},
-        {"text": "Striking releases compressed gas stored in the wood", "correct": false},
-        {"text": "The rough strip injects a spark of electricity", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Dragging the head across the rough strip generates heat through friction. On safety matches, that heat converts red phosphorus on the strip into a tiny bit of white phosphorus, which ignites instantly and sets off the match head's own chemicals.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_123",
-      "question": "Why does a rainbow always appear in a curved arc?",
-      "answers": [
-        {"text": "Raindrops bend light at one fixed angle, forming a circle of colour", "correct": true},
-        {"text": "The curve mirrors the round shape of the sun", "correct": false},
-        {"text": "Light bends around the curvature of the Earth", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Each raindrop sends sunlight back at about 42 degrees, so the bright band forms wherever drops sit at that angle from the anti-solar point, which traces a circle. From the ground you only see an arc, but from a plane a rainbow can appear as a full ring.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_124",
-      "question": "Why does a struck bell or wine glass keep ringing long after you hit it?",
-      "answers": [
-        {"text": "The whole object vibrates as one and loses energy slowly to the air", "correct": true},
-        {"text": "Sound echoes back and forth inside the hollow space", "correct": false},
-        {"text": "The metal generates fresh sound as it cools down", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "A bell or glass is a resonant body that vibrates as a single unit at its natural frequency. It only sheds energy gradually by pushing the surrounding air, so the tone rings on. Touch it and you damp the vibration, silencing it at once.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_126",
-      "question": "Why does the sky turn red and orange at sunset?",
-      "answers": [
-        {"text": "Low sun angle means blue light scatters away, leaving red to reach you", "correct": true},
-        {"text": "The setting sun physically changes colour as it cools", "correct": false},
-        {"text": "Dust in the upper atmosphere glows red when heated", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "At sunset, light skims a long path through the atmosphere. Air scatters blue light in all directions, so by the time the beam reaches you, mostly red and orange remain. The same scattering is why the daytime sky overhead looks blue.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_127",
-      "question": "Why do soap bubbles show swirling rainbow colours on their surface?",
-      "answers": [
-        {"text": "Light reflecting off the bubble's two thin surfaces interferes with itself", "correct": true},
-        {"text": "Soap contains dissolved dyes that spread across the film", "correct": false},
-        {"text": "The bubble splits white light like a tiny prism", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "A bubble wall is incredibly thin, with light bouncing off both its inner and outer surface. The two reflections overlap and either reinforce or cancel certain colours depending on the film's thickness. As the bubble thins and drains, the colours shift and swirl.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_129",
-      "question": "Why does a freshly opened bottle of perfume fill a whole room with scent?",
-      "answers": [
-        {"text": "Scent molecules evaporate and spread out to fill the space", "correct": true},
-        {"text": "Perfume gives off an invisible light that carries the smell", "correct": false},
-        {"text": "Warm air from your body sucks the scent across the room", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "The fragrant molecules turn from liquid to vapour and then drift through the air, bumping randomly until they spread evenly through the room. This random spreading is called diffusion, and it's the same process that lets you smell coffee from another room.",
-      "category": "Pop Culture"
-    },
-    {
       "id": "pop_en_130",
       "question": "Why does a struck piano string keep playing its note until you lift your finger off the key?",
       "answers": [
@@ -1334,18 +1214,6 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Each note has a felt damper that normally silences the string. Pressing a key lifts both the hammer and that damper, so the string rings freely; releasing the key drops the damper back to stop the sound. The sustain pedal lifts every damper at once.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_131",
-      "question": "Why does a cut apple turn brown after a while?",
-      "answers": [
-        {"text": "Exposed cells react with oxygen in the air", "correct": true},
-        {"text": "Light bleaches the natural colour out of the flesh", "correct": false},
-        {"text": "The apple starts to dry out and shrivel", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Cutting breaks cells and lets an enzyme in the apple meet oxygen, producing brown pigments much like the ones in tea. A splash of lemon juice slows it down because the acid and vitamin C interfere with that enzyme's reaction.",
       "category": "Pop Culture"
     },
     {
@@ -1478,18 +1346,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Launched in 1929 as 'Bib-Label Lithiated Lemon-Lime Soda', early 7 Up contained lithium citrate, a mood-stabilising compound, and was pitched as a hangover and mood remedy. Lithium was removed from the recipe in 1948.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_143",
-      "question": "What gave the colour 'magenta' its name?",
-      "answers": [
-        {"text": "A bloody battle fought near the Italian town of Magenta", "correct": true},
-        {"text": "A Greek goddess of dawn", "correct": false},
-        {"text": "A type of tropical flower", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "The vivid dye was discovered in 1859, the same year as the Battle of Magenta in northern Italy. Makers named the new colour after the battle, which had just made headlines across Europe — the town's name now lives on in every printer ink cartridge.",
       "category": "Pop Culture"
     },
     {

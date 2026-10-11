@@ -1,7 +1,7 @@
 {
   "name": "Weltmeisterschaft",
   "language": "de",
-  "version": "1.6",
+  "version": "1.7",
   "theme": "worldcup",
   "season": {
     "start": "06-01",
@@ -49,27 +49,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Das letzte Spiel dieser Finalrunde wurde im Maracanã vor weit über 100.000 Zuschauern ausgetragen und ging als Schock für die Gastgeber in die Geschichte ein.",
-      "category": "Weltmeisterschaft"
-    },
-    {
-      "id": "world_cup_de_004",
-      "question": "Wie viele Mannschaften nahmen am allerersten WM-Turnier 1930 teil?",
-      "answers": [
-        {
-          "text": "13 Mannschaften",
-          "correct": true
-        },
-        {
-          "text": "24 Mannschaften",
-          "correct": false
-        },
-        {
-          "text": "32 Mannschaften",
-          "correct": false
-        }
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Es gab 1930 keine Qualifikation — man konnte einfach zusagen. Trotzdem kamen nur 13 Teams zusammen, weil die Reise nach Südamerika so beschwerlich war.",
       "category": "Weltmeisterschaft"
     },
     {
@@ -448,27 +427,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Obwohl mehrere Keeper wie Chilavert oder Rogério Ceni im Verein regelmäßig per Freistoß und Elfmeter trafen, gelang bei einer WM-Endrunde noch keinem Torhüter ein Treffer.",
-      "category": "Weltmeisterschaft"
-    },
-    {
-      "id": "world_cup_de_023",
-      "question": "Wie alt war Pelé, als er beim WM-Finale 1958 zwei Tore schoss und Weltmeister wurde?",
-      "answers": [
-        {
-          "text": "17 Jahre",
-          "correct": true
-        },
-        {
-          "text": "21 Jahre",
-          "correct": false
-        },
-        {
-          "text": "19 Jahre",
-          "correct": false
-        }
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Pelé ist bis heute der jüngste Spieler, der je in einem WM-Finale getroffen hat – nach dem zweiten Tor brach er auf dem Rasen in Tränen aus.",
       "category": "Weltmeisterschaft"
     },
     {

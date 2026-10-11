@@ -1,7 +1,7 @@
 {
   "name": "Animals & Nature",
   "language": "en",
-  "version": "1.3",
+  "version": "1.4",
   "theme": "nature",
   "questions": [
     {
@@ -1409,18 +1409,6 @@
       "category": "Animals & Nature"
     },
     {
-      "id": "nat_en_126",
-      "question": "Why does metal feel colder than wood at the same temperature?",
-      "answers": [
-        {"text": "Metal pulls heat from your hand faster", "correct": true},
-        {"text": "Metal is actually colder than nearby wood", "correct": false},
-        {"text": "Wood gives off a small amount of its own heat", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Both objects in the same room are the same temperature, but metal conducts heat away from your skin far faster than wood, so your nerves sense rapid heat loss and read it as cold. Your skin senses heat flow, not temperature directly.",
-      "category": "Animals & Nature"
-    },
-    {
       "id": "nat_en_127",
       "question": "Why do bees make hexagonal cells in their honeycomb?",
       "answers": [
@@ -1430,18 +1418,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Among shapes that tile a surface with no gaps, the hexagon encloses the most area for the least perimeter, so bees use the least wax to store the most honey. Recent studies suggest bees start with round cells that flow into hexagons as the wax warms.",
-      "category": "Animals & Nature"
-    },
-    {
-      "id": "nat_en_129",
-      "question": "Why does a magnet lose its magnetism if you heat it enough?",
-      "answers": [
-        {"text": "Heat scrambles the aligned atoms inside it", "correct": true},
-        {"text": "The metal melts and the magnetism drips out", "correct": false},
-        {"text": "Heat reverses the magnet's north and south poles", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "A magnet works because its atoms point the same way. Above a threshold called the Curie temperature, heat jostles the atoms so violently that they point randomly and the magnetism vanishes. For iron that point is around 770 degrees Celsius.",
       "category": "Animals & Nature"
     },
     {
@@ -1577,18 +1553,6 @@
       "category": "Animals & Nature"
     },
     {
-      "id": "nat_en_141",
-      "question": "The word 'panic' traces back to which figure from Greek mythology?",
-      "answers": [
-        {"text": "Pan, the goat-legged god of the wild", "correct": true},
-        {"text": "Medusa, the snake-haired Gorgon", "correct": false},
-        {"text": "Chronos, the god of time", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "'Panic' comes from Pan, the half-goat nature god believed to cause sudden, irrational fear in lonely places and to stampede flocks. The same root names 'panpipes', the reed instrument he supposedly invented.",
-      "category": "Animals & Nature"
-    },
-    {
       "id": "nat_en_142",
       "question": "Aspirin's active ingredient was originally derived from the bark of which tree?",
       "answers": [
@@ -1625,18 +1589,6 @@
       "category": "Animals & Nature"
     },
     {
-      "id": "nat_en_145",
-      "question": "The word 'mortgage' literally means what, from its French roots?",
-      "answers": [
-        {"text": "'Death pledge'", "correct": true},
-        {"text": "'Stone promise'", "correct": false},
-        {"text": "'Land bond'", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "'Mortgage' combines Old French 'mort' (dead) and 'gage' (pledge): the deal 'dies' either when the debt is paid or when the borrower defaults. The same 'mort' root surfaces in nature's names too, from the deadly nightshade to the death's-head hawkmoth.",
-      "category": "Animals & Nature"
-    },
-    {
       "id": "nat_en_146",
       "question": "Penicillin, the first true antibiotic, was discovered because of what accident in Alexander Fleming's lab?",
       "answers": [
@@ -1670,18 +1622,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "The Nahuatl 'ahuacatl' meant both the fruit and 'testicle', likely from the way the fruits hang in pairs. Spanish speakers reshaped it into 'aguacate', which English then softened to 'avocado'.",
-      "category": "Animals & Nature"
-    },
-    {
-      "id": "nat_en_149",
-      "question": "The teddy bear is named after US President Theodore Roosevelt because of what 1902 incident?",
-      "answers": [
-        {"text": "He refused to shoot a bear that had been tied up for him", "correct": true},
-        {"text": "He kept a pet bear cub in the White House", "correct": false},
-        {"text": "He survived a bear attack on a hunt", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "On a Mississippi hunt, Roosevelt declined to shoot a captured black bear, calling it unsportsmanlike. A newspaper cartoon spread the story, and a shopkeeper began selling 'Teddy's bears' — the toy was born.",
       "category": "Animals & Nature"
     },
     {

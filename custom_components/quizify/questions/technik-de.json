@@ -1,7 +1,7 @@
 {
   "name": "Technik",
   "language": "de",
-  "version": "1.3",
+  "version": "1.4",
   "theme": "tech",
   "questions": [
     {
@@ -1202,18 +1202,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Eine Tonne Smartphones enthält ein Vielfaches an Gold wie typisches Golderz, das oft nur wenige Gramm pro Tonne liefert — Fachleute nennen das 'Urban Mining'. Das Gold sitzt als hauchdünne Schicht auf Kontakten und Steckverbindern, weil es nicht korrodiert.",
-      "category": "Technik"
-    },
-    {
-      "id": "technik_de_104",
-      "question": "Warum bleiben Seifenblasen nicht ewig stabil, sondern platzen irgendwann?",
-      "answers": [
-        {"text": "Das Wasser verdunstet und läuft nach unten ab, bis die Haut zu dünn wird", "correct": true},
-        {"text": "Die Luft im Inneren kühlt ab und zieht sich zusammen", "correct": false},
-        {"text": "Der Sauerstoff in der Blase wird langsam aufgebraucht", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Eine Seifenblase ist nur etwa ein zehntausendstel Millimeter dick. Die schillernden Farben entstehen durch Interferenz des Lichts an der dünnen Haut — kurz vor dem Platzen wird die Wand stellenweise schwarz, weil sie dünner als eine Lichtwellenlänge ist.",
       "category": "Technik"
     },
     {

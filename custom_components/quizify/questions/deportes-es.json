@@ -1,7 +1,7 @@
 {
   "name": "Deportes",
   "language": "es",
-  "version": "1.4",
+  "version": "1.5",
   "theme": "sport",
   "questions": [
     {
@@ -674,27 +674,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Supera las 2.600 medallas, más del doble que su perseguidor.",
-      "category": "Deportes"
-    },
-    {
-      "id": "dep_es_033",
-      "question": "¿Qué atleta ganó cuatro oros en los Juegos de Berlín de 1936?",
-      "answers": [
-        {
-          "text": "Jesse Owens",
-          "correct": true
-        },
-        {
-          "text": "Carl Lewis",
-          "correct": false
-        },
-        {
-          "text": "Paavo Nurmi",
-          "correct": false
-        }
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Sus victorias desmintieron en la propia Alemania nazi su propaganda racial.",
       "category": "Deportes"
     },
     {

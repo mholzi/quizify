@@ -1,7 +1,7 @@
 {
   "name": "Tiere & Natur",
   "language": "de",
-  "version": "1.2",
+  "version": "1.3",
   "theme": "nature",
   "questions": [
     {
@@ -98,18 +98,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Alle Clownfische werden als Männchen geboren. Das dominante Weibchen führt die Gruppe — stirbt es, verwandelt sich das ranghöchste Männchen in ein Weibchen. Nemo hätte also Nemos neue Mama werden müssen.",
-      "category": "Tiere & Natur"
-    },
-    {
-      "id": "nat_011",
-      "question": "Welches Landtier hat die längste Tragezeit?",
-      "answers": [
-        {"text": "Blauwal (12 Monate)", "correct": false},
-        {"text": "Elefant (22 Monate)", "correct": true},
-        {"text": "Nashorn (18 Monate)", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Afrikanische Elefanten sind fast zwei Jahre trächtig — die längste Gestationszeit aller Landsäugetiere. Das Kalb wiegt bei der Geburt bereits etwa 100 kg.",
       "category": "Tiere & Natur"
     },
     {

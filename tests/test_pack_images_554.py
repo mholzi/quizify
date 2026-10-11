@@ -60,7 +60,13 @@ class ImageSet:
 
 
 PACK_SETS = (
-    ImageSet("nature", ("tiere-natur.json", "animals-nature.json", "naturaleza-es.json"), 149),
+    ImageSet(
+        "nature",
+        ("tiere-natur.json", "animals-nature.json", "naturaleza-es.json"),
+        # 149 -> 147: the English pack lost off-topic physics and word-origin
+        # questions on purpose (#1054).
+        147,
+    ),
     ImageSet("geography", ("geographie.json", "geography.json", "geografia-es.json"), 149),
     ImageSet("history", ("geschichte-de.json", "history-en.json", "historia-es.json"), 149),
     ImageSet("science", ("wissenschaft-de.json", "science-en.json", "ciencia-es.json"), 150),
@@ -88,9 +94,10 @@ PACK_SETS = (
     ImageSet(
         "popculture",
         ("popkultur.json", "pop-culture.json", "cultura-pop-es.json"),
-        # 149 -> 144: twelve English questions that duplicate a fact already
-        # asked in a fitting pack were removed on purpose (#1054).
-        144,
+        # 149 -> 144 -> 132: twelve English questions that duplicate a fact
+        # already asked in a fitting pack, then twelve more off-topic ones,
+        # were removed on purpose (#1054).
+        132,
         4,
     ),
 )

@@ -1,7 +1,7 @@
 {
   "name": "Music",
   "language": "en",
-  "version": "1.2",
+  "version": "1.3",
   "theme": "music",
   "questions": [
     {
@@ -917,18 +917,6 @@
       "category": "Music"
     },
     {
-      "id": "music_en_077",
-      "question": "Italian luthier Antonio Stradivari worked primarily in which city, now famous for violin-making?",
-      "answers": [
-        {"text": "Cremona", "correct": true},
-        {"text": "Venice", "correct": false},
-        {"text": "Florence", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Stradivari built around 1,100 instruments in Cremona between roughly 1666 and 1737. About 650 survive today, and individual examples have sold for over 15 million dollars.",
-      "category": "Music"
-    },
-    {
       "id": "music_en_078",
       "question": "Which brass instrument is sounded by buzzing the lips into a cup-shaped mouthpiece and changing pitch with a slide?",
       "answers": [
@@ -1022,18 +1010,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Fortissimo is written as 'ff' in scores. Tchaikovsky's '1812 Overture' famously calls for 'ffff' — four f's — at the cannon-fire climax.",
-      "category": "Music"
-    },
-    {
-      "id": "music_en_087",
-      "question": "How many distinct keys are on a standard full-size modern piano?",
-      "answers": [
-        {"text": "88", "correct": true},
-        {"text": "76", "correct": false},
-        {"text": "96", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "The 88-key range, from A0 to C8, covers more than seven octaves. Steinway settled on this layout in the late 19th century, and it has been standard ever since.",
       "category": "Music"
     },
     {

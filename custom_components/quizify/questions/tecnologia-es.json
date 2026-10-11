@@ -1,7 +1,7 @@
 {
   "name": "Tecnología",
   "language": "es",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "tech",
   "questions": [
     {
@@ -2774,27 +2774,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Se usaron primero en telares para tejer dibujos y acabaron dando forma a la informática. Un programa era literalmente una caja pesada de cartulinas ordenadas.",
-      "category": "Tecnología"
-    },
-    {
-      "id": "tec_es_133",
-      "question": "¿Qué fue Sputnik 1 en 1957?",
-      "answers": [
-        {
-          "text": "El primer satélite artificial",
-          "correct": true
-        },
-        {
-          "text": "La primera sonda a Marte",
-          "correct": false
-        },
-        {
-          "text": "El primer vuelo tripulado",
-          "correct": false
-        }
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Solo emitía un pitido, pero cualquiera con una radio de onda corta podía oírlo pasar. Ese pitido reordenó los presupuestos científicos de medio mundo.",
       "category": "Tecnología"
     },
     {

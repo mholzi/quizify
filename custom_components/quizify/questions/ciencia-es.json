@@ -1,7 +1,7 @@
 {
   "name": "Ciencia",
   "language": "es",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "science",
   "questions": [
     {
@@ -296,27 +296,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Plutón fue reclasificado como planeta enano en 2006, dejando ocho planetas.",
-      "category": "Ciencia"
-    },
-    {
-      "id": "cie_es_015",
-      "question": "¿Cuántos cromosomas tiene una célula humana típica?",
-      "answers": [
-        {
-          "text": "23",
-          "correct": false
-        },
-        {
-          "text": "48",
-          "correct": false
-        },
-        {
-          "text": "46",
-          "correct": true
-        }
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Los humanos tenemos 23 pares de cromosomas, 46 en total.",
       "category": "Ciencia"
     },
     {

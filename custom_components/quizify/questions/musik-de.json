@@ -1,7 +1,7 @@
 {
   "name": "Musik",
   "language": "de",
-  "version": "1.2",
+  "version": "1.3",
   "theme": "music",
   "questions": [
     {
@@ -266,18 +266,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Das Theremin (1920 von Léon Theremin erfunden) wird berührungslos gespielt — die Hände bewegen sich nur in der Nähe zweier Antennen, die Höhe und Lautstärke steuern.",
-      "category": "Musik"
-    },
-    {
-      "id": "musik_de_025",
-      "question": "Wie viele Tasten hat ein modernes Konzertklavier?",
-      "answers": [
-        {"text": "88", "correct": true},
-        {"text": "76", "correct": false},
-        {"text": "96", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "88 Tasten — 52 weiße und 36 schwarze. Bösendorfer baut auch Klaviere mit 92 oder sogar 97 Tasten, aber das ist die Ausnahme.",
       "category": "Musik"
     },
     {
@@ -1790,18 +1778,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Auf 88 Tasten verteilen sich 52 weiße und 36 schwarze. Die schwarzen sind in Gruppen zu zwei und drei angeordnet — genau deshalb findet man sich auch blind auf der Tastatur zurecht.",
-      "category": "Musik"
-    },
-    {
-      "id": "musik_de_155",
-      "question": "Wie viele Saiten hat eine moderne Konzert-Pedalharfe ungefähr?",
-      "answers": [
-        {"text": "47", "correct": true},
-        {"text": "24", "correct": false},
-        {"text": "88", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Eine Konzertharfe hat 47 Saiten und 7 Pedale. Über die Pedale kann die Harfenistin jede Tonstufe um einen Halbton verändern — die Füße spielen also kräftig mit.",
       "category": "Musik"
     },
     {
