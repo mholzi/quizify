@@ -551,6 +551,16 @@
     "ALREADY_JOINED": "Bereits beigetreten",
     "JOIN_RATE_LIMITED": "Zu viele Beitritts-Versuche"
   },
+  "notHost": {
+    "titleLine1": "Dieses Gerät",
+    "titleLine2": "ist nicht der Host.",
+    "body": "Das Spiel wird von einem anderen Gerät geleitet. Mitspielen kannst du trotzdem.",
+    "join": "Als Spieler beitreten",
+    "tv": "TV-Ansicht öffnen",
+    "hostTitle": "Bist du der Host?",
+    "hostBefore": "Öffne diese Seite auf dem Gerät, mit dem du gestartet hast. Um stattdessen von hier zu hosten, führe",
+    "hostAfter": "in Home Assistant aus und lade die Seite neu."
+  },
   "page": {
     "titleAdmin": "Quizify — Admin",
     "titleJoin": "Quizify — Beitreten",

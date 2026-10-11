@@ -551,6 +551,16 @@
     "ALREADY_JOINED": "Already joined",
     "JOIN_RATE_LIMITED": "Too many join attempts"
   },
+  "notHost": {
+    "titleLine1": "This device",
+    "titleLine2": "isn't the host.",
+    "body": "The game is run from another device. You can still play along.",
+    "join": "Join as a player",
+    "tv": "Open the TV screen",
+    "hostTitle": "Are you the host?",
+    "hostBefore": "Open this page on the device you started on. To host from here instead, run",
+    "hostAfter": "in Home Assistant, then reload."
+  },
   "page": {
     "titleAdmin": "Quizify — Admin",
     "titleJoin": "Quizify — Join Game",

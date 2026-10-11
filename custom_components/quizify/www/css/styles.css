@@ -4230,6 +4230,58 @@ footer {
 }
 .setup-tweak-link:hover { color: var(--color-text-primary); }
 
+/* ---- "This device isn't the host" (#1053) ----
+   The page /quizify/admin shows when the server refuses it as host. Built
+   from the setup hero (.setup-hero, headline, .btn, .setup-tweak-link), a
+   .qz-icon tile and a .card; only what those do not already say is here. */
+.not-host { justify-content: flex-start; }
+.not-host-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-lg);
+}
+.not-host-lead {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    margin: 0;
+    max-width: 360px;
+}
+/* The primary action is a link here, not a button: it only navigates. */
+.not-host a.btn { text-decoration: none; }
+.not-host .setup-tweak-link { display: inline-block; }
+.not-host-card {
+    width: 100%;
+    max-width: 360px;
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    text-align: left;
+}
+.not-host-card-title {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-text-heading);
+    margin: 0 0 4px;
+}
+.not-host-card-body {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+.not-host-code {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-text-primary);
+    background: var(--color-bg-card-alt);
+    border-radius: 6px;
+    padding: 2px 6px;
+    /* One long token: let it break rather than push a 390px page sideways. */
+    overflow-wrap: anywhere;
+}
+
 /* #627: "Adjust settings" and "Stats" share one row. Two rows would push the
    primary action off a 390px viewport, which is the thing the host actually
    came for. */
