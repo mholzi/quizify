@@ -1,7 +1,7 @@
 {
   "name": "Animals & Nature",
   "language": "en",
-  "version": "1.2",
+  "version": "1.3",
   "theme": "nature",
   "questions": [
     {
@@ -1433,18 +1433,6 @@
       "category": "Animals & Nature"
     },
     {
-      "id": "nat_en_128",
-      "question": "Why does whipping turn cream from a liquid into a fluffy solid?",
-      "answers": [
-        {"text": "Fat globules link up and trap air bubbles", "correct": true},
-        {"text": "The cream cools and partly freezes as you whip", "correct": false},
-        {"text": "Air chemically reacts with the milk sugar", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Whipping forces in air and knocks the protective coating off the fat droplets, so they clump together around the air bubbles and build a stable foam. Whip too long and the fat fully clumps, squeezing out liquid, and you get butter.",
-      "category": "Animals & Nature"
-    },
-    {
       "id": "nat_en_129",
       "question": "Why does a magnet lose its magnetism if you heat it enough?",
       "answers": [
@@ -1733,18 +1721,6 @@
       "category": "Animals & Nature"
     },
     {
-      "id": "nat_en_153",
-      "question": "The chemical element cobalt is named after a creature from German miners' folklore. What kind of creature?",
-      "answers": [
-        {"text": "A mischievous goblin (kobold)", "correct": true},
-        {"text": "A cave-dwelling dragon", "correct": false},
-        {"text": "A poisonous toad", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Miners blamed troublesome ore that gave off toxic arsenic fumes on the 'kobold', a goblin said to haunt mines and swap good metal for worthless rock. The blue-tinged ore kept the name when cobalt was isolated as an element.",
-      "category": "Animals & Nature"
-    },
-    {
       "id": "nat_en_154",
       "question": "The marigold flower's English name is a contraction of which phrase?",
       "answers": [
@@ -1754,18 +1730,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "'Marigold' comes from 'Mary's gold', linking the golden blooms to the Virgin Mary in medieval England. In Mexico, a different but related marigold is central to Día de los Muertos, where its scent is said to guide spirits home.",
-      "category": "Animals & Nature"
-    },
-    {
-      "id": "nat_en_155",
-      "question": "WD-40, the lubricant spray, gets the '40' in its name from what?",
-      "answers": [
-        {"text": "It was the 40th formula the chemist tried", "correct": true},
-        {"text": "It works down to minus 40 degrees", "correct": false},
-        {"text": "It contains 40 ingredients", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "WD-40 stands for 'Water Displacement, 40th formula' — the version that finally worked in 1953. It was first developed to protect Atlas missile parts from rust before becoming a household staple.",
       "category": "Animals & Nature"
     },
     {

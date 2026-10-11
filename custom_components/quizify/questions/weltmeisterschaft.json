@@ -1,7 +1,7 @@
 {
   "name": "Weltmeisterschaft",
   "language": "de",
-  "version": "1.5",
+  "version": "1.6",
   "theme": "worldcup",
   "season": {
     "start": "06-01",
@@ -1141,27 +1141,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Beim 4:1 kam ein kuwaitischer Prinz aus Protest gegen ein Tor auf den Platz; der Schiedsrichter annullierte den Treffer daraufhin tatsächlich, ließ das Spiel aber zu Ende spielen.",
-      "category": "Weltmeisterschaft"
-    },
-    {
-      "id": "world_cup_de_056",
-      "question": "Für die WM 1938 hatte sich eine Nation qualifiziert, die schon vor dem Turnier nicht mehr als eigenständiger Staat existierte. Welche?",
-      "answers": [
-        {
-          "text": "Österreich",
-          "correct": true
-        },
-        {
-          "text": "Polen",
-          "correct": false
-        },
-        {
-          "text": "Tschechoslowakei",
-          "correct": false
-        }
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Österreich hatte sich qualifiziert, wurde aber nach dem 'Anschluss' an das Deutsche Reich aufgelöst und zog zurück; einige österreichische Spieler liefen daraufhin für die deutsche Mannschaft auf.",
       "category": "Weltmeisterschaft"
     },
     {
