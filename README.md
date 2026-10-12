@@ -222,11 +222,11 @@ Points = (Base + Speed Bonus) × Difficulty × Streak × (×2 if Double Points p
 | **Base points** | 10 |
 | **Speed bonus** | up to +5 (linear, decays over time limit) |
 | **Difficulty multiplier** | Easy ×1.0 / Medium ×1.5 / Hard ×2.0 |
-| **Streak multiplier** | +10% per correct answer in a row, max +50% at 5× |
+| **Streak multiplier** | none for the first 2 correct answers in a row; from 3 in a row ×1.3, 4 in a row ×1.4, 5 or more ×1.5 (cap) |
 | **Wrong / timeout** | 0 pts, streak resets |
 
 **Example:** Medium difficulty, instant answer, 3× streak in a row:
-`(10 + 5) × 1.5 × 1.3 = **29 pts**`
+`(10 + 5) × 1.5 × 1.3 = **29 pts**` (the same answer on a 1× or 2× streak scores 22 pts)
 
 ### Time Limits
 
