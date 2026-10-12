@@ -3,6 +3,18 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.23.0-RC3] — 2026-10-12
+
+**A Pack for Film Night, and More Pictures to Guess**
+
+Everything from RC2, plus a second pass through the packs.
+
+### Tidier packs, second pass
+
+Thirty-six more questions left 17 packs. Twenty sat in a pack they did not fit: general physics, chemistry and word-origin questions, twelve of them in Pop Culture, the rest in Animals & Nature and Technology. Sixteen asked for a fact the same pack already asks for. Where a multiple-choice question repeated an estimate or picture question, the multiple-choice one went, so every pack keeps its five estimate and five picture questions. The library now holds 6,362 questions.
+
+Beta versions must be enabled in HACS.
+
 ## [1.23.0-RC2] — 2026-10-11
 
 **A Pack for Film Night, and More Pictures to Guess**
