@@ -9,6 +9,9 @@ BASE_POINTS = 10
 MAX_SPEED_BONUS = 5
 MAX_STREAK_MULTIPLIER_STACKS = 5
 STREAK_MULTIPLIER_PER_STACK = 0.1
+# The streak multiplier only applies from this streak on (#1062); below it
+# the multiplier is exactly 1.0.
+STREAK_MULTIPLIER_MIN_STREAK = 3
 
 # Discrete bonus points awarded once when a player's streak hits exactly
 # the milestone count (not every round above it). Sits on top of the
@@ -26,7 +29,13 @@ STREAK_MILESTONES: dict[int, int] = {
 
 
 def get_streak_multiplier(streak: int) -> float:
-    """Return the streak multiplier: 1.0 + min(streak, 5) * 0.1."""
+    """Return the streak multiplier.
+
+    1.0 for streaks below 3; from 3 on ``1.0 + min(streak, 5) * 0.1``
+    (3 -> 1.3, 4 -> 1.4, 5 and above -> 1.5).
+    """
+    if streak < STREAK_MULTIPLIER_MIN_STREAK:
+        return 1.0
     return 1.0 + min(streak, MAX_STREAK_MULTIPLIER_STACKS) * STREAK_MULTIPLIER_PER_STACK
 
 
@@ -54,7 +63,7 @@ def calculate_round_score(
         base        = 10
         speed_bonus = up to 5 (linear decay over time_limit)
         difficulty  = easy x1.0, medium x1.5, hard x2.0
-        streak      = 1.0 + min(streak, 5) * 0.1
+        streak      = 1.0 below a streak of 3, then 1.0 + min(streak, 5) * 0.1
         double      = x2 if active
 
     Returns 0 for incorrect answers.

@@ -65,19 +65,19 @@ def _score(*, streak: int, double: bool, elapsed: float = 16.0) -> ScoreComputat
 
 
 def test_the_difficulty_uplift_is_not_a_streak_bonus() -> None:
-    """First correct answer on Medium, 16 s of 30: 10 + 2.33 speed, x1.5, x1.1."""
-    c = _score(streak=1, double=False)
-    assert c.points == 20
+    """Medium, 16 s of 30, 4-streak (no milestone): 10 + 2.33 speed, x1.5, x1.4 (#1062)."""
+    c = _score(streak=4, double=False)
+    assert c.points == 25
     assert c.speed_bonus == 2
     assert c.difficulty_bonus == 6  # int(18.5) - int(12.33)
-    assert c.streak_bonus == 2  # int(20.35) - int(18.5): the 10 % a 1-streak pays
+    assert c.streak_bonus == 7  # int(25.9) - int(18.5): the 40 % a 4-streak pays
     assert c.double_bonus == 0
 
 
 def test_the_double_power_up_shows_up_as_itself() -> None:
-    plain = _score(streak=1, double=False)
-    doubled = _score(streak=1, double=True)
-    assert doubled.points == 40
+    plain = _score(streak=4, double=False)
+    doubled = _score(streak=4, double=True)
+    assert doubled.points == 51
     assert doubled.double_bonus == doubled.points - plain.points
     # The streak did not grow because a power-up was spent.
     assert doubled.streak_bonus == plain.streak_bonus
@@ -89,9 +89,9 @@ def test_no_streak_pays_no_streak_bonus() -> None:
 
 
 def test_the_parts_travel_in_the_breakdown() -> None:
-    bd = _score(streak=1, double=True).breakdown
+    bd = _score(streak=4, double=True).breakdown
     assert bd["difficulty_bonus"] == 6
-    assert bd["double_bonus"] == 20
+    assert bd["double_bonus"] == 26
 
 
 def test_a_wager_clears_every_part() -> None:
@@ -192,8 +192,8 @@ def _row(c: ScoreComputation, streak: int) -> dict:
 @pytest.fixture(scope="module")
 def shown() -> dict:
     rows = {
-        "first": _row(_score(streak=1, double=False), 1),
-        "doubled": _row(_score(streak=1, double=True), 1),
+        "first": _row(_score(streak=4, double=False), 4),
+        "doubled": _row(_score(streak=4, double=True), 4),
         "no_streak": _row(_score(streak=0, double=False), 0),
     }
     script = _SCRIPT.format(
@@ -222,16 +222,16 @@ def _en(section: str, key: str) -> str:
 def test_the_phone_names_the_difficulty_points(shown: dict) -> None:
     line = shown["first"]
     assert f"{_en('reveal', 'difficulty')} +6" in line
-    assert "1-streak bonus! +2" in line
+    assert "4-streak bonus! +7" in line
     assert "+9" not in line and "+8" not in line
 
 
 @_NEEDS_NODE
 def test_the_phone_shows_the_double_it_paid_for(shown: dict) -> None:
     line = shown["doubled"]
-    assert f"{_en('powerups', 'double_points')} +20" in line
+    assert f"{_en('powerups', 'double_points')} +26" in line
     # The doubling is not dressed up as a streak any more.
-    assert "1-streak bonus! +2" in line
+    assert "4-streak bonus! +7" in line
 
 
 @_NEEDS_NODE
