@@ -1,7 +1,7 @@
 {
   "name": "Food & Drink",
   "language": "en",
-  "version": "1.3",
+  "version": "1.4",
   "theme": "food",
   "questions": [
     {
@@ -1997,27 +1997,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Cheesemakers pierce the wheels with needles or wires so air reaches the inside, letting the introduced Penicillium roqueforti or P. glaucum grow and develop those blue-green veins.",
-      "category": "Food & Drink"
-    },
-    {
-      "id": "food_en_097",
-      "question": "Authentic Parmigiano-Reggiano cheese must be aged for at least how long before it can be sold under that name?",
-      "answers": [
-        {
-          "text": "12 months",
-          "correct": true
-        },
-        {
-          "text": "3 months",
-          "correct": false
-        },
-        {
-          "text": "5 years",
-          "correct": false
-        }
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Inspectors tap each wheel with a hammer and listen for flaws before approving it. Wheels are graded; only the best can be aged further and stamped as longer-aged Parmigiano-Reggiano.",
       "category": "Food & Drink"
     },
     {

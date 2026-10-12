@@ -1,7 +1,7 @@
 {
   "name": "Geography",
   "language": "en",
-  "version": "1.2",
+  "version": "1.3",
   "theme": "geography",
   "questions": [
     {
@@ -1577,27 +1577,6 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Cabinda is separated from the rest of Angola by a strip of the Democratic Republic of the Congo that reaches the Atlantic. The exclave produces the majority of Angola's offshore oil.",
-      "category": "Geography"
-    },
-    {
-      "id": "geo_en_082",
-      "question": "Which strait separates Spain from Africa at its narrowest point?",
-      "answers": [
-        {
-          "text": "Strait of Gibraltar",
-          "correct": true
-        },
-        {
-          "text": "Strait of Hormuz",
-          "correct": false
-        },
-        {
-          "text": "Strait of Malacca",
-          "correct": false
-        }
-      ],
-      "difficulty": "easy",
-      "fun_fact": "At its narrowest the Strait of Gibraltar is only about 14 km wide. On a clear day you can easily see Morocco from southern Spain, and ferries cross in roughly an hour.",
       "category": "Geography"
     },
     {

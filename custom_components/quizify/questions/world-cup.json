@@ -1,7 +1,7 @@
 {
   "name": "World Cup",
   "language": "en",
-  "version": "1.5",
+  "version": "1.6",
   "theme": "worldcup",
   "season": {
     "start": "06-01",
@@ -1918,27 +1918,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Named 'Pique' (a pun on picante), the chili-pepper mascot leaned hard into Mexican stereotype iconography that would raise eyebrows today.",
-      "category": "World Cup"
-    },
-    {
-      "id": "world_cup_en_092",
-      "question": "The 1966 England World Cup mascot 'World Cup Willie' is credited as a historical first. What was it?",
-      "answers": [
-        {
-          "text": "The first official World Cup mascot ever",
-          "correct": true
-        },
-        {
-          "text": "The first mascot to be an animal",
-          "correct": false
-        },
-        {
-          "text": "The first mascot voiced by a celebrity",
-          "correct": false
-        }
-      ],
-      "difficulty": "easy",
-      "fun_fact": "World Cup Willie, a lion in a Union Jack shirt, was the first World Cup mascot — and arguably the first major sporting mascot, predating most Olympic ones.",
       "category": "World Cup"
     },
     {

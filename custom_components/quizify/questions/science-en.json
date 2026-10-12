@@ -1,7 +1,7 @@
 {
   "name": "Science",
   "language": "en",
-  "version": "1.2",
+  "version": "1.3",
   "theme": "science",
   "questions": [
     {
@@ -866,18 +866,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Karl von Frisch decoded the dance in the 1940s — the angle relative to vertical equals the angle to the food relative to the sun, and dance duration encodes distance. He won a Nobel Prize in 1973 for the discovery.",
-      "category": "Science"
-    },
-    {
-      "id": "science_en_074",
-      "question": "Roughly how long does it take sunlight to reach Earth?",
-      "answers": [
-        {"text": "About 8 minutes", "correct": true},
-        {"text": "About 8 seconds", "correct": false},
-        {"text": "About 8 hours", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Light travels 150 million kilometres from the Sun in about 8 minutes 20 seconds. The sunlight you see actually left the Sun's surface before you started reading this sentence.",
       "category": "Science"
     },
     {

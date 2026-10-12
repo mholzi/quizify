@@ -1,7 +1,7 @@
 {
   "name": "Wissenschaft",
   "language": "de",
-  "version": "1.2",
+  "version": "1.3",
   "theme": "science",
   "questions": [
     {
@@ -1346,27 +1346,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Schall braucht ein Medium aus Atomen oder Molekülen, die schwingen können. Im fast vollkommenen Vakuum des Alls fehlt das. Eine Explosion neben dir würde dich vielleicht durch Strahlung töten — aber sie wäre völlig lautlos.",
-      "category": "Wissenschaft"
-    },
-    {
-      "id": "wissenschaft_de_068",
-      "question": "Wie viele Chromosomen besitzt eine menschliche Zelle?",
-      "answers": [
-        {
-          "text": "23",
-          "correct": false
-        },
-        {
-          "text": "46",
-          "correct": true
-        },
-        {
-          "text": "92",
-          "correct": false
-        }
-      ],
-      "difficulty": "easy",
-      "fun_fact": "23 Chromosomenpaare, also 46 Chromosomen — je eines von Vater und Mutter. Eine Erdbeere hat 56, ein Karpfen über 100. Anzahl sagt nichts über Komplexität aus.",
       "category": "Wissenschaft"
     },
     {

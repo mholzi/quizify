@@ -1,7 +1,7 @@
 {
   "name": "Geografía",
   "language": "es",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "geography",
   "questions": [
     {
@@ -1577,27 +1577,6 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Cabinda está separada del resto de Angola por una franja de la República Democrática del Congo que llega al Atlántico. El enclave produce la mayor parte del petróleo marítimo de Angola.",
-      "category": "Geografía"
-    },
-    {
-      "id": "geo_es_076",
-      "question": "¿Qué estrecho separa España de África en su punto más estrecho?",
-      "answers": [
-        {
-          "text": "El estrecho de Gibraltar",
-          "correct": true
-        },
-        {
-          "text": "El estrecho de Ormuz",
-          "correct": false
-        },
-        {
-          "text": "El estrecho de Malaca",
-          "correct": false
-        }
-      ],
-      "difficulty": "easy",
-      "fun_fact": "En su punto más estrecho, el estrecho de Gibraltar tiene solo unos 14 km de ancho. En un día despejado se ve fácilmente Marruecos desde el sur de España, y los ferris lo cruzan en aproximadamente una hora.",
       "category": "Geografía"
     },
     {

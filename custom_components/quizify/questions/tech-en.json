@@ -1,7 +1,7 @@
 {
   "name": "Technology",
   "language": "en",
-  "version": "1.3",
+  "version": "1.4",
   "theme": "tech",
   "questions": [
     {
@@ -2210,27 +2210,6 @@
       "category": "Technology"
     },
     {
-      "id": "tech_en_108",
-      "question": "Why does a spinning bicycle wheel make the whole bike surprisingly hard to tip over?",
-      "answers": [
-        {
-          "text": "A spinning wheel resists changes to the direction of its axle",
-          "correct": true
-        },
-        {
-          "text": "The spinning air around the wheel pushes the bike upright",
-          "correct": false
-        },
-        {
-          "text": "Centrifugal force pulls the rider's weight toward the centre",
-          "correct": false
-        }
-      ],
-      "difficulty": "medium",
-      "fun_fact": "A spinning wheel acts like a gyroscope: its spin axis 'wants' to keep pointing the same way, resisting tilt. It's not the whole story of why bikes balance — steering geometry matters more — but the effect is real and is why a rolling coin stays up far longer than a still one.",
-      "category": "Technology"
-    },
-    {
       "id": "tech_en_109",
       "question": "Why does cling film stick to a glass bowl without any glue?",
       "answers": [
@@ -2270,27 +2249,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "A fridge doesn't destroy heat — it pumps it from the cold interior out through the coils on the back, plus the energy its motor burns. So leaving the fridge door open to 'cool the room' actually heats it up over time.",
-      "category": "Technology"
-    },
-    {
-      "id": "tech_en_111",
-      "question": "Why does a candle flame point upward no matter how you tilt the candle?",
-      "answers": [
-        {
-          "text": "Hot gas is lighter than surrounding air and rises against gravity",
-          "correct": true
-        },
-        {
-          "text": "The wick channels the flame straight along its fibres",
-          "correct": false
-        },
-        {
-          "text": "Oxygen is denser near the ceiling and pulls the flame up",
-          "correct": false
-        }
-      ],
-      "difficulty": "easy",
-      "fun_fact": "The flame's hot gases are less dense than the cool air around them, so buoyancy pushes them up — gravity defines 'up'. In the weightlessness of space, a candle flame has no 'up' and burns as a dim blue sphere instead of a teardrop.",
       "category": "Technology"
     },
     {
