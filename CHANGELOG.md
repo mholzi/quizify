@@ -3,6 +3,18 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.23.0-RC4] — 2026-10-12
+
+**A Pack for Film Night, and More Pictures to Guess**
+
+Everything from RC3, plus one change to the scoring.
+
+### A streak starts at three
+
+After a single correct answer the phone showed a "1-streak bonus", while the help page says a streak pays off from three. The scoring now follows the help page: the first two correct answers in a row score without a streak bonus, and from the third the bonus is what it was, 30 percent, then 40, then 50 at most. A medium question answered at once gives 22 points on the first and second correct answer, where it gave 24 and 27. The extra points for reaching 3, 5 or 10 in a row are unchanged.
+
+Beta versions must be enabled in HACS.
+
 ## [1.23.0-RC3] — 2026-10-12
 
 **A Pack for Film Night, and More Pictures to Guess**
