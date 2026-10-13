@@ -217,7 +217,9 @@ class TestStreakMilestoneRemoved:
         """The consumer that always existed. Deleting the broadcast must not
         take the celebration with it."""
         idx = BUNDLE.index("case 'answer_result':")
-        assert "new_streak" in BUNDLE[idx : idx + 700]
+        # #1066: the toast reads the milestone the server names, not the
+        # running streak matched against a list of its own.
+        assert "milestone_streak" in BUNDLE[idx : idx + 700]
 
     @pytest.mark.asyncio
     async def test_milestone_speaks_and_fires_but_does_not_broadcast(

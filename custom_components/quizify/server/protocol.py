@@ -195,9 +195,19 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         "difficulty_bonus",
         "double_bonus",
         "new_streak",
+        "streak_active",
         "new_total",
         "milestone_bonus",
         "milestone_streak",
+        note=(
+            "The streak rules live in ``game/scoring.py`` and nowhere else "
+            "(#1066). ``milestone_streak`` is the milestone this answer "
+            "landed on (0 for none) and is what fires the phone toast; "
+            "``streak_active`` says whether ``new_streak`` is long enough to "
+            "score, and is what promotes the reveal to the streak headline. "
+            "The same flag rides beside ``streak`` on every leaderboard and "
+            "``all_answers`` row."
+        ),
     ),
     "guess_accepted": _spec(
         note="Estimate-round ack so the client can lock its slider.",

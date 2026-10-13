@@ -462,13 +462,11 @@
 
             case 'answer_result':
                 game.handleAnswerResult(msg);
-                // Streak milestone toast
-                if (msg.correct && msg.new_streak) {
-                    var streakKeys = { 3: 'game.streakToast3', 5: 'game.streakToast5', 7: 'game.streakToast7' };
-                    if (streakKeys[msg.new_streak]) {
-                        pu.showToast(t(streakKeys[msg.new_streak]), 2500, streakKeys[msg.new_streak]);
-                    }
-                }
+                // Streak milestone toast. #1066: the server names the
+                // milestone (`milestone_streak`, 0 for none); the list of
+                // milestones is STREAK_MILESTONES in game/scoring.py and is
+                // not repeated here.
+                if (msg.correct) pu.showStreakMilestoneToast(msg.milestone_streak);
                 break;
 
             case 'round_summary':
@@ -1265,6 +1263,7 @@
                         double_bonus: lastResult.double_bonus || 0,
                         round_score: lastResult.points_earned || 0,
                         streak: lastResult.new_streak || 0,
+                        streak_active: lastResult.streak_active === true,
                     });
                 }
                 return a;

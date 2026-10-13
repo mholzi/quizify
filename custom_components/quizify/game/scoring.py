@@ -39,6 +39,18 @@ def get_streak_multiplier(streak: int) -> float:
     return 1.0 + min(streak, MAX_STREAK_MULTIPLIER_STACKS) * STREAK_MULTIPLIER_PER_STACK
 
 
+def is_streak_active(streak: int) -> bool:
+    """Whether ``streak`` is long enough to score (#1066).
+
+    The one answer to "is this a streak yet?". It travels on the wire as
+    ``streak_active`` beside every ``streak`` a client renders, so the reveal
+    headline and the leaderboard badge announce a streak exactly when the
+    multiplier pays for one — the phones used to keep their own threshold
+    and it had drifted to 2.
+    """
+    return streak >= STREAK_MULTIPLIER_MIN_STREAK
+
+
 def get_streak_milestone_bonus(streak: int) -> int:
     """Bonus points if ``streak`` is exactly a milestone, else 0.
 
