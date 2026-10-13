@@ -82,7 +82,9 @@
                         (nameSuffix ? nameSuffix(p) : '') + '</span>' +
                     '<span class="leaderboard-score">' + p.score + '</span>' +
                     (afterScore ? afterScore(p) : '') +
-                    (p.streak > 1 ? '<span class="leaderboard-streak">' + p.streak + 'x</span>' : '') +
+                    // #1066: the server says whether a streak scores yet
+                    // (`streak_active`); no threshold lives on this side.
+                    (p.streak_active ? '<span class="leaderboard-streak">' + p.streak + 'x</span>' : '') +
                     '</div>';
             })
             .join('');

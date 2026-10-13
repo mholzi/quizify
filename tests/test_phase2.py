@@ -52,8 +52,12 @@ class TestStreakMilestoneScoring:
             assert get_streak_milestone_bonus(streak) == expected
 
     def test_no_bonus_off_milestone(self) -> None:
-        for streak in (1, 2, 4, 6, 7, 8, 9, 11, 14, 16, 19, 21, 100):
+        for streak in (1, 2, 4, 6, 8, 9, 11, 14, 16, 19, 21, 100):
             assert get_streak_milestone_bonus(streak) == 0
+
+    def test_seven_is_a_milestone_between_five_and_ten(self) -> None:
+        # #1066: the phone has always had a toast for 7; it now pays, too.
+        assert get_streak_milestone_bonus(7) == 75
 
     def test_higher_milestones_award_more(self) -> None:
         # Sanity — designers should never accidentally invert.

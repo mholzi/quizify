@@ -20,6 +20,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from custom_components.quizify.game.phase_controller import GamePhase
+from custom_components.quizify.game.scoring import is_streak_active
 from custom_components.quizify.server.serializers import (
     resolve_correct_indices,
     serialize_leaderboard,
@@ -645,6 +646,7 @@ class RoundMessageBuilder:
                 "double_points": breakdown.get("double_points", False),
                 "double_bonus": breakdown.get("double_bonus", 0),
                 "streak": team.streak,
+                "streak_active": is_streak_active(team.streak),
             }
 
         all_answers = []
@@ -692,6 +694,7 @@ class RoundMessageBuilder:
                     "double_points": breakdown.get("double_points", False),
                     "double_bonus": breakdown.get("double_bonus", 0),
                     "streak": player.streak,
+                    "streak_active": is_streak_active(player.streak),
                 })
             else:
                 all_answers.append({

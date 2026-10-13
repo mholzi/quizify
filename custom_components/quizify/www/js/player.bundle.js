@@ -451,6 +451,27 @@
     }
 
     /**
+     * Celebrate a streak milestone the server just paid a bonus for (#1066).
+     *
+     * `milestone` is `milestone_streak` from the answer_result: the streak
+     * level this answer landed on, or 0. Which levels are milestones is the
+     * server's business (STREAK_MILESTONES in game/scoring.py) — this only
+     * looks for the matching string, `game.streakToast<N>`. A milestone with
+     * no string shows nothing rather than a raw key; `t` hands the key back
+     * when it has no translation, which is the test.
+     * @returns {boolean} whether a toast was shown
+     */
+    function showStreakMilestoneToast(milestone) {
+        var level = Number(milestone) || 0;
+        if (level <= 0) return false;
+        var key = 'game.streakToast' + level;
+        var text = _tt(key);
+        if (!text || text === key) return false;
+        showToast(text, 2500, key);
+        return true;
+    }
+
+    /**
      * Drop the toast on the floor (#838).
      *
      * showToast only fades the element out; the node keeps the text, and the
@@ -567,6 +588,7 @@
         feedbackLabel: feedbackLabel,
         generateQR: generateQR,
         showToast: showToast,
+        showStreakMilestoneToast: showStreakMilestoneToast,
         clearToast: clearToast,
         saveSession: saveSession,
         getSession: getSession,
@@ -2200,13 +2222,16 @@
 
     // ============================================
     // Result Hero — picks 1 of 4 states (Soft Parlor redesign, 2026-05-24):
-    //   X = streak hero (≥2 correct in a row + this round correct)
-    //   Y = big +N points (correct, streak < 2)
+    //   X = streak hero (this round correct + the server says the streak scores)
+    //   Y = big +N points (correct, no scoring streak yet)
     //   Z = wrong  (soft brick verdict + the round's points, 0 or a lost wager)
     //   W = missed (muted clock + Zeit abgelaufen + the round's points)
     // ============================================
 
-    var STREAK_HERO_THRESHOLD = 2;  // streak ≥ 2 promotes to the streak headline
+    // #1066: which of X and Y it is comes from the server (`streak_active` on
+    // the row, set from the same constant the multiplier uses). The threshold
+    // used to live here as a constant of its own and had drifted one below
+    // the multiplier, so the headline announced a streak that did not score.
 
     /**
      * Fire the correct/wrong audio cue for this player's round result.
@@ -2305,7 +2330,7 @@
         }
 
         // Correct: pick X (streak) or Y (big)
-        if (streak >= STREAK_HERO_THRESHOLD) {
+        if (player.streak_active) {
             // State X — flame headline
             hero.classList.add('pl-result-hero--streak');
             hero.innerHTML =
@@ -5690,7 +5715,10 @@
             ? '<span class="you-badge">(<span data-i18n="lobby.you">'
                 + pu.escapeHtml(t('lobby.you')) + '</span>)</span>'
             : '';
-        var streakBadge = entry.streak > 1
+        // #1066: `streak_active` is the server's verdict that the streak is
+        // long enough to score. This used to be a local `> 1`, one short of
+        // the multiplier, so the badge announced a streak that paid nothing.
+        var streakBadge = entry.streak_active
             ? '<span class="leaderboard-streak">' + entry.streak + 'x</span>'
             : '';
         var deltaBadge = '';
@@ -6543,13 +6571,11 @@
 
             case 'answer_result':
                 game.handleAnswerResult(msg);
-                // Streak milestone toast
-                if (msg.correct && msg.new_streak) {
-                    var streakKeys = { 3: 'game.streakToast3', 5: 'game.streakToast5', 7: 'game.streakToast7' };
-                    if (streakKeys[msg.new_streak]) {
-                        pu.showToast(t(streakKeys[msg.new_streak]), 2500, streakKeys[msg.new_streak]);
-                    }
-                }
+                // Streak milestone toast. #1066: the server names the
+                // milestone (`milestone_streak`, 0 for none); the list of
+                // milestones is STREAK_MILESTONES in game/scoring.py and is
+                // not repeated here.
+                if (msg.correct) pu.showStreakMilestoneToast(msg.milestone_streak);
                 break;
 
             case 'round_summary':
@@ -7346,6 +7372,7 @@
                         double_bonus: lastResult.double_bonus || 0,
                         round_score: lastResult.points_earned || 0,
                         streak: lastResult.new_streak || 0,
+                        streak_active: lastResult.streak_active === true,
                     });
                 }
                 return a;

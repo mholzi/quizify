@@ -73,6 +73,7 @@ def test_breakdown_parts_add_up_to_the_score(streak: int, double: bool) -> None:
 
 
 def test_milestone_bonuses_are_unchanged() -> None:
-    assert STREAK_MILESTONES == {3: 20, 5: 50, 10: 100, 15: 150, 20: 250, 25: 400}
+    # 7 joined the table with #1066; #1062 itself left the bonuses alone.
+    assert STREAK_MILESTONES == {3: 20, 5: 50, 7: 75, 10: 100, 15: 150, 20: 250, 25: 400}
     assert get_streak_milestone_bonus(1) == 0
     assert get_streak_milestone_bonus(3) == 20

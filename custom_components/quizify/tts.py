@@ -31,7 +31,7 @@ if TYPE_CHECKING:
 _LOGGER = logging.getLogger(__name__)
 
 # Minimum seconds between two TTS calls. Without this, milestone storms
-# (a player on a 25-streak crossing 3/5/10/15/20/25 in quick succession
+# (a player on a 25-streak crossing 3/5/7/10/15/20/25 in quick succession
 # during a wager round) would stack 6 announcements on top of each
 # other. 5s gives the speaker time to finish a short sentence.
 TTS_MIN_INTERVAL = 5.0

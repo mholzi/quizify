@@ -32,7 +32,7 @@ from the original 1000/500 to keep round scores readable on a TV across a room.
 - **Correct answer:** 10 base points (`BASE_POINTS`)
 - **Speed bonus:** up to 5 additional points for faster answers (`MAX_SPEED_BONUS`, linear decay over the time limit)
 - **Streak multiplier:** ×1.0 + 0.1 per consecutive correct answer, capped at 5 stacks (×1.5)
-- **Streak milestones:** one-off bonus at exactly 3 / 5 / 10 / 15 / 20 / 25 in a row (20 / 50 / 100 / 150 / 250 / 400 points)
+- **Streak milestones:** one-off bonus at exactly 3 / 5 / 7 / 10 / 15 / 20 / 25 in a row (20 / 50 / 75 / 100 / 150 / 250 / 400 points)
 - **Difficulty multiplier:** Easy ×1, Medium ×1.5, Hard ×2
 - Formula: `(base + speed) × difficulty × streak`, plus any milestone bonus
 

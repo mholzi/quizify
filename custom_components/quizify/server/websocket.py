@@ -42,6 +42,7 @@ from custom_components.quizify.game.powerups import (
     PowerUpEffect,
     PowerUpType,
 )
+from custom_components.quizify.game.scoring import is_streak_active
 from custom_components.quizify.game.state import (
     AnswerResult,
     GamePhase,
@@ -1746,6 +1747,9 @@ class QuizifyWebSocketHandler:
                 "difficulty_bonus": result.difficulty_bonus,
                 "double_bonus": result.double_bonus,
                 "new_streak": result.new_streak,
+                # #1066: whether that streak scores yet — the reveal headline
+                # asks this instead of keeping a threshold of its own.
+                "streak_active": is_streak_active(result.new_streak),
                 "new_total": result.new_total,
                 "milestone_bonus": result.milestone_bonus,
                 "milestone_streak": result.milestone_streak,
@@ -1753,9 +1757,10 @@ class QuizifyWebSocketHandler:
             # A milestone is announced out loud and on the HA bus — not over
             # the socket (#750). There used to be a ``streak_milestone``
             # broadcast here "so the TV/admin view can flash", but no surface
-            # ever grew that flash, and the phone toast has always been driven
-            # off ``new_streak`` in the answer_result above. A message with no
-            # reader is worse than no message: it reads like a contract.
+            # ever grew that flash, and the phone toast is driven off
+            # ``milestone_streak`` in the answer_result above (#1066; it used
+            # to match ``new_streak`` against a list of its own). A message
+            # with no reader is worse than no message: it reads like a contract.
             if result.milestone_bonus:
                 # ONE milestone from the dispatch point (#789); the fan-out to
                 # the announcer and the HA bus lives in _streak_milestone.

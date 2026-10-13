@@ -1237,7 +1237,10 @@
             ? '<span class="you-badge">(<span data-i18n="lobby.you">'
                 + pu.escapeHtml(t('lobby.you')) + '</span>)</span>'
             : '';
-        var streakBadge = entry.streak > 1
+        // #1066: `streak_active` is the server's verdict that the streak is
+        // long enough to score. This used to be a local `> 1`, one short of
+        // the multiplier, so the badge announced a streak that paid nothing.
+        var streakBadge = entry.streak_active
             ? '<span class="leaderboard-streak">' + entry.streak + 'x</span>'
             : '';
         var deltaBadge = '';

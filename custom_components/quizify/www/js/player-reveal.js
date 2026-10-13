@@ -404,13 +404,16 @@
 
     // ============================================
     // Result Hero — picks 1 of 4 states (Soft Parlor redesign, 2026-05-24):
-    //   X = streak hero (≥2 correct in a row + this round correct)
-    //   Y = big +N points (correct, streak < 2)
+    //   X = streak hero (this round correct + the server says the streak scores)
+    //   Y = big +N points (correct, no scoring streak yet)
     //   Z = wrong  (soft brick verdict + the round's points, 0 or a lost wager)
     //   W = missed (muted clock + Zeit abgelaufen + the round's points)
     // ============================================
 
-    var STREAK_HERO_THRESHOLD = 2;  // streak ≥ 2 promotes to the streak headline
+    // #1066: which of X and Y it is comes from the server (`streak_active` on
+    // the row, set from the same constant the multiplier uses). The threshold
+    // used to live here as a constant of its own and had drifted one below
+    // the multiplier, so the headline announced a streak that did not score.
 
     /**
      * Fire the correct/wrong audio cue for this player's round result.
@@ -509,7 +512,7 @@
         }
 
         // Correct: pick X (streak) or Y (big)
-        if (streak >= STREAK_HERO_THRESHOLD) {
+        if (player.streak_active) {
             // State X — flame headline
             hero.classList.add('pl-result-hero--streak');
             hero.innerHTML =
