@@ -327,6 +327,8 @@ def test_the_milestones_that_have_strings_do_fire(toasts: dict) -> None:
     """So the test above cannot go green on a toast that never shows at all."""
     assert toasts["3"] == _EN["game"]["streakToast3"]
     assert toasts["5"] == _EN["game"]["streakToast5"]
+    # 7 pays 75 since #1066, so its toast is asked for again.
+    assert toasts["7"] == _EN["game"]["streakToast7"]
 
 
 @_NEEDS_NODE
@@ -334,8 +336,9 @@ def test_the_milestones_that_have_strings_do_fire(toasts: dict) -> None:
     "streak", [s for s in _STREAKS if s not in STREAK_MILESTONES]
 )
 def test_a_streak_that_pays_no_bonus_shows_no_toast(toasts: dict, streak: int) -> None:
-    """The reported case is 7: "7 in a row! On fire!" over a round that paid
-    no bonus. The string still exists; nothing the server sends asks for it."""
+    """The reported case was 7: "7 in a row! On fire!" over a round that paid
+    no bonus. 7 is a milestone now; every streak that still pays nothing stays
+    silent."""
     assert toasts[str(streak)] == ""
 
 

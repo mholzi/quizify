@@ -16,11 +16,12 @@ STREAK_MULTIPLIER_MIN_STREAK = 3
 # Discrete bonus points awarded once when a player's streak hits exactly
 # the milestone count (not every round above it). Sits on top of the
 # smooth streak multiplier so the player feels both: a gradual climb in
-# round score AND a celebratory spike at 3/5/10/etc. Same scale Beatify
+# round score AND a celebratory spike at 3/5/7/10/etc. Same scale Beatify
 # uses — proven not to feel grindy in their A/B tests.
 STREAK_MILESTONES: dict[int, int] = {
     3: 20,
     5: 50,
+    7: 75,
     10: 100,
     15: 150,
     20: 250,
