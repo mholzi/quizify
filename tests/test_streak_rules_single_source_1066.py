@@ -317,9 +317,20 @@ def toasts() -> dict:
 def test_a_paid_milestone_shows_its_toast_when_it_has_a_string(
     toasts: dict, streak: int
 ) -> None:
-    """3 and 5 have strings today; 10/15/20/25 have none and stay silent until
-    the owner writes them — no raw key, no borrowed text."""
+    """A milestone without a string would stay silent — no raw key, no
+    borrowed text. Every milestone has one today, see below."""
     assert toasts[str(streak)] == (_toast_string(streak) or "")
+
+
+@pytest.mark.parametrize("locale", ["de", "en", "es"])
+@pytest.mark.parametrize("streak", sorted(STREAK_MILESTONES))
+def test_every_paid_milestone_has_a_toast_in_every_locale(
+    streak: int, locale: str
+) -> None:
+    """A bonus without a word was half of #1066: +100 at streak 10, silently.
+    A new milestone in scoring.py fails here until its string is written."""
+    strings = json.loads((_I18N / f"{locale}.json").read_text("utf-8"))["game"]
+    assert str(streak) in strings.get(f"streakToast{streak}", "")
 
 
 @_NEEDS_NODE

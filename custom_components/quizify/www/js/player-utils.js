@@ -386,6 +386,10 @@
         'game.streakToast3':       { glyph: 'flame',      tint: 'sun'   },
         'game.streakToast5':       { glyph: 'flame',      tint: 'sun'   },
         'game.streakToast7':       { glyph: 'flame',      tint: 'sun'   },
+        'game.streakToast10':      { glyph: 'flame',      tint: 'sun'   },
+        'game.streakToast15':      { glyph: 'flame',      tint: 'sun'   },
+        'game.streakToast20':      { glyph: 'flame',      tint: 'sun'   },
+        'game.streakToast25':      { glyph: 'flame',      tint: 'sun'   },
         'powerups.stealHint':      { glyph: 'bulb',       tint: 'sun'   },
         'leaderboard.thanksEmoji': { glyph: 'party',      tint: 'coral' },
         'wager.bonusFromReaction': { glyph: 'party',      tint: 'coral' }
