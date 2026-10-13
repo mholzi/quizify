@@ -66,6 +66,7 @@ from ..const import (
     SUBMIT_STATUS_DECLINED,
     SUBMIT_STATUS_PENDING,
 )
+from ..storage import write_json
 from .context import APP_CTX_KEY
 from .origin import check_unauthenticated_post
 from .rate_limit import SlidingWindowLimiter
@@ -283,15 +284,9 @@ class PackSubmissionStore:
         return {"submissions": [], "last_poll": None}
 
     def _save(self, data: dict) -> bool:
-        try:
-            self._path.parent.mkdir(parents=True, exist_ok=True)
-            self._path.write_text(
-                json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8"
-            )
-            return True
-        except OSError as err:
-            _LOGGER.error("Could not write pack submissions: %s", err)
-            return False
+        # write_json goes through a sibling .tmp and os.replace, so an interrupted write
+        # leaves the previous records in place instead of an empty file.
+        return write_json(self._path, data, label="pack submissions")
 
     # --- reconcile ----------------------------------------------------------
 
