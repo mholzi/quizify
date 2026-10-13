@@ -6,7 +6,10 @@ from typing import TYPE_CHECKING, Any
 
 from custom_components.quizify.game.highlights import compute_superlatives
 from custom_components.quizify.game.phase_controller import GamePhase
-from custom_components.quizify.game.scoring import calculate_podium
+from custom_components.quizify.game.scoring import (
+    calculate_podium,
+    is_streak_active,
+)
 
 if TYPE_CHECKING:
     from custom_components.quizify.game.player import PlayerSession
@@ -346,6 +349,10 @@ def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
             ),
             "score": p.score,
             "streak": p.streak,
+            # #1066: the server's verdict on whether that streak scores yet.
+            # The badge and the reveal headline read this, never a threshold
+            # of their own.
+            "streak_active": is_streak_active(p.streak),
             "round_score": p.round_score,
             "correct": last_result == "correct",
             "missed_round": last_result == "timeout",
@@ -787,6 +794,7 @@ def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
             "name": p.name,
             "score": p.score,
             "streak": p.streak,
+            "streak_active": is_streak_active(p.streak),
             "connected": p.connected,
             "color": p.color,
             "is_admin": p.is_admin,

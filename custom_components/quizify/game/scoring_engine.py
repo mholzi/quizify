@@ -5,7 +5,7 @@ game-server God-objects). This module owns the *pure* arithmetic that turns a
 single submitted answer into points + a client-facing breakdown:
 
   * base / speed / difficulty / streak scoring (delegates to ``scoring``)
-  * the streak-milestone spike (3/5/10/... → discrete bonus)
+  * the streak-milestone spike (3/5/7/10/... → discrete bonus)
   * the final-round wager override (Jeopardy-style bet)
 
 It is deliberately side-effect free: it never mutates a ``PlayerSession`` and
@@ -195,7 +195,7 @@ class ScoringEngine:
                 double_bonus = 0
 
         # Streak milestone bonus — discrete spike awarded the round the streak
-        # EXACTLY equals a milestone value (3, 5, 10, 15, 20, 25). Wager rounds
+        # EXACTLY equals a milestone value (3, 5, 7, 10, 15, 20, 25). Wager rounds
         # skip this so the bet stays the only thing in play.
         milestone_bonus = 0
         if correct and wager_used is None:

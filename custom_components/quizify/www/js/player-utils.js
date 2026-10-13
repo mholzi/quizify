@@ -386,6 +386,10 @@
         'game.streakToast3':       { glyph: 'flame',      tint: 'sun'   },
         'game.streakToast5':       { glyph: 'flame',      tint: 'sun'   },
         'game.streakToast7':       { glyph: 'flame',      tint: 'sun'   },
+        'game.streakToast10':      { glyph: 'flame',      tint: 'sun'   },
+        'game.streakToast15':      { glyph: 'flame',      tint: 'sun'   },
+        'game.streakToast20':      { glyph: 'flame',      tint: 'sun'   },
+        'game.streakToast25':      { glyph: 'flame',      tint: 'sun'   },
         'powerups.stealHint':      { glyph: 'bulb',       tint: 'sun'   },
         'leaderboard.thanksEmoji': { glyph: 'party',      tint: 'coral' },
         'wager.bonusFromReaction': { glyph: 'party',      tint: 'coral' }
@@ -443,6 +447,27 @@
         }
         toast.style.opacity = '1';
         setTimeout(function () { toast.style.opacity = '0'; }, duration);
+    }
+
+    /**
+     * Celebrate a streak milestone the server just paid a bonus for (#1066).
+     *
+     * `milestone` is `milestone_streak` from the answer_result: the streak
+     * level this answer landed on, or 0. Which levels are milestones is the
+     * server's business (STREAK_MILESTONES in game/scoring.py) — this only
+     * looks for the matching string, `game.streakToast<N>`. A milestone with
+     * no string shows nothing rather than a raw key; `t` hands the key back
+     * when it has no translation, which is the test.
+     * @returns {boolean} whether a toast was shown
+     */
+    function showStreakMilestoneToast(milestone) {
+        var level = Number(milestone) || 0;
+        if (level <= 0) return false;
+        var key = 'game.streakToast' + level;
+        var text = _tt(key);
+        if (!text || text === key) return false;
+        showToast(text, 2500, key);
+        return true;
     }
 
     /**
@@ -562,6 +587,7 @@
         feedbackLabel: feedbackLabel,
         generateQR: generateQR,
         showToast: showToast,
+        showStreakMilestoneToast: showStreakMilestoneToast,
         clearToast: clearToast,
         saveSession: saveSession,
         getSession: getSession,

@@ -61,8 +61,10 @@ def _run(script: str, tmp_path: Path) -> dict:
 # The three surfaces built these strings. Written out in full rather than
 # assembled from the same pieces the implementation uses, because a helper
 # shared between the code and its test proves nothing about either.
+# ``streak_active`` is the server's verdict that the streak scores (#1066); the
+# row prints the badge on that flag and keeps no threshold of its own.
 _ROWS = [
-    {"name": "Anna", "score": 12, "streak": 3},
+    {"name": "Anna", "score": 12, "streak": 3, "streak_active": True},
     {"name": "B<b>", "score": 7},
 ]
 
