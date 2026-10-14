@@ -3,6 +3,22 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.23.0-RC5] — 2026-10-14
+
+**A Pack for Film Night, and More Pictures to Guess**
+
+Everything from RC4, plus streaks that look the same on the phone and on the server, and a safer save.
+
+### Streaks, one set of rules
+
+The phone kept its own copy of the streak rules, and it had drifted. It celebrated a bonus at 7 that never paid, said nothing when 10 in a row added 100 points, and showed a streak at 2 that did not count yet. The phone now takes the rules from the server. Seven in a row is now a real milestone worth 75 points, and 10, 15, 20 and 25 in a row each get their own toast.
+
+### Pack submissions survive a crash
+
+The list of submitted packs is now written to a temporary file first and then swapped in. A Home Assistant crash mid-save no longer empties it. Thanks to @jay23606.
+
+Beta versions must be enabled in HACS.
+
 ## [1.23.0-RC4] — 2026-10-12
 
 **A Pack for Film Night, and More Pictures to Guess**
