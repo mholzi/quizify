@@ -136,6 +136,32 @@ function _clearFinaleCountdown() {{}}
         .map(function (b) {{ return b.innerHTML.indexOf('powerup-target-submitted') !== -1; }});
     out.soloBadges = badges;
 
+    // #1076: who has not answered cannot be picked for Steal.
+    function stealButtons() {{
+        return document.getElementById('powerup-target-list')
+            .querySelectorAll('.powerup-target-option');
+    }}
+    out.stealDisabled = stealButtons().map(function (b) {{ return b.disabled; }});
+    var picked = [];
+    game.openTargetPicker('steal', function (n) {{ picked.push(n); }}, ROSTER);
+    stealButtons()[1].dispatch('click');  // Cleo, not answered
+    out.pickedUnanswered = picked.slice();
+    out.openAfterDisabledTap = modalOpen();
+    // Cleo answers while the picker is open: her option comes alive.
+    game.renderSubmissionTracker([
+        {{ entrant_id: 'Anna', name: 'Anna', submitted: false, connected: true }},
+        {{ entrant_id: 'Bert', name: 'Bert', submitted: true, connected: true }},
+        {{ entrant_id: 'Cleo', name: 'Cleo', submitted: true, connected: true }}
+    ]);
+    out.stealDisabledAfterAnswer = stealButtons().map(function (b) {{ return b.disabled; }});
+    out.cleoBadgeAfterAnswer = stealButtons()[1].innerHTML.indexOf('powerup-target-submitted') !== -1;
+    stealButtons()[1].dispatch('click');
+    out.pickedAfterAnswer = picked.slice();
+    // Freeze is untouched by the Steal rule.
+    game.openTargetPicker('freeze', function () {{}}, ROSTER);
+    out.freezeDisabled = stealButtons().map(function (b) {{ return b.disabled; }});
+    game.closeTargetPicker();
+
     console.log(JSON.stringify(out));
 }})().catch(function (e) {{ console.error(e); process.exit(1); }});
 """
@@ -190,6 +216,28 @@ def test_a_solo_game_is_unchanged(result: dict) -> None:
     assert result["solo"] == ["Bert", "Cleo"]
     # Steal's "answered" badge keeps reading who has submitted.
     assert result["soloBadges"] == [True, False]
+
+
+@_NEEDS_NODE
+def test_steal_targets_who_have_not_answered_are_disabled(result: dict) -> None:
+    """#1076: the server refuses them; the picker no longer offers them."""
+    assert result["stealDisabled"] == [False, True]
+    assert result["pickedUnanswered"] == []
+    assert result["openAfterDisabledTap"] is True
+
+
+@_NEEDS_NODE
+def test_a_target_who_answers_while_the_picker_is_open_becomes_pickable(
+    result: dict,
+) -> None:
+    assert result["stealDisabledAfterAnswer"] == [False, False]
+    assert result["cleoBadgeAfterAnswer"] is True
+    assert result["pickedAfterAnswer"] == ["Cleo"]
+
+
+@_NEEDS_NODE
+def test_freeze_targets_are_not_disabled(result: dict) -> None:
+    assert result["freezeDisabled"] == [False, False]
 
 
 # ---------------------------------------------------------------------------

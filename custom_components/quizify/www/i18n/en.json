@@ -214,7 +214,7 @@
     "pickFreezeTitle": "Freeze a player",
     "pickStealTitle": "Steal from a player",
     "pickHint": "Tap a player to target them",
-    "stealHint": "Most effective once the target has answered",
+    "stealHint": "Pick a player who has already answered",
     "targetAnswered": "answered",
     "noOpponents": "No other players to target",
     "cancel": "Cancel"
