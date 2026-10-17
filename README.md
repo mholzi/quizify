@@ -52,7 +52,7 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 **Works on Any Screen** — Dashboard mode for the TV. Players use their phones. Admin runs the show. No extra hardware needed.
 
-**Sixteen Themes, Three Languages** — 6,362 questions across 48 themed packs (Geography, Pop Culture, Film & TV, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation, Picture Round, Christmas, New Year's Eve, Halloween) in German, English and Spanish. Mix them, filter them, swap mid-session.
+**Sixteen Themes, Three Languages** — 6,399 questions across 48 themed packs (Geography, Pop Culture, Film & TV, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation, Picture Round, Christmas, New Year's Eve, Halloween) in German, English and Spanish. Mix them, filter them, swap mid-session.
 
 ---
 
@@ -318,19 +318,19 @@ Then **"Start New Game"** (same settings, same players) or **Reset Game** (fresh
 
 ## Question Packs
 
-Quizify ships with **6,362 questions across 48 themed packs in 16 themes**, in German, English and Spanish.
+Quizify ships with **6,399 questions across 48 themed packs in 16 themes**, in German, English and Spanish.
 
 | Theme | 🇩🇪 Deutsch | 🇬🇧 English | 🇪🇸 Español |
 |-------|-------------|-------------|-------------|
 | 🌍 **Geographie / Geography / Geografía** | 159 | 159 | 159 |
-| 🦋 **Tiere & Natur / Animals & Nature / Naturaleza** | 158 | 152 | 160 |
-| 🎬 **Popkultur / Pop Culture / Cultura Pop** | 159 | 136 | 160 |
+| 🦋 **Tiere & Natur / Animals & Nature / Naturaleza** | 158 | 160 | 160 |
+| 🎬 **Popkultur / Pop Culture / Cultura Pop** | 159 | 160 | 160 |
 | ⚽ **Sport / Deportes** | 158 | 160 | 159 |
 | 🎵 **Musik / Music / Música** | 158 | 158 | 160 |
 | 🔬 **Wissenschaft / Science / Ciencia** | 159 | 159 | 159 |
 | 📜 **Geschichte / History / Historia** | 159 | 160 | 160 |
 | 🍔 **Essen & Trinken / Food & Drink / Comida** | 160 | 159 | 160 |
-| 💡 **Technik / Technology / Tecnología** | 158 | 155 | 159 |
+| 💡 **Technik / Technology / Tecnología** | 158 | 160 | 159 |
 | 🎬 **Film & Serien / Film & TV / Cine y series** | 159 | 160 | 159 |
 | 🏆 **Weltmeisterschaft / World Cup / Copa Mundial** | 157 | 159 | 160 |
 | 🎯 **Schätzfragen / Estimation / Estimación** | 40 | 40 | 40 |

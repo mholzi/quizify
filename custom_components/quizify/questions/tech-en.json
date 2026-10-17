@@ -1,7 +1,7 @@
 {
   "name": "Technology",
   "language": "en",
-  "version": "1.4",
+  "version": "1.5",
   "theme": "tech",
   "questions": [
     {
@@ -3177,6 +3177,111 @@
       "unit": "bits",
       "difficulty": "medium",
       "fun_fact": "32 bits give just under 4.3 billion addresses — unimaginably many in 1981, officially exhausted since 2011. IPv6 uses 128.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_171",
+      "question": "What does the 'i' in iMac stand for?",
+      "answers": [
+        {
+          "text": "Internet",
+          "correct": true
+        },
+        {
+          "text": "Innovation",
+          "correct": false
+        },
+        {
+          "text": "Intelligent",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Apple's 1998 launch presentation said it stood for 'Internet', aimed at getting online quickly. Apple also listed 'individual, instruct, inform, inspire' as other meanings.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_172",
+      "question": "What was Java originally called?",
+      "answers": [
+        {
+          "text": "Oak",
+          "correct": true
+        },
+        {
+          "text": "Cedar",
+          "correct": false
+        },
+        {
+          "text": "Elm",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "James Gosling named the language after an oak tree outside his window at Sun Microsystems. It was renamed Java in 1995 after a trademark problem, a nod to the coffee the team drank in large amounts.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_173",
+      "question": "What was the world's first web browser, written by Tim Berners-Lee in 1990, called?",
+      "answers": [
+        {
+          "text": "Mosaic",
+          "correct": false
+        },
+        {
+          "text": "Netscape Navigator",
+          "correct": false
+        },
+        {
+          "text": "WorldWideWeb",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It ran on a NeXT computer and was later renamed Nexus to avoid confusion with the web itself. Mosaic arrived in 1993 and popularised inline images.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_174",
+      "question": "What was the first internet search engine, created in 1990 to index FTP file listings?",
+      "answers": [
+        {
+          "text": "WebCrawler",
+          "correct": false
+        },
+        {
+          "text": "Archie",
+          "correct": true
+        },
+        {
+          "text": "Veronica",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Archie was created by Alan Emtage at McGill University in Montreal, and the name is short for 'archive'. The later Gopher search tools Veronica and Jughead were jokes on the Archie comics.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_175",
+      "question": "Which band's photo is widely regarded as the first image published on the web, in 1992?",
+      "answers": [
+        {
+          "text": "Les Horribles Cernettes",
+          "correct": true
+        },
+        {
+          "text": "Depeche Mode",
+          "correct": false
+        },
+        {
+          "text": "Kraftwerk",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The group was a parody band of staff at the CERN research centre. A colleague gave the photo to Tim Berners-Lee, who put it on the early web.",
       "category": "Technology"
     }
   ]

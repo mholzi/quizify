@@ -1,7 +1,7 @@
 {
   "name": "Pop Culture",
   "language": "en",
-  "version": "1.5",
+  "version": "1.6",
   "theme": "popculture",
   "questions": [
     {
@@ -1642,6 +1642,510 @@
       "unit": "minutes",
       "difficulty": "hard",
       "fun_fact": "238 minutes including overture and intermission. Adjusted for inflation it remains the highest-grossing film ever made.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_171",
+      "question": "Who is the playable hero of The Legend of Zelda series?",
+      "answers": [
+        {
+          "text": "Link",
+          "correct": true
+        },
+        {
+          "text": "Zelda",
+          "correct": false
+        },
+        {
+          "text": "Ganon",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Zelda is the princess who needs rescuing, and she is named after the writer Zelda Fitzgerald. The green-clad hero is Link, which is why people keep calling the game series by the wrong name.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_172",
+      "question": "Which Minecraft monster sneaks up on players and explodes?",
+      "answers": [
+        {
+          "text": "The Zombie",
+          "correct": false
+        },
+        {
+          "text": "The Creeper",
+          "correct": true
+        },
+        {
+          "text": "The Skeleton",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Creeper began as a coding mistake: while building a pig model, creator Markus Persson mixed up the height and width values, ending up with a tall, stubby, legless shape. He liked it and made it a monster.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_173",
+      "question": "Which Pokémon carries the number 001 in the original Pokédex?",
+      "answers": [
+        {
+          "text": "Charmander",
+          "correct": false
+        },
+        {
+          "text": "Pikachu",
+          "correct": false
+        },
+        {
+          "text": "Bulbasaur",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pikachu is number 025 and Charmander number 004. Bulbasaur, Ivysaur and Venusaur open the Pokédex as numbers 001 to 003, ahead of the Charmander and Squirtle lines.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_174",
+      "question": "Which pop star created the stage alter ego 'Sasha Fierce'?",
+      "answers": [
+        {
+          "text": "Lady Gaga",
+          "correct": false
+        },
+        {
+          "text": "Rihanna",
+          "correct": false
+        },
+        {
+          "text": "Beyoncé",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sasha Fierce took over the second disc of the 2008 album I Am... Sasha Fierce. Beyoncé later said she had merged with the persona and retired it in 2010.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_175",
+      "question": "Which Spice Girl was nicknamed 'Scary Spice'?",
+      "answers": [
+        {
+          "text": "Mel B",
+          "correct": true
+        },
+        {
+          "text": "Emma Bunton",
+          "correct": false
+        },
+        {
+          "text": "Geri Halliwell",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Spice Girls' nicknames were handed out by a British pop magazine in the mid-1990s and stuck for good. Mel B was Scary, Geri was Ginger, Emma was Baby, Mel C was Sporty and Victoria was Posh.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_176",
+      "question": "In which country was the Rubik's Cube invented?",
+      "answers": [
+        {
+          "text": "Japan",
+          "correct": false
+        },
+        {
+          "text": "Germany",
+          "correct": false
+        },
+        {
+          "text": "Hungary",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ernő Rubik, an architecture professor in Budapest, built the first prototype in 1974 as a teaching tool for 3D geometry. He needed about a month to solve his own cube.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_177",
+      "question": "What was Netflix's original business before it started streaming?",
+      "answers": [
+        {
+          "text": "Renting DVDs by mail",
+          "correct": true
+        },
+        {
+          "text": "Running a chain of video stores",
+          "correct": false
+        },
+        {
+          "text": "Selling television sets",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Netflix launched in 1997 as a DVD-by-mail service with no late fees. Streaming only arrived in 2007, a decade later.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_178",
+      "question": "What are the walking mushroom enemies in the first level of Super Mario Bros. called?",
+      "answers": [
+        {
+          "text": "Boos",
+          "correct": false
+        },
+        {
+          "text": "Koopas",
+          "correct": false
+        },
+        {
+          "text": "Goombas",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In Japan the Goomba is called Kuribo, roughly 'chestnut person'. It was designed as the simplest enemy possible so that players could learn to stomp it in the first seconds of the game.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_179",
+      "question": "The Monkees were put together in 1965 for what purpose?",
+      "answers": [
+        {
+          "text": "To star in a TV sitcom",
+          "correct": true
+        },
+        {
+          "text": "To open for The Beatles on tour",
+          "correct": false
+        },
+        {
+          "text": "To record a film soundtrack",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The band was cast from an advertisement seeking four 'insane boys' for a television show. In 1967 they fought for the right to play their own instruments on their records, starting with the album Headquarters.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_180",
+      "question": "Which toy became the first ever advertised on American television, in 1952?",
+      "answers": [
+        {
+          "text": "Mr. Potato Head",
+          "correct": true
+        },
+        {
+          "text": "Slinky",
+          "correct": false
+        },
+        {
+          "text": "Barbie",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The original Mr. Potato Head was sold as a box of plastic faces and ears that you pushed into a real potato. The plastic potato body only came along in 1964.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_181",
+      "question": "Where did The Beatles give their final public performance, in January 1969?",
+      "answers": [
+        {
+          "text": "At the Cavern Club in Liverpool",
+          "correct": false
+        },
+        {
+          "text": "On the roof of the Apple building in London",
+          "correct": true
+        },
+        {
+          "text": "At Candlestick Park in San Francisco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 42-minute impromptu set above Savile Row drew crowds into the street until police asked them to stop. Candlestick Park in 1966 was their last paid concert, not their last public one.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_182",
+      "question": "Which heavy metal singer popularised the 'devil horns' hand sign, learned from his Italian grandmother?",
+      "answers": [
+        {
+          "text": "Ozzy Osbourne",
+          "correct": false
+        },
+        {
+          "text": "Bruce Dickinson",
+          "correct": false
+        },
+        {
+          "text": "Ronnie James Dio",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dio's grandmother used the gesture, known as the malocchio, to ward off the evil eye. He began flashing it at concerts after joining Black Sabbath in 1979, and it spread across rock and metal.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_183",
+      "question": "The three pieces of the Triforce in The Legend of Zelda stand for which virtues?",
+      "answers": [
+        {
+          "text": "Strength, Honour and Hope",
+          "correct": false
+        },
+        {
+          "text": "Love, Truth and Justice",
+          "correct": false
+        },
+        {
+          "text": "Power, Wisdom and Courage",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ganon holds the Triforce of Power, Zelda the Triforce of Wisdom and Link the Triforce of Courage. The sacred triangle appears in nearly every game of the series.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_184",
+      "question": "What was Freddie Mercury's birth name?",
+      "answers": [
+        {
+          "text": "Farrokh Bulsara",
+          "correct": true
+        },
+        {
+          "text": "Farid Mercurio",
+          "correct": false
+        },
+        {
+          "text": "Frederick Mercer",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mercury was born in Zanzibar in 1946 to a Parsi family. He adopted the stage name around 1970, taking 'Mercury' from the line 'Mother Mercury, look what they've done to me' in his own song My Fairy King.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_185",
+      "question": "The Rolling Stones' tongue-and-lips logo, drawn in 1970, was inspired by which figure?",
+      "answers": [
+        {
+          "text": "The Greek Gorgon Medusa",
+          "correct": false
+        },
+        {
+          "text": "The Egyptian goddess Sekhmet",
+          "correct": false
+        },
+        {
+          "text": "The Hindu goddess Kali",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Designer John Pasche, then a student at the Royal College of Art, was asked by Mick Jagger for something cheeky and was inspired by Kali's outstretched tongue. He was reportedly paid just £50 at first, with a bonus of £200 later.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_186",
+      "question": "Which Nintendo console was codenamed 'Revolution' during development?",
+      "answers": [
+        {
+          "text": "The Wii",
+          "correct": true
+        },
+        {
+          "text": "The Nintendo Switch",
+          "correct": false
+        },
+        {
+          "text": "The Nintendo DS",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nintendo revealed the final name in April 2006. Nintendo explained that 'Wii' was meant to sound like 'we', signalling a console for everyone.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_187",
+      "question": "The name 'Tamagotchi' blends the Japanese word for 'egg' with what?",
+      "answers": [
+        {
+          "text": "Watch",
+          "correct": true
+        },
+        {
+          "text": "Pocket",
+          "correct": false
+        },
+        {
+          "text": "Friend",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tamago means egg and the second half plays on the English word 'watch', since the toy was originally meant to be worn on the wrist. Bandai launched it in 1996 and has sold more than 80 million of them.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_188",
+      "question": "What does the name 'Pokémon' abbreviate?",
+      "answers": [
+        {
+          "text": "Pixel Monsters",
+          "correct": false
+        },
+        {
+          "text": "Power Monsters",
+          "correct": false
+        },
+        {
+          "text": "Pocket Monsters",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Japanese title is Poketto Monsutā, shortened to Pokémon. Creator Satoshi Tajiri based the idea on his childhood hobby of collecting insects.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_189",
+      "question": "Which music publisher collected licensing fees for 'Happy Birthday to You' until courts struck down its claim in 2015?",
+      "answers": [
+        {
+          "text": "Universal Music Publishing",
+          "correct": false
+        },
+        {
+          "text": "Warner/Chappell Music",
+          "correct": true
+        },
+        {
+          "text": "Disney Music Group",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The company was reported to earn around $2 million a year from licensing the song for films, TV shows and public performances. A US court found in 2015 that its copyright claim covered only a particular piano arrangement, not the song itself.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_190",
+      "question": "Rickrolling evolved from which older internet bait-and-switch prank?",
+      "answers": [
+        {
+          "text": "Duckrolling",
+          "correct": true
+        },
+        {
+          "text": "Catfishing",
+          "correct": false
+        },
+        {
+          "text": "Spoofing",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Duckrolling started around 2006 on message boards where a word filter swapped 'egg' for 'duck', and links promising something else led to a photo of a duck on wheels. The Rick Astley video replaced it in 2007.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_191",
+      "question": "Which 1979 Atari 2600 game hid one of the first famous video game 'Easter eggs'?",
+      "answers": [
+        {
+          "text": "Pitfall!",
+          "correct": false
+        },
+        {
+          "text": "Adventure",
+          "correct": true
+        },
+        {
+          "text": "Combat",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Programmer Warren Robinett secretly placed his own name in a hidden room because Atari did not credit developers. It was found by a 12-year-old a year after release, and an Atari executive then called such secrets 'Easter eggs'.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_192",
+      "question": "Nokia's famous default ringtone is an excerpt of a classical piece written for which instrument?",
+      "answers": [
+        {
+          "text": "Violin",
+          "correct": false
+        },
+        {
+          "text": "Piano",
+          "correct": false
+        },
+        {
+          "text": "Guitar",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The tune comes from Gran Vals, composed by the Spanish guitarist Francisco Tárrega in 1902. It was reportedly heard billions of times a day at the height of Nokia's popularity.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_193",
+      "question": "In the original Super Mario Bros., what is the only difference between the clouds and the bushes?",
+      "answers": [
+        {
+          "text": "Their size",
+          "correct": false
+        },
+        {
+          "text": "Their colour",
+          "correct": true
+        },
+        {
+          "text": "Their animation speed",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The same sprite is reused, only with a different colour palette, to save precious cartridge memory. The whole game fits into about 40 kilobytes.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_194",
+      "question": "Which two things inspired the design of Sonic the Hedgehog's red shoes?",
+      "answers": [
+        {
+          "text": "Michael Jackson's boots and Santa Claus's colours",
+          "correct": true
+        },
+        {
+          "text": "Roller skates and a fire engine",
+          "correct": false
+        },
+        {
+          "text": "Bowling shoes and a ladybird",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Designer Naoto Ohshima has said the red came from Santa Claus and the white strap and buckle from the boots Michael Jackson wore on the cover of his album Bad.",
       "category": "Pop Culture"
     }
   ]
