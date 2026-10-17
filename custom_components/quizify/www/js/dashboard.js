@@ -1566,7 +1566,8 @@
         var title = window.QuizifyI18n ? window.QuizifyI18n.t('dashboard.runnersUp') : 'Also playing';
         othersEl.innerHTML = '<div class="podium-others-title">' + QuizifyUtils.escapeHtml(title) + '</div>' +
             others.map(function(p, i) {
-                var rank = i + 4;  // 4th, 5th, \u2026
+                // 4th, 5th, \u2026 — or the shared rank on a tie (#1078).
+                var rank = window.QuizifyRenderShared.podiumPlace(p, i + 3);
                 return '<div class="podium-other-row">' +
                     '<span class="podium-other-rank">#' + rank + '</span>' +
                     '<span class="podium-other-name">' + QuizifyUtils.escapeHtml(p.name) + '</span>' +
