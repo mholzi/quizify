@@ -1,7 +1,7 @@
 {
   "name": "Animals & Nature",
   "language": "en",
-  "version": "1.4",
+  "version": "1.5",
   "theme": "nature",
   "questions": [
     {
@@ -1836,6 +1836,174 @@
       "unit": "percent",
       "difficulty": "easy",
       "fun_fact": "Very little of it is mapped in detail — we know the surface of Mars better than we know our own seafloor.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_169",
+      "question": "Which is the only mammal capable of true, sustained flight?",
+      "answers": [
+        {
+          "text": "The flying squirrel",
+          "correct": false
+        },
+        {
+          "text": "The bat",
+          "correct": true
+        },
+        {
+          "text": "The sugar glider",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Flying squirrels and sugar gliders only glide, they cannot flap. With around 1,400 species, bats make up roughly a fifth of all mammal species.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_170",
+      "question": "Which of these sea animals has no brain at all?",
+      "answers": [
+        {
+          "text": "The jellyfish",
+          "correct": true
+        },
+        {
+          "text": "The squid",
+          "correct": false
+        },
+        {
+          "text": "The octopus",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A jellyfish gets by with a loose net of nerves that handles swimming and stinging. The box jellyfish even has 24 eyes, all wired to that nerve net rather than a brain.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_171",
+      "question": "What is a group of crows traditionally called?",
+      "answers": [
+        {
+          "text": "A parliament",
+          "correct": false
+        },
+        {
+          "text": "A murder",
+          "correct": true
+        },
+        {
+          "text": "A charm",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A parliament is a group of owls and a charm is a group of finches. Crows are known to gather around dead members of their flock, which some people think inspired the grim name.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_172",
+      "question": "What is a group of flamingos called?",
+      "answers": [
+        {
+          "text": "A flamboyance",
+          "correct": true
+        },
+        {
+          "text": "A tower",
+          "correct": false
+        },
+        {
+          "text": "A bloat",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A tower is a group of giraffes and a bloat is a group of hippos. The name 'flamboyance' is usually put down to the flamingos' bright colour and showy displays.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_173",
+      "question": "Which Australian bird is famed for imitating chainsaws, camera shutters and car alarms?",
+      "answers": [
+        {
+          "text": "The superb lyrebird",
+          "correct": true
+        },
+        {
+          "text": "The kookaburra",
+          "correct": false
+        },
+        {
+          "text": "The galah",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A 1998 BBC series, The Life of Birds, showed David Attenborough with a lyrebird imitating a camera shutter, a motor drive and a chainsaw, though the birds filmed were captive. In the wild, lyrebirds mostly mimic other birds and use their repertoire to impress females.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_174",
+      "question": "Which tree species includes the tallest living trees on Earth?",
+      "answers": [
+        {
+          "text": "The Sitka spruce",
+          "correct": false
+        },
+        {
+          "text": "The giant sequoia",
+          "correct": false
+        },
+        {
+          "text": "The coast redwood",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The record holder, Hyperion, stands about 116 metres tall in a California national park. Its exact location is kept secret to protect it, and giant sequoias are larger by volume but not as tall.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_175",
+      "question": "What is a baby echidna called?",
+      "answers": [
+        {
+          "text": "A puggle",
+          "correct": true
+        },
+        {
+          "text": "A kit",
+          "correct": false
+        },
+        {
+          "text": "A joey",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Echidnas are one of the few mammals that lay eggs. The egg hatches after roughly ten days in the mother's pouch, and the tiny puggle then feeds on her milk, which seeps out through pores in her skin.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_176",
+      "question": "Cuttlefish match their surroundings almost perfectly, yet they are believed to be what?",
+      "answers": [
+        {
+          "text": "Colour-blind",
+          "correct": true
+        },
+        {
+          "text": "Night-blind",
+          "correct": false
+        },
+        {
+          "text": "Short-sighted",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "They have only one type of light-receptive cell. One hypothesis is that their odd U-shaped pupils let them sense colour through the way different wavelengths focus at different depths in the eye, but this is still debated.",
       "category": "Animals & Nature"
     }
   ]
