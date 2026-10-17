@@ -73,11 +73,30 @@ class ScoreComputation:
     milestone_bonus: int = 0
 
     @property
+    def shown_streak_bonus(self) -> int:
+        """The streak figure the reveal prints: multiplier part + milestone.
+
+        #1075: the milestone spike is folded into ``points`` but no breakdown
+        item carried it, so a 3-streak round read "+39" over items summing to
+        19. The client renders the parts additively (#308), so the milestone
+        rides on the streak item the player already sees ("3-streak bonus!")
+        rather than a new line. ``streak_bonus`` itself keeps the engine
+        meaning — the multiplier's share — and ``milestone_bonus`` stays
+        separate for the tallies and the toast.
+        """
+        return self.streak_bonus + self.milestone_bonus
+
+    @property
     def breakdown(self) -> dict[str, Any]:
-        """The ``round_score_breakdown`` dict the client renders."""
+        """The ``round_score_breakdown`` dict the client renders.
+
+        ``streak_bonus`` here is :attr:`shown_streak_bonus` (milestone
+        included, #1075); ``milestone_bonus`` is informational and must not
+        be added on top of it.
+        """
         return {
             "speed_bonus": self.speed_bonus,
-            "streak_bonus": self.streak_bonus,
+            "streak_bonus": self.shown_streak_bonus,
             "difficulty_multiplier": self.difficulty_multiplier,
             "difficulty_bonus": self.difficulty_bonus,
             "double_points": self.double_points,

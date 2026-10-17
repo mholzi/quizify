@@ -1114,7 +1114,10 @@ class QuizifyGameState:
 
         points = computation.points
         speed_bonus = computation.speed_bonus
-        streak_bonus = computation.streak_bonus
+        # #1075: the figure the phone prints, milestone included — the reveal
+        # copies this over its own row (player-core.js), so it has to match
+        # the breakdown dict.
+        streak_bonus = computation.shown_streak_bonus
         diff_mult = computation.difficulty_multiplier
         milestone_bonus = computation.milestone_bonus
 
