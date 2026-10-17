@@ -214,7 +214,7 @@
     "pickFreezeTitle": "Congela a un jugador",
     "pickStealTitle": "Roba a un jugador",
     "pickHint": "Toca a un jugador para elegirlo",
-    "stealHint": "Más eficaz cuando el objetivo ya ha respondido",
+    "stealHint": "Elige a alguien que ya haya respondido",
     "targetAnswered": "ha respondido",
     "noOpponents": "No hay otros jugadores a quienes elegir",
     "cancel": "Cancelar"

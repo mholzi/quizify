@@ -6288,6 +6288,22 @@ body.is-admin .reaction-bar {
     transform: scale(0.98);
 }
 
+/* #1076: Steal targets who have not answered yet — the server refuses them,
+   so they read as unavailable until the "answered" chip appears. */
+.powerup-target-option:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.powerup-target-option:disabled:hover {
+    background: var(--color-bg-card-alt);
+    border-color: var(--color-border-light);
+}
+
+.powerup-target-option:disabled:active {
+    transform: none;
+}
+
 .powerup-target-dot {
     width: 14px;
     height: 14px;

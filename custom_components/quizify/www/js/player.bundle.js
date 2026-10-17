@@ -5529,6 +5529,7 @@
 
         var playerList = players || [];
         _latestPlayers = playerList;
+        _refreshOpenStealPicker(playerList);
 
         if (!tracker || !container) return;
         var submittedCount = playerList.filter(function (p) {
@@ -5874,6 +5875,42 @@
      * Returns true for power-up types whose effect lands on another player
      * (and therefore need a target picker).
      */
+    function _answeredBadgeHtml() {
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        return '<span class="powerup-target-submitted">' +
+            pu.escapeHtml(t('powerups.targetAnswered')) + '</span>';
+    }
+
+    // #1076: the server only lets Steal take from someone who has already
+    // answered (use_powerup), so a target without the "answered" badge is
+    // disabled. When an opponent answers while the picker is open, their
+    // option comes alive with the badge instead of staying greyed out.
+    function _setStealOptionEnabled(btn, enabled) {
+        btn.disabled = !enabled;
+        if (enabled) {
+            btn.removeAttribute('aria-disabled');
+        } else {
+            btn.setAttribute('aria-disabled', 'true');
+        }
+    }
+
+    function _refreshOpenStealPicker(players) {
+        var modal = document.getElementById('powerup-target-modal');
+        var listEl = document.getElementById('powerup-target-list');
+        if (!modal || !listEl || modal.classList.contains('hidden')) return;
+        if (modal.dataset.powerup !== 'steal') return;
+        var submitted = {};
+        (players || []).forEach(function (p) {
+            if (p && p.name && p.submitted) submitted[p.name] = true;
+        });
+        listEl.querySelectorAll('.powerup-target-option').forEach(function (btn) {
+            if (btn.disabled && submitted[btn.dataset.player]) {
+                _setStealOptionEnabled(btn, true);
+                btn.innerHTML += _answeredBadgeHtml();
+            }
+        });
+    }
+
     function powerupNeedsTarget(powerupType) {
         return powerupType === 'freeze' || powerupType === 'steal';
     }
@@ -5924,6 +5961,8 @@
             return { name: p.name, color: p.color, submitted: !!(p.submitted || submittedByName[p.name]) };
         });
 
+        modal.dataset.powerup = powerupType;
+
         if (titleEl) {
             titleEl.textContent = powerupType === 'steal'
                 ? t('powerups.pickStealTitle')
@@ -5970,13 +6009,16 @@
                 }
                 var submittedBadge = '';
                 if (powerupType === 'steal' && opp.submitted) {
-                    submittedBadge = '<span class="powerup-target-submitted">' +
-                        pu.escapeHtml(t('powerups.targetAnswered')) + '</span>';
+                    submittedBadge = _answeredBadgeHtml();
                 }
                 btn.innerHTML = colorDot +
                     '<span class="powerup-target-name">' + pu.escapeHtml(opp.name) + '</span>' +
                     submittedBadge;
+                // #1076: nothing to steal from someone who has not answered —
+                // the server refuses it with a bare "Invalid action".
+                if (powerupType === 'steal') _setStealOptionEnabled(btn, opp.submitted);
                 btn.addEventListener('click', function () {
+                    if (btn.disabled) return;
                     closeTargetPicker();
                     onConfirm(opp.name);
                 });
