@@ -425,17 +425,42 @@
     // showToast(message, duration[, iconKey]) — when iconKey maps to a
     // feedback glyph (#220 P3), the toast renders that SVG icon before the
     // text (innerHTML); otherwise it stays a plain text-only toast.
+    /**
+     * Where the toast sits (#1077): below whatever header is on screen — the
+     * page header (logo, mute/zoom buttons) and the visible view's round row
+     * — instead of on top of them. Measured at show time, so a scrolled page
+     * (headers off screen) keeps the old 16 px.
+     */
+    function _toastTop() {
+        var top = 16;
+        // A header inside a hidden view measures 0 high, so it is skipped.
+        ['.player-header', '.game-header-compact'].forEach(function (sel) {
+            var anchors;
+            try { anchors = document.querySelectorAll(sel); } catch (e) { return; }
+            for (var i = 0; i < (anchors ? anchors.length : 0); i++) {
+                var r = anchors[i].getBoundingClientRect ? anchors[i].getBoundingClientRect() : null;
+                if (r && r.height > 0 && r.bottom + 8 > top) top = Math.round(r.bottom + 8);
+            }
+        });
+        return top;
+    }
+
     function showToast(message, duration, iconKey) {
         duration = duration || 3000;
         var toast = document.getElementById('error-toast');
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'error-toast';
+            // #1077: `width:max-content` + a viewport cap — shrink-to-fit
+            // under `left:50%` capped the toast at half the screen, so "10 in
+            // a row! Unstoppable!" wrapped to two lines at 390 px.
             toast.style.cssText = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);' +
+                'width:max-content;max-width:calc(100vw - 32px);box-sizing:border-box;text-align:center;' +
                 'background:#D65858;color:white;padding:10px 20px;border-radius:10px;' +
                 'font-size:0.85rem;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;';
             document.body.appendChild(toast);
         }
+        toast.style.top = _toastTop() + 'px';
         var spec = iconKey && FEEDBACK_ICON[iconKey];
         var iconHtml = spec ? feedbackIconHtml(spec.glyph, spec.tint) : '';
         if (iconHtml) {
