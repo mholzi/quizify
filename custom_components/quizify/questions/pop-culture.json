@@ -1725,7 +1725,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "Sasha Fierce took over the second disc of the 2008 album I Am... Sasha Fierce. Beyoncé later said she had merged with the persona and retired it in 2010.",
+      "fun_fact": "Sasha Fierce took over the second disc of the 2008 album I Am... Sasha Fierce. Beyoncé later said she no longer needed the persona because she had merged it with her real self.",
       "category": "Pop Culture"
     },
     {
@@ -1788,7 +1788,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "Netflix launched in 1997 as a DVD-by-mail service with no late fees. Streaming only arrived in 2007, a decade later.",
+      "fun_fact": "Netflix was founded in 1997 and began renting DVDs by mail in 1998, at first per rental with late fees. The late-fee-free subscription came in 1999, and streaming only arrived in 2007.",
       "category": "Pop Culture"
     },
     {
@@ -1809,7 +1809,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "In Japan the Goomba is called Kuribo, roughly 'chestnut person'. It was designed as the simplest enemy possible so that players could learn to stomp it in the first seconds of the game.",
+      "fun_fact": "In Japan the Goomba is called Kuribo, roughly 'chestnut person'. It is the first enemy most players meet, and one stomp is all it takes to beat it.",
       "category": "Pop Culture"
     },
     {
@@ -1877,7 +1877,7 @@
     },
     {
       "id": "pop_en_182",
-      "question": "Which heavy metal singer popularised the 'devil horns' hand sign, learned from his Italian grandmother?",
+      "question": "Which heavy metal singer popularised the 'devil horns' hand sign, which he said he learned from his Italian grandmother?",
       "answers": [
         {
           "text": "Ozzy Osbourne",
@@ -1893,7 +1893,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Dio's grandmother used the gesture, known as the malocchio, to ward off the evil eye. He began flashing it at concerts after joining Black Sabbath in 1979, and it spread across rock and metal.",
+      "fun_fact": "Dio said his grandmother used the gesture, known as the malocchio, to ward off the evil eye. He began flashing it at concerts after joining Black Sabbath in 1979. He never claimed to have invented it, and it was in use before him.",
       "category": "Pop Culture"
     },
     {
@@ -1956,7 +1956,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Designer John Pasche, then a student at the Royal College of Art, was asked by Mick Jagger for something cheeky and was inspired by Kali's outstretched tongue. He was reportedly paid just £50 at first, with a bonus of £200 later.",
+      "fun_fact": "Designer John Pasche, then a student at the Royal College of Art, was shown an image of Kali by Mick Jagger and combined her outstretched tongue with Jagger's own mouth. He was reportedly paid just £50 at first, with a bonus of £200 later.",
       "category": "Pop Culture"
     },
     {
@@ -2040,7 +2040,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "The company was reported to earn around $2 million a year from licensing the song for films, TV shows and public performances. A US court found in 2015 that its copyright claim covered only a particular piano arrangement, not the song itself.",
+      "fun_fact": "The company was reported to earn up to around $2 million a year from licensing the song for films, TV shows and public performances. A US court found in 2015 that its copyright covered only specific piano arrangements, not the lyrics.",
       "category": "Pop Culture"
     },
     {
@@ -2082,7 +2082,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "Programmer Warren Robinett secretly placed his own name in a hidden room because Atari did not credit developers. It was found by a 12-year-old a year after release, and an Atari executive then called such secrets 'Easter eggs'.",
+      "fun_fact": "Programmer Warren Robinett secretly placed his own name in a hidden room because Atari did not credit developers. A teenage player found it and wrote to Atari in 1980, and Atari's software chief Steve Wright is credited with calling such secrets 'Easter eggs'.",
       "category": "Pop Culture"
     },
     {
@@ -2129,23 +2129,23 @@
     },
     {
       "id": "pop_en_194",
-      "question": "Which two things inspired the design of Sonic the Hedgehog's red shoes?",
+      "question": "Which pop star's album-cover boots reportedly inspired the red-and-white shoes of Sonic the Hedgehog?",
       "answers": [
         {
-          "text": "Michael Jackson's boots and Santa Claus's colours",
+          "text": "Michael Jackson",
           "correct": true
         },
         {
-          "text": "Roller skates and a fire engine",
+          "text": "Elvis Presley",
           "correct": false
         },
         {
-          "text": "Bowling shoes and a ladybird",
+          "text": "Prince",
           "correct": false
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "Designer Naoto Ohshima has said the red came from Santa Claus and the white strap and buckle from the boots Michael Jackson wore on the cover of his album Bad.",
+      "fun_fact": "Designer Naoto Ohshima reportedly said in a 2009 interview that the shoes took their red-and-white colour scheme from the boots Michael Jackson wore on the cover of his album Bad.",
       "category": "Pop Culture"
     }
   ]

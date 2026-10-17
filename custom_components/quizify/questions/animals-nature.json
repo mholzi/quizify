@@ -1919,12 +1919,12 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "A tower is a group of giraffes and a bloat is a group of hippos. Flamingos also earn the name when they perform their synchronised marching displays in large flocks.",
+      "fun_fact": "A tower is a group of giraffes and a bloat is a group of hippos. The name 'flamboyance' is usually put down to the flamingos' bright colour and showy displays.",
       "category": "Animals & Nature"
     },
     {
       "id": "nat_en_173",
-      "question": "Which Australian bird can imitate chainsaws, camera shutters and car alarms?",
+      "question": "Which Australian bird is famed for imitating chainsaws, camera shutters and car alarms?",
       "answers": [
         {
           "text": "The superb lyrebird",
@@ -1940,7 +1940,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "A famous recording made by David Attenborough for the BBC shows a lyrebird mimicking a camera shutter, a motor drive and a chainsaw. Males use their repertoire to impress females during courtship.",
+      "fun_fact": "A 1998 BBC series, The Life of Birds, showed David Attenborough with a lyrebird imitating a camera shutter, a motor drive and a chainsaw, though the birds filmed were captive. In the wild, lyrebirds mostly mimic other birds and use their repertoire to impress females.",
       "category": "Animals & Nature"
     },
     {
@@ -2003,7 +2003,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "They have only one type of light-receptive cell. One theory is that their odd U-shaped pupils help them pick up colour by exploiting the way different wavelengths focus at different depths in the eye.",
+      "fun_fact": "They have only one type of light-receptive cell. One hypothesis is that their odd U-shaped pupils let them sense colour through the way different wavelengths focus at different depths in the eye, but this is still debated.",
       "category": "Animals & Nature"
     }
   ]

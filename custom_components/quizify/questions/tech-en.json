@@ -3218,7 +3218,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "James Gosling named the language after an oak tree outside his window at Sun Microsystems. It was renamed Java in 1995 after a trademark problem, a nod to the coffee the team drank in large amounts.",
+      "fun_fact": "James Gosling named the language Oak, reportedly after an oak tree outside his office at Sun Microsystems. It was renamed Java in 1995 after a trademark problem, and the new name was a nod to coffee.",
       "category": "Technology"
     },
     {
@@ -3244,7 +3244,7 @@
     },
     {
       "id": "tech_en_174",
-      "question": "What was the first internet search engine, created in 1990 to index FTP file listings?",
+      "question": "Which tool, created in 1990 to index FTP file listings, is generally credited as the first internet search engine?",
       "answers": [
         {
           "text": "WebCrawler",
@@ -3260,12 +3260,12 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Archie was created by Alan Emtage at McGill University in Montreal, and the name is short for 'archive'. The later Gopher search tools Veronica and Jughead were jokes on the Archie comics.",
+      "fun_fact": "Archie was created by Alan Emtage and colleagues at McGill University in Montreal, and the name is short for 'archive'. The later Gopher search tools Veronica and Jughead were named after Archie Comics characters.",
       "category": "Technology"
     },
     {
       "id": "tech_en_175",
-      "question": "Which band's photo is widely regarded as the first image published on the web, in 1992?",
+      "question": "Which band's photo is often cited as the first photo published on the web, in 1992?",
       "answers": [
         {
           "text": "Les Horribles Cernettes",
@@ -3281,7 +3281,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "The group was a parody band of staff at the CERN research centre. A colleague gave the photo to Tim Berners-Lee, who put it on the early web.",
+      "fun_fact": "The group was a parody band of staff at the CERN research centre. Colleague Silvano de Gennaro took the photo, and Tim Berners-Lee asked him for scanned pictures to put on his new information system.",
       "category": "Technology"
     }
   ]
