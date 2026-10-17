@@ -19,6 +19,7 @@ phone labels them with the words it already has (``reveal.difficulty``,
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -195,6 +196,9 @@ def shown() -> dict:
         "first": _row(_score(streak=4, double=False), 4),
         "doubled": _row(_score(streak=4, double=True), 4),
         "no_streak": _row(_score(streak=0, double=False), 0),
+        # #1075: milestone rounds — the spike rides on the streak item.
+        "milestone_3": _row(_score(streak=3, double=False), 3),
+        "milestone_10": _row(_score(streak=10, double=False), 10),
     }
     script = _SCRIPT.format(
         stub=json.dumps(str(_STUB)),
@@ -237,3 +241,64 @@ def test_the_phone_shows_the_double_it_paid_for(shown: dict) -> None:
 @_NEEDS_NODE
 def test_no_streak_no_streak_line(shown: dict) -> None:
     assert "streak" not in shown["no_streak"].lower()
+
+
+# ---------------------------------------------------------------------------
+# #1075: the milestone spike is itemised (inside the streak figure)
+# ---------------------------------------------------------------------------
+
+_MILESTONES = (3, 5, 7, 10, 15, 20, 25)
+
+
+@pytest.mark.parametrize("streak", _MILESTONES)
+@pytest.mark.parametrize("difficulty", list(Difficulty))
+@pytest.mark.parametrize("double", [False, True])
+def test_milestone_round_breakdown_sums_to_points(
+    streak: int, difficulty: Difficulty, double: bool
+) -> None:
+    """Base + every breakdown item the phone shows == the headline points."""
+    c = ScoringEngine().score_submission(
+        correct=True,
+        elapsed=9.0,
+        round_duration=30.0,
+        difficulty=difficulty,
+        streak=streak,
+        double_points_active=double,
+        is_final_round=False,
+        wager=None,
+        score_before_wager=0,
+    )
+    assert c.milestone_bonus > 0
+    bd = c.breakdown
+    shown_sum = (
+        10  # BASE_POINTS, printed by the phone as "Base score"
+        + bd["speed_bonus"]
+        + bd["difficulty_bonus"]
+        + bd["streak_bonus"]
+        + bd["double_bonus"]
+    )
+    assert shown_sum == c.points
+    # The streak item carries the milestone; the engine field keeps its meaning.
+    assert bd["streak_bonus"] == c.streak_bonus + c.milestone_bonus
+
+
+def test_non_milestone_streak_figure_unchanged() -> None:
+    c = _score(streak=4, double=False)
+    assert c.milestone_bonus == 0
+    assert c.breakdown["streak_bonus"] == c.streak_bonus
+
+
+def _shown_total(line: str) -> int:
+    base = re.search(r"Base score\s*(\d+)", line)
+    assert base, line
+    return int(base.group(1)) + sum(int(n) for n in re.findall(r"\+(\d+)", line))
+
+
+@_NEEDS_NODE
+@pytest.mark.parametrize("key,streak", [("milestone_3", 3), ("milestone_10", 10)])
+def test_the_phone_itemises_the_milestone(shown: dict, key: str, streak: int) -> None:
+    c = _score(streak=streak, double=False)
+    line = shown[key]
+    assert f"{streak}-streak bonus! +{c.streak_bonus + c.milestone_bonus}" in line
+    # Every number after "Base score" adds up to the headline.
+    assert _shown_total(line) == c.points
