@@ -163,8 +163,12 @@
         var nameEl = document.getElementById('end-hero-name');
         var scoreEl = document.getElementById('end-hero-score');
         var winner = leaderboard.find(function (p) { return p.rank === 1; }) || leaderboard[0];
+        // #1078: a tie at the top crowns everyone on it ("Anna & Bert"),
+        // not whoever the sort happened to put first.
+        var shared = window.QuizifyRenderShared && window.QuizifyRenderShared.winnerNames;
+        var names = winner ? (shared ? shared(leaderboard) : winner.name) : '';
         // textContent escapes already — no escapeHtml (would double-encode).
-        if (nameEl) nameEl.textContent = winner ? winner.name : '---';
+        if (nameEl) nameEl.textContent = names || '---';
         if (scoreEl) {
             scoreEl.textContent = winner
                 ? _t('game.pointsLabel', { count: winner.score })

@@ -125,13 +125,39 @@
      *                      renders into an element that already carries the
      *                      class; the host page renders into a section.
      */
+    /**
+     * The step a podium entry stands on (#1078): its shared competition rank
+     * from the server (`serialize_finale` — equal scores share a rank), else
+     * its position. Two players tied at the top both stand on step 1, at the
+     * same height, with the same medal — the standings beside the podium
+     * already said "1" twice.
+     */
+    function podiumPlace(entry, index) {
+        var rank = entry && entry.rank;
+        return (typeof rank === 'number' && rank >= 1) ? rank : index + 1;
+    }
+
+    /**
+     * Everyone who shares first place, by name (#1078). One name normally;
+     * on a tie "Anna & Bert" — joined with a sign every language reads, so
+     * the winner line needs no new string.
+     */
+    function winnerNames(list) {
+        list = list || [];
+        var top = list.filter(function (p, i) { return p && podiumPlace(p, i) === 1; });
+        if (!top.length && list[0]) top = [list[0]];
+        return top.map(function (p) { return p.name; }).join(' & ');
+    }
+
     function podiumHtml(podium, opts) {
         opts = opts || {};
         var pointsLabel = opts.pointsLabel != null ? opts.pointsLabel : '';
         var ordered = [];
-        if (podium[1]) ordered.push({ name: podium[1].name, score: podium[1].score, place: 2 });
-        if (podium[0]) ordered.push({ name: podium[0].name, score: podium[0].score, place: 1 });
-        if (podium[2]) ordered.push({ name: podium[2].name, score: podium[2].score, place: 3 });
+        [1, 0, 2].forEach(function (i) {
+            if (podium[i]) {
+                ordered.push({ name: podium[i].name, score: podium[i].score, place: podiumPlace(podium[i], i) });
+            }
+        });
 
         var planks = ordered
             .map(function (p) {
@@ -155,7 +181,7 @@
         var title = '';
         if (opts.championLabel && podium[0]) {
             title = '<div class="podium-title">' + _esc(opts.championLabel) + '</div>' +
-                '<div class="podium-champion-name">' + _esc(podium[0].name) + '</div>';
+                '<div class="podium-champion-name">' + _esc(winnerNames(podium)) + '</div>';
         }
         return title + (opts.wrap ? '<div class="podium">' + planks + '</div>' : planks);
     }
@@ -634,6 +660,8 @@
         PODIUM_MEDALS: PODIUM_MEDALS,
         leaderboardRowsHtml: leaderboardRowsHtml,
         podiumHtml: podiumHtml,
+        podiumPlace: podiumPlace,
+        winnerNames: winnerNames,
         rosterList: rosterList,
         teamGroupedRosterHtml: teamGroupedRosterHtml,
         hotSeatBidCountText: hotSeatBidCountText,
