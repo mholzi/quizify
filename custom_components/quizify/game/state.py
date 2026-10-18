@@ -1805,8 +1805,11 @@ class QuizifyGameState:
                 if diff_enum == Difficulty.HARD:
                     player.hard_score += points
                 player.last_answer_correct = entry["exact"]
+                # #1084: a non-exact guess that still scored is a hit for
+                # the finale card; the recorded result stays exact-only.
                 player.record_round_result(
-                    "correct" if entry["exact"] else "wrong"
+                    "correct" if entry["exact"] else "wrong",
+                    scored_hit=points > 0,
                 )
                 player.round_scores.append(points)
             player.rounds_played += 1
