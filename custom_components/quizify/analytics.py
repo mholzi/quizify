@@ -10,7 +10,7 @@ import asyncio
 import logging
 import time
 from datetime import UTC, datetime
-from typing import TYPE_CHECKING, Any, TypedDict
+from typing import TYPE_CHECKING, Any, NotRequired, TypedDict
 
 from .storage import JsonFile
 
@@ -39,6 +39,39 @@ class GameRecord(TypedDict):
     difficulty: str
     player_scores: dict[str, int]
     winner: str
+    # Everyone sharing first place (#1085); ``winner`` stays the first of them
+    # for readers that only know the single name.
+    winners: NotRequired[list[str]]
+
+
+def winners_of(scores: dict[str, int]) -> list[str]:
+    """Every player on the top score, in roster order (#1085).
+
+    A shared first place is a win for each of them, the same tie the finale
+    podium shows (#1078). One rule for the all-time record and the evening
+    tally. An empty roster has no winner.
+    """
+    if not scores:
+        return []
+    top = max(scores.values())
+    return [name for name, score in scores.items() if score == top]
+
+
+def game_winners(game: GameRecord | dict[str, Any]) -> list[str]:
+    """The winners of one recorded game, tolerant of older records.
+
+    Prefers the stored ``winners``; else derives them from ``player_scores``
+    (so games recorded before #1085 count a tie correctly); else falls back to
+    the lone ``winner`` name.
+    """
+    stored = game.get("winners")
+    if stored:
+        return list(stored)
+    scores = game.get("player_scores")
+    if scores:
+        return winners_of(scores)
+    winner = game.get("winner")
+    return [winner] if winner else []
 
 
 class PlayerAllTimeRecord(TypedDict):
@@ -148,7 +181,7 @@ class QuizifyAnalytics:
             all_time: dict[str, PlayerAllTimeRecord] = {}
             for g in data["games"]:
                 scores = g.get("player_scores") or {}
-                winner = g.get("winner") or ""
+                winners = game_winners(g)
                 ended_at = int(g.get("ended_at", 0))
                 for name, score in scores.items():
                     rec = all_time.get(name)
@@ -165,7 +198,7 @@ class QuizifyAnalytics:
                         all_time[name] = rec
                     rec["games_played"] += 1
                     rec["total_score"] += int(score)
-                    if name == winner:
+                    if name in winners:
                         rec["wins"] += 1
                     rec["last_played"] = max(rec["last_played"], ended_at)
             data["all_time_players"] = all_time
@@ -253,7 +286,8 @@ class QuizifyAnalytics:
         now = int(time.time())
         player_count = len(players)
         avg_score = sum(players.values()) / player_count if player_count > 0 else 0
-        winner = max(players, key=players.get) if players else ""  # type: ignore[arg-type]
+        winners = winners_of(players)
+        winner = winners[0] if winners else ""
 
         record: GameRecord = {
             "game_id": game_id,
@@ -268,11 +302,12 @@ class QuizifyAnalytics:
             "difficulty": difficulty,
             "player_scores": players,
             "winner": winner,
+            "winners": winners,
         }
         await self.add_game(record)
         self._roll_into_all_time(
             players=players,
-            winner=winner,
+            winners=winners,
             ended_at=now,
             player_details=player_details or {},
         )
@@ -287,7 +322,7 @@ class QuizifyAnalytics:
     def _roll_into_all_time(
         self,
         players: dict[str, int],
-        winner: str,
+        winners: list[str],
         ended_at: int,
         player_details: dict[str, dict[str, Any]],
     ) -> None:
@@ -308,7 +343,7 @@ class QuizifyAnalytics:
                 all_time[name] = rec
             rec["games_played"] += 1
             rec["total_score"] += int(score)
-            if name == winner:
+            if name in winners:
                 rec["wins"] += 1
             rec["last_played"] = max(rec["last_played"], ended_at)
             details = player_details.get(name) or {}
@@ -566,10 +601,10 @@ class QuizifyAnalytics:
 
         wins: dict[str, int] = {}
         for game in session:
-            winner = game.get("winner")
             # A game can end with no winner (everyone left, a reset); it still
-            # counts towards the evening's game total but crowns nobody.
-            if winner:
+            # counts towards the evening's game total but crowns nobody. A tie
+            # at the top credits every player on it (#1085).
+            for winner in game_winners(game):
                 wins[winner] = wins.get(winner, 0) + 1
 
         if not wins:
