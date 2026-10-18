@@ -57,7 +57,7 @@ def winners_of(scores: dict[str, int]) -> list[str]:
     return [name for name, score in scores.items() if score == top]
 
 
-def game_winners(game: dict[str, Any]) -> list[str]:
+def game_winners(game: GameRecord | dict[str, Any]) -> list[str]:
     """The winners of one recorded game, tolerant of older records.
 
     Prefers the stored ``winners``; else derives them from ``player_scores``
