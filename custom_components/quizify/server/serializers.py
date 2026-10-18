@@ -915,14 +915,24 @@ def build_share_payload(
             rank = i + 1
             prev = p.score
         history = list(p.round_history)
+        hits = list(getattr(p, "round_hits", ()))
+        # Estimate rounds are scored by closeness (#1084): a guess that
+        # scored points is a hit, even though the round is recorded "wrong"
+        # (not exact). Without this the card read "Correct 0 / 3" with three
+        # crosses next to 225 points. Multiple-choice rounds are unaffected,
+        # their hit flag is exactly ``result == "correct"``.
+        results = [
+            "correct" if i < len(hits) and hits[i] and r == "wrong" else r
+            for i, r in enumerate(history)
+        ]
         entries.append({
             "name": p.name,
             "rank": rank,
             "total_players": total,
             "score": p.score,
             "rounds": len(history),
-            "correct": history.count("correct"),
-            "results": history,
+            "correct": results.count("correct"),
+            "results": results,
             "powerups": p.powerups_used,
         })
     return {"packs": list(packs or []), "players": entries}

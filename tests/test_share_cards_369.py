@@ -162,3 +162,103 @@ def test_results_list_is_a_copy_not_the_live_history() -> None:
     share = build_share_payload([p])
     share["players"][0]["results"].append("wrong")
     assert p.round_history == ["correct"]
+
+
+# ---------------------------------------------------------------------------
+# #1084: estimate rounds are scored by closeness, so a guess that scored
+# points is a hit on the card even though the round is recorded "wrong".
+# ---------------------------------------------------------------------------
+
+
+def test_estimate_guesses_that_scored_count_as_hits_1084() -> None:
+    p = PlayerSession(name="Alice")
+    p.score = 225
+    # Not exact, but scored: the real recording path for estimate rounds.
+    p.record_round_result("wrong", scored_hit=True)
+    p.record_round_result("wrong", scored_hit=True)
+    p.record_round_result("wrong", scored_hit=True)
+    entry = build_share_payload([p])["players"][0]
+    assert entry["correct"] == 3
+    assert entry["rounds"] == 3
+    assert entry["results"] == ["correct"] * 3
+    # The per-player history itself stays exact-only.
+    assert p.round_history == ["wrong"] * 3
+
+
+def test_estimate_zero_point_guess_and_timeout_stay_misses_1084() -> None:
+    p = PlayerSession(name="Bob")
+    p.record_round_result("wrong", scored_hit=False)  # guess scored 0
+    p.record_round_result("timeout")
+    p.record_round_result("correct")  # exact hit
+    entry = build_share_payload([p])["players"][0]
+    assert entry["results"] == ["wrong", "timeout", "correct"]
+    assert entry["correct"] == 1
+
+
+def test_mixed_game_multiple_choice_unchanged_1084() -> None:
+    p = PlayerSession(name="Cy")
+    p.record_round_result("correct")  # MC right
+    p.record_round_result("wrong")  # MC wrong, no points
+    p.record_round_result("wrong", scored_hit=True)  # estimate that scored
+    p.record_round_result("timeout")
+    entry = build_share_payload([p])["players"][0]
+    assert entry["results"] == ["correct", "wrong", "correct", "timeout"]
+    assert entry["correct"] == 2
+    assert entry["rounds"] == 4
+    p.reset_for_new_game()
+    assert p.round_hits == [] and p.round_history == []
+
+
+def test_real_estimate_round_with_scoring_guess_is_a_hit_on_the_card_1084(
+    tmp_path,
+) -> None:
+    """End to end through the real game: a close-but-not-exact guess scores
+    points, and the finale card must count it instead of reading 0 / 1."""
+    import asyncio
+
+    from custom_components.quizify.game.state import QuizifyGameState
+
+    class _Runtime:
+        def __init__(self, d):
+            self.data_dir = d
+
+        async def run_in_executor(self, func, *args):
+            return func(*args)
+
+        def create_task(self, coro):
+            return asyncio.ensure_future(coro)
+
+    gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
+    for name in ("Anna", "Mira"):
+        gs.add_player(name)
+    gs.start_game(
+        category="estimation-en",
+        difficulty="medium",
+        num_rounds=3,
+        language="en",
+        lightning_enabled=False,
+        hot_seat_enabled=False,
+    )
+    gs.start_next_question()
+    q = gs.get_current_question()
+    span = q.estimate_max - q.estimate_min
+    near = q.estimate_answer + span * 0.02
+    if near > q.estimate_max:
+        near = q.estimate_answer - span * 0.02
+    gs.submit_guess("Anna", near)
+    # Mira never guesses: a timeout, must stay a miss.
+    gs.evaluate_round()
+
+    anna = gs._player_registry.players["Anna"]
+    assert anna.score > 0, "premise: the near guess scored"
+    assert anna.round_history == ["wrong"], "premise: not an exact hit"
+
+    players = [
+        gs._player_registry.players["Anna"],
+        gs._player_registry.players["Mira"],
+    ]
+    by_name = {e["name"]: e for e in build_share_payload(players)["players"]}
+    assert by_name["Anna"]["correct"] == 1
+    assert by_name["Anna"]["results"] == ["correct"]
+    assert by_name["Mira"]["correct"] == 0
+    assert by_name["Mira"]["results"] == ["timeout"]

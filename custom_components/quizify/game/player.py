@@ -70,6 +70,8 @@ class PlayerSession:
     # speed_bonus, streak_bonus, diff_mult
     round_score_breakdown: dict = field(default_factory=dict)
     round_history: list[str] = field(default_factory=list)
+    # Parallel to round_history: did the round score as a hit (#1084)?
+    round_hits: list[bool] = field(default_factory=list)
 
     # Superlative tracking
     # elapsed per correct answer
@@ -148,9 +150,17 @@ class PlayerSession:
         # accidentally apply on the next final-round attempt (replays etc.).
         self.wager = None
 
-    def record_round_result(self, result: str) -> None:
-        """Record the result of a round ('correct', 'wrong', or 'timeout')."""
+    def record_round_result(self, result: str, *, scored_hit: bool = False) -> None:
+        """Record the result of a round ('correct', 'wrong', or 'timeout').
+
+        ``scored_hit`` marks a round whose ``result`` is not ``correct`` but
+        which still earned points: an estimate guess that landed close enough
+        to score (#1084). It only feeds the finale share card, so the card's
+        "Correct" tally agrees with the points. Reveal, highlights and streaks
+        keep reading ``result`` unchanged.
+        """
         self.round_history.append(result)
+        self.round_hits.append(result == "correct" or scored_hit)
 
     def add_reaction_bonus(self, round_num: int, cap: int) -> bool:
         """Award a +1 reaction bonus for ``round_num``, respecting ``cap``.
@@ -175,6 +185,7 @@ class PlayerSession:
         self.score = 0
         self.streak = 0
         self.round_history = []
+        self.round_hits = []
         self.answer_times = []
         self.round_scores = []
         self.max_streak = 0
