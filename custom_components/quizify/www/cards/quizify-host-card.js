@@ -245,14 +245,24 @@
         }
 
         connectedCallback() {
+            // Lovelace detaches and re-attaches cards on view switches and
+            // reflows; a re-attached card gets its full retry budget back.
+            this._attempts = 0;
             this._connect();
         }
 
         disconnectedCallback() {
             if (this._retry) { clearTimeout(this._retry); this._retry = null; }
             this._attempts = MAX_RECONNECT;   // stop reconnecting once removed
-            if (this._ws) { try { this._ws.close(); } catch (e) { /* already gone */ } }
+            var ws = this._ws;
             this._ws = null;
+            if (ws) {
+                // Detach the handlers first (#1090): the close event fires
+                // later, possibly after a re-attach opened a new socket, and
+                // must not null that one.
+                ws.onopen = ws.onmessage = ws.onclose = ws.onerror = null;
+                try { ws.close(); } catch (e) { /* already gone */ }
+            }
         }
 
         // ---- Wiring ------------------------------------------------------
@@ -294,6 +304,7 @@
             this._ws = ws;
 
             ws.onopen = function () {
+                if (self._ws !== ws) return;
                 self._attempts = 0;
                 self._status = 'online';
                 // Token first, out of the URL (#359), then the connect frame.
@@ -301,7 +312,11 @@
                 ws.send(JSON.stringify({ type: 'admin_connect' }));
             };
 
+            // Every handler ignores a socket that has been superseded (#1090):
+            // a stale close would otherwise null the live socket and leave
+            // the buttons rendering game_state but sending nothing.
             ws.onmessage = function (evt) {
+                if (self._ws !== ws) return;
                 var msg;
                 try { msg = JSON.parse(evt.data); } catch (e) { return; }
                 if (msg.admin_session_token && window.QuizifyUtils) {
@@ -315,6 +330,7 @@
             };
 
             ws.onclose = function () {
+                if (self._ws !== ws) return;
                 self._ws = null;
                 self._status = 'offline';
                 self._render();
