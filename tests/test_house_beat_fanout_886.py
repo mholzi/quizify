@@ -125,8 +125,10 @@ _FANOUT: list[tuple[str, tuple, list[tuple[str, tuple]], list[tuple[str, tuple]]
     (
         "reveal",
         (_GAME_STATE,),
-        [("announce_reveal", (_GAME_STATE,))],
-        [("notify_answer_revealed", (_GAME_STATE,))],
+        # ``None``: read the game's own round summary. The Hot Seat passes its
+        # chair's question here instead (#1092).
+        [("announce_reveal", (_GAME_STATE, None))],
+        [("notify_answer_revealed", (_GAME_STATE, None))],
     ),
     (
         "_streak_milestone",

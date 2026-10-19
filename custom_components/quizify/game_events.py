@@ -53,7 +53,7 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING, Any
 
-from .game.state import GamePhase, QuizifyGameState
+from .game.state import GamePhase, QuizifyGameState, RoundSummary
 from .house_settings import HouseSettings
 
 if TYPE_CHECKING:
@@ -267,15 +267,19 @@ class QuizifyEventEmitter:
             {"seconds_remaining": seconds_remaining},
         )
 
-    def notify_answer_revealed(self, game_state: QuizifyGameState) -> None:
+    def notify_answer_revealed(
+        self, game_state: QuizifyGameState, summary: RoundSummary | None = None
+    ) -> None:
         """Fire ``quizify_answer_revealed`` from the reveal dispatch point.
 
         Pulls everything from the round summary the reveal broadcast already
         built. ``correct_option_index`` is the index of the correct answer in
         the question's canonical ``answers`` list (``None`` for estimate rounds,
-        which have no option list).
+        which have no option list). ``summary`` overrides the round summary —
+        the Hot Seat passes its chair's question (#1092).
         """
-        summary = game_state.get_round_summary()
+        if summary is None:
+            summary = game_state.get_round_summary()
         if summary is None:
             return
         correct_text = ""

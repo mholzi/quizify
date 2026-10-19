@@ -2603,6 +2603,41 @@ class QuizifyGameState:
             self._notify_state_callbacks()
         return deltas
 
+    def hot_seat_round_summary(self) -> RoundSummary | None:
+        """The settled chair's question as a :class:`RoundSummary` (#1092).
+
+        Handed to the reveal beat instead of ``get_round_summary()``, which
+        still holds the normal round before the detour — the narrator read
+        that round's answer and the bus event carried its correct_count. Not
+        stored on the game: once the detour resumes, ANSWER_REVEAL belongs to
+        that normal round again. One result, the seat holder's.
+        """
+        hs = self._hot_seat
+        if hs is None or hs.question is None or hs.settled is None:
+            return None
+        index = hs.correct_index
+        if index is None:
+            return None
+        results: list[AnswerResult] = []
+        if hs.winner is not None:
+            participant = self._participant_by_entrant(hs.winner)
+            results.append(
+                AnswerResult(
+                    player_id=hs.seat_holder or hs.winner,
+                    correct=hs.answered is True,
+                    points_earned=hs.settled.get(hs.winner, 0),
+                    new_streak=getattr(participant, "streak", 0),
+                    new_total=getattr(participant, "score", 0),
+                )
+            )
+        return RoundSummary(
+            question=hs.question,
+            correct_answer=hs.question.answers[index],
+            fun_fact=hs.question.fun_fact,
+            results=results,
+            leaderboard=self.get_standings(),
+        )
+
     def resume_after_hot_seat(self) -> bool:
         """Return to the paused main game after the reveal (#616).
 
