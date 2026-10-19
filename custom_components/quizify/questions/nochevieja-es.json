@@ -1,7 +1,7 @@
 {
   "name": "Nochevieja",
   "language": "es",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "trivia",
   "season": {
     "start": "12-27",
@@ -2062,6 +2062,846 @@
       "unit": "año",
       "difficulty": "medium",
       "fun_fact": "En 1963, ante público en Hamburgo, en inglés y sin subtítulos.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_101",
+      "question": "¿Qué país se incorporó a la zona euro el 1 de enero de 2026 como su miembro número 21?",
+      "answers": [
+        {
+          "text": "Bulgaria",
+          "correct": true
+        },
+        {
+          "text": "Rumanía",
+          "correct": false
+        },
+        {
+          "text": "Croacia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sustituyó así su moneda nacional, el lev.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_102",
+      "question": "¿Qué artista fue el protagonista del espectáculo del descanso de la Super Bowl LX en febrero de 2026?",
+      "answers": [
+        {
+          "text": "Bad Bunny",
+          "correct": true
+        },
+        {
+          "text": "Shakira",
+          "correct": false
+        },
+        {
+          "text": "Rosalía",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lady Gaga y Ricky Martin actuaron con él como invitados.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_103",
+      "question": "¿Qué álbum ganó el premio al Álbum del Año en los Grammy de febrero de 2026?",
+      "answers": [
+        {
+          "text": "'Debí Tirar Más Fotos' de Bad Bunny",
+          "correct": true
+        },
+        {
+          "text": "'GNX' de Kendrick Lamar",
+          "correct": false
+        },
+        {
+          "text": "'Short n' Sweet' de Sabrina Carpenter",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue el primer álbum en español en ganar el premio principal de la noche.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_104",
+      "question": "¿Qué equipo ganó la Super Bowl LX en febrero de 2026?",
+      "answers": [
+        {
+          "text": "Seattle Seahawks",
+          "correct": true
+        },
+        {
+          "text": "New England Patriots",
+          "correct": false
+        },
+        {
+          "text": "Kansas City Chiefs",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los Seahawks derrotaron a los Patriots por 29 a 13.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_105",
+      "question": "¿Qué país encabezó el medallero de los Juegos Olímpicos de Invierno de febrero de 2026?",
+      "answers": [
+        {
+          "text": "Noruega",
+          "correct": true
+        },
+        {
+          "text": "Estados Unidos",
+          "correct": false
+        },
+        {
+          "text": "Italia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Noruega logró 18 oros, más que ninguna nación en unos Juegos de Invierno.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_106",
+      "question": "¿Qué deporte debutó en el programa olímpico de los Juegos de Invierno de febrero de 2026?",
+      "answers": [
+        {
+          "text": "El esquí de montaña",
+          "correct": true
+        },
+        {
+          "text": "El parkour",
+          "correct": false
+        },
+        {
+          "text": "El patinaje en línea",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se estrenó con tres pruebas: sprint masculino, sprint femenino y relevo mixto.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_107",
+      "question": "¿Qué español ganó el Open de Australia entre enero y febrero de 2026 y completó así los cuatro Grand Slam?",
+      "answers": [
+        {
+          "text": "Carlos Alcaraz",
+          "correct": true
+        },
+        {
+          "text": "Rafael Nadal",
+          "correct": false
+        },
+        {
+          "text": "Roberto Bautista Agut",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En la final derrotó a Novak Djokovic.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_108",
+      "question": "¿Qué película ganó el Óscar a la Mejor Película en marzo de 2026?",
+      "answers": [
+        {
+          "text": "'Una batalla tras otra'",
+          "correct": true
+        },
+        {
+          "text": "'Pecadores'",
+          "correct": false
+        },
+        {
+          "text": "'Hamnet'",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Pecadores' había llegado a la gala con un récord de 16 nominaciones.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_109",
+      "question": "¿Qué actor ganó el Óscar al Mejor Actor en marzo de 2026?",
+      "answers": [
+        {
+          "text": "Michael B. Jordan",
+          "correct": true
+        },
+        {
+          "text": "Timothée Chalamet",
+          "correct": false
+        },
+        {
+          "text": "Leonardo DiCaprio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo ganó por 'Pecadores', donde interpreta a dos hermanos gemelos.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_110",
+      "question": "¿Qué película noruega ganó el Óscar a la Mejor Película Internacional en marzo de 2026?",
+      "answers": [
+        {
+          "text": "'Valor sentimental'",
+          "correct": true
+        },
+        {
+          "text": "'Sirât'",
+          "correct": false
+        },
+        {
+          "text": "'Fue solo un accidente'",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su director es Joachim Trier.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_111",
+      "question": "¿Qué récord batió la tripulación de Artemis II en abril de 2026?",
+      "answers": [
+        {
+          "text": "La mayor distancia a la Tierra alcanzada por seres humanos",
+          "correct": true
+        },
+        {
+          "text": "La estancia más larga sobre la superficie lunar",
+          "correct": false
+        },
+        {
+          "text": "El mayor tiempo en órbita terrestre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Superó la marca del Apolo 13, de 1970.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_112",
+      "question": "¿En qué océano amerizó la cápsula de Artemis II en abril de 2026 tras rodear la Luna?",
+      "answers": [
+        {
+          "text": "En el Pacífico",
+          "correct": true
+        },
+        {
+          "text": "En el Atlántico",
+          "correct": false
+        },
+        {
+          "text": "En el Índico",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Marina de EE. UU. recuperó a los cuatro astronautas frente a la costa de California.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_113",
+      "question": "¿Qué club se proclamó campeón de LaLiga 2025-26 el 10 de mayo de 2026 al ganar al Real Madrid?",
+      "answers": [
+        {
+          "text": "El FC Barcelona",
+          "correct": true
+        },
+        {
+          "text": "El Atlético de Madrid",
+          "correct": false
+        },
+        {
+          "text": "El Villarreal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue su segundo título de liga consecutivo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_114",
+      "question": "¿Cómo se decidió la final de la Liga de Campeones en Budapest, a finales de mayo de 2026?",
+      "answers": [
+        {
+          "text": "El PSG ganó al Arsenal en los penaltis",
+          "correct": true
+        },
+        {
+          "text": "El PSG ganó 2-0 al Arsenal",
+          "correct": false
+        },
+        {
+          "text": "El Arsenal ganó en la prórroga al PSG",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El PSG revalidó el título como solo el segundo club de la era de la Liga de Campeones.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_115",
+      "question": "¿Qué país ganó el Festival de Eurovisión en mayo de 2026?",
+      "answers": [
+        {
+          "text": "Bulgaria",
+          "correct": true
+        },
+        {
+          "text": "Israel",
+          "correct": false
+        },
+        {
+          "text": "Rumanía",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dara ganó con 'Bangaranga' tanto el voto del jurado como el del público.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_116",
+      "question": "¿Qué película ganó la Palma de Oro del Festival de Cannes en mayo de 2026?",
+      "answers": [
+        {
+          "text": "'Fjord', de Cristian Mungiu",
+          "correct": true
+        },
+        {
+          "text": "'Minotaur', de Andréi Zviáguintsev",
+          "correct": false
+        },
+        {
+          "text": "'Elephants in the Fog', de Abinash Bikram Shah",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fue la segunda Palma de Oro de Mungiu, tras '4 meses, 3 semanas, 2 días' en 2007.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_117",
+      "question": "¿Qué tres países organizaron el Mundial de fútbol que empezó en junio de 2026?",
+      "answers": [
+        {
+          "text": "EE. UU., Canadá y México",
+          "correct": true
+        },
+        {
+          "text": "EE. UU., Brasil y Argentina",
+          "correct": false
+        },
+        {
+          "text": "España, Portugal y Marruecos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue el primer Mundial con tres anfitriones.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_118",
+      "question": "¿Cuántas selecciones participaron en el Mundial que arrancó en junio de 2026?",
+      "answers": [
+        {
+          "text": "48",
+          "correct": true
+        },
+        {
+          "text": "32",
+          "correct": false
+        },
+        {
+          "text": "40",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Era la primera vez que el torneo se jugaba con ese formato ampliado.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_119",
+      "question": "¿Qué alemán ganó en junio de 2026 su primer Grand Slam en Roland Garros?",
+      "answers": [
+        {
+          "text": "Alexander Zverev",
+          "correct": true
+        },
+        {
+          "text": "Jan-Lennard Struff",
+          "correct": false
+        },
+        {
+          "text": "Daniel Altmaier",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En la final derrotó al italiano Flavio Cobolli en cinco sets.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_120",
+      "question": "¿Qué selección ganó la final del Mundial en julio de 2026?",
+      "answers": [
+        {
+          "text": "España",
+          "correct": true
+        },
+        {
+          "text": "Argentina",
+          "correct": false
+        },
+        {
+          "text": "Francia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue el segundo título mundial de España, tras el de 2010.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_121",
+      "question": "¿En qué ciudad se celebró el Festival de Eurovisión en mayo de 2026?",
+      "answers": [
+        {
+          "text": "Viena",
+          "correct": true
+        },
+        {
+          "text": "Salzburgo",
+          "correct": false
+        },
+        {
+          "text": "Basilea",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La final se disputó el 16 de mayo en el Wiener Stadthalle.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_122",
+      "question": "¿Quién marcó el único gol de la final del Mundial en julio de 2026, en la prórroga?",
+      "answers": [
+        {
+          "text": "Ferran Torres",
+          "correct": true
+        },
+        {
+          "text": "Lamine Yamal",
+          "correct": false
+        },
+        {
+          "text": "Nico Williams",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Argentina jugó la prórroga con diez hombres tras la expulsión de Enzo Fernández.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_123",
+      "question": "¿Quién ganó el Balón de Oro del Mundial de julio de 2026 como mejor jugador del torneo?",
+      "answers": [
+        {
+          "text": "Rodri",
+          "correct": true
+        },
+        {
+          "text": "Lionel Messi",
+          "correct": false
+        },
+        {
+          "text": "Kylian Mbappé",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Messi quedó segundo en la votación.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_124",
+      "question": "¿Quién fue el máximo goleador del Mundial de julio de 2026 con diez tantos?",
+      "answers": [
+        {
+          "text": "Kylian Mbappé",
+          "correct": true
+        },
+        {
+          "text": "Harry Kane",
+          "correct": false
+        },
+        {
+          "text": "Lionel Messi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ganó la Bota de Oro por segunda vez consecutiva.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_125",
+      "question": "¿Qué selección quedó tercera en el Mundial de julio de 2026?",
+      "answers": [
+        {
+          "text": "Inglaterra",
+          "correct": true
+        },
+        {
+          "text": "Francia",
+          "correct": false
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se jugó el partido por el tercer puesto en Miami.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_126",
+      "question": "¿Quién ganó el título individual masculino de Wimbledon en julio de 2026?",
+      "answers": [
+        {
+          "text": "Jannik Sinner",
+          "correct": true
+        },
+        {
+          "text": "Carlos Alcaraz",
+          "correct": false
+        },
+        {
+          "text": "Alexander Zverev",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue su segundo Wimbledon consecutivo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_127",
+      "question": "¿Qué ciudad española acogió la salida del Tour de Francia en julio de 2026?",
+      "answers": [
+        {
+          "text": "Barcelona",
+          "correct": true
+        },
+        {
+          "text": "Bilbao",
+          "correct": false
+        },
+        {
+          "text": "Valencia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La primera etapa fue una contrarreloj por equipos.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_128",
+      "question": "¿Quién ganó el Tour de Francia que terminó en París en julio de 2026?",
+      "answers": [
+        {
+          "text": "Tadej Pogačar",
+          "correct": true
+        },
+        {
+          "text": "Jonas Vingegaard",
+          "correct": false
+        },
+        {
+          "text": "Remco Evenepoel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue su quinta victoria en la ronda francesa.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_129",
+      "question": "El Nobel de Física de octubre de 2026 reconoció trabajos sobre un detector en el Polo Sur. ¿Cuál?",
+      "answers": [
+        {
+          "text": "El Observatorio de Neutrinos IceCube",
+          "correct": true
+        },
+        {
+          "text": "El Telescopio del Polo Sur",
+          "correct": false
+        },
+        {
+          "text": "El Observatorio Pierre Auger",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Usa un kilómetro cúbico de hielo antártico para cazar neutrinos.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_130",
+      "question": "¿Quién recibió el Premio Nobel de Literatura en octubre de 2026?",
+      "answers": [
+        {
+          "text": "Anne Carson",
+          "correct": true
+        },
+        {
+          "text": "Margaret Atwood",
+          "correct": false
+        },
+        {
+          "text": "Haruki Murakami",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La poeta canadiense es conocida por su diálogo con la Antigüedad clásica.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_131",
+      "question": "¿Qué día se celebra el Día de Reyes en España?",
+      "answers": [
+        {
+          "text": "El 6 de enero",
+          "correct": true
+        },
+        {
+          "text": "El 1 de enero",
+          "correct": false
+        },
+        {
+          "text": "El 25 de diciembre",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es el día principal de los regalos para los niños españoles.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_132",
+      "question": "¿Cuántos Reyes Magos hay en la tradición?",
+      "answers": [
+        {
+          "text": "Tres",
+          "correct": true
+        },
+        {
+          "text": "Dos",
+          "correct": false
+        },
+        {
+          "text": "Cuatro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Evangelio no da el número; la tradición lo dedujo de los tres regalos.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_133",
+      "question": "¿Cómo se llama el dulce en forma de rosca que se come en España el día de Reyes?",
+      "answers": [
+        {
+          "text": "Roscón de Reyes",
+          "correct": true
+        },
+        {
+          "text": "Rosquilla de anís",
+          "correct": false
+        },
+        {
+          "text": "Torrija",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Suele llevar fruta escarchada por encima y puede ir relleno de nata o crema.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_134",
+      "question": "¿Qué se esconde en el roscón de Reyes, además de una figurita?",
+      "answers": [
+        {
+          "text": "Un haba",
+          "correct": true
+        },
+        {
+          "text": "Una moneda",
+          "correct": false
+        },
+        {
+          "text": "Una almendra",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Según la costumbre, a quien le toca el haba le toca pagar el roscón.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_135",
+      "question": "¿Qué ocurre, según la costumbre, con quien encuentra la figurita en el roscón?",
+      "answers": [
+        {
+          "text": "Se le corona rey o reina de la fiesta",
+          "correct": true
+        },
+        {
+          "text": "Tiene que pagar el roscón",
+          "correct": false
+        },
+        {
+          "text": "Escribe la carta a los Reyes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A quien encuentra el haba, en cambio, le toca pagar.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_136",
+      "question": "¿Cómo se llama el desfile de carrozas de la tarde del 5 de enero?",
+      "answers": [
+        {
+          "text": "Cabalgata de Reyes",
+          "correct": true
+        },
+        {
+          "text": "Procesión del Pregón",
+          "correct": false
+        },
+        {
+          "text": "Desfile de la Epifanía",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los Reyes suelen lanzar caramelos al público desde las carrozas.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_137",
+      "question": "¿Qué guía a los Magos hasta Belén según el Evangelio de Mateo?",
+      "answers": [
+        {
+          "text": "Una estrella",
+          "correct": true
+        },
+        {
+          "text": "Un ángel",
+          "correct": false
+        },
+        {
+          "text": "Un sueño",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mateo es el único evangelista que cuenta la visita de los Magos.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_138",
+      "question": "¿Qué se dice que reciben los niños que se han portado mal en la mañana de Reyes?",
+      "answers": [
+        {
+          "text": "Carbón",
+          "correct": true
+        },
+        {
+          "text": "Cebollas",
+          "correct": false
+        },
+        {
+          "text": "Piedras",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hoy las pastelerías venden carbón dulce hecho de azúcar.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_139",
+      "question": "¿Qué significa la palabra 'epifanía', nombre de la fiesta del 6 de enero?",
+      "answers": [
+        {
+          "text": "Manifestación",
+          "correct": true
+        },
+        {
+          "text": "Nacimiento",
+          "correct": false
+        },
+        {
+          "text": "Esperanza",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Procede del griego y recuerda que Jesús se dio a conocer a los Magos.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_140",
+      "question": "¿Qué regalos llevaron los Reyes Magos al Niño Jesús, según la tradición?",
+      "answers": [
+        {
+          "text": "Oro, incienso y mirra",
+          "correct": true
+        },
+        {
+          "text": "Oro, plata y seda",
+          "correct": false
+        },
+        {
+          "text": "Incienso, mirra y vino",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cada regalo se interpreta de forma simbólica: realeza, divinidad y humanidad.",
       "category": "Nochevieja"
     }
   ]

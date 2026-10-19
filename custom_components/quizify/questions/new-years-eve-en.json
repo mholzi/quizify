@@ -1,7 +1,7 @@
 {
   "name": "New Year's Eve",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "trivia",
   "season": {
     "start": "12-27",
@@ -2062,6 +2062,636 @@
       "unit": "year",
       "difficulty": "medium",
       "fun_fact": "1963 — taped before a live audience in Hamburg, in English and without subtitles.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_101",
+      "question": "On 1 January 2026, which country became the 21st member of the euro area?",
+      "answers": [
+        {
+          "text": "Bulgaria",
+          "correct": true
+        },
+        {
+          "text": "Romania",
+          "correct": false
+        },
+        {
+          "text": "Croatia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It replaced its national currency, the lev, at the turn of the year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_102",
+      "question": "In February 2026, which album won Album of the Year at the Grammys?",
+      "answers": [
+        {
+          "text": "'Debí Tirar Más Fotos' by Bad Bunny",
+          "correct": true
+        },
+        {
+          "text": "'GNX' by Kendrick Lamar",
+          "correct": false
+        },
+        {
+          "text": "'Short n' Sweet' by Sabrina Carpenter",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was the first Spanish-language album to win the night's top prize.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_103",
+      "question": "In February 2026, which song won Record of the Year at the Grammys?",
+      "answers": [
+        {
+          "text": "'Luther' by Kendrick Lamar and SZA",
+          "correct": true
+        },
+        {
+          "text": "'Wildflower' by Billie Eilish",
+          "correct": false
+        },
+        {
+          "text": "'Manchild' by Sabrina Carpenter",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Billie Eilish's 'Wildflower' took Song of the Year on the same night.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_104",
+      "question": "Which team won Super Bowl LX in February 2026?",
+      "answers": [
+        {
+          "text": "Seattle Seahawks",
+          "correct": true
+        },
+        {
+          "text": "New England Patriots",
+          "correct": false
+        },
+        {
+          "text": "Kansas City Chiefs",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Seahawks beat the Patriots 29-13 at Levi's Stadium in Santa Clara.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_105",
+      "question": "Who headlined the halftime show at Super Bowl LX in February 2026?",
+      "answers": [
+        {
+          "text": "Bad Bunny",
+          "correct": true
+        },
+        {
+          "text": "Taylor Swift",
+          "correct": false
+        },
+        {
+          "text": "Rihanna",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lady Gaga and Ricky Martin joined him on stage.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_106",
+      "question": "Who was named MVP of Super Bowl LX in February 2026?",
+      "answers": [
+        {
+          "text": "Running back Kenneth Walker III",
+          "correct": true
+        },
+        {
+          "text": "Quarterback Sam Darnold",
+          "correct": false
+        },
+        {
+          "text": "Wide receiver Jaxon Smith-Njigba",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kicker Jason Myers also set a Super Bowl record with five field goals.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_107",
+      "question": "Which country topped the medal table of the February 2026 Winter Olympics?",
+      "answers": [
+        {
+          "text": "Norway",
+          "correct": true
+        },
+        {
+          "text": "United States",
+          "correct": false
+        },
+        {
+          "text": "Italy",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Norway won 18 gold medals, the most of any nation at a single Winter Games.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_108",
+      "question": "Which two places hosted the Winter Olympics in February 2026?",
+      "answers": [
+        {
+          "text": "Milan and Cortina d'Ampezzo",
+          "correct": true
+        },
+        {
+          "text": "Turin and Sestriere",
+          "correct": false
+        },
+        {
+          "text": "Innsbruck and Kitzbühel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Two Olympic cauldrons were lit, one in each place.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_109",
+      "question": "In January and February 2026, which Spaniard won the Australian Open men's title?",
+      "answers": [
+        {
+          "text": "Carlos Alcaraz",
+          "correct": true
+        },
+        {
+          "text": "Rafael Nadal",
+          "correct": false
+        },
+        {
+          "text": "Roberto Bautista Agut",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The win gave him all four Grand Slam titles.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_110",
+      "question": "Which film won the Oscar for Best Picture in March 2026?",
+      "answers": [
+        {
+          "text": "One Battle After Another",
+          "correct": true
+        },
+        {
+          "text": "Sinners",
+          "correct": false
+        },
+        {
+          "text": "Hamnet",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Sinners' had entered the ceremony with a record 16 nominations.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_111",
+      "question": "Which actor won the Oscar for Best Actor in March 2026?",
+      "answers": [
+        {
+          "text": "Michael B. Jordan",
+          "correct": true
+        },
+        {
+          "text": "Timothée Chalamet",
+          "correct": false
+        },
+        {
+          "text": "Leonardo DiCaprio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He won for 'Sinners', in which he plays twin brothers.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_112",
+      "question": "Which actress won the Oscar for Best Actress in March 2026?",
+      "answers": [
+        {
+          "text": "Jessie Buckley",
+          "correct": true
+        },
+        {
+          "text": "Emma Stone",
+          "correct": false
+        },
+        {
+          "text": "Rose Byrne",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "She won for playing Agnes in 'Hamnet'.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_113",
+      "question": "Which film won the Oscar for Best Animated Feature in March 2026?",
+      "answers": [
+        {
+          "text": "KPop Demon Hunters",
+          "correct": true
+        },
+        {
+          "text": "Zootopia 2",
+          "correct": false
+        },
+        {
+          "text": "Elio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The film follows a girl group that secretly fights demons.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_114",
+      "question": "In April 2026, the crew of Artemis II broke which record?",
+      "answers": [
+        {
+          "text": "The farthest distance from Earth reached by humans",
+          "correct": true
+        },
+        {
+          "text": "The longest stay on the Moon's surface",
+          "correct": false
+        },
+        {
+          "text": "The longest time spent in orbit around Earth",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "They passed the mark set by Apollo 13 in 1970.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_115",
+      "question": "Jeremy Hansen, a crew member of Artemis II in April 2026, is an astronaut of which space agency?",
+      "answers": [
+        {
+          "text": "The Canadian Space Agency",
+          "correct": true
+        },
+        {
+          "text": "The European Space Agency",
+          "correct": false
+        },
+        {
+          "text": "The Japanese space agency JAXA",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He was the first non-American to fly around the Moon.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_116",
+      "question": "Which country won the Eurovision Song Contest in May 2026?",
+      "answers": [
+        {
+          "text": "Bulgaria",
+          "correct": true
+        },
+        {
+          "text": "Israel",
+          "correct": false
+        },
+        {
+          "text": "Romania",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dara's 'Bangaranga' won both the jury vote and the televote.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_117",
+      "question": "In which city was the Eurovision Song Contest held in May 2026?",
+      "answers": [
+        {
+          "text": "Vienna",
+          "correct": true
+        },
+        {
+          "text": "Salzburg",
+          "correct": false
+        },
+        {
+          "text": "Basel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The final took place in the Wiener Stadthalle on 16 May.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_118",
+      "question": "Which club won the Premier League in May 2026, its first title since 2004?",
+      "answers": [
+        {
+          "text": "Arsenal",
+          "correct": true
+        },
+        {
+          "text": "Manchester City",
+          "correct": false
+        },
+        {
+          "text": "Liverpool",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The title was sealed on 19 May when Manchester City drew at Bournemouth.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_119",
+      "question": "How was the Champions League final decided in Budapest at the end of May 2026?",
+      "answers": [
+        {
+          "text": "PSG beat Arsenal on penalties",
+          "correct": true
+        },
+        {
+          "text": "PSG beat Arsenal 2-0",
+          "correct": false
+        },
+        {
+          "text": "Arsenal beat PSG in extra time",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "PSG became only the second club to retain the trophy in the Champions League era.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_120",
+      "question": "Which film won the Palme d'Or at the Cannes Film Festival in May 2026?",
+      "answers": [
+        {
+          "text": "'Fjord' by Cristian Mungiu",
+          "correct": true
+        },
+        {
+          "text": "'Minotaur' by Andrey Zvyagintsev",
+          "correct": false
+        },
+        {
+          "text": "'Elephants in the Fog' by Abinash Bikram Shah",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It was Mungiu's second Palme d'Or, after '4 Months, 3 Weeks and 2 Days' in 2007.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_121",
+      "question": "Which three countries hosted the football World Cup that kicked off in June 2026?",
+      "answers": [
+        {
+          "text": "USA, Canada and Mexico",
+          "correct": true
+        },
+        {
+          "text": "USA, Brazil and Argentina",
+          "correct": false
+        },
+        {
+          "text": "Spain, Portugal and Morocco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It was the first World Cup with three host countries and 48 teams.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_122",
+      "question": "Which German won his first Grand Slam title at Roland Garros in June 2026?",
+      "answers": [
+        {
+          "text": "Alexander Zverev",
+          "correct": true
+        },
+        {
+          "text": "Jan-Lennard Struff",
+          "correct": false
+        },
+        {
+          "text": "Daniel Altmaier",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He beat Italy's Flavio Cobolli in five sets in the final.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_123",
+      "question": "Which country won the World Cup final in July 2026?",
+      "answers": [
+        {
+          "text": "Spain",
+          "correct": true
+        },
+        {
+          "text": "Argentina",
+          "correct": false
+        },
+        {
+          "text": "France",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It was Spain's second World Cup title after 2010.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_124",
+      "question": "Who scored the only goal in the World Cup final in July 2026, in extra time?",
+      "answers": [
+        {
+          "text": "Ferran Torres",
+          "correct": true
+        },
+        {
+          "text": "Lamine Yamal",
+          "correct": false
+        },
+        {
+          "text": "Nico Williams",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Argentina played the extra time with ten men after Enzo Fernández was sent off.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_125",
+      "question": "Who won the Golden Ball as best player of the World Cup in July 2026?",
+      "answers": [
+        {
+          "text": "Rodri",
+          "correct": true
+        },
+        {
+          "text": "Lionel Messi",
+          "correct": false
+        },
+        {
+          "text": "Kylian Mbappé",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Messi finished second in the voting.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_126",
+      "question": "Who won the Golden Boot as top scorer of the World Cup in July 2026?",
+      "answers": [
+        {
+          "text": "Kylian Mbappé",
+          "correct": true
+        },
+        {
+          "text": "Harry Kane",
+          "correct": false
+        },
+        {
+          "text": "Lionel Messi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He scored 10 goals and won the award for the second World Cup in a row.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_127",
+      "question": "Who won the men's singles title at Wimbledon in July 2026?",
+      "answers": [
+        {
+          "text": "Jannik Sinner",
+          "correct": true
+        },
+        {
+          "text": "Carlos Alcaraz",
+          "correct": false
+        },
+        {
+          "text": "Alexander Zverev",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was his second Wimbledon title in a row.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_128",
+      "question": "Who won the Tour de France that ended in Paris in July 2026?",
+      "answers": [
+        {
+          "text": "Tadej Pogačar",
+          "correct": true
+        },
+        {
+          "text": "Jonas Vingegaard",
+          "correct": false
+        },
+        {
+          "text": "Remco Evenepoel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was his fifth Tour victory, matching the record of five.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_129",
+      "question": "The Nobel Prize in Physics, announced in October 2026, honoured decisive work on which detector at the South Pole?",
+      "answers": [
+        {
+          "text": "The IceCube Neutrino Observatory",
+          "correct": true
+        },
+        {
+          "text": "The South Pole Telescope",
+          "correct": false
+        },
+        {
+          "text": "The Pierre Auger Observatory",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It uses a cubic kilometre of Antarctic ice to catch ghostly particles called neutrinos.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_130",
+      "question": "Who was awarded the Nobel Prize in Literature in October 2026?",
+      "answers": [
+        {
+          "text": "Anne Carson",
+          "correct": true
+        },
+        {
+          "text": "Margaret Atwood",
+          "correct": false
+        },
+        {
+          "text": "Haruki Murakami",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Canadian poet is known for her engagement with classical antiquity.",
       "category": "New Year's Eve"
     }
   ]

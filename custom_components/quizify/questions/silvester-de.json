@@ -1,7 +1,7 @@
 {
   "name": "Silvester",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "trivia",
   "season": {
     "start": "12-27",
@@ -2062,6 +2062,636 @@
       "unit": "Jahr",
       "difficulty": "medium",
       "fun_fact": "1963 — aufgezeichnet vor Publikum in Hamburg, in englischer Sprache und ohne Untertitel.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_101",
+      "question": "Welches Land trat am 1. Januar 2026 als 21. Mitglied dem Euroraum bei?",
+      "answers": [
+        {
+          "text": "Bulgarien",
+          "correct": true
+        },
+        {
+          "text": "Rumänien",
+          "correct": false
+        },
+        {
+          "text": "Kroatien",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es löste damit seine Landeswährung, den Lew, ab.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_102",
+      "question": "Welches Album gewann im Februar 2026 bei den Grammys die Auszeichnung als Album des Jahres?",
+      "answers": [
+        {
+          "text": "'Debí Tirar Más Fotos' von Bad Bunny",
+          "correct": true
+        },
+        {
+          "text": "'GNX' von Kendrick Lamar",
+          "correct": false
+        },
+        {
+          "text": "'Short n' Sweet' von Sabrina Carpenter",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es war das erste spanischsprachige Album, das den wichtigsten Grammy gewann.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_103",
+      "question": "Welches Team gewann im Februar 2026 den Super Bowl LX?",
+      "answers": [
+        {
+          "text": "Seattle Seahawks",
+          "correct": true
+        },
+        {
+          "text": "New England Patriots",
+          "correct": false
+        },
+        {
+          "text": "Kansas City Chiefs",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Seahawks besiegten die Patriots im Levi's Stadium von Santa Clara mit 29:13.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_104",
+      "question": "Wer trat im Februar 2026 in der Halbzeitshow des Super Bowl LX auf?",
+      "answers": [
+        {
+          "text": "Bad Bunny",
+          "correct": true
+        },
+        {
+          "text": "Taylor Swift",
+          "correct": false
+        },
+        {
+          "text": "Rihanna",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lady Gaga und Ricky Martin standen als Gäste mit auf der Bühne.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_105",
+      "question": "Welches Land stand nach den Olympischen Winterspielen im Februar 2026 ganz oben im Medaillenspiegel?",
+      "answers": [
+        {
+          "text": "Norwegen",
+          "correct": true
+        },
+        {
+          "text": "USA",
+          "correct": false
+        },
+        {
+          "text": "Deutschland",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Norwegen holte 18 Goldmedaillen, so viele wie noch nie eine Nation bei Winterspielen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_106",
+      "question": "Welche zwei italienischen Orte richteten im Februar 2026 die Olympischen Winterspiele aus?",
+      "answers": [
+        {
+          "text": "Mailand und Cortina d'Ampezzo",
+          "correct": true
+        },
+        {
+          "text": "Turin und Sestriere",
+          "correct": false
+        },
+        {
+          "text": "Bozen und Meran",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es brannten zwei olympische Feuer, eines an jedem Ort.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_107",
+      "question": "Welcher Film des deutschen Regisseurs İlker Çatak gewann im Februar 2026 den Goldenen Bären der Berlinale?",
+      "answers": [
+        {
+          "text": "'Gelbe Briefe'",
+          "correct": true
+        },
+        {
+          "text": "'Das Lehrerzimmer'",
+          "correct": false
+        },
+        {
+          "text": "'Sterben'",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Es war der erste Goldene Bär für einen deutschen Regisseur seit 22 Jahren.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_108",
+      "question": "Welcher Film gewann im März 2026 den Oscar als bester Film?",
+      "answers": [
+        {
+          "text": "'One Battle After Another'",
+          "correct": true
+        },
+        {
+          "text": "'Sinners'",
+          "correct": false
+        },
+        {
+          "text": "'Hamnet'",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Sinners' war mit einem Rekord von 16 Nominierungen ins Rennen gegangen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_109",
+      "question": "Welche Schauspielerin gewann im März 2026 den Oscar als beste Hauptdarstellerin?",
+      "answers": [
+        {
+          "text": "Jessie Buckley",
+          "correct": true
+        },
+        {
+          "text": "Emma Stone",
+          "correct": false
+        },
+        {
+          "text": "Rose Byrne",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sie bekam ihn für ihre Rolle als Agnes in 'Hamnet'.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_110",
+      "question": "Welcher Film gewann im März 2026 den Oscar als bester Animationsfilm?",
+      "answers": [
+        {
+          "text": "'KPop Demon Hunters'",
+          "correct": true
+        },
+        {
+          "text": "'Zoomania 2'",
+          "correct": false
+        },
+        {
+          "text": "'Elio'",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Er erzählt von einer Mädchenband, die heimlich Dämonen bekämpft.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_111",
+      "question": "Welcher Film aus Norwegen gewann im März 2026 den Oscar als bester internationaler Film?",
+      "answers": [
+        {
+          "text": "'Sentimental Value'",
+          "correct": true
+        },
+        {
+          "text": "'Es war nur ein Unfall'",
+          "correct": false
+        },
+        {
+          "text": "'Sirât'",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Regie führte Joachim Trier.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_112",
+      "question": "Welchen Rekord stellte die Besatzung von Artemis II im April 2026 auf?",
+      "answers": [
+        {
+          "text": "Größte Entfernung von der Erde, die Menschen je erreichten",
+          "correct": true
+        },
+        {
+          "text": "Längster Aufenthalt auf der Mondoberfläche",
+          "correct": false
+        },
+        {
+          "text": "Längste Zeit im Erdorbit",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sie übertraf damit die Marke von Apollo 13 aus dem Jahr 1970.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_113",
+      "question": "In welchem Ozean wasserte die Raumkapsel von Artemis II im April 2026 nach dem Flug um den Mond?",
+      "answers": [
+        {
+          "text": "Im Pazifik",
+          "correct": true
+        },
+        {
+          "text": "Im Atlantik",
+          "correct": false
+        },
+        {
+          "text": "Im Indischen Ozean",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die US-Marine barg die vier Astronauten vor der Küste Kaliforniens.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_114",
+      "question": "Welcher Verein sicherte sich im April 2026 vier Spieltage vor Schluss die deutsche Fußballmeisterschaft?",
+      "answers": [
+        {
+          "text": "Bayern München",
+          "correct": true
+        },
+        {
+          "text": "Borussia Dortmund",
+          "correct": false
+        },
+        {
+          "text": "Bayer Leverkusen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Titel fiel mit einem 4:2 gegen den VfB Stuttgart am 19. April.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_115",
+      "question": "Wer erzielte im Mai 2026 beim 3:0 im DFB-Pokalfinale gegen den VfB Stuttgart alle drei Tore für Bayern?",
+      "answers": [
+        {
+          "text": "Harry Kane",
+          "correct": true
+        },
+        {
+          "text": "Jamal Musiala",
+          "correct": false
+        },
+        {
+          "text": "Michael Olise",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Finale in Berlin machte das Double perfekt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_116",
+      "question": "Welches Land gewann im Mai 2026 den Eurovision Song Contest?",
+      "answers": [
+        {
+          "text": "Bulgarien",
+          "correct": true
+        },
+        {
+          "text": "Israel",
+          "correct": false
+        },
+        {
+          "text": "Rumänien",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dara gewann mit 'Bangaranga' sowohl die Jury- als auch die Zuschauerwertung.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_117",
+      "question": "In welcher Stadt fand der Eurovision Song Contest im Mai 2026 statt?",
+      "answers": [
+        {
+          "text": "Wien",
+          "correct": true
+        },
+        {
+          "text": "Salzburg",
+          "correct": false
+        },
+        {
+          "text": "Basel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Finale lief am 16. Mai in der Wiener Stadthalle.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_118",
+      "question": "Wie wurde das Champions-League-Finale von Budapest Ende Mai 2026 entschieden?",
+      "answers": [
+        {
+          "text": "Paris Saint-Germain gewann im Elfmeterschießen gegen Arsenal",
+          "correct": true
+        },
+        {
+          "text": "Paris Saint-Germain gewann 2:0 gegen Arsenal",
+          "correct": false
+        },
+        {
+          "text": "Arsenal gewann in der Verlängerung gegen Paris",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "PSG verteidigte den Titel als erst zweiter Klub der Champions-League-Ära.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_119",
+      "question": "Welcher Klub holte im Mai 2026 erstmals seit 2004 die englische Meisterschaft?",
+      "answers": [
+        {
+          "text": "Arsenal",
+          "correct": true
+        },
+        {
+          "text": "Manchester City",
+          "correct": false
+        },
+        {
+          "text": "Liverpool",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Titel stand am 19. Mai fest, als Manchester City in Bournemouth nur remis spielte.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_120",
+      "question": "Welche drei Länder richteten die im Juni 2026 gestartete Fußball-Weltmeisterschaft aus?",
+      "answers": [
+        {
+          "text": "USA, Kanada und Mexiko",
+          "correct": true
+        },
+        {
+          "text": "USA, Brasilien und Argentinien",
+          "correct": false
+        },
+        {
+          "text": "Spanien, Portugal und Marokko",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es war die erste WM mit drei Gastgebern und 48 Teilnehmern.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_121",
+      "question": "Welcher Deutsche gewann im Juni 2026 bei den French Open in Paris seinen ersten Grand-Slam-Titel?",
+      "answers": [
+        {
+          "text": "Alexander Zverev",
+          "correct": true
+        },
+        {
+          "text": "Jan-Lennard Struff",
+          "correct": false
+        },
+        {
+          "text": "Daniel Altmaier",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Im Finale schlug er den Italiener Flavio Cobolli in fünf Sätzen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_122",
+      "question": "Gegen welche Mannschaft schied Deutschland bei der WM Ende Juni 2026 im Sechzehntelfinale im Elfmeterschießen aus?",
+      "answers": [
+        {
+          "text": "Paraguay",
+          "correct": true
+        },
+        {
+          "text": "Ecuador",
+          "correct": false
+        },
+        {
+          "text": "Uruguay",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bundestrainer Julian Nagelsmann gab danach sein Amt auf.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_123",
+      "question": "Welches Land wurde im Juli 2026 Fußball-Weltmeister?",
+      "answers": [
+        {
+          "text": "Spanien",
+          "correct": true
+        },
+        {
+          "text": "Argentinien",
+          "correct": false
+        },
+        {
+          "text": "Frankreich",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es war der zweite WM-Titel der Spanier nach 2010.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_124",
+      "question": "Wer erzielte im Juli 2026 in der Verlängerung das einzige Tor des WM-Finales?",
+      "answers": [
+        {
+          "text": "Ferran Torres",
+          "correct": true
+        },
+        {
+          "text": "Lamine Yamal",
+          "correct": false
+        },
+        {
+          "text": "Nico Williams",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Argentinien spielte die Verlängerung nach einer Gelb-Roten Karte für Enzo Fernández in Unterzahl.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_125",
+      "question": "Wer wurde bei der WM im Juli 2026 zum besten Spieler des Turniers gewählt und bekam den Goldenen Ball?",
+      "answers": [
+        {
+          "text": "Rodri",
+          "correct": true
+        },
+        {
+          "text": "Lionel Messi",
+          "correct": false
+        },
+        {
+          "text": "Kylian Mbappé",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Messi landete in der Wahl auf Rang zwei.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_126",
+      "question": "Wer wurde bei der WM im Juli 2026 mit zehn Toren Torschützenkönig?",
+      "answers": [
+        {
+          "text": "Kylian Mbappé",
+          "correct": true
+        },
+        {
+          "text": "Harry Kane",
+          "correct": false
+        },
+        {
+          "text": "Lionel Messi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Er gewann den Goldenen Schuh nach 2022 zum zweiten Mal in Folge.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_127",
+      "question": "Gegen wen gewann Jannik Sinner im Juli 2026 das Finale von Wimbledon?",
+      "answers": [
+        {
+          "text": "Alexander Zverev",
+          "correct": true
+        },
+        {
+          "text": "Carlos Alcaraz",
+          "correct": false
+        },
+        {
+          "text": "Novak Djokovic",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es war Sinners zweiter Wimbledon-Titel in Folge.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_128",
+      "question": "Wer gewann im Juli 2026 die Tour de France, die in Paris endete?",
+      "answers": [
+        {
+          "text": "Tadej Pogačar",
+          "correct": true
+        },
+        {
+          "text": "Jonas Vingegaard",
+          "correct": false
+        },
+        {
+          "text": "Remco Evenepoel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es war sein fünfter Gesamtsieg bei der Tour.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_129",
+      "question": "Wofür erhielten Karl Deisseroth, Peter Hegemann und Georg Nagel im Oktober 2026 den Nobelpreis für Medizin?",
+      "answers": [
+        {
+          "text": "Für die Optogenetik, die Nervenzellen mit Licht steuert",
+          "correct": true
+        },
+        {
+          "text": "Für die Genschere CRISPR",
+          "correct": false
+        },
+        {
+          "text": "Für die Entwicklung von mRNA-Impfstoffen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hegemann und Nagel forschen in Deutschland.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_130",
+      "question": "Für Arbeiten an welchem Detektor am Südpol erhielt Francis Halzen im Oktober 2026 den Physik-Nobelpreis?",
+      "answers": [
+        {
+          "text": "Dem IceCube-Neutrinoobservatorium",
+          "correct": true
+        },
+        {
+          "text": "Dem Südpol-Teleskop",
+          "correct": false
+        },
+        {
+          "text": "Dem Pierre-Auger-Observatorium",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Es nutzt einen Kubikkilometer antarktisches Eis, um Neutrinos aufzuspüren.",
       "category": "Silvester"
     }
   ]
