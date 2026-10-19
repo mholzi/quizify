@@ -34,6 +34,11 @@ _LOGGER = logging.getLogger(__name__)
 # (a player on a 25-streak crossing 3/5/7/10/15/20/25 in quick succession
 # during a wager round) would stack 6 announcements on top of each
 # other. 5s gives the speaker time to finish a short sentence.
+#
+# Only the incidental lines are dropped inside the window. The question and
+# the reveal are what the room is waiting for and always go out (#1091) —
+# the opener and the final-round call used to land milliseconds before the
+# question and throttle it away.
 TTS_MIN_INTERVAL = 5.0
 
 # Seconds-remaining threshold for the spoken countdown warning (#281). Fires
@@ -126,6 +131,13 @@ class QuizifyTTSAnnouncer:
         # Last single leader name we observed, for leader-change detection.
         # None means "no leader yet" — used to suppress the round-1 change.
         self._previous_leader: str | None = None
+        # The game-start / final-round call, held for the question that
+        # follows it (#1091). The phase flips milliseconds before the question
+        # goes out, so speaking it on its own would either swallow the
+        # question (throttle) or be cut off by it (the speaker plays the newer
+        # clip). One utterance — "Final round! Question 10 of 10: …" — has
+        # neither problem.
+        self._pending_intro: str | None = None
 
     # ------------------------------------------------------------------
     # Per-game configuration (#281)
@@ -167,6 +179,7 @@ class QuizifyTTSAnnouncer:
         self._tts_entity_override = clean_str(tts_entity)
         self._media_player_override = clean_str(media_player)
         self._previous_leader = None
+        self._pending_intro = None
 
     # There is deliberately no export/restore_runtime_config pair any more
     # (#789). It existed only because an options reload rebuilt this announcer
@@ -298,9 +311,17 @@ class QuizifyTTSAnnouncer:
         Resets the per-round countdown guard unconditionally (even when
         question narration is off) so the spoken time warning can fire later
         this round regardless of the question toggle.
+
+        A pending game-start / final-round call leads the utterance (#1091),
+        and is spoken on its own when the question toggle is off.
         """
         self._countdown_announced = False
-        if not (self._enabled and self._announce_question):
+        intro, self._pending_intro = self._pending_intro, None
+        if not self._enabled:
+            return
+        if not self._announce_question:
+            if intro:
+                self._speak(intro)
             return
         text = getattr(question, "question", "") or ""
         message = tts_phrases.phrase(
@@ -313,7 +334,9 @@ class QuizifyTTSAnnouncer:
         options_fragment = self._build_options_fragment(options)
         if options_fragment:
             message = f"{message} {options_fragment}"
-        self._speak(message)
+        if intro:
+            message = f"{intro} {message}"
+        self._speak(message, essential=True)
 
     def _build_options_fragment(self, options: list[str] | None) -> str:
         """Render the spoken answer-options list, or "" when not applicable.
@@ -413,7 +436,7 @@ class QuizifyTTSAnnouncer:
         self._announce_standings_fragment(lang, summary, frags)
 
         if frags:
-            self._speak(" ".join(frags))
+            self._speak(" ".join(frags), essential=True)
 
     def _announce_standings_fragment(
         self, lang: str, summary: Any, frags: list[str]
@@ -567,11 +590,13 @@ class QuizifyTTSAnnouncer:
             and self._game.round == 1
         ):
             self._announced_milestones.clear()
-            self._speak(tts_phrases.phrase(self._lang(), "game_start"))
+            # Spoken as the lead-in of the first question (#1091).
+            self._pending_intro = tts_phrases.phrase(self._lang(), "game_start")
             return
 
         # ANSWER_REVEAL on the last round transitions through FINALE.
         if phase == GamePhase.FINALE:
+            self._pending_intro = None
             leader = self._game.leader
             if leader is not None:
                 self._speak(
@@ -598,20 +623,26 @@ class QuizifyTTSAnnouncer:
             and self._game.round == self._game.total_rounds
             and self._game.total_rounds > 1
         ):
-            self._speak(tts_phrases.phrase(self._lang(), "final_round"))
+            # Spoken as the lead-in of the last question (#1091).
+            self._pending_intro = tts_phrases.phrase(self._lang(), "final_round")
 
     # ------------------------------------------------------------------
     # Internal
     # ------------------------------------------------------------------
 
-    def _speak(self, message: str) -> None:
+    def _speak(self, message: str, *, essential: bool = False) -> None:
         """Fire-and-forget TTS call. Swallows errors so a bad config can't
-        break the game loop."""
+        break the game loop.
+
+        ``essential`` lines (the question, the reveal) skip the throttle but
+        still restart its window, so a milestone right behind them stays
+        quiet (#1091)."""
         if not self.is_configured:
             return
         now = time.monotonic()
         if (
-            self._last_spoken_at is not None
+            not essential
+            and self._last_spoken_at is not None
             and now - self._last_spoken_at < TTS_MIN_INTERVAL
         ):
             _LOGGER.debug(

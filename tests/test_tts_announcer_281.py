@@ -466,9 +466,24 @@ class TestThrottle:
         hass = _FakeHass()
         t = _announcer(hass, game)
         _configure(t)
-        t.announce_question(_question("Q1?"), 1, 10)
+        t.announce_join("Anna")
         await asyncio.sleep(0)
-        t.announce_question(_question("Q2?"), 2, 10)
+        t.announce_join("Ben")
         await asyncio.sleep(0)
         # Second call inside TTS_MIN_INTERVAL → dropped.
         assert len(hass.calls) == 1
+
+    @pytest.mark.asyncio
+    async def test_a_question_is_never_throttled(self, game) -> None:
+        """The question is what the room waits for (#1091): a join line a
+        moment earlier must not swallow it."""
+        game.language = "en"
+        hass = _FakeHass()
+        t = _announcer(hass, game)
+        _configure(t)
+        t.announce_join("Anna")
+        await asyncio.sleep(0)
+        t.announce_question(_question("Q1?"), 1, 10)
+        await asyncio.sleep(0)
+        assert len(hass.calls) == 2
+        assert hass.calls[1][2]["message"] == "Question 1 of 10: Q1?"

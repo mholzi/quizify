@@ -225,8 +225,10 @@ class TestLifecycleLinesAreLocalized:
         game.phase = GamePhase.QUESTION_ACTIVE
         game.round = 1
         t._on_state_changed()
+        # Spoken as the lead-in of the first question (#1091).
+        t.announce_question(MagicMock(question="¿?"), 1, 10)
         await asyncio.sleep(0)
-        assert _last_message(hass) == "¡Empieza Quizify! ¡Mucha suerte!"
+        assert _last_message(hass).startswith("¡Empieza Quizify! ¡Mucha suerte! ")
 
     @pytest.mark.asyncio
     async def test_final_round_speaks_german_in_a_german_game(self, game) -> None:
@@ -239,8 +241,9 @@ class TestLifecycleLinesAreLocalized:
         game.round = 5
         game.total_rounds = 5
         t._on_state_changed()
+        t.announce_question(MagicMock(question="Frage?"), 5, 5)
         await asyncio.sleep(0)
-        assert _last_message(hass) == "Letzte Runde!"
+        assert _last_message(hass).startswith("Letzte Runde! ")
 
     @pytest.mark.asyncio
     async def test_winner_line_speaks_the_game_language(self, game) -> None:
