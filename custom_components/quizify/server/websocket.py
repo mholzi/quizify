@@ -3719,9 +3719,8 @@ class QuizifyWebSocketHandler:
         # drops mid-question, pause the game instead of letting the timer
         # run out while everyone wonders what happened. The admin's
         # PLAYER_SESSION_GRACE (60s by default) gives them time to reload
-        # or switch networks; if they don't come back, the existing
-        # remove-after-timeout below cleans up and the game can be
-        # resumed by another path.
+        # or switch networks; if they don't come back, the game can be
+        # resumed by another path (their row stays until the lobby, #1093).
         #
         # BUT: the most common admin disconnect is the intentional
         # admin.html → player.html redirect that fires when admin clicks
@@ -3749,28 +3748,29 @@ class QuizifyWebSocketHandler:
         )
 
         async def remove_after_timeout(name: str, timeout: float) -> None:
-            await asyncio.sleep(timeout)
-            gs = self._get_game_state()
-            if gs:
+            # #1093: only the lobby removes. Mid-game a dropped player keeps
+            # their row, score and session tokens — a guest whose phone locked
+            # for just over a minute used to vanish from the leaderboard and
+            # come back as a fresh player on the room average. The
+            # disconnected row is harmless meanwhile: ``all_submitted()`` and
+            # every fan-out skip it. Re-checked each grace period, so a
+            # departed guest still leaves once the room is back in the lobby.
+            while True:
+                await asyncio.sleep(timeout)
+                gs = self._get_game_state()
+                if gs is None:
+                    return
                 p = gs.get_player(name)
-                if p and not p.connected:
-                    gs.remove_player(name)
-                    # Clean up session tokens for this player
-                    self._conn.clear_player_tokens(name)
-                    # Coalesced roster broadcast (#453).
-                    self._mark_roster_dirty("player_left")
-                    _LOGGER.info(
-                        "Removed disconnected player after grace period: %s", name
-                    )
-                    # #412: removing the last unanswered player can complete the
-                    # round — re-check all-submitted and evaluate if so, same as
-                    # the immediate-disconnect path above.
-                    if self._maybe_evaluate_after_dropout(gs):
-                        _LOGGER.info(
-                            "Round auto-evaluated after removing last "
-                            "unanswered player %s",
-                            name,
-                        )
+                if p is None or p.connected:
+                    return
+                if gs.phase == GamePhase.LOBBY:
+                    break
+            gs.remove_player(name)
+            # Clean up session tokens for this player
+            self._conn.clear_player_tokens(name)
+            # Coalesced roster broadcast (#453).
+            self._mark_roster_dirty("player_left")
+            _LOGGER.info("Removed disconnected player after grace period: %s", name)
 
         self._conn.schedule_player_removal(player.name, grace, remove_after_timeout)
 
