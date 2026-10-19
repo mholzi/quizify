@@ -258,10 +258,14 @@ class TestTTSPhaseAnnouncements:
         game.round = 1
         game.phase = GamePhase.QUESTION_ACTIVE
         game._notify_state_callbacks()
+        # The opener leads the first question's utterance (#1091).
+        t.announce_question(MagicMock(question="Frage?"), 1, 10)
         await asyncio.sleep(0)
         assert len(hass.calls) == 1
         # German game → German opener (#745).
-        assert hass.calls[0][2]["message"] == "Quizify geht los. Viel Glück!"
+        assert hass.calls[0][2]["message"].startswith(
+            "Quizify geht los. Viel Glück! "
+        )
 
     @pytest.mark.asyncio
     async def test_finale_announces_winner(self, game) -> None:
