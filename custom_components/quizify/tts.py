@@ -21,7 +21,7 @@ import time
 from typing import TYPE_CHECKING, Any
 
 from .game import tts_phrases
-from .game.state import GamePhase, QuizifyGameState
+from .game.state import GamePhase, QuizifyGameState, RoundSummary
 from .ha_service import fire_and_forget_service
 from .house_settings import HouseSettings, clean_str
 
@@ -392,17 +392,23 @@ class QuizifyTTSAnnouncer:
         message = tts_phrases.phrase(self._lang(), "countdown", seconds=seconds)
         self._speak(message)
 
-    def announce_reveal(self, game_state: QuizifyGameState) -> None:
+    def announce_reveal(
+        self, game_state: QuizifyGameState, summary: RoundSummary | None = None
+    ) -> None:
         """Narrate the reveal as ONE combined utterance (#281).
 
         Fragments — correct answer, who-got-it, leader-change — are each gated
         by their own per-event toggle and joined into a single sentence so the
         audio flows the way a host would describe the round, instead of a
         stutter of separate clips. No-op when the master switch is off.
+
+        ``summary`` is the round to narrate when it is not the game's round
+        summary — the Hot Seat's chair question (#1092).
         """
         if not self._enabled:
             return
-        summary = game_state.get_round_summary()
+        if summary is None:
+            summary = game_state.get_round_summary()
         if summary is None:
             return
         lang = self._lang()

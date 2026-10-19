@@ -144,8 +144,10 @@ class HotSeatDriver:
         game_state.finish_hot_seat()
         await self._out.send_hot_seat_result(game_state, hs)
         # #708: and the reveal beat, so the lights and the narrator close the
-        # detour the way they close an ordinary round.
-        self._milestone("reveal", game_state)
+        # detour the way they close an ordinary round. With the chair's own
+        # summary (#1092): the game's round summary is still the normal round
+        # before the detour.
+        self._milestone("reveal", game_state, game_state.hot_seat_round_summary())
 
     async def _wait_out(
         self,

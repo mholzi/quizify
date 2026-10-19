@@ -47,6 +47,7 @@ from custom_components.quizify.game.state import (
     AnswerResult,
     GamePhase,
     QuizifyGameState,
+    RoundSummary,
     TeamAnswerAck,
 )
 from custom_components.quizify.game.team import Team
@@ -4453,10 +4454,18 @@ class QuizifyWebSocketHandler:
             self._event_emitter, "notify_time_running_out", seconds_remaining
         )
 
-    def reveal(self, game_state: QuizifyGameState) -> None:
-        """The answer is out and the round has been scored (#789)."""
-        self._fire(self._tts_announcer, "announce_reveal", game_state)
-        self._fire(self._event_emitter, "notify_answer_revealed", game_state)
+    def reveal(
+        self, game_state: QuizifyGameState, summary: RoundSummary | None = None
+    ) -> None:
+        """The answer is out and the round has been scored (#789).
+
+        ``summary`` overrides the game's round summary — the Hot Seat passes
+        its chair's question, which is not the round summary (#1092).
+        """
+        self._fire(self._tts_announcer, "announce_reveal", game_state, summary)
+        self._fire(
+            self._event_emitter, "notify_answer_revealed", game_state, summary
+        )
 
     # -- MilestoneSink, the detours (#708) ------------------------------
     #

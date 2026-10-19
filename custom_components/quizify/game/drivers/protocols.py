@@ -39,7 +39,7 @@ if TYPE_CHECKING:
     from ..hot_seat import HotSeatRound
     from ..lightning import LightningRound
     from ..questions import Question
-    from ..state import QuizifyGameState
+    from ..state import QuizifyGameState, RoundSummary
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -74,8 +74,11 @@ class MilestoneSink(Protocol):
         """The current answer window is running down. Called on every tick;
         each consumer keeps its own once-per-round guard and threshold."""
 
-    def reveal(self, game_state: QuizifyGameState) -> None:
-        """The answer is out and the round has been scored."""
+    def reveal(
+        self, game_state: QuizifyGameState, summary: RoundSummary | None = None
+    ) -> None:
+        """The answer is out and the round has been scored. ``summary`` is
+        the round to read; ``None`` means ``game_state.get_round_summary()``."""
 
     # -- the detours (#708) ---------------------------------------------
     #

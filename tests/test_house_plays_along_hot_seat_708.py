@@ -71,7 +71,7 @@ class _Announcer:
     def announce_countdown(self, seconds_remaining):  # noqa: ANN001, ANN201
         self.countdowns.append(seconds_remaining)
 
-    def announce_reveal(self, game_state):  # noqa: ANN001, ANN201
+    def announce_reveal(self, game_state, summary=None):  # noqa: ANN001, ANN201
         self.reveals += 1
 
 
@@ -89,7 +89,7 @@ class _Emitter:
     def notify_time_running_out(self, seconds_remaining):  # noqa: ANN001, ANN201
         self.time_running_out.append(seconds_remaining)
 
-    def notify_answer_revealed(self, game_state):  # noqa: ANN001, ANN201
+    def notify_answer_revealed(self, game_state, summary=None):  # noqa: ANN001, ANN201
         self.reveals += 1
 
 
