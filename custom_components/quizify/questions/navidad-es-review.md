@@ -8,7 +8,7 @@ Written for #1099 on 2026-10-19. 59 new questions take the pack from 101 to 160.
 - Blocks: films and songs 15, Advent and customs 12, food and baking 10, markets and places 8, St Nicholas 8, country block 6.
 - Duplicate check: every new question was compared with the existing 101 of this pack and with the other two Christmas packs (normalised wording overlap plus shared answer terms). Hits were topical neighbours only (for example the existing Home Alone question asks for the city, the new ones ask for the actor and the writer); no repeated question.
 - No picture questions, no new estimate questions (the estimate-parity test is untouched).
-- 7 of 59 facts were additionally checked against a web source (listed below). The rest are long-established encyclopedic facts. Facts that could not be confirmed (a Spanish carol's origin, the date of the first presidential Christmas address, a disputed first-printing claim) were dropped or reworded rather than guessed.
+- 8 of 59 facts were additionally checked against a web source (listed below). The rest are long-established encyclopedic facts. Facts that could not be confirmed (a Spanish carol's origin, the date of the first presidential Christmas address, a disputed first-printing claim) were dropped or reworded rather than guessed.
 
 ## New questions
 
@@ -39,7 +39,7 @@ Written for #1099 on 2026-10-19. 59 new questions take the pack from 101 to 160.
 | navidad_es_124 | medium | ¿Qué instrumento navideño típico de Andalucía es un cilindro con una piel por la que se frota una caña? | La zambomba | reference knowledge (encyclopedic; Wikipedia-level facts) |
 | navidad_es_125 | medium | ¿Cómo se llama a Papá Noel en Chile? | Viejito Pascuero | reference knowledge (encyclopedic; Wikipedia-level facts) |
 | navidad_es_126 | hard | ¿Cómo se llama la fiesta colombiana del 7 de diciembre en la que se encienden velas y farolitos? | Día de las Velitas | reference knowledge (encyclopedic; Wikipedia-level facts) |
-| navidad_es_127 | medium | ¿Qué rey mago trae el oro, según la tradición española? | Melchor | reference knowledge (encyclopedic; Wikipedia-level facts) |
+| navidad_es_127 | medium | ¿Quién es el Apalpador en la tradición gallega? | Un carbonero gigante que comprueba si los niños han comido bien | web-checked: <https://www.eldebate.com/sociedad/20251224/olentzero-apalpador-esteru-personajes-tipicos-navidad-distintas-regiones-espana-cns_368627.html> |
 | navidad_es_128 | hard | ¿Qué planta florece en invierno y se conoce como 'rosa de Navidad'? | El eléboro | reference knowledge (encyclopedic; Wikipedia-level facts) |
 | navidad_es_129 | medium | ¿Qué diferencia al turrón de Jijona del de Alicante? | El de Jijona es blando y el de Alicante, duro | reference knowledge (encyclopedic; Wikipedia-level facts) |
 | navidad_es_130 | easy | ¿Qué ciudad es famosa por su mazapán navideño? | Toledo | reference knowledge (encyclopedic; Wikipedia-level facts) |

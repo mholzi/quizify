@@ -2612,23 +2612,23 @@
     },
     {
       "id": "navidad_es_127",
-      "question": "¿Qué rey mago trae el oro, según la tradición española?",
+      "question": "¿Quién es el Apalpador en la tradición gallega?",
       "answers": [
         {
-          "text": "Melchor",
+          "text": "Un carbonero gigante que comprueba si los niños han comido bien",
           "correct": true
         },
         {
-          "text": "Gaspar",
+          "text": "Un pastor que vigila el belén",
           "correct": false
         },
         {
-          "text": "Baltasar",
+          "text": "Un rey que reparte juguetes el 6 de enero",
           "correct": false
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Los nombres de los Magos no aparecen en la Biblia, los dio la tradición posterior.",
+      "fun_fact": "En Nochebuena reparte castañas a los niños.",
       "category": "Navidad"
     },
     {
