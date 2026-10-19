@@ -1,7 +1,7 @@
 {
   "name": "Christmas",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "trivia",
   "season": {
     "start": "12-01",
@@ -2083,6 +2083,1245 @@
       "unit": "doors",
       "difficulty": "easy",
       "fun_fact": "24 — the calendar ends on Christmas Eve rather than on Christmas Day.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_102",
+      "question": "Which actor played Kevin McCallister in 'Home Alone' (1990)?",
+      "answers": [
+        {
+          "text": "Macaulay Culkin",
+          "correct": true
+        },
+        {
+          "text": "Haley Joel Osment",
+          "correct": false
+        },
+        {
+          "text": "Elijah Wood",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A sequel set in New York followed only two years later.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_103",
+      "question": "Who wrote the screenplay for 'Home Alone'?",
+      "answers": [
+        {
+          "text": "John Hughes",
+          "correct": true
+        },
+        {
+          "text": "Chris Columbus",
+          "correct": false
+        },
+        {
+          "text": "Robert Zemeckis",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Columbus directed the film, while Hughes also produced it.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_104",
+      "question": "In the film 'Elf' (2003), what does Buddy pour over his spaghetti?",
+      "answers": [
+        {
+          "text": "Maple syrup",
+          "correct": true
+        },
+        {
+          "text": "Hot chocolate",
+          "correct": false
+        },
+        {
+          "text": "Strawberry jam",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "He names candy, candy canes, candy corns and syrup as the four main food groups.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_105",
+      "question": "Which actor plays Scrooge in 'The Muppet Christmas Carol' (1992)?",
+      "answers": [
+        {
+          "text": "Michael Caine",
+          "correct": true
+        },
+        {
+          "text": "Patrick Stewart",
+          "correct": false
+        },
+        {
+          "text": "Bill Murray",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Caine played the part completely straight, as if the Muppets were real actors.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_106",
+      "question": "At which airport do the opening and closing scenes of 'Love Actually' (2003) take place?",
+      "answers": [
+        {
+          "text": "Heathrow",
+          "correct": true
+        },
+        {
+          "text": "Gatwick",
+          "correct": false
+        },
+        {
+          "text": "Manchester",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Part of the arrivals-hall footage shows real passengers.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_107",
+      "question": "What is Hugh Grant's job in 'Love Actually'?",
+      "answers": [
+        {
+          "text": "Prime Minister",
+          "correct": true
+        },
+        {
+          "text": "Publisher",
+          "correct": false
+        },
+        {
+          "text": "Vicar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "His dance through 10 Downing Street is set to 'Jump (For My Love)' by the Pointer Sisters.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_108",
+      "question": "Which record kept Wham!'s 'Last Christmas' off the UK Christmas No. 1 spot in 1984?",
+      "answers": [
+        {
+          "text": "'Do They Know It's Christmas?' by Band Aid",
+          "correct": true
+        },
+        {
+          "text": "'Wonderful Christmastime' by Paul McCartney",
+          "correct": false
+        },
+        {
+          "text": "'Merry Xmas Everybody' by Slade",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wham! donated the royalties from 'Last Christmas' to famine relief in Ethiopia.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_109",
+      "question": "Who organised the 1984 charity single 'Do They Know It's Christmas?'",
+      "answers": [
+        {
+          "text": "Bob Geldof and Midge Ure",
+          "correct": true
+        },
+        {
+          "text": "Elton John and Bernie Taupin",
+          "correct": false
+        },
+        {
+          "text": "Phil Collins and Peter Gabriel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The song was recorded in a single day at a London studio.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_110",
+      "question": "Which band beat X Factor winner Joe McElderry to the UK Christmas No. 1 in 2009 after a social-media campaign?",
+      "answers": [
+        {
+          "text": "Rage Against the Machine",
+          "correct": true
+        },
+        {
+          "text": "Linkin Park",
+          "correct": false
+        },
+        {
+          "text": "Green Day",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The song, 'Killing in the Name', had been released 17 years earlier.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_111",
+      "question": "Which X Factor winner had the UK Christmas No. 1 in 2008 with a cover of 'Hallelujah'?",
+      "answers": [
+        {
+          "text": "Alexandra Burke",
+          "correct": true
+        },
+        {
+          "text": "Leona Lewis",
+          "correct": false
+        },
+        {
+          "text": "Shayne Ward",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Leonard Cohen wrote the original, which appeared on an album in 1984.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_112",
+      "question": "Which song kept 'Fairytale of New York' by The Pogues and Kirsty MacColl from the UK Christmas No. 1 in 1987?",
+      "answers": [
+        {
+          "text": "'Always on My Mind' by the Pet Shop Boys",
+          "correct": true
+        },
+        {
+          "text": "'Never Gonna Give You Up' by Rick Astley",
+          "correct": false
+        },
+        {
+          "text": "'Mistletoe and Wine' by Cliff Richard",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It never reached the top, yet it has re-entered the charts almost every December since.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_113",
+      "question": "Which band had the 1973 hit 'Merry Xmas Everybody'?",
+      "answers": [
+        {
+          "text": "Slade",
+          "correct": true
+        },
+        {
+          "text": "The Sweet",
+          "correct": false
+        },
+        {
+          "text": "Mud",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It was the UK Christmas No. 1 that year and has charted again in many later Decembers.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_114",
+      "question": "What does Ralphie Parker want for Christmas in 'A Christmas Story' (1983)?",
+      "answers": [
+        {
+          "text": "A Red Ryder air rifle",
+          "correct": true
+        },
+        {
+          "text": "A new bicycle",
+          "correct": false
+        },
+        {
+          "text": "A toy train",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Everyone from his mother to a department-store Santa tells him: 'You'll shoot your eye out.'",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_115",
+      "question": "Which Scandinavian country has made the Czechoslovak–East German film 'Three Wishes for Cinderella' (1973) a fixed Christmas TV tradition?",
+      "answers": [
+        {
+          "text": "Norway",
+          "correct": true
+        },
+        {
+          "text": "Denmark",
+          "correct": false
+        },
+        {
+          "text": "Iceland",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Norwegian the film is called 'Tre nøtter til Askepott'.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_116",
+      "question": "Who composed the music for 'Three Wishes for Cinderella' (1973)?",
+      "answers": [
+        {
+          "text": "Karel Svoboda",
+          "correct": true
+        },
+        {
+          "text": "Bedřich Smetana",
+          "correct": false
+        },
+        {
+          "text": "Leoš Janáček",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Svoboda also wrote the theme of the German TV series 'Maya the Bee'.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_117",
+      "question": "How many candles does a traditional Advent wreath hold?",
+      "answers": [
+        {
+          "text": "Four",
+          "correct": true
+        },
+        {
+          "text": "Five",
+          "correct": false
+        },
+        {
+          "text": "Twelve",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "One more candle is lit on each of the four Sundays before Christmas.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_118",
+      "question": "In the Catholic and Anglican tradition, which colour is the third Advent candle?",
+      "answers": [
+        {
+          "text": "Pink",
+          "correct": true
+        },
+        {
+          "text": "Gold",
+          "correct": false
+        },
+        {
+          "text": "White",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Sunday is called Gaudete, Latin for 'rejoice'.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_119",
+      "question": "What do Germans call the anonymous gift swap known in English as 'Secret Santa'?",
+      "answers": [
+        {
+          "text": "Wichteln",
+          "correct": true
+        },
+        {
+          "text": "Schenkeln",
+          "correct": false
+        },
+        {
+          "text": "Rumpeln",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In 'Schrottwichteln' the presents are deliberately silly.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_120",
+      "question": "Which saint is said to have staged the first living nativity scene at Greccio, Italy, in 1223?",
+      "answers": [
+        {
+          "text": "Francis of Assisi",
+          "correct": true
+        },
+        {
+          "text": "Anthony of Padua",
+          "correct": false
+        },
+        {
+          "text": "Benedict of Nursia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "According to tradition, a real ox and a donkey stood beside the manger.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_121",
+      "question": "On 4 December, St Barbara's Day, what do people in German-speaking countries cut and put in a vase, hoping it will bloom by Christmas?",
+      "answers": [
+        {
+          "text": "Cherry twigs",
+          "correct": true
+        },
+        {
+          "text": "Willow twigs",
+          "correct": false
+        },
+        {
+          "text": "Holly sprigs",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A twig that flowers on time is said to bring luck for the year ahead.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_122",
+      "question": "In a Christingle, which does the orange represent?",
+      "answers": [
+        {
+          "text": "The world",
+          "correct": true
+        },
+        {
+          "text": "The sun",
+          "correct": false
+        },
+        {
+          "text": "The Star of Bethlehem",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A red ribbon, a lit candle and sweets on cocktail sticks complete it.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_123",
+      "question": "On 13 December, which saint's day do Swedish girls wear a crown of candles?",
+      "answers": [
+        {
+          "text": "St Lucia",
+          "correct": true
+        },
+        {
+          "text": "St Agnes",
+          "correct": false
+        },
+        {
+          "text": "St Anne",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Her name goes back to the Latin word for light.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_124",
+      "question": "What do British children traditionally leave out for Father Christmas on Christmas Eve?",
+      "answers": [
+        {
+          "text": "A mince pie and a glass of sherry",
+          "correct": true
+        },
+        {
+          "text": "A bowl of porridge",
+          "correct": false
+        },
+        {
+          "text": "A slice of fruitcake and a cup of tea",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A carrot for the reindeer often goes next to the plate.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_125",
+      "question": "What is given on the first day in the song 'The Twelve Days of Christmas'?",
+      "answers": [
+        {
+          "text": "A partridge in a pear tree",
+          "correct": true
+        },
+        {
+          "text": "Two turtle doves",
+          "correct": false
+        },
+        {
+          "text": "A golden ring",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The lyrics were first printed in England in 1780.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_126",
+      "question": "'Noël' comes from the Latin word for what?",
+      "answers": [
+        {
+          "text": "Birth",
+          "correct": true
+        },
+        {
+          "text": "Winter",
+          "correct": false
+        },
+        {
+          "text": "Gift",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The same Latin root gave English words such as 'natal' and 'prenatal'.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_127",
+      "question": "Which winter-flowering plant is nicknamed the 'Christmas rose'?",
+      "answers": [
+        {
+          "text": "Hellebore",
+          "correct": true
+        },
+        {
+          "text": "Camellia",
+          "correct": false
+        },
+        {
+          "text": "Winter jasmine",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It is poisonous in all its parts and is not related to the true roses.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_128",
+      "question": "On which date is Epiphany, when the Three Kings are said to have reached the stable?",
+      "answers": [
+        {
+          "text": "6 January",
+          "correct": true
+        },
+        {
+          "text": "1 January",
+          "correct": false
+        },
+        {
+          "text": "25 December",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The evening before, Twelfth Night, is when decorations traditionally come down.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_129",
+      "question": "What is a baked Christmas stollen traditionally dusted with?",
+      "answers": [
+        {
+          "text": "Icing sugar",
+          "correct": true
+        },
+        {
+          "text": "Cocoa powder",
+          "correct": false
+        },
+        {
+          "text": "Ground cinnamon",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The thick coat of butter and sugar helps keep the loaf moist for weeks.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_130",
+      "question": "Which English queen reportedly had gingerbread figures made to look like her important guests?",
+      "answers": [
+        {
+          "text": "Elizabeth I",
+          "correct": true
+        },
+        {
+          "text": "Victoria",
+          "correct": false
+        },
+        {
+          "text": "Anne",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ginger reached England from Asia as early as the Middle Ages.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_131",
+      "question": "Which silver coin was traditionally hidden in the British Christmas pudding?",
+      "answers": [
+        {
+          "text": "A sixpence",
+          "correct": true
+        },
+        {
+          "text": "A shilling",
+          "correct": false
+        },
+        {
+          "text": "A farthing",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Whoever found it was said to be in for a year of good luck.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_132",
+      "question": "In Britain, what are 'pigs in blankets' at Christmas dinner?",
+      "answers": [
+        {
+          "text": "Small sausages wrapped in bacon",
+          "correct": true
+        },
+        {
+          "text": "Pork pies in pastry",
+          "correct": false
+        },
+        {
+          "text": "Marzipan piglets",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In the US the same name usually means sausages baked in dough.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_133",
+      "question": "Which German city is world-famous for its marzipan?",
+      "answers": [
+        {
+          "text": "Lübeck",
+          "correct": true
+        },
+        {
+          "text": "Dresden",
+          "correct": false
+        },
+        {
+          "text": "Konstanz",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The firm Niederegger has made it there since 1806.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_134",
+      "question": "Which creamy drink of milk, eggs, sugar and spirits is a Christmas classic in North America?",
+      "answers": [
+        {
+          "text": "Eggnog",
+          "correct": true
+        },
+        {
+          "text": "Hot toddy",
+          "correct": false
+        },
+        {
+          "text": "Egg cream",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In colonial America rum often replaced brandy because it was cheaper.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_135",
+      "question": "What is the hot spiced Christmas wine of Sweden called?",
+      "answers": [
+        {
+          "text": "Glögg",
+          "correct": true
+        },
+        {
+          "text": "Akvavit",
+          "correct": false
+        },
+        {
+          "text": "Kvass",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It is usually served with raisins and almonds.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_136",
+      "question": "Which fairy tale features a house made of gingerbread?",
+      "answers": [
+        {
+          "text": "Hansel and Gretel",
+          "correct": true
+        },
+        {
+          "text": "Snow White",
+          "correct": false
+        },
+        {
+          "text": "Rapunzel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Brothers Grimm included it in their collection in 1812.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_137",
+      "question": "In Dickens's 'A Christmas Carol', what does Scrooge send to the Cratchit family on Christmas morning?",
+      "answers": [
+        {
+          "text": "A prize turkey",
+          "correct": true
+        },
+        {
+          "text": "A roast goose",
+          "correct": false
+        },
+        {
+          "text": "A plum pudding",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Cratchits' own Christmas dinner had been a goose.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_138",
+      "question": "In France, what is a 'bûche de Noël'?",
+      "answers": [
+        {
+          "text": "A cake shaped like a yule log",
+          "correct": true
+        },
+        {
+          "text": "A braided Christmas bread",
+          "correct": false
+        },
+        {
+          "text": "A roast with chestnuts",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It stands in for the real log that once burned through the festive night.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_139",
+      "question": "What is paraded through Dresden on the Saturday before the second Advent at the Stollenfest?",
+      "answers": [
+        {
+          "text": "A giant Christstollen",
+          "correct": true
+        },
+        {
+          "text": "A giant gingerbread house",
+          "correct": false
+        },
+        {
+          "text": "A giant wooden pyramid",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The pieces are cut up and sold to visitors.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_140",
+      "question": "From where does the Nuremberg Christkind open the Christkindlesmarkt with a prologue?",
+      "answers": [
+        {
+          "text": "The balcony of the Frauenkirche",
+          "correct": true
+        },
+        {
+          "text": "The steps of the city hall",
+          "correct": false
+        },
+        {
+          "text": "The castle ramparts",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Thousands gather on the Hauptmarkt below to listen.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_141",
+      "question": "Which London park hosts the big Christmas funfair and market called Winter Wonderland?",
+      "answers": [
+        {
+          "text": "Hyde Park",
+          "correct": true
+        },
+        {
+          "text": "Regent's Park",
+          "correct": false
+        },
+        {
+          "text": "Greenwich Park",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Its attractions include an open-air ice rink and a Christmas market.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_142",
+      "question": "Who put up the first Christmas tree at Rockefeller Center in 1931?",
+      "answers": [
+        {
+          "text": "Construction workers on the site",
+          "correct": true
+        },
+        {
+          "text": "Mayor Jimmy Walker",
+          "correct": false
+        },
+        {
+          "text": "John D. Rockefeller Jr.",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The workers reportedly chipped in to buy it, and their families made the garlands.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_143",
+      "question": "Which crystal maker has designed the star on top of the Rockefeller Center tree since 2004?",
+      "answers": [
+        {
+          "text": "Swarovski",
+          "correct": true
+        },
+        {
+          "text": "Waterford",
+          "correct": false
+        },
+        {
+          "text": "Baccarat",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The tree lights are switched on in a televised ceremony each year.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_144",
+      "question": "In which Austrian village was 'Silent Night' first performed, on Christmas Eve 1818?",
+      "answers": [
+        {
+          "text": "Oberndorf",
+          "correct": true
+        },
+        {
+          "text": "Hallstatt",
+          "correct": false
+        },
+        {
+          "text": "Mariazell",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The original church is gone; a small chapel now marks the spot.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_145",
+      "question": "Which church in Bethlehem stands over the traditional birthplace of Jesus?",
+      "answers": [
+        {
+          "text": "The Church of the Nativity",
+          "correct": true
+        },
+        {
+          "text": "The Church of the Holy Sepulchre",
+          "correct": false
+        },
+        {
+          "text": "St Peter's Basilica",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It is among the oldest churches in the world that are still in use.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_146",
+      "question": "Which Finnish town on the Arctic Circle calls itself the official hometown of Santa Claus?",
+      "answers": [
+        {
+          "text": "Rovaniemi",
+          "correct": true
+        },
+        {
+          "text": "Tromsø",
+          "correct": false
+        },
+        {
+          "text": "Kiruna",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Visitors can walk across the Arctic Circle line in Santa Claus Village.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_147",
+      "question": "On which date is St Nicholas Day celebrated?",
+      "answers": [
+        {
+          "text": "6 December",
+          "correct": true
+        },
+        {
+          "text": "24 December",
+          "correct": false
+        },
+        {
+          "text": "1 December",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tradition links the date to his death in the fourth century.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_148",
+      "question": "What do children in Germany put outside the door on the night of 5 December?",
+      "answers": [
+        {
+          "text": "A boot",
+          "correct": true
+        },
+        {
+          "text": "A stocking",
+          "correct": false
+        },
+        {
+          "text": "A plate",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "By morning it is filled with nuts, mandarins and sweets.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_149",
+      "question": "Who accompanies Saint Nicholas in German folklore as a dark-cloaked helper with a sack and a switch?",
+      "answers": [
+        {
+          "text": "Knecht Ruprecht",
+          "correct": true
+        },
+        {
+          "text": "Rumpelstiltskin",
+          "correct": false
+        },
+        {
+          "text": "Struwwelpeter",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "His name means 'Servant Rupert'.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_150",
+      "question": "On which evening do Dutch children traditionally get their presents from Sinterklaas?",
+      "answers": [
+        {
+          "text": "5 December",
+          "correct": true
+        },
+        {
+          "text": "6 December",
+          "correct": false
+        },
+        {
+          "text": "24 December",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The evening is known as Pakjesavond, 'Parcel Evening'.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_151",
+      "question": "Which Italian city has housed the relics of Saint Nicholas since 1087?",
+      "answers": [
+        {
+          "text": "Bari",
+          "correct": true
+        },
+        {
+          "text": "Naples",
+          "correct": false
+        },
+        {
+          "text": "Venice",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sailors from Bari carried them off from Myra, in what is now Turkey.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_152",
+      "question": "Besides children, which group counts Saint Nicholas as its patron saint?",
+      "answers": [
+        {
+          "text": "Sailors",
+          "correct": true
+        },
+        {
+          "text": "Miners",
+          "correct": false
+        },
+        {
+          "text": "Soldiers",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Many harbour towns across Europe have a church dedicated to him.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_153",
+      "question": "What do people in Switzerland call Saint Nicholas?",
+      "answers": [
+        {
+          "text": "Samichlaus",
+          "correct": true
+        },
+        {
+          "text": "Christkindli",
+          "correct": false
+        },
+        {
+          "text": "Pelznickel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Switzerland he is accompanied by a dark helper called the Schmutzli.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_154",
+      "question": "What is a 'Weckmann' or 'Stutenkerl', baked around St Nicholas Day in parts of Germany?",
+      "answers": [
+        {
+          "text": "A yeast-dough man holding a clay pipe",
+          "correct": true
+        },
+        {
+          "text": "A chocolate bishop",
+          "correct": false
+        },
+        {
+          "text": "A gingerbread horse",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In some regions he is eaten on St Martin's Day instead.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_155",
+      "question": "Who invented the Christmas cracker in 1840s London?",
+      "answers": [
+        {
+          "text": "Tom Smith, a sweet maker",
+          "correct": true
+        },
+        {
+          "text": "Prince Albert",
+          "correct": false
+        },
+        {
+          "text": "Charles Babbage",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The idea came from French sugared almonds sold in twists of paper.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_156",
+      "question": "What do people usually wear from a Christmas cracker at the dinner table?",
+      "answers": [
+        {
+          "text": "A paper crown",
+          "correct": true
+        },
+        {
+          "text": "A paper mask",
+          "correct": false
+        },
+        {
+          "text": "A paper bell",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A joke and a small gift are normally inside as well.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_157",
+      "question": "At what time is the monarch's Christmas message traditionally broadcast in the UK?",
+      "answers": [
+        {
+          "text": "3 p.m.",
+          "correct": true
+        },
+        {
+          "text": "Noon",
+          "correct": false
+        },
+        {
+          "text": "6 p.m.",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The speech is recorded a few days earlier and kept secret until it airs.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_158",
+      "question": "Who gave the first televised royal Christmas message in 1957?",
+      "answers": [
+        {
+          "text": "Queen Elizabeth II",
+          "correct": true
+        },
+        {
+          "text": "King George VI",
+          "correct": false
+        },
+        {
+          "text": "Edward VIII",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It was broadcast live from Sandringham House.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_159",
+      "question": "Which festive British stage show features a dame played by a man and audience shouts of 'Oh no it isn't!'?",
+      "answers": [
+        {
+          "text": "Pantomime",
+          "correct": true
+        },
+        {
+          "text": "Mystery play",
+          "correct": false
+        },
+        {
+          "text": "Nativity play",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cinderella and Aladdin are classic pantomime plots.",
+      "category": "Christmas"
+    },
+    {
+      "id": "christmas_en_160",
+      "question": "Which royal couple helped make the Christmas tree popular in Britain in the 1840s?",
+      "answers": [
+        {
+          "text": "Queen Victoria and Prince Albert",
+          "correct": true
+        },
+        {
+          "text": "George III and Queen Charlotte",
+          "correct": false
+        },
+        {
+          "text": "Edward VII and Queen Alexandra",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "An 1848 picture of the royal family around a tree was widely printed.",
       "category": "Christmas"
     }
   ]
