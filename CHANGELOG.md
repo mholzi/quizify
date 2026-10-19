@@ -3,6 +3,22 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.23.0] — 2026-10-19
+
+**A Pack for Film Night, and More Pictures to Guess**
+
+Since 1.22.0 the library grew, the packs got tidier, and streaks follow one set of rules.
+
+### More to play, less to repeat
+
+Film and television have their own packs in German, English and Spanish, about 160 questions each, and the three picture packs grew from 17 to 40. Fifty-six questions that sat in the wrong pack or repeated another are gone.
+
+### Streaks, one set of rules
+
+A streak now pays from the third correct answer in a row, with a toast at 3, 5, 7, 10, 15, 20 and 25. The points under each answer add up to the total shown.
+
+Also: tied players share the podium and the win, estimates that score count as hits on the finale card, Steal only offers players who have answered, and an admin page on another device says it isn't the host. Pack submissions survive a crash (thanks @jay23606).
+
 ## [1.23.0-RC8] — 2026-10-18
 
 **A Pack for Film Night, and More Pictures to Guess**
