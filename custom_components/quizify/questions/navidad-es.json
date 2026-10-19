@@ -1,7 +1,7 @@
 {
   "name": "Navidad",
   "language": "es",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "trivia",
   "season": {
     "start": "12-01",
@@ -2083,6 +2083,1245 @@
       "unit": "ventanitas",
       "difficulty": "easy",
       "fun_fact": "24: el calendario termina en Nochebuena, no el día de Navidad.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_102",
+      "question": "¿Quién interpreta a Kevin en 'Solo en casa' (1990)?",
+      "answers": [
+        {
+          "text": "Macaulay Culkin",
+          "correct": true
+        },
+        {
+          "text": "Haley Joel Osment",
+          "correct": false
+        },
+        {
+          "text": "Elijah Wood",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Solo dos años después llegó la secuela ambientada en Nueva York.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_103",
+      "question": "¿Quién escribió el guion de 'Solo en casa'?",
+      "answers": [
+        {
+          "text": "John Hughes",
+          "correct": true
+        },
+        {
+          "text": "Chris Columbus",
+          "correct": false
+        },
+        {
+          "text": "Robert Zemeckis",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La dirección fue de Chris Columbus, y Hughes también produjo la película.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_104",
+      "question": "¿En qué ciudad se pierde Kevin en 'Solo en casa 2'?",
+      "answers": [
+        {
+          "text": "En Nueva York",
+          "correct": true
+        },
+        {
+          "text": "En Chicago",
+          "correct": false
+        },
+        {
+          "text": "En Miami",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Allí se aloja en el hotel Plaza con la tarjeta de crédito de su padre.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_105",
+      "question": "¿Qué actor da vida al Grinch en la versión cinematográfica de 2000?",
+      "answers": [
+        {
+          "text": "Jim Carrey",
+          "correct": true
+        },
+        {
+          "text": "Mike Myers",
+          "correct": false
+        },
+        {
+          "text": "Robin Williams",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El personaje nació en un libro del Dr. Seuss de 1957.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_106",
+      "question": "¿Qué echa Buddy sobre sus espaguetis en 'Elf' (2003)?",
+      "answers": [
+        {
+          "text": "Sirope de arce",
+          "correct": true
+        },
+        {
+          "text": "Chocolate caliente",
+          "correct": false
+        },
+        {
+          "text": "Mermelada de fresa",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Como grupos básicos de alimentos cuenta caramelos, bastones de caramelo, maíz dulce y sirope.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_107",
+      "question": "¿Qué actor interpreta a Scrooge en 'Los Teleñecos en Cuento de Navidad' (1992)?",
+      "answers": [
+        {
+          "text": "Michael Caine",
+          "correct": true
+        },
+        {
+          "text": "Patrick Stewart",
+          "correct": false
+        },
+        {
+          "text": "Bill Murray",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Caine lo interpretó con total seriedad, como si los muñecos fueran actores de verdad.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_108",
+      "question": "¿En qué aeropuerto empiezan y terminan las escenas de 'Love Actually' (2003)?",
+      "answers": [
+        {
+          "text": "Heathrow",
+          "correct": true
+        },
+        {
+          "text": "Gatwick",
+          "correct": false
+        },
+        {
+          "text": "Manchester",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Parte de las imágenes de la sala de llegadas muestra a viajeros reales.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_109",
+      "question": "¿Qué canción impidió que 'Last Christmas' de Wham! fuera el número 1 navideño del Reino Unido en 1984?",
+      "answers": [
+        {
+          "text": "'Do They Know It's Christmas?' de Band Aid",
+          "correct": true
+        },
+        {
+          "text": "'Wonderful Christmastime' de Paul McCartney",
+          "correct": false
+        },
+        {
+          "text": "'Merry Xmas Everybody' de Slade",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wham! cedió los derechos de 'Last Christmas' para ayudar a combatir el hambre en Etiopía.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_110",
+      "question": "¿Quiénes organizaron en 1984 el proyecto benéfico Band Aid?",
+      "answers": [
+        {
+          "text": "Bob Geldof y Midge Ure",
+          "correct": true
+        },
+        {
+          "text": "Elton John y Bernie Taupin",
+          "correct": false
+        },
+        {
+          "text": "Phil Collins y Peter Gabriel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La canción se grabó en un solo día en un estudio de Londres.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_111",
+      "question": "En el villancico 'Campana sobre campana', ¿qué verás si te asomas a la ventana?",
+      "answers": [
+        {
+          "text": "Al Niño en la cuna",
+          "correct": true
+        },
+        {
+          "text": "A los Reyes Magos",
+          "correct": false
+        },
+        {
+          "text": "La estrella de Belén",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es uno de los villancicos más populares de España.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_112",
+      "question": "¿De qué país es originario el villancico 'Mi burrito sabanero'?",
+      "answers": [
+        {
+          "text": "De Venezuela",
+          "correct": true
+        },
+        {
+          "text": "De México",
+          "correct": false
+        },
+        {
+          "text": "De Colombia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo popularizó el grupo infantil La Rondallita.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_113",
+      "question": "¿Qué marca de cava lanza cada Navidad un famoso anuncio con estrellas internacionales?",
+      "answers": [
+        {
+          "text": "Freixenet",
+          "correct": true
+        },
+        {
+          "text": "Codorníu",
+          "correct": false
+        },
+        {
+          "text": "Segura Viudas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su sede está en Sant Sadurní d'Anoia, en el corazón de la región del cava.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_114",
+      "question": "¿Qué actor interpreta varios papeles en 'El expreso polar' (2004)?",
+      "answers": [
+        {
+          "text": "Tom Hanks",
+          "correct": true
+        },
+        {
+          "text": "Jim Carrey",
+          "correct": false
+        },
+        {
+          "text": "Robin Williams",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue una de las primeras películas rodadas por completo con captura de movimiento.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_115",
+      "question": "¿Qué país nórdico ha convertido 'Tres nueces para Cenicienta' (1973) en un clásico televisivo de cada Navidad?",
+      "answers": [
+        {
+          "text": "Noruega",
+          "correct": true
+        },
+        {
+          "text": "Dinamarca",
+          "correct": false
+        },
+        {
+          "text": "Islandia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En noruego la película se titula 'Tre nøtter til Askepott'.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_116",
+      "question": "¿Qué canción impidió en 1987 que 'Fairytale of New York' de The Pogues y Kirsty MacColl fuera número 1 navideño en el Reino Unido?",
+      "answers": [
+        {
+          "text": "'Always on My Mind' de los Pet Shop Boys",
+          "correct": true
+        },
+        {
+          "text": "'Never Gonna Give You Up' de Rick Astley",
+          "correct": false
+        },
+        {
+          "text": "'Mistletoe and Wine' de Cliff Richard",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nunca llegó a lo más alto, pero vuelve a las listas casi todos los diciembres.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_117",
+      "question": "¿Cuántas velas tiene una corona de Adviento clásica?",
+      "answers": [
+        {
+          "text": "Cuatro",
+          "correct": true
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        },
+        {
+          "text": "Doce",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cada uno de los cuatro domingos anteriores a la Navidad se enciende una más.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_118",
+      "question": "En la tradición católica y anglicana, ¿de qué color es la tercera vela de Adviento?",
+      "answers": [
+        {
+          "text": "Rosa",
+          "correct": true
+        },
+        {
+          "text": "Dorada",
+          "correct": false
+        },
+        {
+          "text": "Blanca",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ese domingo se llama Gaudete, que en latín significa 'alegraos'.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_119",
+      "question": "¿Cómo se llama en España el juego de regalar algo a una persona sorteada sin que sepa quién se lo da?",
+      "answers": [
+        {
+          "text": "Amigo invisible",
+          "correct": true
+        },
+        {
+          "text": "Regalo a ciegas",
+          "correct": false
+        },
+        {
+          "text": "Santo oculto",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En muchos países de América se le llama 'amigo secreto'.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_120",
+      "question": "¿Qué santo montó en 1223, según la tradición, el primer belén viviente en Greccio, Italia?",
+      "answers": [
+        {
+          "text": "San Francisco de Asís",
+          "correct": true
+        },
+        {
+          "text": "San Antonio de Padua",
+          "correct": false
+        },
+        {
+          "text": "San Benito",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Según la tradición, junto al pesebre había un buey y un asno de verdad.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_121",
+      "question": "¿Cómo se llama la misa que se celebra a medianoche el 24 de diciembre?",
+      "answers": [
+        {
+          "text": "Misa del Gallo",
+          "correct": true
+        },
+        {
+          "text": "Misa del Alba",
+          "correct": false
+        },
+        {
+          "text": "Misa de Gloria",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Según la tradición, el gallo fue el primero en anunciar el nacimiento de Jesús.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_122",
+      "question": "¿Qué se hace tradicionalmente en España el 28 de diciembre, día de los Santos Inocentes?",
+      "answers": [
+        {
+          "text": "Gastar bromas",
+          "correct": true
+        },
+        {
+          "text": "Comer roscón",
+          "correct": false
+        },
+        {
+          "text": "Ir a la cabalgata",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En el mundo anglosajón las bromas se reservan para el 1 de abril.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_123",
+      "question": "¿Cómo se llama en México la flor de Pascua, por su asociación con la Navidad?",
+      "answers": [
+        {
+          "text": "Flor de Nochebuena",
+          "correct": true
+        },
+        {
+          "text": "Flor de Navidad",
+          "correct": false
+        },
+        {
+          "text": "Flor del Niño",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La planta es originaria de México.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_124",
+      "question": "¿Qué instrumento navideño típico de Andalucía es un cilindro con una piel por la que se frota una caña?",
+      "answers": [
+        {
+          "text": "La zambomba",
+          "correct": true
+        },
+        {
+          "text": "El cajón",
+          "correct": false
+        },
+        {
+          "text": "La pandereta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En Jerez de la Frontera se celebran zambombas flamencas cada diciembre.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_125",
+      "question": "¿Cómo se llama a Papá Noel en Chile?",
+      "answers": [
+        {
+          "text": "Viejito Pascuero",
+          "correct": true
+        },
+        {
+          "text": "Tío Nadal",
+          "correct": false
+        },
+        {
+          "text": "Santa Claus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Pascua' es en Chile otra forma de decir Navidad.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_126",
+      "question": "¿Cómo se llama la fiesta colombiana del 7 de diciembre en la que se encienden velas y farolitos?",
+      "answers": [
+        {
+          "text": "Día de las Velitas",
+          "correct": true
+        },
+        {
+          "text": "Noche de Rábanos",
+          "correct": false
+        },
+        {
+          "text": "Fiesta de las Luces",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Marca el comienzo informal de la Navidad en Colombia.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_127",
+      "question": "¿Qué rey mago trae el oro, según la tradición española?",
+      "answers": [
+        {
+          "text": "Melchor",
+          "correct": true
+        },
+        {
+          "text": "Gaspar",
+          "correct": false
+        },
+        {
+          "text": "Baltasar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los nombres de los Magos no aparecen en la Biblia, los dio la tradición posterior.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_128",
+      "question": "¿Qué planta florece en invierno y se conoce como 'rosa de Navidad'?",
+      "answers": [
+        {
+          "text": "El eléboro",
+          "correct": true
+        },
+        {
+          "text": "La camelia",
+          "correct": false
+        },
+        {
+          "text": "El jazmín de invierno",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Es tóxica en todas sus partes y no está emparentada con las rosas.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_129",
+      "question": "¿Qué diferencia al turrón de Jijona del de Alicante?",
+      "answers": [
+        {
+          "text": "El de Jijona es blando y el de Alicante, duro",
+          "correct": true
+        },
+        {
+          "text": "El de Jijona es de chocolate y el de Alicante, de coco",
+          "correct": false
+        },
+        {
+          "text": "El de Jijona lleva avellana y el de Alicante, nuez",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ambos cuentan con Indicación Geográfica Protegida.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_130",
+      "question": "¿Qué ciudad es famosa por su mazapán navideño?",
+      "answers": [
+        {
+          "text": "Toledo",
+          "correct": true
+        },
+        {
+          "text": "Segovia",
+          "correct": false
+        },
+        {
+          "text": "Burgos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El mazapán de Toledo tiene Indicación Geográfica Protegida.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_131",
+      "question": "¿Qué localidad sevillana es famosa por sus polvorones y mantecados?",
+      "answers": [
+        {
+          "text": "Estepa",
+          "correct": true
+        },
+        {
+          "text": "Écija",
+          "correct": false
+        },
+        {
+          "text": "Carmona",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El nombre del polvorón viene de que se desmenuza en polvo al morderlo.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_132",
+      "question": "¿De qué comunidad procede la mayor parte del cava español?",
+      "answers": [
+        {
+          "text": "Cataluña",
+          "correct": true
+        },
+        {
+          "text": "Valencia",
+          "correct": false
+        },
+        {
+          "text": "La Rioja",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se elabora con el método tradicional, con segunda fermentación en la botella.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_133",
+      "question": "¿Qué pescado es un plato tradicional de Nochebuena en Madrid y el norte de España?",
+      "answers": [
+        {
+          "text": "El besugo",
+          "correct": true
+        },
+        {
+          "text": "La sardina asada",
+          "correct": false
+        },
+        {
+          "text": "El boquerón en vinagre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Suele hornearse entero con patatas, ajo y limón.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_134",
+      "question": "¿Qué plato tradicional de Cataluña se come el 26 de diciembre, día de San Esteban?",
+      "answers": [
+        {
+          "text": "Los canelones",
+          "correct": true
+        },
+        {
+          "text": "La fabada",
+          "correct": false
+        },
+        {
+          "text": "La paella",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Aprovechan la carne sobrante del cocido de Navidad.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_135",
+      "question": "¿Qué plato, envuelto en hojas de maíz o de plátano, se prepara en Navidad en México y Centroamérica?",
+      "answers": [
+        {
+          "text": "Los tamales",
+          "correct": true
+        },
+        {
+          "text": "Los buñuelos",
+          "correct": false
+        },
+        {
+          "text": "Los churros",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En muchas familias se hacen entre todos, en una jornada de cocina.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_136",
+      "question": "¿Qué bebida de coco y ron es típica de la Navidad en Puerto Rico?",
+      "answers": [
+        {
+          "text": "El coquito",
+          "correct": true
+        },
+        {
+          "text": "El mojito",
+          "correct": false
+        },
+        {
+          "text": "La piña colada",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En el Caribe cumple el papel del ponche de huevo del mundo anglosajón.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_137",
+      "question": "¿En qué se envuelve la hallaca venezolana antes de cocerla?",
+      "answers": [
+        {
+          "text": "En hojas de plátano",
+          "correct": true
+        },
+        {
+          "text": "En hojas de maíz",
+          "correct": false
+        },
+        {
+          "text": "En papel de aluminio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se prepara en familia en los días previos a la Navidad.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_138",
+      "question": "¿Con qué bebida se suele brindar en Argentina en Nochebuena junto al pan dulce?",
+      "answers": [
+        {
+          "text": "Con sidra",
+          "correct": true
+        },
+        {
+          "text": "Con vino caliente",
+          "correct": false
+        },
+        {
+          "text": "Con ponche de huevo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El brindis se hace a medianoche, mientras suenan los fuegos artificiales.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_139",
+      "question": "¿En qué plaza de Madrid se instala cada año el mercadillo navideño con puestos de belenes y figuritas?",
+      "answers": [
+        {
+          "text": "En la Plaza Mayor",
+          "correct": true
+        },
+        {
+          "text": "En la Plaza de Cibeles",
+          "correct": false
+        },
+        {
+          "text": "En la Plaza de España",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Allí también se venden artículos de broma para el día de los Santos Inocentes.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_140",
+      "question": "¿Qué ciudad gallega es famosa por la espectacular iluminación navideña de sus calles?",
+      "answers": [
+        {
+          "text": "Vigo",
+          "correct": true
+        },
+        {
+          "text": "Santiago de Compostela",
+          "correct": false
+        },
+        {
+          "text": "A Coruña",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cada año viajan hasta allí miles de visitantes solo para verla.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_141",
+      "question": "¿Desde dónde abre el Christkind de Núremberg el mercado navideño con su prólogo?",
+      "answers": [
+        {
+          "text": "Desde el balcón de la Frauenkirche",
+          "correct": true
+        },
+        {
+          "text": "Desde la escalinata del ayuntamiento",
+          "correct": false
+        },
+        {
+          "text": "Desde las murallas del castillo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Miles de personas lo escuchan desde la plaza del mercado.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_142",
+      "question": "¿Quién colocó en 1931 el primer árbol de Navidad del Rockefeller Center?",
+      "answers": [
+        {
+          "text": "Obreros de la construcción",
+          "correct": true
+        },
+        {
+          "text": "El alcalde Jimmy Walker",
+          "correct": false
+        },
+        {
+          "text": "John D. Rockefeller Jr.",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los obreros pusieron dinero entre todos para comprarlo y sus familias hicieron las guirnaldas.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_143",
+      "question": "¿En qué pueblo austriaco sonó 'Noche de paz' por primera vez, en Nochebuena de 1818?",
+      "answers": [
+        {
+          "text": "Oberndorf",
+          "correct": true
+        },
+        {
+          "text": "Hallstatt",
+          "correct": false
+        },
+        {
+          "text": "Mariazell",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La iglesia original ya no existe; una pequeña capilla marca el lugar.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_144",
+      "question": "¿Qué iglesia de Belén se levanta sobre el lugar tradicional del nacimiento de Jesús?",
+      "answers": [
+        {
+          "text": "La basílica de la Natividad",
+          "correct": true
+        },
+        {
+          "text": "La iglesia del Santo Sepulcro",
+          "correct": false
+        },
+        {
+          "text": "La basílica de San Pedro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es una de las iglesias más antiguas del mundo que aún se usan.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_145",
+      "question": "¿Qué ciudad finlandesa en el Círculo Polar se presenta como la ciudad natal oficial de Papá Noel?",
+      "answers": [
+        {
+          "text": "Rovaniemi",
+          "correct": true
+        },
+        {
+          "text": "Tromsø",
+          "correct": false
+        },
+        {
+          "text": "Kiruna",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En la Aldea de Papá Noel se puede cruzar la línea del Círculo Polar.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_146",
+      "question": "¿Qué ciudad española guarda el famoso belén de Salzillo, una obra del siglo XVIII?",
+      "answers": [
+        {
+          "text": "Murcia",
+          "correct": true
+        },
+        {
+          "text": "Granada",
+          "correct": false
+        },
+        {
+          "text": "Valencia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Reúne más de quinientas figuras de barro modeladas a mano.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_147",
+      "question": "¿Qué día se celebra la fiesta de San Nicolás?",
+      "answers": [
+        {
+          "text": "El 6 de diciembre",
+          "correct": true
+        },
+        {
+          "text": "El 24 de diciembre",
+          "correct": false
+        },
+        {
+          "text": "El 1 de diciembre",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La tradición vincula la fecha con su muerte en el siglo IV.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_148",
+      "question": "¿Qué ponen los niños alemanes ante la puerta en la noche del 5 al 6 de diciembre?",
+      "answers": [
+        {
+          "text": "Una bota",
+          "correct": true
+        },
+        {
+          "text": "Un calcetín",
+          "correct": false
+        },
+        {
+          "text": "Un plato",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Por la mañana está lleno de nueces, mandarinas y golosinas.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_149",
+      "question": "¿En qué se reconoce a San Nicolás frente a Papá Noel?",
+      "answers": [
+        {
+          "text": "En su mitra y su báculo de obispo",
+          "correct": true
+        },
+        {
+          "text": "En su gorro rojo con borla",
+          "correct": false
+        },
+        {
+          "text": "En los renos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nicolás fue obispo de Mira, en la actual Turquía.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_150",
+      "question": "¿Quién acompaña a San Nicolás en el folclore alemán, vestido de oscuro y con un saco y una vara?",
+      "answers": [
+        {
+          "text": "Knecht Ruprecht",
+          "correct": true
+        },
+        {
+          "text": "Rumpelstiltskin",
+          "correct": false
+        },
+        {
+          "text": "Struwwelpeter",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su nombre significa 'criado Rupert'.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_151",
+      "question": "¿En qué noche reciben los niños neerlandeses sus regalos de Sinterklaas?",
+      "answers": [
+        {
+          "text": "En la del 5 de diciembre",
+          "correct": true
+        },
+        {
+          "text": "En la del 6 de diciembre",
+          "correct": false
+        },
+        {
+          "text": "En la del 24 de diciembre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Esa noche se llama Pakjesavond, 'noche de los paquetes'.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_152",
+      "question": "¿De qué colectivo es patrón San Nicolás, además de los niños?",
+      "answers": [
+        {
+          "text": "De los marineros",
+          "correct": true
+        },
+        {
+          "text": "De los mineros",
+          "correct": false
+        },
+        {
+          "text": "De los soldados",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Muchas ciudades portuarias de Europa tienen una iglesia dedicada a él.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_153",
+      "question": "¿De qué nombre neerlandés procede 'Santa Claus'?",
+      "answers": [
+        {
+          "text": "De Sinterklaas",
+          "correct": true
+        },
+        {
+          "text": "De Kerstman",
+          "correct": false
+        },
+        {
+          "text": "De Pieterman",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los colonos neerlandeses lo llevaron a Nueva Ámsterdam, la actual Nueva York.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_154",
+      "question": "¿Qué ciudad italiana guarda desde 1087 los restos de San Nicolás?",
+      "answers": [
+        {
+          "text": "Bari",
+          "correct": true
+        },
+        {
+          "text": "Nápoles",
+          "correct": false
+        },
+        {
+          "text": "Venecia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Marineros de Bari los trasladaron desde Mira, en la actual Turquía.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_155",
+      "question": "¿Qué día se celebra el sorteo de la Lotería de Navidad?",
+      "answers": [
+        {
+          "text": "El 22 de diciembre",
+          "correct": true
+        },
+        {
+          "text": "El 24 de diciembre",
+          "correct": false
+        },
+        {
+          "text": "El 6 de enero",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Desde 1992 se celebra siempre el 22 de diciembre, caiga en el día de la semana que caiga.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_156",
+      "question": "¿En qué edificio de Madrid se celebra hoy el sorteo de la Lotería de Navidad?",
+      "answers": [
+        {
+          "text": "En el Teatro Real",
+          "correct": true
+        },
+        {
+          "text": "En el Palacio de Cibeles",
+          "correct": false
+        },
+        {
+          "text": "En el Congreso de los Diputados",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El sorteo se retransmite en directo durante varias horas.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_157",
+      "question": "¿En qué ciudad se celebró en 1812 el primer sorteo de la Lotería de Navidad?",
+      "answers": [
+        {
+          "text": "En Cádiz",
+          "correct": true
+        },
+        {
+          "text": "En Madrid",
+          "correct": false
+        },
+        {
+          "text": "En Sevilla",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fue la época de las Cortes que redactaron la primera Constitución española.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_158",
+      "question": "¿Cuándo emite el rey su tradicional mensaje de Navidad?",
+      "answers": [
+        {
+          "text": "En Nochebuena, el 24 de diciembre",
+          "correct": true
+        },
+        {
+          "text": "El día de Navidad, el 25 de diciembre",
+          "correct": false
+        },
+        {
+          "text": "En Reyes, el 6 de enero",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las televisiones y radios de todo el país lo emiten a la vez.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_159",
+      "question": "¿Quién es el Olentzero en la tradición vasca?",
+      "answers": [
+        {
+          "text": "Un carbonero que trae regalos en Nochebuena",
+          "correct": true
+        },
+        {
+          "text": "Un pastor que vigila el belén",
+          "correct": false
+        },
+        {
+          "text": "Un rey que visita a los niños el 6 de enero",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En muchas localidades vascas y navarras desfila por las calles la noche del 24.",
+      "category": "Navidad"
+    },
+    {
+      "id": "navidad_es_160",
+      "question": "¿Qué espectáculo de muñecos animados de El Corte Inglés es un clásico de cada Navidad en varias ciudades?",
+      "answers": [
+        {
+          "text": "Cortylandia",
+          "correct": true
+        },
+        {
+          "text": "Disneyland",
+          "correct": false
+        },
+        {
+          "text": "Parque Warner",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sus personajes cantan villancicos en las fachadas de los grandes almacenes.",
       "category": "Navidad"
     }
   ]

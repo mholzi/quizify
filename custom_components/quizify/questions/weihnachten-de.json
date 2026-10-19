@@ -1,7 +1,7 @@
 {
   "name": "Weihnachten",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "trivia",
   "season": {
     "start": "12-01",
@@ -2083,6 +2083,1245 @@
       "unit": "Türchen",
       "difficulty": "easy",
       "fun_fact": "24 — der Kalender endet am Heiligabend und nicht am ersten Weihnachtstag.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_102",
+      "question": "Wer spielt in 'Kevin – Allein zu Haus' (1990) den kleinen Kevin?",
+      "answers": [
+        {
+          "text": "Macaulay Culkin",
+          "correct": true
+        },
+        {
+          "text": "Haley Joel Osment",
+          "correct": false
+        },
+        {
+          "text": "Elijah Wood",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nur zwei Jahre später folgte die Fortsetzung, die in New York spielt.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_103",
+      "question": "Wer schrieb das Drehbuch zu 'Kevin – Allein zu Haus'?",
+      "answers": [
+        {
+          "text": "John Hughes",
+          "correct": true
+        },
+        {
+          "text": "Chris Columbus",
+          "correct": false
+        },
+        {
+          "text": "Robert Zemeckis",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Regie führte Chris Columbus, Hughes war außerdem Produzent.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_104",
+      "question": "Welches Schloss ist der wichtigste Drehort von 'Drei Haselnüsse für Aschenbrödel' (1973)?",
+      "answers": [
+        {
+          "text": "Schloss Moritzburg",
+          "correct": true
+        },
+        {
+          "text": "Schloss Neuschwanstein",
+          "correct": false
+        },
+        {
+          "text": "Wartburg",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Winter zeigt das Schloss regelmäßig eine Ausstellung zum Film.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_105",
+      "question": "In welchem skandinavischen Land ist 'Drei Haselnüsse für Aschenbrödel' ein fester Fernseh-Weihnachtsklassiker?",
+      "answers": [
+        {
+          "text": "Norwegen",
+          "correct": true
+        },
+        {
+          "text": "Dänemark",
+          "correct": false
+        },
+        {
+          "text": "Island",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Auf Norwegisch heißt der Film 'Tre nøtter til Askepott'.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_106",
+      "question": "Welche Schauspielerin spielte die Titelrolle in 'Drei Haselnüsse für Aschenbrödel'?",
+      "answers": [
+        {
+          "text": "Libuše Šafránková",
+          "correct": true
+        },
+        {
+          "text": "Hana Maciuchová",
+          "correct": false
+        },
+        {
+          "text": "Iva Janžurová",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Den Prinzen spielte Pavel Trávníček.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_107",
+      "question": "An welchem Flughafen beginnt und endet 'Tatsächlich … Liebe' (2003)?",
+      "answers": [
+        {
+          "text": "London Heathrow",
+          "correct": true
+        },
+        {
+          "text": "London Gatwick",
+          "correct": false
+        },
+        {
+          "text": "Manchester",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein Teil der Szenen in der Ankunftshalle zeigt echte Reisende.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_108",
+      "question": "Welchen Beruf hat Hugh Grant in 'Tatsächlich … Liebe'?",
+      "answers": [
+        {
+          "text": "Premierminister",
+          "correct": true
+        },
+        {
+          "text": "Verleger",
+          "correct": false
+        },
+        {
+          "text": "Pfarrer",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sein Tanz durch die Downing Street läuft zu 'Jump (For My Love)' der Pointer Sisters.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_109",
+      "question": "Welcher Song hielt 'Last Christmas' von Wham! 1984 von Platz 1 der britischen Weihnachtscharts fern?",
+      "answers": [
+        {
+          "text": "'Do They Know It's Christmas?' von Band Aid",
+          "correct": true
+        },
+        {
+          "text": "'Wonderful Christmastime' von Paul McCartney",
+          "correct": false
+        },
+        {
+          "text": "'Merry Xmas Everybody' von Slade",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wham! spendete die Einnahmen aus 'Last Christmas' für die Hungerhilfe in Äthiopien.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_110",
+      "question": "Wer organisierte 1984 das Benefizprojekt Band Aid?",
+      "answers": [
+        {
+          "text": "Bob Geldof und Midge Ure",
+          "correct": true
+        },
+        {
+          "text": "Elton John und Bernie Taupin",
+          "correct": false
+        },
+        {
+          "text": "Phil Collins und Peter Gabriel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Song wurde an nur einem Tag in einem Londoner Studio aufgenommen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_111",
+      "question": "Welche Band verdrängte 2009 nach einer Kampagne im Netz den 'X Factor'-Sieger Joe McElderry von Platz 1 der britischen Weihnachtscharts?",
+      "answers": [
+        {
+          "text": "Rage Against the Machine",
+          "correct": true
+        },
+        {
+          "text": "Linkin Park",
+          "correct": false
+        },
+        {
+          "text": "Green Day",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Song 'Killing in the Name' war damals schon 17 Jahre alt.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_112",
+      "question": "Welcher Song verhinderte 1987 Platz 1 für 'Fairytale of New York' von The Pogues und Kirsty MacColl in den britischen Weihnachtscharts?",
+      "answers": [
+        {
+          "text": "'Always on My Mind' von den Pet Shop Boys",
+          "correct": true
+        },
+        {
+          "text": "'Never Gonna Give You Up' von Rick Astley",
+          "correct": false
+        },
+        {
+          "text": "'Mistletoe and Wine' von Cliff Richard",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ganz oben stand der Song nie, kehrt aber fast jeden Dezember in die Charts zurück.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_113",
+      "question": "Welcher Kinderliedermacher schrieb 'In der Weihnachtsbäckerei'?",
+      "answers": [
+        {
+          "text": "Rolf Zuckowski",
+          "correct": true
+        },
+        {
+          "text": "Detlev Jöcker",
+          "correct": false
+        },
+        {
+          "text": "Reinhard Mey",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Von ihm stammt auch 'Wie schön, dass du geboren bist'.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_114",
+      "question": "Wer komponierte die Melodie zu 'Stille Nacht, heilige Nacht'?",
+      "answers": [
+        {
+          "text": "Franz Xaver Gruber",
+          "correct": true
+        },
+        {
+          "text": "Joseph Mohr",
+          "correct": false
+        },
+        {
+          "text": "Michael Haydn",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Den Text hatte Joseph Mohr schon 1816 als Gedicht geschrieben.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_115",
+      "question": "Welcher Schauspieler spielt in 'Die Muppets Weihnachtsgeschichte' (1992) den Scrooge?",
+      "answers": [
+        {
+          "text": "Michael Caine",
+          "correct": true
+        },
+        {
+          "text": "Patrick Stewart",
+          "correct": false
+        },
+        {
+          "text": "Bill Murray",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Caine spielte die Rolle völlig ernst, als wären die Muppets echte Schauspieler.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_116",
+      "question": "Was gießt Buddy in 'Buddy – Der Weihnachtself' (2003) über seine Spaghetti?",
+      "answers": [
+        {
+          "text": "Ahornsirup",
+          "correct": true
+        },
+        {
+          "text": "Kakao",
+          "correct": false
+        },
+        {
+          "text": "Erdbeermarmelade",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Als wichtigste Nahrungsmittel zählt er Bonbons, Zuckerstangen, Zuckermais und Sirup auf.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_117",
+      "question": "Wie viele Kerzen hat ein klassischer Adventskranz?",
+      "answers": [
+        {
+          "text": "Vier",
+          "correct": true
+        },
+        {
+          "text": "Fünf",
+          "correct": false
+        },
+        {
+          "text": "Zwölf",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "An jedem der vier Sonntage vor Weihnachten kommt eine Kerze hinzu.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_118",
+      "question": "Welche Farbe hat in der katholischen und anglikanischen Tradition die dritte Adventskerze?",
+      "answers": [
+        {
+          "text": "Rosa",
+          "correct": true
+        },
+        {
+          "text": "Gold",
+          "correct": false
+        },
+        {
+          "text": "Weiß",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Sonntag heißt Gaudete, lateinisch für 'Freut euch'.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_119",
+      "question": "Wie nennt man in Deutschland das anonyme Verschenken an eine zugeloste Person?",
+      "answers": [
+        {
+          "text": "Wichteln",
+          "correct": true
+        },
+        {
+          "text": "Schenkeln",
+          "correct": false
+        },
+        {
+          "text": "Rumpeln",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beim 'Schrottwichteln' sind die Geschenke absichtlich Unsinn.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_120",
+      "question": "Welcher Heilige soll 1223 im italienischen Greccio die erste lebende Krippe aufgebaut haben?",
+      "answers": [
+        {
+          "text": "Franz von Assisi",
+          "correct": true
+        },
+        {
+          "text": "Antonius von Padua",
+          "correct": false
+        },
+        {
+          "text": "Benedikt von Nursia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Überlieferung nach standen ein echter Ochse und ein Esel neben der Krippe.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_121",
+      "question": "Was schneidet man am 4. Dezember, dem Barbaratag, ab und stellt in eine Vase, damit es bis Weihnachten blüht?",
+      "answers": [
+        {
+          "text": "Kirschzweige",
+          "correct": true
+        },
+        {
+          "text": "Weidenzweige",
+          "correct": false
+        },
+        {
+          "text": "Stechpalmenzweige",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Blüht der Zweig rechtzeitig, soll er Glück für das kommende Jahr bringen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_122",
+      "question": "Wer brachte 1908 in München den ersten in Serie gedruckten Adventskalender heraus?",
+      "answers": [
+        {
+          "text": "Der Verleger Gerhard Lang",
+          "correct": true
+        },
+        {
+          "text": "Der Pfarrer Johann Hinrich Wichern",
+          "correct": false
+        },
+        {
+          "text": "Der Spielzeugfabrikant Richard Steiff",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sein Kalender hieß 'Im Lande des Christkinds'.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_123",
+      "question": "Wofür sammeln die Sternsinger rund um den 6. Januar Spenden?",
+      "answers": [
+        {
+          "text": "Für Kinder in Not weltweit",
+          "correct": true
+        },
+        {
+          "text": "Für die Kirchenrenovierung",
+          "correct": false
+        },
+        {
+          "text": "Für die örtliche Feuerwehr",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Aktion Dreikönigssingen gibt es seit 1959.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_124",
+      "question": "Was ist ein Schwibbogen?",
+      "answers": [
+        {
+          "text": "Ein Lichterbogen für das Fenster",
+          "correct": true
+        },
+        {
+          "text": "Ein Weihnachtsgebäck",
+          "correct": false
+        },
+        {
+          "text": "Ein Krippenstall",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Seine Form soll an den Ausgang eines Bergwerksstollens erinnern.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_125",
+      "question": "Aus welchem Ort stammt der Herrnhuter Stern?",
+      "answers": [
+        {
+          "text": "Herrnhut in der Oberlausitz",
+          "correct": true
+        },
+        {
+          "text": "Annaberg im Erzgebirge",
+          "correct": false
+        },
+        {
+          "text": "Nürnberg",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein echter Herrnhuter Stern hat immer 25 Zacken: 17 eckige und 8 dreieckige.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_126",
+      "question": "Was tragen schwedische Mädchen am 13. Dezember, dem Luciatag, auf dem Kopf?",
+      "answers": [
+        {
+          "text": "Einen Kranz mit Kerzen",
+          "correct": true
+        },
+        {
+          "text": "Eine Zipfelmütze",
+          "correct": false
+        },
+        {
+          "text": "Ein Rentiergeweih",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name Lucia geht auf das lateinische Wort für Licht zurück.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_127",
+      "question": "Wie nennt man die zwölf Nächte zwischen Weihnachten und dem Dreikönigstag im Volksglauben?",
+      "answers": [
+        {
+          "text": "Rauhnächte",
+          "correct": true
+        },
+        {
+          "text": "Rosennächte",
+          "correct": false
+        },
+        {
+          "text": "Sonnwendnächte",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In dieser Zeit soll man der Überlieferung nach keine Wäsche aufhängen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_128",
+      "question": "Welche drei Gaben brachten die Weisen aus dem Morgenland dem Kind?",
+      "answers": [
+        {
+          "text": "Gold, Weihrauch und Myrrhe",
+          "correct": true
+        },
+        {
+          "text": "Gold, Silber und Weihrauch",
+          "correct": false
+        },
+        {
+          "text": "Myrrhe, Seide und Silber",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Bibel nennt keine Zahl der Weisen, die Dreizahl der Gaben führte zu den drei Königen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_129",
+      "question": "Womit wird ein Christstollen nach dem Backen bestäubt?",
+      "answers": [
+        {
+          "text": "Mit Puderzucker",
+          "correct": true
+        },
+        {
+          "text": "Mit Kakao",
+          "correct": false
+        },
+        {
+          "text": "Mit Zimt",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Zuvor wird er dick mit Butter bestrichen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_130",
+      "question": "Welche Stadt ist für ihre harten Gewürzlebkuchen, die Printen, berühmt?",
+      "answers": [
+        {
+          "text": "Aachen",
+          "correct": true
+        },
+        {
+          "text": "Nürnberg",
+          "correct": false
+        },
+        {
+          "text": "Pulsnitz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name geht auf das niederländische 'prenten' für 'prägen' zurück.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_131",
+      "question": "Welche Stadt ist besonders für ihr Marzipan berühmt?",
+      "answers": [
+        {
+          "text": "Lübeck",
+          "correct": true
+        },
+        {
+          "text": "Konstanz",
+          "correct": false
+        },
+        {
+          "text": "Leipzig",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Traditionshaus Niederegger gibt es dort seit 1806.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_132",
+      "question": "Welche Form haben klassische Vanillekipferl?",
+      "answers": [
+        {
+          "text": "Eine Mondsichel",
+          "correct": true
+        },
+        {
+          "text": "Einen Stern",
+          "correct": false
+        },
+        {
+          "text": "Einen Kringel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nach dem Backen werden sie in Vanillezucker gewendet.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_133",
+      "question": "In welcher Stadt wurden die Dominosteine 1936 erfunden?",
+      "answers": [
+        {
+          "text": "Dresden",
+          "correct": true
+        },
+        {
+          "text": "Nürnberg",
+          "correct": false
+        },
+        {
+          "text": "Aachen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Schichtpraline sollte eine günstige Alternative zu teuren Pralinen sein.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_134",
+      "question": "Welcher Fisch kommt in vielen Familien traditionell an Heiligabend auf den Tisch?",
+      "answers": [
+        {
+          "text": "Karpfen",
+          "correct": true
+        },
+        {
+          "text": "Seelachs",
+          "correct": false
+        },
+        {
+          "text": "Forelle",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Schuppe im Geldbeutel soll im neuen Jahr Geld anziehen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_135",
+      "question": "Welcher Braten gilt in Deutschland als klassisch für das Weihnachtsfest?",
+      "answers": [
+        {
+          "text": "Gans",
+          "correct": true
+        },
+        {
+          "text": "Fasan",
+          "correct": false
+        },
+        {
+          "text": "Rebhuhn",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gefüllt wird sie oft mit Äpfeln und Maronen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_136",
+      "question": "Was füllt man mit Marzipan und Rosinen und gart im Ofen als winterliche Nachspeise?",
+      "answers": [
+        {
+          "text": "Äpfel",
+          "correct": true
+        },
+        {
+          "text": "Birnen",
+          "correct": false
+        },
+        {
+          "text": "Pflaumen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Äpfel werden vorher entkernt.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_137",
+      "question": "In welchem Märchen steht ein Haus aus Lebkuchen im Wald?",
+      "answers": [
+        {
+          "text": "Hänsel und Gretel",
+          "correct": true
+        },
+        {
+          "text": "Schneewittchen",
+          "correct": false
+        },
+        {
+          "text": "Rapunzel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Brüder Grimm nahmen es 1812 in ihre Sammlung auf.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_138",
+      "question": "Was ist das erzgebirgische 'Neunerlei'?",
+      "answers": [
+        {
+          "text": "Ein Heiligabend-Essen mit neun Speisen",
+          "correct": true
+        },
+        {
+          "text": "Ein Gebäck mit neun Gewürzen",
+          "correct": false
+        },
+        {
+          "text": "Ein Räucherspiel mit neun Figuren",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Linsen darauf sollen im neuen Jahr für Geld sorgen.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_139",
+      "question": "Was wird beim Dresdner Stollenfest am Samstag vor dem zweiten Advent durch die Stadt gefahren?",
+      "answers": [
+        {
+          "text": "Ein Riesenstollen",
+          "correct": true
+        },
+        {
+          "text": "Ein Riesen-Lebkuchenhaus",
+          "correct": false
+        },
+        {
+          "text": "Eine Riesenpyramide",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die angeschnittenen Stücke werden an die Besucher verkauft.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_140",
+      "question": "Von wo eröffnet das Nürnberger Christkind den Christkindlesmarkt mit seinem Prolog?",
+      "answers": [
+        {
+          "text": "Vom Balkon der Frauenkirche",
+          "correct": true
+        },
+        {
+          "text": "Von den Rathaustreppen",
+          "correct": false
+        },
+        {
+          "text": "Von der Kaiserburg",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Unten auf dem Hauptmarkt warten Tausende Zuhörer.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_141",
+      "question": "Auf welchem Platz im Zentrum Münchens findet der Christkindlmarkt statt?",
+      "answers": [
+        {
+          "text": "Marienplatz",
+          "correct": true
+        },
+        {
+          "text": "Odeonsplatz",
+          "correct": false
+        },
+        {
+          "text": "Königsplatz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Vor dem Neuen Rathaus steht dort jedes Jahr ein großer Christbaum.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_142",
+      "question": "Wer stellte 1931 den ersten Weihnachtsbaum am Rockefeller Center auf?",
+      "answers": [
+        {
+          "text": "Bauarbeiter der Baustelle",
+          "correct": true
+        },
+        {
+          "text": "Bürgermeister Jimmy Walker",
+          "correct": false
+        },
+        {
+          "text": "John D. Rockefeller Jr.",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Arbeiter legten das Geld für den Baum zusammen, die Girlanden bastelten ihre Familien.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_143",
+      "question": "In welchem österreichischen Ort erklang 'Stille Nacht' am Heiligabend 1818 zum ersten Mal?",
+      "answers": [
+        {
+          "text": "Oberndorf",
+          "correct": true
+        },
+        {
+          "text": "Hallstatt",
+          "correct": false
+        },
+        {
+          "text": "Mariazell",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Kirche von damals steht nicht mehr, eine kleine Kapelle markiert die Stelle.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_144",
+      "question": "Welche Kirche in Bethlehem steht über der überlieferten Geburtsstätte Jesu?",
+      "answers": [
+        {
+          "text": "Die Geburtskirche",
+          "correct": true
+        },
+        {
+          "text": "Die Grabeskirche",
+          "correct": false
+        },
+        {
+          "text": "Der Petersdom",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sie zählt zu den ältesten noch genutzten Kirchen der Welt.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_145",
+      "question": "Welche finnische Stadt am Polarkreis nennt sich offiziell Heimatstadt des Weihnachtsmanns?",
+      "answers": [
+        {
+          "text": "Rovaniemi",
+          "correct": true
+        },
+        {
+          "text": "Tromsø",
+          "correct": false
+        },
+        {
+          "text": "Kiruna",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Im Weihnachtsmanndorf kann man die Linie des Polarkreises überschreiten.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_146",
+      "question": "In welcher fränkischen Stadt steht das ganzjährig geöffnete Weihnachtsdorf von Käthe Wohlfahrt?",
+      "answers": [
+        {
+          "text": "Rothenburg ob der Tauber",
+          "correct": true
+        },
+        {
+          "text": "Bamberg",
+          "correct": false
+        },
+        {
+          "text": "Dinkelsbühl",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Zum Weihnachtsdorf gehört auch ein Deutsches Weihnachtsmuseum.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_147",
+      "question": "An welchem Datum wird der Nikolaustag gefeiert?",
+      "answers": [
+        {
+          "text": "6. Dezember",
+          "correct": true
+        },
+        {
+          "text": "24. Dezember",
+          "correct": false
+        },
+        {
+          "text": "1. Dezember",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Überlieferung verbindet das Datum mit seinem Todestag im vierten Jahrhundert.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_148",
+      "question": "Was stellen Kinder in Deutschland in der Nacht zum 6. Dezember vor die Tür?",
+      "answers": [
+        {
+          "text": "Einen Stiefel",
+          "correct": true
+        },
+        {
+          "text": "Einen Strumpf",
+          "correct": false
+        },
+        {
+          "text": "Einen Teller",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Am Morgen ist er mit Nüssen, Mandarinen und Süßigkeiten gefüllt.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_149",
+      "question": "Woran erkennt man den Nikolaus am ehesten vom Weihnachtsmann?",
+      "answers": [
+        {
+          "text": "An Bischofsmütze und Krummstab",
+          "correct": true
+        },
+        {
+          "text": "An der roten Zipfelmütze",
+          "correct": false
+        },
+        {
+          "text": "An den Rentieren",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Nikolaus trägt ein langes Bischofsgewand mit Mitra.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_150",
+      "question": "Wer begleitet den Nikolaus in der deutschen Überlieferung als dunkel gekleideter Helfer mit Sack und Rute?",
+      "answers": [
+        {
+          "text": "Knecht Ruprecht",
+          "correct": true
+        },
+        {
+          "text": "Rumpelstilzchen",
+          "correct": false
+        },
+        {
+          "text": "Struwwelpeter",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sein Name bedeutet 'Diener Rupert'.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_151",
+      "question": "An welchem Abend bekommen niederländische Kinder traditionell ihre Geschenke von Sinterklaas?",
+      "answers": [
+        {
+          "text": "Am 5. Dezember",
+          "correct": true
+        },
+        {
+          "text": "Am 6. Dezember",
+          "correct": false
+        },
+        {
+          "text": "Am 24. Dezember",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Abend heißt Pakjesavond, 'Päckchenabend'.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_152",
+      "question": "Wessen Schutzpatron ist der heilige Nikolaus neben den Kindern?",
+      "answers": [
+        {
+          "text": "Der Seeleute",
+          "correct": true
+        },
+        {
+          "text": "Der Bergleute",
+          "correct": false
+        },
+        {
+          "text": "Der Soldaten",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Viele Hafenstädte in Europa haben eine Nikolauskirche.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_153",
+      "question": "Welche italienische Stadt beherbergt seit 1087 die Gebeine des heiligen Nikolaus?",
+      "answers": [
+        {
+          "text": "Bari",
+          "correct": true
+        },
+        {
+          "text": "Neapel",
+          "correct": false
+        },
+        {
+          "text": "Venedig",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Seeleute aus Bari holten sie aus Myra, im Gebiet der heutigen Türkei.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_154",
+      "question": "Was ist ein 'Weckmann' oder 'Stutenkerl', der rund um den Nikolaustag gebacken wird?",
+      "answers": [
+        {
+          "text": "Ein Hefeteigmann mit Tonpfeife",
+          "correct": true
+        },
+        {
+          "text": "Ein Schokoladenbischof",
+          "correct": false
+        },
+        {
+          "text": "Ein Lebkuchenpferd",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In manchen Regionen isst man ihn erst zu Sankt Martin.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_155",
+      "question": "Wo bringt traditionell eher das Christkind als der Weihnachtsmann die Geschenke?",
+      "answers": [
+        {
+          "text": "In Süddeutschland und Österreich",
+          "correct": true
+        },
+        {
+          "text": "In Norddeutschland und Dänemark",
+          "correct": false
+        },
+        {
+          "text": "In Ostfriesland und den Niederlanden",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Norden und Osten Deutschlands hat sich der Weihnachtsmann stärker durchgesetzt.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_156",
+      "question": "Wer schrieb 1835 den Text zu 'Morgen kommt der Weihnachtsmann'?",
+      "answers": [
+        {
+          "text": "Hoffmann von Fallersleben",
+          "correct": true
+        },
+        {
+          "text": "Joseph von Eichendorff",
+          "correct": false
+        },
+        {
+          "text": "Matthias Claudius",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Von ihm stammt auch der Text der deutschen Nationalhymne.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_157",
+      "question": "In welchem Ort in Brandenburg beantwortet ein Weihnachtspostamt Kinderbriefe an den Weihnachtsmann?",
+      "answers": [
+        {
+          "text": "Himmelpfort",
+          "correct": true
+        },
+        {
+          "text": "Engelskirchen",
+          "correct": false
+        },
+        {
+          "text": "Lichtenstern",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jedes Jahr treffen dort zigtausende Kinderbriefe ein.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_158",
+      "question": "Welche Baumart steht in den meisten deutschen Wohnzimmern zu Weihnachten?",
+      "answers": [
+        {
+          "text": "Die Nordmanntanne",
+          "correct": true
+        },
+        {
+          "text": "Die Blaufichte",
+          "correct": false
+        },
+        {
+          "text": "Die Kiefer",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sie ist nach dem finnischen Naturforscher Alexander von Nordmann benannt.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_159",
+      "question": "Was gilt für den 24. Dezember in Deutschland?",
+      "answers": [
+        {
+          "text": "Er ist kein gesetzlicher Feiertag",
+          "correct": true
+        },
+        {
+          "text": "Er ist bundesweit ein Feiertag",
+          "correct": false
+        },
+        {
+          "text": "Er ist nur in Bayern ein Feiertag",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Viele Betriebe schließen dennoch am Mittag.",
+      "category": "Weihnachten"
+    },
+    {
+      "id": "weihnachten_de_160",
+      "question": "Wie heißt der 26. Dezember als kirchlicher Gedenktag?",
+      "answers": [
+        {
+          "text": "Stephanstag",
+          "correct": true
+        },
+        {
+          "text": "Barbaratag",
+          "correct": false
+        },
+        {
+          "text": "Martinstag",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der heilige Stephanus gilt als erster christlicher Märtyrer.",
       "category": "Weihnachten"
     }
   ]
