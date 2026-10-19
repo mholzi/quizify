@@ -571,6 +571,10 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 
 The complete history is in [`CHANGELOG.md`](CHANGELOG.md); [`docs/release-notes/`](docs/release-notes/) holds longer prose notes for some releases.
 
+### v1.23.0 — A Pack for Film Night 🎬
+- **Film & TV packs in German, English and Spanish**, about 160 questions each, and the picture packs grew from 17 to 40; 56 misplaced or repeated questions are gone (#1050, #1047, #1054, #1073)
+- Streaks pay from the third correct answer with a toast at every milestone, the points under each answer add up, and tied players share the podium and the win (#1062, #1066, #1075, #1078, #1085)
+
 ### v1.22.0 — The Lightning Round under Watch ⚡
 - **The host page and the television no longer stay frozen in the Lightning Round**: after five seconds without a frame they reconnect by themselves and rejoin the round where it stands (#1035)
 - With debug logging on, every Lightning frame records which screens it reached, so a returning freeze names its own cause in the Home Assistant log (#1044)
