@@ -242,10 +242,11 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         "podium",
         "leaderboard",
         "all_players",
-        optional=("superlatives", "share"),
+        optional=("superlatives", "share", "game_id"),
         note=(
             "``all_players`` is the same list object as ``leaderboard`` (#415); "
-            "``superlatives`` is omitted when empty rather than sent as []."
+            "``superlatives`` is omitted when empty rather than sent as []. "
+            "``game_id`` lets the host page count each finished game once."
         ),
     ),
     "evening_tally": _spec(

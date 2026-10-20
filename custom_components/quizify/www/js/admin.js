@@ -231,6 +231,8 @@
         adminFinaleH2h: document.getElementById('admin-finale-h2h'),
         adminEveningTally: document.getElementById('admin-evening-tally'),
         newGameBtn: document.getElementById('new-game-btn'),
+        starHint: document.getElementById('admin-star-hint'),
+        starHintDismiss: document.getElementById('admin-star-hint-dismiss'),
         lobbyBackBtn: document.getElementById('lobby-back-btn'),
         // Lightning Round (issue #42 mechanics, #285 auto-trigger). The manual
         // start / start-questions / end / again controls were retired; only
@@ -2874,6 +2876,42 @@
         var standings = window.QuizifyRenderShared.finaleStandings(msg);
         renderPodium(els.adminPodium, standings.podium);
         renderLeaderboard(els.adminFinaleLeaderboard, standings.leaderboard);
+        _updateStarHint(msg && msg.game_id);
+    }
+
+    // GitHub star hint under "Start New Game". Only from the third finished
+    // game on this device, and never again once dismissed. Each game counts
+    // once: the last counted game_id is stored with the tally, so a reload or
+    // a reconnect into the same finale (the snapshot carries the same id)
+    // does not count it again. Any storage failure keeps the hint hidden.
+    var STAR_HINT_GAMES_KEY = 'quizify_finished_games';
+    var STAR_HINT_DISMISSED_KEY = 'quizify_star_hint_dismissed';
+    var STAR_HINT_MIN_GAMES = 3;
+
+    function _updateStarHint(gameId) {
+        if (!els.starHint) return;
+        var show = false;
+        try {
+            if (localStorage.getItem(STAR_HINT_DISMISSED_KEY) !== '1') {
+                var saved = JSON.parse(localStorage.getItem(STAR_HINT_GAMES_KEY) || 'null');
+                var count = (saved && typeof saved.count === 'number') ? saved.count : 0;
+                var last = (saved && typeof saved.last === 'string') ? saved.last : null;
+                if (gameId && gameId !== last) {
+                    count += 1;
+                    localStorage.setItem(STAR_HINT_GAMES_KEY,
+                        JSON.stringify({ count: count, last: gameId }));
+                }
+                show = count >= STAR_HINT_MIN_GAMES;
+            }
+        } catch (e) { show = false; /* storage unavailable — no hint */ }
+        els.starHint.hidden = !show;
+    }
+
+    function _dismissStarHint() {
+        if (els.starHint) els.starHint.hidden = true;
+        try {
+            localStorage.setItem(STAR_HINT_DISMISSED_KEY, '1');
+        } catch (e) { /* storage unavailable — hidden for this view only */ }
     }
 
     function handleGameReset() {
@@ -4182,6 +4220,7 @@
     });
 
     on(els.newGameBtn, 'click', function () { send('reset_game', {}); });
+    on(els.starHintDismiss, 'click', _dismissStarHint);
 
     // Lightning Round (issue #42 mechanics, #285 auto-trigger). It now fires
     // automatically mid-game and auto-advances, so there is no manual start /

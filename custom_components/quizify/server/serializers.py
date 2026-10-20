@@ -970,6 +970,7 @@ def serialize_finale(
     all_players: list[PlayerSession],
     superlatives: list[dict[str, str]] | None = None,
     packs: list[str] | None = None,
+    game_id: str | None = None,
 ) -> dict[str, Any]:
     """Build finale payload with podium and full leaderboard."""
     # Shared-rank podium (#308): equal scores share a rank, same as the
@@ -996,6 +997,11 @@ def serialize_finale(
     # Shareable result cards (#369). Always present so the client can render
     # the share block without probing for the key.
     result["share"] = build_share_payload(all_players, packs)
+    # The host page counts finished games per device for the GitHub star hint
+    # under "Start New Game"; the id keeps a reload of the same finale from
+    # counting twice. The FINALE snapshot already carries the same id.
+    if game_id:
+        result["game_id"] = game_id
     return result
 
 
