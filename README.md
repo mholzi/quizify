@@ -834,7 +834,7 @@ The next trivia battle is one QR scan away.
 
 **The open-source trivia quiz for Home Assistant. Built for fun.**
 
-[Report Bug](https://github.com/mholzi/quizify/issues) · [Request Feature](https://github.com/mholzi/quizify/issues) · [Discussions](https://github.com/mholzi/quizify/discussions)
+[⭐ Star on GitHub](https://github.com/mholzi/quizify) · [Report Bug](https://github.com/mholzi/quizify/issues) · [Request Feature](https://github.com/mholzi/quizify/issues) · [Discussions](https://github.com/mholzi/quizify/discussions)
 
 <br>
 
