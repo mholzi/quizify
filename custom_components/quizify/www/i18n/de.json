@@ -145,7 +145,11 @@
     "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
     "categoriesCountPlural": "{count} Kategorien",
     "packNewsTitle": "Neu in diesem Update",
-    "packNewsBody": "Schon installiert — such es dir in der Kategorie-Liste aus und leg los."
+    "packNewsBody": "Schon installiert — such es dir in der Kategorie-Liste aus und leg los.",
+    "starHintBefore": "Gefällt euch Quizify? Ein ⭐",
+    "starHintLink": "auf GitHub",
+    "starHintAfter": "hilft anderen, es zu finden.",
+    "starHintDismiss": "Hinweis schließen"
   },
   "categories": {
     "mixed": "Gemischt",

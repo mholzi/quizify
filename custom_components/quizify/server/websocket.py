@@ -4601,7 +4601,11 @@ class QuizifyWebSocketHandler:
         # serializers both paths share.
         packs = resolve_pack_labels(game_state)
         finale_msg = serialize_finale(
-            podium, all_players, superlatives=awards, packs=packs
+            podium,
+            all_players,
+            superlatives=awards,
+            packs=packs,
+            game_id=game_state.game_id,
         )
         await self._conn.broadcast(finale_msg)
 

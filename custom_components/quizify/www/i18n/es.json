@@ -145,7 +145,11 @@
     "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
     "categoriesCountPlural": "{count} categorías",
     "packNewsTitle": "Novedades de esta actualización",
-    "packNewsBody": "Ya está instalado: elígelo en la lista de categorías y a jugar."
+    "packNewsBody": "Ya está instalado: elígelo en la lista de categorías y a jugar.",
+    "starHintBefore": "¿Os gusta Quizify? Una ⭐",
+    "starHintLink": "en GitHub",
+    "starHintAfter": "ayuda a que otros lo encuentren.",
+    "starHintDismiss": "Cerrar aviso"
   },
   "categories": {
     "mixed": "Mixto",

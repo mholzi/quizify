@@ -995,6 +995,17 @@
                  the manual "⚡ Lightning Round" entry button was retired. -->
             <div class="admin-actions lobby-actions--sticky mt-lg">
                 <button type="button" id="new-game-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.startNewGame">Start New Game</button>
+                <!-- GitHub star hint: from the third finished game on this
+                     device, until dismissed (_updateStarHint in admin.js). -->
+                <p id="admin-star-hint" class="admin-star-hint" hidden>
+                    <span>
+                        <span data-i18n="admin.starHintBefore">Enjoying Quizify? A ⭐</span>
+                        <a href="https://github.com/mholzi/quizify" target="_blank" rel="noopener" data-i18n="admin.starHintLink">on GitHub</a>
+                        <span data-i18n="admin.starHintAfter">helps others find it.</span>
+                    </span>
+                    <button type="button" id="admin-star-hint-dismiss" class="admin-star-hint-dismiss"
+                            aria-label="Dismiss hint" data-i18n-aria-label="admin.starHintDismiss">×</button>
+                </p>
             </div>
         </div>
 

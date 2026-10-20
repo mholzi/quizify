@@ -145,7 +145,11 @@
     "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
     "categoriesCountPlural": "{count} Categories",
     "packNewsTitle": "New in this update",
-    "packNewsBody": "Already installed — pick it from the category list to play it."
+    "packNewsBody": "Already installed — pick it from the category list to play it.",
+    "starHintBefore": "Enjoying Quizify? A ⭐",
+    "starHintLink": "on GitHub",
+    "starHintAfter": "helps others find it.",
+    "starHintDismiss": "Dismiss hint"
   },
   "categories": {
     "mixed": "Mixed",
