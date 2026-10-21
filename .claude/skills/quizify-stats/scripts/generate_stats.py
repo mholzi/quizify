@@ -527,7 +527,7 @@ def fetch_reddit_posts():
     "quizify" also names an unrelated SaaS quiz product, so a global search
     returns strangers: r/Quizify_io, an Anki markdown tool, unrelated quiz
     threads. Rather than guessing which hit is ours, scope decides — hits
-    inside r/homeassistant and r/HACS are ours by construction and carry the
+    inside r/homeassistant and r/homeautomation are ours by construction and carry the
     headline number; global hits are listed apart and never counted into it.
     """
     print("Fetching Reddit posts...")
