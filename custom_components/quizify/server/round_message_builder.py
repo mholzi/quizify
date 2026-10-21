@@ -96,9 +96,7 @@ class RoundMessageBuilder:
             for participant in game_state.get_ranked_participants()
             if any(
                 member in connected
-                for member in (
-                    getattr(participant, "members", None) or [participant.name]
-                )
+                for member in (participant.members or [participant.name])
             )
         ]
         waiting = game_state.players_missing_wager()

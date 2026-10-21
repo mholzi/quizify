@@ -2,17 +2,19 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any
 
 from custom_components.quizify.game.highlights import compute_superlatives
 from custom_components.quizify.game.phase_controller import GamePhase
+from custom_components.quizify.game.player import PlayerSession
 from custom_components.quizify.game.scoring import (
     calculate_podium,
     is_streak_active,
 )
 
 if TYPE_CHECKING:
-    from custom_components.quizify.game.player import PlayerSession
+    from custom_components.quizify.game.participant import Participant
     from custom_components.quizify.game.questions import Question
     from custom_components.quizify.game.state import QuizifyGameState
 
@@ -302,8 +304,11 @@ def strip_answer_for_dashboard(payload: dict[str, Any]) -> dict[str, Any]:
     return stripped
 
 
-def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
-    """Build sorted leaderboard from player list.
+def serialize_leaderboard(players: Sequence[Participant]) -> list[dict[str, Any]]:
+    """Build sorted leaderboard from the ranked participants.
+
+    Takes teams and solo players alike (#365) — typed as ``Participant`` so
+    only what both carry can be read here without a narrowing (#1107).
 
     Ties share a rank (#308): two players on the same score get the same rank
     and the next rank skips accordingly (standard competition ranking —
@@ -320,9 +325,7 @@ def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
         if prev_score is None or p.score != prev_score:
             rank = i + 1
             prev_score = p.score
-        breakdown = (
-            p.round_score_breakdown if hasattr(p, "round_score_breakdown") else {}
-        )
+        breakdown = p.round_score_breakdown
         # Determine if this player answered correctly this round
         last_result = p.round_history[-1] if p.round_history else None
         result.append({
@@ -335,18 +338,14 @@ def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
             # animation and the rank-delta memo collapsed them into one.
             # A player's own name is already unique per game, so for a player
             # the entrant id is simply their name.
-            "entrant_id": getattr(p, "team_id", None) or p.name,
+            "entrant_id": p.team_id or p.name,
             "name": p.name,
             # The people behind the row (#969). A team row stands for several
             # players, a player row for one — so a count of the people who
             # played is the sum of these, not the number of rows. The end
             # screen used ``leaderboard.length`` and printed "2 players" for
             # two teams of two.
-            "members": (
-                list(getattr(p, "members", []))
-                if getattr(p, "team_id", None)
-                else [p.name]
-            ),
+            "members": list(p.members) if p.team_id else [p.name],
             "score": p.score,
             "streak": p.streak,
             # #1066: the server's verdict on whether that streak scores yet.
@@ -803,7 +802,7 @@ def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
     ]
 
 
-def _entrant_has_answered(entrant: Any) -> bool:
+def _entrant_has_answered(entrant: Participant) -> bool:
     """Whether one leaderboard row has a response standing this round (#835).
 
     A player is ``submitted`` the moment they tap — the tap is final. A team
@@ -812,17 +811,14 @@ def _entrant_has_answered(entrant: Any) -> bool:
     the clock stops (#365). So a team has answered when it has a standing
     answer or guess, which is exactly the thing that will score.
     """
-    if getattr(entrant, "team_id", None) is not None:
-        return (
-            getattr(entrant, "current_answer", None) is not None
-            or getattr(entrant, "current_guess", None) is not None
-        )
+    if entrant.team_id is not None:
+        return entrant.current_answer is not None or entrant.current_guess is not None
     return bool(entrant.submitted)
 
 
 def serialize_answer_progress(
-    players: list[PlayerSession],
-    entrants: list[Any] | None = None,
+    players: Sequence[PlayerSession],
+    entrants: Sequence[Participant] | None = None,
 ) -> dict[str, Any]:
     """Who has answered this round, in the shape the phone tracker expects (#619).
 
@@ -848,17 +844,17 @@ def serialize_answer_progress(
     Scores are omitted on purpose. This goes out mid-question, and a live score
     beside each name would leak who just answered correctly.
     """
-    rows: list[Any] = players if entrants is None else entrants
+    rows: Sequence[Participant] = players if entrants is None else entrants
     connected_by_name = {p.name: p.connected for p in players}
 
-    def _connected(row: Any) -> bool:
-        members = getattr(row, "members", None)
-        if members is None:
+    def _connected(row: Participant) -> bool:
+        # ``connected`` is a player's own flag; a team has none (#1107).
+        if isinstance(row, PlayerSession):
             return bool(row.connected)
         # A team is present while any of it is: the tracker greys out a row
         # the room should stop waiting for, and a team with one phone still
         # awake is not that.
-        return any(connected_by_name.get(m, False) for m in members)
+        return any(connected_by_name.get(m, False) for m in row.members)
 
     entries = [
         {
@@ -867,7 +863,7 @@ def serialize_answer_progress(
             # marks "this one is you" on the tracker, and once #835 made the
             # rows teams there was no longer anything on them a player's name
             # could equal, so in team mode nobody's row lit up (#845).
-            "entrant_id": getattr(r, "team_id", None) or r.name,
+            "entrant_id": r.team_id or r.name,
             "name": r.name,
             "submitted": _entrant_has_answered(r),
             "connected": _connected(r),
@@ -883,7 +879,7 @@ def serialize_answer_progress(
 
 
 def build_share_payload(
-    all_players: list[PlayerSession],
+    all_players: Sequence[Participant],
     packs: list[str] | None = None,
 ) -> dict[str, Any]:
     """Per-player run summary for the shareable result card (#369).
@@ -915,7 +911,9 @@ def build_share_payload(
             rank = i + 1
             prev = p.score
         history = list(p.round_history)
-        hits = list(getattr(p, "round_hits", ()))
+        # Only a player records per-round hits (#1084); a team row has none,
+        # so its strip is its ``round_history`` as recorded (#1107).
+        hits = list(p.round_hits) if isinstance(p, PlayerSession) else []
         # Estimate rounds are scored by closeness (#1084): a guess that
         # scored points is a hit, even though the round is recorded "wrong"
         # (not exact). Without this the card read "Correct 0 / 3" with three
@@ -966,8 +964,8 @@ def resolve_pack_labels(game_state: QuizifyGameState) -> list[str]:
 
 
 def serialize_finale(
-    podium: list[PlayerSession],
-    all_players: list[PlayerSession],
+    podium: Sequence[Participant],
+    all_players: Sequence[Participant],
     superlatives: list[dict[str, str]] | None = None,
     packs: list[str] | None = None,
     game_id: str | None = None,

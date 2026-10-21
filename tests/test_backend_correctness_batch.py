@@ -25,6 +25,7 @@ _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
 
 from custom_components.quizify.const import DIFFICULTY_AUTO  # noqa: E402
+from custom_components.quizify.game.player import PlayerSession  # noqa: E402
 from custom_components.quizify.game.scoring import calculate_round_score  # noqa: E402
 from custom_components.quizify.game.scoring_engine import ScoringEngine  # noqa: E402
 from custom_components.quizify.game.state import (  # noqa: E402
@@ -221,19 +222,10 @@ class TestBreakdownSums:
 # ---------------------------------------------------------------------------
 
 
-class _FakePlayer:
-    def __init__(self, name: str, score: int) -> None:
-        self.name = name
-        self.score = score
-        self.streak = 0
-        self.round_score = 0
-        self.round_history: list = []
-        self.round_score_breakdown: dict = {}
-        self.color = "#000"
-        self.is_admin = False
-        self.submitted = False
-        self.max_streak = 0
-        self.powerups_used = 0
+def _FakePlayer(name: str, score: int) -> PlayerSession:  # noqa: N802
+    # A real player rather than a duck type: since #1107 the leaderboard reads
+    # the full ``Participant`` shape (``team_id``, ``members``) explicitly.
+    return PlayerSession(name=name, score=score, color="#000")
 
 
 class TestTiesShareRank:

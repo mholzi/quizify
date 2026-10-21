@@ -20,6 +20,7 @@ from pathlib import Path
 
 import pytest
 
+from custom_components.quizify.game.player import PlayerSession
 from custom_components.quizify.game.team import Team
 from custom_components.quizify.server.serializers import (
     serialize_finale,
@@ -38,20 +39,16 @@ _NEEDS_NODE = pytest.mark.skipif(
 )
 
 
-class _Player:
-    """Just the attributes ``serialize_leaderboard`` reads off a player."""
+def _Player(name: str, score: int) -> PlayerSession:  # noqa: N802
+    """A real player with ten rounds played.
 
-    def __init__(self, name: str, score: int) -> None:
-        self.name = name
-        self.score = score
-        self.streak = 0
-        self.round_score = 0
-        self.round_history = ["correct"] * 10
-        self.color = "#fff"
-        self.is_admin = False
-        self.submitted = False
-        self.max_streak = 0
-        self.powerups_used = 0
+    Was a duck type carrying just the attributes ``serialize_leaderboard``
+    read; since #1107 that function reads the full ``Participant`` shape
+    (``team_id``, ``members``) explicitly, which a real player has.
+    """
+    return PlayerSession(
+        name=name, score=score, color="#fff", round_history=["correct"] * 10
+    )
 
 
 def _live_test_teams() -> list[Team]:

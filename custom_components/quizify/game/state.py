@@ -30,6 +30,7 @@ from ..const import (
 )
 from .calibration import GroupCalibrator
 from .highlights import compute_superlatives
+from .participant import Participant
 from .phase_controller import GamePhase, PhaseController, TickResolution
 from .player import PlayerSession
 from .player_registry import PlayerRegistry
@@ -494,7 +495,7 @@ class QuizifyGameState:
         return self._player_registry.players
 
     @property
-    def leader(self) -> PlayerSession | Team | None:
+    def leader(self) -> Participant | None:
         """Whoever is currently top of the ranking, or None in an empty room.
 
         A *participant*, not a player (#923). In team mode the room's truth is
@@ -3036,7 +3037,7 @@ class QuizifyGameState:
         for participant in self.get_ranked_participants():
             if participant.wager is not None:
                 continue
-            members = getattr(participant, "members", None) or [participant.name]
+            members = participant.members or [participant.name]
             if any(m in connected for m in members):
                 waiting.append(participant.name)
         return waiting
@@ -3070,7 +3071,10 @@ class QuizifyGameState:
         participant = self.get_ranked_participant_for(player_name)
         if participant is None:
             return False
-        if self.team_mode and hasattr(participant, "current_answer"):
+        # Both a team and a player carry ``current_answer`` (#1107), so the
+        # former ``hasattr`` guard here was always true: in team mode the
+        # standing answer decides, for a solo row too.
+        if self.team_mode:
             return participant.current_answer is not None
         return bool(participant.submitted)
 
@@ -3115,7 +3119,7 @@ class QuizifyGameState:
             return None
         return question.image_url or None
 
-    def get_standings(self) -> list[Any]:
+    def get_standings(self) -> list[Participant]:
         """The participants in rank order, highest score first.
 
         Domain objects, deliberately. Until #747 this method returned the
@@ -3130,7 +3134,7 @@ class QuizifyGameState:
             self.get_ranked_participants(), key=lambda p: p.score, reverse=True
         )
 
-    def get_ranked_participants(self) -> list[Any]:
+    def get_ranked_participants(self) -> list[Participant]:
         """Whoever the ranking is about: teams in team mode, else players (#365).
 
         Both answer to the same attribute names, so every leaderboard call site
@@ -3138,13 +3142,13 @@ class QuizifyGameState:
         the dashboard, reveal and finale need no team-specific rendering path.
         """
         if not self.team_mode:
-            return self.get_players()
+            return list(self.get_players())
         # A player who joined no team is a team of one, not an error state
         # (Markus, 2026-08-12) — so they keep their own row next to the teams
         # rather than dropping out of the ranking. Found by playing it: with
         # teams returned alone, the one guest who stayed solo vanished from the
         # leaderboard, the TV and the podium.
-        teams: list[Any] = list(self._team_registry.all_teams())
+        teams: list[Participant] = list(self._team_registry.all_teams())
         solo = [
             p
             for p in self.get_players()
@@ -3167,7 +3171,7 @@ class QuizifyGameState:
             return True
         return self._team_registry.get_by_member(player_name) is None
 
-    def _entrant_key(self, participant: Any) -> str:
+    def _entrant_key(self, participant: Participant) -> str:
         """The key a participant bids, bets and settles under (#804).
 
         A team's id, a solo player's name. Ids rather than names because
@@ -3175,9 +3179,9 @@ class QuizifyGameState:
         by name they would collapse into a single entrant, one team's bid
         overwriting the other's and one settlement paying both.
         """
-        return getattr(participant, "team_id", None) or participant.name
+        return participant.team_id or participant.name
 
-    def _participant_by_entrant(self, entrant: str) -> Any | None:
+    def _participant_by_entrant(self, entrant: str) -> Participant | None:
         """The team or player an entrant key names, or None (#804).
 
         The inverse of ``_entrant_key``, and the reason a Hot Seat settlement
@@ -3209,7 +3213,7 @@ class QuizifyGameState:
             return player_name
         return self._entrant_key(participant)
 
-    def get_ranked_participant_for(self, player_name: str) -> Any | None:
+    def get_ranked_participant_for(self, player_name: str) -> Participant | None:
         """The row on the leaderboard that a given player's points land in.
 
         Their team in team mode, themselves otherwise — and themselves in team
