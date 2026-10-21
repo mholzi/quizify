@@ -84,11 +84,14 @@ class TestLoadCategory:
             "bilderraetsel-de", "picture-round-en",    # picture round (#537)
             "imagenes-es",                             # picture round (es)
         }
+        # One-day occasion packs (#1110) hold only what is genuinely about the
+        # occasion: a 30-question floor, no filler to reach the themed 95.
+        occasion_packs = {"sankt-martin-de"}
         for cat in bank.get_categories():
             if cat.startswith("community-"):
                 continue
             count = bank.get_question_count(cat)
-            if cat in estimate_packs:
+            if cat in estimate_packs or cat in occasion_packs:
                 assert count >= 30, f"{cat} has only {count} questions (floor: 30)"
                 assert count <= 60, f"{cat} has {count} questions (ceiling: 60)"
                 continue

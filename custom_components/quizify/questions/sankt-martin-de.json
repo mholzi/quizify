@@ -1,0 +1,1147 @@
+{
+  "name": "Sankt Martin",
+  "language": "de",
+  "version": "1.0",
+  "theme": "trivia",
+  "season": {
+    "start": "11-04",
+    "end": "11-11",
+    "label": "🏮 Martinszeit"
+  },
+  "questions": [
+    {
+      "id": "sankt_martin_de_001",
+      "question": "An wen verschenkte Martin der Legende nach die Hälfte seines Mantels?",
+      "answers": [
+        {
+          "text": "An einen verletzten Pilger",
+          "correct": false
+        },
+        {
+          "text": "An einen frierenden Bettler",
+          "correct": true
+        },
+        {
+          "text": "An einen Händler am Stadttor",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Am Stadttor teilte er den Mantel; die andere Hälfte behielt er selbst.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_002",
+      "question": "Womit teilte der Soldat Martin seinen Mantel?",
+      "answers": [
+        {
+          "text": "Mit einem Küchenmesser",
+          "correct": false
+        },
+        {
+          "text": "Mit einer Schere",
+          "correct": false
+        },
+        {
+          "text": "Mit seinem Schwert",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Als römischer Soldat trug er ein Schwert bei sich, das er für die Teilung nutzte.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_003",
+      "question": "Welchen Beruf hatte Martin, als er den Bettler traf?",
+      "answers": [
+        {
+          "text": "Soldat",
+          "correct": true
+        },
+        {
+          "text": "Bauer",
+          "correct": false
+        },
+        {
+          "text": "Kaufmann",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Martin diente im römischen Heer, sein Vater war selbst Offizier.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_004",
+      "question": "In welcher Stadt spielt die berühmte Mantelteilung?",
+      "answers": [
+        {
+          "text": "Paris",
+          "correct": false
+        },
+        {
+          "text": "Amiens",
+          "correct": true
+        },
+        {
+          "text": "Köln",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Stadttor von Amiens im Norden Frankreichs gilt als Ort der Legende.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_005",
+      "question": "Wer erschien Martin der Legende nach in der Nacht nach der Mantelteilung im Traum?",
+      "answers": [
+        {
+          "text": "Kaiser Konstantin",
+          "correct": false
+        },
+        {
+          "text": "Sein verstorbener Vater",
+          "correct": false
+        },
+        {
+          "text": "Christus, bekleidet mit dem halben Mantel",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Traum bewegte ihn dazu, sich taufen zu lassen.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_006",
+      "question": "Wie alt war Martin ungefähr, als er sich taufen ließ?",
+      "answers": [
+        {
+          "text": "18 Jahre",
+          "correct": true
+        },
+        {
+          "text": "30 Jahre",
+          "correct": false
+        },
+        {
+          "text": "45 Jahre",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bei der Mantelteilung war er noch ein Katechumene, also ein Taufbewerber.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_007",
+      "question": "In welchem heutigen Land wurde Martin geboren?",
+      "answers": [
+        {
+          "text": "Frankreich",
+          "correct": false
+        },
+        {
+          "text": "Ungarn",
+          "correct": true
+        },
+        {
+          "text": "Spanien",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Geboren wurde er um 316/317 in Savaria, dem heutigen Szombathely, in der römischen Provinz Pannonien.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_008",
+      "question": "In welcher italienischen Stadt wuchs Martin auf?",
+      "answers": [
+        {
+          "text": "Rom",
+          "correct": false
+        },
+        {
+          "text": "Mailand",
+          "correct": false
+        },
+        {
+          "text": "Pavia",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Stadt hieß damals Ticinum und liegt am Fluss Ticino.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_009",
+      "question": "Was bedeutet der Name Martin ursprünglich?",
+      "answers": [
+        {
+          "text": "Dem Kriegsgott Mars geweiht",
+          "correct": true
+        },
+        {
+          "text": "Der Barmherzige",
+          "correct": false
+        },
+        {
+          "text": "Der Mantelträger",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein passender Name für einen Soldaten, der später Mönch und Bischof wurde.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_010",
+      "question": "Vor wem bat Martin der Überlieferung nach in Worms um seine Entlassung aus dem Heer, weil er „Soldat Christi“ sei?",
+      "answers": [
+        {
+          "text": "Vor Konstantin dem Großen",
+          "correct": false
+        },
+        {
+          "text": "Vor dem Caesar Julian",
+          "correct": true
+        },
+        {
+          "text": "Vor Kaiser Theodosius",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Seine Begründung: „Ich bin Soldat Christi, mir ist das Kämpfen nicht erlaubt.“",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_011",
+      "question": "Wer war Martins Lehrer und Förderer in Poitiers?",
+      "answers": [
+        {
+          "text": "Augustinus von Hippo",
+          "correct": false
+        },
+        {
+          "text": "Ambrosius von Mailand",
+          "correct": false
+        },
+        {
+          "text": "Hilarius, der Bischof von Poitiers",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bei Hilarius lebte er als Schüler, bevor er selbst Mönch wurde.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_012",
+      "question": "Wo gründete Martin das Kloster, das als erstes Kloster Galliens gilt?",
+      "answers": [
+        {
+          "text": "In Ligugé",
+          "correct": true
+        },
+        {
+          "text": "In Cluny",
+          "correct": false
+        },
+        {
+          "text": "In Clairvaux",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ligugé liegt bei Poitiers und besteht bis heute als Abtei.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_013",
+      "question": "In welcher Stadt wurde Martin Bischof?",
+      "answers": [
+        {
+          "text": "Reims",
+          "correct": false
+        },
+        {
+          "text": "Tours",
+          "correct": true
+        },
+        {
+          "text": "Lyon",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Er wurde um das Jahr 371 zum Bischof von Tours gewählt.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_014",
+      "question": "Warum soll sich Martin der Legende nach in einem Gänsestall versteckt haben?",
+      "answers": [
+        {
+          "text": "Er floh vor römischen Soldaten",
+          "correct": false
+        },
+        {
+          "text": "Er suchte Schutz vor einem Unwetter",
+          "correct": false
+        },
+        {
+          "text": "Er wollte nicht zum Bischof gewählt werden",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Geschnatter der Gänse verriet sein Versteck.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_015",
+      "question": "Wo starb Martin im Jahr 397?",
+      "answers": [
+        {
+          "text": "In Candes an der Loire",
+          "correct": true
+        },
+        {
+          "text": "In Rom",
+          "correct": false
+        },
+        {
+          "text": "In Amiens",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sein Leichnam wurde per Boot die Loire hinab nach Tours gebracht.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_016",
+      "question": "Warum wird der Martinstag am 11. November gefeiert?",
+      "answers": [
+        {
+          "text": "Es ist sein Geburtstag",
+          "correct": false
+        },
+        {
+          "text": "Es ist der Tag seiner Beisetzung in Tours",
+          "correct": true
+        },
+        {
+          "text": "Es ist der Tag der Mantelteilung",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gestorben war er am 8. November 397; beigesetzt wurde er am 11. November.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_017",
+      "question": "Was war an Martins Verehrung als Heiliger besonders?",
+      "answers": [
+        {
+          "text": "Er war der erste Papst, der heiliggesprochen wurde",
+          "correct": false
+        },
+        {
+          "text": "Er war der erste Heilige der Kirche überhaupt",
+          "correct": false
+        },
+        {
+          "text": "Er gilt als einer der ersten Heiligen, die nicht als Märtyrer verehrt wurden",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Er starb eines natürlichen Todes und wurde für sein Leben als Bekenner verehrt.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_018",
+      "question": "Wer schrieb die älteste erhaltene Lebensbeschreibung des heiligen Martin?",
+      "answers": [
+        {
+          "text": "Sulpicius Severus",
+          "correct": true
+        },
+        {
+          "text": "Gregor von Tours",
+          "correct": false
+        },
+        {
+          "text": "Beda Venerabilis",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sulpicius Severus kannte Martin persönlich.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_019",
+      "question": "An welchem Fluss liegt Tours, die Stadt, in der Martin Bischof war?",
+      "answers": [
+        {
+          "text": "An der Seine",
+          "correct": false
+        },
+        {
+          "text": "An der Loire",
+          "correct": true
+        },
+        {
+          "text": "An der Rhône",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In Tours liegt sein Grab, das im Mittelalter ein bedeutendes Pilgerziel war.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_020",
+      "question": "Was hat Martins Mantel mit dem Wort „Kapelle“ zu tun?",
+      "answers": [
+        {
+          "text": "Die erste Kapelle wurde als Unterstand für Soldaten gebaut",
+          "correct": false
+        },
+        {
+          "text": "Nichts, das Wort stammt aus dem Griechischen",
+          "correct": false
+        },
+        {
+          "text": "Das Wort geht auf „cappa“ zurück, den Mantel, der als Reliquie aufbewahrt wurde",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Hüter der cappa hießen „cappellani“, daraus wurde unser Wort „Kaplan“.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_021",
+      "question": "Für welche Berufsgruppe gilt Martin unter anderem als Schutzpatron?",
+      "answers": [
+        {
+          "text": "Soldaten",
+          "correct": true
+        },
+        {
+          "text": "Seeleute",
+          "correct": false
+        },
+        {
+          "text": "Bergleute",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Auch Bettler und Reiter stehen unter seinem Schutz.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_022",
+      "question": "Mit welchem Vogel wird Martin in der Heiligenverehrung häufig dargestellt?",
+      "answers": [
+        {
+          "text": "Mit dem Raben",
+          "correct": false
+        },
+        {
+          "text": "Mit der Gans",
+          "correct": true
+        },
+        {
+          "text": "Mit der Taube",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Auf Bildern ist er oft zu Pferd mit dem Bettler zu sehen, die Gans ist sein zweites Attribut.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_023",
+      "question": "An welchem Datum wird der Martinstag gefeiert?",
+      "answers": [
+        {
+          "text": "6. Dezember",
+          "correct": false
+        },
+        {
+          "text": "31. Oktober",
+          "correct": false
+        },
+        {
+          "text": "11. November",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Am 6. Dezember ist Nikolaus, am 31. Oktober Halloween und Reformationstag.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_024",
+      "question": "Wer reitet bei vielen Martinsumzügen dem Zug voran?",
+      "answers": [
+        {
+          "text": "Ein als Sankt Martin verkleideter Reiter",
+          "correct": true
+        },
+        {
+          "text": "Der Bürgermeister auf einem Fahrrad",
+          "correct": false
+        },
+        {
+          "text": "Ein Nikolaus mit Esel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Oft sitzt er auf einem Pferd, hat einen roten Mantel an und teilt am Ziel symbolisch den Mantel.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_025",
+      "question": "Was tragen die Kinder beim Martinsumzug?",
+      "answers": [
+        {
+          "text": "Fahnen",
+          "correct": false
+        },
+        {
+          "text": "Laternen",
+          "correct": true
+        },
+        {
+          "text": "Glocken",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Laternen werden meist im Kindergarten oder in der Schule gebastelt.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_026",
+      "question": "Aus welchem Gemüse schnitzte man vielerorts früher Martinslaternen?",
+      "answers": [
+        {
+          "text": "Aus Kürbissen",
+          "correct": false
+        },
+        {
+          "text": "Aus Kohlköpfen",
+          "correct": false
+        },
+        {
+          "text": "Aus Rüben",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die ausgehöhlte Rübe mit Kerze war die Vorläuferin von Papier- und LED-Laternen.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_027",
+      "question": "Wie geht die zweite Zeile von „Ich geh mit meiner Laterne“ weiter: „und meine Laterne geht mit …“?",
+      "answers": [
+        {
+          "text": "… mir",
+          "correct": true
+        },
+        {
+          "text": "… dir",
+          "correct": false
+        },
+        {
+          "text": "… uns",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Weiter heißt es: „Dort oben leuchten die Sterne, und unten leuchten wir.“",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_028",
+      "question": "Wie geht der Laternenreim weiter: „Laterne, Laterne, Sonne, Mond und …“?",
+      "answers": [
+        {
+          "text": "… Wolken",
+          "correct": false
+        },
+        {
+          "text": "… Sterne",
+          "correct": true
+        },
+        {
+          "text": "… Blumen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es folgt: „Brenne auf, mein Licht, brenne auf, mein Licht, nur meine liebe Laterne nicht.“",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_029",
+      "question": "Wie endet die Strophe: „Mein Licht ist aus, wir gehen nach Haus, rabimmel, rabammel, …“?",
+      "answers": [
+        {
+          "text": "… rabumm",
+          "correct": false
+        },
+        {
+          "text": "… rabamm",
+          "correct": false
+        },
+        {
+          "text": "… rabum",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Refrain gehört zu den bekanntesten Reimen des Laternenumzugs.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_030",
+      "question": "Wie beginnt das Lied über den Heiligen: „Sankt Martin ritt durch …“?",
+      "answers": [
+        {
+          "text": "… Schnee und Wind",
+          "correct": true
+        },
+        {
+          "text": "… Nacht und Nebel",
+          "correct": false
+        },
+        {
+          "text": "… Feld und Wald",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Weiter geht es: „Sein Ross, das trug ihn fort geschwind.“",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_031",
+      "question": "Wer sitzt laut dem Martinslied im Schnee?",
+      "answers": [
+        {
+          "text": "Ein hungriger Hirte",
+          "correct": false
+        },
+        {
+          "text": "Ein armer, frierender Mann",
+          "correct": true
+        },
+        {
+          "text": "Ein müder Reisender",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Er bittet Martin um Hilfe, sonst sei „der bittre Frost“ sein Tod.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_032",
+      "question": "Welches Hefegebäck in Menschenform gibt es traditionell zu Sankt Martin?",
+      "answers": [
+        {
+          "text": "Das Lebkuchenherz",
+          "correct": false
+        },
+        {
+          "text": "Der Spekulatius-Reiter",
+          "correct": false
+        },
+        {
+          "text": "Der Weckmann",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Augen bestehen oft aus Rosinen.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_033",
+      "question": "Was hält der Weckmann oder Stutenkerl traditionell oft im Arm?",
+      "answers": [
+        {
+          "text": "Eine Tonpfeife",
+          "correct": true
+        },
+        {
+          "text": "Eine Laterne",
+          "correct": false
+        },
+        {
+          "text": "Einen Regenschirm",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Pfeife aus Ton gehört in vielen Regionen fest zum Gebäck.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_034",
+      "question": "Wie wird der Weckmann in Westfalen und weiten Teilen Norddeutschlands noch genannt?",
+      "answers": [
+        {
+          "text": "Pfefferkuchenmann",
+          "correct": false
+        },
+        {
+          "text": "Stutenkerl",
+          "correct": true
+        },
+        {
+          "text": "Krampus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Je nach Region heißt das Gebäck Weckmann, Stutenkerl oder Hefekerl.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_035",
+      "question": "Was kommt traditionell zur Martinsgans auf den Teller?",
+      "answers": [
+        {
+          "text": "Kartoffelsalat mit Würstchen",
+          "correct": false
+        },
+        {
+          "text": "Spaghetti mit Tomatensoße",
+          "correct": false
+        },
+        {
+          "text": "Rotkohl und Klöße",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In Österreich heißt es meist Rotkraut und Erdäpfelknödel.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_036",
+      "question": "Warum kam früher gerade um Martini die Gans auf den Tisch?",
+      "answers": [
+        {
+          "text": "Vor der folgenden langen Fastenzeit konnte man noch einmal schlemmen",
+          "correct": true
+        },
+        {
+          "text": "Gänse sind nur im November genießbar",
+          "correct": false
+        },
+        {
+          "text": "Gänse wurden nur zu Martini gezüchtet",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Außerdem wurde zu Martini viel Zins in Form von Gänsen bezahlt.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_037",
+      "question": "Welche Rolle spielte der Martinstag im bäuerlichen Jahr?",
+      "answers": [
+        {
+          "text": "Es begann die Aussaat",
+          "correct": false
+        },
+        {
+          "text": "Pacht und Abgaben waren fällig",
+          "correct": true
+        },
+        {
+          "text": "Die Schafe wurden geschoren",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Wirtschaftsjahr endete, die Ernte war eingebracht, Zinsen wurden oft in Naturalien wie Gänsen gezahlt.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_038",
+      "question": "Was wechselten in manchen Regionen um Martini traditionell die Knechte und Mägde?",
+      "answers": [
+        {
+          "text": "Ihre Kleidung",
+          "correct": false
+        },
+        {
+          "text": "Ihren Namen",
+          "correct": false
+        },
+        {
+          "text": "Ihre Dienststelle",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Martinstag war als Zahl- und Wechseltag im Jahr fest verankert.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_039",
+      "question": "Wie heißt die Martinsgans in Österreich?",
+      "answers": [
+        {
+          "text": "Martinigansl",
+          "correct": true
+        },
+        {
+          "text": "Martinihendl",
+          "correct": false
+        },
+        {
+          "text": "Martinikarpfen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dazu gibt es Rotkraut und Erdäpfelknödel.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_040",
+      "question": "Was wird in Österreich beim „Martiniloben“ gefeiert?",
+      "answers": [
+        {
+          "text": "Die erste Schneeflocke",
+          "correct": false
+        },
+        {
+          "text": "Der neue Wein",
+          "correct": true
+        },
+        {
+          "text": "Das Ende der Schule",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Zu Martini wird der junge Wein verkostet, traditionell zusammen mit der Martinigansl.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_041",
+      "question": "Welcher Heilige ist Landespatron des österreichischen Bundeslandes Burgenland?",
+      "answers": [
+        {
+          "text": "Leopold",
+          "correct": false
+        },
+        {
+          "text": "Florian",
+          "correct": false
+        },
+        {
+          "text": "Martin von Tours",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In der Landeshauptstadt Eisenstadt steht der Martinsdom.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_042",
+      "question": "Welchem Heiligen ist der Mainzer Dom hauptsächlich geweiht?",
+      "answers": [
+        {
+          "text": "Martin von Tours",
+          "correct": true
+        },
+        {
+          "text": "Bonifatius",
+          "correct": false
+        },
+        {
+          "text": "Petrus",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der offizielle Name lautet „Hoher Dom zu Mainz St. Martin und St. Stephan“.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_043",
+      "question": "Welche Auszeichnung wird dem Turm der St.-Martins-Kirche in Landshut oft zugeschrieben?",
+      "answers": [
+        {
+          "text": "Höchster Kirchturm Deutschlands",
+          "correct": false
+        },
+        {
+          "text": "Höchster Backsteinturm der Welt",
+          "correct": true
+        },
+        {
+          "text": "Ältester Kirchturm Bayerns",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Er ist etwa 130 Meter hoch.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_044",
+      "question": "Welche romanische Kirche mit markantem Turm prägt die Kölner Rheinfront und ist Sankt Martin geweiht?",
+      "answers": [
+        {
+          "text": "St. Gereon",
+          "correct": false
+        },
+        {
+          "text": "St. Ursula",
+          "correct": false
+        },
+        {
+          "text": "Groß St. Martin",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Groß St. Martin steht in der Kölner Altstadt unmittelbar am Rhein.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_045",
+      "question": "Der Martinitoren ist das Wahrzeichen welcher niederländischen Stadt?",
+      "answers": [
+        {
+          "text": "Groningen",
+          "correct": true
+        },
+        {
+          "text": "Utrecht",
+          "correct": false
+        },
+        {
+          "text": "Maastricht",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Er gehört zur Martinikerk, die nach dem heiligen Martin benannt ist.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_046",
+      "question": "Wie heißt Sankt Martin auf Niederländisch?",
+      "answers": [
+        {
+          "text": "Sinterklaas",
+          "correct": false
+        },
+        {
+          "text": "Sint-Maarten",
+          "correct": true
+        },
+        {
+          "text": "Sint-Joris",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In den Niederlanden und Flandern ziehen Kinder ebenfalls mit Laternen um die Häuser.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_047",
+      "question": "Was isst man in Portugal traditionell am Tag São Martinho (11. November)?",
+      "answers": [
+        {
+          "text": "Gänsebraten",
+          "correct": false
+        },
+        {
+          "text": "Stockfisch",
+          "correct": false
+        },
+        {
+          "text": "Geröstete Esskastanien",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Fest mit gerösteten Kastanien heißt „Magusto“.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_048",
+      "question": "Wie heißt der Martinstag im englischsprachigen Raum?",
+      "answers": [
+        {
+          "text": "Martinmas",
+          "correct": true
+        },
+        {
+          "text": "Michaelmas",
+          "correct": false
+        },
+        {
+          "text": "Candlemas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Schottland war Martinmas einer der traditionellen Zahltage (term days) im Jahr.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_049",
+      "question": "Wie nennt man im Volksmund eine milde Wetterphase um den Martinstag?",
+      "answers": [
+        {
+          "text": "Eisheilige",
+          "correct": false
+        },
+        {
+          "text": "Martinssommer",
+          "correct": true
+        },
+        {
+          "text": "Schafskälte",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Französischen heißt sie „été de la Saint-Martin“, im Englischen „Saint Martin’s summer“.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_050",
+      "question": "Nach wem ist Martin Luther benannt?",
+      "answers": [
+        {
+          "text": "Nach seinem Vater Hans",
+          "correct": false
+        },
+        {
+          "text": "Nach Papst Martin V.",
+          "correct": false
+        },
+        {
+          "text": "Nach dem heiligen Martin von Tours",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Luther wurde am 10. November 1483 geboren und am Martinstag, dem 11. November, getauft.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_051",
+      "question": "Zu welcher Uhrzeit beginnt am Martinstag traditionell die Karnevalssession?",
+      "answers": [
+        {
+          "text": "11:11 Uhr",
+          "correct": true
+        },
+        {
+          "text": "12:00 Uhr",
+          "correct": false
+        },
+        {
+          "text": "0:00 Uhr",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Elf, die „Narrenzahl“, steht für den 11.11. um 11:11 Uhr.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_052",
+      "question": "Welcher Brauch hängt mit dem 11. November und der Fastenzeit zusammen?",
+      "answers": [
+        {
+          "text": "Am Martinstag durfte niemand singen",
+          "correct": false
+        },
+        {
+          "text": "Vor dem Martinsfasten wurde noch einmal ausgiebig gefeiert",
+          "correct": true
+        },
+        {
+          "text": "Am Martinstag blieben die Läden geschlossen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bis zum Weihnachtsfest galt im frühen Mittelalter eine Fastenzeit, das sogenannte Martinsfasten.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_053",
+      "question": "Was brennt oft am Ziel des Martinsumzugs?",
+      "answers": [
+        {
+          "text": "Das Osterfeuer",
+          "correct": false
+        },
+        {
+          "text": "Das Sonnwendfeuer",
+          "correct": false
+        },
+        {
+          "text": "Das Martinsfeuer",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Am Feuer werden vielerorts Weckmänner und Brezeln verteilt.",
+      "category": "Sankt Martin"
+    },
+    {
+      "id": "sankt_martin_de_054",
+      "question": "Was geschieht beim Martinisingen?",
+      "answers": [
+        {
+          "text": "Kinder ziehen mit Liedern von Haus zu Haus und bekommen Süßigkeiten",
+          "correct": true
+        },
+        {
+          "text": "Ein Chor singt in der Kirche für Gänse",
+          "correct": false
+        },
+        {
+          "text": "Soldaten marschieren singend durch die Stadt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Brauch ist ein sogenannter Heischebrauch und erinnert entfernt an Halloween.",
+      "category": "Sankt Martin"
+    }
+  ]
+}
