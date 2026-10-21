@@ -81,6 +81,9 @@ ESTIMATE_SETS: tuple[EstimateSet, ...] = (
         theme="halloween",
         packs=("halloween-de", "halloween-en", "halloween-es"),
     ),
+    # English-only seasonal pack (#1109): one member, so the cross-language
+    # parity checks hold trivially and the per-pack checklist still applies.
+    EstimateSet(theme="thanksgiving", packs=("thanksgiving-en",)),
 )
 
 PACKS_WITH_ESTIMATES = [p for s in ESTIMATE_SETS for p in s.packs]

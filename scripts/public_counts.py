@@ -62,6 +62,8 @@ THEMES: list[tuple[str, tuple[str, str, str]]] = [
     ("Halloween", ("halloween-de", "halloween-en", "halloween-es")),
     ("Silvester / New Year's Eve",
      ("silvester-de", "new-years-eve-en", "nochevieja-es")),
+    # English only (#1109): an empty slot counts as zero and is not "missing".
+    ("Thanksgiving", ("", "thanksgiving-en", "")),
 ]
 
 
@@ -78,7 +80,7 @@ def pack_counts() -> dict[str, int]:
 
 def summary() -> dict[str, object]:
     counts = pack_counts()
-    listed = {name for _, names in THEMES for name in names}
+    listed = {name for _, names in THEMES for name in names if name}
     # A pack that no theme lists would vanish from the table while still
     # counting towards the total — that mismatch is worth surfacing, not
     # smoothing over.

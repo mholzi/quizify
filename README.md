@@ -52,7 +52,7 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 **Works on Any Screen** — Dashboard mode for the TV. Players use their phones. Admin runs the show. No extra hardware needed.
 
-**Sixteen Themes, Three Languages** — 6,676 questions across 48 themed packs (Geography, Pop Culture, Film & TV, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation, Picture Round, Christmas, New Year's Eve, Halloween) in German, English and Spanish. Mix them, filter them, swap mid-session.
+**Seventeen Themes, Three Languages** — 6,776 questions across 49 themed packs (Geography, Pop Culture, Film & TV, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation, Picture Round, Christmas, New Year's Eve, Halloween, Thanksgiving) in German, English and Spanish. Mix them, filter them, swap mid-session.
 
 ---
 
@@ -318,7 +318,7 @@ Then **"Start New Game"** (same settings, same players) or **Reset Game** (fresh
 
 ## Question Packs
 
-Quizify ships with **6,676 questions across 48 themed packs in 16 themes**, in German, English and Spanish.
+Quizify ships with **6,776 questions across 49 themed packs in 17 themes**, in German, English and Spanish.
 
 | Theme | 🇩🇪 Deutsch | 🇬🇧 English | 🇪🇸 Español |
 |-------|-------------|-------------|-------------|
@@ -338,10 +338,11 @@ Quizify ships with **6,676 questions across 48 themed packs in 16 themes**, in G
 | 🎄 **Weihnachten / Christmas / Navidad** | 160 | 160 | 160 |
 | 🎆 **Silvester / New Year's Eve / Nochevieja** | 130 | 130 | 140 |
 | 🎃 **Halloween** | 101 | 101 | 101 |
+| 🦃 **Thanksgiving** | – | 100 | – |
 
 Spanish arrived in 1.3.0, reached every written theme in 1.9.0 and was completed in 1.10.0 — every row in the table above ships in all three languages, World Cup, Estimation, Picture Round and the two holiday packs included. The Estimation packs hold slider questions rather than multiple choice — see [How to Play](#the-experience); every themed pack now carries five slider questions of its own (#566) on top of its written ones.
 
-Three of the rows only show up when they are due. The **Halloween** packs carry a season window for all of October, the **Christmas** packs one from 1 to 26 December and the **New Year's Eve** packs one from 27 December to 6 January; inside its window a seasonal pack is pinned as the featured pack on the setup screen and its card in the picker gets a badge. Outside it, the pack is still selectable like any other — it simply stops asking for attention. The World Cup packs use the same mechanism for June and July.
+Four of the rows only show up when they are due. The **Halloween** packs carry a season window for all of October, the English **Thanksgiving** pack one from 19 to 28 November, the **Christmas** packs one from 1 to 26 December and the **New Year's Eve** packs one from 27 December to 6 January; inside its window a seasonal pack is pinned as the featured pack on the setup screen and its card in the picker gets a badge. Outside it, the pack is still selectable like any other — it simply stops asking for attention. The World Cup packs use the same mechanism for June and July.
 
 Pack selection lives on the **first screen**: a featured pack card (e.g. World Cup) up top, with every other pack as a tappable chip right beneath it — tap to select or deselect, mix several, then hit **Start Game**. Game settings (difficulty, rounds, timer) stay one tap away under **Adjust settings**. **Mixed mode** drops you a random question from every selected pack, so you can stir Geography + Pop + Sport together for chaos mode.
 
