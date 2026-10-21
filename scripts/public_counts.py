@@ -60,6 +60,7 @@ THEMES: list[tuple[str, tuple[str, str, str]]] = [
      ("schaetzfragen-de", "estimation-en", "estimacion-es")),
     ("Weihnachten / Christmas", ("weihnachten-de", "christmas-en", "navidad-es")),
     ("Halloween", ("halloween-de", "halloween-en", "halloween-es")),
+    ("Sankt Martin", ("sankt-martin-de", "", "")),
     ("Silvester / New Year's Eve",
      ("silvester-de", "new-years-eve-en", "nochevieja-es")),
     # English only (#1109): an empty slot counts as zero and is not "missing".
