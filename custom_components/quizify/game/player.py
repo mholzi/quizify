@@ -115,6 +115,26 @@ class PlayerSession:
     streak_milestone_bonus_total: int = 0
     streak_milestones_hit: int = 0
 
+    # ---- Participant shape (#1107) ------------------------------------
+    # A solo player is ranked next to teams, so it answers to the two
+    # attributes that tell a row's identity apart — explicitly, instead of
+    # every caller probing ``getattr(p, "team_id", None)`` and
+    # ``getattr(p, "members", ...)``. Properties, not fields: they are derived,
+    # and stay out of the dataclass constructor and any field iteration.
+
+    @property
+    def team_id(self) -> str | None:
+        """Always ``None``: a player is not a team (see ``Participant``)."""
+        return None
+
+    @property
+    def members(self) -> list[str]:
+        """The people behind this row: the player alone (#969).
+
+        A fresh list on every read, so appending to it changes nothing.
+        """
+        return [self.name]
+
     @property
     def is_active(self) -> bool:
         """True while this player counts as present in the room.

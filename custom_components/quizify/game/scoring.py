@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from .player import PlayerSession
+from collections.abc import Sequence
+
+from .participant import Participant
 from .types import DIFFICULTY_MULTIPLIERS, Difficulty
 
 BASE_POINTS = 10
@@ -256,7 +258,11 @@ def calculate_estimate_scores(
     return results
 
 
-def calculate_podium(players: list[PlayerSession]) -> list[PlayerSession]:
-    """Return the top 3 players sorted by score (descending)."""
+def calculate_podium[P: Participant](players: Sequence[P]) -> list[P]:
+    """Return the top 3 participants sorted by score (descending).
+
+    Generic so a list of players comes back as players and the team-mode
+    ranking (#365) as participants (#1107).
+    """
     sorted_players = sorted(players, key=lambda p: p.score, reverse=True)
     return sorted_players[:3]

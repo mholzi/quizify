@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 
 from ..const import MIN_PLAYERS_FOR_AWARDS
-from .player import PlayerSession
+from .participant import Participant
 
 
 @dataclass
@@ -48,7 +49,7 @@ MIN_ROUNDS = 3
 MOST_ACCURATE_MIN_RATIO = 0.60
 
 
-def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
+def compute_superlatives(players: Sequence[Participant]) -> list[Superlative]:
     """Compute end-of-game superlative awards.
 
     Each award goes to exactly one player. A player can only win one award.
@@ -228,7 +229,7 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
     best_ratio = 0.0
     best_correct = 0
     perfect_player: str | None = None
-    perfect_player_obj: PlayerSession | None = None
+    perfect_player_obj: Participant | None = None
     for p in players:
         if p.name in awarded:
             continue
