@@ -569,7 +569,7 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 
 ## What's New
 
-The complete history is in [`CHANGELOG.md`](CHANGELOG.md); [`docs/release-notes/`](docs/release-notes/) holds longer prose notes for some releases.
+The complete history is in [`CHANGELOG.md`](CHANGELOG.md); longer prose notes for each release are on the [GitHub releases page](https://github.com/mholzi/quizify/releases).
 
 ### v1.23.0 — A Pack for Film Night 🎬
 - **Film & TV packs in German, English and Spanish**, about 160 questions each, and the picture packs grew from 17 to 40; 56 misplaced or repeated questions are gone (#1050, #1047, #1054, #1073)
