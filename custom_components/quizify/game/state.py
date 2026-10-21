@@ -30,6 +30,8 @@ from ..const import (
 )
 from .calibration import GroupCalibrator
 from .highlights import compute_superlatives
+from .hot_seat_controller import HotSeatController
+from .lightning_controller import LightningController
 from .participant import Participant
 from .phase_controller import GamePhase, PhaseController, TickResolution
 from .player import PlayerSession
@@ -52,7 +54,7 @@ from .scoring import (
     calculate_podium,
     estimate_within_calibration_band,
 )
-from .scoring_engine import ScoringEngine, wager_loss
+from .scoring_engine import ScoreComputation, ScoringEngine, wager_loss
 from .team import ANSWER_CHANGE_LOCK_SECONDS, Team, TeamRegistry
 from .timer import QuestionTimer
 from .types import TIME_LIMITS, Difficulty
@@ -253,47 +255,16 @@ class QuizifyGameState:
         self._finale_superlatives: list | None = None
         self._finale_data: dict[str, Any] | None = None
 
-        # Active LightningRound (issue #42), or None when not in a lightning
-        # round. Owns its own questions/scores/recap; this class only holds
-        # the reference + phase so the WS layer can route to it.
-        self._lightning: LightningRound | None = None
-
-        # True between start_lightning_round() and begin_lightning_questions():
-        # the intro splash ("Bolt Burst", issue #201) is on screen and the
-        # first question has not been broadcast yet. For the auto-triggered
-        # flow (#285) the WS loop advances out of it on a grace timer rather
-        # than a host tap.
-        self._lightning_splash_pending: bool = False
-
-        # Auto-trigger bookkeeping (issue #285). The Lightning Round is no
-        # longer a host-manual mode — it fires on its own exactly once per
-        # game at a uniformly random round inside the eligible window
-        # (rounds 3 … N-1). Picked up front in start_game() so the pick is a
-        # single seedable draw the tests can pin.
-        #   * _lightning_enabled  — the settings toggle (default ON).
-        #   * _lightning_target_round — the 1-based round the LR fires BEFORE,
-        #     or None when disabled / the window is empty (short game).
-        #   * _lightning_fired — guards the once-per-game guarantee.
-        #   * _round_to_resume — while in the LIGHTNING/LIGHTNING_RECAP
-        #     detour, the normal round the game returns to afterwards.
-        self._lightning_enabled: bool = True
-        self._lightning_target_round: int | None = None
-        self._lightning_fired: bool = False
-        self._round_to_resume: int = 0
-        # Injectable RNG for the target-round pick so tests are deterministic
-        # without monkeypatching the module-global ``random``. Defaults to the
-        # shared module RNG in production.
-        self._lightning_rng: random.Random = random.Random()
+        # Lightning Round (issue #42) and its auto trigger (#285): the active
+        # round, the intro splash flag and the once-per-game arming live in
+        # the controller (#1108); this class delegates to it below.
+        self._lightning_controller = LightningController(self)
 
         # Hot Seat auction (#616) — the second self-contained detour, armed
         # exactly like the Lightning Round above and deliberately never in the
-        # same round as it (see _pick_hot_seat_round).
-        self._hot_seat: HotSeatRound | None = None
-        self._hot_seat_enabled: bool = True
-        self._hot_seat_target_round: int | None = None
-        self._hot_seat_fired: bool = False
-        self._hot_seat_round_to_resume: int = 0
-        self._hot_seat_rng: random.Random = random.Random()
+        # same round as it. Its state and transitions live in the controller
+        # (#1108); this class delegates to it below.
+        self._hot_seat_controller = HotSeatController(self)
 
         # The two settings toggles a host had no way to reach (#742), armed
         # like the two above: default ON, so a game that says nothing about
@@ -686,20 +657,14 @@ class QuizifyGameState:
         # Arm the auto Lightning Round (#285). Pick the target round once, up
         # front, so it is a single seedable draw — the WS round-advance path
         # consults should_trigger_lightning() and fires when reached.
-        self._lightning_enabled = lightning_enabled
-        self._lightning_fired = False
-        self._round_to_resume = 0
-        if lightning_seed is not None:
-            self._lightning_rng = random.Random(lightning_seed)
-        self._lightning_target_round = self._pick_lightning_round(num_rounds)
+        self._lightning_controller.arm(
+            num_rounds, enabled=lightning_enabled, seed=lightning_seed
+        )
 
         # Arm the Hot Seat auction (#616), same shape, same draw-once rule.
-        self._hot_seat_enabled = hot_seat_enabled
-        self._hot_seat_fired = False
-        self._hot_seat_round_to_resume = 0
-        if hot_seat_seed is not None:
-            self._hot_seat_rng = random.Random(hot_seat_seed)
-        self._hot_seat_target_round = self._pick_hot_seat_round(num_rounds)
+        self._hot_seat_controller.arm(
+            num_rounds, enabled=hot_seat_enabled, seed=hot_seat_seed
+        )
 
         # Power-ups and the final-round wager (#742). Nothing to arm — they
         # are read at the point of use every round.
@@ -994,53 +959,21 @@ class QuizifyGameState:
         against the carrier's shadow total. Passing them in keeps
         ``ScoringEngine`` ignorant of teams — it is handed the bet and the
         bank, and never asks whose they are.
+
+        The work is split into steps (#1108): ``_guard_submission`` refuses
+        taps that may not count (``_set_team_answer`` diverts a team member's
+        tap), ``_score_submission`` judges the answer and runs the arithmetic,
+        and ``_apply_submission`` books the result onto the player.
         """
-        if not _settling_team and self.phase != GamePhase.QUESTION_ACTIVE:
-            return ERR_GAME_NOT_STARTED
+        guarded = self._guard_submission(player_id, _settling_team)
+        if isinstance(guarded, str):
+            return guarded
+        player, timer = guarded
 
-        player = self._player_registry.get_player(player_id)
-        if player is None:
-            return ERR_NOT_IN_GAME
-
-        if player.submitted:
-            return ERR_ALREADY_SUBMITTED
-
-        timer = self._timers.get(player_id)
-        if not _settling_team and timer and timer.is_expired():
-            return ERR_ROUND_EXPIRED
-
-        # Freeze lockout (#300): a frozen target cannot submit until the freeze
-        # window expires. The round clock keeps running underneath (the freeze
-        # does NOT pause get_remaining), so the lockout costs the target real
-        # answer time. Reject the submission while still frozen; once the window
-        # passes the player may submit normally (if the timer hasn't expired).
-        if not _settling_team and timer and timer.is_frozen():
-            _LOGGER.debug(
-                "Rejecting submit from frozen player %s (%.1fs of freeze left)",
-                player_id,
-                timer.frozen_remaining(),
-            )
-            return ERR_FROZEN
-
-        # Team mode (#365): the tap sets the *team's* answer instead of the
-        # player's. Nobody is marked submitted here — every member may keep
-        # changing it until the clock stops, and the answer that stands then is
-        # the one that scores, exactly once, in _do_evaluate_round.
-        team = (
-            None
-            if _settling_team
-            else self._team_registry.get_by_member(player.name)
-        )
-        if team is not None:
-            if not team.set_answer(answer_index, player.name):
-                return ERR_TEAM_LOCKED
-            self._notify_state_callbacks()
-            return TeamAnswerAck(
-                team_id=team.team_id,
-                answer_index=answer_index,
-                set_by=player.name,
-                lock_seconds=ANSWER_CHANGE_LOCK_SECONDS,
-            )
+        if not _settling_team:
+            team_ack = self._set_team_answer(player, answer_index)
+            if team_ack is not None:
+                return team_ack
 
         # Record submission
         elapsed = (
@@ -1056,6 +989,131 @@ class QuizifyGameState:
         if question is None:
             return ERR_GAME_NOT_STARTED
 
+        correct, diff_enum, computation = self._score_submission(
+            player_id,
+            player,
+            question,
+            answer_index,
+            elapsed,
+            settling_team=_settling_team,
+            team_wager=_team_wager,
+            team_bank=_team_bank,
+        )
+        result = self._apply_submission(
+            player_id, player, correct, diff_enum, computation
+        )
+
+        # Check if all players have submitted → auto-evaluate.
+        # Route through the guarded `evaluate_round()` (not directly to
+        # `_do_evaluate_round`) so the `_round_summary is not None` check
+        # closes the race with the timer-expiry path. (#143 in code review.)
+        #
+        # NOT during team settlement (#601). `_settle_team_answers` calls this
+        # method once per team while the round is already being evaluated, and
+        # `_round_summary` is not set until that evaluation finishes — so the
+        # guard inside `evaluate_round()` is still open and the round would
+        # re-enter `_do_evaluate_round` from the middle of its own settlement
+        # loop. Measured consequence: a team scored twice for one round and
+        # its history grew three entries. The settlement caller evaluates the
+        # round itself; it never needs this path.
+        if not _settling_team and self._player_registry.all_submitted():
+            self.evaluate_round()
+
+        return result
+
+    def _guard_submission(
+        self, player_id: str, settling_team: bool
+    ) -> tuple[PlayerSession, QuestionTimer | None] | str:
+        """Refuse a tap that may not count; return the player and their timer.
+
+        Returns an error code string when the submission is refused. The
+        phase, expiry and freeze checks police live taps only — the team
+        settlement (``settling_team``) runs after the clock has stopped.
+        """
+        if not settling_team and self.phase != GamePhase.QUESTION_ACTIVE:
+            return ERR_GAME_NOT_STARTED
+
+        player = self._player_registry.get_player(player_id)
+        if player is None:
+            return ERR_NOT_IN_GAME
+
+        if player.submitted:
+            return ERR_ALREADY_SUBMITTED
+
+        timer = self._timers.get(player_id)
+        if not settling_team and timer and timer.is_expired():
+            return ERR_ROUND_EXPIRED
+
+        # Freeze lockout (#300): a frozen target cannot submit until the freeze
+        # window expires. The round clock keeps running underneath (the freeze
+        # does NOT pause get_remaining), so the lockout costs the target real
+        # answer time. Reject the submission while still frozen; once the window
+        # passes the player may submit normally (if the timer hasn't expired).
+        if not settling_team and timer and timer.is_frozen():
+            _LOGGER.debug(
+                "Rejecting submit from frozen player %s (%.1fs of freeze left)",
+                player_id,
+                timer.frozen_remaining(),
+            )
+            return ERR_FROZEN
+        return player, timer
+
+    def _set_team_answer(
+        self, player: PlayerSession, answer_index: int
+    ) -> TeamAnswerAck | str | None:
+        """Set the tapping member's team answer; None when they are solo.
+
+        Team mode (#365): the tap sets the *team's* answer instead of the
+        player's. Nobody is marked submitted here — every member may keep
+        changing it until the clock stops, and the answer that stands then is
+        the one that scores, exactly once, in _do_evaluate_round.
+        """
+        team = self._team_registry.get_by_member(player.name)
+        if team is None:
+            return None
+        if not team.set_answer(answer_index, player.name):
+            return ERR_TEAM_LOCKED
+        self._notify_state_callbacks()
+        return TeamAnswerAck(
+            team_id=team.team_id,
+            answer_index=answer_index,
+            set_by=player.name,
+            lock_seconds=ANSWER_CHANGE_LOCK_SECONDS,
+        )
+
+    def _double_points_for(
+        self, player_id: str, player: PlayerSession, settling_team: bool
+    ) -> bool:
+        """Whether DOUBLE_POINTS applies to this submission."""
+        double_active = self._powerup_manager.is_double_points_active(player_id)
+        if settling_team and not double_active:
+            # Team mode (#704): the carrier is whoever's tap stands at the
+            # buzzer, which is rarely the member who spent DOUBLE_POINTS. The
+            # activator's power-up was consumed and nothing doubled — no badge,
+            # no effect. The team answers as one, so it scores as one: the
+            # multiplier applies when ANY member of the carrier's team has it
+            # active this round.
+            carrier_team = self._team_registry.get_by_member(player.name)
+            if carrier_team is not None:
+                double_active = any(
+                    self._powerup_manager.is_double_points_active(member)
+                    for member in carrier_team.members
+                )
+        return double_active
+
+    def _score_submission(
+        self,
+        player_id: str,
+        player: PlayerSession,
+        question: Question,
+        answer_index: int,
+        elapsed: float,
+        *,
+        settling_team: bool,
+        team_wager: int | None,
+        team_bank: int | None,
+    ) -> tuple[bool, Difficulty, ScoreComputation]:
+        """Judge the answer, advance the streak and compute the points."""
         correct = self._question_bank.validate_answer(question, answer_index)
         # Cache the result so _do_evaluate_round doesn't need to re-validate
         # (#145 in code-review issues — also closes the `current_answer or -1`
@@ -1067,20 +1125,7 @@ class QuizifyGameState:
         except ValueError:
             diff_enum = Difficulty.MEDIUM
 
-        double_active = self._powerup_manager.is_double_points_active(player_id)
-        if _settling_team and not double_active:
-            # Team mode (#704): the carrier is whoever's tap stands at the
-            # buzzer, which is rarely the member who spent DOUBLE_POINTS. The
-            # activator's power-up was consumed and nothing doubled — no badge,
-            # no effect. The team answers as one, so it scores as one: the
-            # multiplier applies when ANY member of the carrier's team has it
-            # active this round.
-            settling_team = self._team_registry.get_by_member(player.name)
-            if settling_team is not None:
-                double_active = any(
-                    self._powerup_manager.is_double_points_active(member)
-                    for member in settling_team.members
-                )
+        double_active = self._double_points_for(player_id, player, settling_team)
 
         if correct:
             player.streak += 1
@@ -1105,21 +1150,25 @@ class QuizifyGameState:
             streak=player.streak,
             double_points_active=double_active,
             is_final_round=self.round == self.total_rounds,
-            wager=_team_wager if _settling_team else player.wager,
+            wager=team_wager if settling_team else player.wager,
             score_before_wager=(
-                _team_bank
-                if _settling_team and _team_bank is not None
+                team_bank
+                if settling_team and team_bank is not None
                 else player.score
             ),
         )
+        return correct, diff_enum, computation
 
+    def _apply_submission(
+        self,
+        player_id: str,
+        player: PlayerSession,
+        correct: bool,
+        diff_enum: Difficulty,
+        computation: ScoreComputation,
+    ) -> AnswerResult:
+        """Book a scored submission onto the player and build its result."""
         points = computation.points
-        speed_bonus = computation.speed_bonus
-        # #1075: the figure the phone prints, milestone included — the reveal
-        # copies this over its own row (player-core.js), so it has to match
-        # the breakdown dict.
-        streak_bonus = computation.shown_streak_bonus
-        diff_mult = computation.difficulty_multiplier
         milestone_bonus = computation.milestone_bonus
 
         # Tally the milestone hit (engine already folded the bonus into points).
@@ -1160,38 +1209,23 @@ class QuizifyGameState:
         if correct and diff_enum == Difficulty.HARD:
             player.hard_score += points
 
-        result = AnswerResult(
+        return AnswerResult(
             player_id=player_id,
             correct=correct,
             points_earned=points,
             new_streak=player.streak,
             new_total=player.score,
-            speed_bonus=speed_bonus,
-            streak_bonus=streak_bonus,
-            difficulty_multiplier=diff_mult,
+            speed_bonus=computation.speed_bonus,
+            # #1075: the figure the phone prints, milestone included — the
+            # reveal copies this over its own row (player-core.js), so it has
+            # to match the breakdown dict.
+            streak_bonus=computation.shown_streak_bonus,
+            difficulty_multiplier=computation.difficulty_multiplier,
             difficulty_bonus=computation.difficulty_bonus,
             double_bonus=computation.double_bonus,
             milestone_bonus=milestone_bonus,
             milestone_streak=player.streak if milestone_bonus else 0,
         )
-
-        # Check if all players have submitted → auto-evaluate.
-        # Route through the guarded `evaluate_round()` (not directly to
-        # `_do_evaluate_round`) so the `_round_summary is not None` check
-        # closes the race with the timer-expiry path. (#143 in code review.)
-        #
-        # NOT during team settlement (#601). `_settle_team_answers` calls this
-        # method once per team while the round is already being evaluated, and
-        # `_round_summary` is not set until that evaluation finishes — so the
-        # guard inside `evaluate_round()` is still open and the round would
-        # re-enter `_do_evaluate_round` from the middle of its own settlement
-        # loop. Measured consequence: a team scored twice for one round and
-        # its history grew three entries. The settlement caller evaluates the
-        # round itself; it never needs this path.
-        if not _settling_team and self._player_registry.all_submitted():
-            self.evaluate_round()
-
-        return result
 
     def submit_guess(self, player_id: str, guess: float) -> str | None:
         """Submit a player's numeric guess for an estimate round (#275).
@@ -2231,16 +2265,9 @@ class QuizifyGameState:
         self.shuffled_answers = []
         self._timer_override = None
         self._calibrator = None
-        self._lightning = None
-        self._lightning_splash_pending = False
         # Auto-trigger bookkeeping (#285) — re-armed by the next start_game.
-        self._lightning_target_round = None
-        self._lightning_fired = False
-        self._round_to_resume = 0
-        self._hot_seat = None
-        self._hot_seat_target_round = None
-        self._hot_seat_fired = False
-        self._hot_seat_round_to_resume = 0
+        self._lightning_controller.reset()
+        self._hot_seat_controller.reset()
 
         # A game abandoned before the finale never ran end_game; its shown
         # set must not follow the room into the next game (#1019).
@@ -2277,48 +2304,34 @@ class QuizifyGameState:
     # Lightning Round (issue #42)
     # ------------------------------------------------------------------
     #
-    # Thin wrappers around a LightningRound instance. The mode's rules and
-    # state live in game/lightning.py; this class only owns the reference
-    # and the phase transition so the WS handler has one place to call.
+    # The detour's orchestration lives in game/lightning_controller.py (#1108)
+    # and its rules in game/lightning.py. These delegates keep the names the
+    # WS handler, the drivers and the tests already call.
 
-    def _pick_lightning_round(self, num_rounds: int) -> int | None:
-        """Pick the round the auto Lightning Round fires before (#285).
+    @property
+    def _lightning(self) -> LightningRound | None:
+        return self._lightning_controller._round
 
-        The eligible window is rounds ``3 … num_rounds-1`` (1-based): the
-        first two rounds are blocked so the game establishes itself, and the
-        final round is blocked so the Lightning Round never replaces the
-        climactic last question. Returns a uniformly-random round in that
-        window, or ``None`` when the toggle is off OR the window is empty
-        (``num_rounds < 4`` — a short game simply skips the Lightning Round,
-        we never force one).
-        """
-        if not self._lightning_enabled:
-            return None
-        low, high = 3, num_rounds - 1
-        if high < low:
-            return None  # window empty → short game, no Lightning Round
-        return self._lightning_rng.randint(low, high)
+    @_lightning.setter
+    def _lightning(self, value: LightningRound | None) -> None:
+        self._lightning_controller._round = value
+
+    @property
+    def _lightning_fired(self) -> bool:
+        return self._lightning_controller._fired
+
+    @_lightning_fired.setter
+    def _lightning_fired(self, value: bool) -> None:
+        self._lightning_controller._fired = value
 
     @property
     def lightning_target_round(self) -> int | None:
         """The round the auto Lightning Round fires before, or None (#285)."""
-        return self._lightning_target_round
+        return self._lightning_controller.lightning_target_round
 
     def should_trigger_lightning(self) -> bool:
-        """True iff the auto Lightning Round should fire right now (#285).
-
-        Consulted by the WS round-advance path BEFORE it starts the next
-        normal question. Fires exactly once per game, when the game is about
-        to enter the pre-picked target round (``self.round`` counts completed
-        rounds, so ``round + 1`` is the round we are about to start). Guarded
-        by ``_lightning_fired`` for the once-per-game guarantee and only from
-        a between-rounds phase.
-        """
-        if self._lightning_fired or self._lightning_target_round is None:
-            return False
-        if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
-            return False
-        return self.round + 1 == self._lightning_target_round
+        """True iff the auto Lightning Round should fire right now (#285)."""
+        return self._lightning_controller.should_trigger_lightning()
 
     def start_lightning_round(
         self,
@@ -2329,342 +2342,108 @@ class QuizifyGameState:
         language: str | None = None,
         auto: bool = False,
     ) -> bool:
-        """Begin a lightning round, reusing the current player roster.
-
-        Returns True if it started, False if no questions were available or
-        the phase is wrong.
-
-        ``auto=True`` is the #285 mid-game auto path: it remembers the
-        in-progress round so the game can resume the normal flow after the
-        recap, marks the once-per-game flag, and is allowed to fire from
-        ANSWER_REVEAL (between two normal rounds). ``auto=False`` keeps the
-        legacy entry phases (LOBBY/FINALE/LIGHTNING_RECAP) used by tests and
-        any remaining standalone callers.
-        """
-        from .lightning import LightningRound  # local import — avoid cycle
-
-        if auto:
-            if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
-                return False
-        elif self.phase not in (
-            GamePhase.LOBBY,
-            GamePhase.FINALE,
-            GamePhase.LIGHTNING_RECAP,
-        ):
-            return False
-
-        player_names = list(self._player_registry.players.keys())
-        lr = LightningRound(
-            self._question_bank,
-            player_names,
-            language=language or self.language,
-            category=category if category is not None else self.category,
-            categories=(
-                categories if categories is not None else self.categories
-            ),
+        """Begin a lightning round, reusing the current player roster."""
+        return self._lightning_controller.start_lightning_round(
+            category=category,
+            categories=categories,
             difficulty=difficulty,
-            # A team answers lightning together, like a normal round (#552).
-            # The roster is a snapshot: teams are frozen from the start of the
-            # game, so the detour cannot be joined or left mid-round.
-            teams=self._team_registry.to_list(),
+            language=language,
+            auto=auto,
         )
-        # Reserve the questions the main game still owes the host (#544). Only
-        # the auto path detours out of a running game; the lobby/finale entries
-        # have no remaining rounds to protect.
-        reserve = max(0, self.total_rounds - self.round) if auto else 0
-        if not lr.start(reserve=reserve):
-            return False
-
-        if auto:
-            # Remember the normal round we detoured out of so the game resumes
-            # there after the recap, and burn the once-per-game flag.
-            self._round_to_resume = self.round
-            self._lightning_fired = True
-
-        self._lightning = lr
-        self.phase = GamePhase.LIGHTNING
-        # Open on the intro splash (issue #201). In the auto flow (#285) the
-        # WS loop advances out of it on a grace timer (no host tap);
-        # begin_lightning_questions() still performs the transition.
-        self._lightning_splash_pending = True
-        self._notify_state_callbacks()
-        return True
 
     def begin_lightning_questions(self) -> bool:
-        """Leave the intro splash and let the question loop start (issue #201).
-
-        Returns True if the splash was pending and is now dismissed, False
-        if there was nothing to dismiss (no active round / already started).
-        """
-        if self.phase != GamePhase.LIGHTNING or not self._lightning_splash_pending:
-            return False
-        self._lightning_splash_pending = False
-        self._notify_state_callbacks()
-        return True
+        """Leave the intro splash and let the question loop start (#201)."""
+        return self._lightning_controller.begin_lightning_questions()
 
     @property
     def lightning_splash_pending(self) -> bool:
         """True while the lightning intro splash is showing (issue #201)."""
-        return self._lightning_splash_pending
+        return self._lightning_controller.lightning_splash_pending
 
     @property
     def lightning(self) -> LightningRound | None:
         """The active LightningRound, or None."""
-        return self._lightning
+        return self._lightning_controller.lightning
 
     def finish_lightning_round(self) -> None:
         """Transition out of an active lightning round into its recap screen."""
-        if self.phase == GamePhase.LIGHTNING:
-            self.phase = GamePhase.LIGHTNING_RECAP
-            # Mid-game: persist, but keep this game's shown set (#1019).
-            self._flush_history(end_of_game=False)
-            self._notify_state_callbacks()
+        self._lightning_controller.finish_lightning_round()
 
     @property
     def in_lightning_detour(self) -> bool:
-        """True while the auto Lightning Round is interrupting a live game (#285).
-
-        Distinguishes the mid-game auto detour (a normal game is paused in the
-        background, ``_round_to_resume`` > 0) from a standalone lightning
-        session started from the lobby. The WS layer uses this to decide
-        whether the recap's advance returns to the main game or to the lobby.
-        """
-        return self._round_to_resume > 0
+        """True while the auto Lightning Round interrupts a live game (#285)."""
+        return self._lightning_controller.in_lightning_detour
 
     def resume_after_lightning(self) -> bool:
-        """Return to the paused main game after the auto Lightning recap (#285).
-
-        Flips LIGHTNING_RECAP back to ANSWER_REVEAL and restores the round
-        counter so the next ``start_next_question`` proceeds into the
-        originally-scheduled round. Returns True if a detour was active, False
-        otherwise (a standalone lightning session has no main game to resume).
-        """
-        if self.phase != GamePhase.LIGHTNING_RECAP or not self.in_lightning_detour:
-            return False
-        self.round = self._round_to_resume
-        self._round_to_resume = 0
-        self._lightning = None
-        self._lightning_splash_pending = False
-        self.phase = GamePhase.ANSWER_REVEAL
-        self._notify_state_callbacks()
-        return True
+        """Return to the paused main game after the auto Lightning recap."""
+        return self._lightning_controller.resume_after_lightning()
 
     # ------------------------------------------------------------------
     # Hot Seat auction (issue #616)
     # ------------------------------------------------------------------
     #
-    # Thin wrappers around a HotSeatRound, mirroring the Lightning block
-    # above: the rules live in game/hot_seat.py, this class owns only the
-    # reference and the phase transitions so the WS handler has one caller.
+    # The detour's orchestration lives in game/hot_seat_controller.py (#1108)
+    # and its rules in game/hot_seat.py. These delegates keep the names the WS
+    # handler, the drivers and the tests already call.
 
-    def _pick_hot_seat_round(self, num_rounds: int) -> int | None:
-        """Pick the round the Hot Seat auction fires before (#616).
+    @property
+    def _hot_seat_target_round(self) -> int | None:
+        return self._hot_seat_controller._target_round
 
-        Same window as the Lightning Round — rounds ``3 … num_rounds-1`` — for
-        the same two reasons: the game should establish itself first, and the
-        last question stays the climax rather than being replaced by a detour.
+    @_hot_seat_target_round.setter
+    def _hot_seat_target_round(self, value: int | None) -> None:
+        self._hot_seat_controller._target_round = value
 
-        The draw additionally avoids the Lightning target. Two detours in one
-        round would mean the second fires immediately after the first's recap,
-        with no normal question between them; the round would read as broken
-        even though both modes behaved correctly.
-        """
-        if not self._hot_seat_enabled:
-            return None
-        low, high = 3, num_rounds - 1
-        if high < low:
-            return None  # window empty → short game, no auction
-        candidates = [
-            r for r in range(low, high + 1) if r != self._lightning_target_round
-        ]
-        if not candidates:
-            # A 4-round game has a one-round window that Lightning already
-            # owns. Lightning was armed first, so it keeps it.
-            return None
-        return candidates[self._hot_seat_rng.randrange(len(candidates))]
+    @property
+    def _hot_seat_fired(self) -> bool:
+        return self._hot_seat_controller._fired
+
+    @_hot_seat_fired.setter
+    def _hot_seat_fired(self, value: bool) -> None:
+        self._hot_seat_controller._fired = value
 
     @property
     def hot_seat_target_round(self) -> int | None:
         """The round the Hot Seat auction fires before, or None (#616)."""
-        return self._hot_seat_target_round
+        return self._hot_seat_controller.hot_seat_target_round
 
     @property
     def hot_seat(self) -> HotSeatRound | None:
         """The active HotSeatRound, or None."""
-        return self._hot_seat
+        return self._hot_seat_controller.hot_seat
 
     @property
     def in_hot_seat_detour(self) -> bool:
         """True while the auction is interrupting a live game (#616)."""
-        return self._hot_seat_round_to_resume > 0
+        return self._hot_seat_controller.in_hot_seat_detour
 
     def should_trigger_hot_seat(self) -> bool:
-        """True iff the Hot Seat auction should fire right now (#616).
-
-        Consulted by the WS round-advance path before it starts the next
-        normal question, exactly like ``should_trigger_lightning``. Fires once
-        per game, only from a between-rounds phase.
-        """
-        if self._hot_seat_fired or self._hot_seat_target_round is None:
-            return False
-        # #669 gated this off in team mode, because bids were a percentage of
-        # the bidder's own ``player.score`` — the shadow value #668 is about,
-        # zero for everyone but the round's carrier — and the settlement wrote
-        # its deltas there too, while the leaderboard, podium and awards all
-        # read ``get_ranked_participants()``. #804 removes the gate by fixing
-        # both ends: the auction now bids and settles per ENTRANT, so a team
-        # stakes the score the television shows and is paid into the same row.
-        if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
-            return False
-        return self.round + 1 == self._hot_seat_target_round
+        """True iff the Hot Seat auction should fire right now (#616)."""
+        return self._hot_seat_controller.should_trigger_hot_seat()
 
     def start_hot_seat_auction(self) -> bool:
-        """Open the sealed bidding window. False means "skip, play on".
-
-        False is a normal outcome, not an error: too few players to hold an
-        auction, or no question the main game can spare (#544). Either way the
-        once-per-game flag is burned so the attempt is not retried every round.
-        """
-        from .hot_seat import HotSeatRound  # local import — avoid cycle
-
-        if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
-            return False
-
-        # Keyed by ENTRANT (#804): a team id in team mode, a player name
-        # otherwise. ``get_ranked_participants`` is the same list the
-        # leaderboard, the podium and the awards read, so the banks the bids
-        # are shares of are the numbers on the television — and the deltas
-        # ``finish_hot_seat`` writes back land on the same rows.
-        scores = {
-            self._entrant_key(participant): participant.score
-            for participant in self.get_ranked_participants()
-        }
-        hs = HotSeatRound(
-            self._question_bank,
-            scores,
-            language=self.language,
-            category=self.category,
-            categories=self.categories,
-            difficulty=self.difficulty,
-            teams=self._team_registry.to_list(),
-        )
-        # Same reservation rule as Lightning (#544): never spend a question the
-        # main game still owes a later round.
-        reserve = max(0, self.total_rounds - self.round)
-        self._hot_seat_fired = True
-        if not hs.start(reserve=reserve):
-            return False
-
-        self._hot_seat = hs
-        self._hot_seat_round_to_resume = self.round
-        self.phase = GamePhase.HOT_SEAT_AUCTION
-        self._notify_state_callbacks()
-        return True
+        """Open the sealed bidding window. False means "skip, play on"."""
+        return self._hot_seat_controller.start_hot_seat_auction()
 
     def close_hot_seat_auction(self) -> str | None:
-        """Award the chair and move into the question. Returns the winner.
-
-        None means nobody bid above zero — the driver treats that as "no
-        auction happened" and resumes the normal round, because a chair
-        nobody wanted is not a round worth playing.
-        """
-        if self.phase != GamePhase.HOT_SEAT_AUCTION or self._hot_seat is None:
-            return None
-        winner = self._hot_seat.resolve_auction()
-        if winner is None:
-            return None
-        self.phase = GamePhase.HOT_SEAT
-        self._notify_state_callbacks()
-        return winner
+        """Award the chair and move into the question. Returns the winner."""
+        return self._hot_seat_controller.close_hot_seat_auction()
 
     def finish_hot_seat(self) -> dict[str, int]:
-        """Settle the round and move to the reveal. Returns the point deltas.
-
-        Applying the deltas is this method's job rather than the caller's, so
-        an unanswered question cannot quietly skip settlement — that is the
-        exact failure this mode had to design against (#653).
-        """
-        if self._hot_seat is None:
-            return {}
-        deltas = self._hot_seat.settle()
-        for entrant, delta in deltas.items():
-            # The key is an entrant, so the payout follows whoever the ranking
-            # is about (#804): the team, or the player who joined none. The
-            # floor at zero is the rule every other score in this file keeps.
-            participant = self._participant_by_entrant(entrant)
-            if participant is None:
-                continue
-            participant.score += delta
-            if participant.score < 0:
-                participant.score = 0
-        if self.phase == GamePhase.HOT_SEAT:
-            self.phase = GamePhase.HOT_SEAT_REVEAL
-            # Mid-game: persist, but keep this game's shown set (#1019).
-            self._flush_history(end_of_game=False)
-            self._notify_state_callbacks()
-        return deltas
+        """Settle the round and move to the reveal. Returns the point deltas."""
+        return self._hot_seat_controller.finish_hot_seat()
 
     def hot_seat_round_summary(self) -> RoundSummary | None:
-        """The settled chair's question as a :class:`RoundSummary` (#1092).
-
-        Handed to the reveal beat instead of ``get_round_summary()``, which
-        still holds the normal round before the detour — the narrator read
-        that round's answer and the bus event carried its correct_count. Not
-        stored on the game: once the detour resumes, ANSWER_REVEAL belongs to
-        that normal round again. One result, the seat holder's.
-        """
-        hs = self._hot_seat
-        if hs is None or hs.question is None or hs.settled is None:
-            return None
-        index = hs.correct_index
-        if index is None:
-            return None
-        results: list[AnswerResult] = []
-        if hs.winner is not None:
-            participant = self._participant_by_entrant(hs.winner)
-            results.append(
-                AnswerResult(
-                    player_id=hs.seat_holder or hs.winner,
-                    correct=hs.answered is True,
-                    points_earned=hs.settled.get(hs.winner, 0),
-                    new_streak=getattr(participant, "streak", 0),
-                    new_total=getattr(participant, "score", 0),
-                )
-            )
-        return RoundSummary(
-            question=hs.question,
-            correct_answer=hs.question.answers[index],
-            fun_fact=hs.question.fun_fact,
-            results=results,
-            leaderboard=self.get_standings(),
-        )
+        """The settled chair's question as a :class:`RoundSummary` (#1092)."""
+        return self._hot_seat_controller.hot_seat_round_summary()
 
     def resume_after_hot_seat(self) -> bool:
-        """Return to the paused main game after the reveal (#616).
-
-        Mirrors ``resume_after_lightning``: flips back to ANSWER_REVEAL and
-        restores the round counter so the next advance lands on the
-        originally-scheduled round.
-        """
-        if self.phase != GamePhase.HOT_SEAT_REVEAL or not self.in_hot_seat_detour:
-            return False
-        self.round = self._hot_seat_round_to_resume
-        self._hot_seat_round_to_resume = 0
-        self._hot_seat = None
-        self.phase = GamePhase.ANSWER_REVEAL
-        self._notify_state_callbacks()
-        return True
+        """Return to the paused main game after the reveal (#616)."""
+        return self._hot_seat_controller.resume_after_hot_seat()
 
     def abort_hot_seat(self) -> None:
         """Drop an auction that found no bidder and return to the main game."""
-        if self._hot_seat is None:
-            return
-        self.round = self._hot_seat_round_to_resume or self.round
-        self._hot_seat_round_to_resume = 0
-        self._hot_seat = None
-        if self.phase in (GamePhase.HOT_SEAT_AUCTION, GamePhase.HOT_SEAT):
-            self.phase = GamePhase.ANSWER_REVEAL
-        self._notify_state_callbacks()
+        self._hot_seat_controller.abort_hot_seat()
 
     # ------------------------------------------------------------------
     # Power-ups
@@ -3110,7 +2889,7 @@ class QuizifyGameState:
         if self._calibrator is not None:
             return None
         next_round = self.round + 1
-        if next_round == self._lightning_target_round and not self._lightning_fired:
+        if next_round == self.lightning_target_round and not self._lightning_fired:
             return None
         if next_round == self._hot_seat_target_round and not self._hot_seat_fired:
             return None
