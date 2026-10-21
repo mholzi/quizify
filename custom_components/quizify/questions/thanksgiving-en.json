@@ -1,0 +1,2068 @@
+{
+  "name": "Thanksgiving",
+  "language": "en",
+  "version": "1.0",
+  "theme": "trivia",
+  "season": {
+    "start": "11-19",
+    "end": "11-28",
+    "label": "🦃 Thanksgiving season"
+  },
+  "questions": [
+    {
+      "id": "thanksgiving_en_001",
+      "question": "Which ship carried the Pilgrims across the Atlantic to New England?",
+      "answers": [
+        {
+          "text": "The Mayflower",
+          "correct": true
+        },
+        {
+          "text": "The Santa Maria",
+          "correct": false
+        },
+        {
+          "text": "The Golden Hind",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The crossing from Plymouth, England, took about two months, and the ship had earlier carried wine across the Channel.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_002",
+      "question": "Why did the Pilgrims leave England?",
+      "answers": [
+        {
+          "text": "To practise their religion freely",
+          "correct": true
+        },
+        {
+          "text": "To search for gold",
+          "correct": false
+        },
+        {
+          "text": "To escape a plague",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "They were Separatists who rejected the Church of England; they lived in the Netherlands for years before sailing.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_003",
+      "question": "In which present-day US state did the Pilgrims found Plymouth Colony?",
+      "answers": [
+        {
+          "text": "Massachusetts",
+          "correct": true
+        },
+        {
+          "text": "Virginia",
+          "correct": false
+        },
+        {
+          "text": "Maine",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "They had aimed for the mouth of the Hudson but were blown north and settled at Plymouth in December.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_004",
+      "question": "What was the Mayflower Compact?",
+      "answers": [
+        {
+          "text": "A written agreement to govern themselves",
+          "correct": true
+        },
+        {
+          "text": "A peace treaty with the Wampanoag",
+          "correct": false
+        },
+        {
+          "text": "The ship's list of cargo and supplies",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Forty-one men signed it aboard the ship; it is often called an early step towards self-government in America.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_005",
+      "question": "Which rock is traditionally said to mark the Pilgrims' landing place?",
+      "answers": [
+        {
+          "text": "Plymouth Rock",
+          "correct": true
+        },
+        {
+          "text": "Stone Mountain",
+          "correct": false
+        },
+        {
+          "text": "Blarney Stone",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The link between the boulder and the landing was first made in 1741, over a century after the event.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_006",
+      "question": "Roughly what share of the Mayflower's passengers died during the first winter at Plymouth?",
+      "answers": [
+        {
+          "text": "About half",
+          "correct": true
+        },
+        {
+          "text": "About one in ten",
+          "correct": false
+        },
+        {
+          "text": "Nearly all of them",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Disease, cold and hunger took a heavy toll before the first harvest in the new colony.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_007",
+      "question": "Which Wampanoag leader made a peace agreement with the Plymouth colonists?",
+      "answers": [
+        {
+          "text": "Massasoit",
+          "correct": true
+        },
+        {
+          "text": "Sitting Bull",
+          "correct": false
+        },
+        {
+          "text": "Geronimo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The pact reached in spring is remembered as the basis for the Plymouth colonists' first years of survival.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_008",
+      "question": "Which English-speaking Patuxet man taught the Pilgrims how to plant corn and fish for alewives?",
+      "answers": [
+        {
+          "text": "Squanto",
+          "correct": true
+        },
+        {
+          "text": "Powhatan",
+          "correct": false
+        },
+        {
+          "text": "Tecumseh",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "His real name was Tisquantum; he had been abducted to Europe years earlier and learned English there.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_009",
+      "question": "What does the name 'Wampanoag' mean?",
+      "answers": [
+        {
+          "text": "People of the First Light",
+          "correct": true
+        },
+        {
+          "text": "People of the Great River",
+          "correct": false
+        },
+        {
+          "text": "Keepers of the Corn",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Wampanoag homeland lies in what is now eastern Massachusetts and Rhode Island, and the people live there to this day.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_010",
+      "question": "How long did the Plymouth harvest celebration reportedly last?",
+      "answers": [
+        {
+          "text": "Three days",
+          "correct": true
+        },
+        {
+          "text": "One afternoon",
+          "correct": false
+        },
+        {
+          "text": "A full week",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Edward Winslow wrote that the colonists and their guests feasted and played games for three days.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_011",
+      "question": "Which Pilgrim wrote the best-known eyewitness account of the Plymouth harvest feast?",
+      "answers": [
+        {
+          "text": "Edward Winslow",
+          "correct": true
+        },
+        {
+          "text": "Cotton Mather",
+          "correct": false
+        },
+        {
+          "text": "Roger Williams",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "His letter was printed in London in a pamphlet known as 'Mourt's Relation'.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_012",
+      "question": "According to that account, what did the Wampanoag guests bring to the feast?",
+      "answers": [
+        {
+          "text": "Five deer",
+          "correct": true
+        },
+        {
+          "text": "A wagon of pumpkins",
+          "correct": false
+        },
+        {
+          "text": "A flock of sheep",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Venison, wildfowl and corn make up the few foods the written sources actually name.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_013",
+      "question": "About how many Wampanoag men does Winslow say joined the feast?",
+      "answers": [
+        {
+          "text": "Around ninety",
+          "correct": true
+        },
+        {
+          "text": "About ten",
+          "correct": false
+        },
+        {
+          "text": "Around three hundred",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The guests outnumbered the surviving colonists, who were only a few dozen, by quite a margin.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_014",
+      "question": "Which US president declared a national day of thanksgiving in 1789?",
+      "answers": [
+        {
+          "text": "George Washington",
+          "correct": true
+        },
+        {
+          "text": "Thomas Jefferson",
+          "correct": false
+        },
+        {
+          "text": "John Adams",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Washington set aside a day for gratitude, but it was a one-off and not yet a yearly holiday.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_015",
+      "question": "Which Founding Father and president declined to issue Thanksgiving proclamations, citing the separation of church and state?",
+      "answers": [
+        {
+          "text": "Thomas Jefferson",
+          "correct": true
+        },
+        {
+          "text": "George Washington",
+          "correct": false
+        },
+        {
+          "text": "John Adams",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Jefferson argued that the government had no business prescribing religious observances.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_016",
+      "question": "Which magazine editor campaigned for decades to make Thanksgiving a national holiday?",
+      "answers": [
+        {
+          "text": "Sarah Josepha Hale",
+          "correct": true
+        },
+        {
+          "text": "Louisa May Alcott",
+          "correct": false
+        },
+        {
+          "text": "Harriet Beecher Stowe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hale sent letters to presidents year after year until Lincoln finally acted.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_017",
+      "question": "Hale edited a famous ladies' magazine. What was it called?",
+      "answers": [
+        {
+          "text": "Godey's Lady's Book",
+          "correct": true
+        },
+        {
+          "text": "Harper's Bazaar",
+          "correct": false
+        },
+        {
+          "text": "The Saturday Evening Post",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was one of the most widely read magazines in America in the mid-nineteenth century.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_018",
+      "question": "Which nursery rhyme is Sarah Josepha Hale traditionally credited with writing?",
+      "answers": [
+        {
+          "text": "Mary Had a Little Lamb",
+          "correct": true
+        },
+        {
+          "text": "Humpty Dumpty",
+          "correct": false
+        },
+        {
+          "text": "Twinkle, Twinkle, Little Star",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Who wrote the rhyme has been debated, but Hale is the author most often named.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_019",
+      "question": "During which war did Abraham Lincoln proclaim a national Thanksgiving?",
+      "answers": [
+        {
+          "text": "The American Civil War",
+          "correct": true
+        },
+        {
+          "text": "The War of 1812",
+          "correct": false
+        },
+        {
+          "text": "The Mexican-American War",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "He asked Americans to give thanks even though the nation was torn apart by battle.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_020",
+      "question": "Who drafted Lincoln's Thanksgiving proclamation?",
+      "answers": [
+        {
+          "text": "Secretary of State William Seward",
+          "correct": true
+        },
+        {
+          "text": "General Ulysses S. Grant",
+          "correct": false
+        },
+        {
+          "text": "Vice President Hannibal Hamlin",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Seward wrote the text, and Lincoln signed it in October for a day of thanks in late November.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_021",
+      "question": "Since 1941, federal law places Thanksgiving on which day?",
+      "answers": [
+        {
+          "text": "The fourth Thursday of November",
+          "correct": true
+        },
+        {
+          "text": "The last Friday of November",
+          "correct": false
+        },
+        {
+          "text": "The first Thursday of December",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Congress settled the date after a messy few years in which states disagreed about when to celebrate.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_022",
+      "question": "Where did the Pilgrims live for years before sailing to America?",
+      "answers": [
+        {
+          "text": "Leiden, in the Netherlands",
+          "correct": true
+        },
+        {
+          "text": "Lisbon, in Portugal",
+          "correct": false
+        },
+        {
+          "text": "Dublin, in Ireland",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "They moved to the Dutch city in the 1600s but worried their children were becoming Dutch.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_023",
+      "question": "Since 1970, many Native Americans gather at Plymouth on Thanksgiving Day for which observance?",
+      "answers": [
+        {
+          "text": "The National Day of Mourning",
+          "correct": true
+        },
+        {
+          "text": "The Harvest Moon Festival",
+          "correct": false
+        },
+        {
+          "text": "The Powwow of Peace",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The yearly gathering reminds visitors that the holiday has a very different meaning for Native peoples.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_024",
+      "question": "The Wampanoag leader known to the English as 'King Philip' went by which name?",
+      "answers": [
+        {
+          "text": "Metacom",
+          "correct": true
+        },
+        {
+          "text": "Pontiac",
+          "correct": false
+        },
+        {
+          "text": "Black Hawk",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "He was a son of Massasoit and led a war against the colonists in 1675.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_025",
+      "question": "On which day of the week is Thanksgiving always celebrated in the United States?",
+      "answers": [
+        {
+          "text": "Thursday",
+          "correct": true
+        },
+        {
+          "text": "Saturday",
+          "correct": false
+        },
+        {
+          "text": "Monday",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Friday after it is the start of the Christmas shopping season for many.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_026",
+      "question": "Which bird did Benjamin Franklin reportedly think would have made a better national symbol than the bald eagle?",
+      "answers": [
+        {
+          "text": "The wild turkey",
+          "correct": true
+        },
+        {
+          "text": "The mockingbird",
+          "correct": false
+        },
+        {
+          "text": "The American robin",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In a letter to his daughter he called the turkey a more respectable bird, 'a true original native of America'.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_027",
+      "question": "Which US state raises the most turkeys?",
+      "answers": [
+        {
+          "text": "Minnesota",
+          "correct": true
+        },
+        {
+          "text": "Texas",
+          "correct": false
+        },
+        {
+          "text": "Georgia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "North Carolina usually ranks second.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_028",
+      "question": "In which region were turkeys first domesticated?",
+      "answers": [
+        {
+          "text": "Mexico",
+          "correct": true
+        },
+        {
+          "text": "Western Europe",
+          "correct": false
+        },
+        {
+          "text": "Southern China",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Aztecs and earlier peoples kept them long before the Spanish carried them across the ocean.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_029",
+      "question": "What is a male turkey called?",
+      "answers": [
+        {
+          "text": "A tom",
+          "correct": true
+        },
+        {
+          "text": "A cob",
+          "correct": false
+        },
+        {
+          "text": "A drake",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A female is called a hen and the young are called poults.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_030",
+      "question": "Which red flap of skin hangs from a turkey's throat?",
+      "answers": [
+        {
+          "text": "The wattle",
+          "correct": true
+        },
+        {
+          "text": "The crop",
+          "correct": false
+        },
+        {
+          "text": "The spur",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The skin on a male's head and neck changes colour with his mood.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_031",
+      "question": "Which amino acid in turkey is often blamed for the sleepiness after Thanksgiving dinner?",
+      "answers": [
+        {
+          "text": "Tryptophan",
+          "correct": true
+        },
+        {
+          "text": "Lysine",
+          "correct": false
+        },
+        {
+          "text": "Glutamine",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Chicken has about as much of it; the big meal and the carbohydrates probably matter more.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_032",
+      "question": "What is a turducken?",
+      "answers": [
+        {
+          "text": "A turkey stuffed with a duck stuffed with a chicken",
+          "correct": true
+        },
+        {
+          "text": "A pie made of three kinds of poultry",
+          "correct": false
+        },
+        {
+          "text": "A turkey-shaped chocolate cake",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Football commentator John Madden helped make the dish famous on holiday broadcasts.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_033",
+      "question": "What is the Butterball Turkey Talk-Line?",
+      "answers": [
+        {
+          "text": "A hotline for cooking questions",
+          "correct": true
+        },
+        {
+          "text": "A radio show for farmers",
+          "correct": false
+        },
+        {
+          "text": "A parade float",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It has been answering anxious cooks since 1981, with most calls coming in around late November.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_034",
+      "question": "What is a 'Tofurky'?",
+      "answers": [
+        {
+          "text": "A vegetarian holiday roast made from tofu",
+          "correct": true
+        },
+        {
+          "text": "A turkey baked with tofu stuffing",
+          "correct": false
+        },
+        {
+          "text": "A turkey-shaped tofu mold",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was launched in the mid-1990s and has become the best-known meat-free holiday roast.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_035",
+      "question": "What do many Southerners call stuffing that is baked in a dish instead of in the bird?",
+      "answers": [
+        {
+          "text": "Dressing",
+          "correct": true
+        },
+        {
+          "text": "Filling",
+          "correct": false
+        },
+        {
+          "text": "Fixings",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cornbread is a classic base in the South.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_036",
+      "question": "Which company created the green bean casserole in 1955?",
+      "answers": [
+        {
+          "text": "Campbell's",
+          "correct": true
+        },
+        {
+          "text": "Heinz",
+          "correct": false
+        },
+        {
+          "text": "Kraft",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dorcas Reilly of Campbell's test kitchen came up with the recipe, which calls for cream of mushroom soup and crispy onions.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_037",
+      "question": "Which topping crowns many American candied sweet potato casseroles?",
+      "answers": [
+        {
+          "text": "Marshmallows",
+          "correct": true
+        },
+        {
+          "text": "Whipped cream",
+          "correct": false
+        },
+        {
+          "text": "Popcorn",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The sweet dish is more dessert than side, which is why some families fight over it.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_038",
+      "question": "Cornbread dressing is a traditional part of the Thanksgiving table in which region?",
+      "answers": [
+        {
+          "text": "The American South",
+          "correct": true
+        },
+        {
+          "text": "The Pacific Northwest",
+          "correct": false
+        },
+        {
+          "text": "New England",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cornmeal has been a staple of Southern cooking for centuries.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_039",
+      "question": "Which colonial New England dessert is made from cornmeal, milk and molasses?",
+      "answers": [
+        {
+          "text": "Indian pudding",
+          "correct": true
+        },
+        {
+          "text": "Shoofly pie",
+          "correct": false
+        },
+        {
+          "text": "Whoopie pie",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It was a way for early colonists to turn cheap cornmeal into something sweet.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_040",
+      "question": "Which Boston hotel gave its name to a soft, folded dinner roll?",
+      "answers": [
+        {
+          "text": "The Parker House",
+          "correct": true
+        },
+        {
+          "text": "The Ritz",
+          "correct": false
+        },
+        {
+          "text": "The Plaza",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Omni Parker House, open since 1855, says its kitchen invented the roll.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_041",
+      "question": "How are many cranberries harvested?",
+      "answers": [
+        {
+          "text": "The bog is flooded so the berries float",
+          "correct": true
+        },
+        {
+          "text": "Pickers climb ladders into tall bushes",
+          "correct": false
+        },
+        {
+          "text": "Machines shake them from trees",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cranberries grow on low vines, and air pockets inside the berries make them float.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_042",
+      "question": "Which US state grows the most cranberries?",
+      "answers": [
+        {
+          "text": "Wisconsin",
+          "correct": true
+        },
+        {
+          "text": "Maine",
+          "correct": false
+        },
+        {
+          "text": "Oregon",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wisconsin has led the country for years, and Massachusetts, where the Pilgrims settled, is also a major producer.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_043",
+      "question": "Which US state is the biggest producer of pumpkins for canning?",
+      "answers": [
+        {
+          "text": "Illinois",
+          "correct": true
+        },
+        {
+          "text": "Vermont",
+          "correct": false
+        },
+        {
+          "text": "Arizona",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A town in Illinois, Morton, calls itself the 'Pumpkin Capital of the World'.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_044",
+      "question": "Most 'yams' sold in American supermarkets are really which vegetable?",
+      "answers": [
+        {
+          "text": "Sweet potatoes",
+          "correct": true
+        },
+        {
+          "text": "Parsnips",
+          "correct": false
+        },
+        {
+          "text": "Turnips",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "True yams come from Africa and Asia and are much starchier and drier.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_045",
+      "question": "What should you do before lowering a turkey into a deep fryer full of hot oil?",
+      "answers": [
+        {
+          "text": "Make sure it is completely thawed and dry",
+          "correct": true
+        },
+        {
+          "text": "Keep it frozen so it cooks evenly",
+          "correct": false
+        },
+        {
+          "text": "Brush it with water so it browns",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Water or ice and hot oil is a famously dangerous mix, and fires on Thanksgiving are a common story.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_046",
+      "question": "Which live attraction featured in the first Macy's parade in New York?",
+      "answers": [
+        {
+          "text": "Animals from the Central Park Zoo",
+          "correct": true
+        },
+        {
+          "text": "A real steam locomotive",
+          "correct": false
+        },
+        {
+          "text": "A troupe of circus acrobats on horseback",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Elephants, camels and bears walked the streets before the first balloons arrived a few years later.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_047",
+      "question": "Which cartoon character was the first giant helium balloon at the Macy's parade?",
+      "answers": [
+        {
+          "text": "Felix the Cat",
+          "correct": true
+        },
+        {
+          "text": "Mickey Mouse",
+          "correct": false
+        },
+        {
+          "text": "Popeye",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It floated over the streets in 1927, replacing the animals on loan from the zoo.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_048",
+      "question": "What was the Macy's parade first billed as?",
+      "answers": [
+        {
+          "text": "A Christmas parade",
+          "correct": true
+        },
+        {
+          "text": "A harvest festival",
+          "correct": false
+        },
+        {
+          "text": "A victory parade",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Its final float was Santa Claus, which is still the closing act today.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_049",
+      "question": "What happened to the giant balloons at the end of the parade in its early years?",
+      "answers": [
+        {
+          "text": "They were released into the sky",
+          "correct": true
+        },
+        {
+          "text": "They were popped with arrows",
+          "correct": false
+        },
+        {
+          "text": "They were sold to schoolchildren",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Finders were offered a prize for returning them, and the practice ended in the early 1930s.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_050",
+      "question": "Where does the Macy's Thanksgiving Day Parade end?",
+      "answers": [
+        {
+          "text": "Macy's flagship store at Herald Square",
+          "correct": true
+        },
+        {
+          "text": "Times Square",
+          "correct": false
+        },
+        {
+          "text": "Central Park",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It starts on the Upper West Side and travels south through Manhattan.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_051",
+      "question": "Why was the Macy's parade suspended from 1942 to 1944?",
+      "answers": [
+        {
+          "text": "World War II needed rubber and helium",
+          "correct": true
+        },
+        {
+          "text": "A polio outbreak hit the city",
+          "correct": false
+        },
+        {
+          "text": "The store was closed for renovation",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Macy's donated the balloons' rubber to the war effort.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_052",
+      "question": "A runaway balloon of which character injured a spectator in 1997 and led to stricter wind rules?",
+      "answers": [
+        {
+          "text": "The Cat in the Hat",
+          "correct": true
+        },
+        {
+          "text": "Barney",
+          "correct": false
+        },
+        {
+          "text": "Snoopy",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The balloon struck a lamppost, and rules about wind speeds followed.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_053",
+      "question": "Which NFL team has played a Thanksgiving game nearly every year since 1934?",
+      "answers": [
+        {
+          "text": "The Detroit Lions",
+          "correct": true
+        },
+        {
+          "text": "The Green Bay Packers",
+          "correct": false
+        },
+        {
+          "text": "The New York Giants",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The team's owner had the idea so that his struggling club would draw a crowd, and it worked.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_054",
+      "question": "Which NFL team joined the Thanksgiving tradition in 1966 and became its second regular host?",
+      "answers": [
+        {
+          "text": "The Dallas Cowboys",
+          "correct": true
+        },
+        {
+          "text": "The Pittsburgh Steelers",
+          "correct": false
+        },
+        {
+          "text": "The Miami Dolphins",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Cowboys' general manager wanted a spotlight for the young franchise, and the idea stuck.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_055",
+      "question": "Which team did the Detroit Lions play in the very first Thanksgiving game in 1934?",
+      "answers": [
+        {
+          "text": "The Chicago Bears",
+          "correct": true
+        },
+        {
+          "text": "The Green Bay Packers",
+          "correct": false
+        },
+        {
+          "text": "The Cleveland Rams",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The game was broadcast on national radio, and the Bears won a close one.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_056",
+      "question": "Which undefeated team did the Lions beat on Thanksgiving 1962 after sacking quarterback Bart Starr 11 times?",
+      "answers": [
+        {
+          "text": "The Green Bay Packers",
+          "correct": true
+        },
+        {
+          "text": "The Baltimore Colts",
+          "correct": false
+        },
+        {
+          "text": "The San Francisco 49ers",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It was the only loss for the Packers that regular season, and the game is still remembered in Detroit.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_057",
+      "question": "Which broadcaster began awarding a turkey leg to the best player of the Thanksgiving game?",
+      "answers": [
+        {
+          "text": "John Madden",
+          "correct": true
+        },
+        {
+          "text": "Howard Cosell",
+          "correct": false
+        },
+        {
+          "text": "Pat Summerall",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Madden's turkey leg went to the game's most valuable player, and it later became a trophy named for him.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_058",
+      "question": "Which show do many Americans watch after the Macy's parade on Thanksgiving morning?",
+      "answers": [
+        {
+          "text": "The National Dog Show",
+          "correct": true
+        },
+        {
+          "text": "The Westminster Kennel Club Dog Show",
+          "correct": false
+        },
+        {
+          "text": "The Rose Parade",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "NBC has aired the National Dog Show after the parade since 2002.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_059",
+      "question": "Which US president carried out the first formal turkey pardon in 1989?",
+      "answers": [
+        {
+          "text": "George H. W. Bush",
+          "correct": true
+        },
+        {
+          "text": "Ronald Reagan",
+          "correct": false
+        },
+        {
+          "text": "Harry Truman",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Reagan joked about pardoning a turkey in 1987, and Truman is often credited, though his library denies it.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_060",
+      "question": "Why did Franklin D. Roosevelt move Thanksgiving a week earlier in 1939?",
+      "answers": [
+        {
+          "text": "To lengthen the Christmas shopping season",
+          "correct": true
+        },
+        {
+          "text": "To avoid a hurricane",
+          "correct": false
+        },
+        {
+          "text": "To honour the war dead",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Retailers had lobbied for it, since the holiday would otherwise fall on the last possible date that year.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_061",
+      "question": "What was Roosevelt's earlier Thanksgiving of 1939 nicknamed?",
+      "answers": [
+        {
+          "text": "Franksgiving",
+          "correct": true
+        },
+        {
+          "text": "Rooseveltmas",
+          "correct": false
+        },
+        {
+          "text": "Turkey Tuesday",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The country split roughly in half, and some states ended up celebrating twice.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_062",
+      "question": "What is the origin of the term 'Black Friday'?",
+      "answers": [
+        {
+          "text": "Philadelphia police describing traffic chaos",
+          "correct": true
+        },
+        {
+          "text": "A stock market crash",
+          "correct": false
+        },
+        {
+          "text": "A blizzard that closed the shops",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The term was used in Philadelphia in the 1960s before retailers turned it into a positive.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_063",
+      "question": "Which company launched Small Business Saturday in 2010?",
+      "answers": [
+        {
+          "text": "American Express",
+          "correct": true
+        },
+        {
+          "text": "Amazon",
+          "correct": false
+        },
+        {
+          "text": "Walmart",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It comes the day after Black Friday and encourages shopping at local stores.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_064",
+      "question": "What is GivingTuesday?",
+      "answers": [
+        {
+          "text": "A charity day following Cyber Monday",
+          "correct": true
+        },
+        {
+          "text": "A national bank holiday",
+          "correct": false
+        },
+        {
+          "text": "A day when shops cut prices on gift cards",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was started in 2012 as a counterweight to the shopping days that precede it.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_065",
+      "question": "What is 'Friendsgiving'?",
+      "answers": [
+        {
+          "text": "A Thanksgiving-style meal shared with friends",
+          "correct": true
+        },
+        {
+          "text": "A gift swap among classmates",
+          "correct": false
+        },
+        {
+          "text": "A charity run on Thanksgiving morning",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Everyone usually brings a dish, which turns the dinner into a potluck.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_066",
+      "question": "What do two people do with a turkey's wishbone?",
+      "answers": [
+        {
+          "text": "Each pulls an end, and the larger piece gets the wish",
+          "correct": true
+        },
+        {
+          "text": "They toss it over a shoulder",
+          "correct": false
+        },
+        {
+          "text": "They hang it on the front door for luck",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The custom is much older than Thanksgiving and goes back to ancient Rome and the Etruscans.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_067",
+      "question": "The Turkey Trot in which city is a YMCA race that claims to be the oldest continuous road race in North America?",
+      "answers": [
+        {
+          "text": "Buffalo, New York",
+          "correct": true
+        },
+        {
+          "text": "Chicago, Illinois",
+          "correct": false
+        },
+        {
+          "text": "Boston, Massachusetts",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It has been run on Thanksgiving Day since 1896, when only a handful of people took part.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_068",
+      "question": "In the sitcom Friends, which trophy do Ross and Monica fight for in their Thanksgiving football game?",
+      "answers": [
+        {
+          "text": "The Geller Cup",
+          "correct": true
+        },
+        {
+          "text": "The Turkey Bowl",
+          "correct": false
+        },
+        {
+          "text": "The Tribbiani Trophy",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Their competitive streak runs through the show.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_069",
+      "question": "Which 1987 comedy follows Steve Martin and John Candy as they try to get home for Thanksgiving?",
+      "answers": [
+        {
+          "text": "Planes, Trains and Automobiles",
+          "correct": true
+        },
+        {
+          "text": "Home Alone",
+          "correct": false
+        },
+        {
+          "text": "Uncle Buck",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "John Hughes wrote and directed it, and the shower-curtain-ring scene is a classic.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_070",
+      "question": "In 'A Charlie Brown Thanksgiving' (1973), who invites herself and her friends to Charlie Brown's house for dinner?",
+      "answers": [
+        {
+          "text": "Peppermint Patty",
+          "correct": true
+        },
+        {
+          "text": "Lucy",
+          "correct": false
+        },
+        {
+          "text": "Sally",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "She does so even though Charlie Brown had planned to spend the day at his grandmother's.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_071",
+      "question": "What does the Peanuts gang eat for their Thanksgiving dinner in the 1973 special?",
+      "answers": [
+        {
+          "text": "Toast, popcorn, pretzel sticks and jelly beans",
+          "correct": true
+        },
+        {
+          "text": "A full turkey with cranberry sauce",
+          "correct": false
+        },
+        {
+          "text": "Hot dogs and apple pie",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Snoopy and Woodstock put the meal together.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_072",
+      "question": "Which jazz pianist composed the music for the Peanuts TV specials?",
+      "answers": [
+        {
+          "text": "Vince Guaraldi",
+          "correct": true
+        },
+        {
+          "text": "Dave Brubeck",
+          "correct": false
+        },
+        {
+          "text": "Duke Ellington",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "His 'Linus and Lucy' is one of the best-known pieces of Peanuts music.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_073",
+      "question": "Which actress directed the 1995 Thanksgiving comedy-drama 'Home for the Holidays'?",
+      "answers": [
+        {
+          "text": "Jodie Foster",
+          "correct": true
+        },
+        {
+          "text": "Nora Ephron",
+          "correct": false
+        },
+        {
+          "text": "Penny Marshall",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Holly Hunter and Robert Downey Jr. star in the film.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_074",
+      "question": "In which 1993 comedy does Wednesday Addams wreck a camp's Thanksgiving pageant?",
+      "answers": [
+        {
+          "text": "Addams Family Values",
+          "correct": true
+        },
+        {
+          "text": "Hocus Pocus",
+          "correct": false
+        },
+        {
+          "text": "Beetlejuice",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The scene turns the story of the first Thanksgiving upside down.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_075",
+      "question": "In the animated film 'Free Birds' (2013), what do two turkeys travel back in time to prevent?",
+      "answers": [
+        {
+          "text": "Turkey being served at the first Thanksgiving",
+          "correct": true
+        },
+        {
+          "text": "The Mayflower from reaching America",
+          "correct": false
+        },
+        {
+          "text": "A hunter from shooting the bird",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Owen Wilson and Woody Harrelson voice the pair.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_076",
+      "question": "Which 1947 Christmas classic begins at the Macy's Thanksgiving Day Parade?",
+      "answers": [
+        {
+          "text": "Miracle on 34th Street",
+          "correct": true
+        },
+        {
+          "text": "It's a Wonderful Life",
+          "correct": false
+        },
+        {
+          "text": "White Christmas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The film used real footage of the parade, with Macy's cooperation.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_077",
+      "question": "Which Arlo Guthrie song is played on many American radio stations every Thanksgiving?",
+      "answers": [
+        {
+          "text": "Alice's Restaurant",
+          "correct": true
+        },
+        {
+          "text": "This Land Is Your Land",
+          "correct": false
+        },
+        {
+          "text": "The Weight",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The story of the song begins with a Thanksgiving dinner and a garbage dump.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_078",
+      "question": "Which American writer penned the Thanksgiving poem that begins 'Over the river and through the wood'?",
+      "answers": [
+        {
+          "text": "Lydia Maria Child",
+          "correct": true
+        },
+        {
+          "text": "Emily Dickinson",
+          "correct": false
+        },
+        {
+          "text": "Henry Wadsworth Longfellow",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It was first printed in 1844 as 'A Boy's Thanksgiving Day'.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_079",
+      "question": "Which comedian sang 'The Thanksgiving Song' on Saturday Night Live in 1992?",
+      "answers": [
+        {
+          "text": "Adam Sandler",
+          "correct": true
+        },
+        {
+          "text": "Chris Farley",
+          "correct": false
+        },
+        {
+          "text": "Dana Carvey",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The song lists things to be thankful for, in a deadpan comic way.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_080",
+      "question": "In the sitcom 'WKRP in Cincinnati', what happens in the famous 'Turkeys Away' episode?",
+      "answers": [
+        {
+          "text": "The station drops live turkeys from a helicopter",
+          "correct": true
+        },
+        {
+          "text": "The staff throws a dinner party on the air",
+          "correct": false
+        },
+        {
+          "text": "A turkey is elected station mascot",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The line 'As God is my witness, I thought turkeys could fly' is a classic punchline.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_081",
+      "question": "Which sitcom gave us the Thanksgiving tradition of 'Slapsgiving'?",
+      "answers": [
+        {
+          "text": "How I Met Your Mother",
+          "correct": true
+        },
+        {
+          "text": "The Office",
+          "correct": false
+        },
+        {
+          "text": "Friends",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It comes from a bet in which Marshall earns the right to slap Barney.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_082",
+      "question": "Which horror director expanded his 2007 Grindhouse fake trailer into the 2023 feature 'Thanksgiving'?",
+      "answers": [
+        {
+          "text": "Eli Roth",
+          "correct": true
+        },
+        {
+          "text": "Rob Zombie",
+          "correct": false
+        },
+        {
+          "text": "Edgar Wright",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The trailer was one of several fake trailers shown between the two Grindhouse films.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_083",
+      "question": "In Canada, on which day is Thanksgiving celebrated?",
+      "answers": [
+        {
+          "text": "The second Monday of October",
+          "correct": true
+        },
+        {
+          "text": "The fourth Thursday of November",
+          "correct": false
+        },
+        {
+          "text": "The first Sunday of September",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Canadian harvest ends earlier than the American one, so the holiday is earlier too.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_084",
+      "question": "Which English explorer held a thanksgiving service in 1578 that Canadians count as an early North American thanksgiving?",
+      "answers": [
+        {
+          "text": "Martin Frobisher",
+          "correct": true
+        },
+        {
+          "text": "Jacques Cartier",
+          "correct": false
+        },
+        {
+          "text": "Henry Hudson",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "He celebrated after surviving a stormy voyage to the Arctic.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_085",
+      "question": "Samuel de Champlain founded a winter feasting club in Acadia in 1606. What was it called?",
+      "answers": [
+        {
+          "text": "The Order of Good Cheer",
+          "correct": true
+        },
+        {
+          "text": "The Brotherhood of the Bear",
+          "correct": false
+        },
+        {
+          "text": "The Feast of the Northern Star",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Members took turns hunting and cooking for the group to keep spirits up.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_086",
+      "question": "Which West African country celebrates Thanksgiving on the first Thursday of November?",
+      "answers": [
+        {
+          "text": "Liberia",
+          "correct": true
+        },
+        {
+          "text": "Ghana",
+          "correct": false
+        },
+        {
+          "text": "Senegal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Its founders were freed African Americans who took the holiday with them.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_087",
+      "question": "Which Australian territory in the Pacific celebrates Thanksgiving on the last Wednesday of November?",
+      "answers": [
+        {
+          "text": "Norfolk Island",
+          "correct": true
+        },
+        {
+          "text": "Christmas Island",
+          "correct": false
+        },
+        {
+          "text": "Lord Howe Island",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The custom was brought by American whalers in the 19th century.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_088",
+      "question": "What does Grenada's Thanksgiving Day, on 25 October, commemorate?",
+      "answers": [
+        {
+          "text": "The 1983 US-led intervention",
+          "correct": true
+        },
+        {
+          "text": "The end of the harvest",
+          "correct": false
+        },
+        {
+          "text": "The founding of its first church",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It is a public holiday on the Caribbean island.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_089",
+      "question": "In which Dutch city is a Thanksgiving service held every year at the Pieterskerk, where Pilgrim pastor John Robinson is buried?",
+      "answers": [
+        {
+          "text": "Leiden",
+          "correct": true
+        },
+        {
+          "text": "Rotterdam",
+          "correct": false
+        },
+        {
+          "text": "Amsterdam",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Pilgrims' time in the city is remembered with a museum and the annual service.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_090",
+      "question": "Which country observes 'Labor Thanksgiving Day' on 23 November?",
+      "answers": [
+        {
+          "text": "Japan",
+          "correct": true
+        },
+        {
+          "text": "South Korea",
+          "correct": false
+        },
+        {
+          "text": "Canada",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It is rooted in an ancient harvest festival and has been a public holiday since 1948.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_091",
+      "question": "What is the German harvest-thanks festival called?",
+      "answers": [
+        {
+          "text": "Erntedankfest",
+          "correct": true
+        },
+        {
+          "text": "Oktoberfest",
+          "correct": false
+        },
+        {
+          "text": "Martinstag",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It is usually celebrated on a Sunday in early October, with churches decorated with crops.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_092",
+      "question": "Which Korean harvest festival is often called 'Korean Thanksgiving'?",
+      "answers": [
+        {
+          "text": "Chuseok",
+          "correct": true
+        },
+        {
+          "text": "Seollal",
+          "correct": false
+        },
+        {
+          "text": "Dano",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Families gather to share songpyeon rice cakes and honour their ancestors.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_093",
+      "question": "What red, tart fruit is cooked into the classic sauce served with turkey?",
+      "answers": [
+        {
+          "text": "Cranberries",
+          "correct": true
+        },
+        {
+          "text": "Cherries",
+          "correct": false
+        },
+        {
+          "text": "Pomegranates",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cranberries were a native food long before the colonists arrived, and are one of few major fruits grown in North America.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_094",
+      "question": "Which pie is the most iconic Thanksgiving dessert?",
+      "answers": [
+        {
+          "text": "Pumpkin pie",
+          "correct": true
+        },
+        {
+          "text": "Lemon meringue pie",
+          "correct": false
+        },
+        {
+          "text": "Key lime pie",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The filling is a spiced custard, usually made with canned pumpkin puree.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_095",
+      "question": "Who traditionally rides the final float of the Macy's Thanksgiving Day Parade?",
+      "answers": [
+        {
+          "text": "Santa Claus",
+          "correct": true
+        },
+        {
+          "text": "The Easter Bunny",
+          "correct": false
+        },
+        {
+          "text": "Uncle Sam",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "His arrival marks the unofficial start of the Christmas season in New York.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_096",
+      "question": "In which year did the Pilgrims and the Wampanoag hold the first Plymouth harvest feast?",
+      "type": "estimate",
+      "answer": 1621,
+      "min": 1500,
+      "max": 1800,
+      "unit": "year",
+      "difficulty": "easy",
+      "fun_fact": "Edward Winslow's letter from December of that year is the main source for the feast.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_097",
+      "question": "How many passengers sailed on the Mayflower in 1620?",
+      "type": "estimate",
+      "answer": 102,
+      "min": 0,
+      "max": 400,
+      "unit": "passengers",
+      "difficulty": "medium",
+      "fun_fact": "A crew of around thirty sailors came along, and about half of the passengers died in the first winter.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_098",
+      "question": "Roughly how many turkeys do Americans eat on Thanksgiving Day, in millions?",
+      "type": "estimate",
+      "answer": 46,
+      "min": 1,
+      "max": 200,
+      "unit": "million turkeys",
+      "difficulty": "hard",
+      "fun_fact": "The figure is the National Turkey Federation's yearly estimate.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_099",
+      "question": "At what internal temperature, in degrees Fahrenheit, is a turkey considered safe to eat according to the USDA?",
+      "type": "estimate",
+      "answer": 165,
+      "min": 100,
+      "max": 250,
+      "unit": "°F",
+      "difficulty": "medium",
+      "fun_fact": "That is about 74 degrees Celsius, measured in the thickest part of the thigh.",
+      "category": "Thanksgiving"
+    },
+    {
+      "id": "thanksgiving_en_100",
+      "question": "In which year was the first Macy's Thanksgiving Day Parade held in New York?",
+      "type": "estimate",
+      "answer": 1924,
+      "min": 1850,
+      "max": 2000,
+      "unit": "year",
+      "difficulty": "hard",
+      "fun_fact": "Macy's employees organised it, and many of them were immigrants who wanted to celebrate their new home.",
+      "category": "Thanksgiving"
+    }
+  ]
+}
