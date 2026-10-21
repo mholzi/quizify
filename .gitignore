@@ -82,3 +82,13 @@ Thumbs.db
 
 # ---- Local QA venv ----
 .qa-venv/
+
+# ---- Maintainer-only files (kept locally, not shipped) ----
+CLAUDE.md
+.claude/
+DESIGN.md
+GAPS.md
+IMPLEMENTATION_PLAN.md
+REQUIREMENTS.md
+docs/
+custom_components/quizify/questions/*-review.md
