@@ -12,7 +12,7 @@ Turn any gathering into a trivia battle. Players scan, questions fly, everyone c
 [![Version](https://img.shields.io/github/v/release/mholzi/quizify?style=for-the-badge&color=ff00ff&label=Version)](https://github.com/mholzi/quizify/releases)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-[**Get Started**](#setup-in-home-assistant) • [**How to Play**](#the-experience) • [**Question Packs**](#question-packs) • [**See It In Action**](#the-experience)
+[**Website**](https://quizify-ha.web.app) • [**Get Started**](#setup-in-home-assistant) • [**How to Play**](#the-experience) • [**Question Packs**](#question-packs) • [**See It In Action**](#the-experience)
 
 ---
 
@@ -62,18 +62,9 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 ### Step 1: Install
 
-**Via HACS (Recommended)** — One click to add the repository, then install:
+**Via HACS (Recommended)** — Quizify is in the HACS default list. Open HACS, search for "Quizify", install it and restart Home Assistant. Or use the shortcut:
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mholzi&repository=quizify&category=integration)
-
-Or manually:
-```
-HACS → ⋮ Menu → Custom Repositories
-→ URL: https://github.com/mholzi/quizify
-→ Category: Integration
-→ Install "Quizify"
-→ Restart Home Assistant
-```
 
 **Manual**
 ```bash
@@ -92,6 +83,8 @@ Settings → Devices & Services → Add Integration → "Quizify"
 ```
 
 That's it. Quizify is now installed.
+
+If you enjoy Quizify, a star on [GitHub](https://github.com/mholzi/quizify) helps other Home Assistant users find it.
 
 ---
 
