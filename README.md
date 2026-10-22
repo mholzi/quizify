@@ -93,6 +93,8 @@ Settings → Devices & Services → Add Integration → "Quizify"
 
 That's it. Quizify is now installed.
 
+If Quizify gets a laugh at your next party, a ⭐ on [GitHub](https://github.com/mholzi/quizify) helps other Home Assistant users find it.
+
 ---
 
 <br>
