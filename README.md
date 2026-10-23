@@ -566,6 +566,10 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 
 The complete history is in [`CHANGELOG.md`](CHANGELOG.md); longer prose notes for each release are on the [GitHub releases page](https://github.com/mholzi/quizify/releases).
 
+### v1.24.0 — Holiday Packs, and a Sturdier Core 🎄
+- **Christmas grows to 160 questions per language**, New Year's Eve gains a 2026-in-review block, and Thanksgiving (English) and Sankt Martin (German) are new, each featured only in its own season (#1101, #1102, #1111, #1113)
+- A player who drops out mid-game keeps their score and seat, Hot Seat reads out the right question at the reveal, and text-to-speech never skips a question or a reveal (#1098, #1097, #1096, #1095)
+
 ### v1.23.0 — A Pack for Film Night 🎬
 - **Film & TV packs in German, English and Spanish**, about 160 questions each, and the picture packs grew from 17 to 40; 56 misplaced or repeated questions are gone (#1050, #1047, #1054, #1073)
 - Streaks pay from the third correct answer with a toast at every milestone, the points under each answer add up, and tied players share the podium and the win (#1062, #1066, #1075, #1078, #1085)
