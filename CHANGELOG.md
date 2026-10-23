@@ -3,6 +3,22 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.24.0] — 2026-10-23
+
+**Holiday Packs, and a Sturdier Core**
+
+Since 1.23.0 the season packs grew and two new holidays joined them, bringing the library to 6,830 questions in 50 packs.
+
+### Packs for the holidays
+
+The Christmas packs now hold 160 questions per language, including a St Nicholas block, and New Year's Eve gains a 2026-in-review block, with Three Kings' Day in Spanish. Thanksgiving (English, 100 questions) and Sankt Martin (German, 54 questions) are new, and each is featured only in its own season.
+
+### Fewer surprises mid-game
+
+A player who drops out mid-game keeps their score and seat until the lobby, and Hot Seat reads out the right question at the reveal. Text-to-speech never skips a question or a reveal, and the host card stays responsive after a reconnect.
+
+Also: from the third game, the host's finale shows a quiet, dismissible hint to star Quizify on GitHub. Under the hood the game core was split into smaller parts, with no change to how it plays.
+
 ## [1.24.0-RC1] — 2026-10-21
 
 **Holiday Packs, and a Sturdier Core**
