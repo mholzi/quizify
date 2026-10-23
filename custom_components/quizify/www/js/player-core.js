@@ -1261,7 +1261,13 @@
                         difficulty_multiplier: lastResult.difficulty_multiplier || 1.0,
                         difficulty_bonus: lastResult.difficulty_bonus || 0,
                         double_bonus: lastResult.double_bonus || 0,
-                        round_score: lastResult.points_earned || 0,
+                        // #1118: the server's row already holds the settled
+                        // round score (Steal included); the submit-time
+                        // answer_result predates it. Only fall back to that
+                        // frame when the row carries no score of its own.
+                        round_score: (typeof a.points_earned === 'number')
+                            ? a.points_earned
+                            : (lastResult.points_earned || 0),
                         streak: lastResult.new_streak || 0,
                         streak_active: lastResult.streak_active === true,
                     });
