@@ -29,6 +29,7 @@ from ..const import (
     WAGER_WINDOW_DURATION,
 )
 from .calibration import GroupCalibrator
+from .estimate_controller import EstimateController
 from .highlights import compute_superlatives
 from .hot_seat_controller import HotSeatController
 from .lightning_controller import LightningController
@@ -49,15 +50,13 @@ from .questions import (
     Question,
     QuestionBank,
 )
-from .scoring import (
-    calculate_estimate_scores,
-    calculate_podium,
-    estimate_within_calibration_band,
-)
-from .scoring_engine import ScoreComputation, ScoringEngine, wager_loss
+from .scoring import calculate_podium
+from .scoring_engine import ScoreComputation, ScoringEngine
 from .team import ANSWER_CHANGE_LOCK_SECONDS, Team, TeamRegistry
+from .team_settlement import TeamSettlementController
 from .timer import QuestionTimer
 from .types import TIME_LIMITS, Difficulty
+from .wager_controller import WagerController
 
 if TYPE_CHECKING:
     from ..analytics import QuizifyAnalytics
@@ -270,13 +269,20 @@ class QuizifyGameState:
         # like the two above: default ON, so a game that says nothing about
         # them plays exactly as it did before.
         #   * _powerups_enabled — deal a power-up each round (#340), or don't.
-        #   * _wager_enabled — open the last round's betting window (#656),
-        #     or play the final question straight.
+        #   * the wager toggle — open the last round's betting window (#656),
+        #     or play the final question straight. It lives on the
+        #     WagerController with the rest of the betting window (#1116).
         # Unlike Lightning and Hot Seat these are not one-shot detours, so
         # there is no target round to draw and no ``_fired`` guard: each is
         # read where the mechanic happens, every round.
         self._powerups_enabled: bool = True
-        self._wager_enabled: bool = True
+        self._wager_controller = WagerController(self)
+
+        # Estimate scoring and team settlement (#275/#365/#602), moved out of
+        # this class in #1116. Neither keeps state of its own; this class
+        # delegates to them under the old private names below.
+        self._estimate_controller = EstimateController(self)
+        self._team_settlement = TeamSettlementController(self)
 
         # Round shuffle state (owned here, not in WS handler).
         # `shuffle_map` is the "canonical" per-round shuffle used by the
@@ -669,7 +675,7 @@ class QuizifyGameState:
         # Power-ups and the final-round wager (#742). Nothing to arm — they
         # are read at the point of use every round.
         self._powerups_enabled = powerups_enabled
-        self._wager_enabled = wager_enabled
+        self._wager_controller.enabled = wager_enabled
 
         # Group-level adaptive difficulty (#40). Only the explicit "auto" mode
         # opts in; any fixed difficulty the host pinned (easy/medium/hard) is
@@ -1310,61 +1316,12 @@ class QuizifyGameState:
     def _pick_team_carrier(
         self, team: Team, setter: str | None
     ) -> PlayerSession | None:
-        """The member who carries a team's response into the scoring path.
-
-        Normally the member who set it. If they left between the tap and the
-        buzzer the response still stands for the team, so it is handed to
-        another member rather than dropping a round the team did answer.
-
-        Connected members are preferred over disconnected ones (#601). The
-        earlier version took the first member who had not submitted, which
-        could be someone whose phone had simply locked — and during the
-        re-entrant evaluation that bug allowed, handing the answer to that
-        member scored the same round a second time.
-        """
-        player = self._player_registry.get_player(setter) if setter else None
-        if player is not None and not player.submitted:
-            return player
-        candidates = [
-            p
-            for name in team.members
-            if (p := self._player_registry.get_player(name)) is not None
-            and not p.submitted
-        ]
-        if not candidates:
-            return None
-        # Fall back to a disconnected member only when nobody is left online:
-        # the team did answer, and losing the round because every phone went
-        # dark would punish the wrong thing.
-        return next((p for p in candidates if p.connected), candidates[0])
+        """Delegate: see :meth:`TeamSettlementController.pick_carrier`."""
+        return self._team_settlement.pick_carrier(team, setter)
 
     def _record_team_timeout(self, team: Team) -> None:
-        """Book a round the team never answered (#748).
-
-        The shape a missed round takes everywhere else: streak broken, a
-        ``timeout`` history entry, the round's score in the round-score
-        history, and the round still counted as played so the per-round
-        averages divide by the right number. Shared by both settlement paths
-        so a fourth copy cannot drift the way the scoring blocks did.
-
-        On the final round a standing bet is resolved here as a loss (#653,
-        #804) — the twin of the per-player timeout branch in
-        ``_do_evaluate_round``. A team that placed a bet and then let the clock
-        run out pays it, because "bet, then sit still" must not be the cheapest
-        way through the last question. The history records ``round_score``
-        rather than a literal zero for the same reason the player path does
-        (#472): a pre-settlement reaction bonus (#800) or this very loss has
-        already moved it.
-        """
-        team.streak = 0
-        if self.round == self.total_rounds:
-            loss = wager_loss(team.score, team.wager)
-            if loss:
-                team.round_score -= loss
-                team.score = max(0, team.score - loss)
-        team.round_history.append("timeout")
-        team.round_scores.append(team.round_score)
-        team.rounds_played += 1
+        """Delegate: see :meth:`TeamSettlementController.record_timeout`."""
+        self._team_settlement.record_timeout(team)
 
     def _credit_team_round(
         self,
@@ -1424,122 +1381,18 @@ class QuizifyGameState:
                 team.hard_score += points
 
     def _settle_team_answers(self) -> None:
-        """Score each team's standing answer once, through the player path.
-
-        The member who set the answer carries it: their submission is scored
-        with the team's streak and with the elapsed time of their *last* tap,
-        and the result is written back to the team. Members who did not set it
-        are left untouched — they neither score nor count as a timeout, because
-        in team mode there is nothing individual left to reward or punish.
-
-        A team that never answered breaks its streak and records a timeout,
-        the same shape a player's missed round takes.
-        """
-        round_started = self._round_start_time or 0.0
-        for team in self._team_registry.all_teams():
-            if team.current_answer is None or team.answer_by is None:
-                self._record_team_timeout(team)
-                continue
-            player = self._pick_team_carrier(team, team.answer_by)
-            if player is None:
-                self._record_team_timeout(team)
-                continue
-
-            elapsed = max(0.0, (team.answered_at or round_started) - round_started)
-            # The scoring engine reads the player's streak; in team mode the
-            # streak belongs to the team, so lend it for the call and take the
-            # updated value back.
-            player.streak = team.streak
-            result = self.submit_answer(
-                player.name,
-                team.current_answer,
-                elapsed_override=elapsed,
-                _settling_team=True,
-                # The final-round bet is the team's, staked against the team's
-                # score (#804). Lent for the call the same way the streak is,
-                # so the scoring engine keeps one wager rule for everybody.
-                _team_wager=team.wager,
-                _team_bank=team.score,
-            )
-            if isinstance(result, AnswerResult):
-                # The milestone was earned on the team's streak (lent to the
-                # carrier above), so it is tallied on the team (#923) — the
-                # analytics rollup reads this counter off the entrant.
-                if result.milestone_bonus:
-                    team.streak_milestones_hit += 1
-                self._credit_team_round(
-                    team,
-                    result.points_earned,
-                    result.correct,
-                    elapsed,
-                    player.round_score_breakdown,
-                )
+        """Delegate: see :meth:`TeamSettlementController.settle_answers`."""
+        self._team_settlement.settle_answers()
 
     def _settle_team_guesses(self) -> dict[str, str]:
-        """Hand each team's standing guess to the member who set it (#602).
-
-        The estimate path ranks *participants* by closeness to the true value.
-        In team mode the participant is the team — so rather than teach
-        ``calculate_estimate_scores`` about teams, the team's guess is carried
-        into the ranking by one of its members, the same shape
-        ``_settle_team_answers`` uses for multiple choice. The ranking then
-        contains one entry per team plus any solo players, and the scoring
-        function needs no change at all.
-
-        Returns ``{team_id: carrier_name}`` so the results can be copied back
-        onto the teams once the per-player pass has run.
-        """
-        round_started = self._round_start_time or 0.0
-        carriers: dict[str, str] = {}
-        for team in self._team_registry.all_teams():
-            if team.current_guess is None or team.guess_by is None:
-                continue
-            player = self._pick_team_carrier(team, team.guess_by)
-            if player is None:
-                continue
-            player.current_guess = team.current_guess
-            player.submitted = True
-            player.submission_time = time.time()
-            player.last_elapsed = max(
-                0.0, (team.guessed_at or round_started) - round_started
-            )
-            carriers[team.team_id] = player.name
-        return carriers
+        """Delegate: see :meth:`TeamSettlementController.settle_guesses`."""
+        return self._team_settlement.settle_guesses()
 
     def _apply_estimate_results_to_teams(
         self, carriers: dict[str, str], scores: dict[str, dict]
     ) -> None:
-        """Copy each carrier's estimate result onto their team (#602).
-
-        Which member carried the guess is this method's only concern; the
-        bookkeeping itself belongs to ``_credit_team_round``, shared with
-        ``_settle_team_answers`` (#748). This used to be a hand-kept "mirror"
-        of that block, and it had already drifted — only this copy floored the
-        team total at zero. A team that never guessed records a timeout, which
-        is what a missed round looks like everywhere else.
-        """
-        for team in self._team_registry.all_teams():
-            carrier_name = carriers.get(team.team_id)
-            player = (
-                self._player_registry.get_player(carrier_name)
-                if carrier_name
-                else None
-            )
-            entry = scores.get(carrier_name) if carrier_name else None
-            if player is None or entry is None:
-                self._record_team_timeout(team)
-                continue
-
-            # "Correct" on an estimate round means an EXACT hit — a near miss
-            # is recorded as "wrong", so the shared streak rule cannot grow a
-            # streak past a milestone that was never paid (#408).
-            self._credit_team_round(
-                team,
-                player.round_score,
-                bool(entry["exact"]),
-                player.last_elapsed,
-                player.round_score_breakdown,
-            )
+        """Delegate: see :meth:`EstimateController.apply_results_to_teams`."""
+        self._estimate_controller.apply_results_to_teams(carriers, scores)
 
     def _collect_team_powerup_stats(self) -> None:
         """Roll each team's members' power-up usage up to the team (#365).
@@ -1604,14 +1457,7 @@ class QuizifyGameState:
                 # mean taking the round for free — and two settlement rules side
                 # by side would be worse than either. Both are strict now.
                 player.streak = 0
-                if self.round == self.total_rounds:
-                    loss = wager_loss(player.score, player.wager)
-                    if loss:
-                        # round_score, not a literal -loss: a pre-submit STEAL
-                        # (#472) may already have folded points in here, and the
-                        # reveal reports points_earned=round_score.
-                        player.round_score -= loss
-                        player.score = max(0, player.score - loss)
+                self._wager_controller.settle_timeout(player)
                 player.record_round_result("timeout")
                 # Record round_score, not a literal 0 (#472). For a genuine
                 # timeout this is 0 (reset_round zeroed it and the player never
@@ -1758,158 +1604,13 @@ class QuizifyGameState:
         return self._round_summary
 
     def _evaluate_estimate_round(self, question: Question) -> RoundSummary:
-        """Evaluate an estimate round by closeness (#275).
-
-        Ranks every player who submitted a guess by absolute distance to the
-        true value, awards difficulty-scaled, rank-decayed points (closest =
-        full, exact = bonus), applies them to player scores, and builds a
-        RoundSummary whose ``estimate`` block carries the number-line reveal
-        data. Non-guessers score 0 and break their streak, same as an MC
-        timeout. The round-closing tail (summary, phase, calibrator, stats,
-        broadcast) is ``_close_round``, shared with the MC path — this method
-        does the scoring and nothing else (#810).
-        """
-        answer_val = (
-            question.estimate_answer
-            if question.estimate_answer is not None
-            else 0.0
-        )
-        try:
-            diff_enum = Difficulty(question.difficulty)
-        except ValueError:
-            diff_enum = Difficulty.MEDIUM
-
-        # Team mode (#602): settle each team's standing guess onto a member
-        # before the ranking is built, so the ranking sees one entry per team
-        # (plus any solo players) instead of every individual member.
-        carriers = self._settle_team_guesses() if self.team_mode else {}
-
-        guesses: dict[str, float] = {
-            p.name: p.current_guess
-            for p in self._player_registry.players.values()
-            if p.submitted and p.current_guess is not None
-        }
-        scores = calculate_estimate_scores(guesses, answer_val, diff_enum)
-
-        # Apply scoring + per-round bookkeeping to every player.
-        for player in self._player_registry.players.values():
-            entry = scores.get(player.name)
-            if entry is None:
-                # No guess this round → score 0, streak breaks (mirrors MC
-                # timeout). A player who guessed but somehow isn't in ``scores``
-                # can't happen, but this branch also covers the not-submitted
-                # case cleanly.
-                player.streak = 0
-                player.record_round_result("timeout")
-                player.round_score = 0
-                player.round_score_breakdown = {}
-                player.round_scores.append(0)
-            else:
-                points = entry["points"]
-                # Closeness scoring has no streak/speed concept; surface the
-                # estimate-specific breakdown so the reveal can show distance.
-                # Streak only advances on an EXACT hit — a non-exact guess is
-                # recorded as "wrong" below, so growing the streak on it would
-                # let a wrong guess step past a STREAK_MILESTONES value without
-                # ever paying the milestone (only MC awards them) (#408). Keep
-                # streak bookkeeping in agreement with the recorded correctness.
-                if entry["exact"]:
-                    player.streak += 1
-                    if player.streak > player.max_streak:
-                        player.max_streak = player.streak
-                else:
-                    player.streak = 0
-                player.round_score = points
-                player.round_score_breakdown = {
-                    "speed_bonus": 0,
-                    "streak_bonus": 0,
-                    "difficulty_multiplier": 1.0,
-                    "double_points": False,
-                    "estimate_distance": entry["distance"],
-                    "estimate_rank": entry["rank"],
-                    "estimate_exact": entry["exact"],
-                }
-                # Participant's total, not the carrier's (#923) — the twin
-                # of the guard in ``submit_answer``. The team is credited from
-                # ``round_score`` in ``_apply_estimate_results_to_teams``, so
-                # the running total here would be a second ledger.
-                if self._keeps_own_score(player.name):
-                    player.score += points
-                    if player.score < 0:
-                        player.score = 0
-                if diff_enum == Difficulty.HARD:
-                    player.hard_score += points
-                player.last_answer_correct = entry["exact"]
-                # #1084: a non-exact guess that still scored is a hit for
-                # the finale card; the recorded result stays exact-only.
-                player.record_round_result(
-                    "correct" if entry["exact"] else "wrong",
-                    scored_hit=points > 0,
-                )
-                player.round_scores.append(points)
-            player.rounds_played += 1
-
-        if self.team_mode:
-            self._apply_estimate_results_to_teams(carriers, scores)
-
-        # A synthetic "correct answer" so the rest of the pipeline (which reads
-        # ``RoundSummary.correct_answer.text``) keeps working for estimate
-        # rounds. The text is the true value with its unit.
-        answer_text = self._format_estimate_value(question, answer_val)
-        correct_answer = Answer(text=answer_text, correct=True)
-
-        estimate_block = self._build_estimate_reveal(
-            question, answer_val, scores, carriers
-        )
-
-        # Two correctness readings, on purpose (#810).
-        #
-        # ``exact`` is what the reveal and the per-question stats have always
-        # meant by correct on an estimate round, and stays that way: the number
-        # line either landed on the value or it did not.
-        #
-        # The auto-difficulty calibrator needs a different reading. Distance
-        # zero on a slider is close to unattainable, so feeding it ``exact``
-        # would score every estimate round 0/N and march an auto-mode game down
-        # to EASY — the reason the calibrator feed was better off missing than
-        # naively copied. It gets "did the guess land inside the band" instead,
-        # which is the judgement the reveal's number line already invites.
-        exact_correct = {
-            name: bool(entry["exact"]) for name, entry in scores.items()
-        }
-        span = (
-            question.estimate_max - question.estimate_min
-            if question.estimate_max is not None
-            and question.estimate_min is not None
-            else None
-        )
-        close_correct = {
-            name: estimate_within_calibration_band(entry["distance"], span)
-            for name, entry in scores.items()
-        }
-
-        _LOGGER.info(
-            "Estimate round %d evaluated (answer=%s, %d guesses), "
-            "transitioning to ANSWER_REVEAL",
-            self.round,
-            answer_val,
-            len(guesses),
-        )
-
-        return self._close_round(
-            question,
-            correct_answer,
-            exact_correct,
-            estimate=estimate_block,
-            calibration_correctness=close_correct,
-        )
+        """Delegate: see :meth:`EstimateController.evaluate_round`."""
+        return self._estimate_controller.evaluate_round(question)
 
     @staticmethod
     def _format_estimate_value(question: Question, value: float) -> str:
-        """Format an estimate value for display (drop trailing .0, add unit)."""
-        text = str(int(value)) if value == int(value) else str(value)
-        unit = question.estimate_unit
-        return f"{text} {unit}".strip() if unit else text
+        """Delegate: see :meth:`EstimateController.format_value`."""
+        return EstimateController.format_value(question, value)
 
     def _build_estimate_reveal(
         self,
@@ -1918,115 +1619,10 @@ class QuizifyGameState:
         scores: dict[str, dict],
         carriers: dict[str, str] | None = None,
     ) -> dict[str, Any]:
-        """Assemble the number-line reveal block for an estimate round (#275).
-
-        Carries the true value, the slider range/unit, and every CONNECTED
-        player's guess + distance + awarded points + rank, plus the winner
-        (rank 1). Both the player reveal and the TV dashboard render the
-        number line from this. The closest player(s) are rank 1; ties share it.
-
-        In team mode the entrant is the team (#962, the rule #923 applied to
-        podium, sensors and events): one row per team, named after the team,
-        with ``team_id`` and ``members`` so a phone can find its own row even
-        when two teams share a name (#759). A member who did not move the
-        slider is not "without a guess" — only a team that never guessed is.
-        A guest who joined no team keeps a row of their own.
-        """
-        guesses_out: list[dict[str, Any]] = []
-        winner_name = ""
-        best_rank: int | None = None
-        if self.team_mode:
-            carriers = carriers or {}
-            for team in self._team_registry.all_teams():
-                members = list(team.members)
-                if not any(
-                    (p := self._player_registry.get_player(m)) is not None
-                    and p.connected
-                    for m in members
-                ):
-                    continue
-                carrier_name = carriers.get(team.team_id)
-                carrier = (
-                    self._player_registry.get_player(carrier_name)
-                    if carrier_name
-                    else None
-                )
-                entry = scores.get(carrier_name) if carrier_name else None
-                row: dict[str, Any] = {
-                    "player_name": team.name,
-                    "team_id": team.team_id,
-                    "members": members,
-                    "color": team.color,
-                }
-                if entry is None or carrier is None:
-                    row.update({
-                        "guess": None,
-                        "distance": None,
-                        "points": 0,
-                        "rank": None,
-                        "exact": False,
-                        "no_guess": True,
-                    })
-                else:
-                    rank = entry["rank"]
-                    if best_rank is None or rank < best_rank:
-                        best_rank = rank
-                        winner_name = team.name
-                    row.update({
-                        "guess": carrier.current_guess,
-                        "distance": entry["distance"],
-                        "points": entry["points"],
-                        "rank": rank,
-                        "exact": entry["exact"],
-                        "no_guess": False,
-                    })
-                guesses_out.append(row)
-        for player in self._player_registry.players.values():
-            if not player.connected:
-                continue
-            if (
-                self.team_mode
-                and self._team_registry.get_by_member(player.name) is not None
-            ):
-                continue
-            entry = scores.get(player.name)
-            if entry is None or player.current_guess is None:
-                guesses_out.append({
-                    "player_name": player.name,
-                    "color": player.color,
-                    "guess": None,
-                    "distance": None,
-                    "points": 0,
-                    "rank": None,
-                    "exact": False,
-                    "no_guess": True,
-                })
-                continue
-            rank = entry["rank"]
-            if best_rank is None or rank < best_rank:
-                best_rank = rank
-                winner_name = player.name
-            guesses_out.append({
-                "player_name": player.name,
-                "color": player.color,
-                "guess": player.current_guess,
-                "distance": entry["distance"],
-                "points": entry["points"],
-                "rank": rank,
-                "exact": entry["exact"],
-                "no_guess": False,
-            })
-
-        return {
-            "answer": answer_val,
-            "answer_text": self._format_estimate_value(question, answer_val),
-            "min": question.estimate_min,
-            "max": question.estimate_max,
-            "unit": question.estimate_unit,
-            "step": question.estimate_step,
-            "guesses": guesses_out,
-            "winner": winner_name,
-        }
+        """Delegate: see :meth:`EstimateController.build_reveal`."""
+        return self._estimate_controller.build_reveal(
+            question, answer_val, scores, carriers
+        )
 
     # ------------------------------------------------------------------
     # Pause / resume
@@ -2730,31 +2326,8 @@ class QuizifyGameState:
         return self._powerup_manager.get_powerup(player_name)
 
     def _needs_wager_window(self, question: Question) -> bool:
-        """Whether this round opens with a betting window (#656).
-
-        Mirrors exactly the rule the player payload advertises the wager UI
-        by: the last round, and never an estimate final. Estimate rounds score
-        through ``_evaluate_estimate_round``, which never reads
-        ``player.wager`` (#353) — opening a window there would collect bets
-        nothing settles.
-
-        Team mode used to be excluded for a third reason (#668): there
-        ``player.score`` is a by-product — the carrier of a given round
-        receives the team's points personally and everyone else stays at zero
-        — so the window advertised each member "your bank: X" against a
-        meaningless number and settled only the carrier's bet against the
-        carrier's shadow score. #804 fixes the mechanic instead of gating it:
-        the bet now belongs to the team, is staked against the team score the
-        television shows, and any member may place it.
-
-        #742 adds a second exclusion, of a different kind: a host's choice
-        rather than a mechanic that cannot settle. A table playing with
-        children switches the betting window off, and the final question is
-        played straight instead of one where "no answer costs you the stake".
-        """
-        if not self._wager_enabled:
-            return False
-        return self.round == self.total_rounds and not question.is_estimate
+        """Delegate: see :meth:`WagerController.needs_window`."""
+        return self._wager_controller.needs_window(question)
 
     @property
     def wager_enabled(self) -> bool:
@@ -2765,7 +2338,7 @@ class QuizifyGameState:
         ``_needs_wager_window`` exactly. A phone offered a bet the server never
         opens a window for is worse than no bet at all.
         """
-        return self._wager_enabled
+        return self._wager_controller.enabled
 
     def arm_round_timers(self) -> bool:
         """Close the betting window and start the round proper (#656).
@@ -2786,76 +2359,19 @@ class QuizifyGameState:
 
     def wager_window_remaining(self) -> float:
         """Seconds left in the betting window (0.0 outside WAGER_ACTIVE)."""
-        if self.phase != GamePhase.WAGER_ACTIVE:
-            return 0.0
-        return self._phase_controller.wager_window_remaining()
+        return self._wager_controller.window_remaining()
 
     def players_missing_wager(self) -> list[str]:
-        """Connected participants who have not locked a bet yet (#656).
-
-        The window closes early once this is empty, so a table that decides
-        fast is not held for the full 20 seconds. Disconnected players are
-        excluded — waiting on a phone that has left the room would strand the
-        window until the deadline for everybody else.
-
-        In team mode the answer is a team's name, not a member's (#804): one
-        bet is placed per team, so waiting on each member in turn would hold
-        the window open for people who have nothing left to do — and the host
-        screen would name three players for one outstanding decision.
-        """
-        if not self.team_mode:
-            return [
-                p.name
-                for p in self._player_registry.players.values()
-                if p.connected and p.wager is None
-            ]
-        connected = {
-            p.name for p in self._player_registry.players.values() if p.connected
-        }
-        waiting: list[str] = []
-        for participant in self.get_ranked_participants():
-            if participant.wager is not None:
-                continue
-            members = participant.members or [participant.name]
-            if any(m in connected for m in members):
-                waiting.append(participant.name)
-        return waiting
+        """Delegate: see :meth:`WagerController.players_missing`."""
+        return self._wager_controller.players_missing()
 
     def record_wager(self, player_name: str, pct: int) -> bool:
-        """Stake ``pct`` for whoever this player bets as (#804).
-
-        Their team in team mode, themselves otherwise — the same row
-        ``get_ranked_participant_for`` resolves for every other payout. Any
-        member may set the team's bet and the last one counts, exactly like
-        the standing answer; there is no change lock, because the window is a
-        single decision the whole team can see the tally of, not a tap race in
-        the last seconds of a question.
-
-        Returns False for a name that is not in the game.
-        """
-        participant = self.get_ranked_participant_for(player_name)
-        if participant is None:
-            return False
-        participant.wager = pct
-        return True
+        """Delegate: see :meth:`WagerController.record`."""
+        return self._wager_controller.record(player_name, pct)
 
     def wager_is_locked(self, player_name: str) -> bool:
-        """True once the bet's answer is already committed (#255/#804).
-
-        A wager only makes sense *before* the answer is in — it stakes points
-        on getting that answer right. For a solo player that is their own
-        submission; for a team it is the standing answer, since no member is
-        ever marked ``submitted`` in team mode (#365).
-        """
-        participant = self.get_ranked_participant_for(player_name)
-        if participant is None:
-            return False
-        # Both a team and a player carry ``current_answer`` (#1107), so the
-        # former ``hasattr`` guard here was always true: in team mode the
-        # standing answer decides, for a solo row too.
-        if self.team_mode:
-            return participant.current_answer is not None
-        return bool(participant.submitted)
+        """Delegate: see :meth:`WagerController.is_locked`."""
+        return self._wager_controller.is_locked(player_name)
 
     def get_current_question(self) -> Question | None:
         """Return the current question, or None."""
@@ -3025,7 +2541,7 @@ class QuizifyGameState:
     @property
     def wager_window_duration(self) -> float:
         """How long a betting window stays open (#656)."""
-        return self._phase_controller.wager_window_duration
+        return self._wager_controller.window_duration
 
     def question_time_remaining_for_snapshot(self) -> float:
         """Seconds left on the current question, for a mid-round joiner.
