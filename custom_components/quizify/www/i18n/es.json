@@ -599,6 +599,10 @@
     "tech": "Tecnología"
   },
   "packSubmit": {
+    "wishTile": {
+      "title": "¿Falta un tema?",
+      "cta": "Pedir un pack"
+    },
     "heading": "Enviar un paquete de la comunidad",
     "intro": "Tres pasos rápidos. Tu paquete se publica como una incidencia de revisión en GitHub.",
     "placeholder": "{ \"name\": \"Mi paquete\", \"language\": \"es\", \"questions\": [ ... ] }",

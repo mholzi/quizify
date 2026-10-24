@@ -491,6 +491,12 @@
                 syncHeroPackChips();
             }
         }
+        // #1127: the "Missing a topic? / Ask for a pack" tile closes the grid.
+        // pack-submit.js owns it and adds it only while pack requests are
+        // enabled; it is re-added here because the grid was just emptied.
+        if (window.QuizifyPackSubmit && typeof window.QuizifyPackSubmit.appendWishTile === 'function') {
+            window.QuizifyPackSubmit.appendWishTile(els.heroPackChips);
+        }
         syncHeroFeatureCardState();
     }
 

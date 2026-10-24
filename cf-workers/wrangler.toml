@@ -1,9 +1,35 @@
 # Cloudflare Worker config for the Quizify community-pack submission endpoint.
-# Deploy:  cd cf-workers && npx wrangler deploy
+# Deploy:  cd cf-workers && npx wrangler deploy   (full steps: README.md)
 # Secret:  npx wrangler secret put GITHUB_PAT   (fine-grained PAT, Issues R+W on mholzi/quizify)
-# URL:     https://quizify-api.<account>.workers.dev  (set as the integration's
-#          "Community pack submission URL" option)
+# URL:     https://quizify-api.mholzi.workers.dev — the integration's built-in
+#          default (DEFAULT_COMMUNITY_SUBMIT_URL in const.py, #1127). A host who
+#          runs their own worker sets it as the "Community pack submission URL"
+#          option instead.
 name = "quizify-api"
 main = "quizify-api.js"
 compatibility_date = "2026-06-11"
 workers_dev = true
+
+# Anonymous path (#1127). Installs that use the built-in default URL send no
+# secret, so this deploy accepts them — but only while all three of the
+# settings below are present. Set ANONYMOUS_SUBMISSIONS to "off" and redeploy
+# to shut the anonymous path in an abuse incident; secret-authenticated callers
+# keep working.
+[vars]
+ANONYMOUS_SUBMISSIONS = "on"
+
+# Per-IP burst limit for anonymous callers (Workers rate-limiting binding).
+# namespace_id is any integer unique within the Cloudflare account; period must
+# be 10 or 60 seconds.
+[[ratelimits]]
+name = "ANON_LIMITER"
+namespace_id = "1127"
+simple = { limit = 3, period = 60 }
+
+# Per-IP and global daily caps for anonymous callers. Create the namespace once
+# with `npx wrangler kv namespace create quizify-anon-counts` and paste the id
+# it prints here (KV ids are not secret; commit it). The deploy fails while the
+# placeholder is in place, which is the point.
+[[kv_namespaces]]
+binding = "ANON_COUNTS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"

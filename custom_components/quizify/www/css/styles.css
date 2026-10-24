@@ -4519,6 +4519,37 @@ footer {
 .hpt-sky   .hct-icon { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
 .hpt-sun   .hct-icon { background: rgba(232, 196, 127, 0.24); color: #C9A24E; }
 
+/* #1127: the dashed "Missing a topic? / Ask for a pack" tile that closes the
+   grid (pack-submit.js appendWishTile). Same box as a pack tile, but dashed
+   coral and never "selected" — tapping it opens the request card instead. */
+.hero-wish-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    text-align: left;
+    background: rgba(232, 138, 127, 0.08);
+    border: 1.5px dashed var(--color-accent-primary);
+    border-radius: 13px;
+    padding: 11px;
+    cursor: pointer;
+    font: inherit;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.hero-wish-tile:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 13px rgba(232, 138, 127, 0.16);
+}
+.hero-wish-tile .hct-icon {
+    background: rgba(232, 138, 127, 0.16);
+    color: var(--color-accent-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+/* Darker coral for text: the accent itself is too light to read on cream. */
+.hero-wish-tile .hct-name,
+.hero-wish-tile .hct-count { color: #B85A4F; }
+
 /* Topics step relocated to the hero — keep it out of the Adjust-settings view. */
 #vF-step-topics[hidden] { display: none; }
 

@@ -599,6 +599,10 @@
     "tech": "Tech"
   },
   "packSubmit": {
+    "wishTile": {
+      "title": "Fehlt ein Thema?",
+      "cta": "Pack wünschen"
+    },
     "heading": "Community-Pack einreichen",
     "intro": "Drei kurze Schritte. Dein Pack landet als Review-Issue auf GitHub.",
     "placeholder": "{ \"name\": \"Mein Pack\", \"language\": \"de\", \"questions\": [ ... ] }",
