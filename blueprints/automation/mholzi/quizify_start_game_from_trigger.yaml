@@ -1,0 +1,48 @@
+blueprint:
+  name: Quizify - Start a game from a button or remote
+  description: >-
+    Starts a Quizify game when your chosen trigger fires, for example a Zigbee
+    button press, a remote or a switch. Only works while Quizify is in the
+    lobby. Leave the options empty to repeat the settings of your last game.
+  domain: automation
+  author: mholzi
+  min_version: 2024.10.0
+  source_url: https://raw.githubusercontent.com/mholzi/quizify/main/blueprints/automation/mholzi/quizify_start_game_from_trigger.yaml
+  input:
+    start_trigger:
+      name: Start trigger
+      description: What starts the game, e.g. a button press or an event entity.
+      selector:
+        trigger:
+    preset:
+      name: Preset
+      description: Optional. Name of a preset saved in the Quizify setup screen.
+      default: ""
+      selector:
+        text:
+    num_rounds:
+      name: Rounds
+      description: Optional. 0 keeps the last setting.
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 50
+          mode: box
+
+mode: single
+max_exceeded: silent
+
+variables:
+  preset: !input preset
+  num_rounds: !input num_rounds
+
+triggers: !input start_trigger
+
+actions:
+  - action: quizify.start_game
+    data: >-
+      {%- set d = {} -%}
+      {%- if preset -%}{%- set d = dict(d, preset=preset) -%}{%- endif -%}
+      {%- if num_rounds | int(0) > 0 -%}{%- set d = dict(d, num_rounds=num_rounds | int) -%}{%- endif -%}
+      {{ d }}

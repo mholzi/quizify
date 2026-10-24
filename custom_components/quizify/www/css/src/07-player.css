@@ -1563,6 +1563,22 @@
     color: var(--color-text-muted);
 }
 
+/* Pointer to the automation blueprints (#1128): soft sage tint, small text */
+.setup-house-autohint {
+    margin: 10px 0;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--color-text-primary);
+    background: color-mix(in srgb, var(--color-accent-secondary) 14%, transparent);
+    border-radius: 8px;
+}
+.setup-house-autohint a {
+    color: var(--color-accent-primary);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
 /* Advanced disclosure (collapsed by default) */
 .setup-house-adv-btn {
     display: flex;

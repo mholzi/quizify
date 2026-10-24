@@ -309,6 +309,34 @@ Then **"Start New Game"** (same settings, same players) or **Reset Game** (fresh
 
 <br>
 
+## Automations
+
+Quizify fires `quizify_*` events on the Home Assistant event bus at every game milestone, so your own automations can follow the game. They are off by default: switch on **The House Plays Along** under Settings → Devices & Services → Quizify → Configure (or the master switch in the admin setup, "Does the house play along?").
+
+Three ready-made blueprints, one click each:
+
+- **Flash lights on the answer reveal** (green if most of the room was right, red if not): [![Open your Home Assistant instance and import this blueprint.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fraw.githubusercontent.com%2Fmholzi%2Fquizify%2Fmain%2Fblueprints%2Fautomation%2Fmholzi%2Fquizify_flash_lights_on_reveal.yaml)
+- **Announce the winner** on a speaker via text-to-speech: [![Open your Home Assistant instance and import this blueprint.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fraw.githubusercontent.com%2Fmholzi%2Fquizify%2Fmain%2Fblueprints%2Fautomation%2Fmholzi%2Fquizify_announce_winner.yaml)
+- **Start a game** from a button, remote or any trigger (`quizify.start_game`): [![Open your Home Assistant instance and import this blueprint.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fraw.githubusercontent.com%2Fmholzi%2Fquizify%2Fmain%2Fblueprints%2Fautomation%2Fmholzi%2Fquizify_start_game_from_trigger.yaml)
+
+| Event | Fires when |
+|---|---|
+| `quizify_game_started` | A game starts (`game_id`, `player_count`, `round_count`) |
+| `quizify_question_shown` | A question goes on screen (`round`, `total_rounds`, `question_type`) |
+| `quizify_time_running_out` | The round timer drops to 5 seconds, once per round (`seconds_remaining`) |
+| `quizify_answer_revealed` | The answer is revealed (`round`, `correct_option_index`, `correct_option_text`, `correct_count`, `total_players`) |
+| `quizify_streak_milestone` | A player hits a streak milestone (`player_name`, `streak`, `bonus`) |
+| `quizify_finale_started` | The finale begins |
+| `quizify_winner_decided` | The winner is decided (`winner_name`, `score`) |
+| `quizify_game_ended` | The game is over (`leaderboard`: list of `name`, `score`) |
+| `quizify_hot_seat_started` | The Hot Seat detour opens (`player_name`, `entrant_name`, `bid_pct`, `stake`, `bidder_count`) |
+| `quizify_wager_open` | The betting window opens (`round`, `total_rounds`, `seconds`) |
+| `quizify_lightning_started` | The Lightning Round starts (`question_count`, `seconds_per_question`, `player_count`) |
+
+---
+
+<br>
+
 ## Question Packs
 
 Quizify ships with **7,310 questions across 53 themed packs in 19 themes**, in German, English and Spanish.
@@ -393,7 +421,7 @@ Quizify speaks your guests' language.
 
 The UI follows the game language (since v1.1.24) — pick German in the pack-picker and the entire admin / player / dashboard surface switches to German labels, tooltips, error messages, fun-fact labels, and end-game awards. Switch to English or Spanish and the whole thing flips.
 
-630 i18n keys, full parity between all three locales, validated in CI.
+633 i18n keys, full parity between all three locales, validated in CI.
 
 ---
 

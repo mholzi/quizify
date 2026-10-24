@@ -1,0 +1,59 @@
+blueprint:
+  name: Quizify - Announce the winner
+  description: >-
+    Reads the winner's name and score out loud on a speaker when Quizify
+    decides the game.
+
+
+    Needs the option **The House Plays Along** switched on (Settings > Devices
+    & services > Quizify > Configure), otherwise Quizify fires no events.
+  domain: automation
+  author: mholzi
+  min_version: 2024.10.0
+  source_url: https://raw.githubusercontent.com/mholzi/quizify/main/blueprints/automation/mholzi/quizify_announce_winner.yaml
+  input:
+    tts_engine:
+      name: Text-to-speech engine
+      selector:
+        entity:
+          domain: tts
+    speaker:
+      name: Speaker
+      selector:
+        entity:
+          domain: media_player
+    message:
+      name: Announcement
+      description: "Use {winner} for the winner's name and {score} for the points."
+      default: "And the winner is {winner}, with {score} points. Congratulations!"
+      selector:
+        text:
+    language:
+      name: Language
+      description: Optional. Leave empty to use the engine's default.
+      default: ""
+      selector:
+        text:
+
+mode: single
+
+variables:
+  message: !input message
+  language: !input language
+  text: >-
+    {{ message
+       | replace('{winner}', trigger.event.data.winner_name | string)
+       | replace('{score}', trigger.event.data.score | string) }}
+
+triggers:
+  - trigger: event
+    event_type: quizify_winner_decided
+
+actions:
+  - action: tts.speak
+    target:
+      entity_id: !input tts_engine
+    data:
+      media_player_entity_id: !input speaker
+      message: "{{ text }}"
+      language: "{{ language if language else none }}"
