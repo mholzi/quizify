@@ -677,42 +677,22 @@ class QuizifyGameState:
         self._powerups_enabled = powerups_enabled
         self._wager_controller.enabled = wager_enabled
 
-        # Group-level adaptive difficulty (#40). Only the explicit "auto" mode
-        # opts in; any fixed difficulty the host pinned (easy/medium/hard) is
-        # honoured verbatim and never calibrated. When auto, the queue is built
-        # across ALL difficulties (no per-difficulty filter) so we can serve the
-        # calibrated target each round.
-        if self.difficulty == DIFFICULTY_AUTO:
-            self._calibrator = GroupCalibrator(
-                start=Difficulty(DIFFICULTY_AUTO_START)
-            )
-            queue_difficulty: str | None = None
-        else:
-            self._calibrator = None
-            queue_difficulty = difficulty
+        queue_difficulty = self._configure_difficulty_calibrator(difficulty)
 
         # Persist for "Play again — same settings" (one-tap rematch).
         # Snapshot here so a later reset_to_lobby keeps these and
         # play_again can reuse them without re-prompting the admin.
-        self._last_settings = {
-            "category": category,
-            "categories": list(categories) if categories else None,
-            "difficulty": difficulty,
-            "num_rounds": num_rounds,
-            "language": self.language,
-            "timer_duration": timer_duration,
-            "lightning_enabled": lightning_enabled,
-            # #670: hot_seat_enabled belongs here for the same reason
-            # lightning_enabled does. Without it the one-tap rematch falls
-            # back to start_game's default (True) and hands a kids' game the
-            # auction its preset had switched off.
-            "hot_seat_enabled": hot_seat_enabled,
-            # #742: here for exactly the reason #670 put hot_seat_enabled here.
-            # A rematch that quietly re-deals Steal and re-opens the betting
-            # window is the same bug in a third and fourth mechanic.
-            "powerups_enabled": powerups_enabled,
-            "wager_enabled": wager_enabled,
-        }
+        self._last_settings = self._build_last_settings(
+            category=category,
+            categories=categories,
+            difficulty=difficulty,
+            num_rounds=num_rounds,
+            timer_duration=timer_duration,
+            lightning_enabled=lightning_enabled,
+            hot_seat_enabled=hot_seat_enabled,
+            powerups_enabled=powerups_enabled,
+            wager_enabled=wager_enabled,
+        )
 
         # Load questions. The bank is preloaded off the event loop at
         # async_setup_entry (#258), so this is a guaranteed cache hit (guarded
@@ -732,6 +712,153 @@ class QuizifyGameState:
         if not self._question_bank._queue:
             raise ValueError(ERR_NO_QUESTIONS_REMAINING)
 
+        self._reset_roster_for_new_game()
+
+        self._game_start_time = time.time()
+
+        _LOGGER.info(
+            "Game started: id=%s, category=%s, difficulty=%s, rounds=%d",
+            self.game_id,
+            category,
+            difficulty,
+            num_rounds,
+        )
+
+        self._notify_state_callbacks()
+        return {
+            "game_id": self.game_id,
+            "total_rounds": self.total_rounds,
+            "category": self.category,
+            "difficulty": self.difficulty,
+        }
+
+    def start_next_question(self) -> Question | None:
+        """Load the next question and transition to QUESTION_ACTIVE.
+
+        Returns the Question or None if no more questions.
+        """
+        if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
+            _LOGGER.warning("Cannot start question in phase %s", self.phase)
+            return None
+
+        # Check round limit
+        if self.round >= self.total_rounds:
+            self.end_game()
+            return None
+
+        question = self._pick_next_question()
+        if question is None:
+            _LOGGER.warning("No more questions available")
+            self.end_game()
+            return None
+
+        self.round += 1
+        self._current_question = question
+
+        # Record this question as shown for history tracking
+        self._question_bank.record_shown(question.id)
+
+        round_duration = self._round_duration_for(question)
+
+        # Reset per-round state
+        for player in self._player_registry.players.values():
+            player.reset_round()
+        # Teams clear their standing answer with the players (#365) — the lock
+        # must not survive into the next question either.
+        self._team_registry.reset_round()
+        self._powerup_manager.reset_round()
+
+        # #656: the final round opens with a betting window instead of the
+        # question. Hold the round back — no start stamp, no timers — so the
+        # answer clock cannot drain while the table is still deciding what to
+        # stake. ``arm_round_timers`` starts the round once the window closes.
+        needs_wager_window = self._needs_wager_window(question)
+        if needs_wager_window:
+            self._phase_controller.begin_wager_window(
+                round_duration, WAGER_WINDOW_DURATION
+            )
+        else:
+            # Stamp round timing + create+start per-player timers.
+            self._phase_controller.begin_round(round_duration)
+
+        self._deal_round_powerup(question)
+
+        if not needs_wager_window:
+            # begin_wager_window already put us in WAGER_ACTIVE; flipping to
+            # QUESTION_ACTIVE here would advertise a round that has no timers.
+            self._phase_controller.enter_question_active()
+        self._round_summary = None
+        # Invalidate the memoized round-summary message (#414): a new round is
+        # live, so the previous round's cached dict must not be served.
+        self._round_summary_msg = None
+        self._round_summary_msg_key = None
+
+        _LOGGER.info(
+            "Round %d/%d started: %s (%.0fs)",
+            self.round,
+            self.total_rounds,
+            question.id,
+            self._round_duration,
+        )
+        self._notify_state_callbacks()
+        return question
+
+    def _configure_difficulty_calibrator(self, difficulty: str | None) -> str | None:
+        """Install or clear the group calibrator; return the queue filter.
+
+        Extracted from :meth:`start_game` (#1124), behaviour unchanged.
+        """
+        # Group-level adaptive difficulty (#40). Only the explicit "auto" mode
+        # opts in; any fixed difficulty the host pinned (easy/medium/hard) is
+        # honoured verbatim and never calibrated. When auto, the queue is built
+        # across ALL difficulties (no per-difficulty filter) so we can serve the
+        # calibrated target each round.
+        if self.difficulty == DIFFICULTY_AUTO:
+            self._calibrator = GroupCalibrator(
+                start=Difficulty(DIFFICULTY_AUTO_START)
+            )
+            queue_difficulty: str | None = None
+        else:
+            self._calibrator = None
+            queue_difficulty = difficulty
+        return queue_difficulty
+
+    def _build_last_settings(
+        self,
+        *,
+        category: str | None,
+        categories: list[str] | None,
+        difficulty: str | None,
+        num_rounds: int,
+        timer_duration: int | None,
+        lightning_enabled: bool,
+        hot_seat_enabled: bool,
+        powerups_enabled: bool,
+        wager_enabled: bool,
+    ) -> dict[str, Any]:
+        """Settings snapshot for the one-tap rematch (from start_game, #1124)."""
+        return {
+            "category": category,
+            "categories": list(categories) if categories else None,
+            "difficulty": difficulty,
+            "num_rounds": num_rounds,
+            "language": self.language,
+            "timer_duration": timer_duration,
+            "lightning_enabled": lightning_enabled,
+            # #670: hot_seat_enabled belongs here for the same reason
+            # lightning_enabled does. Without it the one-tap rematch falls
+            # back to start_game's default (True) and hands a kids' game the
+            # auction its preset had switched off.
+            "hot_seat_enabled": hot_seat_enabled,
+            # #742: here for exactly the reason #670 put hot_seat_enabled here.
+            # A rematch that quietly re-deals Steal and re-opens the betting
+            # window is the same bug in a third and fourth mechanic.
+            "powerups_enabled": powerups_enabled,
+            "wager_enabled": wager_enabled,
+        }
+
+    def _reset_roster_for_new_game(self) -> None:
+        """Drop ghosts, zero players, teams and power-ups (from start_game, #1124)."""
         # Drop players who are no longer connected before resetting
         # scores. Players who disconnected during the previous game
         # would otherwise persist in the new lobby/leaderboard with
@@ -768,38 +895,8 @@ class QuizifyGameState:
         # Reset power-ups
         self._powerup_manager.reset()
 
-        self._game_start_time = time.time()
-
-        _LOGGER.info(
-            "Game started: id=%s, category=%s, difficulty=%s, rounds=%d",
-            self.game_id,
-            category,
-            difficulty,
-            num_rounds,
-        )
-
-        self._notify_state_callbacks()
-        return {
-            "game_id": self.game_id,
-            "total_rounds": self.total_rounds,
-            "category": self.category,
-            "difficulty": self.difficulty,
-        }
-
-    def start_next_question(self) -> Question | None:
-        """Load the next question and transition to QUESTION_ACTIVE.
-
-        Returns the Question or None if no more questions.
-        """
-        if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
-            _LOGGER.warning("Cannot start question in phase %s", self.phase)
-            return None
-
-        # Check round limit
-        if self.round >= self.total_rounds:
-            self.end_game()
-            return None
-
+    def _pick_next_question(self) -> Question | None:
+        """Draw the next question, calibrated in auto mode (#1124)."""
         if self._calibrator is not None:
             # Group-level adaptive ("auto") mode: serve the calibrated target
             # difficulty for this round. The calibrator was fed each completed
@@ -807,59 +904,32 @@ class QuizifyGameState:
             # ever steps one rung at a time and stays put until enough rounds of
             # signal have accumulated, so this is bounded and smooth.
             target = self._calibrator.current_target
-            question = self._question_bank.get_next_question_at_difficulty(
+            return self._question_bank.get_next_question_at_difficulty(
                 target.value
             )
         else:
-            question = self._question_bank.get_next_question(
+            return self._question_bank.get_next_question(
                 category=self.category, difficulty=self.difficulty
             )
-        if question is None:
-            _LOGGER.warning("No more questions available")
-            self.end_game()
-            return None
 
-        self.round += 1
-        self._current_question = question
-
-        # Record this question as shown for history tracking
-        self._question_bank.record_shown(question.id)
-
+    def _round_duration_for(self, question: Question) -> float:
+        """Answer-window length in seconds for ``question`` (#1124)."""
         # Determine time limit. Admin-chosen timer override (set in
         # start_game) wins over the difficulty-derived default — the
         # picker in the admin UI lets the host pick 20/30/45/180s up front
         # (the 180 s option came from #506: reading a question plus four
         # answers takes small kids well over 45 s).
         if self._timer_override is not None:
-            round_duration = float(self._timer_override)
+            return float(self._timer_override)
         else:
             try:
                 diff_enum = Difficulty(question.difficulty)
             except ValueError:
                 diff_enum = Difficulty.MEDIUM
-            round_duration = float(TIME_LIMITS.get(diff_enum, DEFAULT_ROUND_DURATION))
+            return float(TIME_LIMITS.get(diff_enum, DEFAULT_ROUND_DURATION))
 
-        # Reset per-round state
-        for player in self._player_registry.players.values():
-            player.reset_round()
-        # Teams clear their standing answer with the players (#365) — the lock
-        # must not survive into the next question either.
-        self._team_registry.reset_round()
-        self._powerup_manager.reset_round()
-
-        # #656: the final round opens with a betting window instead of the
-        # question. Hold the round back — no start stamp, no timers — so the
-        # answer clock cannot drain while the table is still deciding what to
-        # stake. ``arm_round_timers`` starts the round once the window closes.
-        needs_wager_window = self._needs_wager_window(question)
-        if needs_wager_window:
-            self._phase_controller.begin_wager_window(
-                round_duration, WAGER_WINDOW_DURATION
-            )
-        else:
-            # Stamp round timing + create+start per-player timers.
-            self._phase_controller.begin_round(round_duration)
-
+    def _deal_round_powerup(self, question: Question) -> None:
+        """Hand one eligible player a power-up for this round (#1124)."""
         # Randomly assign a power-up to one player who has not yet received one
         # this game (#340 — at most one power-up per player per game). The
         # granted set persists across rounds and is cleared only on a
@@ -917,26 +987,6 @@ class QuizifyGameState:
                 "No eligible players for power-up this round "
                 "(all connected players already granted)"
             )
-
-        if not needs_wager_window:
-            # begin_wager_window already put us in WAGER_ACTIVE; flipping to
-            # QUESTION_ACTIVE here would advertise a round that has no timers.
-            self._phase_controller.enter_question_active()
-        self._round_summary = None
-        # Invalidate the memoized round-summary message (#414): a new round is
-        # live, so the previous round's cached dict must not be served.
-        self._round_summary_msg = None
-        self._round_summary_msg_key = None
-
-        _LOGGER.info(
-            "Round %d/%d started: %s (%.0fs)",
-            self.round,
-            self.total_rounds,
-            question.id,
-            self._round_duration,
-        )
-        self._notify_state_callbacks()
-        return question
 
     def submit_answer(
         self,
@@ -2089,6 +2139,44 @@ class QuizifyGameState:
         ) and source_player and source_player.submitted:
             return ERR_INVALID_ACTION
 
+        target_id, target_ok = self._resolve_powerup_target(player_id, target_id, held)
+        if not target_ok:
+            return ERR_INVALID_ACTION
+
+        # Determine wrong answer indices for joker
+        wrong_indices = [
+            i for i, a in enumerate(question.answers) if not a.correct
+        ]
+
+        effect = self._powerup_manager.use_powerup(
+            player_id=player_id,
+            target_id=target_id,
+            wrong_answer_indices=wrong_indices,
+        )
+
+        if effect is None:
+            return ERR_INVALID_ACTION
+
+        if self._apply_powerup_effect(effect, player_id, target_id) is not None:
+            return ERR_INVALID_ACTION
+
+        _LOGGER.info(
+            "Power-up %s used by %s (target: %s)",
+            effect.type.value,
+            player_id,
+            target_id,
+        )
+
+        return effect
+
+    def _resolve_powerup_target(
+        self, player_id: str, target_id: str | None, held: PowerUpType | None
+    ) -> tuple[str | None, bool]:
+        """Validate/choose the target for ``held`` (from use_powerup, #1124).
+
+        Returns ``(target_id, ok)``; ``ok`` False means "reject with
+        ERR_INVALID_ACTION" and nothing has been consumed.
+        """
         # Resolve target for opponent-targeted power-ups BEFORE consuming
         # inventory. The player UI passes an explicit target via picker, but
         # we also accept null and pick a random active opponent (safety net
@@ -2108,7 +2196,7 @@ class QuizifyGameState:
             )
             teammates = set(own_team.members) if own_team is not None else set()
             if target_id and target_id in teammates:
-                return ERR_INVALID_ACTION
+                return None, False
             if (
                 not target_id
                 or target_id == player_id
@@ -2129,7 +2217,7 @@ class QuizifyGameState:
                     and (held != PowerUpType.STEAL or p.submitted)
                 ]
                 if not opponents:
-                    return ERR_INVALID_ACTION
+                    return None, False
                 target_id = random.choice(opponents)
 
         # Explicit-target submitted-check (random fallback already filters above).
@@ -2137,28 +2225,23 @@ class QuizifyGameState:
         if target_id:
             target_check = self._player_registry.get_player(target_id)
             if held == PowerUpType.FREEZE and target_check and target_check.submitted:
-                return ERR_INVALID_ACTION
+                return None, False
             if (
                 held == PowerUpType.STEAL
                 and target_check
                 and not target_check.submitted
             ):
-                return ERR_INVALID_ACTION
+                return None, False
 
-        # Determine wrong answer indices for joker
-        wrong_indices = [
-            i for i, a in enumerate(question.answers) if not a.correct
-        ]
+        return target_id, True
 
-        effect = self._powerup_manager.use_powerup(
-            player_id=player_id,
-            target_id=target_id,
-            wrong_answer_indices=wrong_indices,
-        )
+    def _apply_powerup_effect(
+        self, effect: PowerUpEffect, player_id: str, target_id: str | None
+    ) -> str | None:
+        """Apply a consumed power-up's side effects (from use_powerup, #1124).
 
-        if effect is None:
-            return ERR_INVALID_ACTION
-
+        Returns ``ERR_INVALID_ACTION`` if a STEAL target vanished, else None.
+        """
         # Count every successful power-up use for the finale "POWER-UPS GENUTZT"
         # stat. Done here (not per type below) so all four types contribute.
         source_player = self._player_registry.get_player(player_id)
@@ -2216,14 +2299,7 @@ class QuizifyGameState:
             source_player.score = max(0, source_player.score + stolen)
             effect.stolen_points = stolen
 
-        _LOGGER.info(
-            "Power-up %s used by %s (target: %s)",
-            effect.type.value,
-            player_id,
-            target_id,
-        )
-
-        return effect
+        return None
 
     # ------------------------------------------------------------------
     # State access
