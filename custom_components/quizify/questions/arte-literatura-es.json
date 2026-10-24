@@ -1,0 +1,3323 @@
+{
+  "name": "Arte y literatura",
+  "language": "es",
+  "version": "1.0",
+  "theme": "trivia",
+  "questions": [
+    {
+      "id": "artlit_es_001",
+      "question": "¿Quién pintó latas de sopa Campbell y retratos de Marilyn Monroe?",
+      "answers": [
+        {
+          "text": "Andy Warhol",
+          "correct": true
+        },
+        {
+          "text": "Roy Lichtenstein",
+          "correct": false
+        },
+        {
+          "text": "Jackson Pollock",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Warhol llamó 'Factory' a su estudio, donde producía obras en serie con serigrafía.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_002",
+      "question": "¿Cómo se llama la técnica de Gaudí que cubre superficies con fragmentos de cerámica rota, como en el banco del Park Güell?",
+      "answers": [
+        {
+          "text": "Trencadís",
+          "correct": true
+        },
+        {
+          "text": "Esgrafiado",
+          "correct": false
+        },
+        {
+          "text": "Taracea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La palabra viene del catalán 'trencar', romper. Gaudí aprovechaba restos de azulejos y piezas de cerámica desechadas.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_003",
+      "question": "¿Qué cuadro de Frida Kahlo la muestra con el pelo cortado y un traje de hombre grande?",
+      "answers": [
+        {
+          "text": "Autorretrato con pelo cortado",
+          "correct": true
+        },
+        {
+          "text": "Las dos Fridas",
+          "correct": false
+        },
+        {
+          "text": "Autorretrato con collar de espinas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lo pintó en 1940, poco después de su divorcio de Diego Rivera. Encima del cuadro escribió la letra de una canción popular sobre el amor.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_004",
+      "question": "¿Qué obra de Lorca trata de una viuda que impone ocho años de luto a sus cinco hijas?",
+      "answers": [
+        {
+          "text": "La casa de Bernarda Alba",
+          "correct": true
+        },
+        {
+          "text": "Bodas de sangre",
+          "correct": false
+        },
+        {
+          "text": "Yerma",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La terminó en junio de 1936 y no se estrenó hasta 1945, en Buenos Aires.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_005",
+      "question": "¿Quién pintó 'Las Meninas', el famoso retrato de la corte de Felipe IV?",
+      "answers": [
+        {
+          "text": "Diego Velázquez",
+          "correct": true
+        },
+        {
+          "text": "Francisco de Goya",
+          "correct": false
+        },
+        {
+          "text": "El Greco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Velázquez se pintó a sí mismo a la izquierda, ante un lienzo enorme. El cuadro cuelga hoy en el Museo del Prado.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_006",
+      "question": "¿Qué arquitecto diseñó el Museo Guggenheim de Nueva York, con forma de espiral?",
+      "answers": [
+        {
+          "text": "Frank Lloyd Wright",
+          "correct": true
+        },
+        {
+          "text": "Le Corbusier",
+          "correct": false
+        },
+        {
+          "text": "Mies van der Rohe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se abrió en 1959, pocos meses después de la muerte de Wright. Las obras se ven al bajar una rampa continua.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_007",
+      "question": "¿Qué figura ocupa el centro de 'Las Meninas', rodeada de damas de honor?",
+      "answers": [
+        {
+          "text": "La infanta Margarita",
+          "correct": true
+        },
+        {
+          "text": "La reina Mariana",
+          "correct": false
+        },
+        {
+          "text": "La infanta María Teresa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Margarita tenía unos cinco años cuando se pintó el cuadro. En el fondo, un espejo refleja a los reyes.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_008",
+      "question": "¿Quién escribió 'Romeo y Julieta'?",
+      "answers": [
+        {
+          "text": "William Shakespeare",
+          "correct": true
+        },
+        {
+          "text": "Christopher Marlowe",
+          "correct": false
+        },
+        {
+          "text": "Charles Dickens",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La historia transcurre en Verona y se escribió hacia 1595.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_009",
+      "question": "¿Qué escritor creó 'El señor de los anillos'?",
+      "answers": [
+        {
+          "text": "J. R. R. Tolkien",
+          "correct": true
+        },
+        {
+          "text": "C. S. Lewis",
+          "correct": false
+        },
+        {
+          "text": "George R. R. Martin",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tolkien era profesor de Oxford y creó idiomas inventados mucho antes de escribir la novela.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_010",
+      "question": "¿Qué escritor español ganó el Premio Nobel de Literatura en 1989?",
+      "answers": [
+        {
+          "text": "Camilo José Cela",
+          "correct": true
+        },
+        {
+          "text": "Miguel Delibes",
+          "correct": false
+        },
+        {
+          "text": "Pío Baroja",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Debutó con 'La familia de Pascual Duarte', una novela de 1942 que tuvo un éxito enorme.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_011",
+      "question": "¿En qué ciudad está el museo del Hermitage, instalado en el antiguo Palacio de Invierno?",
+      "answers": [
+        {
+          "text": "San Petersburgo",
+          "correct": true
+        },
+        {
+          "text": "Moscú",
+          "correct": false
+        },
+        {
+          "text": "Kiev",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La colección empezó con Catalina la Grande. Se dice que, para ver cada obra durante un minuto, se necesitarían años.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_012",
+      "question": "¿Quién escribió 'El principito'?",
+      "answers": [
+        {
+          "text": "Antoine de Saint-Exupéry",
+          "correct": true
+        },
+        {
+          "text": "Albert Camus",
+          "correct": false
+        },
+        {
+          "text": "Jules Verne",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Saint-Exupéry era piloto y desapareció en 1944 durante un vuelo de reconocimiento sobre el Mediterráneo.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_013",
+      "question": "¿Qué pintor impresionista pintó una y otra vez los nenúfares de su jardín en Giverny?",
+      "answers": [
+        {
+          "text": "Claude Monet",
+          "correct": true
+        },
+        {
+          "text": "Édouard Manet",
+          "correct": false
+        },
+        {
+          "text": "Auguste Renoir",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pintó cientos de cuadros de su estanque. Con los años su vista empeoró por las cataratas y los colores de sus últimas obras se volvieron más cálidos.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_014",
+      "question": "¿Qué artista colombiano es famoso por sus figuras voluminosas, como mujeres, gatos y frutas rollizas?",
+      "answers": [
+        {
+          "text": "Fernando Botero",
+          "correct": true
+        },
+        {
+          "text": "Oswaldo Guayasamín",
+          "correct": false
+        },
+        {
+          "text": "Alejandro Obregón",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nació en Medellín en 1932. Donó cientos de obras a museos de su ciudad natal y de Bogotá, y sus esculturas están en plazas de medio mundo.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_015",
+      "question": "¿Qué novela de Isabel Allende narra la saga de la familia Trueba?",
+      "answers": [
+        {
+          "text": "La casa de los espíritus",
+          "correct": true
+        },
+        {
+          "text": "Eva Luna",
+          "correct": false
+        },
+        {
+          "text": "Paula",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Allende empezó a escribirla en 1981, en forma de carta a su abuelo moribundo, a quien no podía visitar en Chile.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_016",
+      "question": "¿Qué premio literario español lleva el nombre de un grupo editorial y destaca por su altísima dotación?",
+      "answers": [
+        {
+          "text": "Premio Planeta",
+          "correct": true
+        },
+        {
+          "text": "Premio Nadal",
+          "correct": false
+        },
+        {
+          "text": "Premio Cervantes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lleva el nombre del Grupo Planeta. Se falla en Barcelona a mediados de octubre y el ganador recibe un millón de euros.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_017",
+      "question": "¿Qué museo de París ocupa una antigua estación de tren?",
+      "answers": [
+        {
+          "text": "El Museo de Orsay",
+          "correct": true
+        },
+        {
+          "text": "El Louvre",
+          "correct": false
+        },
+        {
+          "text": "El Pompidou",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Abrió como museo en 1986. Guarda obras de Monet, Renoir, Degas y Van Gogh.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_018",
+      "question": "¿Qué escritor francés escribió 'Los tres mosqueteros'?",
+      "answers": [
+        {
+          "text": "Alexandre Dumas",
+          "correct": true
+        },
+        {
+          "text": "Victor Hugo",
+          "correct": false
+        },
+        {
+          "text": "Julio Verne",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los tres mosqueteros son Athos, Porthos y Aramis. D'Artagnan, el cuarto, es el protagonista y fue un personaje real.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_019",
+      "question": "¿Qué poeta escribió 'Campos de Castilla' y 'Caminante, no hay camino'?",
+      "answers": [
+        {
+          "text": "Antonio Machado",
+          "correct": true
+        },
+        {
+          "text": "Miguel Hernández",
+          "correct": false
+        },
+        {
+          "text": "Gerardo Diego",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Murió en 1939 en Colliure, un pueblo francés al que huyó con su madre al final de la guerra.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_020",
+      "question": "¿Cómo se llama el máximo premio literario en lengua española, que se entrega cada 23 de abril?",
+      "answers": [
+        {
+          "text": "Premio Cervantes",
+          "correct": true
+        },
+        {
+          "text": "Premio Planeta",
+          "correct": false
+        },
+        {
+          "text": "Premio Nadal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La fecha recuerda la muerte de Cervantes y se celebra en Alcalá de Henares, su ciudad natal.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_021",
+      "question": "¿Qué pintor sevillano es famoso por sus Inmaculadas y por escenas con niños de la calle?",
+      "answers": [
+        {
+          "text": "Bartolomé Murillo",
+          "correct": true
+        },
+        {
+          "text": "Francisco de Zurbarán",
+          "correct": false
+        },
+        {
+          "text": "José de Ribera",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Murillo fue muy popular en toda Europa en el siglo XVIII y sus niños se copiaron mucho.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_022",
+      "question": "¿Qué accidente cambió la vida de Frida Kahlo cuando tenía 18 años?",
+      "answers": [
+        {
+          "text": "Un choque entre un autobús y un tranvía",
+          "correct": true
+        },
+        {
+          "text": "Una caída desde un caballo",
+          "correct": false
+        },
+        {
+          "text": "Un incendio en su casa",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pasó meses en cama y empezó a pintar con un caballete adaptado y un espejo sobre la cama.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_023",
+      "question": "¿Quién escribió '1984', con el Gran Hermano?",
+      "answers": [
+        {
+          "text": "George Orwell",
+          "correct": true
+        },
+        {
+          "text": "Aldous Huxley",
+          "correct": false
+        },
+        {
+          "text": "Ray Bradbury",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "George Orwell es un seudónimo. Su nombre real era Eric Blair.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_024",
+      "question": "¿Quién escribió 'Veinte poemas de amor y una canción desesperada'?",
+      "answers": [
+        {
+          "text": "Pablo Neruda",
+          "correct": true
+        },
+        {
+          "text": "Octavio Paz",
+          "correct": false
+        },
+        {
+          "text": "Jorge Luis Borges",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lo publicó en 1924, con apenas veinte años. Fue uno de los libros de poesía más vendidos en lengua española.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_025",
+      "question": "¿Quién escribió 'La muerte de Artemio Cruz'?",
+      "answers": [
+        {
+          "text": "Carlos Fuentes",
+          "correct": true
+        },
+        {
+          "text": "Juan Rulfo",
+          "correct": false
+        },
+        {
+          "text": "Octavio Paz",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La novela, de 1962, cuenta la vida de un político en su lecho de muerte. Fuentes fue una figura clave del llamado 'boom' latinoamericano.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_026",
+      "question": "¿Qué apodo recibe la Casa Milà de Gaudí en Barcelona?",
+      "answers": [
+        {
+          "text": "La Pedrera",
+          "correct": true
+        },
+        {
+          "text": "La Ballena",
+          "correct": false
+        },
+        {
+          "text": "El Dragón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El apodo nació como burla por su fachada ondulada de piedra, que recuerda a una cantera.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_027",
+      "question": "¿Qué objeto aparece 'derritiéndose' en 'La persistencia de la memoria' de Dalí?",
+      "answers": [
+        {
+          "text": "Relojes",
+          "correct": true
+        },
+        {
+          "text": "Quesos",
+          "correct": false
+        },
+        {
+          "text": "Velas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dalí contó que la idea le vino al ver un queso camembert que se derretía al sol. El cuadro es de 1931 y mide solo 24 por 33 centímetros.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_028",
+      "question": "¿Qué cuadro de Monet dio nombre al impresionismo?",
+      "answers": [
+        {
+          "text": "Impresión, sol naciente",
+          "correct": true
+        },
+        {
+          "text": "Mujeres en el jardín",
+          "correct": false
+        },
+        {
+          "text": "Los nenúfares",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un crítico lo usó con burla en 1874 y los propios pintores adoptaron el nombre, que acabó siendo una marca de prestigio.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_029",
+      "question": "¿En qué localidad catalana está el Teatro-Museo Dalí?",
+      "answers": [
+        {
+          "text": "Figueres",
+          "correct": true
+        },
+        {
+          "text": "Cadaqués",
+          "correct": false
+        },
+        {
+          "text": "Girona",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dalí nació en Figueres y está enterrado en una cripta bajo el escenario del museo, que él mismo diseñó.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_030",
+      "question": "¿Qué escultor suizo creó figuras humanas extremadamente alargadas y delgadas?",
+      "answers": [
+        {
+          "text": "Alberto Giacometti",
+          "correct": true
+        },
+        {
+          "text": "Constantin Brancusi",
+          "correct": false
+        },
+        {
+          "text": "Alexander Calder",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sus obras se venden por millones. Una de ellas, 'El hombre que camina', es de las esculturas más caras que se han subastado.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_031",
+      "question": "¿Qué novela corta de García Márquez empieza anunciando que van a matar a Santiago Nasar?",
+      "answers": [
+        {
+          "text": "Crónica de una muerte anunciada",
+          "correct": true
+        },
+        {
+          "text": "El coronel no tiene quien le escriba",
+          "correct": false
+        },
+        {
+          "text": "Del amor y otros demonios",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se basa en un crimen real ocurrido en 1951 en Sucre, Colombia.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_032",
+      "question": "¿Quién escribió la 'Odisea', el viaje de regreso de Ulises a casa?",
+      "answers": [
+        {
+          "text": "Homero",
+          "correct": true
+        },
+        {
+          "text": "Virgilio",
+          "correct": false
+        },
+        {
+          "text": "Sófocles",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ulises tarda diez años en volver tras la guerra de Troya.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_033",
+      "question": "¿En qué batalla naval participó Cervantes y quedó con la mano izquierda inutilizada?",
+      "answers": [
+        {
+          "text": "Lepanto",
+          "correct": true
+        },
+        {
+          "text": "Trafalgar",
+          "correct": false
+        },
+        {
+          "text": "Salamina",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cinco años después, en 1575, lo capturaron unos piratas y pasó cinco años cautivo en Argel.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_034",
+      "question": "¿Quién escribió 'Marianela' y 'Fortunata y Jacinta'?",
+      "answers": [
+        {
+          "text": "Benito Pérez Galdós",
+          "correct": true
+        },
+        {
+          "text": "Leopoldo Alas, 'Clarín'",
+          "correct": false
+        },
+        {
+          "text": "Emilia Pardo Bazán",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sus 'Episodios nacionales' suman 46 novelas que cuentan la historia de España en el siglo XIX.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_035",
+      "question": "¿Quién escribió 'Fuenteovejuna', donde todo un pueblo asume un crimen?",
+      "answers": [
+        {
+          "text": "Lope de Vega",
+          "correct": true
+        },
+        {
+          "text": "Calderón de la Barca",
+          "correct": false
+        },
+        {
+          "text": "Tirso de Molina",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cuando el juez pregunta quién mató al comendador, todo el pueblo responde 'Fuenteovejuna lo hizo'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_036",
+      "question": "¿Quién escribió 'Frankenstein'?",
+      "answers": [
+        {
+          "text": "Mary Shelley",
+          "correct": true
+        },
+        {
+          "text": "Bram Stoker",
+          "correct": false
+        },
+        {
+          "text": "Charlotte Brontë",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La idea surgió en 1816, en un verano frío y lluvioso, cuando ella tenía 18 años y un grupo de amigos retó a escribir historias de terror.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_037",
+      "question": "¿Qué animal es el protagonista de 'Platero y yo', de Juan Ramón Jiménez?",
+      "answers": [
+        {
+          "text": "Un burro",
+          "correct": true
+        },
+        {
+          "text": "Un caballo",
+          "correct": false
+        },
+        {
+          "text": "Un perro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Platero es pequeño, peludo y suave. El libro transcurre en Moguer, su pueblo. Jiménez ganó el Nobel en 1956.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_038",
+      "question": "¿Qué poeta nicaragüense fue el gran impulsor del modernismo, con 'Azul…'?",
+      "answers": [
+        {
+          "text": "Rubén Darío",
+          "correct": true
+        },
+        {
+          "text": "José Martí",
+          "correct": false
+        },
+        {
+          "text": "Amado Nervo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nació en 1867 y fue una figura clave en España y Latinoamérica. Su libro 'Azul…' es de 1888.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_039",
+      "question": "¿Qué escritor francés escribió 'Veinte mil leguas de viaje submarino'?",
+      "answers": [
+        {
+          "text": "Julio Verne",
+          "correct": true
+        },
+        {
+          "text": "Alexandre Dumas",
+          "correct": false
+        },
+        {
+          "text": "Víctor Hugo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El capitán del submarino Nautilus se llama Nemo, que en latín significa 'nadie'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_040",
+      "question": "¿Quién pintó el 'Cuadrado negro sobre fondo blanco' (1915), uno de los hitos del arte abstracto?",
+      "answers": [
+        {
+          "text": "Kazimir Malévich",
+          "correct": true
+        },
+        {
+          "text": "Wassily Kandinsky",
+          "correct": false
+        },
+        {
+          "text": "Piet Mondrian",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lo mostró por primera vez en una esquina de sala, donde en las casas rusas se colgaba un icono religioso.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_041",
+      "question": "¿Qué pintor catalán es autor de obras con estrellas, lunas y figuras en colores primarios, y tiene una fundación en Montjuïc?",
+      "answers": [
+        {
+          "text": "Joan Miró",
+          "correct": true
+        },
+        {
+          "text": "Antoni Tàpies",
+          "correct": false
+        },
+        {
+          "text": "Josep Maria Sert",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su mosaico del suelo de la Rambla de Barcelona se encuentra entre los más pisados de la ciudad.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_042",
+      "question": "¿Qué pintor realizó 'Guernica' en 1937 como protesta por el bombardeo de una localidad vasca?",
+      "answers": [
+        {
+          "text": "Pablo Picasso",
+          "correct": true
+        },
+        {
+          "text": "Salvador Dalí",
+          "correct": false
+        },
+        {
+          "text": "Joan Miró",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lo pintó en pocas semanas para el pabellón de España de la Exposición de París. Es un cuadro en blanco, negro y grises, sin una gota de color.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_043",
+      "question": "¿Cuál es el nombre real de la labradora a quien Don Quijote llama Dulcinea del Toboso?",
+      "answers": [
+        {
+          "text": "Aldonza Lorenzo",
+          "correct": true
+        },
+        {
+          "text": "Marcela",
+          "correct": false
+        },
+        {
+          "text": "Teresa Panza",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Don Quijote la imagina como una dama perfecta, aunque apenas la conoce y ella ni lo sabe.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_044",
+      "question": "¿Qué poeta de la Generación del 27 ganó el Nobel de Literatura en 1977?",
+      "answers": [
+        {
+          "text": "Vicente Aleixandre",
+          "correct": true
+        },
+        {
+          "text": "Luis Cernuda",
+          "correct": false
+        },
+        {
+          "text": "Rafael Alberti",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su libro 'Sombra del paraíso' es de los más reconocidos. Vivió casi toda la vida en Madrid, en una casa de Velintonia.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_045",
+      "question": "¿Quién creó el personaje de Don Juan en 'El burlador de Sevilla'?",
+      "answers": [
+        {
+          "text": "Tirso de Molina",
+          "correct": true
+        },
+        {
+          "text": "Lope de Vega",
+          "correct": false
+        },
+        {
+          "text": "José Zorrilla",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tirso de Molina era seudónimo de un fraile mercedario, Gabriel Téllez.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_046",
+      "question": "¿Qué cuadro de Picasso de 1907 retrata a mujeres de un burdel de una calle de Barcelona?",
+      "answers": [
+        {
+          "text": "Las señoritas de Aviñón",
+          "correct": true
+        },
+        {
+          "text": "Los saltimbanquis",
+          "correct": false
+        },
+        {
+          "text": "La vida",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El nombre viene de la calle de Avinyó, en Barcelona. Muchos consideran que fue el punto de partida del cubismo.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_047",
+      "question": "¿Qué dictador protagoniza 'La fiesta del Chivo', de Vargas Llosa?",
+      "answers": [
+        {
+          "text": "Rafael Leónidas Trujillo",
+          "correct": true
+        },
+        {
+          "text": "Augusto Pinochet",
+          "correct": false
+        },
+        {
+          "text": "Anastasio Somoza",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'El Chivo' era el apodo de Trujillo, quien gobernó la República Dominicana durante más de treinta años.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_048",
+      "question": "¿Cómo se llama la etapa de Picasso, entre 1901 y 1904, de cuadros en tonos azules?",
+      "answers": [
+        {
+          "text": "Periodo azul",
+          "correct": true
+        },
+        {
+          "text": "Periodo rosa",
+          "correct": false
+        },
+        {
+          "text": "Periodo africano",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se asocia con la tristeza que le dejó la muerte de su amigo Carlos Casagemas. Los mendigos y ciegos son sus modelos habituales.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_049",
+      "question": "¿Qué cueva cántabra es famosa por sus pinturas rupestres de bisontes?",
+      "answers": [
+        {
+          "text": "Altamira",
+          "correct": true
+        },
+        {
+          "text": "Lascaux",
+          "correct": false
+        },
+        {
+          "text": "Covadonga",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En 1879, María, la hija de ocho años del aficionado Marcelino Sanz de Sautuola, fue la primera en ver los bisontes del techo.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_050",
+      "question": "¿Contra qué ataca Don Quijote creyendo que son gigantes?",
+      "answers": [
+        {
+          "text": "Molinos de viento",
+          "correct": true
+        },
+        {
+          "text": "Torres de iglesia",
+          "correct": false
+        },
+        {
+          "text": "Árboles enormes",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El episodio es tan famoso que luchar contra molinos de viento significa en español pelear contra enemigos imaginarios.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_051",
+      "question": "¿Qué arquitecto estadounidense diseñó la Ciudad de la Cultura de Galicia, en Santiago de Compostela?",
+      "answers": [
+        {
+          "text": "Peter Eisenman",
+          "correct": true
+        },
+        {
+          "text": "Frank Gehry",
+          "correct": false
+        },
+        {
+          "text": "Richard Meier",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su forma se inspira en el mapa de la ciudad vieja y en la concha de los peregrinos.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_052",
+      "question": "¿Qué famoso poeta italiano escribió la 'Divina comedia'?",
+      "answers": [
+        {
+          "text": "Dante Alighieri",
+          "correct": true
+        },
+        {
+          "text": "Giovanni Boccaccio",
+          "correct": false
+        },
+        {
+          "text": "Petrarca",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En el 'Infierno' Dante es guiado por el poeta romano Virgilio.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_053",
+      "question": "¿Qué poeta mexicano ganó el Premio Nobel de Literatura en 1990?",
+      "answers": [
+        {
+          "text": "Octavio Paz",
+          "correct": true
+        },
+        {
+          "text": "Carlos Fuentes",
+          "correct": false
+        },
+        {
+          "text": "Juan Rulfo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su ensayo 'El laberinto de la soledad', de 1950, reflexiona sobre la identidad mexicana.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_054",
+      "question": "¿Qué escritor uruguayo escribió 'Cuentos de amor, de locura y de muerte'?",
+      "answers": [
+        {
+          "text": "Horacio Quiroga",
+          "correct": true
+        },
+        {
+          "text": "Mario Benedetti",
+          "correct": false
+        },
+        {
+          "text": "Juan Carlos Onetti",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Quiroga vivió años en la selva de Misiones, que aparece en muchos de sus relatos.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_055",
+      "question": "¿Qué arquitecto diseñó la Sagrada Familia de Barcelona?",
+      "answers": [
+        {
+          "text": "Antoni Gaudí",
+          "correct": true
+        },
+        {
+          "text": "Santiago Calatrava",
+          "correct": false
+        },
+        {
+          "text": "Oscar Niemeyer",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gaudí murió en 1926, atropellado por un tranvía, con la obra sin terminar. Las obras siguen, más de 140 años después de la primera piedra.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_056",
+      "question": "¿Qué poeta cubano escribió los 'Versos sencillos', cuyos versos inspiraron la canción 'Guantanamera'?",
+      "answers": [
+        {
+          "text": "José Martí",
+          "correct": true
+        },
+        {
+          "text": "Nicolás Guillén",
+          "correct": false
+        },
+        {
+          "text": "Rubén Darío",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Murió en combate en 1895, en la guerra de independencia de Cuba.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_057",
+      "question": "¿Quién diseñó el Museo Soumaya de Ciudad de México?",
+      "answers": [
+        {
+          "text": "Fernando Romero",
+          "correct": true
+        },
+        {
+          "text": "Luis Barragán",
+          "correct": false
+        },
+        {
+          "text": "Pedro Ramírez Vázquez",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su fachada está cubierta de miles de hexágonos de aluminio. Guarda esculturas de Rodin y obras de Dalí y Rivera.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_058",
+      "question": "¿Qué pintor español pintó 'El caballero de la mano en el pecho'?",
+      "answers": [
+        {
+          "text": "El Greco",
+          "correct": true
+        },
+        {
+          "text": "Velázquez",
+          "correct": false
+        },
+        {
+          "text": "Murillo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nadie sabe quién era el retratado. El cuadro se exhibe en el Prado.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_059",
+      "question": "¿Qué escultor vasco es autor del 'Peine del Viento' de San Sebastián?",
+      "answers": [
+        {
+          "text": "Eduardo Chillida",
+          "correct": true
+        },
+        {
+          "text": "Jorge Oteiza",
+          "correct": false
+        },
+        {
+          "text": "Pablo Gargallo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las tres piezas de acero están ancladas en las rocas del final de la bahía de La Concha, y se inauguraron en 1977.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_060",
+      "question": "¿Quién escribió 'Don Juan Tenorio', que muchos teatros representan cada 1 de noviembre?",
+      "answers": [
+        {
+          "text": "José Zorrilla",
+          "correct": true
+        },
+        {
+          "text": "Duque de Rivas",
+          "correct": false
+        },
+        {
+          "text": "José de Espronceda",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La tradición de verla por Todos los Santos se mantiene desde el siglo XIX.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_061",
+      "question": "¿Qué novela de Laura Esquivel mezcla recetas de cocina con una historia de amor en el México revolucionario?",
+      "answers": [
+        {
+          "text": "Como agua para chocolate",
+          "correct": true
+        },
+        {
+          "text": "La casa de los espíritus",
+          "correct": false
+        },
+        {
+          "text": "Ardiente paciencia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cada capítulo empieza con una receta, uno por mes del año. La novela ya es un clásico.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_062",
+      "question": "¿Quién escribió 'Moby Dick', sobre un capitán obsesionado con una ballena blanca?",
+      "answers": [
+        {
+          "text": "Herman Melville",
+          "correct": true
+        },
+        {
+          "text": "Mark Twain",
+          "correct": false
+        },
+        {
+          "text": "Jack London",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cuando se publicó, en 1851, tuvo poco éxito. Se valoró de verdad décadas después de la muerte del autor.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_063",
+      "question": "¿En qué museo de Madrid se exhibe el 'Guernica'?",
+      "answers": [
+        {
+          "text": "Museo Reina Sofía",
+          "correct": true
+        },
+        {
+          "text": "Museo Thyssen",
+          "correct": false
+        },
+        {
+          "text": "Museo Cerralbo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Picasso había pedido que el cuadro no volviera a España hasta que regresara la democracia. Llegó en 1981, tras la muerte de Franco.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_064",
+      "question": "¿Qué escritora creó al detective belga Hércules Poirot?",
+      "answers": [
+        {
+          "text": "Agatha Christie",
+          "correct": true
+        },
+        {
+          "text": "Patricia Highsmith",
+          "correct": false
+        },
+        {
+          "text": "Daphne du Maurier",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su obra de teatro 'La ratonera' se representa en Londres desde 1952.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_065",
+      "question": "¿Qué novela de Gabriel García Márquez narra la historia de la familia Buendía en el pueblo de Macondo?",
+      "answers": [
+        {
+          "text": "Cien años de soledad",
+          "correct": true
+        },
+        {
+          "text": "El amor en los tiempos del cólera",
+          "correct": false
+        },
+        {
+          "text": "Crónica de una muerte anunciada",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se publicó en 1967 en Buenos Aires y ha vendido decenas de millones de ejemplares en todo el mundo.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_066",
+      "question": "¿Qué escultor francés creó 'El pensador'?",
+      "answers": [
+        {
+          "text": "Auguste Rodin",
+          "correct": true
+        },
+        {
+          "text": "Edgar Degas",
+          "correct": false
+        },
+        {
+          "text": "Antoine Bourdelle",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Originalmente era parte de 'La puerta del Infierno', encargada para un museo de París, y representaba a Dante.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_067",
+      "question": "¿Qué poeta granadino escribió el 'Romancero gitano'?",
+      "answers": [
+        {
+          "text": "Federico García Lorca",
+          "correct": true
+        },
+        {
+          "text": "Antonio Machado",
+          "correct": false
+        },
+        {
+          "text": "Rafael Alberti",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lorca fue asesinado en agosto de 1936, al comienzo de la Guerra Civil, cuando tenía 38 años.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_068",
+      "question": "¿Quién escribió la saga de 'Harry Potter'?",
+      "answers": [
+        {
+          "text": "J. K. Rowling",
+          "correct": true
+        },
+        {
+          "text": "Roald Dahl",
+          "correct": false
+        },
+        {
+          "text": "Suzanne Collins",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Una docena de editoriales rechazó el primer libro antes de que Bloomsbury lo aceptara.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_069",
+      "question": "¿Quién escribió 'Don Quijote de la Mancha'?",
+      "answers": [
+        {
+          "text": "Miguel de Cervantes",
+          "correct": true
+        },
+        {
+          "text": "Lope de Vega",
+          "correct": false
+        },
+        {
+          "text": "Francisco de Quevedo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cervantes perdió el uso de la mano izquierda en la batalla de Lepanto, en 1571, y por eso lo llamaban 'el manco de Lepanto'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_070",
+      "question": "¿Qué pintora mexicana es famosa por sus autorretratos y sus cejas unidas?",
+      "answers": [
+        {
+          "text": "Frida Kahlo",
+          "correct": true
+        },
+        {
+          "text": "Georgia O'Keeffe",
+          "correct": false
+        },
+        {
+          "text": "Remedios Varo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Más de un tercio de sus cuadros son autorretratos. Decía que se pintaba a sí misma porque pasaba mucho tiempo sola y era el tema que mejor conocía.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_071",
+      "question": "¿Qué artista uruguayo dibujó un mapa de América del Sur al revés con la frase 'Nuestro norte es el Sur'?",
+      "answers": [
+        {
+          "text": "Joaquín Torres García",
+          "correct": true
+        },
+        {
+          "text": "Pedro Figari",
+          "correct": false
+        },
+        {
+          "text": "Rafael Barradas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Torres García fundó en Montevideo un taller para crear un arte propio de América.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_072",
+      "question": "¿Qué escultor barroco creó 'El éxtasis de Santa Teresa' en Roma?",
+      "answers": [
+        {
+          "text": "Gian Lorenzo Bernini",
+          "correct": true
+        },
+        {
+          "text": "Miguel Ángel",
+          "correct": false
+        },
+        {
+          "text": "Antonio Canova",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bernini combinó escultura, arquitectura y luz natural en la capilla Cornaro, que parece un teatro.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_073",
+      "question": "¿Qué arquitecto valenciano diseñó la Ciudad de las Artes y las Ciencias de Valencia?",
+      "answers": [
+        {
+          "text": "Santiago Calatrava",
+          "correct": true
+        },
+        {
+          "text": "Ricardo Bofill",
+          "correct": false
+        },
+        {
+          "text": "Rafael Moneo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Calatrava también diseñó el puente Zubizuri de Bilbao y el Puente de la Mujer de Buenos Aires.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_074",
+      "question": "¿Qué escritor francés escribió 'El extranjero', que empieza con la muerte de la madre del protagonista?",
+      "answers": [
+        {
+          "text": "Albert Camus",
+          "correct": true
+        },
+        {
+          "text": "Jean-Paul Sartre",
+          "correct": false
+        },
+        {
+          "text": "Marcel Proust",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Camus ganó el Nobel en 1957. La primera frase de la novela es 'Hoy ha muerto mamá'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_075",
+      "question": "¿Qué serie de Goya incluye el 'Saturno devorando a su hijo'?",
+      "answers": [
+        {
+          "text": "Las Pinturas negras",
+          "correct": true
+        },
+        {
+          "text": "Los Caprichos",
+          "correct": false
+        },
+        {
+          "text": "Los Desastres de la guerra",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Goya las pintó directamente en las paredes de su casa, la Quinta del Sordo. Más tarde se trasladaron a lienzo y hoy se ven en el Prado.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_076",
+      "question": "¿De qué color era la tinta con la que escribía Pablo Neruda?",
+      "answers": [
+        {
+          "text": "Verde",
+          "correct": true
+        },
+        {
+          "text": "Roja",
+          "correct": false
+        },
+        {
+          "text": "Azul",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Neruda usaba tinta verde, que para él era el color de la esperanza. Firmaba y escribía así sus poemas.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_077",
+      "question": "¿Qué artista callejero británico y anónimo consiguió que su cuadro se triturara parcialmente justo después de venderse en una subasta de Sotheby's en 2018?",
+      "answers": [
+        {
+          "text": "Banksy",
+          "correct": true
+        },
+        {
+          "text": "Keith Haring",
+          "correct": false
+        },
+        {
+          "text": "Jean-Michel Basquiat",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cuadro 'Niña con globo' se autodestruyó parcialmente justo al vender. Más tarde se renombró 'Love is in the Bin' y su valor se multiplicó.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_078",
+      "question": "¿Quién escribió 'Pedro Páramo', ambientada en el pueblo de Comala?",
+      "answers": [
+        {
+          "text": "Juan Rulfo",
+          "correct": true
+        },
+        {
+          "text": "Carlos Fuentes",
+          "correct": false
+        },
+        {
+          "text": "Octavio Paz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rulfo publicó solo dos libros, 'El llano en llamas' y 'Pedro Páramo', y es de los escritores más influyentes de América Latina.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_079",
+      "question": "¿Quién escribió 'Luces de bohemia', obra con la que nació el género del esperpento?",
+      "answers": [
+        {
+          "text": "Ramón María del Valle-Inclán",
+          "correct": true
+        },
+        {
+          "text": "Federico García Lorca",
+          "correct": false
+        },
+        {
+          "text": "Jacinto Benavente",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El protagonista, Max Estrella, es un poeta ciego que recorre una noche de Madrid. El esperpento deforma la realidad como un espejo cóncavo.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_080",
+      "question": "¿Qué pintor realizó 'Los borrachos' (el triunfo de Baco)?",
+      "answers": [
+        {
+          "text": "Velázquez",
+          "correct": true
+        },
+        {
+          "text": "Murillo",
+          "correct": false
+        },
+        {
+          "text": "Zurbarán",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es de los pocos cuadros mitológicos de Velázquez, con un dios rodeado de campesinos.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_081",
+      "question": "¿Quién pintó 'La joven de la perla'?",
+      "answers": [
+        {
+          "text": "Johannes Vermeer",
+          "correct": true
+        },
+        {
+          "text": "Rembrandt",
+          "correct": false
+        },
+        {
+          "text": "Peter Paul Rubens",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cuadro está en el Mauritshuis, en La Haya. Vermeer dejó apenas unas treinta y pocas obras.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_082",
+      "question": "¿Quién escribió 'Crimen y castigo'?",
+      "answers": [
+        {
+          "text": "Fiódor Dostoyevski",
+          "correct": true
+        },
+        {
+          "text": "León Tolstói",
+          "correct": false
+        },
+        {
+          "text": "Antón Chéjov",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El protagonista, Raskólnikov, es un estudiante pobre que comete un asesinato. La novela se publicó por entregas en 1866.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_083",
+      "question": "¿Qué arquitecto brasileño proyectó los edificios principales de Brasilia?",
+      "answers": [
+        {
+          "text": "Oscar Niemeyer",
+          "correct": true
+        },
+        {
+          "text": "Lúcio Costa",
+          "correct": false
+        },
+        {
+          "text": "Paulo Mendes da Rocha",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brasilia se inauguró en 1960 y Niemeyer siguió trabajando hasta pocos días antes de morir, a los 104 años.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_084",
+      "question": "¿Qué monja mexicana del siglo XVII escribió 'Hombres necios que acusáis a la mujer'?",
+      "answers": [
+        {
+          "text": "Sor Juana Inés de la Cruz",
+          "correct": true
+        },
+        {
+          "text": "Gabriela Mistral",
+          "correct": false
+        },
+        {
+          "text": "Rosario Castellanos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se la llama 'la décima musa'. Aparece en los billetes de 200 pesos mexicanos.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_085",
+      "question": "¿Qué arquitecto mexicano ganó el Premio Pritzker en 1980?",
+      "answers": [
+        {
+          "text": "Luis Barragán",
+          "correct": true
+        },
+        {
+          "text": "Ricardo Legorreta",
+          "correct": false
+        },
+        {
+          "text": "Teodoro González de León",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su casa de Tacubaya, en Ciudad de México, es Patrimonio de la Humanidad. Usaba colores vivos y muros sencillos.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_086",
+      "question": "¿Quién escribió 'Orgullo y prejuicio'?",
+      "answers": [
+        {
+          "text": "Jane Austen",
+          "correct": true
+        },
+        {
+          "text": "Emily Brontë",
+          "correct": false
+        },
+        {
+          "text": "Mary Shelley",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Austen publicó sus novelas sin firmar con su nombre. La protagonista se llama Elizabeth Bennet.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_087",
+      "question": "¿Quién escribió 'Los santos inocentes', llevada al cine por Mario Camus?",
+      "answers": [
+        {
+          "text": "Miguel Delibes",
+          "correct": true
+        },
+        {
+          "text": "Camilo José Cela",
+          "correct": false
+        },
+        {
+          "text": "Juan Benet",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La película de 1984 ganó premios en Cannes y es uno de los grandes dramas del cine español.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_088",
+      "question": "¿Qué movimiento artístico, impulsado por Picasso y Braque, descompone los objetos en formas geométricas?",
+      "answers": [
+        {
+          "text": "Cubismo",
+          "correct": true
+        },
+        {
+          "text": "Impresionismo",
+          "correct": false
+        },
+        {
+          "text": "Fauvismo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El nombre nació de un crítico que, ante cuadros de Braque de 1908, habló de 'pequeños cubos'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_089",
+      "question": "¿Quién escribió 'La Celestina'?",
+      "answers": [
+        {
+          "text": "Fernando de Rojas",
+          "correct": true
+        },
+        {
+          "text": "Juan Ruiz",
+          "correct": false
+        },
+        {
+          "text": "Garcilaso de la Vega",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se publicó en 1499 con el título de 'Comedia de Calisto y Melibea'. Después se llamó 'Tragicomedia'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_090",
+      "question": "¿Quién escribió 'La sombra del viento'?",
+      "answers": [
+        {
+          "text": "Carlos Ruiz Zafón",
+          "correct": true
+        },
+        {
+          "text": "Arturo Pérez-Reverte",
+          "correct": false
+        },
+        {
+          "text": "Javier Marías",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La novela transcurre en una Barcelona de posguerra, en el Cementerio de los Libros Olvidados.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_091",
+      "question": "¿Quién escribió 'La vida es sueño', con el príncipe Segismundo encerrado en una torre?",
+      "answers": [
+        {
+          "text": "Calderón de la Barca",
+          "correct": true
+        },
+        {
+          "text": "Lope de Vega",
+          "correct": false
+        },
+        {
+          "text": "Tirso de Molina",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Segismundo se pregunta si la vida es real o solo un sueño. Es una de las obras clave del Siglo de Oro.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_092",
+      "question": "¿Quién escribió 'Guerra y paz'?",
+      "answers": [
+        {
+          "text": "León Tolstói",
+          "correct": true
+        },
+        {
+          "text": "Fiódor Dostoyevski",
+          "correct": false
+        },
+        {
+          "text": "Iván Turguénev",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La novela transcurre durante la invasión de Napoleón a Rusia. Tiene más de 500 personajes.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_093",
+      "question": "¿Cuál de las hermanas Brontë escribió 'Cumbres borrascosas'?",
+      "answers": [
+        {
+          "text": "Emily",
+          "correct": true
+        },
+        {
+          "text": "Charlotte",
+          "correct": false
+        },
+        {
+          "text": "Anne",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Charlotte escribió 'Jane Eyre'. Las tres publicaron con seudónimos masculinos: Currer, Ellis y Acton Bell.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_094",
+      "question": "¿Qué museo de Madrid ocupa el antiguo Hospital General de San Carlos?",
+      "answers": [
+        {
+          "text": "Museo Reina Sofía",
+          "correct": true
+        },
+        {
+          "text": "Museo Thyssen-Bornemisza",
+          "correct": false
+        },
+        {
+          "text": "Museo del Prado",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El edificio se terminó en el siglo XVIII. Hoy conserva arte español del siglo XX, con Picasso, Dalí y Miró.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_095",
+      "question": "¿Cómo se llamaba la esposa y musa de Dalí?",
+      "answers": [
+        {
+          "text": "Gala",
+          "correct": true
+        },
+        {
+          "text": "Dora",
+          "correct": false
+        },
+        {
+          "text": "Lee",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Estuvo casada antes con el poeta Paul Éluard. Dalí firmaba muchos cuadros con los dos nombres, 'Gala-Salvador Dalí'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_096",
+      "question": "¿Quién escribió 'El Lazarillo de Tormes'?",
+      "answers": [
+        {
+          "text": "Es de autor anónimo",
+          "correct": true
+        },
+        {
+          "text": "Miguel de Cervantes",
+          "correct": false
+        },
+        {
+          "text": "Francisco de Quevedo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es la primera novela picaresca. Nadie sabe quién la escribió, aunque hay muchas hipótesis, y la Inquisición la incluyó en su índice de libros prohibidos.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_097",
+      "question": "¿Qué edificio de Gaudí es conocido como la 'Casa de los huesos' por su fachada?",
+      "answers": [
+        {
+          "text": "La Casa Batlló",
+          "correct": true
+        },
+        {
+          "text": "La Casa Milà",
+          "correct": false
+        },
+        {
+          "text": "El Palau Güell",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su tejado recuerda al lomo de un dragón. Según la leyenda, la torre con cruz sería la lanza de San Jorge.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_098",
+      "question": "¿Qué dinastía construyó la Alhambra de Granada en su forma actual?",
+      "answers": [
+        {
+          "text": "La nazarí",
+          "correct": true
+        },
+        {
+          "text": "La omeya",
+          "correct": false
+        },
+        {
+          "text": "La almohade",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue la residencia de los últimos reyes musulmanes de la península ibérica, hasta 1492.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_099",
+      "question": "¿Quién escribió 'La Regenta'?",
+      "answers": [
+        {
+          "text": "Leopoldo Alas, 'Clarín'",
+          "correct": true
+        },
+        {
+          "text": "Benito Pérez Galdós",
+          "correct": false
+        },
+        {
+          "text": "Emilia Pardo Bazán",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La ciudad de Vetusta de la novela se parece mucho a Oviedo, y muchos vecinos se sintieron retratados.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_100",
+      "question": "¿Qué arquitecto español ganó el Premio Pritzker en 1996?",
+      "answers": [
+        {
+          "text": "Rafael Moneo",
+          "correct": true
+        },
+        {
+          "text": "Ricardo Bofill",
+          "correct": false
+        },
+        {
+          "text": "Santiago Calatrava",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Es el autor de la ampliación del Museo del Prado y del Kursaal de San Sebastián.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_101",
+      "question": "¿Quién escribió 'Rimas y leyendas', con versos como 'Volverán las oscuras golondrinas'?",
+      "answers": [
+        {
+          "text": "Gustavo Adolfo Bécquer",
+          "correct": true
+        },
+        {
+          "text": "José de Espronceda",
+          "correct": false
+        },
+        {
+          "text": "Rubén Darío",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bécquer nació en Sevilla y murió joven, a los 34 años, en 1870. Sus Rimas se publicaron después de su muerte.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_102",
+      "question": "¿Qué escultor, gallego de nacimiento y activo en Valladolid, es famoso por sus Cristos yacentes y pasos de Semana Santa?",
+      "answers": [
+        {
+          "text": "Gregorio Fernández",
+          "correct": true
+        },
+        {
+          "text": "Alonso Berruguete",
+          "correct": false
+        },
+        {
+          "text": "Juan Martínez Montañés",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Muchas de sus tallas se conservan en el Museo Nacional de Escultura de Valladolid y siguen saliendo en procesión.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_103",
+      "question": "¿Qué cuadro de Velázquez muestra a una Venus desnuda de espaldas, mirándose en un espejo?",
+      "answers": [
+        {
+          "text": "La Venus del espejo",
+          "correct": true
+        },
+        {
+          "text": "La maja desnuda",
+          "correct": false
+        },
+        {
+          "text": "El cristo de San Plácido",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es el único desnudo femenino que se conserva de Velázquez. En 1914 una sufragista lo acuchilló en la National Gallery de Londres.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_104",
+      "question": "¿Cómo se llama el fiel escudero de Don Quijote?",
+      "answers": [
+        {
+          "text": "Sancho Panza",
+          "correct": true
+        },
+        {
+          "text": "Sansón Carrasco",
+          "correct": false
+        },
+        {
+          "text": "Cide Hamete",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sancho acepta seguir a Don Quijote a cambio de que le regale una ínsula. En la segunda parte llega a gobernar una, la ínsula Barataria.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_105",
+      "question": "¿En qué museo de París se exhibe la 'Mona Lisa'?",
+      "answers": [
+        {
+          "text": "El Louvre",
+          "correct": true
+        },
+        {
+          "text": "El Museo de Orsay",
+          "correct": false
+        },
+        {
+          "text": "El Pompidou",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En 1911 un empleado, Vincenzo Peruggia, la robó del Louvre y la tuvo en casa durante dos años. El robo la volvió mundialmente famosa.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_106",
+      "question": "¿Qué pintor cubano mezcló cubismo y cultura afrocubana en 'La jungla'?",
+      "answers": [
+        {
+          "text": "Wifredo Lam",
+          "correct": true
+        },
+        {
+          "text": "Amelia Peláez",
+          "correct": false
+        },
+        {
+          "text": "René Portocarrero",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lam fue amigo de Picasso. Su cuadro está en el MoMA de Nueva York.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_107",
+      "question": "¿Quién pintó 'La noche estrellada'?",
+      "answers": [
+        {
+          "text": "Vincent van Gogh",
+          "correct": true
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        },
+        {
+          "text": "Paul Cézanne",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lo pintó en 1889, de memoria, mirando por la ventana del sanatorio de Saint-Rémy. El pueblo del cuadro es inventado.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_108",
+      "question": "¿Qué personaje de Shakespeare pronuncia 'Ser o no ser, esa es la cuestión'?",
+      "answers": [
+        {
+          "text": "Hamlet",
+          "correct": true
+        },
+        {
+          "text": "Macbeth",
+          "correct": false
+        },
+        {
+          "text": "Otelo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es un príncipe de Dinamarca. Su monólogo es de los más citados de la historia del teatro.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_109",
+      "question": "¿Qué mural de Diego Rivera, encargado por la familia Rockefeller, fue destruido en 1934 por incluir un retrato de Lenin?",
+      "answers": [
+        {
+          "text": "El hombre en la encrucijada",
+          "correct": true
+        },
+        {
+          "text": "Sueño de una tarde dominical",
+          "correct": false
+        },
+        {
+          "text": "La Creación",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Rivera repitió el mural en el Palacio de Bellas Artes de Ciudad de México, con el mismo retrato.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_110",
+      "question": "¿En qué ciudad europea vivió Cortázar muchos años y donde está enterrado?",
+      "answers": [
+        {
+          "text": "París",
+          "correct": true
+        },
+        {
+          "text": "Roma",
+          "correct": false
+        },
+        {
+          "text": "Madrid",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Está enterrado en el cementerio de Montparnasse, y su tumba lleva flores y papeles de lectores.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_111",
+      "question": "¿Qué pintor es el autor del 'Nacimiento de Venus', hoy en la galería de los Uffizi?",
+      "answers": [
+        {
+          "text": "Sandro Botticelli",
+          "correct": true
+        },
+        {
+          "text": "Rafael",
+          "correct": false
+        },
+        {
+          "text": "Tiziano",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Venus llega a la orilla sobre una concha. El cuadro se pintó hacia 1485 para una familia de banqueros de Florencia.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_112",
+      "question": "¿Qué escritor chileno escribió 'Los detectives salvajes' y '2666'?",
+      "answers": [
+        {
+          "text": "Roberto Bolaño",
+          "correct": true
+        },
+        {
+          "text": "Jorge Edwards",
+          "correct": false
+        },
+        {
+          "text": "José Donoso",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Murió en 2003, a los 50 años. '2666' se publicó después, y tiene cinco partes.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_113",
+      "question": "¿Cómo se llama el caballo de Don Quijote?",
+      "answers": [
+        {
+          "text": "Rocinante",
+          "correct": true
+        },
+        {
+          "text": "Babieca",
+          "correct": false
+        },
+        {
+          "text": "Bucéfalo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Babieca fue el caballo del Cid y Bucéfalo el de Alejandro Magno. Rocinante es un rocín flaco, y el nombre juega con 'rocín antes'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_114",
+      "question": "¿Qué poeta escribió 'Nanas de la cebolla' desde la cárcel para su hijo?",
+      "answers": [
+        {
+          "text": "Miguel Hernández",
+          "correct": true
+        },
+        {
+          "text": "Luis Cernuda",
+          "correct": false
+        },
+        {
+          "text": "Vicente Aleixandre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Murió en 1942 en la cárcel de Alicante. Fue pastor de cabras en su juventud.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_115",
+      "question": "¿Qué pintor ecuatoriano es el creador de 'La Capilla del Hombre', un museo en Quito?",
+      "answers": [
+        {
+          "text": "Oswaldo Guayasamín",
+          "correct": true
+        },
+        {
+          "text": "Eduardo Kingman",
+          "correct": false
+        },
+        {
+          "text": "Camilo Egas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La Capilla del Hombre se inauguró en 2002, tres años después de su muerte.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_116",
+      "question": "¿Qué corriente artística comparten Dalí, Magritte y Max Ernst?",
+      "answers": [
+        {
+          "text": "Surrealismo",
+          "correct": true
+        },
+        {
+          "text": "Dadaísmo",
+          "correct": false
+        },
+        {
+          "text": "Futurismo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El movimiento se declaró oficialmente en París en 1924, con el manifiesto de André Breton.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_117",
+      "question": "¿Quién ganó el primer Premio Cervantes, en 1976?",
+      "answers": [
+        {
+          "text": "Jorge Guillén",
+          "correct": true
+        },
+        {
+          "text": "Dámaso Alonso",
+          "correct": false
+        },
+        {
+          "text": "Gerardo Diego",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Guillén, poeta de la Generación del 27, murió en 1984. El premio lo convoca el Ministerio de Cultura de España.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_118",
+      "question": "¿Qué escritor argentino, casi ciego, escribió 'El Aleph' y fue director de la Biblioteca Nacional?",
+      "answers": [
+        {
+          "text": "Jorge Luis Borges",
+          "correct": true
+        },
+        {
+          "text": "Julio Cortázar",
+          "correct": false
+        },
+        {
+          "text": "Ernesto Sabato",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Perdió la vista de forma gradual. En su 'Poema de los dones' habló de la ironía de tener a la vez 'los libros y la noche'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_119",
+      "question": "¿Quién escribió 'Alicia en el país de las maravillas'?",
+      "answers": [
+        {
+          "text": "Lewis Carroll",
+          "correct": true
+        },
+        {
+          "text": "Charles Dickens",
+          "correct": false
+        },
+        {
+          "text": "J. M. Barrie",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lewis Carroll era el seudónimo de Charles Dodgson, un profesor de matemáticas de Oxford.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_120",
+      "question": "¿Qué pintor belga firmó 'La traición de las imágenes', con una pipa y la frase 'Esto no es una pipa'?",
+      "answers": [
+        {
+          "text": "René Magritte",
+          "correct": true
+        },
+        {
+          "text": "Salvador Dalí",
+          "correct": false
+        },
+        {
+          "text": "Paul Delvaux",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su juego es que lo pintado es una imagen de una pipa, no una pipa real.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_121",
+      "question": "¿Qué edificio de Córdoba es famoso por su bosque de columnas con arcos de dos colores?",
+      "answers": [
+        {
+          "text": "La Mezquita-Catedral",
+          "correct": true
+        },
+        {
+          "text": "La Alhambra",
+          "correct": false
+        },
+        {
+          "text": "La Giralda",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se empezó a construir en el siglo VIII y se amplió varias veces. Tras la conquista cristiana se construyó una catedral en el centro.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_122",
+      "question": "¿Qué pintor flamenco es el autor de 'El jardín de las delicias', hoy en el Prado?",
+      "answers": [
+        {
+          "text": "El Bosco",
+          "correct": true
+        },
+        {
+          "text": "Pieter Brueghel el Viejo",
+          "correct": false
+        },
+        {
+          "text": "Alberto Durero",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Felipe II coleccionó obras del Bosco, por eso el Prado conserva tantas.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_123",
+      "question": "¿Cómo se llama el gaucho protagonista del poema nacional argentino de José Hernández?",
+      "answers": [
+        {
+          "text": "Martín Fierro",
+          "correct": true
+        },
+        {
+          "text": "Juan Moreira",
+          "correct": false
+        },
+        {
+          "text": "Facundo Quiroga",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El poema se publicó en dos partes, 'La ida' (1872) y 'La vuelta' (1879).",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_124",
+      "question": "¿Qué arquitecto catalán diseñó el Palau de la Música Catalana?",
+      "answers": [
+        {
+          "text": "Lluís Domènech i Montaner",
+          "correct": true
+        },
+        {
+          "text": "Josep Puig i Cadafalch",
+          "correct": false
+        },
+        {
+          "text": "Antoni Gaudí",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Es una sala de conciertos modernista de Barcelona, Patrimonio de la Humanidad junto con el Hospital de Sant Pau, del mismo autor.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_125",
+      "question": "¿Qué escritor guatemalteco ganó el Nobel de Literatura en 1967?",
+      "answers": [
+        {
+          "text": "Miguel Ángel Asturias",
+          "correct": true
+        },
+        {
+          "text": "Augusto Monterroso",
+          "correct": false
+        },
+        {
+          "text": "Rafael Arévalo Martínez",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su novela 'El señor presidente' retrata a un dictador. Terminó la novela en París, pero no se publicó hasta 1946.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_126",
+      "question": "¿Quién pintó 'La libertad guiando al pueblo'?",
+      "answers": [
+        {
+          "text": "Eugène Delacroix",
+          "correct": true
+        },
+        {
+          "text": "Théodore Géricault",
+          "correct": false
+        },
+        {
+          "text": "Jacques-Louis David",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se inspiró en la revolución francesa de julio de 1830. El muchacho con pistolas del cuadro sirvió de modelo para Gavroche en 'Los miserables'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_127",
+      "question": "¿Cómo se llama la técnica de Georges Seurat que construye las imágenes con pequeños puntos de color?",
+      "answers": [
+        {
+          "text": "Puntillismo",
+          "correct": true
+        },
+        {
+          "text": "Tenebrismo",
+          "correct": false
+        },
+        {
+          "text": "Collage",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al mirarlo de cerca solo se ven puntos. Desde lejos, el ojo mezcla los colores.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_128",
+      "question": "¿Qué pintor holandés es autor de 'La ronda de noche'?",
+      "answers": [
+        {
+          "text": "Rembrandt",
+          "correct": true
+        },
+        {
+          "text": "Johannes Vermeer",
+          "correct": false
+        },
+        {
+          "text": "Frans Hals",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El cuadro es una escena de día. Se llama así porque el barniz se oscureció con los siglos.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_129",
+      "question": "¿Quién pintó 'El grito', una de las imágenes más reconocibles del arte moderno?",
+      "answers": [
+        {
+          "text": "Edvard Munch",
+          "correct": true
+        },
+        {
+          "text": "Gustav Klimt",
+          "correct": false
+        },
+        {
+          "text": "Wassily Kandinsky",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Munch hizo varias versiones, entre pinturas, pasteles y litografías. Una de ellas fue robada y recuperada.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_130",
+      "question": "¿Qué pintor valenciano, conocido por el color y la luz mediterránea, retrató niños jugando en la playa?",
+      "answers": [
+        {
+          "text": "Joaquín Sorolla",
+          "correct": true
+        },
+        {
+          "text": "Ignacio Zuloaga",
+          "correct": false
+        },
+        {
+          "text": "Julio Romero de Torres",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su casa de Madrid es hoy un museo con un jardín que él mismo diseñó.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_131",
+      "question": "¿Qué escritor argentino escribió la novela 'El túnel'?",
+      "answers": [
+        {
+          "text": "Ernesto Sabato",
+          "correct": true
+        },
+        {
+          "text": "Julio Cortázar",
+          "correct": false
+        },
+        {
+          "text": "Adolfo Bioy Casares",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La novela empieza con la confesión de un pintor que ha asesinado a la mujer que amaba.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_132",
+      "question": "¿Qué escritor irlandés ambientó 'Ulises' en un solo día en Dublín?",
+      "answers": [
+        {
+          "text": "James Joyce",
+          "correct": true
+        },
+        {
+          "text": "Samuel Beckett",
+          "correct": false
+        },
+        {
+          "text": "Oscar Wilde",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El día es el 16 de junio de 1904, que hoy los lectores celebran como el 'Bloomsday'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_133",
+      "question": "¿Qué novela de Kafka empieza con Gregor Samsa convertido en un enorme insecto?",
+      "answers": [
+        {
+          "text": "La metamorfosis",
+          "correct": true
+        },
+        {
+          "text": "El proceso",
+          "correct": false
+        },
+        {
+          "text": "El castillo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El texto nunca dice qué insecto es. Kafka pidió expresamente que no se lo dibujara en la portada.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_134",
+      "question": "¿Qué cuadros de Goya existen en versión vestida y versión desnuda?",
+      "answers": [
+        {
+          "text": "Las majas",
+          "correct": true
+        },
+        {
+          "text": "Las hilanderas",
+          "correct": false
+        },
+        {
+          "text": "Las Meninas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se conservan en el Prado. Según la tradición, la Inquisición pidió explicaciones a Goya por el desnudo.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_135",
+      "question": "¿Cómo se llamaba la casa de Frida Kahlo en el barrio de Coyoacán, hoy museo?",
+      "answers": [
+        {
+          "text": "La Casa Azul",
+          "correct": true
+        },
+        {
+          "text": "La Casa Rosa",
+          "correct": false
+        },
+        {
+          "text": "La Casa Roja",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Allí nació y murió. Hoy es uno de los museos más visitados de Ciudad de México.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_136",
+      "question": "¿Qué pintor italiano pintó 'La última cena' en un muro de Milán?",
+      "answers": [
+        {
+          "text": "Leonardo da Vinci",
+          "correct": true
+        },
+        {
+          "text": "Rafael",
+          "correct": false
+        },
+        {
+          "text": "Caravaggio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Experimentó con una técnica nueva que no resistió bien el paso del tiempo, y la pintura empezó a deteriorarse a los pocos años.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_137",
+      "question": "¿Qué escritor peruano ganó el Premio Nobel de Literatura en 2010?",
+      "answers": [
+        {
+          "text": "Mario Vargas Llosa",
+          "correct": true
+        },
+        {
+          "text": "Alfredo Bryce Echenique",
+          "correct": false
+        },
+        {
+          "text": "Ricardo Palma",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En 1990 fue candidato a presidente de Perú, pero perdió contra Alberto Fujimori.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_138",
+      "question": "¿Qué obra de El Greco muestra el entierro de un noble en la iglesia de Santo Tomé, en Toledo?",
+      "answers": [
+        {
+          "text": "El entierro del conde de Orgaz",
+          "correct": true
+        },
+        {
+          "text": "La Anunciación",
+          "correct": false
+        },
+        {
+          "text": "El expolio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La iglesia de Santo Tomé sigue siendo su lugar de exhibición, y la gente hace cola para ver el cuadro. Lo pintó entre 1586 y 1588.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_139",
+      "question": "¿Qué arquitecto francés diseñó la ampliación del Museo Reina Sofía, inaugurada en 2005?",
+      "answers": [
+        {
+          "text": "Jean Nouvel",
+          "correct": true
+        },
+        {
+          "text": "Renzo Piano",
+          "correct": false
+        },
+        {
+          "text": "Herzog & de Meuron",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su gran tejado rojo une los edificios nuevos con el antiguo hospital. Incluye auditorio, biblioteca y salas de exposiciones.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_140",
+      "question": "¿Qué corriente artística lideraron en México Diego Rivera, José Clemente Orozco y David Alfaro Siqueiros?",
+      "answers": [
+        {
+          "text": "El muralismo",
+          "correct": true
+        },
+        {
+          "text": "El costumbrismo",
+          "correct": false
+        },
+        {
+          "text": "El realismo socialista",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pintaban en edificios públicos para que el arte llegara a todos, no solo a quienes visitaban museos. El movimiento nació tras la Revolución mexicana.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_141",
+      "question": "¿Quién escribió 'Rayuela', una novela que se puede leer en dos órdenes distintos?",
+      "answers": [
+        {
+          "text": "Julio Cortázar",
+          "correct": true
+        },
+        {
+          "text": "Ernesto Sabato",
+          "correct": false
+        },
+        {
+          "text": "Adolfo Bioy Casares",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El libro trae un tablero de dirección: el lector puede leerlo de corrido o saltando capítulos.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_142",
+      "question": "¿Quién fue la primera persona latinoamericana en ganar el Nobel de Literatura, en 1945?",
+      "answers": [
+        {
+          "text": "Gabriela Mistral",
+          "correct": true
+        },
+        {
+          "text": "Rosalía de Castro",
+          "correct": false
+        },
+        {
+          "text": "Alfonsina Storni",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Era chilena y poeta. Su nombre real era Lucila Godoy Alcayaga.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_143",
+      "question": "¿Qué pintor nacido en Creta vivió casi toda su vida en Toledo y es famoso por sus figuras alargadas?",
+      "answers": [
+        {
+          "text": "El Greco",
+          "correct": true
+        },
+        {
+          "text": "José de Ribera",
+          "correct": false
+        },
+        {
+          "text": "Francisco de Zurbarán",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su nombre real era Doménikos Theotokópoulos. 'El Greco' era el apodo que le daban en España.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_144",
+      "question": "¿Quién esculpió el 'David' que se exhibe en Florencia?",
+      "answers": [
+        {
+          "text": "Miguel Ángel",
+          "correct": true
+        },
+        {
+          "text": "Donatello",
+          "correct": false
+        },
+        {
+          "text": "Bernini",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Salió de un bloque de mármol que otros escultores habían descartado por defectuoso. Mide más de cinco metros de altura.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_145",
+      "question": "¿Qué pintor barroco italiano es famoso por el claroscuro dramático y por una vida violenta?",
+      "answers": [
+        {
+          "text": "Caravaggio",
+          "correct": true
+        },
+        {
+          "text": "Rafael",
+          "correct": false
+        },
+        {
+          "text": "Tiziano",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tuvo que huir de Roma en 1606 tras matar a un hombre en una pelea.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_146",
+      "question": "¿Qué gran escritor argentino, aun siendo candidato, nunca ganó el Premio Nobel?",
+      "answers": [
+        {
+          "text": "Jorge Luis Borges",
+          "correct": true
+        },
+        {
+          "text": "Pablo Neruda",
+          "correct": false
+        },
+        {
+          "text": "Gabriel García Márquez",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Neruda y García Márquez sí lo ganaron. Borges recibió el Cervantes en 1979, compartido con Gerardo Diego.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_147",
+      "question": "¿Qué artista pintó el techo de la Capilla Sixtina?",
+      "answers": [
+        {
+          "text": "Miguel Ángel",
+          "correct": true
+        },
+        {
+          "text": "Rafael",
+          "correct": false
+        },
+        {
+          "text": "Leonardo da Vinci",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Trabajó entre 1508 y 1512, y se consideraba más escultor que pintor. Sobre la bóveda pintó más de 300 figuras.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_148",
+      "question": "¿Qué escritor creó al detective Sherlock Holmes?",
+      "answers": [
+        {
+          "text": "Arthur Conan Doyle",
+          "correct": true
+        },
+        {
+          "text": "Agatha Christie",
+          "correct": false
+        },
+        {
+          "text": "Edgar Allan Poe",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Conan Doyle hizo morir a Holmes en 1893, pero el público protestó tanto que tuvo que resucitarlo.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_149",
+      "question": "¿De qué ciudad española era natural Diego Velázquez?",
+      "answers": [
+        {
+          "text": "Sevilla",
+          "correct": true
+        },
+        {
+          "text": "Madrid",
+          "correct": false
+        },
+        {
+          "text": "Toledo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nació en 1599 y se mudó a Madrid en 1623, donde Felipe IV lo nombró pintor de cámara.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_150",
+      "question": "¿Qué novela de Hemingway transcurre durante la Guerra Civil española?",
+      "answers": [
+        {
+          "text": "Por quién doblan las campanas",
+          "correct": true
+        },
+        {
+          "text": "El viejo y el mar",
+          "correct": false
+        },
+        {
+          "text": "Adiós a las armas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hemingway fue corresponsal de guerra en España en 1937 y 1938, y la novela es de 1940.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_151",
+      "question": "¿Qué arquitecto diseñó el Museo Guggenheim de Bilbao?",
+      "answers": [
+        {
+          "text": "Frank Gehry",
+          "correct": true
+        },
+        {
+          "text": "Norman Foster",
+          "correct": false
+        },
+        {
+          "text": "Zaha Hadid",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se inauguró en 1997 y está revestido de planchas de titanio. Su efecto en la ciudad dio nombre al llamado 'efecto Guggenheim'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_152",
+      "question": "¿Qué pintor español retrató los fusilamientos del 3 de mayo de 1808 en Madrid?",
+      "answers": [
+        {
+          "text": "Francisco de Goya",
+          "correct": true
+        },
+        {
+          "text": "Diego Velázquez",
+          "correct": false
+        },
+        {
+          "text": "Bartolomé Murillo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lo pintó en 1814, cuando terminó la ocupación francesa. Hoy cuelga en el Prado y pasó a ser un icono de la pintura contra la guerra.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_153",
+      "question": "¿Qué personaje de Dickens es un avaro que cambia tras recibir la visita de tres fantasmas?",
+      "answers": [
+        {
+          "text": "Ebenezer Scrooge",
+          "correct": true
+        },
+        {
+          "text": "Fagin",
+          "correct": false
+        },
+        {
+          "text": "Oliver Twist",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Cuento de Navidad' se publicó en diciembre de 1843 y ayudó a popularizar la Navidad como fiesta de familia.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_154",
+      "question": "¿Qué estilo arquitectónico tienen catedrales como Notre Dame, con arcos apuntados y grandes vidrieras?",
+      "answers": [
+        {
+          "text": "Gótico",
+          "correct": true
+        },
+        {
+          "text": "Románico",
+          "correct": false
+        },
+        {
+          "text": "Barroco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sus arbotantes sostienen los muros desde fuera, lo que permitía abrir ventanales enormes.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_155",
+      "question": "¿Qué libros hicieron perder la cabeza a Alonso Quijano, el futuro Don Quijote?",
+      "answers": [
+        {
+          "text": "Libros de caballerías",
+          "correct": true
+        },
+        {
+          "text": "Libros de poesía",
+          "correct": false
+        },
+        {
+          "text": "Libros de viajes",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Leyó tantos que se creyó caballero andante. Entre sus favoritos estaba 'Amadís de Gaula'.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_156",
+      "question": "¿Cuántos años tenía Pablo Picasso cuando murió?",
+      "type": "estimate",
+      "answer": 91,
+      "min": 30,
+      "max": 120,
+      "unit": "años",
+      "difficulty": "medium",
+      "fun_fact": "Picasso trabajó casi hasta el final: se conservan decenas de miles de pinturas, cerámicas y grabados de más de 75 años de carrera.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_157",
+      "question": "¿Cuántos sonetos reúne la colección de William Shakespeare publicada en 1609?",
+      "type": "estimate",
+      "answer": 154,
+      "min": 20,
+      "max": 400,
+      "unit": "sonetos",
+      "difficulty": "medium",
+      "fun_fact": "La mayoría de los sonetos se dirigen a un joven y los últimos a una misteriosa «Dama Oscura». Aún hoy no se sabe quiénes eran.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_158",
+      "question": "¿En qué año robaron la Mona Lisa del Louvre?",
+      "type": "estimate",
+      "answer": 1911,
+      "min": 1800,
+      "max": 2000,
+      "unit": "año",
+      "difficulty": "hard",
+      "fun_fact": "El ladrón, un vidriero italiano, escondió el cuadro dos años en su piso de París. Fue el robo lo que hizo mundialmente famosa a la Mona Lisa.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_159",
+      "question": "¿En qué año se publicó la primera parte de «Don Quijote de la Mancha»?",
+      "type": "estimate",
+      "answer": 1605,
+      "min": 1500,
+      "max": 1800,
+      "unit": "año",
+      "difficulty": "medium",
+      "fun_fact": "La segunda parte no llegó hasta 1615, en parte porque un desconocido había publicado una continuación falsa en 1614. Cervantes se burla de él en el libro.",
+      "category": "Arte y literatura"
+    },
+    {
+      "id": "artlit_es_160",
+      "question": "¿En qué año se publicó la novela «1984» de George Orwell?",
+      "type": "estimate",
+      "answer": 1949,
+      "min": 1900,
+      "max": 2000,
+      "unit": "año",
+      "difficulty": "easy",
+      "fun_fact": "Orwell escribió el libro gravemente enfermo en la remota isla escocesa de Jura. Murió pocos meses después de su publicación.",
+      "category": "Arte y literatura"
+    }
+  ]
+}
