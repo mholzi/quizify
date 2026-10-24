@@ -1,0 +1,3323 @@
+{
+  "name": "Kunst & Literatur",
+  "language": "de",
+  "version": "1.0",
+  "theme": "trivia",
+  "questions": [
+    {
+      "id": "kunst_de_001",
+      "question": "Wer verfasste 1924 das „Manifest des Surrealismus“?",
+      "answers": [
+        {
+          "text": "André Breton",
+          "correct": true
+        },
+        {
+          "text": "Max Ernst",
+          "correct": false
+        },
+        {
+          "text": "Salvador Dalí",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Breton war Schriftsteller und Arzt und gilt als Gründer der Bewegung. Das Manifest forderte das freie Wirken des Unbewussten.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_002",
+      "question": "Welche Romanheldin Fontanes wird als junges Mädchen mit einem viel älteren Baron verheiratet?",
+      "answers": [
+        {
+          "text": "Effi Briest",
+          "correct": true
+        },
+        {
+          "text": "Lene Nimptsch",
+          "correct": false
+        },
+        {
+          "text": "Cécile",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ihr Vater sagt am Ende den berühmten Satz „Das ist ein zu weites Feld“. Grass’ Roman „Ein weites Feld“ greift den Satz später als Titel auf.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_003",
+      "question": "In welchem Pariser Museum hängt Leonardo da Vincis „Mona Lisa“?",
+      "answers": [
+        {
+          "text": "Im Louvre",
+          "correct": true
+        },
+        {
+          "text": "Im Musée d’Orsay",
+          "correct": false
+        },
+        {
+          "text": "Im Centre Pompidou",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "1911 wurde das Bild von einem Handwerker aus dem Louvre gestohlen und tauchte erst 1913 in Florenz wieder auf. Der Diebstahl machte das Gemälde erst richtig weltberühmt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_004",
+      "question": "Welcher Dichter schrieb die „Duineser Elegien“?",
+      "answers": [
+        {
+          "text": "Rainer Maria Rilke",
+          "correct": true
+        },
+        {
+          "text": "Friedrich Hölderlin",
+          "correct": false
+        },
+        {
+          "text": "Stefan George",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Rilke stammte aus Prag. Der Name der Elegien geht auf Schloss Duino bei Triest zurück.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_005",
+      "question": "In welcher Stadt hängt Raffaels „Sixtinische Madonna“?",
+      "answers": [
+        {
+          "text": "In Dresden",
+          "correct": true
+        },
+        {
+          "text": "In Berlin",
+          "correct": false
+        },
+        {
+          "text": "In München",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Berühmt wurden vor allem die beiden kleinen Engel am unteren Bildrand, die als Postermotiv unzählige Wände zieren. Das Gemälde gehört zur Gemäldegalerie Alte Meister.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_006",
+      "question": "In welcher italienischen Stadt spielt Shakespeares „Romeo und Julia“?",
+      "answers": [
+        {
+          "text": "In Verona",
+          "correct": true
+        },
+        {
+          "text": "In Venedig",
+          "correct": false
+        },
+        {
+          "text": "In Mantua",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Shakespeare nahm den Stoff aus einem englischen Gedicht von Arthur Brooke von 1562. Romeo wird im Stück nach Mantua verbannt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_007",
+      "question": "Welcher weiche Käse soll Salvador Dalí zu den zerfließenden Uhren in „Die Beständigkeit der Erinnerung“ inspiriert haben?",
+      "answers": [
+        {
+          "text": "Camembert",
+          "correct": true
+        },
+        {
+          "text": "Brie",
+          "correct": false
+        },
+        {
+          "text": "Gorgonzola",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dalí erzählte, ein Stück Camembert in der Sonne habe ihm die Idee gegeben. Das kleine Bild von 1931 hängt im MoMA in New York.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_008",
+      "question": "Welcher römische Dichter führt Dante durch Hölle und Läuterungsberg?",
+      "answers": [
+        {
+          "text": "Vergil",
+          "correct": true
+        },
+        {
+          "text": "Ovid",
+          "correct": false
+        },
+        {
+          "text": "Homer",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Durchs Paradies führt später Beatrice. Die „Göttliche Komödie“ ist in Terzinen geschrieben, einem Reimschema, das Dante erfunden haben soll.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_009",
+      "question": "Wie alt wurde Pablo Picasso?",
+      "type": "estimate",
+      "answer": 91,
+      "min": 30,
+      "max": 120,
+      "unit": "Jahre",
+      "difficulty": "medium",
+      "fun_fact": "Picasso arbeitete bis zuletzt: Aus seinen gut 75 Schaffensjahren sind Zehntausende Werke erhalten, darunter Gemälde, Keramiken und Grafiken.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_010",
+      "question": "In welchem Drama schließt ein Gelehrter einen Pakt mit Mephisto?",
+      "answers": [
+        {
+          "text": "„Faust“",
+          "correct": true
+        },
+        {
+          "text": "„Wilhelm Tell“",
+          "correct": false
+        },
+        {
+          "text": "„Nathan der Weise“",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Goethe arbeitete mehr als sechzig Jahre mit Unterbrechungen an dem Stoff. Teil II erschien erst nach seinem Tod 1832.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_011",
+      "question": "In welcher Stadt wurde 1916 die Dada-Bewegung im Cabaret Voltaire begründet?",
+      "answers": [
+        {
+          "text": "In Zürich",
+          "correct": true
+        },
+        {
+          "text": "In Paris",
+          "correct": false
+        },
+        {
+          "text": "In Berlin",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hugo Ball und seine Freunde reagierten mit Unsinnsgedichten und Lärm auf den Ersten Weltkrieg. Das Wort „Dada“ soll zufällig aus einem Wörterbuch gewählt worden sein.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_012",
+      "question": "Welches Tier bittet den kleinen Prinzen in Saint-Exupérys Erzählung, es zu zähmen?",
+      "answers": [
+        {
+          "text": "Der Fuchs",
+          "correct": true
+        },
+        {
+          "text": "Die Schlange",
+          "correct": false
+        },
+        {
+          "text": "Das Schaf",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Von ihm stammt der Satz „Man sieht nur mit dem Herzen gut“. Saint-Exupéry war Pilot und verschwand 1944 über dem Mittelmeer.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_013",
+      "question": "Aus welcher Stadt stammt Gerhard Richter, der 1961 wenige Monate vor dem Mauerbau in den Westen ging?",
+      "answers": [
+        {
+          "text": "Aus Dresden",
+          "correct": true
+        },
+        {
+          "text": "Aus Leipzig",
+          "correct": false
+        },
+        {
+          "text": "Aus Chemnitz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Richter ließ sich in Düsseldorf nieder und studierte dort an der Kunstakademie. Heute gilt er als einer der bedeutendsten lebenden Maler.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_014",
+      "question": "Wogegen kämpft Don Quijote, weil er sie für Riesen hält?",
+      "answers": [
+        {
+          "text": "Gegen Windmühlen",
+          "correct": true
+        },
+        {
+          "text": "Gegen Kirchtürme",
+          "correct": false
+        },
+        {
+          "text": "Gegen Brücken",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cervantes’ Roman erschien in zwei Teilen 1605 und 1615. Er gilt als einer der ersten modernen Romane.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_015",
+      "question": "Welcher Bauhaus-Künstler entwarf den Stahlrohrsessel „Wassily“?",
+      "answers": [
+        {
+          "text": "Marcel Breuer",
+          "correct": true
+        },
+        {
+          "text": "Walter Gropius",
+          "correct": false
+        },
+        {
+          "text": "Josef Albers",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Breuer ließ sich vom Lenker seines Fahrrads inspirieren. Der Name kam später auf, weil Wassily Kandinsky ein frühes Exemplar bekam.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_016",
+      "question": "Welche österreichische Autorin erhielt 2004 den Literaturnobelpreis und schrieb „Die Klavierspielerin“?",
+      "answers": [
+        {
+          "text": "Elfriede Jelinek",
+          "correct": true
+        },
+        {
+          "text": "Marlen Haushofer",
+          "correct": false
+        },
+        {
+          "text": "Ingeborg Bachmann",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Jelinek reiste nicht nach Stockholm, sondern schickte eine Videobotschaft. Ihr Roman wurde von Michael Haneke verfilmt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_017",
+      "question": "Mit welcher Technik wurde der US-Maler Jackson Pollock berühmt?",
+      "answers": [
+        {
+          "text": "Er ließ Farbe auf am Boden liegende Leinwände tropfen und schütten",
+          "correct": true
+        },
+        {
+          "text": "Er malte mit feinen Pinselstrichen winzige Punkte",
+          "correct": false
+        },
+        {
+          "text": "Er klebte Zeitungsausschnitte auf Holzplatten",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wegen seiner Methode bekam er den Spitznamen „Jack the Dripper“. Er arbeitete oft in einer umgebauten Scheune auf Long Island.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_018",
+      "question": "Wie viele Verse hat ein klassisches Sonett?",
+      "answers": [
+        {
+          "text": "14",
+          "correct": true
+        },
+        {
+          "text": "12",
+          "correct": false
+        },
+        {
+          "text": "16",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es besteht aus zwei Vierzeilern und zwei Dreizeilern. Die Form stammt aus Italien und wurde von Dichtern wie Petrarca geprägt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_019",
+      "question": "In welcher Stadt wurde 1905 die Künstlergruppe „Die Brücke“ gegründet?",
+      "answers": [
+        {
+          "text": "In Dresden",
+          "correct": true
+        },
+        {
+          "text": "In München",
+          "correct": false
+        },
+        {
+          "text": "In Berlin",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Zu den Gründern gehörten Ernst Ludwig Kirchner, Erich Heckel und Karl Schmidt-Rottluff. Später zogen die meisten nach Berlin.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_020",
+      "question": "Welcher belgische Detektiv Agatha Christies löst „Mord im Orientexpress“?",
+      "answers": [
+        {
+          "text": "Hercule Poirot",
+          "correct": true
+        },
+        {
+          "text": "Miss Marple",
+          "correct": false
+        },
+        {
+          "text": "Inspector Maigret",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Poirot bekam 1975 einen Nachruf in der New York Times. Christie gilt als eine der meistverkauften Autorinnen der Welt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_021",
+      "question": "Welche Schauspielerin zeigte Andy Warhols Siebdruckserie, die er kurz nach ihrem Tod 1962 begann?",
+      "answers": [
+        {
+          "text": "Marilyn Monroe",
+          "correct": true
+        },
+        {
+          "text": "Audrey Hepburn",
+          "correct": false
+        },
+        {
+          "text": "Brigitte Bardot",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Als Vorlage diente ein Werbefoto aus dem Film „Niagara“ von 1953. Warhol druckte das Gesicht in knalligen Farben immer wieder neu.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_022",
+      "question": "Welchen Fisch fängt der alte Fischer Santiago in Hemingways „Der alte Mann und das Meer“?",
+      "answers": [
+        {
+          "text": "Einen Marlin",
+          "correct": true
+        },
+        {
+          "text": "Einen Thunfisch",
+          "correct": false
+        },
+        {
+          "text": "Einen Hai",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Auf dem Heimweg fressen Haie den Fisch bis auf das Skelett. Hemingway erhielt dafür 1953 den Pulitzerpreis und 1954 den Nobelpreis.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_023",
+      "question": "In welchem Gebäude gestaltete Gerhard Richter 2007 ein Fenster aus tausenden bunten Glasquadraten?",
+      "answers": [
+        {
+          "text": "Im Kölner Dom",
+          "correct": true
+        },
+        {
+          "text": "In der Frauenkirche Dresden",
+          "correct": false
+        },
+        {
+          "text": "In der Münchner Frauenkirche",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Rund 11.300 Quadrate in 72 Farben setzte ein Zufallsgenerator zusammen. Richter verzichtete auf ein Honorar für das Fenster.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_024",
+      "question": "Wohin fährt Emil in Erich Kästners „Emil und die Detektive“ mit der Bahn, bevor ihm sein Geld gestohlen wird?",
+      "answers": [
+        {
+          "text": "Nach Berlin",
+          "correct": true
+        },
+        {
+          "text": "Nach Hamburg",
+          "correct": false
+        },
+        {
+          "text": "Nach Dresden",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kästner stammte selbst aus Dresden. 1933 sah er in Berlin zu, wie die Nazis seine Bücher verbrannten.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_025",
+      "question": "In welcher Stadt hängt Leonardos „Abendmahl“?",
+      "answers": [
+        {
+          "text": "In Mailand",
+          "correct": true
+        },
+        {
+          "text": "In Florenz",
+          "correct": false
+        },
+        {
+          "text": "In Rom",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Leonardo malte es direkt auf die Wand des Refektoriums von Santa Maria delle Grazie. Weil er eine experimentelle Technik nutzte, begann die Farbe schon zu seinen Lebzeiten abzublättern.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_026",
+      "question": "Wie heißt der Teenager-Held in J. D. Salingers „Der Fänger im Roggen“?",
+      "answers": [
+        {
+          "text": "Holden Caulfield",
+          "correct": true
+        },
+        {
+          "text": "Huckleberry Finn",
+          "correct": false
+        },
+        {
+          "text": "Jay Gatsby",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Salinger zog sich später in ein Haus in New Hampshire zurück. Das Buch wurde in den USA mehrfach aus Schulen verbannt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_027",
+      "question": "Wie nannten Kritiker die Maler um Henri Matisse 1905 spöttisch?",
+      "answers": [
+        {
+          "text": "„Fauves“ (Wilde)",
+          "correct": true
+        },
+        {
+          "text": "„Cubistes“",
+          "correct": false
+        },
+        {
+          "text": "„Naïfs“",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Kritiker Louis Vauxcelles sah in einem Saal des Pariser Herbstsalons Matisse’ grelle Farben und sprach von Wilden. Der Name blieb.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_028",
+      "question": "Wie heißt der Angeklagte in Kafkas „Der Process“, der nie erfährt, wessen er beschuldigt wird?",
+      "answers": [
+        {
+          "text": "Josef K.",
+          "correct": true
+        },
+        {
+          "text": "Gregor Samsa",
+          "correct": false
+        },
+        {
+          "text": "Karl Rossmann",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Buch erschien 1925, nach Kafkas Tod. Sein Freund Max Brod veröffentlichte es, obwohl Kafka verfügt hatte, den Nachlass zu verbrennen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_029",
+      "question": "Wie heißt Edward Hoppers berühmtes Bild eines nächtlichen Diners mit vier Personen?",
+      "answers": [
+        {
+          "text": "„Nighthawks“",
+          "correct": true
+        },
+        {
+          "text": "„Early Sunday Morning“",
+          "correct": false
+        },
+        {
+          "text": "„Gas“",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Gemälde von 1942 hängt im Art Institute of Chicago. Der Titel spielt auf „Nachtschwärmer“ an.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_030",
+      "question": "Wie heißt das fiktive Dorf in Gabriel García Márquez’ „Hundert Jahre Einsamkeit“?",
+      "answers": [
+        {
+          "text": "Macondo",
+          "correct": true
+        },
+        {
+          "text": "Santa Clara",
+          "correct": false
+        },
+        {
+          "text": "Comala",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Roman erzählt über sieben Generationen die Geschichte der Familie Buendía. García Márquez erhielt 1982 den Literaturnobelpreis.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_031",
+      "question": "Welcher Bauhaus-Direktor wird mit dem Satz „Weniger ist mehr“ verbunden?",
+      "answers": [
+        {
+          "text": "Ludwig Mies van der Rohe",
+          "correct": true
+        },
+        {
+          "text": "Walter Gropius",
+          "correct": false
+        },
+        {
+          "text": "Hannes Meyer",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mies leitete das Bauhaus von 1930 bis zur Schließung 1933. Sein deutscher Pavillon für die Weltausstellung 1929 in Barcelona gilt als Ikone der Moderne.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_032",
+      "question": "Welches Gebäck löst in Marcel Prousts Romanzyklus Kindheitserinnerungen aus?",
+      "answers": [
+        {
+          "text": "Die Madeleine",
+          "correct": true
+        },
+        {
+          "text": "Das Croissant",
+          "correct": false
+        },
+        {
+          "text": "Das Macaron",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Zyklus „Auf der Suche nach der verlorenen Zeit“ umfasst sieben Bände. Die Szene gilt als berühmteste Erinnerungsszene der Weltliteratur.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_033",
+      "question": "In welcher Stadt lebte und arbeitete Albrecht Dürer die meiste Zeit?",
+      "answers": [
+        {
+          "text": "In Nürnberg",
+          "correct": true
+        },
+        {
+          "text": "In Augsburg",
+          "correct": false
+        },
+        {
+          "text": "In Regensburg",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sein Wohnhaus am Fuß der Burg ist erhalten und heute ein Museum. Dürer reiste zweimal nach Italien und einmal in die Niederlande.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_034",
+      "question": "Welche britische Auszeichnung gilt als wichtigster Romanpreis des Landes?",
+      "answers": [
+        {
+          "text": "Der Booker Prize",
+          "correct": true
+        },
+        {
+          "text": "Der Pulitzer-Preis",
+          "correct": false
+        },
+        {
+          "text": "Der Prix Goncourt",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Er wird seit 1969 verliehen. Der Pulitzer-Preis ist amerikanisch, der Goncourt französisch.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_035",
+      "question": "Welche Göttin lenkt die Quadriga auf dem Brandenburger Tor?",
+      "answers": [
+        {
+          "text": "Victoria, die Siegesgöttin",
+          "correct": true
+        },
+        {
+          "text": "Athene",
+          "correct": false
+        },
+        {
+          "text": "Diana",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Napoleon ließ die Quadriga 1806 nach Paris schaffen. 1814 kam sie zurück und bekam das Eiserne Kreuz.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_036",
+      "question": "Aus welchem Land stammte der Märchenautor Hans Christian Andersen?",
+      "answers": [
+        {
+          "text": "Aus Dänemark",
+          "correct": true
+        },
+        {
+          "text": "Aus Schweden",
+          "correct": false
+        },
+        {
+          "text": "Aus Deutschland",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Seine „Kleine Meerjungfrau“ sitzt als Bronzefigur im Hafen von Kopenhagen. Andersen schrieb über 150 Märchen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_037",
+      "question": "Für welches Ereignis wurde der Eiffelturm 1889 errichtet?",
+      "answers": [
+        {
+          "text": "Für die Weltausstellung in Paris",
+          "correct": true
+        },
+        {
+          "text": "Für die Olympischen Spiele",
+          "correct": false
+        },
+        {
+          "text": "Für die Eröffnung der Pariser Metro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Turm war ursprünglich nur für 20 Jahre genehmigt. Gerettet haben ihn später die Funkantennen, die man auf ihm anbringen konnte.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_038",
+      "question": "Welcher Schriftsteller schrieb „Der große Gatsby“?",
+      "answers": [
+        {
+          "text": "F. Scott Fitzgerald",
+          "correct": true
+        },
+        {
+          "text": "Ernest Hemingway",
+          "correct": false
+        },
+        {
+          "text": "John Steinbeck",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Buch verkaufte sich zu Fitzgeralds Lebzeiten eher schlecht. Erst nach seinem Tod wurde es zum Klassiker.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_039",
+      "question": "In welcher Stadt steht die 2017 eröffnete Elbphilharmonie?",
+      "answers": [
+        {
+          "text": "In Hamburg",
+          "correct": true
+        },
+        {
+          "text": "In Bremen",
+          "correct": false
+        },
+        {
+          "text": "In Köln",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Baukosten lagen am Ende bei einem Vielfachen der ursprünglich geplanten Summe. Der Konzertsaal ruht auf einem alten Kaispeicher.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_040",
+      "question": "In welchem Land spielt Shakespeares „Hamlet“?",
+      "answers": [
+        {
+          "text": "In Dänemark",
+          "correct": true
+        },
+        {
+          "text": "In Schweden",
+          "correct": false
+        },
+        {
+          "text": "In Norwegen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Schloss Kronborg in Helsingör gilt als Vorbild für Schloss Elsinore. Der Satz „Etwas ist faul im Staate Dänemark“ stammt aus dem Stück.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_041",
+      "question": "Welches Material wurde zum Markenzeichen von Joseph Beuys, neben Fett?",
+      "answers": [
+        {
+          "text": "Filz",
+          "correct": true
+        },
+        {
+          "text": "Gummi",
+          "correct": false
+        },
+        {
+          "text": "Stahl",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beuys erzählte, tatarische Nomaden hätten ihn nach einem Flugzeugabsturz auf der Krim in Fett und Filz gewickelt. Ob die Geschichte stimmt, ist umstritten.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_042",
+      "question": "Welcher Komponist vertonte Schillers „Ode an die Freude“ im Finale seiner 9. Sinfonie?",
+      "answers": [
+        {
+          "text": "Ludwig van Beethoven",
+          "correct": true
+        },
+        {
+          "text": "Wolfgang Amadeus Mozart",
+          "correct": false
+        },
+        {
+          "text": "Johannes Brahms",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Satz wurde später zur Hymne der Europäischen Union. Schiller selbst hielt das Gedicht später für misslungen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_043",
+      "question": "Welcher Körperteil fehlt der berühmten Statue der Venus von Milo im Louvre?",
+      "answers": [
+        {
+          "text": "Die Arme",
+          "correct": true
+        },
+        {
+          "text": "Die Nase",
+          "correct": false
+        },
+        {
+          "text": "Die Füße",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Statue wurde 1820 auf der griechischen Insel Milos gefunden. Sie entstand etwa 150 v. Chr.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_044",
+      "question": "Welches Tier führt in Orwells „Farm der Tiere“ die Revolution an?",
+      "answers": [
+        {
+          "text": "Ein Schwein",
+          "correct": true
+        },
+        {
+          "text": "Ein Pferd",
+          "correct": false
+        },
+        {
+          "text": "Ein Hund",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Buch ist eine Satire auf die Sowjetunion. Berühmt wurde der Satz „Alle Tiere sind gleich, aber manche sind gleicher“.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_045",
+      "question": "In welcher spanischen Stadt befindet sich der Prado, eines der größten Kunstmuseen Europas?",
+      "answers": [
+        {
+          "text": "In Madrid",
+          "correct": true
+        },
+        {
+          "text": "In Barcelona",
+          "correct": false
+        },
+        {
+          "text": "In Sevilla",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Prado hängen unter anderem Velázquez’ „Las Meninas“ und Goyas „Schwarze Bilder“. Das Museum wurde 1819 eröffnet.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_046",
+      "question": "Welche zwei Wissenschaftler stehen im Mittelpunkt von Daniel Kehlmanns Roman „Die Vermessung der Welt“?",
+      "answers": [
+        {
+          "text": "Alexander von Humboldt und Carl Friedrich Gauß",
+          "correct": true
+        },
+        {
+          "text": "Immanuel Kant und Johann Wolfgang Goethe",
+          "correct": false
+        },
+        {
+          "text": "Albert Einstein und Max Planck",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Buch wurde 2005 zum Bestseller in Deutschland und international. Es verbindet Fakten und Fiktion.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_047",
+      "question": "Was geschah 2018 bei einer Auktion bei Sotheby’s mit Banksys „Girl with Balloon“ direkt nach dem Zuschlag?",
+      "answers": [
+        {
+          "text": "Es wurde teilweise geschreddert",
+          "correct": true
+        },
+        {
+          "text": "Es wurde gestohlen",
+          "correct": false
+        },
+        {
+          "text": "Es wurde mit Farbe übergossen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Rahmen war heimlich ein Schredder eingebaut. Das halb zerschnittene Werk wurde als „Love is in the Bin“ später für über 18 Millionen Pfund verkauft.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_048",
+      "question": "Wer wäscht sich in Shakespeares „Macbeth“ im Wahn ständig die Hände, um Blutflecken zu entfernen?",
+      "answers": [
+        {
+          "text": "Lady Macbeth",
+          "correct": true
+        },
+        {
+          "text": "Lady Macduff",
+          "correct": false
+        },
+        {
+          "text": "Ophelia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Szene enthält den berühmten Satz „Out, damned spot“. Sie schlafwandelt dabei durch das Schloss.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_049",
+      "question": "Welcher Pionier der abstrakten Malerei lehrte am Bauhaus und stammte aus Moskau?",
+      "answers": [
+        {
+          "text": "Wassily Kandinsky",
+          "correct": true
+        },
+        {
+          "text": "Edvard Munch",
+          "correct": false
+        },
+        {
+          "text": "Otto Dix",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sein „Komposition“-Zyklus gilt als Beginn der gegenstandslosen Malerei. Kandinsky verband Farben auch mit Klängen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_050",
+      "question": "Wie hieß das von Bertolt Brecht und Helene Weigel gegründete Theater in Ost-Berlin?",
+      "answers": [
+        {
+          "text": "Berliner Ensemble",
+          "correct": true
+        },
+        {
+          "text": "Deutsches Theater",
+          "correct": false
+        },
+        {
+          "text": "Volksbühne",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Theater am Schiffbauerdamm wurde 1949 gegründet. Es ist bis heute eine der bekanntesten Bühnen Berlins.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_051",
+      "question": "Welchen Körperteil schnitt sich Vincent van Gogh 1888 in Arles teilweise ab?",
+      "answers": [
+        {
+          "text": "Einen Teil seines linken Ohrs",
+          "correct": true
+        },
+        {
+          "text": "Einen Finger der rechten Hand",
+          "correct": false
+        },
+        {
+          "text": "Eine Haarlocke samt Kopfhaut",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Er wickelte das Stück Ohr in Papier und überreichte es einer Frau in einem Bordell. Danach kam er ins Krankenhaus von Arles.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_052",
+      "question": "Aus welchem Land stammt das Haiku?",
+      "answers": [
+        {
+          "text": "Aus Japan",
+          "correct": true
+        },
+        {
+          "text": "Aus China",
+          "correct": false
+        },
+        {
+          "text": "Aus Korea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Klassisch hat es drei Zeilen mit 5, 7 und 5 Silben. Der bekannteste Haiku-Dichter ist Matsuo Bashō.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_053",
+      "question": "In welchem Berliner Museum steht die Büste der Nofretete?",
+      "answers": [
+        {
+          "text": "Im Neuen Museum",
+          "correct": true
+        },
+        {
+          "text": "Im Pergamonmuseum",
+          "correct": false
+        },
+        {
+          "text": "In der Alten Nationalgalerie",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Archäologe Ludwig Borchardt entdeckte sie 1912 in Amarna. Ägypten fordert sie seit Langem zurück.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_054",
+      "question": "Welches Schiller-Stück löste bei der Uraufführung 1782 in Mannheim Begeisterung aus und brachte ihn in Konflikt mit dem Herzog?",
+      "answers": [
+        {
+          "text": "„Die Räuber“",
+          "correct": true
+        },
+        {
+          "text": "„Kabale und Liebe“",
+          "correct": false
+        },
+        {
+          "text": "„Maria Stuart“",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Schiller verließ danach heimlich Stuttgart, weil ihm der Herzog das Schreiben verbieten wollte. Die Räuber machten ihn über Nacht berühmt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_055",
+      "question": "Welcher Maler war Hofmaler in Wittenberg und porträtierte Martin Luther mehrfach?",
+      "answers": [
+        {
+          "text": "Lucas Cranach der Ältere",
+          "correct": true
+        },
+        {
+          "text": "Albrecht Dürer",
+          "correct": false
+        },
+        {
+          "text": "Matthias Grünewald",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sein Markenzeichen war eine geflügelte Schlange. Cranach führte in Wittenberg eine große Werkstatt, die Luthers Bild in ganz Deutschland verbreitete.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_056",
+      "question": "Wie heißt der allgegenwärtige Diktator in George Orwells „1984“?",
+      "answers": [
+        {
+          "text": "Big Brother",
+          "correct": true
+        },
+        {
+          "text": "Napoleon",
+          "correct": false
+        },
+        {
+          "text": "O’Brien",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Orwell schrieb das Buch auf der schottischen Insel Jura. Der Begriff „Big Brother“ ist seither ein Synonym für Überwachung.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_057",
+      "question": "In welchem Land wurde 1974 die Terrakotta-Armee entdeckt?",
+      "answers": [
+        {
+          "text": "In China",
+          "correct": true
+        },
+        {
+          "text": "In Indien",
+          "correct": false
+        },
+        {
+          "text": "In Japan",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bauern stießen beim Brunnenbau darauf. Die Figuren bewachen das Grab von Kaiser Qin Shihuangdi, und die Gesichter sind individuell gestaltet.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_058",
+      "question": "Wie heißt das Reich in Michael Endes „Die unendliche Geschichte“?",
+      "answers": [
+        {
+          "text": "Phantásien",
+          "correct": true
+        },
+        {
+          "text": "Nimmerland",
+          "correct": false
+        },
+        {
+          "text": "Mittelerde",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Junge Bastian Balthasar Bux liest das Buch und wird selbst zur Figur. Ende schrieb auch „Momo“ und „Jim Knopf“.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_059",
+      "question": "Welches Berliner Gebäude verhüllten Christo und Jeanne-Claude 1995?",
+      "answers": [
+        {
+          "text": "Den Reichstag",
+          "correct": true
+        },
+        {
+          "text": "Das Brandenburger Tor",
+          "correct": false
+        },
+        {
+          "text": "Die Siegessäule",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rund 100.000 Quadratmeter silbriges Gewebe waren dafür nötig. In nur zwei Wochen kamen Millionen Besucher.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_060",
+      "question": "Welchen Geizhals bekehren drei Geister in Dickens’ „Eine Weihnachtsgeschichte“?",
+      "answers": [
+        {
+          "text": "Ebenezer Scrooge",
+          "correct": true
+        },
+        {
+          "text": "Fagin",
+          "correct": false
+        },
+        {
+          "text": "Mr Pickwick",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Erzählung erschien 1843 und prägte das moderne Weihnachtsbild. „Scrooge“ wurde zum Synonym für Geizhals.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_061",
+      "question": "Welcher Künstler gründete 1911 gemeinsam mit Wassily Kandinsky die Gruppe „Der Blaue Reiter“?",
+      "answers": [
+        {
+          "text": "Franz Marc",
+          "correct": true
+        },
+        {
+          "text": "Max Beckmann",
+          "correct": false
+        },
+        {
+          "text": "Ernst Ludwig Kirchner",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Marc malte vor allem Tiere, etwa „Die großen blauen Pferde“. Er fiel 1916 im Ersten Weltkrieg bei Verdun.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_062",
+      "question": "Welcher Literaturnobelpreisträger schrieb „Siddhartha“, „Der Steppenwolf“ und „Das Glasperlenspiel“?",
+      "answers": [
+        {
+          "text": "Hermann Hesse",
+          "correct": true
+        },
+        {
+          "text": "Heinrich Böll",
+          "correct": false
+        },
+        {
+          "text": "Hans Fallada",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hesse bekam den Nobelpreis 1946. Er lebte lange im Tessin, in Montagnola.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_063",
+      "question": "Welcher Göttin war der Parthenon auf der Athener Akropolis geweiht?",
+      "answers": [
+        {
+          "text": "Athene",
+          "correct": true
+        },
+        {
+          "text": "Hera",
+          "correct": false
+        },
+        {
+          "text": "Artemis",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Stadt Athen trägt den Namen der Göttin. Teile der Giebelskulpturen stehen seit dem frühen 19. Jahrhundert im British Museum.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_064",
+      "question": "Welcher Schweizer Dramatiker schrieb „Der Besuch der alten Dame“?",
+      "answers": [
+        {
+          "text": "Friedrich Dürrenmatt",
+          "correct": true
+        },
+        {
+          "text": "Max Frisch",
+          "correct": false
+        },
+        {
+          "text": "Robert Walser",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Handlung spielt im fiktiven Städtchen Güllen. Eine Milliardärin bietet dort Geld für die Ermordung ihres früheren Geliebten.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_065",
+      "question": "Welche Kirche in Dresden wurde 1945 zerstört und nach dem Wiederaufbau 2005 neu geweiht?",
+      "answers": [
+        {
+          "text": "Die Frauenkirche",
+          "correct": true
+        },
+        {
+          "text": "Die Kreuzkirche",
+          "correct": false
+        },
+        {
+          "text": "Die Hofkirche",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Ruine blieb bis 1990 als Mahnmal liegen. Beim Wiederaufbau wurden alte, dunkle Steine in die neue Fassade eingefügt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_066",
+      "question": "Wie viele Sonette umfasst die Sammlung von William Shakespeare aus dem Jahr 1609?",
+      "type": "estimate",
+      "answer": 154,
+      "min": 20,
+      "max": 400,
+      "unit": "Sonette",
+      "difficulty": "medium",
+      "fun_fact": "Die meisten Sonette richten sich an einen jungen Mann, die späteren an eine rätselhafte „Dark Lady“. Wer die beiden waren, ist bis heute ungeklärt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_067",
+      "question": "Welche Form prägt das Innere des Guggenheim-Museums in New York?",
+      "answers": [
+        {
+          "text": "Eine große Spirale",
+          "correct": true
+        },
+        {
+          "text": "Ein weites Labyrinth",
+          "correct": false
+        },
+        {
+          "text": "Ein offener Kreuzgang",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Frank Lloyd Wright entwarf das Haus, eröffnet wurde es 1959, nur wenige Monate nach seinem Tod. Besucher fahren oft nach oben und laufen die Rampe nach unten.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_068",
+      "question": "Wie nennt Anne Frank die fiktive Adressatin ihrer Tagebucheinträge?",
+      "answers": [
+        {
+          "text": "Kitty",
+          "correct": true
+        },
+        {
+          "text": "Margot",
+          "correct": false
+        },
+        {
+          "text": "Emma",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Tagebuch schrieb sie im Hinterhaus an der Prinsengracht in Amsterdam. Ihr Vater Otto Frank veröffentlichte es 1947.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_069",
+      "question": "Welche Maltechnik nutzte Georges Seurat, indem er Bilder aus vielen kleinen Farbpunkten komponierte?",
+      "answers": [
+        {
+          "text": "Den Pointillismus",
+          "correct": true
+        },
+        {
+          "text": "Den Kubismus",
+          "correct": false
+        },
+        {
+          "text": "Den Fauvismus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "An seinem Hauptwerk „Ein Sonntagnachmittag auf der Insel La Grande Jatte“ arbeitete er etwa zwei Jahre. Aus der Nähe sieht man nur Punkte, erst aus der Ferne mischen sich die Farben im Auge.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_070",
+      "question": "In welcher Straße wohnt Sherlock Holmes?",
+      "answers": [
+        {
+          "text": "In der Baker Street",
+          "correct": true
+        },
+        {
+          "text": "In der Fleet Street",
+          "correct": false
+        },
+        {
+          "text": "In der Downing Street",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Adresse 221B gab es zur Entstehungszeit der Geschichten gar nicht. Heute residiert dort ein Museum mit der berühmten Hausnummer.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_071",
+      "question": "Welcher Maler porträtierte sich 1500 frontal in einer Pose, die an Christus-Darstellungen erinnert?",
+      "answers": [
+        {
+          "text": "Albrecht Dürer",
+          "correct": true
+        },
+        {
+          "text": "Hans Holbein",
+          "correct": false
+        },
+        {
+          "text": "Lucas Cranach",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Selbstbildnis im Pelzrock hängt in der Alten Pinakothek in München. Es war für die damalige Zeit extrem selbstbewusst.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_072",
+      "question": "Mit welchem Komponisten schuf Bertolt Brecht „Die Dreigroschenoper“?",
+      "answers": [
+        {
+          "text": "Kurt Weill",
+          "correct": true
+        },
+        {
+          "text": "Hanns Eisler",
+          "correct": false
+        },
+        {
+          "text": "Paul Dessau",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Stück wurde 1928 in Berlin uraufgeführt. Der Song „Mackie Messer“ wurde weltberühmt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_073",
+      "question": "In welchem Jahr wurde die Mona Lisa aus dem Louvre gestohlen?",
+      "type": "estimate",
+      "answer": 1911,
+      "min": 1800,
+      "max": 2000,
+      "unit": "Jahr",
+      "difficulty": "hard",
+      "fun_fact": "Der Dieb, ein italienischer Glaser, versteckte das Bild zwei Jahre lang in seiner Pariser Wohnung. Erst der Diebstahl machte die Mona Lisa weltberühmt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_074",
+      "question": "Welche Goethe-Ballade beginnt mit „Wer reitet so spät durch Nacht und Wind?“",
+      "answers": [
+        {
+          "text": "„Erlkönig“",
+          "correct": true
+        },
+        {
+          "text": "„Der Zauberlehrling“",
+          "correct": false
+        },
+        {
+          "text": "„Der Schatzgräber“",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Franz Schubert vertonte das Gedicht 1815 im Alter von 18 Jahren. Es gehört zu den bekanntesten deutschen Liedern.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_075",
+      "question": "In welcher Stadt findet die Kunstschau Documenta in der Regel alle fünf Jahre statt?",
+      "answers": [
+        {
+          "text": "In Kassel",
+          "correct": true
+        },
+        {
+          "text": "In Münster",
+          "correct": false
+        },
+        {
+          "text": "In Karlsruhe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Maler Arnold Bode gründete sie 1955 als Begleitprogramm zur Bundesgartenschau. Aus dem Nebenprogramm wurde eine der wichtigsten Gegenwartskunstschauen der Welt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_076",
+      "question": "In welchem Berg wird der Eine Ring in „Der Herr der Ringe“ am Ende vernichtet?",
+      "answers": [
+        {
+          "text": "Im Schicksalsberg",
+          "correct": true
+        },
+        {
+          "text": "Im Einsamen Berg",
+          "correct": false
+        },
+        {
+          "text": "In den Nebelbergen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Schicksalsberg liegt in Mordor. Tolkien war Professor für Altenglisch in Oxford.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_077",
+      "question": "Welchen Alltagsgegenstand stellte Marcel Duchamp 1917 unter dem Titel „Fountain“ aus?",
+      "answers": [
+        {
+          "text": "Ein Urinal",
+          "correct": true
+        },
+        {
+          "text": "Ein Waschbecken",
+          "correct": false
+        },
+        {
+          "text": "Eine Badewanne",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Er signierte es mit dem Pseudonym „R. Mutt“. Das Original ist verschollen, es existieren nur spätere Repliken.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_078",
+      "question": "Aus welcher Stadt stammte der Schriftsteller Franz Kafka?",
+      "answers": [
+        {
+          "text": "Aus Prag",
+          "correct": true
+        },
+        {
+          "text": "Aus Wien",
+          "correct": false
+        },
+        {
+          "text": "Aus Budapest",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kafka schrieb auf Deutsch. Sein Brotberuf war eine Stelle bei einer Versicherungsanstalt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_079",
+      "question": "Welches Produkt malte Andy Warhol 1962 in 32 Varianten auf Leinwand?",
+      "answers": [
+        {
+          "text": "Campbell’s Suppendosen",
+          "correct": true
+        },
+        {
+          "text": "Coca-Cola-Flaschen",
+          "correct": false
+        },
+        {
+          "text": "Cornflakes-Packungen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die 32 Bilder entsprachen den damals verkauften Sorten der Suppenmarke. Warhol soll angeblich jahrelang täglich Campbell’s-Suppe zum Mittagessen gegessen haben.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_080",
+      "question": "Wie heißt der einäugige Riese, den Odysseus in der „Odyssee“ überlistet?",
+      "answers": [
+        {
+          "text": "Polyphem",
+          "correct": true
+        },
+        {
+          "text": "Laokoon",
+          "correct": false
+        },
+        {
+          "text": "Charybdis",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Odysseus nennt sich dem Riesen gegenüber „Niemand“. Als Polyphem um Hilfe schreit, antworten die anderen Riesen deshalb nicht.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_081",
+      "question": "Welcher Barockmaler war für dramatisches Hell-Dunkel bekannt und floh 1606 nach einem Totschlag aus Rom?",
+      "answers": [
+        {
+          "text": "Caravaggio",
+          "correct": true
+        },
+        {
+          "text": "Gian Lorenzo Bernini",
+          "correct": false
+        },
+        {
+          "text": "Peter Paul Rubens",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Er wurde in Abwesenheit zum Tode verurteilt und starb 1610 auf der Flucht. Seine Gemälde nutzten Straßenleute als Modelle für Heilige.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_082",
+      "question": "Wie heißt der Junge, der in Günter Grass’ „Die Blechtrommel“ beschließt, nicht mehr zu wachsen?",
+      "answers": [
+        {
+          "text": "Oskar Matzerath",
+          "correct": true
+        },
+        {
+          "text": "Alfred Matzerath",
+          "correct": false
+        },
+        {
+          "text": "Hans Castorp",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Roman spielt in Danzig, Grass erhielt 1999 den Nobelpreis. Die Verfilmung von Volker Schlöndorff gewann 1980 den Oscar als bester fremdsprachiger Film.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_083",
+      "question": "Welcher Bildhauer schuf „Der Denker“ und „Der Kuss“?",
+      "answers": [
+        {
+          "text": "Auguste Rodin",
+          "correct": true
+        },
+        {
+          "text": "Antonio Canova",
+          "correct": false
+        },
+        {
+          "text": "Michelangelo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Denker war ursprünglich als Figur für das „Höllentor“ nach Dantes Göttlicher Komödie gedacht. Später wurde er als eigenständige Skulptur gegossen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_084",
+      "question": "Wem folgt Alice in Lewis Carrolls Geschichte in den Kaninchenbau?",
+      "answers": [
+        {
+          "text": "Einem weißen Kaninchen mit Taschenuhr",
+          "correct": true
+        },
+        {
+          "text": "Einer blauen Raupe",
+          "correct": false
+        },
+        {
+          "text": "Einer sprechenden Katze",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lewis Carroll hieß eigentlich Charles Dodgson und war Mathematiker. Die Geschichte erzählte er zuerst der zehnjährigen Alice Liddell.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_085",
+      "question": "Wie heißt Picassos düstere Schaffensphase ab 1901, die nach der Farbe ihrer Bilder benannt ist?",
+      "answers": [
+        {
+          "text": "Blaue Periode",
+          "correct": true
+        },
+        {
+          "text": "Grüne Periode",
+          "correct": false
+        },
+        {
+          "text": "Graue Periode",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Auslöser war der Suizid seines Freundes Carlos Casagemas 1901. Erst danach folgte die heitere, rötlich getönte „Rosa Periode“.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_086",
+      "question": "Wie heißt Pippi Langstrumpfs Affe?",
+      "answers": [
+        {
+          "text": "Herr Nilsson",
+          "correct": true
+        },
+        {
+          "text": "Herr Svensson",
+          "correct": false
+        },
+        {
+          "text": "Herr Andersson",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Astrid Lindgren erfand die Geschichte 1941, als ihre Tochter krank im Bett lag. Pippis Pferd heißt schlicht „Kleiner Onkel“.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_087",
+      "question": "Was war das Pariser Musée d’Orsay früher?",
+      "answers": [
+        {
+          "text": "Ein Bahnhof",
+          "correct": true
+        },
+        {
+          "text": "Eine Kaserne",
+          "correct": false
+        },
+        {
+          "text": "Eine Börse",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Bahnhof wurde 1900 zur Weltausstellung eröffnet. Er war später zu kurz für moderne Züge und wurde zum Museum für Impressionisten umgebaut.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_088",
+      "question": "Welcher Schiller-Held muss in einem Drama einen Apfel vom Kopf seines Sohnes schießen?",
+      "answers": [
+        {
+          "text": "Wilhelm Tell",
+          "correct": true
+        },
+        {
+          "text": "Don Carlos",
+          "correct": false
+        },
+        {
+          "text": "Wallenstein",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Stück wurde 1804 in Weimar uraufgeführt. Schiller selbst war nie in der Schweiz.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_089",
+      "question": "Welche Künstlerin schuf die Skulptur „Mutter mit totem Sohn“ in der Neuen Wache in Berlin?",
+      "answers": [
+        {
+          "text": "Käthe Kollwitz",
+          "correct": true
+        },
+        {
+          "text": "Paula Modersohn-Becker",
+          "correct": false
+        },
+        {
+          "text": "Gabriele Münter",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ihr Sohn Peter fiel 1914 im Ersten Weltkrieg. Die Skulptur wurde ab 1993 zum zentralen Mahnmal der Bundesrepublik.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_090",
+      "question": "Welcher Musiker erhielt 2016 den Literaturnobelpreis?",
+      "answers": [
+        {
+          "text": "Bob Dylan",
+          "correct": true
+        },
+        {
+          "text": "Leonard Cohen",
+          "correct": false
+        },
+        {
+          "text": "Paul Simon",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Jury lobte neue poetische Ausdrucksformen innerhalb der amerikanischen Songtradition. Zur Zeremonie in Stockholm kam Dylan nicht, die Rede reichte er später nach.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_091",
+      "question": "Aus welchem Land stammte der Maler Edvard Munch, der „Der Schrei“ schuf?",
+      "answers": [
+        {
+          "text": "Norwegen",
+          "correct": true
+        },
+        {
+          "text": "Schweden",
+          "correct": false
+        },
+        {
+          "text": "Dänemark",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es gibt mehrere Fassungen des Motivs. Eine Pastellversion wurde 2012 bei Sotheby’s für knapp 120 Millionen Dollar versteigert.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_092",
+      "question": "In welchem Jahr erschien der erste Teil von Cervantes' „Don Quijote“?",
+      "type": "estimate",
+      "answer": 1605,
+      "min": 1500,
+      "max": 1800,
+      "unit": "Jahr",
+      "difficulty": "medium",
+      "fun_fact": "Der zweite Teil folgte erst 1615, auch weil ein Unbekannter 1614 eine gefälschte Fortsetzung herausgebracht hatte. Cervantes rechnete darin mit ihm ab.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_093",
+      "question": "Wie heißt die Technik, bei der auf frischen, feuchten Putz gemalt wird?",
+      "answers": [
+        {
+          "text": "Fresko",
+          "correct": true
+        },
+        {
+          "text": "Aquarell",
+          "correct": false
+        },
+        {
+          "text": "Gouache",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Begriff kommt vom italienischen „al fresco“. Die Farbe verbindet sich beim Trocknen dauerhaft mit dem Putz.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_094",
+      "question": "Auf welcher Messe wird der Deutsche Buchpreis verliehen?",
+      "answers": [
+        {
+          "text": "Auf der Frankfurter Buchmesse",
+          "correct": true
+        },
+        {
+          "text": "Auf der Leipziger Buchmesse",
+          "correct": false
+        },
+        {
+          "text": "Auf der Hamburger Buchmesse",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Preis für den besten deutschsprachigen Roman des Jahres wird seit 2005 vergeben. Die Longlist erscheint schon Wochen vor der Messe.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_095",
+      "question": "Welcher Wiener Maler, Schüler von Gustav Klimt, starb 1918 mit nur 28 Jahren an der Spanischen Grippe?",
+      "answers": [
+        {
+          "text": "Egon Schiele",
+          "correct": true
+        },
+        {
+          "text": "Oskar Kokoschka",
+          "correct": false
+        },
+        {
+          "text": "Richard Gerstl",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Seine schwangere Frau Edith war nur drei Tage zuvor an derselben Krankheit gestorben. Schiele hinterließ trotz kurzer Karriere hunderte Gemälde und tausende Zeichnungen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_096",
+      "question": "Wie heißt der stolze Gentleman in Jane Austens „Stolz und Vorurteil“?",
+      "answers": [
+        {
+          "text": "Mr Darcy",
+          "correct": true
+        },
+        {
+          "text": "Mr Rochester",
+          "correct": false
+        },
+        {
+          "text": "Heathcliff",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Buch erschien 1813 anonym. Auf dem Titel stand nur „von der Autorin von Sense and Sensibility“.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_097",
+      "question": "Für wen ließ Großmogul Shah Jahan das Taj Mahal bauen?",
+      "answers": [
+        {
+          "text": "Als Grabmal für seine verstorbene Frau",
+          "correct": true
+        },
+        {
+          "text": "Als Residenz für seinen Hofstaat",
+          "correct": false
+        },
+        {
+          "text": "Als Moschee für seine Hauptstadt",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Frau hieß Mumtaz Mahal und starb 1631. Der Bau dauerte rund 22 Jahre.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_098",
+      "question": "Welchen Felsen am Rhein machte Heinrich Heine mit seinem Gedicht berühmt?",
+      "answers": [
+        {
+          "text": "Die Loreley",
+          "correct": true
+        },
+        {
+          "text": "Den Drachenfels",
+          "correct": false
+        },
+        {
+          "text": "Den Rheinfall",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Gedicht wurde von Friedrich Silcher vertont und dadurch zum Volkslied. Heine schrieb es 1824.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_099",
+      "question": "Welcher belgische Surrealist malte Männer mit Bowlerhut und das Bild mit dem Satz „Dies ist keine Pfeife“?",
+      "answers": [
+        {
+          "text": "René Magritte",
+          "correct": true
+        },
+        {
+          "text": "Salvador Dalí",
+          "correct": false
+        },
+        {
+          "text": "Joan Miró",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Bild trägt den Titel „Der Verrat der Bilder“. Gemeint ist: Ein Gemälde einer Pfeife ist keine echte Pfeife.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_100",
+      "question": "Wer stiehlt den Menschen in Michael Endes „Momo“ die Zeit?",
+      "answers": [
+        {
+          "text": "Die grauen Herren",
+          "correct": true
+        },
+        {
+          "text": "Die roten Zwerge",
+          "correct": false
+        },
+        {
+          "text": "Die schwarzen Ritter",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Zeitdiebe leben von der Zeit, die Menschen „sparen“. Das Buch erschien 1973.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_101",
+      "question": "Was imitierte Roy Lichtenstein mit seinen großen Rasterpunkten?",
+      "answers": [
+        {
+          "text": "Den Druck von Comic-Heften",
+          "correct": true
+        },
+        {
+          "text": "Die Körnung alter Fotos",
+          "correct": false
+        },
+        {
+          "text": "Das Flimmern von Fernsehbildern",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Punkte heißen Ben-Day-Punkte nach einem Druckverfahren. Lichtenstein vergrößerte sie auf riesige Leinwände.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_102",
+      "question": "Was ist das Besondere an der Titelfigur Godot in Becketts Stück „Warten auf Godot“?",
+      "answers": [
+        {
+          "text": "Er erscheint nie auf der Bühne",
+          "correct": true
+        },
+        {
+          "text": "Er tritt im zweiten Akt auf",
+          "correct": false
+        },
+        {
+          "text": "Er stirbt am Ende",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Uraufführung fand 1953 in Paris statt. Wer oder was Godot ist, ließ Beckett offen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_103",
+      "question": "Welche Besonderheit haben Leonardo da Vincis Notizbücher?",
+      "answers": [
+        {
+          "text": "Er schrieb in Spiegelschrift",
+          "correct": true
+        },
+        {
+          "text": "Er schrieb in einem Geheimcode",
+          "correct": false
+        },
+        {
+          "text": "Er schrieb ausschließlich in Reimen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Leonardo war Linkshänder, und die Spiegelschrift verhinderte wohl, dass die Tinte verschmierte. Die Notizen enthalten Erfindungen von Fallschirm bis Panzer.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_104",
+      "question": "Wie hieß das berühmte Londoner Theater, in dem viele Stücke Shakespeares aufgeführt wurden?",
+      "answers": [
+        {
+          "text": "Das Globe Theatre",
+          "correct": true
+        },
+        {
+          "text": "Das Drury Lane",
+          "correct": false
+        },
+        {
+          "text": "Das Old Vic",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Globe brannte 1613 ab, als bei einer Aufführung von „Heinrich VIII.“ ein Kanonenschuss das Strohdach entzündete. Heute steht in London ein Nachbau.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_105",
+      "question": "Welches Monet-Gemälde gab dem Impressionismus seinen Namen?",
+      "answers": [
+        {
+          "text": "„Impression, Sonnenaufgang“",
+          "correct": true
+        },
+        {
+          "text": "„Die Seerosen“",
+          "correct": false
+        },
+        {
+          "text": "„Die Kathedrale von Rouen“",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Kritiker Louis Leroy spottete 1874 über das „bloß eindrucksvolle“ Bild. Die Maler nahmen den Spottnamen später selbst an.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_106",
+      "question": "Wie heißt der Gentleman, der in Jules Vernes Roman wettet, die Welt in 80 Tagen zu umrunden?",
+      "answers": [
+        {
+          "text": "Phileas Fogg",
+          "correct": true
+        },
+        {
+          "text": "Kapitän Nemo",
+          "correct": false
+        },
+        {
+          "text": "Professor Lidenbrock",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Er gewinnt die Wette nur, weil er durch die Reise nach Osten einen Tag gewonnen hat und es nicht merkt. Das Ende wird dadurch zu einer Pointe.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_107",
+      "question": "Welcher spanische Hofmaler wurde im Alter taub und schuf die „Schwarzen Bilder“?",
+      "answers": [
+        {
+          "text": "Francisco de Goya",
+          "correct": true
+        },
+        {
+          "text": "Diego Velázquez",
+          "correct": false
+        },
+        {
+          "text": "El Greco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eines dieser Bilder zeigt Saturn, der seinen Sohn verschlingt. Goya malte sie direkt auf die Wände seines Landhauses.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_108",
+      "question": "Welche Gefahr bedroht Deichgraf Hauke Haien in Storms „Der Schimmelreiter“?",
+      "answers": [
+        {
+          "text": "Eine Sturmflut",
+          "correct": true
+        },
+        {
+          "text": "Eine Seuche",
+          "correct": false
+        },
+        {
+          "text": "Ein Brand",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Theodor Storm stammte aus Husum und beschrieb die Nordseeküste. Die Novelle erschien 1888, kurz vor seinem Tod.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_109",
+      "question": "Wer entwarf die Glaspyramide im Hof des Louvre?",
+      "answers": [
+        {
+          "text": "I. M. Pei",
+          "correct": true
+        },
+        {
+          "text": "Norman Foster",
+          "correct": false
+        },
+        {
+          "text": "Frank Gehry",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Pyramide wurde 1989 eröffnet und war zunächst heftig umstritten. Sie dient als Haupteingang des Museums.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_110",
+      "question": "Welchen Beruf hatte Heinrich Hoffmann, der Autor des „Struwwelpeter“?",
+      "answers": [
+        {
+          "text": "Er war Arzt",
+          "correct": true
+        },
+        {
+          "text": "Er war Lehrer",
+          "correct": false
+        },
+        {
+          "text": "Er war Pfarrer",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Er schrieb das Buch 1844 als Weihnachtsgeschenk für seinen Sohn, weil ihm die Kinderbücher im Laden nicht gefielen. Später wurde es ein Welterfolg.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_111",
+      "question": "Welcher bayerische König ließ Schloss Neuschwanstein bauen?",
+      "answers": [
+        {
+          "text": "Ludwig II.",
+          "correct": true
+        },
+        {
+          "text": "Maximilian II.",
+          "correct": false
+        },
+        {
+          "text": "Ludwig I.",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ludwig starb 1886 unter ungeklärten Umständen im Starnberger See, das Schloss blieb unvollendet. Es diente später als Vorbild für Disneys Dornröschenschloss.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_112",
+      "question": "Unter welchem Pseudonym veröffentlichte Charlotte Brontë ihren Roman „Jane Eyre“?",
+      "answers": [
+        {
+          "text": "Currer Bell",
+          "correct": true
+        },
+        {
+          "text": "George Eliot",
+          "correct": false
+        },
+        {
+          "text": "Acton Smith",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Auch ihre Schwestern Emily und Anne wählten männlich klingende Pseudonyme. Die Autorinnen nannten sich Ellis und Acton Bell.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_113",
+      "question": "In welchem früheren Zarenpalast ist die Eremitage in Sankt Petersburg untergebracht?",
+      "answers": [
+        {
+          "text": "Im Winterpalast",
+          "correct": true
+        },
+        {
+          "text": "Im Peterhof",
+          "correct": false
+        },
+        {
+          "text": "Im Katharinenpalast",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Keller leben bis heute Katzen, die Mäuse fernhalten. Die Tradition geht auf Zarin Elisabeth zurück.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_114",
+      "question": "Welcher Briefroman Goethes soll eine Welle von Nachahmungstaten ausgelöst haben?",
+      "answers": [
+        {
+          "text": "„Die Leiden des jungen Werthers“",
+          "correct": true
+        },
+        {
+          "text": "„Wilhelm Meisters Lehrjahre“",
+          "correct": false
+        },
+        {
+          "text": "„Die Wahlverwandtschaften“",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In manchen Städten wurde das Buch verboten. Der Begriff „Werther-Effekt“ beschreibt bis heute das Phänomen der Nachahmung.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_115",
+      "question": "Wie heißt das Haus von Frida Kahlo in Mexiko-Stadt, das heute ein Museum ist?",
+      "answers": [
+        {
+          "text": "Das Blaue Haus",
+          "correct": true
+        },
+        {
+          "text": "Das Rote Haus",
+          "correct": false
+        },
+        {
+          "text": "Das Gelbe Haus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kahlo wurde in dem Haus geboren und starb dort 1954. Die kobaltblauen Wände gaben ihm den Namen „Casa Azul“.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_116",
+      "question": "In welcher Stadt lebte Goethe die längste Zeit seines Erwachsenenlebens?",
+      "answers": [
+        {
+          "text": "In Weimar",
+          "correct": true
+        },
+        {
+          "text": "In Jena",
+          "correct": false
+        },
+        {
+          "text": "In Leipzig",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Geboren wurde er in Frankfurt am Main. Herzog Carl August holte ihn 1775 nach Weimar, wo er Minister und Theaterleiter wurde.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_117",
+      "question": "Welcher Renaissance-Maler schuf „Die Geburt der Venus“?",
+      "answers": [
+        {
+          "text": "Sandro Botticelli",
+          "correct": true
+        },
+        {
+          "text": "Raffael",
+          "correct": false
+        },
+        {
+          "text": "Tizian",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Bild hängt in den Uffizien in Florenz. Die Venus steht auf einer Muschel, während Windgötter sie ans Ufer blasen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_118",
+      "question": "Wie heißt der Glöckner in Victor Hugos Roman über die Kathedrale Notre-Dame?",
+      "answers": [
+        {
+          "text": "Quasimodo",
+          "correct": true
+        },
+        {
+          "text": "Jean Valjean",
+          "correct": false
+        },
+        {
+          "text": "Gavroche",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Roman von 1831 löste eine Welle zur Rettung und Restaurierung der Kathedrale aus. Hugo wollte damit auf den Verfall der gotischen Bauten aufmerksam machen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_119",
+      "question": "Welcher Wiener Maler schuf „Der Kuss“ mit viel Blattgold?",
+      "answers": [
+        {
+          "text": "Gustav Klimt",
+          "correct": true
+        },
+        {
+          "text": "Egon Schiele",
+          "correct": false
+        },
+        {
+          "text": "Oskar Kokoschka",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Bild entstand um 1908 und hängt im Wiener Belvedere. Klimt ließ dafür echtes Blattgold auf die Leinwand auftragen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_120",
+      "question": "Welcher französische Autor schrieb „Der Fremde“ und „Die Pest“?",
+      "answers": [
+        {
+          "text": "Albert Camus",
+          "correct": true
+        },
+        {
+          "text": "Jean-Paul Sartre",
+          "correct": false
+        },
+        {
+          "text": "Samuel Beckett",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Camus erhielt 1957 mit 44 Jahren den Nobelpreis, einer der jüngsten Preisträger. Er starb 1960 bei einem Autounfall.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_121",
+      "question": "Was beherbergt Londons Tate Modern in einem früheren Gebäude?",
+      "answers": [
+        {
+          "text": "Ein ehemaliges Kraftwerk",
+          "correct": true
+        },
+        {
+          "text": "Einen ehemaligen Bahnhof",
+          "correct": false
+        },
+        {
+          "text": "Eine ehemalige Brauerei",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Haus an der Themse war das Kraftwerk Bankside. Die riesige Turbinenhalle dient heute für Großinstallationen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_122",
+      "question": "Welche Autorin schrieb „Harry Potter“, nachdem mehrere Verlage das Manuskript abgelehnt hatten?",
+      "answers": [
+        {
+          "text": "J. K. Rowling",
+          "correct": true
+        },
+        {
+          "text": "Suzanne Collins",
+          "correct": false
+        },
+        {
+          "text": "Stephenie Meyer",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Idee kam ihr 1990 im Zug nach London. Zwölf Verlage sollen das erste Manuskript abgelehnt haben.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_123",
+      "question": "Welche Farben setzte Piet Mondrian neben Schwarz und Weiß in seinen Kompositionen ein?",
+      "answers": [
+        {
+          "text": "Rot, Gelb und Blau",
+          "correct": true
+        },
+        {
+          "text": "Grün, Orange und Violett",
+          "correct": false
+        },
+        {
+          "text": "Rot, Grün und Gelb",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mondrian gehörte zur niederländischen Gruppe De Stijl. In New York malte er später „Broadway Boogie Woogie“, inspiriert vom Straßenraster der Stadt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_124",
+      "question": "Welches Großprojekt begannen die Brüder Grimm neben ihren Märchen?",
+      "answers": [
+        {
+          "text": "Das „Deutsche Wörterbuch“",
+          "correct": true
+        },
+        {
+          "text": "Die „Duden-Rechtschreibung“",
+          "correct": false
+        },
+        {
+          "text": "Den „Brockhaus“",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Arbeit begann 1838 und endete erst 1961, lange nach dem Tod der Brüder. Das Wörterbuch umfasst 32 Bände.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_125",
+      "question": "Welche Blumen malte Van Gogh 1888 in Arles, um das Zimmer seines Freundes Paul Gauguin zu schmücken?",
+      "answers": [
+        {
+          "text": "Sonnenblumen",
+          "correct": true
+        },
+        {
+          "text": "Schwertlilien",
+          "correct": false
+        },
+        {
+          "text": "Mohnblumen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Van Gogh hoffte, im „Gelben Haus“ eine Künstlerkolonie zu gründen. Gauguin war der Einzige, der tatsächlich kam, und nach zwei Monaten endete die Freundschaft im Streit.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_126",
+      "question": "Wie heißt Winnetous weißer Blutsbruder in den Romanen von Karl May?",
+      "answers": [
+        {
+          "text": "Old Shatterhand",
+          "correct": true
+        },
+        {
+          "text": "Kara Ben Nemsi",
+          "correct": false
+        },
+        {
+          "text": "Hadschi Halef Omar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Karl May schrieb seine Amerika-Romane, ohne je dort gewesen zu sein. Seine erste Reise in die USA unternahm er erst 1908.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_127",
+      "question": "Welche baskische Stadt gab Picassos berühmtem Antikriegsbild von 1937 den Namen?",
+      "answers": [
+        {
+          "text": "Guernica",
+          "correct": true
+        },
+        {
+          "text": "Bilbao",
+          "correct": false
+        },
+        {
+          "text": "San Sebastián",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Gemälde hängt im Museo Reina Sofía in Madrid. Ein Wandteppich nach dem Motiv hängt am Eingang zum UN-Sicherheitsrat in New York.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_128",
+      "question": "Aus welchem Land stammte die Schriftstellerin Ingeborg Bachmann?",
+      "answers": [
+        {
+          "text": "Aus Österreich",
+          "correct": true
+        },
+        {
+          "text": "Aus der Schweiz",
+          "correct": false
+        },
+        {
+          "text": "Aus Deutschland",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sie wurde in Klagenfurt geboren. Dort wird jedes Jahr der nach ihr benannte Bachmannpreis beim öffentlichen Wettlesen vergeben.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_129",
+      "question": "Welcher Epoche wird Caspar David Friedrichs „Wanderer über dem Nebelmeer“ zugerechnet?",
+      "answers": [
+        {
+          "text": "Der Romantik",
+          "correct": true
+        },
+        {
+          "text": "Dem Barock",
+          "correct": false
+        },
+        {
+          "text": "Dem Impressionismus",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Rückenfigur ist Friedrichs Markenzeichen: Der Betrachter blickt mit der Figur ins Bild. Friedrich stammte aus Greifswald und lebte lange in Dresden.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_130",
+      "question": "Für welches Werk erhielt Thomas Mann 1929 vor allem den Literaturnobelpreis?",
+      "answers": [
+        {
+          "text": "„Buddenbrooks“",
+          "correct": true
+        },
+        {
+          "text": "„Der Zauberberg“",
+          "correct": false
+        },
+        {
+          "text": "„Der Tod in Venedig“",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Begründung des Komitees nannte vor allem den Familienroman über Lübecker Kaufleute. Der „Zauberberg“ wurde in der Begründung nicht erwähnt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_131",
+      "question": "Welcher niederländische Maler schuf das rätselhafte Triptychon „Der Garten der Lüste“?",
+      "answers": [
+        {
+          "text": "Hieronymus Bosch",
+          "correct": true
+        },
+        {
+          "text": "Pieter Bruegel",
+          "correct": false
+        },
+        {
+          "text": "Jan van Eyck",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Bild hängt im Prado in Madrid. Seine Hybridwesen und Fabelmotive geben Forschern bis heute Rätsel auf.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_132",
+      "question": "Wie viele Streiche spielen Max und Moritz in Wilhelm Buschs Geschichte?",
+      "answers": [
+        {
+          "text": "Sieben",
+          "correct": true
+        },
+        {
+          "text": "Fünf",
+          "correct": false
+        },
+        {
+          "text": "Neun",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Buch erschien 1865 und endet damit, dass die beiden in der Mühle zu Körnern gemahlen werden. Busch war auch Maler und Zeichner.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_133",
+      "question": "Welcher russische Künstler malte 1915 das „Schwarze Quadrat“?",
+      "answers": [
+        {
+          "text": "Kasimir Malewitsch",
+          "correct": true
+        },
+        {
+          "text": "Marc Chagall",
+          "correct": false
+        },
+        {
+          "text": "Wassily Kandinsky",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Bild löste die Malerei vom Gegenstand fast radikal ab. Malewitsch nannte seine Richtung „Suprematismus“.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_134",
+      "question": "In welchem Krieg spielt Remarques „Im Westen nichts Neues“?",
+      "answers": [
+        {
+          "text": "Im Ersten Weltkrieg",
+          "correct": true
+        },
+        {
+          "text": "Im Zweiten Weltkrieg",
+          "correct": false
+        },
+        {
+          "text": "Im Dreißigjährigen Krieg",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Remarque stammte aus Osnabrück. Das Buch erschien 1929 und wurde 1933 von den Nationalsozialisten verbrannt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_135",
+      "question": "Welches Land schenkte den USA die Freiheitsstatue?",
+      "answers": [
+        {
+          "text": "Frankreich",
+          "correct": true
+        },
+        {
+          "text": "Großbritannien",
+          "correct": false
+        },
+        {
+          "text": "Spanien",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das innere Stahlgerüst stammt von Gustave Eiffel. Ihre grüne Farbe ist Patina auf dem Kupfer, ursprünglich glänzte sie rotbraun.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_136",
+      "question": "Welche Hauptfigur in Dostojewskis „Schuld und Sühne“ ermordet eine Pfandleiherin?",
+      "answers": [
+        {
+          "text": "Raskolnikow",
+          "correct": true
+        },
+        {
+          "text": "Aljoscha",
+          "correct": false
+        },
+        {
+          "text": "Fürst Myschkin",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Student glaubt, außergewöhnliche Menschen dürften moralische Grenzen überschreiten. Der Roman spielt im Sankt Petersburg des 19. Jahrhunderts.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_137",
+      "question": "In welchem Raum malte Michelangelo „Die Erschaffung Adams“?",
+      "answers": [
+        {
+          "text": "In der Sixtinischen Kapelle",
+          "correct": true
+        },
+        {
+          "text": "Im Petersdom",
+          "correct": false
+        },
+        {
+          "text": "Im Pantheon",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Arbeit an der Decke dauerte von 1508 bis 1512. Entgegen der Legende malte Michelangelo nicht liegend, sondern auf einem Gerüst im Stehen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_138",
+      "question": "Welche Stelle an Siegfrieds Körper ist im Nibelungenlied verwundbar?",
+      "answers": [
+        {
+          "text": "Eine Stelle zwischen den Schulterblättern",
+          "correct": true
+        },
+        {
+          "text": "Die Ferse",
+          "correct": false
+        },
+        {
+          "text": "Das Herz",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ein Lindenblatt hatte sich beim Bad im Drachenblut auf seinen Rücken gelegt. Hagen stach genau dort zu.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_139",
+      "question": "In welcher Stadt wurde das Bauhaus 1919 gegründet?",
+      "answers": [
+        {
+          "text": "In Weimar",
+          "correct": true
+        },
+        {
+          "text": "In Dessau",
+          "correct": false
+        },
+        {
+          "text": "In Berlin",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Walter Gropius leitete die Schule. 1925 zog sie nach Dessau um, 1932 nach Berlin, und 1933 löste sie sich unter dem Druck der Nationalsozialisten selbst auf.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_140",
+      "question": "Wie heißt der Kapitän, der in Melvilles „Moby Dick“ besessen den weißen Wal jagt?",
+      "answers": [
+        {
+          "text": "Ahab",
+          "correct": true
+        },
+        {
+          "text": "Ismael",
+          "correct": false
+        },
+        {
+          "text": "Nemo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Schiff heißt Pequod. Der Roman fiel zu Melvilles Lebzeiten weitgehend durch.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_141",
+      "question": "Welche beiden Künstler begründeten um 1907 den Kubismus?",
+      "answers": [
+        {
+          "text": "Pablo Picasso und Georges Braque",
+          "correct": true
+        },
+        {
+          "text": "Salvador Dalí und Joan Miró",
+          "correct": false
+        },
+        {
+          "text": "Henri Matisse und André Derain",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Name leitet sich von „cubes“ ab, wie ein Kritiker die Bilder abfällig nannte. Beide Maler arbeiteten damals so eng zusammen, dass sie ihre Bilder kaum unterscheiden konnten.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_142",
+      "question": "In welchem Schweizer Ort spielt Thomas Manns „Der Zauberberg“?",
+      "answers": [
+        {
+          "text": "In Davos",
+          "correct": true
+        },
+        {
+          "text": "In St. Moritz",
+          "correct": false
+        },
+        {
+          "text": "In Zermatt",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mann besuchte 1912 seine Frau Katia, die dort in einem Sanatorium lag. Der Besuch lieferte ihm die Idee für den Roman.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_143",
+      "question": "Welche Kopfbedeckung trägt das „Mädchen mit dem Perlenohrring“ von Jan Vermeer?",
+      "answers": [
+        {
+          "text": "Einen Turban",
+          "correct": true
+        },
+        {
+          "text": "Eine Spitzenhaube",
+          "correct": false
+        },
+        {
+          "text": "Einen Federhut",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Bild hängt im Mauritshuis in Den Haag. Wer das Mädchen war, ist bis heute nicht sicher geklärt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_144",
+      "question": "In was verwandelt sich Gregor Samsa in Kafkas Erzählung „Die Verwandlung“?",
+      "answers": [
+        {
+          "text": "In ein riesiges Ungeziefer",
+          "correct": true
+        },
+        {
+          "text": "In einen großen Wolf",
+          "correct": false
+        },
+        {
+          "text": "In eine riesige Ratte",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kafka bestand darauf, dass das Tier auf dem Titelbild nie gezeigt werden dürfe. Es bleibt bis heute unbestimmt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_145",
+      "question": "In welcher Stadt steht der Isenheimer Altar von Matthias Grünewald?",
+      "answers": [
+        {
+          "text": "In Colmar",
+          "correct": true
+        },
+        {
+          "text": "In Straßburg",
+          "correct": false
+        },
+        {
+          "text": "In Basel",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Er entstand für ein Kloster in Isenheim, das Kranke pflegte. Die Gekreuzigten-Darstellung zeigt Haut voller Geschwüre, passend zum „Antoniusfeuer“.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_146",
+      "question": "In welchem Jahr erschien George Orwells Roman „1984“?",
+      "type": "estimate",
+      "answer": 1949,
+      "min": 1900,
+      "max": 2000,
+      "unit": "Jahr",
+      "difficulty": "easy",
+      "fun_fact": "Orwell schrieb das Buch schwer krank auf der abgelegenen schottischen Insel Jura. Er starb wenige Monate nach dem Erscheinen.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_147",
+      "question": "Aus welchem Material meißelte Michelangelo seinen „David“?",
+      "answers": [
+        {
+          "text": "Aus Marmor",
+          "correct": true
+        },
+        {
+          "text": "Aus Bronze",
+          "correct": false
+        },
+        {
+          "text": "Aus Sandstein",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Block war schon Jahrzehnte zuvor von anderen Bildhauern angehauen und dann liegen gelassen worden. Die fertige Statue in Florenz ist gut fünf Meter hoch.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_148",
+      "question": "Welche Besonderheit hat Jean-Baptiste Grenouille in Süskinds „Das Parfum“?",
+      "answers": [
+        {
+          "text": "Er hat einen absoluten Geruchssinn, aber keinen eigenen Körpergeruch",
+          "correct": true
+        },
+        {
+          "text": "Er ist blind und riecht deshalb alles",
+          "correct": false
+        },
+        {
+          "text": "Er kann nur Blumendüfte unterscheiden",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Roman spielt im Paris des 18. Jahrhunderts und wurde weltweit über 20 Millionen Mal verkauft. Er wurde 2006 verfilmt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_149",
+      "question": "In welchem Gebäude steht Michelangelos „Pietà“?",
+      "answers": [
+        {
+          "text": "Im Petersdom",
+          "correct": true
+        },
+        {
+          "text": "In der Sixtinischen Kapelle",
+          "correct": false
+        },
+        {
+          "text": "In der Lateranbasilika",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es ist das einzige Werk, das Michelangelo signierte. Seinen Namen meißelte er auf das Band über der Brust der Maria.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_150",
+      "question": "Welcher Dramatiker starb mit 23 Jahren und schrieb „Woyzeck“ und „Dantons Tod“?",
+      "answers": [
+        {
+          "text": "Georg Büchner",
+          "correct": true
+        },
+        {
+          "text": "Heinrich von Kleist",
+          "correct": false
+        },
+        {
+          "text": "Friedrich Hebbel",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nach ihm ist der wichtigste deutsche Literaturpreis benannt. „Woyzeck“ blieb Fragment und wurde erst Jahrzehnte nach seinem Tod entdeckt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_151",
+      "question": "Welcher Architekt prägte die Sagrada Família in Barcelona, an der seit 1882 gebaut wird?",
+      "answers": [
+        {
+          "text": "Antoni Gaudí",
+          "correct": true
+        },
+        {
+          "text": "Le Corbusier",
+          "correct": false
+        },
+        {
+          "text": "Santiago Calatrava",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gaudí starb 1926 nach einem Unfall mit einer Straßenbahn. Das Bauwerk ist bis heute nicht vollständig fertiggestellt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_152",
+      "question": "Wie heißt der junge Held, der in Dumas’ Roman zu den drei Musketieren stößt?",
+      "answers": [
+        {
+          "text": "D’Artagnan",
+          "correct": true
+        },
+        {
+          "text": "Cyrano",
+          "correct": false
+        },
+        {
+          "text": "Edmond Dantès",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Wahlspruch der Musketiere lautet „Einer für alle, alle für einen“. D’Artagnan beruht auf einer historischen Person.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_153",
+      "question": "In welchem Museum hängt Rembrandts „Die Nachtwache“?",
+      "answers": [
+        {
+          "text": "Im Rijksmuseum in Amsterdam",
+          "correct": true
+        },
+        {
+          "text": "Im Mauritshuis in Den Haag",
+          "correct": false
+        },
+        {
+          "text": "Im Städel in Frankfurt",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Szene spielt eigentlich am Tag. Der Eindruck der Nacht entstand erst durch nachgedunkelten Firnis über Jahrhunderte.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_154",
+      "question": "Welcher Dichter schrieb 1945 die „Todesfuge“ mit der Zeile „Schwarze Milch der Frühe“?",
+      "answers": [
+        {
+          "text": "Paul Celan",
+          "correct": true
+        },
+        {
+          "text": "Peter Huchel",
+          "correct": false
+        },
+        {
+          "text": "Erich Fried",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Celan wurde in Czernowitz geboren und überlebte den Holocaust. Das Gedicht gehört zu den bekanntesten Texten über die Shoah.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_155",
+      "question": "Was lehnte Friedensreich Hundertwasser in seiner Architektur grundsätzlich ab?",
+      "answers": [
+        {
+          "text": "Die gerade Linie",
+          "correct": true
+        },
+        {
+          "text": "Die Begrünung",
+          "correct": false
+        },
+        {
+          "text": "Die bunten Farben",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Er nannte die gerade Linie „gottlos und unmoralisch“. Sein berühmtestes Haus in Wien hat schiefe Böden und Bäume auf dem Dach.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_156",
+      "question": "Wie bringt Tom Sawyer in Mark Twains Roman andere Jungen dazu, für ihn den Zaun zu streichen?",
+      "answers": [
+        {
+          "text": "Er tut so, als sei es ein Vergnügen",
+          "correct": true
+        },
+        {
+          "text": "Er zahlt ihnen Taschengeld",
+          "correct": false
+        },
+        {
+          "text": "Er droht ihnen mit Prügel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Am Ende bekommt Tom für die Gelegenheit sogar Geschenke von den Jungen. „Mark Twain“ ist ein Pseudonym und ein Lotsenruf auf den Mississippi-Dampfern.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_157",
+      "question": "Welche Südseeinsel wurde zum Hauptmotiv des Malers Paul Gauguin?",
+      "answers": [
+        {
+          "text": "Tahiti",
+          "correct": true
+        },
+        {
+          "text": "Hawaii",
+          "correct": false
+        },
+        {
+          "text": "Bali",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gauguin hatte zuvor als Börsenmakler in Paris gearbeitet. Er verließ Frankreich, weil er „zurück zum Ursprünglichen“ wollte.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_158",
+      "question": "Welcher Tag wird in Dublin als „Bloomsday“ gefeiert?",
+      "answers": [
+        {
+          "text": "Der 16. Juni",
+          "correct": true
+        },
+        {
+          "text": "Der 1. Mai",
+          "correct": false
+        },
+        {
+          "text": "Der 17. März",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Tag erinnert an den Handlungstag in James Joyces „Ulysses“, den 16. Juni 1904. Fans gehen dann mit Kostümen den Weg der Romanfiguren nach.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_159",
+      "question": "Welcher Architekt entwarf das Guggenheim-Museum in Bilbao?",
+      "answers": [
+        {
+          "text": "Frank Gehry",
+          "correct": true
+        },
+        {
+          "text": "Zaha Hadid",
+          "correct": false
+        },
+        {
+          "text": "Renzo Piano",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Bau von 1997 ist mit Titanblech verkleidet. Seine Wirkung auf die Stadt wurde als „Bilbao-Effekt“ bekannt.",
+      "category": "Kunst & Literatur"
+    },
+    {
+      "id": "kunst_de_160",
+      "question": "Welches Gleichnis steht im Zentrum von Lessings „Nathan der Weise“?",
+      "answers": [
+        {
+          "text": "Die Ringparabel",
+          "correct": true
+        },
+        {
+          "text": "Das Höhlengleichnis",
+          "correct": false
+        },
+        {
+          "text": "Die Fabel vom Fuchs",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In der Parabel geht es um drei Ringe, die für Judentum, Christentum und Islam stehen. Das Stück ist ein Plädoyer für Toleranz.",
+      "category": "Kunst & Literatur"
+    }
+  ]
+}

@@ -1,0 +1,3323 @@
+{
+  "name": "Art & Literature",
+  "language": "en",
+  "version": "1.0",
+  "theme": "trivia",
+  "questions": [
+    {
+      "id": "artlit_en_001",
+      "question": "Which street artist's 'Girl with Balloon' partly shredded itself right after selling at auction in 2018?",
+      "answers": [
+        {
+          "text": "Banksy",
+          "correct": true
+        },
+        {
+          "text": "Shepard Fairey",
+          "correct": false
+        },
+        {
+          "text": "Invader",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The half-shredded work was renamed 'Love is in the Bin' and later resold for far more than its original price.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_002",
+      "question": "Who wrote 'Winnie-the-Pooh'?",
+      "answers": [
+        {
+          "text": "A. A. Milne",
+          "correct": true
+        },
+        {
+          "text": "Beatrix Potter",
+          "correct": false
+        },
+        {
+          "text": "Kenneth Grahame",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pooh was inspired partly by a real bear called Winnipeg at London Zoo, after which he was named.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_003",
+      "question": "Which famous Paris cathedral was badly damaged by a fire in April 2019?",
+      "answers": [
+        {
+          "text": "Notre-Dame",
+          "correct": true
+        },
+        {
+          "text": "Sacré-Cœur",
+          "correct": false
+        },
+        {
+          "text": "Sainte-Chapelle",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Its spire collapsed in the blaze, and the cathedral reopened in December 2024 after extensive restoration.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_004",
+      "question": "Caravaggio is famous for dramatic contrasts of light and dark. What is this technique called?",
+      "answers": [
+        {
+          "text": "Chiaroscuro",
+          "correct": true
+        },
+        {
+          "text": "Sfumato",
+          "correct": false
+        },
+        {
+          "text": "Pointillism",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "His violent personality matched his paintings, and he fled Rome in 1606 after killing a man.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_005",
+      "question": "What was the name of Shakespeare's wife?",
+      "answers": [
+        {
+          "text": "Anne Hathaway",
+          "correct": true
+        },
+        {
+          "text": "Mary Arden",
+          "correct": false
+        },
+        {
+          "text": "Elizabeth Woodville",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In his will he left her only his 'second-best bed'.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_006",
+      "question": "Picasso's 'Guernica' responds to the bombing of a Basque town during which conflict?",
+      "answers": [
+        {
+          "text": "The Spanish Civil War",
+          "correct": true
+        },
+        {
+          "text": "World War I",
+          "correct": false
+        },
+        {
+          "text": "World War II",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The huge black-and-white canvas debuted at the 1937 World's Fair in Paris and is now in the Reina Sofía museum in Madrid.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_007",
+      "question": "Who wrote the tragedy 'Romeo and Juliet'?",
+      "answers": [
+        {
+          "text": "William Shakespeare",
+          "correct": true
+        },
+        {
+          "text": "Christopher Marlowe",
+          "correct": false
+        },
+        {
+          "text": "Charles Dickens",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The play is set in Verona, and Shakespeare probably wrote it in the mid-1590s.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_008",
+      "question": "Monet painted his famous water lilies in his garden in which French village?",
+      "answers": [
+        {
+          "text": "Giverny",
+          "correct": true
+        },
+        {
+          "text": "Arles",
+          "correct": false
+        },
+        {
+          "text": "Auvers-sur-Oise",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He designed the pond himself, with a Japanese-style bridge, and painted it for roughly the last 30 years of his life.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_009",
+      "question": "The Terracotta Army in China was buried to guard the tomb of which person?",
+      "answers": [
+        {
+          "text": "Qin Shi Huang, the first emperor",
+          "correct": true
+        },
+        {
+          "text": "Genghis Khan",
+          "correct": false
+        },
+        {
+          "text": "Confucius",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Farmers digging a well found it in 1974, and the figures all have different faces.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_010",
+      "question": "Which Dutch painter created 'The Starry Night' in 1889?",
+      "answers": [
+        {
+          "text": "Vincent van Gogh",
+          "correct": true
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        },
+        {
+          "text": "Edvard Munch",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "He painted it from memory during the day, based on the view from his room at the asylum in Saint-Rémy, adding an imagined village.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_011",
+      "question": "In 'Don Quixote', what does the hero famously charge at, believing them to be giants?",
+      "answers": [
+        {
+          "text": "Windmills",
+          "correct": true
+        },
+        {
+          "text": "Sheep",
+          "correct": false
+        },
+        {
+          "text": "Castle towers",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Miguel de Cervantes published it in two parts, in 1605 and 1615, and it is often called the first modern novel.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_012",
+      "question": "Which playwright wrote 'Waiting for Godot', in which two men wait for someone who never arrives?",
+      "answers": [
+        {
+          "text": "Samuel Beckett",
+          "correct": true
+        },
+        {
+          "text": "Harold Pinter",
+          "correct": false
+        },
+        {
+          "text": "Tom Stoppard",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beckett wrote it in French first, and it won him the Nobel Prize in 1969.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_013",
+      "question": "In which Shakespeare play does the famous stage direction 'Exit, pursued by a bear' appear?",
+      "answers": [
+        {
+          "text": "The Winter's Tale",
+          "correct": true
+        },
+        {
+          "text": "Cymbeline",
+          "correct": false
+        },
+        {
+          "text": "Pericles",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Scholars debate whether a real bear or an actor in a costume played the part.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_014",
+      "question": "Hokusai's 'The Great Wave off Kanagawa' is what kind of artwork?",
+      "answers": [
+        {
+          "text": "A woodblock print",
+          "correct": true
+        },
+        {
+          "text": "A silk scroll painting",
+          "correct": false
+        },
+        {
+          "text": "A lacquer panel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mount Fuji is the small peak in the background, and the print belongs to a series of 36 views of the mountain.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_015",
+      "question": "In Hemingway's 'The Old Man and the Sea', what giant fish does the old fisherman hook?",
+      "answers": [
+        {
+          "text": "A marlin",
+          "correct": true
+        },
+        {
+          "text": "A swordfish",
+          "correct": false
+        },
+        {
+          "text": "A shark",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The short novel won the 1953 Pulitzer Prize and helped Hemingway win the Nobel the following year.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_016",
+      "question": "Which Flemish painter created the 'Arnolfini Portrait' in 1434, with a tiny mirror reflecting the room?",
+      "answers": [
+        {
+          "text": "Jan van Eyck",
+          "correct": true
+        },
+        {
+          "text": "Rogier van der Weyden",
+          "correct": false
+        },
+        {
+          "text": "Hans Holbein",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Above the mirror he wrote 'Jan van Eyck was here', as if signing a witness statement.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_017",
+      "question": "Artemisia Gentileschi, known for her dramatic 'Judith' paintings, worked in which art period?",
+      "answers": [
+        {
+          "text": "The Baroque",
+          "correct": true
+        },
+        {
+          "text": "The Rococo",
+          "correct": false
+        },
+        {
+          "text": "The Gothic",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "She was one of the first women admitted to the art academy in Florence.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_018",
+      "question": "Which play contains the line 'All the world's a stage'?",
+      "answers": [
+        {
+          "text": "As You Like It",
+          "correct": true
+        },
+        {
+          "text": "Hamlet",
+          "correct": false
+        },
+        {
+          "text": "Macbeth",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The speech is given by the melancholy Jaques and describes the seven ages of man.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_019",
+      "question": "The Uffizi Gallery, home to Botticelli's 'Birth of Venus', is in which Italian city?",
+      "answers": [
+        {
+          "text": "Florence",
+          "correct": true
+        },
+        {
+          "text": "Rome",
+          "correct": false
+        },
+        {
+          "text": "Venice",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Uffizi' means 'offices': the building was originally constructed to house the administration of the Medici family.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_020",
+      "question": "El Greco, the Spanish Renaissance painter, was born on which island?",
+      "answers": [
+        {
+          "text": "Crete",
+          "correct": true
+        },
+        {
+          "text": "Sicily",
+          "correct": false
+        },
+        {
+          "text": "Cyprus",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "His nickname simply means 'The Greek', and he spent most of his working life in Toledo.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_021",
+      "question": "What is the name of Harry Potter's pet owl?",
+      "answers": [
+        {
+          "text": "Hedwig",
+          "correct": true
+        },
+        {
+          "text": "Errol",
+          "correct": false
+        },
+        {
+          "text": "Pigwidgeon",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rowling reportedly found the name Hedwig in a book about medieval saints.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_022",
+      "question": "Marcel Duchamp's notorious 1917 artwork 'Fountain' was a signed what?",
+      "answers": [
+        {
+          "text": "A urinal",
+          "correct": true
+        },
+        {
+          "text": "A bicycle wheel",
+          "correct": false
+        },
+        {
+          "text": "A coat rack",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He signed it 'R. Mutt'; the original was lost, so the versions seen today are later replicas.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_023",
+      "question": "Which Nigerian writer became the first African to win the Nobel Prize in Literature, in 1986?",
+      "answers": [
+        {
+          "text": "Wole Soyinka",
+          "correct": true
+        },
+        {
+          "text": "Chinua Achebe",
+          "correct": false
+        },
+        {
+          "text": "Ngũgĩ wa Thiong'o",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "He was jailed for almost two years during the Nigerian civil war after speaking out against the conflict.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_024",
+      "question": "Leonardo's 'Vitruvian Man' drawing shows what?",
+      "answers": [
+        {
+          "text": "The ideal proportions of the human body",
+          "correct": true
+        },
+        {
+          "text": "A flying machine design",
+          "correct": false
+        },
+        {
+          "text": "A map of the Moon",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The drawing appears on the Italian one-euro coin.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_025",
+      "question": "Mary Shelley began 'Frankenstein' during a ghost-story challenge near which lake?",
+      "answers": [
+        {
+          "text": "Lake Geneva",
+          "correct": true
+        },
+        {
+          "text": "Lake Como",
+          "correct": false
+        },
+        {
+          "text": "Windermere",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The group, which included Lord Byron, was stuck indoors in 1816, the so-called 'Year Without a Summer'.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_026",
+      "question": "Which French Impressionist is famous for his paintings of ballet dancers?",
+      "answers": [
+        {
+          "text": "Edgar Degas",
+          "correct": true
+        },
+        {
+          "text": "Pierre-Auguste Renoir",
+          "correct": false
+        },
+        {
+          "text": "Camille Pissarro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He also made a wax sculpture of a young dancer that was dressed in a real cloth tutu.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_027",
+      "question": "George Eliot, author of 'Middlemarch', was the pen name of a woman with which real name?",
+      "answers": [
+        {
+          "text": "Mary Ann Evans",
+          "correct": true
+        },
+        {
+          "text": "Mary Ann Brontë",
+          "correct": false
+        },
+        {
+          "text": "Mary Anne Shelley",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "She chose a male name so that her work would be taken seriously.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_028",
+      "question": "Which ancient Greek playwright wrote 'Oedipus Rex'?",
+      "answers": [
+        {
+          "text": "Sophocles",
+          "correct": true
+        },
+        {
+          "text": "Euripides",
+          "correct": false
+        },
+        {
+          "text": "Aeschylus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Freud later used the title for his 'Oedipus complex'.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_029",
+      "question": "Which Swedish author created Pippi Longstocking?",
+      "answers": [
+        {
+          "text": "Astrid Lindgren",
+          "correct": true
+        },
+        {
+          "text": "Tove Jansson",
+          "correct": false
+        },
+        {
+          "text": "Selma Lagerlöf",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "She first invented the character as a story to cheer up her sick daughter.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_030",
+      "question": "Who wrote 'Jane Eyre'?",
+      "answers": [
+        {
+          "text": "Charlotte Brontë",
+          "correct": true
+        },
+        {
+          "text": "Emily Brontë",
+          "correct": false
+        },
+        {
+          "text": "Anne Brontë",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "She published it in 1847 under the male pen name Currer Bell.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_031",
+      "question": "In which Paris museum does the Mona Lisa hang?",
+      "answers": [
+        {
+          "text": "The Louvre",
+          "correct": true
+        },
+        {
+          "text": "The Musée d'Orsay",
+          "correct": false
+        },
+        {
+          "text": "The Centre Pompidou",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The painting was stolen in 1911 by a museum worker and only recovered two years later, which made it world famous.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_032",
+      "question": "Which hero spends ten years trying to get home in Homer's 'Odyssey'?",
+      "answers": [
+        {
+          "text": "Odysseus",
+          "correct": true
+        },
+        {
+          "text": "Achilles",
+          "correct": false
+        },
+        {
+          "text": "Hector",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The poem includes the Cyclops and the Sirens, and the Romans called its hero Ulysses.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_033",
+      "question": "René Magritte's painting of a pipe carries the caption 'This is not a...' what?",
+      "answers": [
+        {
+          "text": "A pipe",
+          "correct": true
+        },
+        {
+          "text": "A painting",
+          "correct": false
+        },
+        {
+          "text": "A smoke",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Belgian surrealist's point was that a painting of a pipe is an image, not a real pipe you can smoke.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_034",
+      "question": "For which pharaoh was the Great Pyramid of Giza built?",
+      "answers": [
+        {
+          "text": "Khufu",
+          "correct": true
+        },
+        {
+          "text": "Tutankhamun",
+          "correct": false
+        },
+        {
+          "text": "Ramesses II",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was the tallest human-made structure on Earth for around 3,800 years.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_035",
+      "question": "Which Irish writer wrote 'The Picture of Dorian Gray'?",
+      "answers": [
+        {
+          "text": "Oscar Wilde",
+          "correct": true
+        },
+        {
+          "text": "George Bernard Shaw",
+          "correct": false
+        },
+        {
+          "text": "James Joyce",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was Wilde's only novel, and he wrote most of his famous plays afterwards.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_036",
+      "question": "Which Dickens character famously asks, 'Please, sir, I want some more'?",
+      "answers": [
+        {
+          "text": "Oliver Twist",
+          "correct": true
+        },
+        {
+          "text": "David Copperfield",
+          "correct": false
+        },
+        {
+          "text": "Pip",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The scene takes place in a workhouse, and the book first appeared in monthly instalments in a magazine.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_037",
+      "question": "Georges Seurat's 'A Sunday on La Grande Jatte' is made of thousands of tiny dots. What is the technique called?",
+      "answers": [
+        {
+          "text": "Pointillism",
+          "correct": true
+        },
+        {
+          "text": "Divisionism by stencil",
+          "correct": false
+        },
+        {
+          "text": "Fauvism",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He worked on it for about two years, and viewers' eyes blend the dots into colours from a distance.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_038",
+      "question": "Which famous musician won the Nobel Prize in Literature in 2016?",
+      "answers": [
+        {
+          "text": "Bob Dylan",
+          "correct": true
+        },
+        {
+          "text": "Leonard Cohen",
+          "correct": false
+        },
+        {
+          "text": "Paul McCartney",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "He did not attend the ceremony but sent a speech to be read out, and gave his lecture later.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_039",
+      "question": "What do the 'flying buttresses' on Gothic cathedrals do?",
+      "answers": [
+        {
+          "text": "Support the walls from the outside",
+          "correct": true
+        },
+        {
+          "text": "Hold the church bells",
+          "correct": false
+        },
+        {
+          "text": "Decorate the doorways",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "They let builders make walls taller and fill them with large stained-glass windows.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_040",
+      "question": "In 'The Lord of the Rings', in which fiery mountain must the One Ring be destroyed?",
+      "answers": [
+        {
+          "text": "Mount Doom",
+          "correct": true
+        },
+        {
+          "text": "Mount Gundabad",
+          "correct": false
+        },
+        {
+          "text": "The Lonely Mountain",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tolkien was a close friend of C. S. Lewis, and the two met regularly in a writers' group called the Inklings.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_041",
+      "question": "In which Shakespeare play does a man get turned into a donkey with fairy help?",
+      "answers": [
+        {
+          "text": "A Midsummer Night's Dream",
+          "correct": true
+        },
+        {
+          "text": "The Tempest",
+          "correct": false
+        },
+        {
+          "text": "Twelfth Night",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The man is Nick Bottom the weaver, and the fairy mischief-maker responsible is Puck.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_042",
+      "question": "What does Jean Valjean steal at the start of 'Les Misérables'?",
+      "answers": [
+        {
+          "text": "A loaf of bread",
+          "correct": true
+        },
+        {
+          "text": "A silver candlestick",
+          "correct": false
+        },
+        {
+          "text": "A pocket watch",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He is sentenced to five years for the theft and ends up serving 19 after trying to escape.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_043",
+      "question": "Which of King Lear's daughters is the youngest and the only one who is truly loyal?",
+      "answers": [
+        {
+          "text": "Cordelia",
+          "correct": true
+        },
+        {
+          "text": "Goneril",
+          "correct": false
+        },
+        {
+          "text": "Regan",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Her honest answer, that she loves him as a daughter should, is what angers Lear at the start.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_044",
+      "question": "In 1993 Toni Morrison, author of 'Beloved', became the first African American woman to win which prize?",
+      "answers": [
+        {
+          "text": "The Nobel Prize in Literature",
+          "correct": true
+        },
+        {
+          "text": "The Booker Prize",
+          "correct": false
+        },
+        {
+          "text": "The Costa Book Award",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Nobel committee praised her novels for their visionary force and poetic import.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_045",
+      "question": "The Metropolitan Museum of Art stands on the edge of which New York park?",
+      "answers": [
+        {
+          "text": "Central Park",
+          "correct": true
+        },
+        {
+          "text": "Prospect Park",
+          "correct": false
+        },
+        {
+          "text": "Battery Park",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The museum opened in 1872 in a different building and moved to its current home in the 1880s.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_046",
+      "question": "Which artist turned Campbell's soup cans into pop art in 1962?",
+      "answers": [
+        {
+          "text": "Andy Warhol",
+          "correct": true
+        },
+        {
+          "text": "Roy Lichtenstein",
+          "correct": false
+        },
+        {
+          "text": "Jasper Johns",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The original work consists of 32 canvases, one for each flavour the company sold at the time.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_047",
+      "question": "Which famous Paris bookshop first published James Joyce's 'Ulysses' in 1922?",
+      "answers": [
+        {
+          "text": "Shakespeare and Company",
+          "correct": true
+        },
+        {
+          "text": "Gibert Jeune",
+          "correct": false
+        },
+        {
+          "text": "La Hune",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The shop's American owner, Sylvia Beach, took on the book when other publishers refused it.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_048",
+      "question": "Norman Rockwell was famous for painting covers for which American magazine?",
+      "answers": [
+        {
+          "text": "The Saturday Evening Post",
+          "correct": true
+        },
+        {
+          "text": "Time",
+          "correct": false
+        },
+        {
+          "text": "Life",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He painted over 300 covers for the magazine across a span of 47 years.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_049",
+      "question": "What is the name of the failing salesman in Arthur Miller's 'Death of a Salesman'?",
+      "answers": [
+        {
+          "text": "Willy Loman",
+          "correct": true
+        },
+        {
+          "text": "Biff Brewster",
+          "correct": false
+        },
+        {
+          "text": "Harold Hill",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The play premiered in 1949 and won the Pulitzer Prize for Drama.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_050",
+      "question": "Which Japanese artist is famous for her polka dots and 'Infinity Mirror Rooms'?",
+      "answers": [
+        {
+          "text": "Yayoi Kusama",
+          "correct": true
+        },
+        {
+          "text": "Yoko Ono",
+          "correct": false
+        },
+        {
+          "text": "Takashi Murakami",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "She has lived by choice in a psychiatric hospital in Tokyo since the 1970s and still works daily.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_051",
+      "question": "How old was Pablo Picasso when he died?",
+      "type": "estimate",
+      "answer": 91,
+      "min": 30,
+      "max": 120,
+      "unit": "years",
+      "difficulty": "medium",
+      "fun_fact": "Picasso worked almost until the end: tens of thousands of his paintings, ceramics and prints survive from a career of more than 75 years.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_052",
+      "question": "Velázquez's 'Las Meninas' hangs in which Madrid museum?",
+      "answers": [
+        {
+          "text": "The Prado",
+          "correct": true
+        },
+        {
+          "text": "The Reina Sofía",
+          "correct": false
+        },
+        {
+          "text": "The Thyssen-Bornemisza",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Velázquez painted himself into the scene, standing at a large canvas on the left.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_053",
+      "question": "In his old age, Henri Matisse created large artworks mainly by doing what?",
+      "answers": [
+        {
+          "text": "Cutting shapes out of painted paper",
+          "correct": true
+        },
+        {
+          "text": "Carving stone",
+          "correct": false
+        },
+        {
+          "text": "Weaving tapestries by hand",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ill health kept him in a chair, so he called it 'painting with scissors'.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_054",
+      "question": "What is the name of the protagonist of Orwell's 'Nineteen Eighty-Four'?",
+      "answers": [
+        {
+          "text": "Winston Smith",
+          "correct": true
+        },
+        {
+          "text": "Julian Fox",
+          "correct": false
+        },
+        {
+          "text": "Eric Blair",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Orwell finished the book in 1948 on a remote Scottish island called Jura, and flipped the year digits for the title.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_055",
+      "question": "Which English painter created 'The Hay Wain', showing a cart crossing a river in Suffolk?",
+      "answers": [
+        {
+          "text": "John Constable",
+          "correct": true
+        },
+        {
+          "text": "Thomas Gainsborough",
+          "correct": false
+        },
+        {
+          "text": "J. M. W. Turner",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The painting won a gold medal at the Paris Salon of 1824 and strongly influenced French landscape painters.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_056",
+      "question": "Which Romanian-born sculptor made the polished bronze 'Bird in Space'?",
+      "answers": [
+        {
+          "text": "Constantin Brâncuși",
+          "correct": true
+        },
+        {
+          "text": "Henry Moore",
+          "correct": false
+        },
+        {
+          "text": "Alexander Calder",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "US customs once treated a Brâncuși sculpture as a metal object and charged duty, and he took the case to court in 1928.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_057",
+      "question": "In 'Sense and Sensibility', Elinor Dashwood's younger sister is called what?",
+      "answers": [
+        {
+          "text": "Marianne",
+          "correct": true
+        },
+        {
+          "text": "Lydia",
+          "correct": false
+        },
+        {
+          "text": "Georgiana",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It was Jane Austen's first published novel, in 1811.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_058",
+      "question": "On which London street is Sherlock Holmes's fictional address at number 221B?",
+      "answers": [
+        {
+          "text": "Baker Street",
+          "correct": true
+        },
+        {
+          "text": "Fleet Street",
+          "correct": false
+        },
+        {
+          "text": "Oxford Street",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "When the stories appeared, no 221B existed; today a museum there claims the address.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_059",
+      "question": "Who painted the ceiling of the Sistine Chapel between 1508 and 1512?",
+      "answers": [
+        {
+          "text": "Michelangelo",
+          "correct": true
+        },
+        {
+          "text": "Raphael",
+          "correct": false
+        },
+        {
+          "text": "Leonardo da Vinci",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Michelangelo saw himself as a sculptor and reportedly complained about the job, yet it became his most famous painted work.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_060",
+      "question": "Which art movement got its name from a Monet painting called 'Impression, Sunrise'?",
+      "answers": [
+        {
+          "text": "Impressionism",
+          "correct": true
+        },
+        {
+          "text": "Cubism",
+          "correct": false
+        },
+        {
+          "text": "Fauvism",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The critic Louis Leroy used the word mockingly in 1874, but the painters liked it and adopted it themselves.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_061",
+      "question": "Which sculptor made the giant spider sculptures called 'Maman'?",
+      "answers": [
+        {
+          "text": "Louise Bourgeois",
+          "correct": true
+        },
+        {
+          "text": "Barbara Hepworth",
+          "correct": false
+        },
+        {
+          "text": "Yayoi Kusama",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The spiders are about nine metres tall, and she meant them as a tribute to her mother, a tapestry restorer.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_062",
+      "question": "In Kafka's 'The Metamorphosis', Gregor Samsa wakes up transformed into what?",
+      "answers": [
+        {
+          "text": "A giant insect",
+          "correct": true
+        },
+        {
+          "text": "A wolf",
+          "correct": false
+        },
+        {
+          "text": "A statue",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kafka insisted that the insect never be shown on the book's cover.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_063",
+      "question": "Where does the hero of Saint-Exupéry's 'The Little Prince' live?",
+      "answers": [
+        {
+          "text": "On a tiny asteroid",
+          "correct": true
+        },
+        {
+          "text": "On a desert island",
+          "correct": false
+        },
+        {
+          "text": "In a lighthouse",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The prince's asteroid is called B-612, and the book is among the most translated ever written.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_064",
+      "question": "Who wrote 'Charlie and the Chocolate Factory'?",
+      "answers": [
+        {
+          "text": "Roald Dahl",
+          "correct": true
+        },
+        {
+          "text": "Enid Blyton",
+          "correct": false
+        },
+        {
+          "text": "C. S. Lewis",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dahl was a fighter pilot in the RAF during World War II before he became a writer.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_065",
+      "question": "Which Dr. Seuss book was written using only 50 different words, after a bet?",
+      "answers": [
+        {
+          "text": "Green Eggs and Ham",
+          "correct": true
+        },
+        {
+          "text": "The Cat in the Hat",
+          "correct": false
+        },
+        {
+          "text": "Horton Hears a Who!",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "His publisher Bennett Cerf bet him that he could not write a book with so few words.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_066",
+      "question": "In 'Oliver Twist', what is the nickname of the pickpocket Jack Dawkins?",
+      "answers": [
+        {
+          "text": "The Artful Dodger",
+          "correct": true
+        },
+        {
+          "text": "The Cunning Fox",
+          "correct": false
+        },
+        {
+          "text": "The Quick Lad",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He is one of Fagin's gang, and the book's depiction of London's poor shocked Victorian readers.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_067",
+      "question": "Which Belgian detective created by Agatha Christie relies on his 'little grey cells'?",
+      "answers": [
+        {
+          "text": "Hercule Poirot",
+          "correct": true
+        },
+        {
+          "text": "Jules Maigret",
+          "correct": false
+        },
+        {
+          "text": "Miss Marple",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "When Poirot was killed off in 1975, the New York Times printed an obituary, a rare honour for a fictional character.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_068",
+      "question": "Who wrote the poem 'The Raven', with its refrain 'Nevermore'?",
+      "answers": [
+        {
+          "text": "Edgar Allan Poe",
+          "correct": true
+        },
+        {
+          "text": "Walt Whitman",
+          "correct": false
+        },
+        {
+          "text": "Robert Frost",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Poe published it in 1845, and it made him famous almost overnight.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_069",
+      "question": "Which British artist put a shark in a tank of formaldehyde and called it a work of art?",
+      "answers": [
+        {
+          "text": "Damien Hirst",
+          "correct": true
+        },
+        {
+          "text": "Tracey Emin",
+          "correct": false
+        },
+        {
+          "text": "Banksy",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The piece, made in 1991, was commissioned by the collector Charles Saatchi.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_070",
+      "question": "What kind of animal is Napoleon in George Orwell's 'Animal Farm'?",
+      "answers": [
+        {
+          "text": "A pig",
+          "correct": true
+        },
+        {
+          "text": "A horse",
+          "correct": false
+        },
+        {
+          "text": "A dog",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Napoleon is modelled on Stalin, while his rival Snowball stands for Trotsky.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_071",
+      "question": "Who is the heroine of Suzanne Collins's 'The Hunger Games'?",
+      "answers": [
+        {
+          "text": "Katniss Everdeen",
+          "correct": true
+        },
+        {
+          "text": "Tris Prior",
+          "correct": false
+        },
+        {
+          "text": "Bella Swan",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The first novel was published in 2008 and was inspired by Greek myth and reality TV.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_072",
+      "question": "Which Victor Hugo novel features the bell-ringer Quasimodo?",
+      "answers": [
+        {
+          "text": "The Hunchback of Notre-Dame",
+          "correct": true
+        },
+        {
+          "text": "Les Misérables",
+          "correct": false
+        },
+        {
+          "text": "The Count of Monte Cristo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The book helped inspire a campaign to restore the neglected cathedral.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_073",
+      "question": "How many sonnets are in Shakespeare's 1609 collection?",
+      "type": "estimate",
+      "answer": 154,
+      "min": 20,
+      "max": 400,
+      "unit": "sonnets",
+      "difficulty": "medium",
+      "fun_fact": "Most of the sonnets address a young man and the later ones a mysterious 'Dark Lady'. Who either of them was is still unknown.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_074",
+      "question": "Which Spanish surrealist painted melting clocks in 'The Persistence of Memory'?",
+      "answers": [
+        {
+          "text": "Salvador Dalí",
+          "correct": true
+        },
+        {
+          "text": "Joan Miró",
+          "correct": false
+        },
+        {
+          "text": "Pablo Picasso",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The painting is tiny, only about 24 by 33 centimetres, and hangs in the Museum of Modern Art in New York.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_075",
+      "question": "In 'Lord of the Flies', what object do the stranded boys use to call meetings?",
+      "answers": [
+        {
+          "text": "A conch shell",
+          "correct": true
+        },
+        {
+          "text": "A bell",
+          "correct": false
+        },
+        {
+          "text": "A whistle",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "William Golding won the Nobel Prize in Literature in 1983.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_076",
+      "question": "Which New York museum has a famous spiral ramp inside, designed by Frank Lloyd Wright?",
+      "answers": [
+        {
+          "text": "The Guggenheim",
+          "correct": true
+        },
+        {
+          "text": "The Whitney",
+          "correct": false
+        },
+        {
+          "text": "The Frick",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It opened in 1959, only six months after Wright's death.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_077",
+      "question": "Pablo Picasso co-founded Cubism with which French painter?",
+      "answers": [
+        {
+          "text": "Georges Braque",
+          "correct": true
+        },
+        {
+          "text": "Henri Matisse",
+          "correct": false
+        },
+        {
+          "text": "Paul Cézanne",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The two worked so closely around 1910 that Braque compared their partnership to mountaineers roped together.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_078",
+      "question": "Which lawyer defends Tom Robinson in 'To Kill a Mockingbird'?",
+      "answers": [
+        {
+          "text": "Atticus Finch",
+          "correct": true
+        },
+        {
+          "text": "Boo Radley",
+          "correct": false
+        },
+        {
+          "text": "Jem Finch",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Harper Lee's follow-up 'Go Set a Watchman' appeared only in 2015, decades after the original.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_079",
+      "question": "The Taj Mahal was built by Emperor Shah Jahan as a tomb for whom?",
+      "answers": [
+        {
+          "text": "His wife Mumtaz Mahal",
+          "correct": true
+        },
+        {
+          "text": "His mother",
+          "correct": false
+        },
+        {
+          "text": "His father Jahangir",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Construction took around 20 years and used white marble that was reportedly hauled in by elephants.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_080",
+      "question": "The Sydney Opera House was designed by an architect from which country?",
+      "answers": [
+        {
+          "text": "Denmark",
+          "correct": true
+        },
+        {
+          "text": "Australia",
+          "correct": false
+        },
+        {
+          "text": "The United Kingdom",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Jørn Utzon resigned in 1966 amid disputes before it was finished and never saw the completed building.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_081",
+      "question": "Which Dutch artist is famous for his impossible staircases and endlessly repeating patterns?",
+      "answers": [
+        {
+          "text": "M. C. Escher",
+          "correct": true
+        },
+        {
+          "text": "Piet Mondrian",
+          "correct": false
+        },
+        {
+          "text": "Hieronymus Bosch",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "His works such as 'Ascending and Descending' are popular with mathematicians as well as art fans.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_082",
+      "question": "A traditional Japanese haiku follows which syllable pattern?",
+      "answers": [
+        {
+          "text": "5-7-5",
+          "correct": true
+        },
+        {
+          "text": "7-5-7",
+          "correct": false
+        },
+        {
+          "text": "3-5-3",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Strictly speaking, Japanese haiku count sound units rather than syllables.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_083",
+      "question": "James Joyce's 'Ulysses' takes place over a single day in which city?",
+      "answers": [
+        {
+          "text": "Dublin",
+          "correct": true
+        },
+        {
+          "text": "London",
+          "correct": false
+        },
+        {
+          "text": "Paris",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The day is 16 June 1904, which fans celebrate each year as Bloomsday.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_084",
+      "question": "Which Scottish architect and designer created the Glasgow School of Art building?",
+      "answers": [
+        {
+          "text": "Charles Rennie Mackintosh",
+          "correct": true
+        },
+        {
+          "text": "Robert Adam",
+          "correct": false
+        },
+        {
+          "text": "Norman Foster",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The building was damaged by serious fires in 2014 and 2018.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_085",
+      "question": "Which French writer wrote 'The Stranger', which opens with the line 'Mother died today'?",
+      "answers": [
+        {
+          "text": "Albert Camus",
+          "correct": true
+        },
+        {
+          "text": "Jean-Paul Sartre",
+          "correct": false
+        },
+        {
+          "text": "Marcel Proust",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Camus won the Nobel Prize in Literature in 1957 at the age of 44.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_086",
+      "question": "Which Russian author wrote 'Dead Souls' and the short story 'The Overcoat'?",
+      "answers": [
+        {
+          "text": "Nikolai Gogol",
+          "correct": true
+        },
+        {
+          "text": "Ivan Turgenev",
+          "correct": false
+        },
+        {
+          "text": "Alexander Pushkin",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dostoevsky is said to have remarked that Russian writers all 'came out of Gogol's Overcoat'.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_087",
+      "question": "Anish Kapoor's mirror-like Chicago sculpture 'Cloud Gate' is nicknamed what?",
+      "answers": [
+        {
+          "text": "The Bean",
+          "correct": true
+        },
+        {
+          "text": "The Mirror Ball",
+          "correct": false
+        },
+        {
+          "text": "The Silver Egg",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Its stainless steel plates were welded and polished so smoothly that no seams are visible.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_088",
+      "question": "Which Romantic poet wrote 'I Wandered Lonely as a Cloud', about daffodils?",
+      "answers": [
+        {
+          "text": "William Wordsworth",
+          "correct": true
+        },
+        {
+          "text": "Lord Byron",
+          "correct": false
+        },
+        {
+          "text": "John Keats",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He drew on his sister Dorothy's journal entry about seeing a field of daffodils.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_089",
+      "question": "Which English architect designed the new St Paul's Cathedral in London after the Great Fire of 1666?",
+      "answers": [
+        {
+          "text": "Christopher Wren",
+          "correct": true
+        },
+        {
+          "text": "Inigo Jones",
+          "correct": false
+        },
+        {
+          "text": "John Nash",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The building was completed in 1710 and its dome is among the largest in the world.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_090",
+      "question": "In 'Alice's Adventures in Wonderland', what does Alice follow down the rabbit hole?",
+      "answers": [
+        {
+          "text": "A white rabbit",
+          "correct": true
+        },
+        {
+          "text": "A talking cat",
+          "correct": false
+        },
+        {
+          "text": "A caterpillar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Author Charles Dodgson was a maths lecturer at Oxford and wrote under the name Lewis Carroll.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_091",
+      "question": "The Pulitzer Prize is administered by which American university?",
+      "answers": [
+        {
+          "text": "Columbia University",
+          "correct": true
+        },
+        {
+          "text": "Harvard University",
+          "correct": false
+        },
+        {
+          "text": "Yale University",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It is named after the newspaper publisher Joseph Pulitzer, who left money for it in his will.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_092",
+      "question": "Which Dutch painter is known for 'Girl with a Pearl Earring'?",
+      "answers": [
+        {
+          "text": "Johannes Vermeer",
+          "correct": true
+        },
+        {
+          "text": "Rembrandt van Rijn",
+          "correct": false
+        },
+        {
+          "text": "Frans Hals",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It is a 'tronie', a study of a face rather than a portrait of a specific person, so the model's identity is unknown.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_093",
+      "question": "At which King's Cross platform do students board the Hogwarts Express?",
+      "answers": [
+        {
+          "text": "Platform 9 and three-quarters",
+          "correct": true
+        },
+        {
+          "text": "Platform 7 and a half",
+          "correct": false
+        },
+        {
+          "text": "Platform 13",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Real King's Cross has a trolley half-stuck in a wall with a sign, which is a favourite photo stop.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_094",
+      "question": "Which narrator opens 'Moby-Dick' with the words 'Call me ...'?",
+      "answers": [
+        {
+          "text": "Ishmael",
+          "correct": true
+        },
+        {
+          "text": "Ahab",
+          "correct": false
+        },
+        {
+          "text": "Queequeg",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Herman Melville's book flopped at first and was only recognised as a classic decades after his death.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_095",
+      "question": "Who wrote 'War and Peace'?",
+      "answers": [
+        {
+          "text": "Leo Tolstoy",
+          "correct": true
+        },
+        {
+          "text": "Fyodor Dostoevsky",
+          "correct": false
+        },
+        {
+          "text": "Anton Chekhov",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "His wife Sophia reportedly copied out the huge manuscript by hand several times.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_096",
+      "question": "Which poet from Amherst, Massachusetts wrote almost 1,800 poems, most of them found after her death?",
+      "answers": [
+        {
+          "text": "Emily Dickinson",
+          "correct": true
+        },
+        {
+          "text": "Sylvia Plath",
+          "correct": false
+        },
+        {
+          "text": "Elizabeth Barrett Browning",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dickinson published only a handful of poems in her lifetime, and her sister found the rest in a drawer.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_097",
+      "question": "In which year was the Mona Lisa stolen from the Louvre?",
+      "type": "estimate",
+      "answer": 1911,
+      "min": 1800,
+      "max": 2000,
+      "unit": "year",
+      "difficulty": "hard",
+      "fun_fact": "The thief, an Italian glazier, hid the painting in his Paris flat for two years. The theft is what made the Mona Lisa world-famous.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_098",
+      "question": "What did Andy Warhol call his New York studio, famous for its silver foil walls?",
+      "answers": [
+        {
+          "text": "The Factory",
+          "correct": true
+        },
+        {
+          "text": "The Warehouse",
+          "correct": false
+        },
+        {
+          "text": "The Silver Room",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It became a hangout for artists, musicians and celebrities, and Warhol produced prints there almost on an assembly line.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_099",
+      "question": "Which American painter made 'American Gothic', showing a farmer with a pitchfork next to a woman?",
+      "answers": [
+        {
+          "text": "Grant Wood",
+          "correct": true
+        },
+        {
+          "text": "Edward Hopper",
+          "correct": false
+        },
+        {
+          "text": "Norman Rockwell",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The models were Wood's dentist and his sister, not a married couple.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_100",
+      "question": "Hilary Mantel is the only woman to have won the Booker Prize twice, for which pair of novels?",
+      "answers": [
+        {
+          "text": "Wolf Hall and Bring Up the Bodies",
+          "correct": true
+        },
+        {
+          "text": "The Remains of the Day and Never Let Me Go",
+          "correct": false
+        },
+        {
+          "text": "Life of Pi and Oscar and Lucinda",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Both books follow the rise of Thomas Cromwell at the court of Henry VIII.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_101",
+      "question": "Edward Hopper's painting 'Nighthawks' shows people in what kind of place?",
+      "answers": [
+        {
+          "text": "A late-night diner",
+          "correct": true
+        },
+        {
+          "text": "A railway waiting room",
+          "correct": false
+        },
+        {
+          "text": "A cinema foyer",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The painting dates from 1942 and now hangs in the Art Institute of Chicago.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_102",
+      "question": "Piet Mondrian's famous grid paintings combine black lines with which set of colours?",
+      "answers": [
+        {
+          "text": "Red, yellow and blue",
+          "correct": true
+        },
+        {
+          "text": "Green, orange and purple",
+          "correct": false
+        },
+        {
+          "text": "Pink, brown and grey",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "His 'Broadway Boogie Woogie' was inspired by the street grid and jazz of New York.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_103",
+      "question": "Who wrote the vampire novel 'Dracula'?",
+      "answers": [
+        {
+          "text": "Bram Stoker",
+          "correct": true
+        },
+        {
+          "text": "Mary Shelley",
+          "correct": false
+        },
+        {
+          "text": "Edgar Allan Poe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Stoker was Irish and never visited Transylvania, the novel's setting, instead researching in libraries.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_104",
+      "question": "Which two German brothers collected fairy tales such as 'Hansel and Gretel'?",
+      "answers": [
+        {
+          "text": "The Brothers Grimm",
+          "correct": true
+        },
+        {
+          "text": "The Brothers Mann",
+          "correct": false
+        },
+        {
+          "text": "The Brothers Hoffmann",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "They were scholars of language, and their first collection appeared in 1812.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_105",
+      "question": "What causes the splash in David Hockney's painting 'A Bigger Splash'?",
+      "answers": [
+        {
+          "text": "An unseen diver jumping off the board",
+          "correct": true
+        },
+        {
+          "text": "Rain falling on the pool",
+          "correct": false
+        },
+        {
+          "text": "A thrown beach ball",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hockney painted it in 1967, and the diver never appears, so only the aftermath is shown.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_106",
+      "question": "Who is the student at the centre of Dostoevsky's 'Crime and Punishment'?",
+      "answers": [
+        {
+          "text": "Raskolnikov",
+          "correct": true
+        },
+        {
+          "text": "Karamazov",
+          "correct": false
+        },
+        {
+          "text": "Zhivago",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The novel is set in St Petersburg and the first half is largely about his crime.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_107",
+      "question": "Which Spanish painter made 'The Third of May 1808', showing soldiers executing civilians?",
+      "answers": [
+        {
+          "text": "Francisco Goya",
+          "correct": true
+        },
+        {
+          "text": "El Greco",
+          "correct": false
+        },
+        {
+          "text": "Diego Velázquez",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The painting shows French troops shooting Madrid citizens, and it inspired Manet and Picasso.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_108",
+      "question": "Before it became an art museum, the Louvre in Paris was what?",
+      "answers": [
+        {
+          "text": "A royal palace",
+          "correct": true
+        },
+        {
+          "text": "A cathedral",
+          "correct": false
+        },
+        {
+          "text": "A monastery",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It began as a medieval fortress and opened as a public museum in 1793, during the French Revolution.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_109",
+      "question": "'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.' This opens which novel?",
+      "answers": [
+        {
+          "text": "Pride and Prejudice",
+          "correct": true
+        },
+        {
+          "text": "Emma",
+          "correct": false
+        },
+        {
+          "text": "Jane Eyre",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jane Austen first called it 'First Impressions' and published it anonymously.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_110",
+      "question": "Which Mexican painter is famous for her many striking self-portraits and her unibrow?",
+      "answers": [
+        {
+          "text": "Frida Kahlo",
+          "correct": true
+        },
+        {
+          "text": "Tamara de Lempicka",
+          "correct": false
+        },
+        {
+          "text": "Georgia O'Keeffe",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "She lived much of her life in the 'Casa Azul', the blue house in Mexico City that is now a museum.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_111",
+      "question": "The Alhambra, a palace-fortress complex built by Moorish rulers, is in which Spanish city?",
+      "answers": [
+        {
+          "text": "Granada",
+          "correct": true
+        },
+        {
+          "text": "Cordoba",
+          "correct": false
+        },
+        {
+          "text": "Madrid",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Its walls are covered in intricate geometric patterns, because Islamic art avoids depicting people.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_112",
+      "question": "Edvard Munch, painter of 'The Scream', came from which country?",
+      "answers": [
+        {
+          "text": "Norway",
+          "correct": true
+        },
+        {
+          "text": "Sweden",
+          "correct": false
+        },
+        {
+          "text": "Denmark",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "One version of the painting was stolen from the National Gallery in Oslo in 1994, on the day the Winter Olympics opened.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_113",
+      "question": "What is the name of the hobbit hero of 'The Hobbit'?",
+      "answers": [
+        {
+          "text": "Bilbo Baggins",
+          "correct": true
+        },
+        {
+          "text": "Frodo Baggins",
+          "correct": false
+        },
+        {
+          "text": "Samwise Gamgee",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tolkien reportedly wrote the first line while marking exam papers, on a blank page.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_114",
+      "question": "Which London museum of modern art is housed in a former power station?",
+      "answers": [
+        {
+          "text": "Tate Modern",
+          "correct": true
+        },
+        {
+          "text": "The Saatchi Gallery",
+          "correct": false
+        },
+        {
+          "text": "The V&A",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Bankside Power Station was turned into the museum in 2000, and the old chimney still stands.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_115",
+      "question": "In 'Peter Pan', who is the pirate captain with a hook for a hand?",
+      "answers": [
+        {
+          "text": "Captain Hook",
+          "correct": true
+        },
+        {
+          "text": "Long John Silver",
+          "correct": false
+        },
+        {
+          "text": "Blackbeard",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "J. M. Barrie gave the rights to the play to Great Ormond Street Hospital in London.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_116",
+      "question": "Jean-Michel Basquiat first became known as a graffiti artist under which tag?",
+      "answers": [
+        {
+          "text": "SAMO",
+          "correct": true
+        },
+        {
+          "text": "TAKI",
+          "correct": false
+        },
+        {
+          "text": "ZEPHYR",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "He and a friend tagged cryptic poetic phrases around Lower Manhattan, signed with the tag, before he turned to canvas.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_117",
+      "question": "Which T. S. Eliot poem begins with the line 'April is the cruellest month'?",
+      "answers": [
+        {
+          "text": "The Waste Land",
+          "correct": true
+        },
+        {
+          "text": "The Hollow Men",
+          "correct": false
+        },
+        {
+          "text": "Ash-Wednesday",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ezra Pound heavily edited the 1922 poem, cutting it to roughly half its original length.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_118",
+      "question": "What is the name of the miser visited by three ghosts in 'A Christmas Carol'?",
+      "answers": [
+        {
+          "text": "Ebenezer Scrooge",
+          "correct": true
+        },
+        {
+          "text": "Jacob Marley",
+          "correct": false
+        },
+        {
+          "text": "Bob Cratchit",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dickens published it in 1843 and the first print run sold out within days.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_119",
+      "question": "In 'The Three Musketeers', what is the name of the young Gascon who joins them?",
+      "answers": [
+        {
+          "text": "D'Artagnan",
+          "correct": true
+        },
+        {
+          "text": "Cyrano",
+          "correct": false
+        },
+        {
+          "text": "Rochefort",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Alexandre Dumas wrote the novel in 1844 and gave the group the motto 'All for one, one for all'.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_120",
+      "question": "Which Russian author wrote 'Doctor Zhivago' and was pressured to decline the 1958 Nobel Prize?",
+      "answers": [
+        {
+          "text": "Boris Pasternak",
+          "correct": true
+        },
+        {
+          "text": "Aleksandr Solzhenitsyn",
+          "correct": false
+        },
+        {
+          "text": "Vladimir Nabokov",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Soviet authorities denounced the book and forced him to refuse the prize.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_121",
+      "question": "J. M. W. Turner's 'The Fighting Temeraire' shows an old warship being towed away to be what?",
+      "answers": [
+        {
+          "text": "Broken up for scrap",
+          "correct": true
+        },
+        {
+          "text": "Turned into a museum",
+          "correct": false
+        },
+        {
+          "text": "Sunk as a target",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The ship had fought at Trafalgar; the painting topped a 2005 BBC poll for Britain's favourite painting.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_122",
+      "question": "What does Miss Havisham still wear decades after being jilted in 'Great Expectations'?",
+      "answers": [
+        {
+          "text": "Her wedding dress",
+          "correct": true
+        },
+        {
+          "text": "A black mourning gown",
+          "correct": false
+        },
+        {
+          "text": "A servant's uniform",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "She also stopped all the clocks in her house at the moment she received the news.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_123",
+      "question": "Who narrates F. Scott Fitzgerald's 'The Great Gatsby'?",
+      "answers": [
+        {
+          "text": "Nick Carraway",
+          "correct": true
+        },
+        {
+          "text": "Jay Gatsby",
+          "correct": false
+        },
+        {
+          "text": "Tom Buchanan",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gatsby stares at a green light on the end of Daisy's dock, one of literature's best-known symbols.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_124",
+      "question": "The 'Inferno' is the first part of which epic poem by Dante?",
+      "answers": [
+        {
+          "text": "The Divine Comedy",
+          "correct": true
+        },
+        {
+          "text": "The Aeneid",
+          "correct": false
+        },
+        {
+          "text": "Paradise Lost",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dante is guided through Hell by the Roman poet Virgil.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_125",
+      "question": "Which Swiss sculptor is known for extremely thin, elongated figures such as 'Walking Man'?",
+      "answers": [
+        {
+          "text": "Alberto Giacometti",
+          "correct": true
+        },
+        {
+          "text": "Constantin Brâncuși",
+          "correct": false
+        },
+        {
+          "text": "Henry Moore",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "One cast of 'Walking Man' sold for more than 100 million dollars in 2010.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_126",
+      "question": "What is the traditional painting technique called in which pigment is applied to wet plaster?",
+      "answers": [
+        {
+          "text": "Fresco",
+          "correct": true
+        },
+        {
+          "text": "Encaustic",
+          "correct": false
+        },
+        {
+          "text": "Pastel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The word 'fresco' comes from the Italian for 'fresh', because the artist must finish before the plaster dries.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_127",
+      "question": "Which Czech artist became famous for Art Nouveau posters of the actress Sarah Bernhardt?",
+      "answers": [
+        {
+          "text": "Alphonse Mucha",
+          "correct": true
+        },
+        {
+          "text": "Gustav Klimt",
+          "correct": false
+        },
+        {
+          "text": "Henri de Toulouse-Lautrec",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "His flowing, decorative style defined Art Nouveau, and he later painted the 'Slav Epic' cycle.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_128",
+      "question": "Which Austrian painter made the gold-covered painting 'The Kiss' around 1907?",
+      "answers": [
+        {
+          "text": "Gustav Klimt",
+          "correct": true
+        },
+        {
+          "text": "Egon Schiele",
+          "correct": false
+        },
+        {
+          "text": "Oskar Kokoschka",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Klimt used real gold leaf, and the painting hangs in the Belvedere in Vienna.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_129",
+      "question": "Which Italian painter created 'The Birth of Venus', showing the goddess arriving on a shell?",
+      "answers": [
+        {
+          "text": "Sandro Botticelli",
+          "correct": true
+        },
+        {
+          "text": "Titian",
+          "correct": false
+        },
+        {
+          "text": "Raphael",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The painting was commissioned by the Medici family and is painted in tempera on canvas.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_130",
+      "question": "In which city did Anne Frank and her family hide during World War II?",
+      "answers": [
+        {
+          "text": "Amsterdam",
+          "correct": true
+        },
+        {
+          "text": "Berlin",
+          "correct": false
+        },
+        {
+          "text": "Warsaw",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Secret Annex was behind her father's office, and her diary has been translated into more than 60 languages.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_131",
+      "question": "Which Dutch painter created the fantastical triptych 'The Garden of Earthly Delights'?",
+      "answers": [
+        {
+          "text": "Hieronymus Bosch",
+          "correct": true
+        },
+        {
+          "text": "Pieter Bruegel",
+          "correct": false
+        },
+        {
+          "text": "Jan van Eyck",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The three panels run from Paradise through a crowded pleasure garden to a nightmarish Hell.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_132",
+      "question": "Mark Rothko is best known for large paintings made of soft blocks of colour. Which movement is he associated with?",
+      "answers": [
+        {
+          "text": "Abstract Expressionism",
+          "correct": true
+        },
+        {
+          "text": "Pop Art",
+          "correct": false
+        },
+        {
+          "text": "Cubism",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He wanted viewers to stand close and be enveloped, and preferred his paintings hung low in dim light.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_133",
+      "question": "Which American artist became known as 'Jack the Dripper' for pouring paint onto canvases laid on the floor?",
+      "answers": [
+        {
+          "text": "Jackson Pollock",
+          "correct": true
+        },
+        {
+          "text": "Willem de Kooning",
+          "correct": false
+        },
+        {
+          "text": "Mark Rothko",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Working above the canvas let him move all the way around it, so his paintings have no clear top or bottom.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_134",
+      "question": "Raphael's fresco 'The School of Athens' is in which city?",
+      "answers": [
+        {
+          "text": "Vatican City",
+          "correct": true
+        },
+        {
+          "text": "Florence",
+          "correct": false
+        },
+        {
+          "text": "Venice",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The central figures are Plato and Aristotle, and Plato is often said to have Leonardo's face.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_135",
+      "question": "In which year was the first part of Cervantes' 'Don Quixote' published?",
+      "type": "estimate",
+      "answer": 1605,
+      "min": 1500,
+      "max": 1800,
+      "unit": "year",
+      "difficulty": "medium",
+      "fun_fact": "The second part only followed in 1615, partly because an unknown author had published a fake sequel in 1614. Cervantes mocks him in it.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_136",
+      "question": "In which year was George Orwell's 'Nineteen Eighty-Four' published?",
+      "type": "estimate",
+      "answer": 1949,
+      "min": 1900,
+      "max": 2000,
+      "unit": "year",
+      "difficulty": "easy",
+      "fun_fact": "Orwell wrote the book while seriously ill on the remote Scottish island of Jura. He died a few months after it came out.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_137",
+      "question": "Which Romantic poet wrote 'Ozymandias', about a ruined statue in the desert?",
+      "answers": [
+        {
+          "text": "Percy Bysshe Shelley",
+          "correct": true
+        },
+        {
+          "text": "John Keats",
+          "correct": false
+        },
+        {
+          "text": "Lord Byron",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "He wrote it in 1818 and it ends with the line 'Look on my works, ye Mighty, and despair!'",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_138",
+      "question": "What is a 'triptych' in art?",
+      "answers": [
+        {
+          "text": "An artwork made of three panels",
+          "correct": true
+        },
+        {
+          "text": "A sculpture of three figures",
+          "correct": false
+        },
+        {
+          "text": "A painting using only three colours",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Medieval altarpieces were often triptychs, with side panels that folded shut like doors.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_139",
+      "question": "Roy Lichtenstein's pop art paintings imitated the look of what?",
+      "answers": [
+        {
+          "text": "Comic books",
+          "correct": true
+        },
+        {
+          "text": "Newspaper photographs",
+          "correct": false
+        },
+        {
+          "text": "Street posters",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "He even reproduced the printing dots, known as Ben-Day dots, by hand at giant size.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_140",
+      "question": "In which English city was the painter David Hockney born?",
+      "answers": [
+        {
+          "text": "Bradford",
+          "correct": true
+        },
+        {
+          "text": "Liverpool",
+          "correct": false
+        },
+        {
+          "text": "Leeds",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "He later moved to Los Angeles, where he painted his sunny pool pictures such as 'A Bigger Splash'.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_141",
+      "question": "Which creatures give Macbeth his dangerous prophecy?",
+      "answers": [
+        {
+          "text": "Three witches",
+          "correct": true
+        },
+        {
+          "text": "Three ghosts",
+          "correct": false
+        },
+        {
+          "text": "Three knights",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Superstitious theatre people avoid saying the name 'Macbeth' inside a theatre and call it 'the Scottish play'.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_142",
+      "question": "Which Catalan architect designed the still-unfinished Sagrada Família church in Barcelona?",
+      "answers": [
+        {
+          "text": "Antoni Gaudí",
+          "correct": true
+        },
+        {
+          "text": "Josep Puig i Cadafalch",
+          "correct": false
+        },
+        {
+          "text": "Santiago Calatrava",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Construction began in 1882 and is still ongoing, which makes it one of the longest building projects in modern Europe.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_143",
+      "question": "The Mexican artist Frida Kahlo was married to which muralist?",
+      "answers": [
+        {
+          "text": "Diego Rivera",
+          "correct": true
+        },
+        {
+          "text": "José Clemente Orozco",
+          "correct": false
+        },
+        {
+          "text": "David Alfaro Siqueiros",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The couple married, divorced and then married each other again within about a year.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_144",
+      "question": "Leonardo's 'The Last Supper' is painted on what?",
+      "answers": [
+        {
+          "text": "The wall of a monastery dining hall",
+          "correct": true
+        },
+        {
+          "text": "A wooden altar panel",
+          "correct": false
+        },
+        {
+          "text": "A canvas hung in a cathedral",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "His experimental technique on dry plaster started flaking within decades, so it has been restored many times.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_145",
+      "question": "In Robert Frost's famous poem, two roads diverge in a what?",
+      "answers": [
+        {
+          "text": "A yellow wood",
+          "correct": true
+        },
+        {
+          "text": "A snowy field",
+          "correct": false
+        },
+        {
+          "text": "A misty valley",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Frost meant it partly as a gentle joke on a friend who could never decide which path to take.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_146",
+      "question": "Which scheming character manipulates Othello into a jealous rage?",
+      "answers": [
+        {
+          "text": "Iago",
+          "correct": true
+        },
+        {
+          "text": "Cassio",
+          "correct": false
+        },
+        {
+          "text": "Roderigo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Iago has more lines than Othello himself.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_147",
+      "question": "Which American architect designed Fallingwater, a house built over a waterfall in Pennsylvania?",
+      "answers": [
+        {
+          "text": "Frank Lloyd Wright",
+          "correct": true
+        },
+        {
+          "text": "Frank Gehry",
+          "correct": false
+        },
+        {
+          "text": "Louis Sullivan",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wright designed it in the 1930s for the Kaufmann family, who first expected a house with a view of the falls, not above them.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_148",
+      "question": "Frank Gehry designed the titanium-clad Guggenheim Museum in which Spanish city?",
+      "answers": [
+        {
+          "text": "Bilbao",
+          "correct": true
+        },
+        {
+          "text": "Barcelona",
+          "correct": false
+        },
+        {
+          "text": "Seville",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Its 1997 opening helped revive the city and gave rise to the term 'Bilbao effect' for architecture-led regeneration.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_149",
+      "question": "The Bauhaus, a famous school of design and architecture, was founded in 1919 in which country?",
+      "answers": [
+        {
+          "text": "Germany",
+          "correct": true
+        },
+        {
+          "text": "Austria",
+          "correct": false
+        },
+        {
+          "text": "The Netherlands",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Nazis forced it to close in 1933, and many teachers emigrated and spread its style worldwide.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_150",
+      "question": "Who was the first non-European to win the Nobel Prize in Literature, in 1913?",
+      "answers": [
+        {
+          "text": "Rabindranath Tagore",
+          "correct": true
+        },
+        {
+          "text": "Pablo Neruda",
+          "correct": false
+        },
+        {
+          "text": "Kahlil Gibran",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "He also wrote the words of the national anthems of both India and Bangladesh.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_151",
+      "question": "The Turner Prize is awarded each year by which London-based gallery group?",
+      "answers": [
+        {
+          "text": "Tate",
+          "correct": true
+        },
+        {
+          "text": "The National Gallery",
+          "correct": false
+        },
+        {
+          "text": "The Royal Academy",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Past winners include Grayson Perry, who collected his 2003 prize dressed as his alter ego Claire.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_152",
+      "question": "The Little Mermaid statue in Copenhagen honours a story by which author?",
+      "answers": [
+        {
+          "text": "Hans Christian Andersen",
+          "correct": true
+        },
+        {
+          "text": "Astrid Lindgren",
+          "correct": false
+        },
+        {
+          "text": "Selma Lagerlöf",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The bronze statue was donated in 1913 and has been beheaded and splashed with paint more than once.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_153",
+      "question": "Through which piece of furniture do the children enter Narnia?",
+      "answers": [
+        {
+          "text": "A wardrobe",
+          "correct": true
+        },
+        {
+          "text": "A grandfather clock",
+          "correct": false
+        },
+        {
+          "text": "A mirror",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "C. S. Lewis published the first Narnia book in 1950, and the saga has seven books.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_154",
+      "question": "Why does the Leaning Tower of Pisa lean?",
+      "answers": [
+        {
+          "text": "It was built on soft, shifting ground",
+          "correct": true
+        },
+        {
+          "text": "An earthquake tilted it",
+          "correct": false
+        },
+        {
+          "text": "Bombing damaged it in wartime",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It began to tilt in the 12th century while the upper floors were still being built, and engineers stabilised it in the 1990s.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_155",
+      "question": "Which poet wrote the autobiography 'I Know Why the Caged Bird Sings'?",
+      "answers": [
+        {
+          "text": "Maya Angelou",
+          "correct": true
+        },
+        {
+          "text": "Toni Morrison",
+          "correct": false
+        },
+        {
+          "text": "Alice Walker",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "She read a poem at Bill Clinton's presidential inauguration in 1993.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_156",
+      "question": "Which Dutch master painted 'The Night Watch', a scene that is actually set in daylight?",
+      "answers": [
+        {
+          "text": "Rembrandt",
+          "correct": true
+        },
+        {
+          "text": "Johannes Vermeer",
+          "correct": false
+        },
+        {
+          "text": "Jan Steen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Darkened varnish over the centuries gave the painting its nighttime look and its nickname.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_157",
+      "question": "Which American painter is best known for her large close-ups of flowers?",
+      "answers": [
+        {
+          "text": "Georgia O'Keeffe",
+          "correct": true
+        },
+        {
+          "text": "Mary Cassatt",
+          "correct": false
+        },
+        {
+          "text": "Grandma Moses",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "She later moved to New Mexico, where she painted desert landscapes and sun-bleached animal bones.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_158",
+      "question": "In Mary Shelley's novel, who or what is 'Frankenstein'?",
+      "answers": [
+        {
+          "text": "The scientist who creates the creature",
+          "correct": true
+        },
+        {
+          "text": "The creature itself",
+          "correct": false
+        },
+        {
+          "text": "The village where the story is set",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The creature has no name in the book, and the confusion started with later stage and film adaptations.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_159",
+      "question": "The Teenage Mutant Ninja Turtles are named after artists from which period?",
+      "answers": [
+        {
+          "text": "The Renaissance",
+          "correct": true
+        },
+        {
+          "text": "The Baroque",
+          "correct": false
+        },
+        {
+          "text": "The Impressionist era",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Leonardo, Donatello, Michelangelo and Raphael were the creators' picks, and the show jokes that Raphael is the cool but rude one.",
+      "category": "Art & Literature"
+    },
+    {
+      "id": "artlit_en_160",
+      "question": "Tom Sawyer and Huckleberry Finn grew up beside which river?",
+      "answers": [
+        {
+          "text": "The Mississippi",
+          "correct": true
+        },
+        {
+          "text": "The Missouri",
+          "correct": false
+        },
+        {
+          "text": "The Ohio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mark Twain took his pen name from a riverboat call meaning two fathoms deep.",
+      "category": "Art & Literature"
+    }
+  ]
+}
