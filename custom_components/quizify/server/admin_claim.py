@@ -6,9 +6,9 @@ and split into one helper per case, unchanged. The handler keeps
 the tests reach it by that name.
 
 Only the player-join path lives here. The admin-dashboard socket
-(``?role=admin&token=...``) is still authorized in ``websocket.py``
-(``handle`` / ``_grant_admin``), and so are ``_is_authorized_admin`` and
-``_is_reset_authorized``.
+(``?role=admin&token=...``) is authorized in ``admin_auth.py``
+(``grant_admin``), and so are ``is_authorized_admin`` and
+``is_reset_authorized``.
 """
 
 from __future__ import annotations

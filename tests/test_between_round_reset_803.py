@@ -466,10 +466,14 @@ def test_the_server_would_have_accepted_the_reset_all_along() -> None:
     the phone stops guessing at it; ``not _host_connected(...)`` is the same
     sentence, which is the point of naming it once.
     """
+    # The reset rule moved to ``server/admin_auth.py`` (#1124); ``self`` is
+    # now ``handler`` there.
+    decision = (_CC / "server" / "admin_auth.py").read_text("utf-8")
+    decision = decision.split("def is_reset_authorized(", 1)[1]
+    decision = decision.split("\ndef ", 1)[0]
+    assert "return not handler._host_connected(game_state)" in decision
+
     source = (_CC / "server" / "websocket.py").read_text("utf-8")
-    decision = source.split("def _is_reset_authorized(", 1)[1]
-    decision = decision.split("\n    def ", 1)[0]
-    assert "return not self._host_connected(game_state)" in decision
 
     body = source.split("def _host_connected(", 1)[1]
     body = body.split("\n    def ", 1)[0]

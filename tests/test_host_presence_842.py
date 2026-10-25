@@ -334,10 +334,12 @@ def test_every_snapshot_the_handler_sends_goes_through_the_wrapper() -> None:
 def test_the_reset_rule_reads_the_same_helper() -> None:
     """If these two ever compute the answer separately they will drift, and the
     drift is invisible until a guest taps a button that does nothing."""
-    source = _WEBSOCKET_PY.read_text("utf-8")
-    body = source.split("def _is_reset_authorized(", 1)[1].split("\n    def ", 1)[0]
+    # The reset rule moved to ``server/admin_auth.py`` (#1124); ``self`` is
+    # now ``handler`` there.
+    source = (_WEBSOCKET_PY.parent / "admin_auth.py").read_text("utf-8")
+    body = source.split("def is_reset_authorized(", 1)[1].split("\ndef ", 1)[0]
 
-    assert "return not self._host_connected(game_state)" in body
+    assert "return not handler._host_connected(game_state)" in body
 
 
 def test_the_announcer_is_not_left_unused(handler) -> None:
