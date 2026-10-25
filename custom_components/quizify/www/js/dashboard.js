@@ -397,7 +397,12 @@
                 if (els.reconnectPill) els.reconnectPill.hidden = true;
                 ws.send(JSON.stringify({ type: 'get_state' }));
             },
-            onMessage: handleMessage,
+            // Any frame may move currentPhase; the wake lock follows it
+            // here, in one place, after the frame is handled (#1131).
+            onMessage: function (msg) {
+                handleMessage(msg);
+                _syncWakeLock();
+            },
             stallGuard: function () {
                 return lightningLive && currentPhase === 'LIGHTNING';
             },
@@ -546,6 +551,75 @@
             case 'reaction_bonus':
                 handleReactionBonus(msg);
                 break;
+        }
+    }
+
+    // ============================================
+    // Screen Wake Lock (#1131)
+    // A tablet or browser used as the TV dimmed and locked mid-game, so the
+    // room lost the board (and its socket) during a long question.
+    // The lock is held from the first wager/question of a game through its
+    // last reveal and dropped in the lobby/setup and on the finale. The OS
+    // releases it whenever the tab hides; the visibilitychange listener takes
+    // it back. Feature-detected and silent: an unsupported browser or a
+    // refused request just leaves the screen to its normal timeout.
+    // ============================================
+    var WAKE_LOCK_PHASES = {
+        WAGER_ACTIVE: true,
+        QUESTION_ACTIVE: true,
+        ANSWER_REVEAL: true,
+        PAUSED: true,
+        LIGHTNING: true,
+        LIGHTNING_RECAP: true,
+        HOT_SEAT_AUCTION: true,
+        HOT_SEAT: true,
+        HOT_SEAT_REVEAL: true
+    };
+    var _wakeLock = null;
+    var _wakeLockPending = false;
+    var _wakeLockWanted = false;
+
+    async function _acquireWakeLock() {
+        _wakeLockWanted = true;
+        if (!('wakeLock' in navigator)) return;  // unsupported browser
+        if (_wakeLock || _wakeLockPending) return;  // held or on its way
+        if (document.visibilityState !== 'visible') return;  // would reject
+        _wakeLockPending = true;
+        try {
+            var lock = await navigator.wakeLock.request('screen');
+            _wakeLockPending = false;
+            if (!_wakeLockWanted) {
+                // The game ended while the request was in flight.
+                try { lock.release(); } catch (e) { /* ignore */ }
+                return;
+            }
+            _wakeLock = lock;
+            lock.addEventListener('release', function () {
+                // OS released it (tab hidden, low battery, etc.) - clear
+                // so the visibilitychange handler re-acquires.
+                if (_wakeLock === lock) _wakeLock = null;
+            });
+        } catch (e) {
+            // NotAllowedError (permissions policy, battery saver) - silent.
+            _wakeLockPending = false;
+            _wakeLock = null;
+        }
+    }
+
+    function _releaseWakeLock() {
+        _wakeLockWanted = false;
+        if (_wakeLock) {
+            var lock = _wakeLock;
+            _wakeLock = null;
+            try { lock.release(); } catch (e) { /* ignore */ }
+        }
+    }
+
+    function _syncWakeLock() {
+        if (WAKE_LOCK_PHASES[currentPhase]) {
+            _acquireWakeLock();
+        } else {
+            _releaseWakeLock();
         }
     }
 
@@ -1860,6 +1934,13 @@
     } else {
         window.addEventListener('resize', scheduleFitAwards);
     }
+
+    // The OS releases the wake lock whenever the tab hides; take it back
+    // when the board is in front again (#1131). The socket needs no help
+    // here: onClose already retries forever.
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') _syncWakeLock();
+    });
 
     connect();
 })();

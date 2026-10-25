@@ -184,6 +184,7 @@
     "paused": "Game Paused",
     "pausedHint": "The game will resume when the host returns",
     "pausedResetHint": "Any phone in the room can reset the game now",
+    "resetGuestWarning": "All points and players will be cleared, and every phone goes back to the join screen.",
     "stoleFromYou": "{name} stole {points} points from you!",
     "stoleFromOpponent": "Stolen: +{points} pts from {name}!",
     "frozen": "You were frozen for 5s!",
