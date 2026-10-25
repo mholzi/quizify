@@ -151,6 +151,10 @@ class TestHandshakeReleasesSlot:
         slot, not just the token case."""
         handler.MAX_CONNECTIONS_PER_IP = 2
         handler.MAX_CONNECTIONS_PER_LOOPBACK = 2
+        # The exception propagates out of handle(), so aiohttp never closes the
+        # socket server-side; without a heartbeat it leaves no timer behind
+        # for the HA test plugin's lingering-timer check.
+        handler.HEARTBEAT_INTERVAL = None  # type: ignore[assignment]
 
         async def _boom(*_args: object, **_kwargs: object) -> bool:
             raise RuntimeError("handshake failure")
