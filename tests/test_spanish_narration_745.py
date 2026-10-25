@@ -426,11 +426,12 @@ class TestAdminPanelExposesTheToggle:
             assert bundle["setup"]["tts"]["milestone"], lang
 
     def test_the_server_forwards_the_toggle(self) -> None:
+        # ``_apply_tts_config`` moved to settings_handlers.py (#1124).
         ws = (
             _REPO_ROOT
             / "custom_components"
             / "quizify"
             / "server"
-            / "websocket.py"
+            / "settings_handlers.py"
         ).read_text("utf-8")
         assert 'announce_milestone=bool(tts.get("announce_milestone", True))' in ws

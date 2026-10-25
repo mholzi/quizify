@@ -13,7 +13,6 @@ from typing import TYPE_CHECKING, Any
 from aiohttp import WSMsgType, web
 
 from custom_components.quizify.const import (
-    DIFFICULTY_AUTO,
     ERR_ADMIN_REQUIRED,
     ERR_ALREADY_JOINED,
     ERR_GAME_ALREADY_STARTED,
@@ -51,10 +50,11 @@ from custom_components.quizify.game.state import (
     TeamAnswerAck,
 )
 from custom_components.quizify.game.team import Team
-from custom_components.quizify.game.types import Difficulty
 from custom_components.quizify.server import (
+    admin_claim,
     hot_seat_handlers,
     lightning_handlers,
+    settings_handlers,
     wager_handlers,
 )
 from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
@@ -78,6 +78,12 @@ from custom_components.quizify.server.serializers import (
     snapshot_house_entities,
     snapshot_tts_entities,
     strip_answer_for_dashboard,
+)
+from custom_components.quizify.server.start_settings import (
+    _START_GAME_FIELDS,
+    _coerce_toggle,
+    _overrides_to_start_settings,
+    _preset_to_start_settings,
 )
 
 if TYPE_CHECKING:
@@ -131,12 +137,6 @@ MSG_CONFIGURE_HOUSE = "configure_house"
 MSG_SET_LANGUAGE = "set_language"
 MSG_SET_DIFFICULTY = "set_difficulty"
 
-# What ``set_difficulty`` accepts (#851): the four chips the setup screen
-# offers. Anything else is a client that has drifted from the markup, and the
-# lobby is better off keeping the value it has than painting a label nothing
-# can translate.
-_LOBBY_DIFFICULTIES = frozenset({d.value for d in Difficulty} | {DIFFICULTY_AUTO})
-
 # Admin messages that require WS-level admin (a real ?role=admin tab) rather
 # than the admin-as-player relaxation ``_is_authorized_admin`` allows. These
 # two reach Home Assistant service calls with host-supplied entity ids (#724).
@@ -144,179 +144,6 @@ _WS_ADMIN_ONLY = frozenset({MSG_CONFIGURE_TTS, MSG_CONFIGURE_HOUSE})
 MSG_CREATE_TEAM = "create_team"
 MSG_JOIN_TEAM = "join_team"
 MSG_LEAVE_TEAM = "leave_team"
-
-
-def _in_domain(entity_id: str, domain: str) -> bool:
-    """True when ``entity_id`` names an entity of ``domain``.
-
-    The house config arrives as untyped client JSON and its ids are handed
-    straight to ``light.turn_on`` / ``scene.turn_on`` / ``media_player.play_media``.
-    A domain check is the cheap half of #724: even an authorized host should not
-    be able to aim the party lights at ``lock.front_door`` by editing the frame.
-    """
-    return entity_id.startswith(f"{domain}.")
-
-
-def _entities_in_domain(entity_ids: list[str], domain: str, field: str) -> list[str]:
-    """Keep only the ids of ``domain``, logging what was dropped (#724)."""
-    kept = [e for e in entity_ids if _in_domain(e, domain)]
-    dropped = [e for e in entity_ids if not _in_domain(e, domain)]
-    if dropped:
-        _LOGGER.warning(
-            "House config: ignored %d %s entry/entries outside the %s domain: %s",
-            len(dropped),
-            field,
-            domain,
-            ", ".join(dropped),
-        )
-    return kept
-
-
-def _entity_in_domain(entity_id: str, domain: str, field: str) -> str:
-    """Keep ``entity_id`` only if it is of ``domain``, else "" (#724)."""
-    if not entity_id or _in_domain(entity_id, domain):
-        return entity_id
-    _LOGGER.warning(
-        "House config: ignored %s %r - not a %s entity",
-        field,
-        entity_id,
-        domain,
-    )
-    return ""
-
-
-def _coerce_toggle(value: Any, *, default: bool) -> bool:
-    """Coerce a wire toggle value to a bool (#285).
-
-    Front-end checkboxes serialize as a JSON ``bool``, but be defensive about
-    string forms ("false"/"0"/"off"/"no") and a missing key so a malformed
-    payload can't accidentally arm/disarm a setting against the default.
-    """
-    if value is None:
-        return default
-    if isinstance(value, bool):
-        return value
-    if isinstance(value, (int, float)):
-        return bool(value)
-    if isinstance(value, str):
-        return value.strip().lower() not in ("false", "0", "off", "no", "")
-    return default
-
-
-# --- socket-less start_game settings (#744) ----------------------------------
-#
-# The keyword arguments ``QuizifyGameState.start_game`` accepts and that a
-# service call / preset / last-used snapshot may fill in. The two seed
-# arguments are deliberately absent: they exist for tests to pin the random
-# draws and must never be reachable from a host-facing surface.
-_START_GAME_FIELDS = frozenset(
-    {
-        "category",
-        "categories",
-        "difficulty",
-        "num_rounds",
-        "language",
-        "timer_duration",
-        "lightning_enabled",
-        "hot_seat_enabled",
-        "powerups_enabled",
-        "wager_enabled",
-    }
-)
-
-# The admin UI's sentinel for "no pick" in the pack and difficulty choosers. It
-# is stored verbatim in a saved preset and typed verbatim into a service call,
-# and ``start_game`` spells the same thing ``None``.
-_MIXED = "mixed"
-
-#: Saved-preset field name -> ``start_game`` keyword. ``packs`` and ``category``
-#: are handled separately because they resolve to two different keywords.
-_PRESET_FIELD_MAP = {
-    "rounds": "num_rounds",
-    "timer": "timer_duration",
-    "difficulty": "difficulty",
-    "language": "language",
-    "lightning": "lightning_enabled",
-    "hot_seat": "hot_seat_enabled",
-    "powerups": "powerups_enabled",
-    "wager": "wager_enabled",
-}
-
-
-def _coerce_category(raw: Any) -> dict[str, Any]:
-    """Resolve a pack selection to ``category`` / ``categories`` kwargs.
-
-    Accepts the three shapes every Quizify surface already uses: a list of
-    slugs (multi-pack), a single slug, or the ``"mixed"`` sentinel / empty value
-    meaning "all packs". Always returns BOTH keys so a narrower pick from a
-    later layer fully replaces a broader one instead of merging with it.
-    """
-    if isinstance(raw, (list, tuple)):
-        slugs = [str(s).strip() for s in raw if str(s).strip()]
-        if slugs:
-            return {"category": None, "categories": slugs}
-        return {"category": None, "categories": None}
-    value = str(raw or "").strip()
-    if not value or value == _MIXED:
-        return {"category": None, "categories": None}
-    return {"category": value, "categories": None}
-
-
-def _preset_to_start_settings(preset: dict[str, Any]) -> dict[str, Any]:
-    """Translate a saved preset record into ``start_game`` keywords (#744).
-
-    Presets are stored in the admin UI's vocabulary (``rounds``, ``timer``,
-    ``packs``, ``hot_seat``); this is the one place that knows the mapping.
-    Fields the preset does not carry are left out entirely so the layer below
-    keeps owning them.
-    """
-    settings: dict[str, Any] = {}
-    if "packs" in preset:
-        settings.update(_coerce_category(preset.get("packs")))
-    elif "category" in preset:
-        settings.update(_coerce_category(preset.get("category")))
-    for field, keyword in _PRESET_FIELD_MAP.items():
-        if preset.get(field) is None:
-            continue
-        value = preset[field]
-        if keyword == "difficulty":
-            settings["difficulty"] = (
-                None if str(value).strip() in ("", _MIXED) else str(value).strip()
-            )
-        elif keyword == "language":
-            # #889: a preset's packs are written in one language, so the
-            # language rides along with them. Empty means "not stored" — a
-            # preset saved before #889 — and the layers below keep owning it.
-            text = str(value).strip()
-            if text:
-                settings["language"] = text
-        elif keyword in ("num_rounds", "timer_duration"):
-            try:
-                settings[keyword] = int(value)
-            except (TypeError, ValueError):
-                continue
-        else:
-            settings[keyword] = bool(value)
-    return settings
-
-
-def _overrides_to_start_settings(overrides: dict[str, Any]) -> dict[str, Any]:
-    """Translate the explicit ``quizify.start_game`` fields into keywords.
-
-    The service schema has already coerced and range-checked the numbers, so
-    this only has to resolve the pack selection and the ``"mixed"`` difficulty
-    sentinel. Absent fields stay absent.
-    """
-    settings: dict[str, Any] = {}
-    if "category" in overrides:
-        settings.update(_coerce_category(overrides["category"]))
-    if "difficulty" in overrides:
-        raw = str(overrides["difficulty"] or "").strip()
-        settings["difficulty"] = None if raw in ("", _MIXED) else raw
-    for key in ("num_rounds", "language", "timer_duration"):
-        if overrides.get(key) is not None:
-            settings[key] = overrides[key]
-    return settings
 
 
 class QuizifyWebSocketHandler:
@@ -1152,153 +979,8 @@ class QuizifyWebSocketHandler:
         name: str,
         data: dict,
     ) -> None:
-        """Decide whether *player_obj* holds the admin crown after a join.
-
-        The cases are early returns, not a nest, so the next security fix
-        lands beside the case it guards rather than one level deeper (#985):
-
-        * no claim, but the slot carries an inherited crown — strip it
-          unless the join proves ownership (#389);
-        * a *connected* admin under another name — refuse the claim (#208);
-        * first claim (no admin at all) or a same-name reclaim — granted,
-          token-free;
-        * a *stale* admin under a DIFFERENT name — transfer the crown only
-          against a valid admin token (#358).
-
-        Admin-as-player: trust `is_admin: true` in the join message.
-
-        This is the Beatify pattern (which has shipped without bugs
-        for years). Earlier Quizify releases tried to cryptographically
-        validate an admin token threaded through the player's join
-        message; that pattern created a brittle state machine where
-        browser sessionStorage and server token storage could drift
-        apart with no in-product recovery (8 betas worth of bugs).
-
-        Trust trade-off: a malicious client on the LAN could send
-        `is_admin: true` and become admin. Mitigations:
-          - The user's home LAN is generally trusted.
-          - Nabu Casa already requires HA auth to reach the
-            integration through its tunnel.
-          - "First admin claims it" still applies; only one admin
-            slot exists per game.
-        The persisted admin token is still validated for the pure
-        admin-dashboard WebSocket connect (`?role=admin&token=...`),
-        which is the higher-stakes path. Player joins are simpler.
-        See DESIGN.md for the full rationale.
-        """
-        if not data.get("is_admin"):
-            if not player_obj.is_admin:
-                # No claim, no crown on the slot: nothing to decide.
-                return
-
-            # #389 (P2 security): silent crown inheritance via a LOBBY
-            # name-rejoin. In LOBBY a disconnected player's slot can be
-            # reclaimed by simply re-typing the same name, with NO session
-            # token (PlayerRegistry.add_player, the ``phase_value ==
-            # "LOBBY"`` reconnect branch). If that slot was the host's, the
-            # reclaimer INHERITS is_admin — and because this join carries no
-            # ``is_admin: true`` claim, the #358 crown-gating below never runs
-            # to vet it. So an attacker who just types the host's exact name
-            # in the plain player-join form, while the host is briefly
-            # disconnected in the lobby, silently seizes the crown with no
-            # token.
-            #
-            # (Reaching this branch means the join did NOT claim admin, yet
-            # the resulting slot holds is_admin — a freshly added player
-            # starts non-admin, so the crown can only have been inherited
-            # from the reclaimed slot.)
-            #
-            # Strip the inherited crown unless the joiner proves ownership
-            # with a valid admin session token — same proof and FAIL-SOFT
-            # posture as #358 (never reject the join). The legit host's
-            # admin-as-player tab always re-sends ``is_admin: true`` on join
-            # (see player-core.js), so it takes the claim path below and is
-            # unaffected here; a token holder still keeps the crown even on
-            # this path.
-            claim_token = data.get("admin_token")
-            if claim_token and self._conn.validate_admin_token(claim_token):
-                return
-            _LOGGER.warning(
-                "Inherited admin crown stripped for %s: LOBBY "
-                "name-rejoin without a valid admin token (#389)",
-                name,
-            )
-            player_obj.is_admin = False
-            return
-
-        # Single-admin invariant (#208): exactly one player may hold the
-        # crown per game. Only grant admin if no *other* player is already
-        # admin. A re-claim by the same name (e.g. the admin's redirect from
-        # /quizify/admin to /quizify/player re-joining under the same name) is
-        # idempotent and still granted; a claim by a *different* player while
-        # an admin exists is rejected — the original admin keeps the crown.
-        # Rejecting rather than taking over is the safer behaviour: it stops
-        # any LAN client from seizing control mid-game by sending
-        # `is_admin: true`.
-        if game_state.has_other_admin(name):
-            _LOGGER.warning(
-                "Admin claim rejected for %s: a different player "
-                "already holds the single admin slot",
-                name,
-            )
-            return
-
-        # Crown-recovery (#207 regression of #209): if a *stale*
-        # (disconnected) admin slot still lingers under a different
-        # name — the host's old /admin slot during the
-        # /admin -> /player redirect — demote it before crowning the
-        # re-joining host. has_other_admin() no longer blocks on a
-        # disconnected admin, so without this demotion two players
-        # would briefly carry is_admin and break the #208 invariant.
-        stale_admin = game_state.get_admin()
-        if stale_admin is None or stale_admin.name.lower() == name.lower():
-            # First claim (no admin at all) or a same-name reclaim: both stay
-            # token-free (the documented Beatify trust trade-off).
-            #
-            # ``.lower()`` (#995), the fold ``get_player`` used to find
-            # ``player_obj``: the host who types ``HOST`` reclaims the stored
-            # ``Host`` slot, so the slot in front of us and ``stale_admin``
-            # are the same object. Compared case-sensitively it read as a
-            # crown *transfer* between two people and fell through to the
-            # #358 token gate, which then denied the host their own crown
-            # ("Crown transfer denied for HOST ... stale admin Host keeps the
-            # crown" — about one slot). ``.lower()`` rather than
-            # ``.casefold()`` on purpose: this must match what the lookup
-            # did, and casefold matches names get_player does not (``Straße``
-            # / ``STRASSE``), which would be the same split in the other
-            # direction.
-            player_obj.is_admin = True
-            return
-
-        # #358: transferring the crown from a stale admin to a
-        # DIFFERENT name is the takeover vector. During the host's
-        # reload / wifi blip the real admin is momentarily
-        # disconnected (so has_other_admin() is False), and any LAN
-        # client sending `is_admin: true` under a new name would
-        # otherwise demote the host and seize control mid-game.
-        # Require proof: a valid admin session token in the join.
-        # Fail SOFT — no error, just no crown — so we don't
-        # reintroduce the brittle token state machine DESIGN.md
-        # warns about; the legit host still recovers via the
-        # token-based reconnect path, which preserves is_admin on
-        # their own slot.
-        claim_token = data.get("admin_token")
-        if not (claim_token and self._conn.validate_admin_token(claim_token)):
-            _LOGGER.warning(
-                "Crown transfer denied for %s: no valid admin "
-                "token; stale admin %s keeps the crown",
-                name,
-                stale_admin.name,
-            )
-            return
-
-        stale_admin.is_admin = False
-        player_obj.is_admin = True
-        _LOGGER.info(
-            "Crown transferred from stale admin %s to %s",
-            stale_admin.name,
-            name,
-        )
+        """Delegate to :func:`admin_claim.resolve_admin_claim` (#1124)."""
+        admin_claim.resolve_admin_claim(self, game_state, player_obj, name, data)
 
     async def _handle_join(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
@@ -3862,54 +3544,14 @@ class QuizifyWebSocketHandler:
         self._tts_announcer = announcer
 
     def _apply_tts_config(self, tts: dict[str, Any]) -> None:
-        """Push a flat TTS-settings dict onto the announcer (#281).
-
-        Shared by ``start_game`` (config nested under ``data["tts"]``) and the
-        lobby-time ``configure_tts`` message (config sent flat). No-op when no
-        announcer is wired (standalone dev server, HA without a TTS entity);
-        guarded so a malformed payload can't break the caller.
-        """
-        announcer = self._tts_announcer
-        if announcer is None:
-            return
-        try:
-            announcer.configure(
-                enabled=bool(tts.get("enabled")),
-                announce_question=bool(tts.get("announce_question", True)),
-                announce_options=bool(tts.get("announce_options", True)),
-                announce_reveal=bool(tts.get("announce_reveal", True)),
-                announce_standings=bool(tts.get("announce_standings", True)),
-                announce_join=bool(tts.get("announce_join", True)),
-                announce_countdown=bool(tts.get("announce_countdown", True)),
-                announce_milestone=bool(tts.get("announce_milestone", True)),
-                # Per-game entity overrides from the admin dropdowns (#281).
-                # Empty/missing → the announcer falls back to the config-entry
-                # default entities.
-                tts_entity=_entity_in_domain(
-                    str(tts.get("tts_entity") or "").strip(), "tts", "tts_entity"
-                )
-                or None,
-                media_player=_entity_in_domain(
-                    str(tts.get("media_player") or "").strip(),
-                    "media_player",
-                    "media_player",
-                )
-                or None,
-            )
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("TTS configure raised")
+        """Delegate to :func:`settings_handlers.apply_tts_config` (#1124)."""
+        settings_handlers.apply_tts_config(self, tts)
 
     async def _handle_configure_tts(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Handle the admin ``configure_tts`` message (#281).
-
-        Sent by admin.js on connect and whenever a narration toggle/entity
-        changes, so the announcer is configured during the pre-game lobby —
-        otherwise player-join narration (which fires before ``start_game``)
-        would never speak. The payload is the flat TTS-settings object.
-        """
-        self._apply_tts_config(data or {})
+        """Delegate to :func:`settings_handlers.handle_configure_tts`."""
+        await settings_handlers.handle_configure_tts(self, ws, data, game_state)
 
     # ------------------------------------------------------------------
     # "House Plays Along" runtime config (#494 Phase 4)
@@ -3936,192 +3578,26 @@ class QuizifyWebSocketHandler:
         self._sound_effects = effects
 
     def _apply_house_config(self, house: dict[str, Any]) -> None:
-        """Push the flat "House Plays Along" settings dict onto its consumers.
-
-        Shared by ``start_game`` (config nested under ``data["house"]``) and the
-        lobby-time ``configure_house`` message (config sent flat), exactly like
-        :meth:`_apply_tts_config`. The panel persists one flat dict in
-        localStorage and pushes it verbatim; "presets" are a frontend-only
-        concept, so a ``preset`` key (if any) is simply ignored here — the
-        backend only ever sees the resolved booleans.
-
-        Fans out to all THREE consumers, because the panel presents one master
-        switch over what are internally three independent subsystems:
-          * party lights  — the 5 accent cues + the winner scene;
-          * sound effects — the 4 one-shot cues;
-          * event emitter — the ``quizify_*`` bus events the other two ride on.
-        The master ``enabled`` is a runtime override of the
-        ``CONF_HOUSE_EVENTS_ENABLED`` option and is handed to each of them, so
-        flipping it off silences the whole feature in one frame.
-
-        Defensive by design — the payload is untyped client JSON:
-          * each child toggle defaults to ON (``bool(house.get(key, True))``),
-            so a partial dict degrades to "master decides" rather than to a
-            silently half-dead panel; only the master defaults OFF;
-          * each ``configure()`` is individually guarded, so one bad entity id
-            (e.g. a stale ``light.*`` the host has since removed) can at worst
-            kill its own subsystem, never the other two — and never the frame,
-            which would drop the admin's whole message.
-        No-op per consumer when it isn't wired (standalone dev server).
-        """
-        enabled = bool(house.get("enabled"))
-
-        def _toggle(key: str) -> bool:
-            return bool(house.get(key, True))
-
-        # Entity overrides. An empty selection ("" / []) means "no override" —
-        # the consumer then falls back to its config-entry default
-        # (CONF_PARTY_LIGHT_ENTITIES / CONF_MEDIA_PLAYER_ENTITY /
-        # CONF_FINALE_SCENE). Coerced defensively: a non-list ``light_entities``
-        # from a malformed payload must not reach the light service call.
-        raw_light_entities = house.get("light_entities")
-        light_entities = (
-            [str(e) for e in raw_light_entities]
-            if isinstance(raw_light_entities, list)
-            else []
-        )
-        media_player = str(house.get("media_player") or "").strip()
-        winner_scene_entity = str(house.get("winner_scene_entity") or "").strip()
-
-        # Domain allowlist (#724). Each override is forwarded to exactly one
-        # service - light.turn_on, scene.turn_on, media_player.play_media - so
-        # an id from any other domain is never a legitimate value here. Dropped
-        # rather than rejected: one bad picker entry must not disarm the whole
-        # house block, which is the same defensive stance as the guards below.
-        light_entities = _entities_in_domain(light_entities, "light", "light_entities")
-        media_player = _entity_in_domain(media_player, "media_player", "media_player")
-        winner_scene_entity = _entity_in_domain(
-            winner_scene_entity, "scene", "winner_scene_entity"
-        )
-
-        lights = self._party_lights
-        if lights is not None:
-            try:
-                lights.configure(
-                    enabled=enabled,
-                    light_question=_toggle("light_question"),
-                    light_countdown=_toggle("light_countdown"),
-                    light_reveal=_toggle("light_reveal"),
-                    light_streak=_toggle("light_streak"),
-                    light_winner=_toggle("light_winner"),
-                    winner_scene=_toggle("winner_scene"),
-                    light_entities=light_entities,
-                    winner_scene_entity=winner_scene_entity,
-                )
-            except Exception:  # noqa: BLE001
-                _LOGGER.exception("House party-lights configure raised")
-
-        effects = self._sound_effects
-        if effects is not None:
-            try:
-                effects.configure(
-                    enabled=enabled,
-                    sfx_correct=_toggle("sfx_correct"),
-                    sfx_wrong=_toggle("sfx_wrong"),
-                    sfx_streak=_toggle("sfx_streak"),
-                    sfx_winner=_toggle("sfx_winner"),
-                    media_player=media_player,
-                )
-            except Exception:  # noqa: BLE001
-                _LOGGER.exception("House sound-effects configure raised")
-
-        emitter = self._event_emitter
-        if emitter is not None:
-            try:
-                # The emitter has no per-cue toggles of its own — the bus events
-                # are the substrate the lights and SFX subscribe to, so it only
-                # honours the master switch. Leaving it armed while the master is
-                # off would keep spamming quizify_* events at the host's own
-                # automations, which is exactly what the master promises to stop.
-                emitter.configure(enabled=enabled)
-            except Exception:  # noqa: BLE001
-                _LOGGER.exception("House event-emitter configure raised")
+        """Delegate to :func:`settings_handlers.apply_house_config` (#1124)."""
+        settings_handlers.apply_house_config(self, house)
 
     async def _handle_configure_house(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Handle the admin ``configure_house`` message (#494 Phase 4).
-
-        Sent by admin.js on connect (right after ``admin_connect``) and whenever
-        a house toggle / entity picker changes, mirroring ``configure_tts``. The
-        on-connect push is why this must work with no game in progress: the
-        lobby-phase cues (player-join glow, lobby SFX) fire before ``start_game``
-        ever lands, so waiting for the start payload would leave them
-        misconfigured for the entire lobby. Nothing here touches ``game_state``
-        — the applier only reconfigures long-lived consumers — so the lobby path
-        is safe by construction. The payload is the flat house-settings object.
-        """
-        self._apply_house_config(data or {})
+        """Delegate to :func:`settings_handlers.handle_configure_house`."""
+        await settings_handlers.handle_configure_house(self, ws, data, game_state)
 
     async def _handle_set_language(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Handle the admin ``set_language`` message (#776).
-
-        The host's language pick used to reach the game only in the
-        ``start_game`` payload, so for the whole life of the lobby
-        ``GameState.language`` sat at its constructor default ``"de"``. Every
-        phone that joined an English game was handed a German frame by
-        ``_syncServerLanguage`` in player-core.js — the German lobby, then the
-        German chrome around the first English question, because the correction
-        only arrived with ``start_game``.
-
-        Sent by admin.js on connect (right after ``admin_connect``) and whenever
-        the language chip changes, exactly like ``configure_house`` (#494). Two
-        consequences follow, and both are the point: a phone joining an English
-        lobby sees English on its first painted frame, and flipping the chip
-        while people are already sitting in the lobby re-renders their screens
-        because we re-broadcast the state.
-
-        Only accepted in LOBBY. Mid-game this would swap the chrome under the
-        players without swapping the questions, which is worse than the bug.
-        The value is not checked against a bundle list here for the same reason
-        ``start_game`` doesn't check it: the client's ``QuizifyI18n.setLanguage``
-        already clamps an unknown code to English, and a second, stricter gate
-        on this path only invites the two to drift apart.
-        """
-        language = data.get("language")
-        if not isinstance(language, str) or not language:
-            return
-        if game_state.phase != GamePhase.LOBBY:
-            return
-        if language == game_state.language:
-            return
-        game_state.language = language
-        await self._broadcast_state_projected(game_state)
+        """Delegate to :func:`settings_handlers.handle_set_language`."""
+        await settings_handlers.handle_set_language(self, ws, data, game_state)
 
     async def _handle_set_difficulty(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Handle the admin ``set_difficulty`` message (#851).
-
-        The same hole ``set_language`` closed in #776, one field over.
-        ``GameState.difficulty`` is written by ``start_game`` and nowhere else,
-        so for the whole life of the lobby it described the game BEFORE this
-        one — the constructor default on the first game of the evening, the
-        previous game's pick after that. The state snapshot carries that field
-        to every phone and to the television, so a lobby the host had set to
-        *Einfach* told the guests *Medium*, and the value was not wrong by a
-        rendering: it was the last game's, faithfully rendered.
-
-        Sent by admin.js on connect (right after ``admin_connect``), whenever
-        the difficulty chip changes, and whenever a preset sets it — the same
-        three moments ``set_language`` is sent at.
-
-        Only accepted in LOBBY, and only for the four values the setup screen
-        offers. Mid-game this would relabel a running game underneath the
-        players; and ``start_game`` writes the field again from its own
-        payload, so nothing here can survive into the game itself.
-        """
-        difficulty = data.get("difficulty")
-        if not isinstance(difficulty, str) or difficulty not in _LOBBY_DIFFICULTIES:
-            return
-        if game_state.phase != GamePhase.LOBBY:
-            return
-        if difficulty == game_state.difficulty:
-            return
-        game_state.difficulty = difficulty
-        await self._broadcast_state_projected(game_state)
+        """Delegate to :func:`settings_handlers.handle_set_difficulty`."""
+        await settings_handlers.handle_set_difficulty(self, ws, data, game_state)
 
     # ------------------------------------------------------------------
     # The house beats (#789/#788)
