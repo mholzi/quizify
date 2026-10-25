@@ -556,37 +556,41 @@ class QuizifyWebSocketHandler:
         await ws.prepare(request)
         if remote is not None:
             self._ip_connections[remote] = self._ip_connections.get(remote, 0) + 1
-
-        role = request.query.get("role")
-        is_dashboard = role == "dashboard"
-        # #359: prefer the token from the ``X-Quizify-Token`` header (kept out
-        # of aiohttp/reverse-proxy access logs and browser history); fall back
-        # to the deprecated ``?token=`` query param for backward compat. A
-        # browser WS handshake can't set headers, so the admin frontend also
-        # sends the token in a first-message ``admin_auth`` frame handled in
-        # the message loop below.
-        admin_token = request.headers.get("X-Quizify-Token") or request.query.get(
-            "token"
-        )
-
-        is_admin = await self._grant_admin(role, admin_token, request)
-
-        self._conn.add_connection(ws, is_admin=is_admin, is_dashboard=is_dashboard)
-
-        _LOGGER.debug(
-            "WebSocket connected (admin=%s), total: %d",
-            is_admin,
-            len(self._conn.connections),
-        )
-
-        # #842: a host arriving is the one half of the signal the room was
-        # never sent. Announced here rather than in ``admin_connect`` because
-        # the socket is already counted by ``has_admin_connections()``, which
-        # is what the flag reports.
-        if is_admin:
-            await self._announce_host_presence()
-
+        # Everything after the per-IP increment runs inside the try so the
+        # ``finally`` below always releases the slot (#361). An exception
+        # during the handshake (admin grant, registration, host announcement)
+        # used to skip the release and burn one slot of the cap for good. The
+        # cleanup steps all tolerate a socket that was never registered.
         try:
+            role = request.query.get("role")
+            is_dashboard = role == "dashboard"
+            # #359: prefer the token from the ``X-Quizify-Token`` header (kept out
+            # of aiohttp/reverse-proxy access logs and browser history); fall back
+            # to the deprecated ``?token=`` query param for backward compat. A
+            # browser WS handshake can't set headers, so the admin frontend also
+            # sends the token in a first-message ``admin_auth`` frame handled in
+            # the message loop below.
+            admin_token = request.headers.get("X-Quizify-Token") or request.query.get(
+                "token"
+            )
+
+            is_admin = await self._grant_admin(role, admin_token, request)
+
+            self._conn.add_connection(ws, is_admin=is_admin, is_dashboard=is_dashboard)
+
+            _LOGGER.debug(
+                "WebSocket connected (admin=%s), total: %d",
+                is_admin,
+                len(self._conn.connections),
+            )
+
+            # #842: a host arriving is the one half of the signal the room was
+            # never sent. Announced here rather than in ``admin_connect`` because
+            # the socket is already counted by ``has_admin_connections()``, which
+            # is what the flag reports.
+            if is_admin:
+                await self._announce_host_presence()
+
             async for msg in ws:
                 if msg.type == WSMsgType.TEXT:
                     # Rate limiting: record timestamp BEFORE processing so the

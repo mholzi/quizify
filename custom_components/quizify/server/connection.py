@@ -255,18 +255,30 @@ class ConnectionManager:
             _persist.add_done_callback(_log_task_exception)
         return self._admin_session_token
 
-    def validate_admin_token(self, token: str) -> bool:
+    def validate_admin_token(self, token: object) -> bool:
         """Return True if *token* matches the current admin session token.
 
         The comparison uses :func:`hmac.compare_digest` so it runs in constant
         time and doesn't leak the token byte-by-byte through response timing
         (#259). The empty-token / no-token-set guards short-circuit *before* the
-        compare: ``compare_digest`` requires both operands to be set strings of
-        the same type, and a None/empty admin token must never validate.
+        compare, and a None/empty admin token must never validate.
+
+        Never raises. *token* comes straight from the client (header, query
+        param or ``admin_auth`` frame), so it may be any JSON value or a str
+        with non-ASCII characters. ``compare_digest`` raises ``TypeError`` on
+        a non-ASCII ``str`` and on mismatched types, so anything that is not a
+        ``str`` is rejected up front and both sides are compared as UTF-8
+        bytes.
         """
-        if not token or not self._admin_session_token:
+        if not isinstance(token, str) or not token or not self._admin_session_token:
             return False
-        return hmac.compare_digest(token, self._admin_session_token)
+        try:
+            candidate = token.encode("utf-8")
+        except UnicodeEncodeError:
+            # Lone surrogates (e.g. from surrogateescape-decoded headers)
+            # cannot be the uuid4 token.
+            return False
+        return hmac.compare_digest(candidate, self._admin_session_token.encode("utf-8"))
 
     async def try_bootstrap_admin(self) -> bool:
         """Atomically grant + persist the admin token on a fresh install.
