@@ -83,12 +83,14 @@ def test_the_reconnect_snapshot_describes_the_reveal() -> None:
 
 
 def test_the_admin_connect_frame_is_that_snapshot() -> None:
-    source = (_CC / "server" / "websocket.py").read_text("utf-8")
-    body = source.split("async def _handle_admin_connect(", 1)[1].split(
-        "\n    async def ", 1
+    # The body moved to ``server/admin_auth.py`` (#1124); ``self`` is now
+    # ``handler`` there.
+    source = (_CC / "server" / "admin_auth.py").read_text("utf-8")
+    body = source.split("async def handle_admin_connect(", 1)[1].split(
+        "\ndef ", 1
     )[0]
 
-    assert "state = self._snapshot(game_state)" in body
+    assert "state = handler._snapshot(game_state)" in body
     assert 'state["type"] = "game_state"' in body
 
 
