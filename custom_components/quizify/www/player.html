@@ -999,6 +999,23 @@
         </div>
     </div>
 
+    <!-- Guest reset confirmation (#1131). Same shape as the host's
+         #reset-game-modal in admin.html: a guest tap on any of the four
+         reset buttons opens this, and only its confirm button sends
+         reset_game. -->
+    <div id="guest-reset-modal" class="modal hidden" role="dialog" aria-modal="true"
+         aria-labelledby="guest-reset-modal-title" aria-describedby="guest-reset-modal-text">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <h2 id="guest-reset-modal-title" data-i18n="admin.resetGameConfirm">Reset game?</h2>
+            <p id="guest-reset-modal-text" data-i18n="game.resetGuestWarning">All points and players will be cleared, and every phone goes back to the join screen.</p>
+            <div class="modal-actions">
+                <button type="button" id="guest-reset-confirm-btn" class="btn btn-danger" data-i18n="admin.resetGame">Reset game</button>
+                <button type="button" id="guest-reset-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- QR Modal (Lobby - full screen) -->
     <div id="qr-modal" class="qr-modal hidden" role="dialog" aria-modal="true"
          aria-labelledby="qr-modal-title">

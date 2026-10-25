@@ -118,12 +118,16 @@ def test_the_hot_seat_control_is_not_inside_the_panel_that_tears_itself_down() -
 
 
 def test_every_control_is_wired_to_send_reset_game() -> None:
+    """Every control reaches ``reset_game`` — through the confirm dialog since
+    #1131, which ``test_wake_lock_guest_reset_1131`` runs for real."""
     source = _without_comments(_CORE.read_text("utf-8"))
-    body = source.split("function setupResetAffordance()", 1)[1].split("\n    }", 1)[0]
+    body = source.split("function setupResetAffordance()", 1)[1]
+    body = body.split("\n    }\n", 1)[0]
 
     for _phase, (btn, _wrapper) in STAGES.items():
         assert f"'{btn}'" in body
     assert "'paused-reset-btn'" in body
+    assert "openGuestResetModal(btn)" in body
     assert "send('reset_game', {})" in body
 
 

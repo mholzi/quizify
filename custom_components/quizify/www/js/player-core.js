@@ -1431,6 +1431,12 @@
             var w = document.getElementById(wrapperId);
             if (w) w.classList.add('hidden');
         }
+        // A confirm dialog opened from this button must not outlive it: the
+        // host came back or the stage moved on, so there is nothing left to
+        // confirm (#1131).
+        if (_guestResetTrigger && _guestResetTrigger.id === btnId) {
+            closeGuestResetModal();
+        }
     }
 
     // ------------------------------------------------------------------
@@ -1721,6 +1727,71 @@
         }
     }
 
+    // ------------------------------------------------------------------
+    // Guest reset confirmation (#1131)
+    // ------------------------------------------------------------------
+    //
+    // `reset_game` from a guest wipes every player, score and socket, and the
+    // buttons that send it sit right where a guest is already tapping. The
+    // host's own reset has always gone through #reset-game-modal; a guest
+    // tap now goes through the same kind of dialog (#guest-reset-modal), and
+    // only its confirm button sends anything.
+    var _guestResetTrigger = null;
+    var _guestResetKeyHandler = null;
+
+    function _focus(el) {
+        if (el && typeof el.focus === 'function') el.focus();
+    }
+
+    function openGuestResetModal(triggerBtn) {
+        var modal = document.getElementById('guest-reset-modal');
+        if (!modal) return false;
+        _guestResetTrigger = triggerBtn || null;
+        modal.classList.remove('hidden');
+        var cancelBtn = document.getElementById('guest-reset-cancel-btn');
+        setTimeout(function () { _focus(cancelBtn); }, 0);
+
+        if (_guestResetKeyHandler) {
+            document.removeEventListener('keydown', _guestResetKeyHandler, true);
+        }
+        _guestResetKeyHandler = function (e) {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeGuestResetModal();
+                return;
+            }
+            if (e.key !== 'Tab') return;
+            // Two buttons, so the trap is the pair itself.
+            var first = document.getElementById('guest-reset-confirm-btn');
+            var last = cancelBtn;
+            if (!first || !last) return;
+            var active = document.activeElement;
+            if (e.shiftKey) {
+                if (active === first || !modal.contains(active)) {
+                    e.preventDefault();
+                    _focus(last);
+                }
+            } else if (active === last || !modal.contains(active)) {
+                e.preventDefault();
+                _focus(first);
+            }
+        };
+        document.addEventListener('keydown', _guestResetKeyHandler, true);
+        return true;
+    }
+
+    function closeGuestResetModal() {
+        var modal = document.getElementById('guest-reset-modal');
+        if (modal) modal.classList.add('hidden');
+        if (_guestResetKeyHandler) {
+            document.removeEventListener('keydown', _guestResetKeyHandler, true);
+            _guestResetKeyHandler = null;
+        }
+        var trigger = _guestResetTrigger;
+        _guestResetTrigger = null;
+        _focus(trigger);
+    }
+
     function setupResetAffordance() {
         [
             'paused-reset-btn',
@@ -1731,11 +1802,30 @@
             var btn = document.getElementById(id);
             if (btn) {
                 btn.addEventListener('click', function () {
-                    btn.disabled = true;
-                    send('reset_game', {});
+                    openGuestResetModal(btn);
                 });
             }
         });
+        var confirmBtn = document.getElementById('guest-reset-confirm-btn');
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', function () {
+                // Only a trigger that is still on screen may fire: the
+                // dialog closes with its button, but a tap can race that.
+                var trigger = _guestResetTrigger;
+                if (!trigger || trigger.classList.contains('hidden')) {
+                    closeGuestResetModal();
+                    return;
+                }
+                trigger.disabled = true;
+                send('reset_game', {});
+                closeGuestResetModal();
+            });
+        }
+        var cancelBtn = document.getElementById('guest-reset-cancel-btn');
+        if (cancelBtn) cancelBtn.addEventListener('click', closeGuestResetModal);
+        var modal = document.getElementById('guest-reset-modal');
+        var backdrop = modal && modal.querySelector('.modal-backdrop');
+        if (backdrop) backdrop.addEventListener('click', closeGuestResetModal);
     }
 
     // ============================================
