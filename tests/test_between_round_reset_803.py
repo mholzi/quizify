@@ -483,7 +483,8 @@ def test_the_server_would_have_accepted_the_reset_all_along() -> None:
 def test_nothing_else_can_leave_these_two_phases() -> None:
     """Which is why they need the hatch: both are advanced by the host's
     next_question and by no timer."""
-    source = (_CC / "server" / "websocket.py").read_text("utf-8")
+    # ``_advance_round`` moved to ``server/game_commands.py`` (#1124).
+    source = (_CC / "server" / "game_commands.py").read_text("utf-8")
 
     assert "if game_state.phase == GamePhase.LIGHTNING_RECAP:" in source
     assert "if game_state.phase == GamePhase.HOT_SEAT_REVEAL:" in source

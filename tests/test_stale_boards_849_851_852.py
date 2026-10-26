@@ -422,7 +422,8 @@ def test_start_game_still_carries_the_difficulty() -> None:
     """The lobby push is an addition, not a replacement: a game started from
     the HA service, or by a host who reloaded the admin page, must still
     arrive with one."""
-    ws_source = (_CC / "server" / "websocket.py").read_text("utf-8")
+    # ``_handle_start_game`` moved to ``server/game_commands.py`` (#1124).
+    ws_source = (_CC / "server" / "game_commands.py").read_text("utf-8")
     assert 'difficulty = data.get("difficulty")' in ws_source
 
     payload_line = (
