@@ -165,21 +165,26 @@ CONF_SFX_WRONG_URL = "sfx_wrong_url"  # str, single, free-text URL
 CONF_SFX_STREAK_URL = "sfx_streak_url"  # str, single, free-text URL
 CONF_SFX_WINNER_URL = "sfx_winner_url"  # str, single, free-text URL
 
-# Endpoint a composed community question pack is POSTed to so it lands as a
-# GitHub issue for review (#180). Empty by default — the whole in-app pack
-# submission feature stays completely inert (UI hidden, endpoints accept
-# nothing) until the user points this at a worker URL that holds the GitHub
-# token and creates the issue. The token never lives in the browser or the
-# integration; the worker is separate infrastructure (see issue #180, step 5).
+# Endpoint a composed community question pack (or a pack request, #579) is
+# POSTed to so it lands as a GitHub issue for review (#180). The option is an
+# OVERRIDE since #1127: empty means the maintainer's worker at
+# DEFAULT_COMMUNITY_SUBMIT_URL, so every install can ask for a pack without
+# deploying anything. The token never lives in the browser or the integration;
+# the worker (cf-workers/quizify-api.js) holds it.
 CONF_COMMUNITY_SUBMIT_URL = "community_submit_url"  # str, single, free-text URL
 
+# The built-in worker (#1127). Installs that leave CONF_COMMUNITY_SUBMIT_URL
+# empty call it without a secret, on the worker's rate-limited anonymous path —
+# a secret baked into a public repo would protect nothing. See
+# cf-workers/README.md for the limits and the trade-off.
+DEFAULT_COMMUNITY_SUBMIT_URL = "https://quizify-api.mholzi.workers.dev"
+
 # Shared secret the integration sends as an ``X-Quizify-Secret`` header on every
-# pack submission (#256). When the worker has a matching ``SHARED_SECRET`` env
-# secret set it rejects any request without this header, closing the open-proxy
-# hole. Empty by default and fully back-compatible: with no secret configured
-# the header is omitted and the worker (which only enforces when *its* secret is
-# set) behaves exactly as before. Set BOTH the worker secret and this option to
-# lock the endpoint down. See cf-workers/README.md.
+# pack submission (#256) — for a SELF-HOSTED worker only. It travels only to the
+# URL set in CONF_COMMUNITY_SUBMIT_URL, never to DEFAULT_COMMUNITY_SUBMIT_URL: a
+# host's own secret is no business of the maintainer's worker (#1127). A worker
+# with a matching ``SHARED_SECRET`` accepts the header; a wrong one is a 401.
+# Empty by default: no header. See cf-workers/README.md.
 CONF_COMMUNITY_SUBMIT_SECRET = "community_submit_secret"  # str, single, free-text
 
 # ---------------------------------------------------------------------------

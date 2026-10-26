@@ -107,6 +107,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         AppContext,
         read_manifest_version,
     )
+    from .server.pack_submission import resolve_submit_target  # noqa: PLC0415
     from .server.views import (  # noqa: PLC0415
         prime_ui_languages,
         refresh_live_version,
@@ -181,6 +182,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Priming here moves that one scan into an executor thread.
     await hass.async_add_executor_job(prime_ui_languages)
 
+    submit_url, submit_secret = resolve_submit_target(
+        entry.options.get(CONF_COMMUNITY_SUBMIT_URL),
+        entry.options.get(CONF_COMMUNITY_SUBMIT_SECRET),
+    )
     ctx = AppContext(
         runtime=runtime,
         game=game_state,
@@ -191,19 +196,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         # HA's configured language drives the admin UI's initial language
         # (Settings → General). hass.config.language is always set on HA.
         ha_language=hass.config.language,
-        # Community-pack submission stays inert until this worker URL is set
-        # (#180). Empty/unset → the in-app submit UI hides itself.
-        community_submit_url=(
-            entry.options.get(CONF_COMMUNITY_SUBMIT_URL) or ""
-        ).strip()
-        or None,
-        # Shared secret sent as X-Quizify-Secret to the worker (#256). Empty →
-        # header omitted (back-compatible); set it alongside the worker's
-        # SHARED_SECRET to close the open-proxy hole.
-        community_submit_secret=(
-            entry.options.get(CONF_COMMUNITY_SUBMIT_SECRET) or ""
-        ).strip()
-        or None,
+        # Community-pack submission and pack requests (#180, #579). The URL
+        # option is an override since #1127: empty → the built-in worker, with
+        # no secret (a host's secret goes only to the host's own worker).
+        community_submit_url=submit_url,
+        community_submit_secret=submit_secret,
     )
 
     # Stash on hass.data so existing tooling (services.yaml, lookups in
@@ -360,10 +357,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         game_state.question_bank.set_avoid_recent_repeats(
             bool(opts.get(CONF_AVOID_RECENT_REPEATS, DEFAULT_AVOID_RECENT_REPEATS))
         )
-        # Toggle the community-pack submit feature live (#180) — no HA restart.
-        ctx.community_submit_url = clean_str(opts.get(CONF_COMMUNITY_SUBMIT_URL))
-        ctx.community_submit_secret = clean_str(
-            opts.get(CONF_COMMUNITY_SUBMIT_SECRET)
+        # Re-point the pack-submit worker live (#180) — no HA restart. An
+        # emptied URL falls back to the built-in worker (#1127).
+        ctx.community_submit_url, ctx.community_submit_secret = (
+            resolve_submit_target(
+                opts.get(CONF_COMMUNITY_SUBMIT_URL),
+                opts.get(CONF_COMMUNITY_SUBMIT_SECRET),
+            )
         )
         # The whole house-consumer reload path (#789). This used to be 100
         # lines: export each consumer's runtime config, detach it, rebuild it

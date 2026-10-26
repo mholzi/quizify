@@ -21,9 +21,12 @@ in the payload (``{"request": {...}}``) and the record's ``kind``. That is the
 point: a request issue closes exactly like a submission issue, so a second
 status mechanism would have been a second thing to keep correct.
 
-The whole feature stays inert until ``community_submit_url`` is set: the config
+The feature stays inert while ``ctx.community_submit_url`` is empty: the config
 endpoint reports ``enabled: false`` (so the UI hides the section) and POSTs are
-refused with ``SUBMIT_DISABLED``.
+refused with ``SUBMIT_DISABLED``. On Home Assistant it is never empty since
+#1127 — :func:`resolve_submit_target` falls back to the maintainer's worker
+(``DEFAULT_COMMUNITY_SUBMIT_URL``) when the option is blank. The standalone dev
+server leaves it empty, so local testing never files a real issue.
 
 No HA coupling: handlers read everything they need from the
 :class:`~..server.context.AppContext` (``ctx.runtime`` for the data dir and
@@ -45,6 +48,7 @@ import aiohttp
 from aiohttp import web
 
 from ..const import (
+    DEFAULT_COMMUNITY_SUBMIT_URL,
     ERR_SUBMIT_DISABLED,
     ERR_SUBMIT_GITHUB_ERROR,
     ERR_SUBMIT_INVALID_FORMAT,
@@ -107,6 +111,23 @@ def _store_lock(path: object) -> asyncio.Lock:
         lock = asyncio.Lock()
         _store_locks[key] = lock
     return lock
+
+
+def resolve_submit_target(
+    url_option: object, secret_option: object
+) -> tuple[str, str | None]:
+    """The worker URL and secret to use, from the two integration options (#1127).
+
+    An empty URL option means the built-in worker, and then **no** secret: a
+    secret only ever belongs to the host's own worker, so it travels only with a
+    URL the host set. The default worker takes anonymous, rate-limited calls.
+    Returns ``(url, secret_or_None)``; the URL is never empty.
+    """
+    url = url_option.strip() if isinstance(url_option, str) else ""
+    if not url:
+        return DEFAULT_COMMUNITY_SUBMIT_URL, None
+    secret = secret_option.strip() if isinstance(secret_option, str) else ""
+    return url, secret or None
 
 
 def _check_rate_limit(client_ip: str) -> bool:

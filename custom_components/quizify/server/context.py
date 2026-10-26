@@ -80,14 +80,16 @@ class AppContext:
     ha_language: str | None = None
     # Worker endpoint a composed community pack is POSTed to so it lands as a
     # GitHub issue for review (#180). ``None``/empty keeps the whole in-app
-    # submission feature hidden and inert. Mutable so an options-flow change
-    # toggles the feature without an HA restart.
+    # submission feature hidden and inert — which only the standalone dev
+    # server does: on HA it is the option or, since #1127, the built-in
+    # DEFAULT_COMMUNITY_SUBMIT_URL. Mutable so an options-flow change re-points
+    # it without an HA restart.
     community_submit_url: str | None = None
     # Shared secret sent as the ``X-Quizify-Secret`` header on the worker POST
-    # (#256). When set (and the worker has a matching ``SHARED_SECRET``), it
-    # closes the open-proxy hole. ``None``/empty → header omitted, fully
-    # back-compatible. Mutable so an options-flow change applies without an HA
-    # restart, mirroring ``community_submit_url``.
+    # (#256), for a self-hosted worker. Always ``None`` with the built-in
+    # default URL (#1127). ``None``/empty → header omitted. Mutable so an
+    # options-flow change applies without an HA restart, mirroring
+    # ``community_submit_url``.
     community_submit_secret: str | None = None
     # The five "House Plays Along" consumers plus the config-entry settings they
     # share (#789). ``None`` on the standalone dev server, which has no config

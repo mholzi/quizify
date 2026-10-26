@@ -369,6 +369,9 @@ Some rows only show up when they are due. The **Halloween** packs carry a season
 
 Pack selection lives on the **first screen**: a featured pack card (e.g. World Cup) up top, with every other pack as a tappable chip right beneath it — tap to select or deselect, mix several, then hit **Start Game**. Game settings (difficulty, rounds, timer) stay one tap away under **Adjust settings**. **Mixed mode** drops you a random question from every selected pack, so you can stir Geography + Pop + Sport together for chaos mode.
 
+**Missing a topic? Ask for a pack from inside the app.** The last tile in the pack picker opens a short request form (theme, language, a note); it lands in this repo as an issue labelled `pack-request`, and the finished pack comes back as a pull request that ships to everyone.
+This works out of the box through the Quizify worker. If you run your own worker ([`cf-workers/`](cf-workers/README.md)), set it as **Community pack submission URL** in the integration options.
+
 All packs follow an "Unnützes Wissen" editorial line — surprising, counter-intuitive, weird-but-true trivia. Less "capital of France", more "the average cloud weighs about 500 tons".
 
 ### Custom Question Packs
@@ -421,7 +424,7 @@ Quizify speaks your guests' language.
 
 The UI follows the game language (since v1.1.24) — pick German in the pack-picker and the entire admin / player / dashboard surface switches to German labels, tooltips, error messages, fun-fact labels, and end-game awards. Switch to English or Spanish and the whole thing flips.
 
-634 i18n keys, full parity between all three locales, validated in CI.
+636 i18n keys, full parity between all three locales, validated in CI.
 
 ---
 

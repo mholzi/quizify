@@ -9,7 +9,9 @@
  * directly. "My submissions" renders as a status timeline.
  *
  * The whole section stays hidden until /api/quizify/pack-submit/config reports
- * enabled:true. Error codes (INVALID_FORMAT / RATE_LIMITED / GITHUB_ERROR /
+ * enabled:true. The same rule shows the "Missing a topic? / Ask for a pack"
+ * tile at the end of the hero pack picker (#1127), which jumps to this card in
+ * request mode. Error codes (INVALID_FORMAT / RATE_LIMITED / GITHUB_ERROR /
  * SUBMIT_DISABLED) map to i18n keys with a fallback to the raw message.
  *
  * Self-contained IIFE on window.QuizifyPackSubmit — no coupling to admin.js.
@@ -34,6 +36,11 @@ window.QuizifyPackSubmit = (function () {
 
     // The pack that last passed validation — carried from Check to Submit.
     var validatedPack = null;
+
+    // Set once the config endpoint reports enabled:true. Gates the wish tile
+    // exactly like the card: no worker, no tile (#1127).
+    var enabled = false;
+    var WISH_TILE_CLASS = 'hero-wish-tile';
 
     function t(key, params) {
         if (window.QuizifyI18n && typeof window.QuizifyI18n.t === 'function') {
@@ -306,6 +313,60 @@ window.QuizifyPackSubmit = (function () {
         });
     }
 
+    /* ---------------- wish tile in the pack picker (#1127) ---------------- */
+
+    /** Open the card in request mode from anywhere on the setup screen.
+     *  The card lives in "Adjust settings" under Apply, so the hero first
+     *  switches over — by pressing the real "Adjust settings…" link, so
+     *  admin.js's own mode switch runs unchanged (the hero pack tiles proxy
+     *  their chips the same way). */
+    function openRequest() {
+        var tweakBtn = el('setup-tweak-btn');
+        var screen = el('setup-screen');
+        if (tweakBtn && !(screen && screen.getAttribute('data-mode') === 'detail')) {
+            tweakBtn.click();
+        }
+        setMode('request');
+        var section = el('pack-submit-section');
+        if (section && typeof section.scrollIntoView === 'function') {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        var theme = el('pack-request-theme');
+        if (theme && typeof theme.focus === 'function') {
+            try { theme.focus({ preventScroll: true }); } catch (_e) { theme.focus(); }
+        }
+    }
+
+    /** Append the dashed "Missing a topic? / Ask for a pack" tile to the hero
+     *  pack grid. admin.js calls this at the end of every buildHeroPackChips()
+     *  (the grid is rebuilt on each language switch), and init() calls it once
+     *  the config arrives, because that answer usually lands after the first
+     *  build. Idempotent, and a no-op while the feature is off. Both lines
+     *  carry their data-i18n key so the page-wide sweep repaints them on a
+     *  language switch, as #866 settled for the Mixed tile. */
+    function appendWishTile(container) {
+        if (!enabled || !container) { return null; }
+        var existing = container.querySelector('.' + WISH_TILE_CLASS);
+        if (existing) { return existing; }
+        var tile = document.createElement('button');
+        tile.type = 'button';
+        tile.className = WISH_TILE_CLASS;
+        tile.innerHTML = '<span class="hct-icon" aria-hidden="true">\uFF0B</span>' +
+            '<span class="hct-name" data-i18n="packSubmit.wishTile.title"></span>' +
+            '<span class="hct-count" data-i18n="packSubmit.wishTile.cta"></span>';
+        // English until the bundle answers; the sweep repaints it after.
+        [['.hct-name', 'packSubmit.wishTile.title', 'Missing a topic?'],
+         ['.hct-count', 'packSubmit.wishTile.cta', 'Ask for a pack']].forEach(function (row) {
+            var node = tile.querySelector(row[0]);
+            if (!node) { return; }
+            var text = t(row[1]);
+            node.textContent = text === row[1] ? row[2] : text;
+        });
+        tile.addEventListener('click', openRequest);
+        container.appendChild(tile);
+        return tile;
+    }
+
     function setRequestStatus(msg, kind) {
         var statusEl = el('pack-request-status');
         if (!statusEl) { return; }
@@ -445,7 +506,9 @@ window.QuizifyPackSubmit = (function () {
             return;  // can't reach config → leave hidden
         }
 
+        enabled = true;
         section.classList.remove('hidden');
+        appendWishTile(el('hero-pack-chips'));
         if (window.QuizifyI18n && window.QuizifyI18n.initPageTranslations) {
             window.QuizifyI18n.initPageTranslations(section);
         }
@@ -510,8 +573,10 @@ window.QuizifyPackSubmit = (function () {
 
     return {
         init: init,
-        validatePack: validatePack,  // exported for tests
-        setMode: setMode             // exported for tests
+        appendWishTile: appendWishTile,  // called by admin.js buildHeroPackChips
+        openRequest: openRequest,
+        validatePack: validatePack,      // exported for tests
+        setMode: setMode                 // exported for tests
     };
 })();
 

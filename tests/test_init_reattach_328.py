@@ -51,6 +51,7 @@ from custom_components.quizify.const import (  # noqa: E402
     CONF_MEDIA_PLAYER_ENTITY,
     CONF_PARTY_LIGHT_ENTITIES,
     CONF_TTS_ENTITY,
+    DEFAULT_COMMUNITY_SUBMIT_URL,
     DOMAIN,
 )
 
@@ -222,7 +223,10 @@ async def test_options_update_clears_fields_when_emptied(
 
     data = hass.data[DOMAIN]
     assert data["game"].lobby_music_url is None
-    assert data["ctx"].community_submit_url is None
+    # An emptied URL option falls back to the built-in worker (#1127), with no
+    # secret — it is an override, not an on/off switch.
+    assert data["ctx"].community_submit_url == DEFAULT_COMMUNITY_SUBMIT_URL
+    assert data["ctx"].community_submit_secret is None
     # The party-lights helper reads the cleared option and reports unconfigured.
     assert data["party_lights"].is_configured is False
 
@@ -301,3 +305,33 @@ async def test_options_reload_resumes_lobby_music_on_attach(
     assert lm.is_configured is True
     # The re-attached instance evaluated the LOBBY phase on attach and started.
     assert lm._playing is True
+
+
+async def test_fresh_install_uses_the_default_worker(http_hass: HomeAssistant) -> None:
+    """#1127: with no options at all, pack requests point at the built-in
+    worker, so the feature is on out of the box — and no secret travels."""
+    hass = http_hass
+    await _setup(hass)
+    ctx = hass.data[DOMAIN]["ctx"]
+    assert ctx.community_submit_url == DEFAULT_COMMUNITY_SUBMIT_URL
+    assert ctx.community_submit_secret is None
+
+
+async def test_secret_never_goes_to_the_default_worker(
+    http_hass: HomeAssistant,
+) -> None:
+    """#1127: a secret left behind after clearing the URL belongs to the host's
+    own worker; it must not be sent to the maintainer's."""
+    hass = http_hass
+    entry = await _setup(hass)
+    hass.config_entries.async_update_entry(
+        entry,
+        options={
+            CONF_COMMUNITY_SUBMIT_URL: "",
+            CONF_COMMUNITY_SUBMIT_SECRET: "s3cr3t",
+        },
+    )
+    await hass.async_block_till_done()
+    ctx = hass.data[DOMAIN]["ctx"]
+    assert ctx.community_submit_url == DEFAULT_COMMUNITY_SUBMIT_URL
+    assert ctx.community_submit_secret is None
