@@ -47,9 +47,14 @@ BUNDLE = (WWW / "js" / "player.bundle.js").read_text("utf-8")
 PLAYER_CORE = (WWW / "js" / "player-core.js").read_text("utf-8")
 PLAYER_GAME = (WWW / "js" / "player-game.js").read_text("utf-8")
 PLAYER_HTML = (WWW / "player.html").read_text("utf-8")
-WEBSOCKET_PY = (
-    _REPO_ROOT / "custom_components" / "quizify" / "server" / "websocket.py"
-).read_text("utf-8")
+# The server side of the socket, including the game commands that moved out of
+# ``websocket.py`` into ``game_commands.py`` (#1124; ``kicked`` is sent there).
+WEBSOCKET_PY = "\n".join(
+    (_REPO_ROOT / "custom_components" / "quizify" / "server" / name).read_text(
+        "utf-8"
+    )
+    for name in ("websocket.py", "game_commands.py")
+)
 I18N = {
     lang: json.loads((WWW / "i18n" / f"{lang}.json").read_text("utf-8"))
     for lang in ("en", "de", "es")

@@ -288,7 +288,8 @@ def test_start_game_still_carries_the_language() -> None:
     """The lobby push is an addition, not a replacement: a host who reloads the
     admin page mid-lobby, or a game started from the HA service, must still
     arrive with a language."""
-    ws_source = (_CC / "server" / "websocket.py").read_text("utf-8")
+    # ``_handle_start_game`` moved to ``server/game_commands.py`` (#1124).
+    ws_source = (_CC / "server" / "game_commands.py").read_text("utf-8")
     assert 'language = data.get("language", "de")' in ws_source
     assert "language: selectedLanguage," in (_JS / "admin.js").read_text("utf-8")
 
