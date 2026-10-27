@@ -39,8 +39,11 @@ from custom_components.quizify.game.state import (  # noqa: E402
     GamePhase,
     QuizifyGameState,
 )
-from custom_components.quizify.server import WS_PATH  # noqa: E402
-from custom_components.quizify.server import websocket as ws_mod  # noqa: E402
+from custom_components.quizify.server import (  # noqa: E402
+    WS_PATH,
+    game_broadcasts,
+    round_flow,
+)
 from custom_components.quizify.server.round_message_builder import (  # noqa: E402
     RoundMessageBuilder,
 )
@@ -230,7 +233,8 @@ class TestTickCoalescing413:
     ) -> None:
         # Fast poll cadence, long timer → many poll iterations but the displayed
         # second (ceil) never changes across the test window.
-        monkeypatch.setattr(ws_mod, "TICK_INTERVAL", 0.02)
+        # The tick loop moved to ``server/round_flow.py`` (#1124).
+        monkeypatch.setattr(round_flow, "TICK_INTERVAL", 0.02)
         gs = _started_game(tmp_path, ["Alice"])
         assert gs.phase == GamePhase.QUESTION_ACTIVE
 
@@ -335,7 +339,8 @@ class TestFinaleEfficiency415:
             raise AssertionError("podium recomputed despite cached finale data")
 
         monkeypatch.setattr(scoring, "calculate_podium", _boom)
-        monkeypatch.setattr(ws_mod, "compute_superlatives", _boom)
+        # The finale broadcast moved to ``server/game_broadcasts.py`` (#1124).
+        monkeypatch.setattr(game_broadcasts, "compute_superlatives", _boom)
 
         await h._broadcast_finale(gs)
         assert captured and captured[-1]["type"] == "finale"

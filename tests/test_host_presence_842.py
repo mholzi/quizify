@@ -355,8 +355,13 @@ def test_the_announcer_is_not_left_unused(handler) -> None:
     v1.16.0-RC2, in which not one departure ever reached a phone.
     """
     source = _WEBSOCKET_PY.read_text("utf-8")
+    # The join and reconnect hooks moved to ``server/join_handlers.py``
+    # (#1124), where ``self`` is ``handler``.
+    joins = (_WEBSOCKET_PY.parent / "join_handlers.py").read_text("utf-8")
 
-    awaited = source.count("await self._announce_host_presence()")
+    awaited = source.count("await self._announce_host_presence()") + joins.count(
+        "await handler._announce_host_presence()"
+    )
     scheduled = source.count("self._announce_host_presence_soon()")
     assert awaited >= 4
     assert scheduled >= 2  # the two hooks in _handle_disconnect

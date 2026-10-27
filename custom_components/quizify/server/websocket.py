@@ -5,7 +5,6 @@ from __future__ import annotations
 import asyncio
 import ipaddress
 import logging
-import random
 from functools import cached_property
 from typing import TYPE_CHECKING, Any
 
@@ -13,46 +12,28 @@ from aiohttp import WSMsgType, web
 
 from custom_components.quizify.const import (
     ERR_ADMIN_REQUIRED,
-    ERR_ALREADY_JOINED,
     ERR_GAME_NOT_STARTED,
     ERR_INVALID_ACTION,
     ERR_JOIN_RATE_LIMITED,
-    ERR_NAME_INVALID,
-    ERR_NOT_IN_GAME,
-    ERR_TEAM_CLOSED,
     LOBBY_DISCONNECT_GRACE_PERIOD,
     MAX_PLAYERS,
-    WAGER_WINDOW_DURATION,
 )
-from custom_components.quizify.game.drivers import (
-    HotSeatDriver,
-    LightningDriver,
-    NormalRoundDriver,
-    WagerWindowDriver,
-)
-from custom_components.quizify.game.highlights import compute_superlatives
-from custom_components.quizify.game.phase_controller import TICK_INTERVAL
-from custom_components.quizify.game.player_registry import sanitize_player_name
-from custom_components.quizify.game.powerups import (
-    FREEZE_DURATION,
-    PowerUpEffect,
-    PowerUpType,
-)
-from custom_components.quizify.game.scoring import is_streak_active
 from custom_components.quizify.game.state import (
-    AnswerResult,
     GamePhase,
     QuizifyGameState,
     RoundSummary,
-    TeamAnswerAck,
 )
-from custom_components.quizify.game.team import Team
 from custom_components.quizify.server import (
     admin_auth,
     admin_claim,
+    answer_handlers,
+    batched_updates,
+    game_broadcasts,
     game_commands,
     hot_seat_handlers,
+    join_handlers,
     lightning_handlers,
+    round_flow,
     settings_handlers,
     wager_handlers,
 )
@@ -68,13 +49,7 @@ from custom_components.quizify.server.origin import reject_cross_origin
 from custom_components.quizify.server.rate_limit import SlidingWindowLimiter
 from custom_components.quizify.server.round_message_builder import RoundMessageBuilder
 from custom_components.quizify.server.serializers import (
-    resolve_pack_labels,
-    serialize_answer_progress,
-    serialize_finale,
-    serialize_leaderboard,
-    serialize_player_list,
     serialize_state_snapshot,
-    strip_answer_for_dashboard,
 )
 from custom_components.quizify.server.start_settings import (
     _START_GAME_FIELDS,
@@ -906,196 +881,8 @@ class QuizifyWebSocketHandler:
     async def _handle_join(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Handle player join."""
-        # A reloading phone races its own old socket here (#448/#646): take
-        # down any slot whose transport is already dead before deciding
-        # whether this name is taken. ``reaped`` is what turns a collision
-        # with the caller's own ghost into a reclaim rather than a refusal.
-        reaped = self._reap_closed_connections(game_state)
-        connection_id = self._conn.connection_id(ws)
-
-        # Canonicalize ONCE, here, before anything is keyed on the name (#603).
-        # The registry sanitizes on store; using the raw name afterwards meant
-        # the session token was issued under a name the registry did not have
-        # and every later `get_player(name)` missed. That silently cost the
-        # host the crown and, after a wifi blip, made the player's score
-        # unreachable — for any name holding a zero-width joiner, i.e. most
-        # multi-codepoint emoji, and for a stray double space.
-        name = sanitize_player_name(data.get("name", ""))
-
-        if not name:
-            await self._conn.send_error(ws, ERR_NAME_INVALID, "Name is required")
-            return
-
-        # Defense in depth against a second self-join (#244, cousin of #207).
-        #
-        # The admin "Join as Player" flow registers the host as a player on
-        # the SAME admin WebSocket. If the host taps "Join as Player" again,
-        # the client opens the modal afresh and (with a different typed name)
-        # would otherwise create a duplicate/ghost player from the one admin
-        # session. The client now hides the button after the first join, but
-        # a crafted message must not slip past either: if THIS connection
-        # already holds a connected player under a different name, reject the
-        # duplicate join. A re-join under the SAME name is idempotent and
-        # handled by the reconnect path in PlayerRegistry.add_player, so it is
-        # explicitly allowed here (no-op rejoin / lobby refresh).
-        existing = self._player_for_ws(game_state, ws)
-        if (
-            existing is not None
-            and existing.connected
-            and existing.name.lower() != name.lower()
-        ):
-            _LOGGER.warning(
-                "Duplicate self-join rejected: connection already holds "
-                "player %s, refusing second join as %s",
-                existing.name,
-                name,
-            )
-            await self._conn.send_error(
-                ws,
-                ERR_ALREADY_JOINED,
-                "Already joined as a player",
-            )
-            return
-
-        # Auto-append number if name is taken
-        #
-        # #448: gate on ``is_active``, not on the name alone. After a reload
-        # the old slot can linger with ``connected = True`` and a CLOSED
-        # socket — the "stale connected flag" case ``_reap_closed_connections``
-        # has just taken down above (it read ``ws.closed`` here before #882).
-        # Renaming to "Name 2" at this point (before add_player ever sees the
-        # original name) made the reclaim branch unreachable, spawning a
-        # duplicate ghost with score 0. Falling through on a reaped slot lets
-        # add_player reclaim the original name; genuinely live duplicates
-        # (socket still open) still get the "Name 2" suffix.
-        #
-        # ``existing.connection_id != connection_id`` (#603): once the name is
-        # canonicalized, an idempotent rejoin from the SAME connection — a
-        # lobby refresh, the admin's redirect from /quizify/admin to
-        # /quizify/player — matches an active slot that IS this connection.
-        # Renaming it to "Name 2" would spawn a score-0 duplicate of the
-        # player who is already sitting there.
-        # Before canonicalization this never surfaced, because the raw name
-        # differed from the stored one and the duplicate-self-join guard above
-        # rejected the rejoin outright instead. Both behaviours were wrong; a
-        # rejoin under the same name from the same socket is a no-op reclaim.
-        original_name = name
-        counter = 2
-        while (
-            (existing := game_state.get_player(name))
-            and existing.is_active
-            and existing.connection_id != connection_id
-        ):
-            name = f"{original_name} {counter}"
-            counter += 1
-
-        success, error_code = game_state.add_player(
-            name, connection_id, reclaim_by_name=name in reaped
-        )
-
-        if success:
-            # #1004: a reclaim matches the slot case-insensitively, so the
-            # typed name ("HOSTIE") can differ from the slot's own ("Hostie").
-            # From here on everything is keyed on the slot's name: the pending
-            # removal, the session token, the power-up and lightning maps, and
-            # above all the ``player_id`` the phone stores as its identity. The
-            # phone matched that against the roster and, on a case-different
-            # reclaim, listed its own slot as another player.
-            player_obj = game_state.get_player(name)
-            if player_obj is not None:
-                name = player_obj.name
-
-            # Cancel pending removal on reconnect
-            self._conn.cancel_pending_removal(name)
-
-            # Generate session token for reconnect
-            session_token = self._conn.create_session_token(name)
-
-            # Who wears the crown after this join is its own four-case
-            # decision (#985); ``_resolve_admin_claim`` holds it.
-            if player_obj is not None:
-                self._resolve_admin_claim(game_state, player_obj, name, data)
-
-            # If a lightning round is mid-flight, register the late joiner so
-            # they can score from the next question on (issue #42).
-            if game_state.phase == GamePhase.LIGHTNING and game_state.lightning:
-                game_state.lightning.add_player(name)
-
-            # Cancel any deferred admin-disconnect pause: the admin's
-            # redirect from /quizify/admin to /quizify/player took the
-            # fresh-join path (no session token) instead of the
-            # reconnect path. Same desired outcome — game keeps running.
-            # Also clear the admin-disconnect grace armed by the closed admin
-            # WS: the host is right here as a player, so nothing is "away".
-            # (It no longer wipes the token on expiry — #725 — but leaving it
-            # armed would keep has_pending_admin_disconnect() lying.)
-            if player_obj and player_obj.is_admin:
-                self._cancel_admin_pause()
-                self._conn.cancel_admin_disconnect()
-                # #842: the host is back on the wire as a player.
-                await self._announce_host_presence()
-
-            # Send join confirmation with session token and assigned color
-            powerup = game_state.get_player_powerup(name)
-            await self._conn.send(ws, {
-                "type": "joined",
-                "player_id": name,
-                "powerup": powerup.value if powerup else None,
-                "session_token": session_token,
-                "color": player_obj.color if player_obj else "",
-                "is_admin": player_obj.is_admin if player_obj else False,
-                # All-time standing for THIS player only (#371, variant A).
-                # Rides the join frame rather than the roster broadcast: it
-                # is per-player data, it never changes mid-lobby, and putting
-                # it in the coalesced roster frame would ship everyone's
-                # history to every phone. ``None`` for a first-timer.
-                "all_time": self._all_time_standing(name),
-            })
-
-            # Send current state to the joining player. Project the
-            # player-agnostic snapshot into THIS player's frame (#253): own
-            # shuffle order for the answer buttons, own timer, flat reveal —
-            # otherwise a mid-round joiner mis-scores their taps and sees an
-            # empty reveal.
-            state = self._snapshot(game_state)
-            if player_obj is not None:
-                state = self._round_messages.project_snapshot_for_player(
-                    game_state, snapshot=state, player=player_obj
-                )
-            state["type"] = "game_state"
-            await self._conn.send(ws, state)
-
-            # Broadcast player list to everyone — coalesced (#453).
-            self._mark_roster_dirty("player_joined")
-
-            # Narrate the join (#281). The host's own admin-as-player tab is
-            # skipped inside the announcer so the room doesn't hear the host
-            # announce themselves. Pre-game lobby joins narrate because the
-            # admin pushes the TTS config on connect via ``configure_tts``.
-            self._player_joined(
-                name, bool(player_obj.is_admin) if player_obj else False
-            )
-        else:
-            # The client localizes off the structured ``code`` via
-            # ``t('join.refused.<CODE>')``; the wire ``message`` is only the
-            # English fallback for a bundle that has no key for the code.
-            #
-            # #729: every code ``add_player`` can return must have a fallback.
-            # ``ERR_GAME_ENDED`` had none, so a guest who scanned a QR code
-            # from a finished game got the bare "Failed to join" — no hint that
-            # the game was over and the host had to start a new one. #812
-            # moved that map to ``ERROR_FALLBACK_TEXT`` in const.py, where the
-            # coverage is asserted against ``add_player`` itself rather than
-            # against whichever local dict happened to come first in this file.
-            if error_code:
-                await self._conn.send_error(ws, error_code)
-            else:
-                # A refusal with no code at all: nothing to localize, so say
-                # the one thing that is certainly true.
-                await self._conn.send_error(
-                    ws, ERR_INVALID_ACTION, "Failed to join"
-                )
+        """Delegate: see :func:`join_handlers.handle_join` (#1124)."""
+        await join_handlers.handle_join(self, ws, data, game_state)
 
     # ------------------------------------------------------------------
     # Player reconnect (session-based)
@@ -1104,93 +891,8 @@ class QuizifyWebSocketHandler:
     async def _handle_reconnect(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Handle player reconnect with session token."""
-        token = data.get("session_token", "")
-        name = self._conn.get_player_for_token(token)
-
-        if not name:
-            # Token not found — treat as unknown, client should show join form
-            await self._conn.send(ws, {"type": "reconnect_failed"})
-            return
-
-        player = game_state.get_player(name)
-        if not player:
-            # Player was fully removed — token stale
-            self._conn.revoke_token(token)
-            await self._conn.send(ws, {"type": "reconnect_failed"})
-            return
-
-        # Restore player connection. The id → socket map stays in the
-        # connection manager (#882); the game model only learns the new
-        # opaque handle.
-        game_state.bind_player_connection(player, self._conn.connection_id(ws))
-        player.connected = True
-        self._conn.cancel_pending_removal(name)
-
-        # If this is the admin returning from the intentional
-        # /quizify/admin → /quizify/player redirect after Start,
-        # cancel the deferred pause scheduled by _handle_disconnect.
-        # Without this, the pause would fire ~4s after the redirect
-        # completes — the user would see the question briefly, then
-        # the paused-view, defeating the whole grace-period fix.
-        # Also clear the admin-disconnect grace (#351) so the returning host
-        # isn't still counted as away. Since #725 the grace no longer wipes
-        # the persisted token, only reports "no admin socket attached".
-        if player.is_admin:
-            self._cancel_admin_pause()
-            self._conn.cancel_admin_disconnect()
-            # #842: same host, resumed rather than freshly joined.
-            await self._announce_host_presence()
-
-        _LOGGER.info("Player session-reconnected: %s", name)
-
-        # If we paused on admin disconnect and this is the admin coming
-        # back, auto-resume the game so players don't sit on the paused
-        # screen wondering. Resume only when WE caused the pause —
-        # leave admin-initiated pauses alone.
-        if (
-            player.is_admin
-            and game_state.phase == GamePhase.PAUSED
-            and game_state.get_pause_reason() == "admin_disconnected"
-            and game_state.resume()
-        ):
-            self._start_timer_tick(game_state)
-            # Broadcast the resumed state to EVERY player (#287). Without
-            # this, the other players stay frozen on the "Host disconnected"
-            # paused-view (player-core.js only leaves it on a game_state
-            # message) while their timers tick down → scored as timeouts.
-            # Per-player PROJECTED — same mechanism as the manual-resume
-            # fix (#286) so answer buttons keep the right shuffle order.
-            await self._broadcast_state_projected(game_state)
-            _LOGGER.info("Auto-resumed after admin reconnect")
-
-        # Generate a fresh token and revoke old one
-        new_token = self._conn.rotate_session_token(token, name)
-
-        # Send reconnect success with new token
-        powerup = game_state.get_player_powerup(name)
-        await self._conn.send(ws, {
-            "type": "reconnected",
-            "player_id": name,
-            "session_token": new_token,
-            "powerup": powerup.value if powerup else None,
-            # Same per-player standing as the join frame (#371) — a player who
-            # reloads their phone in the lobby must not lose the line.
-            "all_time": self._all_time_standing(name),
-        })
-
-        # Send full game state, projected into THIS player's frame (#253):
-        # the reconnect snapshot otherwise carries canonical answer order
-        # (mis-scoring taps) and a nested round_summary the reveal can't read.
-        state = self._snapshot(game_state)
-        state = self._round_messages.project_snapshot_for_player(
-            game_state, snapshot=state, player=player
-        )
-        state["type"] = "game_state"
-        await self._conn.send(ws, state)
-
-        # Broadcast updated player list — coalesced (#453).
-        self._mark_roster_dirty("player_joined")
+        """Delegate: see :func:`join_handlers.handle_reconnect` (#1124)."""
+        await join_handlers.handle_reconnect(self, ws, data, game_state)
 
     # ------------------------------------------------------------------
     # Teams (#365)
@@ -1199,76 +901,20 @@ class QuizifyWebSocketHandler:
     async def _handle_create_team(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Open a team and put the requesting player in it (lobby only)."""
-        player = self._player_for_ws(game_state, ws)
-        if not player:
-            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
-            return
-
-        team = game_state.create_team(str(data.get("name", ""))[:24], player.name)
-        if team is None:
-            # Teams are fixed once the game starts — a latecomer plays alone.
-            await self._conn.send_error(
-                ws, ERR_TEAM_CLOSED, "Teams are set for this game"
-            )
-            return
-
-        await self._conn.send(ws, {"type": "team_joined", "team": team})
-        await self._round_out.send_teams_update(game_state)
-        # #931: forming or dissolving a team changes who the entrants
-        # are, so the duel underneath the roster is about different rows
-        # now. Teams do not move the roster, so nothing else recomputes
-        # it here and the old line would simply stay up.
-        await self._send_head_to_head(game_state)
+        """Delegate: see :func:`join_handlers.handle_create_team` (#1124)."""
+        await join_handlers.handle_create_team(self, ws, data, game_state)
 
     async def _handle_join_team(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Join an existing team (lobby only)."""
-        player = self._player_for_ws(game_state, ws)
-        if not player:
-            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
-            return
-
-        team = game_state.join_team(str(data.get("team_id", "")), player.name)
-        if team is None:
-            # Either the game has started or the team dissolved while the
-            # player was tapping it — the same answer either way: it is gone.
-            await self._conn.send_error(
-                ws, ERR_TEAM_CLOSED, "That team is no longer open"
-            )
-            return
-
-        await self._conn.send(ws, {"type": "team_joined", "team": team})
-        await self._round_out.send_teams_update(game_state)
-        # #931: forming or dissolving a team changes who the entrants
-        # are, so the duel underneath the roster is about different rows
-        # now. Teams do not move the roster, so nothing else recomputes
-        # it here and the old line would simply stay up.
-        await self._send_head_to_head(game_state)
+        """Delegate: see :func:`join_handlers.handle_join_team` (#1124)."""
+        await join_handlers.handle_join_team(self, ws, data, game_state)
 
     async def _handle_leave_team(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Leave the current team (lobby only). The last one out dissolves it."""
-        player = self._player_for_ws(game_state, ws)
-        if not player:
-            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
-            return
-
-        if not game_state.leave_team(player.name):
-            await self._conn.send_error(
-                ws, ERR_TEAM_CLOSED, "Teams are set for this game"
-            )
-            return
-
-        await self._conn.send(ws, {"type": "team_left"})
-        await self._round_out.send_teams_update(game_state)
-        # #931: forming or dissolving a team changes who the entrants
-        # are, so the duel underneath the roster is about different rows
-        # now. Teams do not move the roster, so nothing else recomputes
-        # it here and the old line would simply stay up.
-        await self._send_head_to_head(game_state)
+        """Delegate: see :func:`join_handlers.handle_leave_team` (#1124)."""
+        await join_handlers.handle_leave_team(self, ws, data, game_state)
 
     # ------------------------------------------------------------------
     # Submit answer
@@ -1277,112 +923,8 @@ class QuizifyWebSocketHandler:
     async def _handle_submit_answer(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Handle answer submission from player."""
-        # ``all_submitted()`` decides early reveal off ``connected`` (#882);
-        # reap first so a room-mate whose socket died a moment ago cannot hold
-        # the whole room on the full timer.
-        self._reap_closed_connections(game_state)
-        player = self._player_for_ws(game_state, ws)
-        if not player:
-            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
-            return
-
-        if game_state.phase != GamePhase.QUESTION_ACTIVE:
-            # Silently ignore submit_answer when not in question phase
-            return
-
-        # Estimate rounds (#275): the player submits a numeric ``guess`` on the
-        # same message instead of an ``answer_index``. Closeness is ranked at
-        # round evaluation, so there's no per-answer ``answer_result`` to send —
-        # an ``ack`` lets the client lock the slider on a confirmed submit.
-        current_q = game_state.get_current_question()
-        if current_q is not None and getattr(current_q, "is_estimate", False):
-            guess_raw = data.get("guess")
-            if not isinstance(guess_raw, (int, float)) or isinstance(guess_raw, bool):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Invalid guess")
-                return
-            err = game_state.submit_guess(player.name, float(guess_raw))
-            if err is None:
-                # #939: a guess moves the room's "N/M answered" exactly like a
-                # tap does (#619) — solo and team guess alike. Without this the
-                # tracker sat on 0/N for every estimate round.
-                self._mark_progress_dirty()
-                await self._conn.send(ws, {"type": "guess_accepted"})
-            else:
-                # Fallback text comes from ERROR_FALLBACK_TEXT (#812).
-                await self._conn.send_error(ws, err)
-            return
-
-        shuffled_index = data.get("answer_index")
-        if shuffled_index is None or not isinstance(shuffled_index, int):
-            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Invalid answer index")
-            return
-
-        # Map shuffled index back to original index — use the player's
-        # own shuffle (anti-cheat per-player), falling back to canonical.
-        player_shuffle = game_state.get_player_shuffle(player.name)
-        if 0 <= shuffled_index < len(player_shuffle):
-            original_index = player_shuffle[shuffled_index]
-        else:
-            await self._conn.send_error(
-                ws, ERR_INVALID_ACTION, "Answer index out of range"
-            )
-            return
-
-        result = game_state.submit_answer(player.name, original_index)
-
-        if isinstance(result, TeamAnswerAck):
-            # Team mode (#365): the tap set the team's answer, it did not score
-            # anything. Every member — the setter included — gets the standing
-            # answer in their own answer order, so the dots appear on the same
-            # question for all of them.
-            await self._round_out.send_team_answer(
-                game_state, result, setter=player.name
-            )
-            self._mark_progress_dirty()
-            return
-
-        if isinstance(result, AnswerResult):
-            # #619: the room can see who it is waiting for. Coalesced, so a
-            # simultaneous tap-storm is one frame, not one per tap.
-            self._mark_progress_dirty()
-            await self._conn.send(ws, {
-                "type": "answer_result",
-                "correct": result.correct,
-                "points_earned": result.points_earned,
-                "speed_bonus": result.speed_bonus,
-                "streak_bonus": result.streak_bonus,
-                "difficulty_multiplier": result.difficulty_multiplier,
-                "difficulty_bonus": result.difficulty_bonus,
-                "double_bonus": result.double_bonus,
-                "new_streak": result.new_streak,
-                # #1066: whether that streak scores yet — the reveal headline
-                # asks this instead of keeping a threshold of its own.
-                "streak_active": is_streak_active(result.new_streak),
-                "new_total": result.new_total,
-                "milestone_bonus": result.milestone_bonus,
-                "milestone_streak": result.milestone_streak,
-            })
-            # A milestone is announced out loud and on the HA bus — not over
-            # the socket (#750). There used to be a ``streak_milestone``
-            # broadcast here "so the TV/admin view can flash", but no surface
-            # ever grew that flash, and the phone toast is driven off
-            # ``milestone_streak`` in the answer_result above (#1066; it used
-            # to match ``new_streak`` against a list of its own). A message
-            # with no reader is worse than no message: it reads like a contract.
-            if result.milestone_bonus:
-                # ONE milestone from the dispatch point (#789); the fan-out to
-                # the announcer and the HA bus lives in _streak_milestone.
-                self._streak_milestone(
-                    player.name, result.milestone_streak, result.milestone_bonus
-                )
-            # NB: round-summary broadcast is fired exclusively by
-            # state._fire_broadcast("round_evaluated") \u2192 broadcast_state().
-            # Do NOT broadcast here \u2014 that would double-fire when the timer
-            # path races with all-submitted (#3 in logical review).
-        elif isinstance(result, str):
-            # Fallback text comes from ERROR_FALLBACK_TEXT (#812).
-            await self._conn.send_error(ws, result)
+        """Delegate: see :func:`answer_handlers.handle_submit_answer` (#1124)."""
+        await answer_handlers.handle_submit_answer(self, ws, data, game_state)
 
     # ------------------------------------------------------------------
     # Power-ups
@@ -1401,397 +943,66 @@ class QuizifyWebSocketHandler:
     async def _handle_reaction(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Broadcast an emoji reaction. If the reaction comes in during
-        ANSWER_REVEAL, also award a +1 bonus to each correct answerer
-        from that round — cheap "audience appreciation" mechanic. The
-        reactor themselves can only grant one such bonus per round
-        (tracked on PlayerSession.reaction_bonuses_given), and each
-        correct answerer caps at _REACTION_BONUS_CAP_PER_ROUND incoming
-        bonuses so a 6-player room can't pile 5 free points on the
-        leader every reveal."""
-        reactor = self._player_for_ws(game_state, ws)
-        if not reactor:
-            return  # silent: reactions are best-effort, not a hard error
-
-        emoji = data.get("emoji", "")
-        if not isinstance(emoji, str) or not (1 <= len(emoji) <= 8):
-            return  # ignore malformed
-
-        # Buffer the visual reaction instead of broadcasting it inline (#304).
-        # A flush task drains the buffer once per ~150ms window; identical
-        # (player, emoji) pairs within a window collapse to one broadcast,
-        # which is where the amplification came from. Floating animations work
-        # in any phase, same as before — just batched.
-        self._enqueue_reaction(reactor.name, emoji)
-
-        # Bonus path: only during reveal, only once per round per reactor.
-        if game_state.phase != GamePhase.ANSWER_REVEAL:
-            return
-        summary = game_state.get_round_summary()
-        if summary is None:
-            return
-        round_num = game_state.round
-        if round_num in reactor.reaction_bonuses_given:
-            return  # already granted a bonus this round
-        reactor.reaction_bonuses_given.add(round_num)
-
-        # Award +1 for each correct answer this round, respecting the per-round
-        # incoming cap.
-        #
-        # #800: the points go to the *ranked participant*, not to the name on
-        # the AnswerResult. In team mode the results are still per player — the
-        # member whose tap carried the team's answer is the "correct" one — so
-        # crediting them moved a shadow score (#668/#669) that no screen shows,
-        # while the leaderboard this very broadcast carries never budged. The
-        # recipient is therefore the team when there is one, and the player
-        # only when they are solo.
-        reactor_participant = game_state.get_ranked_participant_for(reactor.name)
-        bonus_recipients: list[str] = []
-        credited: list[Any] = []
-        for result in summary.results:
-            if not result.correct:
-                continue
-            recipient = game_state.get_ranked_participant_for(result.player_id)
-            if recipient is None or recipient is reactor_participant:
-                continue  # can't tip your own hat — nor your own team's
-            if any(recipient is seen for seen in credited):
-                continue  # one team, several correct members → one bonus
-            credited.append(recipient)
-            # Per-round inbound counter (separate from `reaction_bonuses_given`
-            # which tracks OUTGOING bonuses). Encapsulated on the participant so
-            # it is reset per game in reset_for_new_game() (#167) and the cap
-            # logic lives with the state it guards (#364).
-            if not recipient.add_reaction_bonus(
-                round_num, self._REACTION_BONUS_CAP_PER_ROUND
-            ):
-                continue  # recipient already at the per-round cap
-            # ``to_players`` stays a list of PLAYER names: it is what each
-            # phone matches itself against to raise the "+1 from X" toast. A
-            # credited team hands over its whole roster, so every member is
-            # told about the point their team just earned.
-            if isinstance(recipient, Team):
-                bonus_recipients.extend(recipient.members)
-            else:
-                bonus_recipients.append(recipient.name)
-
-        if bonus_recipients:
-            # #449: the bonus above mutated recipient scores, but the #414
-            # round-summary memo (built for the reveal broadcast) still holds
-            # the pre-bonus leaderboard. Invalidate it so any join/reconnect/
-            # get_state during this same ANSWER_REVEAL re-serializes the fresh,
-            # post-bonus leaderboard instead of serving the stale cache.
-            game_state.invalidate_round_summary_msg()
-            # #416: defer + coalesce the leaderboard broadcast into the shared
-            # ~150ms flush window instead of emitting a full-leaderboard frame
-            # per reactor right here. The points are already awarded above; the
-            # flush builds one ``reaction_bonus`` reflecting the whole batch.
-            self._reaction_bonus_from[reactor.name] = None
-            for recipient_name in bonus_recipients:
-                self._reaction_bonus_to[recipient_name] = None
-            # The visual reaction above already armed the flush task, but arm it
-            # defensively so a bonus can never sit undrained.
-            self._ensure_reaction_flush()
+        """Delegate: see :func:`answer_handlers.handle_reaction` (#1124)."""
+        await answer_handlers.handle_reaction(self, ws, data, game_state)
 
     def _enqueue_reaction(self, player_name: str, emoji: str) -> None:
-        """Buffer a visual reaction and ensure a flush task is pending (#304).
-
-        Reactions are keyed on ``(player_name, emoji)`` so a player mashing the
-        same emoji within a flush window collapses to a single broadcast; a
-        ``dict`` preserves insertion order so distinct reactions flush in the
-        order they first arrived. The flush task is (re)started lazily and runs
-        exactly one window before draining.
-        """
-        self._reaction_buffer[(player_name, emoji)] = None
-        self._ensure_reaction_flush()
+        """Delegate: see :func:`batched_updates.enqueue_reaction` (#1124)."""
+        batched_updates.enqueue_reaction(self, player_name, emoji)
 
     def _ensure_reaction_flush(self) -> None:
-        """(Re)arm the coalescing flush task if one isn't already pending.
-
-        Shared by the visual-reaction buffer (#304) and the reveal
-        reaction-bonus buffer (#416) so either kind of buffered event guarantees
-        a flush within one window.
-        """
-        if self._reaction_flush_task is None or self._reaction_flush_task.done():
-            self._reaction_flush_task = self._runtime.create_task(
-                self._flush_reactions_after_window()
-            )
+        """Delegate: see :func:`batched_updates.ensure_reaction_flush` (#1124)."""
+        batched_updates.ensure_reaction_flush(self)
 
     async def _flush_reactions_after_window(self) -> None:
-        """Wait one coalescing window, then broadcast the buffered reactions.
-
-        ONE ``reactions`` frame carrying every distinct ``(player, emoji)``
-        buffered this window (#896). The window used to dedupe the buffer and
-        then emit a separate ``reaction`` broadcast per surviving pair, which
-        with the 15 msg/s limiter is ~107 ``json.dumps`` and ~1,070
-        ``send_str`` per second while eight phones tap through a reveal, where
-        one frame per window is ~7/s. ``reaction_bonus``, computed a few lines
-        below in this same function, has batched since #416 — the two halves
-        of one flush now agree on the wire shape.
-
-        The clients keep their old single-``reaction`` branch for one release
-        (see ``player-core.js``, ``admin.js``, ``dashboard.js``) so a phone
-        holding a cached bundle from before this change is not left staring at
-        a reveal with no reactions on it.
-        """
-        try:
-            await asyncio.sleep(self._REACTION_FLUSH_WINDOW)
-        except asyncio.CancelledError:
-            # Cancelled on cleanup — drop whatever was buffered (best-effort
-            # eye-candy, nothing to persist) and re-raise so the task ends.
-            self._reaction_buffer.clear()
-            self._reaction_bonus_from.clear()
-            self._reaction_bonus_to.clear()
-            raise
-        buffered = list(self._reaction_buffer)
-        self._reaction_buffer.clear()
-        # Collect every broadcast for this window, then fan them all out in a
-        # single gather (#416) instead of awaiting them one at a time.
-        broadcasts = []
-        if buffered:
-            broadcasts.append(self._conn.broadcast({
-                "type": "reactions",
-                "reactions": [
-                    {"emoji": emoji, "player_name": player_name}
-                    for player_name, emoji in buffered
-                ],
-            }))
-
-        # #416: collapse the reveal reaction-bonus events buffered this window
-        # into ONE ``reaction_bonus``. The leaderboard is serialized once, now —
-        # after every point award in the window has settled — so it reflects the
-        # whole batch. ``from_player`` keeps the existing single-name wire field
-        # (first reactor) for the client toast; ``from_players`` carries the full
-        # set for completeness.
-        if self._reaction_bonus_to:
-            from_players = list(self._reaction_bonus_from)
-            to_players = list(self._reaction_bonus_to)
-            self._reaction_bonus_from.clear()
-            self._reaction_bonus_to.clear()
-            gs = self._get_game_state()
-            if gs is not None and from_players:
-                broadcasts.append(self._conn.broadcast({
-                    "type": "reaction_bonus",
-                    "from_player": from_players[0],
-                    "from_players": from_players,
-                    "to_players": to_players,
-                    "leaderboard": serialize_leaderboard(gs.get_ranked_participants()),
-                }))
-
-        if broadcasts:
-            await asyncio.gather(*broadcasts)
-
-        # Reactions/bonuses that arrived DURING the broadcasts above were
-        # appended to the buffers, but _ensure_reaction_flush won't start a new
-        # flush while this task is still running (it isn't None/done yet) — so
-        # without this the tail would sit unbroadcast until some future event
-        # happened to arrive (#354). Re-arm the flush ourselves so the buffers
-        # always drain: one more window, then another pass. Loops until empty.
-        if self._reaction_buffer or self._reaction_bonus_to:
-            self._reaction_flush_task = self._runtime.create_task(
-                self._flush_reactions_after_window()
-            )
+        """Delegate to :func:`batched_updates.flush_reactions_after_window`."""
+        await batched_updates.flush_reactions_after_window(self)
 
     def _cancel_reaction_flush(self) -> None:
-        """Cancel any pending reaction-flush task (called on cleanup)."""
-        if self._reaction_flush_task is not None:
-            self._reaction_flush_task.cancel()
-            self._reaction_flush_task = None
-        self._reaction_buffer.clear()
-        self._reaction_bonus_from.clear()
-        self._reaction_bonus_to.clear()
+        """Delegate: see :func:`batched_updates.cancel_reaction_flush` (#1124)."""
+        batched_updates.cancel_reaction_flush(self)
 
     def _mark_roster_dirty(self, event_type: str) -> None:
-        """Flag the roster as changed and (re)arm the coalescing flush (#453).
-
-        ``event_type`` is ``"player_joined"`` or ``"player_left"`` and only
-        determines the wire ``type`` of the coalesced message (the join/leave
-        animation the client plays); the ``players`` list itself is always the
-        live roster serialized at flush time. Mixed joins+leaves in one window
-        collapse to a single frame typed by the LAST event.
-        """
-        self._roster_dirty = True
-        self._roster_last_type = event_type
-        self._ensure_roster_flush()
+        """Delegate: see :func:`batched_updates.mark_roster_dirty` (#1124)."""
+        batched_updates.mark_roster_dirty(self, event_type)
 
     def _ensure_roster_flush(self) -> None:
-        """(Re)arm the roster-coalescing flush task if none is pending."""
-        if self._roster_flush_task is None or self._roster_flush_task.done():
-            # Stored on self (no GC risk), matching the timer-tick / lightning /
-            # admin-pause fire-and-forget pattern in this handler.
-            self._roster_flush_task = asyncio.ensure_future(
-                self._flush_roster_after_window()
-            )
-            self._roster_flush_task.add_done_callback(self._log_task_exception)
+        """Delegate: see :func:`batched_updates.ensure_roster_flush` (#1124)."""
+        batched_updates.ensure_roster_flush(self)
 
     async def _flush_roster_after_window(self) -> None:
-        """Wait one window, then broadcast ONE roster frame (#453).
-
-        Mirrors ``_flush_reactions_after_window``: coalesces a burst of roster
-        changes into a single ``player_joined`` / ``player_left`` carrying the
-        current player list. Re-arms itself if more changes landed during the
-        broadcast so the final roster always reaches every client.
-        """
-        try:
-            await asyncio.sleep(self._REACTION_FLUSH_WINDOW)
-        except asyncio.CancelledError:
-            self._roster_dirty = False
-            raise
-
-        if not self._roster_dirty:
-            return
-
-        event_type = self._roster_last_type
-        self._roster_dirty = False
-        gs = self._get_game_state()
-        if gs is not None:
-            await self._conn.broadcast({
-                "type": event_type,
-                "players": serialize_player_list(gs.get_players()),
-                # A player leaving also leaves their team, and the last one out
-                # dissolves it (#365) — so the roster frame carries the teams
-                # too, or the lobby keeps showing a team nobody is in.
-                "teams": gs.team_registry.to_list(),
-            })
-            await self._send_head_to_head(gs)
-
-        # A roster change that landed DURING the broadcast set _roster_dirty
-        # again; _ensure_roster_flush won't start a new task while this one is
-        # running, so re-arm here to drain the tail (mirrors #354).
-        if self._roster_dirty:
-            self._roster_flush_task = asyncio.ensure_future(
-                self._flush_roster_after_window()
-            )
-            self._roster_flush_task.add_done_callback(self._log_task_exception)
+        """Delegate: see :func:`batched_updates.flush_roster_after_window` (#1124)."""
+        await batched_updates.flush_roster_after_window(self)
 
     def _mark_progress_dirty(self) -> None:
-        """Flag answer-progress as changed and (re)arm its coalescing flush."""
-        self._progress_dirty = True
-        if self._progress_flush_task is None or self._progress_flush_task.done():
-            self._progress_flush_task = asyncio.ensure_future(
-                self._flush_progress_after_window()
-            )
-            self._progress_flush_task.add_done_callback(self._log_task_exception)
+        """Delegate: see :func:`batched_updates.mark_progress_dirty` (#1124)."""
+        batched_updates.mark_progress_dirty(self)
 
     async def _flush_progress_after_window(self) -> None:
-        """Wait one window, then broadcast ONE answer-progress frame (#619).
-
-        Mirrors ``_flush_roster_after_window`` down to the tail re-arm: taps
-        that land during the broadcast set the flag again, and no new task can
-        start while this one runs.
-
-        The list is serialized at flush time, not at tap time, so the frame
-        always carries the room as it is when it goes out rather than as it was
-        when the first tap of the window arrived.
-        """
-        try:
-            await asyncio.sleep(self._REACTION_FLUSH_WINDOW)
-        except asyncio.CancelledError:
-            self._progress_dirty = False
-            raise
-
-        if not self._progress_dirty:
-            return
-
-        self._progress_dirty = False
-        gs = self._get_game_state()
-        if gs is not None:
-            # #835: the rows the room can see, not the head count. In team
-            # mode the counter has to count teams out of teams — no member is
-            # ever marked submitted, so counting people left the television on
-            # 0/N for the whole round.
-            await self._conn.broadcast(
-                serialize_answer_progress(
-                    gs.get_players(), gs.get_ranked_participants()
-                )
-            )
-
-        if self._progress_dirty:
-            self._progress_flush_task = asyncio.ensure_future(
-                self._flush_progress_after_window()
-            )
-            self._progress_flush_task.add_done_callback(self._log_task_exception)
+        """Delegate: see :func:`batched_updates.flush_progress_after_window` (#1124)."""
+        await batched_updates.flush_progress_after_window(self)
 
     def _cancel_progress_flush(self) -> None:
-        """Cancel any pending answer-progress flush (called on cleanup)."""
-        if self._progress_flush_task is not None:
-            self._progress_flush_task.cancel()
-            self._progress_flush_task = None
-        self._progress_dirty = False
+        """Delegate: see :func:`batched_updates.cancel_progress_flush` (#1124)."""
+        batched_updates.cancel_progress_flush(self)
 
     async def _send_head_to_head(self, game_state: QuizifyGameState) -> None:
-        """Show the TV the duel between the two present regulars (#613).
-
-        Lobby only: a rivalry line belongs before the game, and mid-game it
-        would compete with the question for the same screen.
-
-        To the TV and admin, never to the phones — this is a deliberate
-        reversal of #371, which sends each player only their OWN standing.
-        Putting two people's record in front of the room is a different call,
-        made knowingly, and the phones stay out of it.
-        """
-        if game_state.phase != GamePhase.LOBBY:
-            return
-        await self._broadcast_head_to_head(game_state, at="lobby")
+        """Delegate: see :func:`batched_updates.send_head_to_head` (#1124)."""
+        await batched_updates.send_head_to_head(self, game_state)
 
     async def _dispatch_end_head_to_head(self) -> None:
-        """The duel again on the end screen, once the game is recorded (#613).
-
-        Rides ``analytics_recorded`` rather than the finale, and that is the
-        whole point: the game everyone just watched is part of the record only
-        after it is written. Sent with the finale, this line would state the
-        standing from BEFORE that game — the one number the room can see is
-        wrong, because they just played it.
-
-        It is also the better place for the line. In the lobby the duel shows
-        a score from past evenings that surprises nobody; here it is the
-        result of the evening in progress.
-        """
-        game_state = self._get_game_state()
-        if game_state is None or game_state.phase != GamePhase.FINALE:
-            return
-        await self._broadcast_head_to_head(game_state, at="finale")
+        """Delegate: see :func:`batched_updates.dispatch_end_head_to_head` (#1124)."""
+        await batched_updates.dispatch_end_head_to_head(self)
 
     async def _broadcast_head_to_head(
         self, game_state: QuizifyGameState, *, at: str
     ) -> None:
-        """Compute the duel and put it on the TV. Shared by both placements.
-
-        ``at`` tells the dashboard which line to fill; the payload is
-        otherwise identical, so the two placements cannot drift apart in what
-        they claim. Never a plain broadcast — that would reach every phone and
-        undo #371 everywhere.
-        """
-        analytics = game_state.stats_service
-        if analytics is None:
-            return
-        # #931: entrants, not people. ``get_ranked_participants`` is the list
-        # the podium, the leaderboard and the recorded game (#923) are all
-        # built from, and in solo mode it is exactly ``get_players()``. Asking
-        # the people instead put "Anna 13 - 6 Cleo" under a podium that had
-        # just declared team Sofa the winner: Anna never entered that game,
-        # she is one of two members of something that did, and the pair
-        # selection silently picked one of the two. The rule is therefore the
-        # ranking's own: the duel compares whoever the game is between.
-        duel = analytics.get_head_to_head(
-            [p.name for p in game_state.get_ranked_participants()]
-        )
-        # #931: a frame either way, never silence. Fewer than two entrants, or
-        # no pair of them has met twice -> the line has to LEAVE the screen
-        # rather than stand from before. The lobby recomputes this on every
-        # roster change and on every team change, and two entrants who were on
-        # screen a moment ago are one team now. Both renderers already read a
-        # frame without ``left``/``right`` as "hide", so this needs no new
-        # element and no new text.
-        await self._conn.broadcast_to_admins_and_dashboards(
-            {"type": "head_to_head", "at": at, **(duel or {})}
-        )
+        """Delegate: see :func:`batched_updates.broadcast_head_to_head` (#1124)."""
+        await batched_updates.broadcast_head_to_head(self, game_state, at=at)
 
     def _cancel_roster_flush(self) -> None:
-        """Cancel any pending roster-flush task (called on cleanup)."""
-        if self._roster_flush_task is not None:
-            self._roster_flush_task.cancel()
-            self._roster_flush_task = None
-        self._roster_dirty = False
+        """Delegate: see :func:`batched_updates.cancel_roster_flush` (#1124)."""
+        batched_updates.cancel_roster_flush(self)
 
     # ------------------------------------------------------------------
     # Wager (gameplay idea #3 — Jeopardy-style final round)
@@ -1806,69 +1017,8 @@ class QuizifyWebSocketHandler:
     async def _handle_use_powerup(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Handle power-up usage."""
-        player = self._player_for_ws(game_state, ws)
-        if not player:
-            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
-            return
-
-        target_id = data.get("target_player_id")
-        result = game_state.use_powerup(player.name, target_id)
-
-        if isinstance(result, PowerUpEffect):
-            # Broadcast power-up application to all
-            effect_data: dict[str, Any] = {
-                "type": "powerup_applied",
-                "powerup_type": result.type.value,
-                "source_player": result.source_player,
-                "target_player": result.target_player,
-            }
-
-            # For joker, send the removed answer to the using player only
-            if (
-                result.type == PowerUpType.JOKER
-                and result.joker_remove_index is not None
-            ):
-                # Map the canonical original index to THIS player's shuffled
-                # position. The buttons are rendered in the per-player shuffle
-                # order, so mapping through the canonical shuffle_map would
-                # disable the wrong button — potentially the CORRECT answer
-                # (#254). get_player_shuffle falls back to the canonical map
-                # when the player has no per-player shuffle.
-                player_shuffle = game_state.get_player_shuffle(player.name)
-                shuffled_remove_idx = None
-                for shuffled_idx, orig_idx in enumerate(player_shuffle):
-                    if orig_idx == result.joker_remove_index:
-                        shuffled_remove_idx = shuffled_idx
-                        break
-
-                await self._conn.send(ws, {
-                    "type": "powerup_applied",
-                    "powerup_type": "joker",
-                    "source_player": result.source_player,
-                    "joker_remove_index": shuffled_remove_idx,
-                })
-                # Public broadcast w/o joker_remove_index — opponents get a
-                # "Player X used Joker" toast (the removed-answer index is
-                # per-shuffle so it stays in the private send above).
-                await self._conn.broadcast({
-                    "type": "powerup_applied",
-                    "powerup_type": "joker",
-                    "source_player": result.source_player,
-                })
-            elif result.type == PowerUpType.STEAL:
-                effect_data["stolen_points"] = result.stolen_points
-                await self._conn.broadcast(effect_data)
-            else:
-                # FREEZE: tell the target how long the lockout lasts so the
-                # client can show a countdown overlay (#300). Server is the
-                # authority — it rejects submits via ERR_FROZEN regardless of
-                # what the client does with this.
-                if result.type == PowerUpType.FREEZE:
-                    effect_data["freeze_duration"] = FREEZE_DURATION
-                await self._conn.broadcast(effect_data)
-        elif isinstance(result, str):
-            await self._conn.send_error(ws, result, "Power-up not available")
+        """Delegate: see :func:`answer_handlers.handle_use_powerup` (#1124)."""
+        await answer_handlers.handle_use_powerup(self, ws, data, game_state)
 
     # ------------------------------------------------------------------
     # Game commands: start/next/skip/end/pause/resume/play-again/reset/kick
@@ -2014,56 +1164,12 @@ class QuizifyWebSocketHandler:
     # layer.
 
     async def _start_auto_lightning(self, game_state: QuizifyGameState) -> None:
-        """Fire the auto Lightning Round mid-game (#285).
-
-        Replaces the retired host-manual ``start_lightning`` entry: there is
-        no host tap. We detour out of the current round (``auto=True``
-        remembers it), broadcast the intro splash, then the loop auto-advances
-        out of the splash after a grace and runs the fast question loop. After
-        the recap the host's normal advance resumes the main game.
-        """
-        # Stop any normal-round timer first — the two loops are mutually
-        # exclusive.
-        self._cancel_timer_tick()
-
-        started = game_state.start_lightning_round(
-            # Reuse the running game's own pack/difficulty/language selection.
-            category=game_state.category,
-            difficulty=game_state.difficulty,
-            language=game_state.language,
-            auto=True,
-        )
-        if not started:
-            # No questions available for the lightning queue, or wrong phase.
-            # Fall back to the normal round so the game never wedges.
-            _LOGGER.warning(
-                "Auto lightning round could not start; continuing normal game"
-            )
-            await self._continue_normal_question(game_state)
-            return
-
-        # Broadcast a phase-entry state so every client switches to the
-        # lightning view, then the intro splash ("Bolt Burst", #201).
-        state = self._snapshot(game_state)
-        state["type"] = "game_state"
-        await self._conn.broadcast(state)
-        await self._lightning_out.send_lightning_splash(game_state)
-
-        # Auto-advance: no host tap. The loop itself dismisses the splash after
-        # the grace and starts question 1.
-        self._start_lightning_loop(game_state, auto_dismiss_splash=True)
+        """Delegate: see :func:`round_flow.start_auto_lightning` (#1124)."""
+        await round_flow.start_auto_lightning(self, game_state)
 
     async def _continue_normal_question(self, game_state: QuizifyGameState) -> None:
-        """Start the next normal question without re-checking the LR trigger.
-
-        Used by the auto-LR fallback path (LR couldn't start) so we don't
-        recurse back into should_trigger_lightning() — the flag is already
-        burned, so this is just the plain question start.
-        """
-        question = game_state.start_next_question()
-        if question is None:
-            return
-        await self._deliver_question(game_state, question)
+        """Delegate: see :func:`round_flow.continue_normal_question` (#1124)."""
+        await round_flow.continue_normal_question(self, game_state)
 
     async def _handle_lightning_answer(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
@@ -2077,79 +1183,30 @@ class QuizifyWebSocketHandler:
         *,
         auto_dismiss_splash: bool = False,
     ) -> None:
-        """Arm the Lightning Round driver (#42/#788).
-
-        The loop itself — the fixed window, the all-answered short-circuit, the
-        phase re-checks and the recap — lives in
-        :class:`~custom_components.quizify.game.drivers.LightningDriver`. What
-        stays here is the task: creating it, parking it on the attribute the
-        #746 registry tears down, and surfacing its exceptions.
-        """
-        self._cancel_lightning_loop()
-        driver = LightningDriver(
-            self._lightning_out,
-            milestones=self,
-            splash_grace=self.LIGHTNING_SPLASH_GRACE,
-            splash_hold=self.AUTO_LIGHTNING_SPLASH_HOLD,
+        """Delegate: see :func:`round_flow.start_lightning_loop` (#1124)."""
+        round_flow.start_lightning_loop(
+            self, game_state, auto_dismiss_splash=auto_dismiss_splash
         )
-        self._lightning_task = asyncio.ensure_future(
-            driver.run(game_state, auto_dismiss_splash=auto_dismiss_splash)
-        )
-        self._lightning_task.add_done_callback(self._log_task_exception)
 
     def _cancel_lightning_loop(self) -> None:
-        if self._lightning_task is not None:
-            self._lightning_task.cancel()
-            self._lightning_task = None
+        """Delegate: see :func:`round_flow.cancel_lightning_loop` (#1124)."""
+        round_flow.cancel_lightning_loop(self)
 
     # ------------------------------------------------------------------
     # Hot Seat auction (issue #616)
     # ------------------------------------------------------------------
 
     def _cancel_hot_seat_loop(self) -> None:
-        if self._hot_seat_task is not None:
-            self._hot_seat_task.cancel()
-            self._hot_seat_task = None
+        """Delegate: see :func:`round_flow.cancel_hot_seat_loop` (#1124)."""
+        round_flow.cancel_hot_seat_loop(self)
 
     async def _start_hot_seat(self, game_state: QuizifyGameState) -> bool:
-        """Open the auction and drive it to the reveal. False means "skipped".
-
-        A False here is ordinary — too few players, or every remaining
-        question is spoken for by the main game (#544) — and the caller falls
-        through to the normal round rather than ending it.
-        """
-        self._cancel_timer_tick()
-        if not game_state.start_hot_seat_auction():
-            _LOGGER.info("Hot seat auction skipped; continuing normal game")
-            return False
-
-        hs = game_state.hot_seat
-        if hs is None:
-            return False
-
-        state = self._snapshot(game_state)
-        state["type"] = "game_state"
-        await self._conn.broadcast(state)
-        await self._hot_seat_out.send_hot_seat_auction(game_state, hs)
-
-        self._start_hot_seat_loop(game_state)
-        return True
+        """Delegate: see :func:`round_flow.start_hot_seat` (#1124)."""
+        return await round_flow.start_hot_seat(self, game_state)
 
     def _start_hot_seat_loop(self, game_state: QuizifyGameState) -> None:
-        """Arm the Hot Seat driver (#616/#788).
-
-        Auction → reveal → question → settlement is
-        :class:`~custom_components.quizify.game.drivers.HotSeatDriver`; the task
-        and the #746 attribute stay here.
-        """
-        self._cancel_hot_seat_loop()
-        driver = HotSeatDriver(
-            self._hot_seat_out,
-            milestones=self,
-            reveal_hold=self.HOT_SEAT_REVEAL_HOLD,
-        )
-        self._hot_seat_task = asyncio.ensure_future(driver.run(game_state))
-        self._hot_seat_task.add_done_callback(self._log_task_exception)
+        """Delegate: see :func:`round_flow.start_hot_seat_loop` (#1124)."""
+        round_flow.start_hot_seat_loop(self, game_state)
 
     async def _broadcast_state_projected(
         self,
@@ -2157,324 +1214,66 @@ class QuizifyWebSocketHandler:
         *,
         extra: dict[str, Any] | None = None,
     ) -> None:
-        """Fan out a ``game_state`` snapshot, projected per recipient.
-
-        Each connected PLAYER gets the snapshot projected into their own frame
-        (own shuffled answer order, own timer, flat reveal) via
-        ``project_snapshot_for_player`` — the same mechanism the join/reconnect
-        path uses (#253). Sending the raw canonical snapshot to players would
-        mis-score ~2/3 of their taps because ``submit_answer`` maps the tapped
-        index through the player's OWN shuffle (#286). Pure admin/dashboard
-        sockets (no player session) get the canonical snapshot untouched.
-
-        ``extra`` merges extra top-level keys (e.g. ``pause_reason``) into every
-        message. Used by the resume path (#286 #287) so a resumed game reaches
-        every screen with correctly-ordered answer buttons.
-        """
-        base = self._snapshot(game_state)
-
-        # Per-player projected sends.
-        player_ws: set[Any] = set()
-        sends = []
-        for player in game_state.get_players():
-            if not player.connected:
-                continue
-            player_sock = self._conn.socket_for(player.connection_id)
-            if player_sock is not None:
-                player_ws.add(player_sock)
-            msg = self._round_messages.project_snapshot_for_player(
-                game_state, snapshot=base, player=player
-            )
-            msg["type"] = "game_state"
-            if extra:
-                msg.update(extra)
-            sends.append(self._conn.send_to_player(player, msg))
-
-        # Raw snapshot for pure admin/dashboard sockets — but skip any socket
-        # that is also a player (admin-as-player already got its projected
-        # copy above, and must NOT see canonical order mid-question).
-        raw = dict(base)
-        raw["type"] = "game_state"
-        if extra:
-            raw.update(extra)
-        for ws, _is_admin in self._conn.iter_admin_and_dashboard_ws():
-            if ws.closed or ws in player_ws:
-                continue
-            sends.append(self._conn.send(ws, raw))
-
-        if sends:
-            await asyncio.gather(*sends)
+        """Delegate: see :func:`round_flow.broadcast_state_projected` (#1124)."""
+        await round_flow.broadcast_state_projected(self, game_state, extra=extra)
 
     # ------------------------------------------------------------------
     # Question flow
     # ------------------------------------------------------------------
 
     async def _start_next_question(self, game_state: QuizifyGameState) -> None:
-        """Start the next question: shuffle answers, broadcast, start timer ticks."""
-        self._cancel_timer_tick()
-
-        # Auto Lightning Round (#285): exactly once per game, when the game is
-        # about to enter the pre-picked target round, detour into the fast
-        # Lightning Round first. The normal round resumes after the recap (the
-        # host's next advance lands on resume_after_lightning → ANSWER_REVEAL →
-        # this same path, which by then sees _lightning_fired and proceeds).
-        if game_state.should_trigger_lightning():
-            await self._start_auto_lightning(game_state)
-            return
-
-        # Hot Seat auction (#616): the same detour shape, one round later or
-        # earlier — never the same round, the draw excludes it. A failed start
-        # (too few players, no spare question) falls through to the normal
-        # question so the game can never wedge on a skipped bonus.
-        if game_state.should_trigger_hot_seat() and await self._start_hot_seat(
-            game_state
-        ):
-            return
-
-        question = game_state.start_next_question()
-        if question is None:
-            # Game ended (no more questions or round limit reached).
-            # start_next_question() already called end_game(), which fired the
-            # ``game_ended`` event → dispatcher → _broadcast_finale (the single
-            # finale broadcast source). No direct broadcast here. (#255.)
-            return
-
-        await self._deliver_question(game_state, question)
+        """Delegate: see :func:`round_flow.start_next_question` (#1124)."""
+        await round_flow.start_next_question(self, game_state)
 
     async def _deliver_question(
         self, game_state: QuizifyGameState, question: Any
     ) -> None:
-        """Send a freshly-started question — or open its betting window (#656).
-
-        On an MC final ``start_next_question`` parks the state machine in
-        WAGER_ACTIVE instead of QUESTION_ACTIVE: bets first, question after.
-        Every path that starts a question goes through here, so none of them
-        can emit a question into a phase that has no timers — which would
-        exit the tick loop on its first iteration and hang the round.
-        """
-        if game_state.phase == GamePhase.WAGER_ACTIVE:
-            await self._open_wager_window(game_state, question)
-            return
-        await self._emit_question(game_state, question)
+        """Delegate: see :func:`round_flow.deliver_question` (#1124)."""
+        await round_flow.deliver_question(self, game_state, question)
 
     async def _open_wager_window(
         self, game_state: QuizifyGameState, question: Any
     ) -> None:
-        """Announce the betting window and arm its deadline (#656).
-
-        The frames are the WagerBroadcaster's (#881); what stays here is the
-        one task that guarantees the window ends — with or without the
-        players — because the task belongs to the #746 registry.
-        """
-        await self._wager_out.send_wager_window(game_state, question)
-        self._start_wager_window(game_state)
+        """Delegate: see :func:`round_flow.open_wager_window` (#1124)."""
+        await round_flow.open_wager_window(self, game_state, question)
 
     def _start_wager_window(self, game_state: QuizifyGameState) -> None:
-        """Arm the task that closes the betting window at the deadline (#656).
-
-        The deadline is what keeps the final round from hanging on a player who
-        never bets — an AFK phone, or a room that all walked out. It is the
-        same class of hang as #586, so it gets an unconditional timer rather
-        than a condition that depends on clients behaving. The wait itself is
-        :class:`~custom_components.quizify.game.drivers.WagerWindowDriver`.
-        """
-        self._cancel_wager_window()
-        driver = WagerWindowDriver(
-            self._wager_out,
-            duration=WAGER_WINDOW_DURATION,
-            milestones=self,
-        )
-        self._wager_window_task = asyncio.create_task(driver.run(game_state))
+        """Delegate: see :func:`round_flow.start_wager_window` (#1124)."""
+        round_flow.start_wager_window(self, game_state)
 
     def _cancel_wager_window(self) -> None:
-        """Cancel the pending betting-window deadline, if any.
-
-        Never cancels the *calling* task. ``_close_wager_window`` clears the
-        deadline before doing its work, and the deadline itself is one of its
-        two callers — so a blind ``cancel()`` here kills the very coroutine
-        that is closing the window, and the CancelledError lands on the first
-        await inside ``_emit_question``. The question then never goes out and
-        the final round hangs on the betting screen with a countdown reading
-        zero. Found on the live server, not by a unit test; there is one for
-        it now.
-        """
-        task = self._wager_window_task
-        self._wager_window_task = None
-        if task is not None and not task.done() and task is not asyncio.current_task():
-            task.cancel()
+        """Delegate: see :func:`round_flow.cancel_wager_window` (#1124)."""
+        round_flow.cancel_wager_window(self)
 
     async def _close_wager_window(self, game_state: QuizifyGameState) -> None:
-        """Close the betting window: arm the timers, then send the question.
-
-        ``arm_round_timers`` returns False when the window is already shut,
-        which is what makes the two closing triggers safe to race — the last
-        player locking in, and the deadline. Whoever arrives second finds the
-        phase already flipped and returns without re-emitting the question.
-        """
-        self._cancel_wager_window()
-        question = game_state.get_current_question()
-        if question is None or not game_state.arm_round_timers():
-            return
-        await self._emit_question(game_state, question)
+        """Delegate: see :func:`round_flow.close_wager_window` (#1124)."""
+        await round_flow.close_wager_window(self, game_state)
 
     async def _emit_question(
         self, game_state: QuizifyGameState, question: Any
     ) -> None:
-        """Shuffle, broadcast and arm the timer for an already-started question.
-
-        Split out from ``_start_next_question`` (#285) so the auto-LR fallback
-        path can reuse the identical emission without re-running the LR
-        trigger check.
-        """
-        # Canonical shuffle — used by admin/dashboard and as a fallback.
-        indices = list(range(len(question.answers)))
-        random.shuffle(indices)
-        shuffled_texts = [question.answers[i].text for i in indices]
-        game_state.set_round_shuffle(indices, shuffled_texts)
-
-        # Per-player shuffles: each phone sees A/B/C in its own order
-        # (anti-cheat — couch neighbours can't shout "B!"). The
-        # submit_answer path uses player.name to look this up.
-        game_state.clear_player_shuffles()
-        players_now = game_state.get_players()
-        for player in players_now:
-            player_indices = list(range(len(question.answers)))
-            random.shuffle(player_indices)
-            game_state.set_player_shuffle(player.name, player_indices)
-
-        # Send question per-player so each gets their own shuffled order.
-        # The builder assembles each payload (own shuffle); the handler still
-        # owns the send and the connected-player skip (#189).
-        # #742: this flag is what makes the phone render the wager UI, so it
-        # has to agree with ``_needs_wager_window`` — with the toggle off the
-        # server opens no window, and a client offered a bet it cannot place
-        # would sit on a slider nothing accepts.
-        is_final = (
-            game_state.wager_enabled
-            and game_state.round == game_state.total_rounds
-        )
-        # Build every per-player payload, then fan out in parallel (#258) so a
-        # single slow client can't delay the question reaching the rest.
-        question_sends = []
-        for player in players_now:
-            if not player.connected:
-                continue
-            player_msg = self._round_messages.build_player_question(
-                game_state, question=question, player=player, is_final=is_final
-            )
-            question_sends.append(self._conn.send_to_player(player, player_msg))
-        if question_sends:
-            await asyncio.gather(*question_sends)
-
-        # Send question with correct answer to admin
-        admin_msg = self._round_messages.build_admin_question(
-            game_state, question=question
-        )
-        # Also fan out to TV-dashboard connections so their question-view
-        # populates with the same canonical-order payload. Without this the
-        # dashboard's answer-grid stays empty and the v1.1.47 #151 answer-
-        # distribution bars never attach. Admin-as-player still excluded.
-        # The TV connects without a token (#604), so it gets the same payload
-        # with the answer taken out — see strip_answer_for_dashboard.
-        await self._conn.broadcast_to_admins_and_dashboards(
-            admin_msg, dashboard_message=strip_answer_for_dashboard(admin_msg)
-        )
-
-        # ONE question milestone from the dispatch point (#789): narration
-        # (#281, with the canonical shuffled order so spoken letters match the
-        # TV grid) plus the HA bus event (#366) fan out inside question_shown.
-        self.question_shown(
-            question, game_state.round, game_state.total_rounds, shuffled_texts
-        )
-
-        # Cache players to avoid redundant calls
-        players = game_state.get_players()
-
-        # Notify players who got a power-up this round (parallel fan-out, #258).
-        powerup_sends = []
-        for player in players:
-            powerup = game_state.get_player_powerup(player.name)
-            if powerup and player.connected:
-                powerup_sends.append(self._conn.send_to_player(player, {
-                    "type": "powerup_assigned",
-                    "powerup_type": powerup.value,
-                }))
-        if powerup_sends:
-            await asyncio.gather(*powerup_sends)
-
-        # Broadcast game state with leaderboard so player sees rankings during game
-        await self._conn.broadcast(
-            self._round_messages.build_game_state_with_leaderboard(
-                game_state, players=players
-            )
-        )
-
-        # Start timer tick task
-        self._start_timer_tick(game_state)
+        """Delegate: see :func:`round_flow.emit_question` (#1124)."""
+        await round_flow.emit_question(self, game_state, question)
 
     # ------------------------------------------------------------------
     # Timer ticks
     # ------------------------------------------------------------------
 
     def _start_timer_tick(self, game_state: QuizifyGameState) -> None:
-        """Arm the normal round's countdown driver (#203/#413/#788).
-
-        The cadence, the per-recipient coalescing, the two stop conditions and
-        the auto-evaluate live in
-        :class:`~custom_components.quizify.game.drivers.NormalRoundDriver`. This
-        loop owns only the task and the wire messages it asks for.
-        """
-        self._cancel_timer_tick()
-        # ``TICK_INTERVAL`` is read here rather than defaulted inside the
-        # driver so the module-level name stays the single knob a test (or a
-        # future runtime setting) can turn.
-        driver = NormalRoundDriver(
-            self._round_out, milestones=self, tick_interval=TICK_INTERVAL
-        )
-        self._timer_tick_task = asyncio.ensure_future(driver.run(game_state))
-        self._timer_tick_task.add_done_callback(self._log_task_exception)
+        """Delegate: see :func:`round_flow.start_timer_tick` (#1124)."""
+        round_flow.start_timer_tick(self, game_state)
 
     def _cancel_timer_tick(self) -> None:
-        """Cancel the timer tick task — and the betting window with it.
-
-        The two are the same thing from the caller's side: the round's
-        background clock. Cancelling both here rather than at each of the
-        eight ``_cancel_timer_tick`` call sites (reset, end game, skip,
-        pause, disconnect, next question, …) is what guarantees no path can
-        leave a window armed over a round that has already moved on (#656).
-        """
-        if self._timer_tick_task is not None:
-            self._timer_tick_task.cancel()
-            self._timer_tick_task = None
-        self._cancel_wager_window()
+        """Delegate: see :func:`round_flow.cancel_timer_tick` (#1124)."""
+        round_flow.cancel_timer_tick(self)
 
     def _cancel_task_group(self, group: tuple[tuple[str, str], ...]) -> None:
-        """Run every canceller in one of the registries above (#746).
-
-        Cancellers are idempotent and safe on a task that was never started,
-        so a group can always be run whole. That is the point: the caller
-        says *which scope* it is tearing down, never *which tasks*.
-        """
-        for _attr, canceller in group:
-            cancel: Callable[[], None] = getattr(self, canceller)
-            cancel()
+        """Delegate: see :func:`round_flow.cancel_task_group` (#1124)."""
+        round_flow.cancel_task_group(self, group)
 
     def _cancel_round_tasks(self) -> None:
-        """Tear down EVERY round-scoped task (#746).
-
-        The one place that owns "the round is over": end game, reset,
-        play again, start game, and the full cleanup all route through here
-        rather than listing cancellers themselves. A sixth task added to
-        ``_ROUND_SCOPED_TASKS`` is therefore stopped by all of them at once.
-
-        Paths that deliberately stop only PART of a round — ``_advance_round``
-        settling one detour, ``admin_action_pause`` freezing the clock while
-        the round stays alive, ``_handle_admin_skip`` cutting a question short
-        — keep calling the individual cancellers, with a comment saying why.
-        A deliberate subset should read as one; only a *complete* teardown
-        belongs here.
-        """
-        self._cancel_task_group(self._ROUND_SCOPED_TASKS)
+        """Delegate: see :func:`round_flow.cancel_round_tasks` (#1124)."""
+        round_flow.cancel_round_tasks(self)
 
     @staticmethod
     def _log_task_exception(task: asyncio.Task) -> None:
@@ -2499,28 +1298,8 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
 
     def _maybe_evaluate_after_dropout(self, game_state: QuizifyGameState) -> bool:
-        """Auto-evaluate the live round if a dropout left everyone submitted (#412).
-
-        ``all_submitted()`` is normally only consulted inside
-        submit_answer/submit_guess. When the last unanswered player disconnects
-        (or is removed after the grace timeout) mid-question, that check never
-        re-runs, so a room where everyone else already answered would sit idle
-        until the timer expired. Re-test it here: during QUESTION_ACTIVE, if the
-        registry now reports all active participants submitted, stop the
-        countdown and evaluate. ``evaluate_round`` fires the
-        ``round_evaluated`` state event, which drives the reveal broadcast (same
-        as the timer-expiry and admin-skip paths); it is guarded against double
-        evaluation, so racing with the tick loop is safe.
-
-        Returns True when it triggered an evaluation.
-        """
-        if game_state.phase != GamePhase.QUESTION_ACTIVE:
-            return False
-        if not game_state.all_submitted():
-            return False
-        self._cancel_timer_tick()
-        game_state.evaluate_round()
-        return True
+        """Delegate: see :func:`round_flow.maybe_evaluate_after_dropout` (#1124)."""
+        return round_flow.maybe_evaluate_after_dropout(self, game_state)
 
     async def _handle_disconnect(
         self, ws: web.WebSocketResponse, was_admin: bool | None = None
@@ -2656,58 +1435,12 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
 
     def _schedule_admin_pause(self, admin_name: str) -> None:
-        """Schedule a pause to fire ADMIN_REDIRECT_GRACE seconds from now.
-
-        If admin reconnects (via session token or fresh join) before the
-        timer expires, _cancel_admin_pause clears the task. Re-entrant:
-        cancels any prior pending task before scheduling a new one, so a
-        rapid disconnect-reconnect-disconnect doesn't stack tasks.
-        """
-        self._cancel_admin_pause()
-
-        async def pause_after_grace() -> None:
-            try:
-                await asyncio.sleep(self.ADMIN_REDIRECT_GRACE)
-                gs = self._get_game_state()
-                if gs is None:
-                    return
-                # Final sanity checks before pausing — admin may have
-                # reconnected via a path that doesn't cancel us, or the
-                # game may have advanced past QUESTION_ACTIVE on its own.
-                player = gs.get_player(admin_name)
-                if player and player.connected:
-                    _LOGGER.debug(
-                        "Admin %s reconnected within grace — skipping pause",
-                        admin_name,
-                    )
-                    return
-                if gs.phase != GamePhase.QUESTION_ACTIVE:
-                    return
-                if not gs.pause(reason="admin_disconnected"):
-                    return
-                self._cancel_timer_tick()
-                state = self._snapshot(gs)
-                state["type"] = "game_state"
-                await self._conn.broadcast(state)
-                _LOGGER.info(
-                    "Paused game after admin %s failed to reconnect within %.1fs",
-                    admin_name,
-                    self.ADMIN_REDIRECT_GRACE,
-                )
-            except asyncio.CancelledError:
-                # Normal path: admin reconnected in time. Don't log.
-                pass
-
-        self._admin_pause_task = asyncio.ensure_future(pause_after_grace())
-        # Surface a crash in the deferred-pause loop (#362/#307) instead of
-        # letting "Task exception was never retrieved" leak at GC time.
-        self._admin_pause_task.add_done_callback(self._log_task_exception)
+        """Delegate: see :func:`round_flow.schedule_admin_pause` (#1124)."""
+        round_flow.schedule_admin_pause(self, admin_name)
 
     def _cancel_admin_pause(self) -> None:
-        """Cancel any pending deferred admin-disconnect pause."""
-        if self._admin_pause_task and not self._admin_pause_task.done():
-            self._admin_pause_task.cancel()
-        self._admin_pause_task = None
+        """Delegate: see :func:`round_flow.cancel_admin_pause` (#1124)."""
+        round_flow.cancel_admin_pause(self)
 
     # ------------------------------------------------------------------
     # Admin auth helper
@@ -2772,179 +1505,32 @@ class QuizifyWebSocketHandler:
         return state
 
     async def _announce_host_presence(self) -> None:
-        """Broadcast the host-presence flag when, and only when, it changes.
-
-        Called wherever an admin socket is added or dropped and wherever the
-        host's own player row changes connection state. Broadcast rather than
-        unicast: every phone in the room needs it, and the two screens that do
-        not (the host page knows, the television does not care) ignore it.
-        """
-        game_state = self._get_game_state()
-        if game_state is None:
-            return
-        connected = self._host_connected(game_state)
-        if connected == self._host_presence_sent:
-            return
-        previous = self._host_presence_sent
-        self._host_presence_sent = connected
-        try:
-            await self._conn.broadcast(
-                # ``host_connected``, not ``connected`` (#848). One fact needs
-                # one name: the snapshot has always carried it under this key,
-                # and ``_rememberHostFlag`` in player-core.js — the only reader
-                # of either — reads that key and nothing else. The frame #840
-                # shipped said ``connected``, so on the two occasions the
-                # departure DID leave the server the phone read
-                # ``msg.host_connected``, found undefined, and kept the answer
-                # it already had. A live-fixed broadcast alone would still not
-                # have armed a single hatch.
-                {"type": "host_presence", "host_connected": connected}
-            )
-        except BaseException:
-            # The flag is a record of what actually went on the wire, so a
-            # send that never happened must not be remembered as one. #848
-            # was silent on all three of its reproductions partly because of
-            # this: the broadcast died in a cancelled task with the flag
-            # already flipped, and every later announcement deduped against a
-            # value no phone had ever been told.
-            self._host_presence_sent = previous
-            raise
+        """Delegate: see :func:`game_broadcasts.announce_host_presence` (#1124)."""
+        await game_broadcasts.announce_host_presence(self)
 
     def _announce_host_presence_soon(self) -> None:
-        """Announce host presence from a task the closing socket cannot kill.
-
-        ``_handle_disconnect`` runs inside the ``finally`` of ``handle()``, and
-        by the time it does, aiohttp has already cancelled that request's task:
-        the next ``await`` that yields to the loop raises ``CancelledError``.
-        The announcement is exactly such an await — ``broadcast`` fans out with
-        ``asyncio.gather``, which needs one loop iteration before its children
-        run — so the six awaited call sites #840 added did reach this one, did
-        flip ``_host_presence_sent``, and then died before a single byte left
-        the server.
-
-        That is #848 exactly as the live test measured it: the guest phone
-        recorded ``host_presence {connected: true}`` when the host's tab
-        opened, the HA log carried ``Admin disconnected, keeping game alive for
-        120s`` when it closed, and no frame was ever sent for the close. A call
-        site that runs is not a call site that reaches a phone.
-
-        So the departure gets its own task, the same shape
-        ``_schedule_admin_pause`` two screens down and
-        ``ConnectionManager.schedule_admin_timeout`` already use in this very
-        path, and for this very reason. Scheduling is synchronous, so nothing
-        here can be cancelled out from under it; the coroutine re-reads
-        ``_host_connected`` when it runs, so a host who came back in the
-        meantime is never announced gone.
-        """
-        self._host_presence_task = asyncio.ensure_future(
-            self._announce_host_presence()
-        )
-        self._host_presence_task.add_done_callback(self._log_task_exception)
+        """Delegate: see :func:`game_broadcasts.announce_host_presence_soon` (#1124)."""
+        game_broadcasts.announce_host_presence_soon(self)
 
     def _cancel_host_presence(self) -> None:
-        """Drop a pending host-presence announcement (integration teardown).
-
-        Connection-scoped, not round-scoped: whether anybody is hosting the
-        room has nothing to do with which round it is on. Only
-        ``cleanup_game_tasks()`` reaches this.
-        """
-        if self._host_presence_task is not None:
-            self._host_presence_task.cancel()
-            self._host_presence_task = None
+        """Delegate: see :func:`game_broadcasts.cancel_host_presence` (#1124)."""
+        game_broadcasts.cancel_host_presence(self)
 
     async def _dispatch_analytics_followups(self) -> None:
-        """Everything true only once the game is recorded (#624, #612, #613).
-
-        One handler because one event: the season standing per player, the
-        evening tally for the room and the end-screen duel all become correct
-        at the same instant, and registering three handlers for the same event
-        would make their order an accident of dict insertion.
-        """
-        await self._dispatch_all_time_standings()
-        await self._dispatch_evening_tally()
-        await self._dispatch_end_head_to_head()
+        """Delegate to :func:`game_broadcasts.dispatch_analytics_followups`."""
+        await game_broadcasts.dispatch_analytics_followups(self)
 
     async def _dispatch_evening_tally(self) -> None:
-        """Broadcast tonight's running score to the TV (#612).
-
-        Rides the same ``analytics_recorded`` event as the season standing: the
-        game that just finished is only part of the tally once it is written.
-
-        Broadcast rather than per-player — unlike the season standing, this is
-        the room's number, and the TV is the screen it belongs on.
-        """
-        gs = self._get_game_state()
-        if gs is None:
-            return
-        analytics = gs.stats_service
-        if analytics is None:
-            return
-        tally = analytics.get_evening_tally()
-        if tally is None:
-            # One game so far, or no sitting in progress. Saying nothing beats
-            # restating the podium that is already on screen.
-            return
-        await self._conn.broadcast_to_admins_and_dashboards(
-            {"type": "evening_tally", **tally}
-        )
+        """Delegate: see :func:`game_broadcasts.dispatch_evening_tally` (#1124)."""
+        await game_broadcasts.dispatch_evening_tally(self)
 
     async def _dispatch_all_time_standings(self) -> None:
-        """Send each player their own season standing, after the game landed.
-
-        Fired by ``analytics_recorded`` (#624), not with the finale: the record
-        is written in a detached task so a slow disk cannot delay the end
-        screen, which means the finale goes out while the all-time table still
-        describes the state BEFORE this game. A standing sent then would
-        contradict the podium the player is looking at.
-
-        Per-player rather than a broadcast, because the interesting number is
-        the player's own rank. Fail-soft throughout: no analytics, an unknown
-        name or a closed socket each just means no line, exactly as on join.
-        """
-        game_state = self._get_game_state()
-        if game_state is None:
-            return
-        sends = []
-        for player in game_state.get_players():
-            if not self._conn.is_connection_open(player.connection_id):
-                continue
-            # The player's OWN name, the same key the join frame used (#932).
-            # #923 moved this to the entrant, so a team member's phone showed
-            # the team's row worded as a personal one: "1 win from 1 game"
-            # replacing the "14 wins from 27 games" the same phone read in the
-            # lobby minutes earlier. The all-time table is keyed by entrant
-            # name, so a member with history is found here perfectly well —
-            # their record simply does not move for a game the team was
-            # recorded under, which is what one ledger (#923) means. A member
-            # with no history of their own gets no line, exactly as they got
-            # none in the lobby; the alternative is a team's record wearing a
-            # person's wording.
-            standing = self._all_time_standing(player.name)
-            if standing is None:
-                continue
-            sends.append(
-                self._conn.send_to_player(
-                    player,
-                    {"type": "all_time_update", "all_time": standing},
-                )
-            )
-        if sends:
-            await asyncio.gather(*sends)
+        """Delegate: see :func:`game_broadcasts.dispatch_all_time_standings` (#1124)."""
+        await game_broadcasts.dispatch_all_time_standings(self)
 
     def _all_time_standing(self, name: str) -> PlayerStanding | None:
-        """This player's own all-time placing for the lobby line (#371).
-
-        FAIL-SOFT by construction: no game state, no wired analytics, or a
-        name that never finished a game all return ``None``, and the client
-        simply renders no line. A join must never fail over a decoration.
-        """
-        gs = self._get_game_state()
-        if gs is None:
-            return None
-        analytics = gs.stats_service
-        if analytics is None:
-            return None
-        return analytics.get_player_standing(name)
+        """Delegate: see :func:`game_broadcasts.all_time_standing` (#1124)."""
+        return game_broadcasts.all_time_standing(self, name)
 
     def set_tts_announcer(
         self, announcer: QuizifyTTSAnnouncer | None
@@ -3222,49 +1808,8 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
 
     async def _broadcast_finale(self, game_state: QuizifyGameState) -> None:
-        """Build and broadcast the finale message (podium + superlatives).
-
-        ``end_game`` already computed and cached the podium + superlatives, so
-        reuse them here instead of recomputing ``calculate_podium`` +
-        ``compute_superlatives`` from scratch (#415). Falls back to a fresh
-        compute only if this is ever reached without a populated cache (e.g. a
-        direct call in a test) so behaviour is unchanged in that edge case.
-        """
-        # In team mode the finale is about teams (#365): podium, leaderboard
-        # and awards all take the ranked participants, which are teams there
-        # and players otherwise. `compute_superlatives` reads the same
-        # attribute names, so the awards aggregate per team without a second
-        # implementation — an award simply belongs to "Team Sofa" instead of
-        # to Anna.
-        all_players = game_state.get_ranked_participants()
-
-        podium = game_state.get_finale_podium()
-        if podium is None:
-            from custom_components.quizify.game.scoring import (
-                calculate_podium,  # noqa: PLC0415
-            )
-
-            podium = calculate_podium(all_players)
-
-        cached_superlatives = game_state.get_finale_superlatives()
-        superlatives = (
-            cached_superlatives
-            if cached_superlatives is not None
-            else compute_superlatives(all_players)
-        )
-        awards = [s.to_dict() for s in superlatives]
-        # Pack labels for the shareable card (#369). The FINALE snapshot needs
-        # the identical list (#878), so the resolution lives next to the
-        # serializers both paths share.
-        packs = resolve_pack_labels(game_state)
-        finale_msg = serialize_finale(
-            podium,
-            all_players,
-            superlatives=awards,
-            packs=packs,
-            game_id=game_state.game_id,
-        )
-        await self._conn.broadcast(finale_msg)
+        """Delegate: see :func:`game_broadcasts.broadcast_finale` (#1124)."""
+        await game_broadcasts.broadcast_finale(self, game_state)
 
     # ------------------------------------------------------------------
     # Broadcast callback for game state

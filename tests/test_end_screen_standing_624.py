@@ -66,22 +66,26 @@ def test_the_dispatcher_is_registered_for_that_event() -> None:
     source = (_CC / "server" / "websocket.py").read_text("utf-8")
 
     assert '"analytics_recorded": self._dispatch_analytics_followups' in source
-    followups = source.split("async def _dispatch_analytics_followups", 1)[1][:600]
-    assert "self._dispatch_all_time_standings()" in followups
+    # The follow-ups moved to ``server/game_broadcasts.py`` (#1124); ``self``
+    # is ``handler`` there.
+    moved = (_CC / "server" / "game_broadcasts.py").read_text("utf-8")
+    followups = moved.split("async def dispatch_analytics_followups", 1)[1][:600]
+    assert "handler._dispatch_all_time_standings()" in followups
 
 
 def test_each_player_gets_their_own_standing() -> None:
     """A broadcast would be wrong: the interesting number is your own rank."""
-    source = (_CC / "server" / "websocket.py").read_text("utf-8")
+    # Moved to ``server/game_broadcasts.py`` (#1124); ``self`` is ``handler``.
+    source = (_CC / "server" / "game_broadcasts.py").read_text("utf-8")
     body = _without_comments(
-        _py_function(source, "    async def _dispatch_all_time_standings(self)")
+        _py_function(source, "async def dispatch_all_time_standings(handler")
     )
 
     assert "for player in game_state.get_players()" in body
     # And their OWN standing: the lookup key is the player's name, the same
     # one the join frame uses. #923 briefly made it the entrant's name, which
     # put the team's record on a member's phone in a personal wording (#932).
-    assert "self._all_time_standing(player.name)" in body
+    assert "handler._all_time_standing(player.name)" in body
     assert "get_ranked_participant_for" not in body
     assert '"type": "all_time_update"' in body
     # Asserts the absent CALL, not the absent word: the docstring above
@@ -89,7 +93,7 @@ def test_each_player_gets_their_own_standing() -> None:
     # comments, not docstrings. Fourth time today an assertion nearly tripped
     # over the prose the fix writes about itself — so pin behaviour, never
     # vocabulary.
-    assert "self._conn.broadcast(" not in body
+    assert "handler._conn.broadcast(" not in body
 
 
 def test_it_skips_closed_sockets_and_missing_standings() -> None:
@@ -100,8 +104,8 @@ def test_it_skips_closed_sockets_and_missing_standings() -> None:
     """
     body = _without_comments(
         _py_function(
-            (_CC / "server" / "websocket.py").read_text("utf-8"),
-            "    async def _dispatch_all_time_standings(self)",
+            (_CC / "server" / "game_broadcasts.py").read_text("utf-8"),
+            "async def dispatch_all_time_standings(handler",
         )
     )
 

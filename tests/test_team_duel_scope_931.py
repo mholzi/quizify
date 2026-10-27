@@ -317,9 +317,10 @@ def test_participants_are_what_the_sender_asks_for() -> None:
     when the game was about entrants. Naming ``get_players()`` here again is
     how that comes back.
     """
-    source = (_CC / "server" / "websocket.py").read_text("utf-8")
-    body = source.split("async def _broadcast_head_to_head", 1)[1].split(
-        "\n    def ", 1
+    # Moved to ``server/batched_updates.py`` (#1124), a module function now.
+    source = (_CC / "server" / "batched_updates.py").read_text("utf-8")
+    body = source.split("async def broadcast_head_to_head", 1)[1].split(
+        "\ndef ", 1
     )[0]
     body = re.sub(r"#.*$", "", body, flags=re.M)
 
@@ -331,9 +332,10 @@ def test_participants_are_what_the_sender_asks_for() -> None:
 
 def test_every_team_handler_recomputes_the_lobby_duel() -> None:
     """Create, join and leave all change who the entrants are."""
-    source = (_CC / "server" / "websocket.py").read_text("utf-8")
-    for name in ("_handle_create_team", "_handle_join_team", "_handle_leave_team"):
-        body = source.split(f"async def {name}", 1)[1].split("\n    async def ", 1)[0]
+    # Moved to ``server/join_handlers.py`` (#1124), module functions now.
+    source = (_CC / "server" / "join_handlers.py").read_text("utf-8")
+    for name in ("handle_create_team", "handle_join_team", "handle_leave_team"):
+        body = source.split(f"async def {name}", 1)[1].split("\nasync def ", 1)[0]
         assert "_send_head_to_head" in body, name
 
 
