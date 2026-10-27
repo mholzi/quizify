@@ -138,23 +138,26 @@ def _fn_body(source: str, name: str) -> str:
     they were not looking at.
     """
     body = source.split(f"async def {name}", 1)[1]
-    for marker in ("\n    async def ", "\n    def "):
+    # Since #1124 these are module functions (``server/batched_updates.py``,
+    # ``server/game_broadcasts.py``), so the next sibling sits at column 0.
+    for marker in ("\nasync def ", "\ndef "):
         body = body.split(marker, 1)[0]
     return re.sub(r'""".*?"""', "", body, flags=re.S)
 
 
 def test_it_is_sent_in_the_lobby_only_and_never_to_phones() -> None:
     """The reversal of #371 is bounded: the room sees it, the phones do not."""
-    source = (_CC / "server" / "websocket.py").read_text("utf-8")
+    # Moved to ``server/batched_updates.py`` (#1124); ``self`` is ``handler``.
+    source = (_CC / "server" / "batched_updates.py").read_text("utf-8")
 
-    assert "phase != GamePhase.LOBBY" in _fn_body(source, "_send_head_to_head")
+    assert "phase != GamePhase.LOBBY" in _fn_body(source, "send_head_to_head")
 
     # Both placements go out through the one shared sender, so they cannot
     # drift apart in who they reach.
-    shared = _fn_body(source, "_broadcast_head_to_head")
+    shared = _fn_body(source, "broadcast_head_to_head")
     assert "broadcast_to_admins_and_dashboards" in shared
     # A plain broadcast would reach every phone — the thing #371 avoided.
-    assert "self._conn.broadcast(" not in shared
+    assert "handler._conn.broadcast(" not in shared
 
 
 def test_the_end_screen_duel_waits_for_the_game_to_be_recorded() -> None:
@@ -164,12 +167,18 @@ def test_the_end_screen_duel_waits_for_the_game_to_be_recorded() -> None:
     So it rides ``analytics_recorded`` like the season standing (#624) and the
     evening tally (#612), which become true at the same instant.
     """
-    source = (_CC / "server" / "websocket.py").read_text("utf-8")
-
-    followups = _fn_body(source, "_dispatch_analytics_followups")
+    # Moved out of ``websocket.py`` (#1124): the follow-ups to
+    # ``server/game_broadcasts.py``, the duel to ``server/batched_updates.py``.
+    followups = _fn_body(
+        (_CC / "server" / "game_broadcasts.py").read_text("utf-8"),
+        "dispatch_analytics_followups",
+    )
     assert "_dispatch_end_head_to_head" in followups
 
-    end = _fn_body(source, "_dispatch_end_head_to_head")
+    end = _fn_body(
+        (_CC / "server" / "batched_updates.py").read_text("utf-8"),
+        "dispatch_end_head_to_head",
+    )
     assert "GamePhase.FINALE" in end
     assert 'at="finale"' in end
 

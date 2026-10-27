@@ -161,17 +161,19 @@ def test_the_tv_renders_it_and_does_not_double_escape() -> None:
 
 def test_it_rides_the_same_recorded_event_as_the_standing() -> None:
     """Both become true at the same instant — when the game is written."""
-    source = (_CC / "server" / "websocket.py").read_text("utf-8")
-    followups = source.split("async def _dispatch_analytics_followups", 1)[1][:600]
+    # Moved to ``server/game_broadcasts.py`` (#1124); ``self`` is ``handler``.
+    source = (_CC / "server" / "game_broadcasts.py").read_text("utf-8")
+    followups = source.split("async def dispatch_analytics_followups", 1)[1][:600]
 
-    assert "self._dispatch_evening_tally()" in followups
+    assert "handler._dispatch_evening_tally()" in followups
 
 
 def test_the_tally_goes_to_the_tv_not_to_every_phone() -> None:
     """Unlike the season standing, this is the room's number."""
-    source = (_CC / "server" / "websocket.py").read_text("utf-8")
-    body = source.split("async def _dispatch_evening_tally", 1)[1].split(
-        "\n    async def ", 1
+    # Moved to ``server/game_broadcasts.py`` (#1124), a module function now.
+    source = (_CC / "server" / "game_broadcasts.py").read_text("utf-8")
+    body = source.split("async def dispatch_evening_tally", 1)[1].split(
+        "\nasync def ", 1
     )[0]
 
     assert "broadcast_to_admins_and_dashboards" in body

@@ -46,7 +46,8 @@ _PACKAGE = _REPO_ROOT / "custom_components" / "quizify"
 # it, and asserted to be the ONLY such site — a second one has to be declared
 # here on purpose rather than slipping through unchecked.
 _DYNAMIC_TYPE_SITES: dict[str, tuple[str, ...]] = {
-    "server/websocket.py::_flush_roster_after_window": (
+    # Moved out of websocket.py in #1124.
+    "server/batched_updates.py::flush_roster_after_window": (
         "player_joined",
         "player_left",
     ),

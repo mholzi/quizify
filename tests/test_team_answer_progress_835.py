@@ -31,7 +31,8 @@ from custom_components.quizify.server.round_message_builder import RoundMessageB
 from custom_components.quizify.server.serializers import serialize_answer_progress
 
 REPO = Path(__file__).resolve().parent.parent
-WEBSOCKET = REPO / "custom_components" / "quizify" / "server" / "websocket.py"
+# The progress flush moved out of websocket.py into batched_updates.py (#1124).
+WEBSOCKET = REPO / "custom_components" / "quizify" / "server" / "batched_updates.py"
 
 
 class _Runtime:

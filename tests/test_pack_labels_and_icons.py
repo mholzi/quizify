@@ -106,7 +106,9 @@ def test_share_card_gets_display_names_not_slugs() -> None:
         "the slug fallback is gone; an unknown pack would vanish from the "
         "card's Packs line instead of appearing under its slug."
     )
-    assert "resolve_pack_labels(game_state)" in WS_PY.read_text(encoding="utf-8"), (
+    # The finale broadcast moved to ``server/game_broadcasts.py`` (#1124).
+    finale_py = WS_PY.parent / "game_broadcasts.py"
+    assert "resolve_pack_labels(game_state)" in finale_py.read_text(encoding="utf-8"), (
         "the finale broadcast stopped using the shared resolver — the live "
         "frame and the FINALE snapshot can drift apart again."
     )

@@ -49,7 +49,7 @@ from custom_components.quizify.game_events import (  # noqa: E402
     QuizifyEventEmitter,
 )
 from custom_components.quizify.lights import QuizifyPartyLights  # noqa: E402
-from custom_components.quizify.server import websocket as ws_mod  # noqa: E402
+from custom_components.quizify.server import round_flow  # noqa: E402
 from custom_components.quizify.server.connection import (  # noqa: E402
     ConnectionManager,
 )
@@ -393,7 +393,8 @@ class TestTheBettingWindow:
 
                 return _noop()
 
-        monkeypatch.setattr(ws_mod, "WagerWindowDriver", _Recording)
+        # The window code moved to ``server/round_flow.py`` (#1124).
+        monkeypatch.setattr(round_flow, "WagerWindowDriver", _Recording)
         handler = QuizifyWebSocketHandler(
             runtime=_FakeRuntime(tmp_path), game_state_provider=lambda: game
         )

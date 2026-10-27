@@ -350,9 +350,10 @@ class TestHandler:
         zero. Every unit test passed, because they all closed the window from
         the *other* trigger.
         """
-        from custom_components.quizify.server import websocket as ws_mod  # noqa: PLC0415
+        # The window code moved to ``server/round_flow.py`` (#1124).
+        from custom_components.quizify.server import round_flow  # noqa: PLC0415
 
-        monkeypatch.setattr(ws_mod, "WAGER_WINDOW_DURATION", 0.05)
+        monkeypatch.setattr(round_flow, "WAGER_WINDOW_DURATION", 0.05)
         state = _game(tmp_path, rounds=1)
         question = state.start_next_question()
         handler, conn = _handler()
