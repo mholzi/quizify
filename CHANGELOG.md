@@ -15,7 +15,7 @@ Painting, books and poetry have their own packs in German, English and Spanish, 
 
 ### Safer game nights
 
-The host page and the TV keep the screen on during a game, and a guest's reset button asks before it clears anything. Three automation blueprints are ready to import: flash the lights on the reveal, announce the winner, or start a game from any trigger.
+The host page and the TV keep the screen on during a game, and a guest's reset button asks before it clears anything. Three automation blueprints are ready to import: reveal lights, winner announcement, game start.
 
 Admin sign-in is sturdier: a malformed token is rejected cleanly.
 
@@ -23,7 +23,7 @@ Admin sign-in is sturdier: a malformed token is rejected cleanly.
 
 The pack picker now ends with an "Ask for a pack" tile that works without any setup.
 
-Also: the reveal card shows the right score after a Steal, and joining, answering and round flow now live in smaller modules (no behaviour change).
+Also: the reveal card shows the right score after a Steal, and the live-connection code is split into smaller modules (no behaviour change).
 
 ## [1.25.0-RC3] — 2026-10-27
 
