@@ -3,6 +3,30 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.25.0] — 2026-10-29
+
+**Art on the Shelf, and a Screen That Stays On**
+
+Since 1.24.0 the library gained a new theme and games got harder to wipe by accident: 7,310 questions in 53 packs.
+
+### 🎨 Art and literature
+
+Painting, books and poetry have their own packs in German, English and Spanish, 160 questions each.
+
+### 📺 Safer game nights
+
+The host page and the TV keep the screen on during a game. A guest's reset button asks before it clears anything, and a malformed admin token is rejected cleanly.
+
+### 🏠 Blueprints for the house
+
+Three automation blueprints are ready to import: reveal lights, winner announcement, game start.
+
+### 🙋 Ask for a pack
+
+The pack picker ends with an "Ask for a pack" tile that works without setup.
+
+Also: the reveal card shows the right score after a Steal, and the live-connection code is split into smaller modules (no behaviour change).
+
 ## [1.25.0-RC4] — 2026-10-28
 
 **Art on the Shelf, and a Screen That Stays On**
