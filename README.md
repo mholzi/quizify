@@ -598,6 +598,10 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 
 The complete history is in [`CHANGELOG.md`](CHANGELOG.md); longer prose notes for each release are on the [GitHub releases page](https://github.com/mholzi/quizify/releases).
 
+### v1.25.0 — Art on the Shelf, and a Screen That Stays On 🎨
+- **Art & Literature packs in German, English and Spanish**, 160 questions each, and the pack picker ends with an "Ask for a pack" tile that works without setup (#1125, #1127)
+- The host page and the TV keep the screen on during a game, a guest's reset asks first, and three automation blueprints are ready to import (#1131, #1128)
+
 ### v1.24.0 — Holiday Packs, and a Sturdier Core 🎄
 - **Christmas grows to 160 questions per language**, New Year's Eve gains a 2026-in-review block, and Thanksgiving (English) and Sankt Martin (German) are new, each featured only in its own season (#1101, #1102, #1111, #1113)
 - A player who drops out mid-game keeps their score and seat, Hot Seat reads out the right question at the reveal, and text-to-speech never skips a question or a reveal (#1098, #1097, #1096, #1095)
