@@ -43,7 +43,7 @@ from .game_events import (
     EVENT_STREAK_MILESTONE,
     EVENT_WINNER_DECIDED,
 )
-from .ha_service import fire_and_forget_service
+from .ha_service import fire_and_forget_service, hass_callback
 from .house_settings import CUE_KEYS, HouseSettings, clean_str
 
 if TYPE_CHECKING:
@@ -288,6 +288,7 @@ class QuizifySoundEffects:
     # Bus-event handlers
     # ------------------------------------------------------------------
 
+    @hass_callback
     def _on_answer_revealed(self, event: Event) -> None:
         """Correct sting when the crowd mostly nailed it, else the wrong buzzer.
 
@@ -300,10 +301,12 @@ class QuizifySoundEffects:
         majority = total > 0 and correct > total / 2
         self._play_cue("correct" if majority else "wrong")
 
+    @hass_callback
     def _on_streak_milestone(self, event: Event) -> None:  # noqa: ARG002
         """Chime on a hot streak."""
         self._play_cue("streak")
 
+    @hass_callback
     def _on_winner_decided(self, event: Event) -> None:  # noqa: ARG002
         """Fanfare when the winner is decided."""
         self._play_cue("winner")

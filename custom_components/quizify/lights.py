@@ -39,7 +39,7 @@ from .game_events import (
     EVENT_TIME_RUNNING_OUT,
     EVENT_WINNER_DECIDED,
 )
-from .ha_service import fire_and_forget_service
+from .ha_service import fire_and_forget_service, hass_callback
 from .house_settings import HouseSettings, clean_entity_ids, clean_str
 
 if TYPE_CHECKING:
@@ -469,12 +469,14 @@ class QuizifyPartyLights:
     # Accent choreography (#494 Phase 2) — bus-event handlers
     # ------------------------------------------------------------------
 
+    @hass_callback
     def _on_question_shown(self, event: Event) -> None:  # noqa: ARG002
         """Brightness bump on the live coral when a question appears."""
         if not (self._settings.master_enabled and self._light_question):
             return
         self._start_pulse(_ACCENT_QUESTION_SHOWN)
 
+    @hass_callback
     def _on_time_running_out(self, event: Event) -> None:  # noqa: ARG002
         """Faster breathing brightness pulse in the final seconds of a round.
 
@@ -485,6 +487,7 @@ class QuizifyPartyLights:
             return
         self._start_pulse(_ACCENT_COUNTDOWN)
 
+    @hass_callback
     def _on_answer_revealed(self, event: Event) -> None:
         """Green when the crowd mostly nailed it, amber when they mostly missed.
 
@@ -499,12 +502,14 @@ class QuizifyPartyLights:
         majority = total > 0 and correct > total / 2
         self._start_pulse(_ACCENT_REVEAL_GREEN if majority else _ACCENT_REVEAL_AMBER)
 
+    @hass_callback
     def _on_streak_milestone(self, event: Event) -> None:  # noqa: ARG002
         """Double-pulse bright coral to celebrate a hot streak."""
         if not (self._settings.master_enabled and self._light_streak):
             return
         self._start_pulse(_ACCENT_STREAK)
 
+    @hass_callback
     def _on_winner_decided(self, event: Event) -> None:  # noqa: ARG002
         """Victory sweep in sun, settling to a steady celebratory glow.
 

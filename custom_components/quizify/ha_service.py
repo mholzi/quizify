@@ -21,6 +21,17 @@ if TYPE_CHECKING:
 
 _LOGGER = logging.getLogger(__name__)
 
+# ``@callback`` marks a bus handler as safe to run inline on the event loop.
+# Without it HA classifies a plain function as ``HassJobType.Executor`` and runs
+# it in a worker thread, where ``hass.async_create_task`` is not thread-safe
+# (#1152). Guarded so the standalone dev server (no ``homeassistant``) imports;
+# there the decorator is an identity no-op.
+try:  # pragma: no cover - import guard exercised only off-HA
+    from homeassistant.core import callback as hass_callback
+except Exception:  # noqa: BLE001 - any import failure => run without HA
+    def hass_callback(func):  # type: ignore[misc]
+        return func
+
 
 def fire_and_forget_service(
     hass: HomeAssistant | None,
