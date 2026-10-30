@@ -2118,6 +2118,12 @@
 
     // ---- Phase handlers ----
 
+    function _rosterHasName(players, name) {
+        return window.QuizifyRenderShared.rosterList(players).some(function (p) {
+            return (typeof p === 'string' ? p : (p && p.name)) === name;
+        });
+    }
+
     function handleGameState(msg) {
         currentPhase = msg.phase;
         if (msg.admin_session_token) {
@@ -2159,6 +2165,15 @@
         // #804: teams ride the snapshot (#365), so a host screen that connects
         // late — or reloads mid-lobby — still shows who is playing with whom.
         if (msg.teams) _lobbyTeams = msg.teams;
+        // #1156: a reload in the lobby after "Join as Player" lost
+        // _adminJoinedAs while the roster still seated the host. The stored
+        // name plus a roster that lists it is the proof the seat is still
+        // ours, so take it back before the roster is drawn (the button state
+        // depends on it).
+        if (msg.phase === 'LOBBY' && !_adminJoinedAs && msg.players) {
+            var _seat = sessionStorage.getItem('quizify_admin_name');
+            if (_seat && _rosterHasName(msg.players, _seat)) _adminJoinedAs = _seat;
+        }
         if (msg.players) renderLobbyPlayers(msg.players);
 
         // If game is running and we have a stored name, redirect to player.html
