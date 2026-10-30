@@ -88,7 +88,24 @@
         'lightning-splash-view', 'lightning-view', 'lightning-recap-view'
     ];
 
+    // #1153: the screens a broadcast frame (round summary, game state,
+    // finale, lightning, pause) switches to. A phone that has not joined has
+    // no business on any of them: it receives every frame from socket open,
+    // and used to be pulled off the join form mid-typing with no way back.
+    // `state.playerName` is set the moment Join is tapped (and a restoring
+    // session sets it on the `reconnected` ack, which precedes the first
+    // snapshot), so a pending join and a returning player both pass.
+    // kicked-view is deliberately absent: it is shown AFTER the name is
+    // cleared.
+    var GAME_VIEW_IDS = [
+        'lobby-view', 'game-view', 'reveal-view', 'paused-view', 'end-view',
+        'lightning-splash-view', 'lightning-view', 'lightning-recap-view'
+    ];
+
     function showView(viewId) {
+        if (!state.playerName && GAME_VIEW_IDS.indexOf(viewId) !== -1) {
+            return;
+        }
         var revealedEl = null;
         for (var i = 0; i < viewIds.length; i++) {
             var el = document.getElementById(viewIds[i]);
