@@ -260,6 +260,18 @@ window.QuizifyPackSubmit = (function () {
         goToStep(2);
     }
 
+    // #1148: both POSTs are admin-token gated. As a header, not ?token= (#608).
+    function postJson(url, payload) {
+        var headers = { 'Content-Type': 'application/json' };
+        var tok = QuizifyUtils.readAdminToken();
+        if (tok) { headers['X-Quizify-Token'] = tok; }
+        return fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(payload)
+        });
+    }
+
     async function doSubmit() {
         var parsed = validatedPack;
         if (!parsed) { goToStep(2); return; }
@@ -269,11 +281,7 @@ window.QuizifyPackSubmit = (function () {
         setStatus(t('packSubmit.submitting'), 'pending');
 
         try {
-            var resp = await fetch(SUBMIT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ pack: parsed })
-            });
+            var resp = await postJson(SUBMIT_URL, { pack: parsed });
             var data = {};
             try { data = await resp.json(); } catch (_e) { /* ignore */ }
             if (!resp.ok || !data.ok) {
@@ -405,16 +413,12 @@ window.QuizifyPackSubmit = (function () {
         if (btn) { btn.disabled = true; }
         setRequestStatus(t('packSubmit.request.sending'), 'pending');
         try {
-            var resp = await fetch(REQUEST_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    request: {
-                        theme: theme,
-                        language: (langEl && langEl.value) || 'de',
-                        notes: notes
-                    }
-                })
+            var resp = await postJson(REQUEST_URL, {
+                request: {
+                    theme: theme,
+                    language: (langEl && langEl.value) || 'de',
+                    notes: notes
+                }
             });
             var data = {};
             try { data = await resp.json(); } catch (_e) { /* ignore */ }

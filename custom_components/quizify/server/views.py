@@ -1275,6 +1275,24 @@ async def _gated_submissions_list_view(request: web.Request) -> web.StreamRespon
     return await submissions_list_view(request)
 
 
+# #1148: filing a GitHub issue through the host's worker is a host action, and
+# since #1127 every install has a worker. The token check sits in front of the
+# views' own origin gate and limiter on purpose: a refused guest must not spend
+# the shared per-IP submit budget.
+async def _gated_submit_pack_view(request: web.Request) -> web.StreamResponse:
+    """Admin-token gate in front of the imported pack submission view."""
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
+    return await submit_pack_view(request)
+
+
+async def _gated_request_pack_view(request: web.Request) -> web.StreamResponse:
+    """Admin-token gate in front of the imported pack request view."""
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
+    return await request_pack_view(request)
+
+
 ROUTES: list[tuple[str, str, _RouteHandler]] = [
     ("GET", "/quizify/admin", admin_view),
     ("GET", "/quizify/launcher", launcher_view),
@@ -1309,10 +1327,10 @@ ROUTES: list[tuple[str, str, _RouteHandler]] = [
     # the config endpoint reports enabled:false and POSTs are refused.
     ("GET", "/api/quizify/pack-submit/config", submit_config_view),
     ("GET", "/api/quizify/pack-submit/submissions", _gated_submissions_list_view),
-    ("POST", "/api/quizify/pack-submit", submit_pack_view),
+    ("POST", "/api/quizify/pack-submit", _gated_submit_pack_view),
     # Pack requests (#579) — the same feature switch and the same worker as the
     # submission above, only the other direction: a wish instead of content.
-    ("POST", "/api/quizify/pack-submit/request", request_pack_view),
+    ("POST", "/api/quizify/pack-submit/request", _gated_request_pack_view),
 ]
 
 
