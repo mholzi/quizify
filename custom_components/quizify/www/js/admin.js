@@ -1956,6 +1956,9 @@
             // #741: full broadcasts the host page received and dropped. A
             // steal moved the leaderboard in front of the host with no
             // account of why, and the reveal's reactions were phone-private.
+            case 'scoring_status':
+                handleScoringStatus(msg);
+                break;
             case 'powerup_applied':
                 handlePowerUpApplied(msg);
                 break;
@@ -3344,11 +3347,28 @@
         // #741: remembered so an expiring steal chip can repaint the same rows
         // without waiting for the next frame from the server.
         if (container === els.gameLeaderboard) _lastGameLeaderboard = players;
-        // Same row on all three surfaces (#787); the steal chip is the only
-        // thing this page hangs off it.
-        container.innerHTML = window.QuizifyRenderShared.leaderboardRowsHtml(players, {
-            afterScore: function (p) { return scoreDeltaHtml(p.name); }
-        });
+        var shared = window.QuizifyRenderShared;
+        // #1150: only the running game's list shows the host's own view.
+        var status = container === els.gameLeaderboard ? _scoringStatus : null;
+        // Same row on all three surfaces (#787); the steal chip and the #1150
+        // note are the only things this page hangs off it.
+        container.innerHTML = shared.leaderboardRowsHtml(shared.scoringHostRows(players, status), {
+            afterScore: function (p) { return scoreDeltaHtml(p.name); },
+            rowClass: function (p) { return shared.scoringFlag(p, status) ? 'has-scoring-note' : ''; },
+            afterRow: function (p) { return shared.scoringNoteHtml(p, status); }
+        }) + shared.scoringOutHtml(status);
+        if (status) {
+            shared.bindScoringButtons(container, function (entrantId, out) {
+                send('set_scoring', { entrant_id: entrantId, out: out });
+            });
+        }
+    }
+
+    var _scoringStatus = null;
+
+    function handleScoringStatus(msg) {
+        _scoringStatus = msg;
+        if (_lastGameLeaderboard) renderLeaderboard(els.gameLeaderboard, _lastGameLeaderboard);
     }
 
     function renderPodium(container, podium) {

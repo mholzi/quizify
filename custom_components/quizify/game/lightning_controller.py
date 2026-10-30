@@ -158,7 +158,15 @@ class LightningController:
         ):
             return False
 
-        player_names = list(self._game.players.keys())
+        # Whoever is out of the scoring gets no row on this board either (#1150).
+        # A team's members go with it, or they would each enter on their own.
+        out = self._game.get_out_of_ranking_entrants()
+        teams = self._game.team_registry.to_list()
+        gone = set(out)
+        for team in teams:
+            if team["team_id"] in out:
+                gone.update(team["members"])
+        player_names = [n for n in self._game.players if n not in gone]
         lr = LightningRound(
             self._game.question_bank,
             player_names,
@@ -171,7 +179,7 @@ class LightningController:
             # A team answers lightning together, like a normal round (#552).
             # The roster is a snapshot: teams are frozen from the start of the
             # game, so the detour cannot be joined or left mid-round.
-            teams=self._game.team_registry.to_list(),
+            teams=[t for t in teams if t["team_id"] not in out],
         )
         # Reserve the questions the main game still owes the host (#544). Only
         # the auto path detours out of a running game; the lobby/finale entries

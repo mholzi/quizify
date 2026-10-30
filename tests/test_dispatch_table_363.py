@@ -59,6 +59,7 @@ ROUTING = {
     ws_mod.MSG_PAUSE_GAME: "_handle_pause_game",
     ws_mod.MSG_RESUME_GAME: "_handle_resume_game",
     ws_mod.MSG_KICK_PLAYER: "_handle_kick_player",
+    ws_mod.MSG_SET_SCORING: "_handle_set_scoring",
     ws_mod.MSG_CONFIGURE_TTS: "_handle_configure_tts",
 }
 

@@ -76,7 +76,8 @@
             .map(function (p, i) {
                 var rank = p.rank || i + 1;
                 var rankClass = rank <= 3 ? ' rank-' + rank : '';
-                return '<div class="leaderboard-row">' +
+                var rowClass = opts.rowClass ? opts.rowClass(p) : '';
+                return '<div class="leaderboard-row' + (rowClass ? ' ' + rowClass : '') + '">' +
                     '<span class="leaderboard-rank' + rankClass + '">' + rank + '</span>' +
                     '<span class="leaderboard-name">' + _esc(p.name) +
                         (nameSuffix ? nameSuffix(p) : '') + '</span>' +
@@ -85,9 +86,111 @@
                     // #1066: the server says whether a streak scores yet
                     // (`streak_active`); no threshold lives on this side.
                     (p.streak_active ? '<span class="leaderboard-streak">' + p.streak + 'x</span>' : '') +
+                    (opts.afterRow ? opts.afterRow(p) : '') +
                     '</div>';
             })
             .join('');
+    }
+
+    // ============================================
+    // Out of scoring (#1150)
+    // ============================================
+
+    function _entrantOf(row) {
+        return row.entrant_id || row.name;
+    }
+
+    /**
+     * The ranking as the host sees it: `scoring_status` says how it differs
+     * from the room's until the next reveal. Without a status (every screen
+     * but the host's) the rows pass through untouched.
+     */
+    function scoringHostRows(leaderboard, status) {
+        var board = leaderboard || [];
+        if (!status) return board;
+        var out = {};
+        (status.out || []).forEach(function (row) { out[_entrantOf(row)] = true; });
+        var seen = {};
+        var rows = board.filter(function (row) {
+            seen[_entrantOf(row)] = true;
+            return !out[_entrantOf(row)];
+        });
+        (status.back || []).forEach(function (row) {
+            if (!seen[_entrantOf(row)]) rows.push(row);
+        });
+        rows = rows.slice().sort(function (a, b) { return b.score - a.score; });
+        var rank = 0;
+        var previous = null;
+        return rows.map(function (row, i) {
+            if (row.score !== previous) { rank = i + 1; previous = row.score; }
+            return Object.assign({}, row, { rank: rank });
+        });
+    }
+
+    function scoringFlag(row, status) {
+        var flags = status && status.flags;
+        return (flags && flags[_entrantOf(row)]) || null;
+    }
+
+    function _scoringText(flag) {
+        if (!flag.is_team) {
+            return flag.missed === 1
+                ? _t('admin.scoringMissedOne', 'Disconnected for 1 round')
+                : _t('admin.scoringMissedMany', 'Disconnected for {count} rounds', { count: flag.missed });
+        }
+        if (flag.present === 0) return _t('admin.scoringAllGone', 'All disconnected');
+        return _t('admin.scoringSomeGone', '{names} disconnected, {present} of {total} here', {
+            names: flag.absent.join(', '), present: flag.present, total: flag.total
+        });
+    }
+
+    /** The line under a disconnected row: what is known, and what can be done. */
+    function scoringNoteHtml(row, status) {
+        var flag = scoringFlag(row, status);
+        if (!flag) return '';
+        return '<div class="scoring-note">' +
+            '<span class="scoring-off">' + _esc(_scoringText(flag)) + '</span>' +
+            (flag.can_take_out
+                ? '<button type="button" class="scoring-btn" data-scoring-out="' + _esc(_entrantOf(row)) + '">' +
+                    _esc(_t('admin.scoringOut', 'Out of scoring')) + '</button>'
+                : '') +
+            (flag.on_podium
+                ? '<span class="scoring-podium">' +
+                    _esc(_t('admin.scoringPodium', 'Otherwise on the podium')) + '</span>'
+                : '') +
+            '</div>';
+    }
+
+    /** Everybody the host took out, below the ranking, with the way back. */
+    function scoringOutHtml(status) {
+        var out = (status && status.out) || [];
+        if (!out.length) return '';
+        return '<div class="scoring-section">' +
+            _esc(_t('admin.scoringSection', 'Not in the scoring')) + '</div>' +
+            out.map(function (row) {
+                return '<div class="scoring-out-row">' +
+                    '<span class="scoring-out-rank" aria-hidden="true">\u2013</span>' +
+                    '<span class="scoring-out-name">' + _esc(row.name) + '</span>' +
+                    '<span class="scoring-out-score">' + _esc(row.score) + '</span>' +
+                    '<button type="button" class="scoring-btn" data-scoring-back="' + _esc(_entrantOf(row)) + '">' +
+                        _esc(_t('admin.scoringBack', 'Bring back')) + '</button>' +
+                    '</div>';
+            }).join('');
+    }
+
+    /**
+     * One listener per container: the rows are repainted constantly, the
+     * container is not. `send(entrantId, out)` is the page's own socket.
+     */
+    function bindScoringButtons(container, send) {
+        if (!container || container.dataset.scoringBound) return;
+        container.dataset.scoringBound = '1';
+        container.addEventListener('click', function (e) {
+            var button = e.target.closest && e.target.closest('[data-scoring-out],[data-scoring-back]');
+            if (!button) return;
+            var takeOut = button.hasAttribute('data-scoring-out');
+            send(button.getAttribute(takeOut ? 'data-scoring-out' : 'data-scoring-back'), takeOut);
+        });
     }
 
     // ============================================
@@ -659,6 +762,11 @@
         POWERUP_SPECS: POWERUP_SPECS,
         PODIUM_MEDALS: PODIUM_MEDALS,
         leaderboardRowsHtml: leaderboardRowsHtml,
+        scoringHostRows: scoringHostRows,
+        scoringFlag: scoringFlag,
+        scoringNoteHtml: scoringNoteHtml,
+        scoringOutHtml: scoringOutHtml,
+        bindScoringButtons: bindScoringButtons,
         podiumHtml: podiumHtml,
         podiumPlace: podiumPlace,
         winnerNames: winnerNames,

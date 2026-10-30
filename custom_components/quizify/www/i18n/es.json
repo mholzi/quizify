@@ -149,7 +149,15 @@
     "starHintBefore": "¿Os gusta Quizify? Una ⭐",
     "starHintLink": "en GitHub",
     "starHintAfter": "ayuda a que otros lo encuentren.",
-    "starHintDismiss": "Cerrar aviso"
+    "starHintDismiss": "Cerrar aviso",
+    "scoringOut": "Sacar de la clasificación",
+    "scoringBack": "Recuperar",
+    "scoringSection": "Fuera de la clasificación",
+    "scoringMissedOne": "Desconectado desde hace 1 ronda",
+    "scoringMissedMany": "Desconectado desde hace {count} rondas",
+    "scoringAllGone": "Todos desconectados",
+    "scoringSomeGone": "{names} desconectado, {present} de {total} aquí",
+    "scoringPodium": "Si no, estará en el podio"
   },
   "categories": {
     "mixed": "Mixto",
@@ -203,7 +211,8 @@
     "timerRemainingAria": "Tiempo restante: {seconds} segundos",
     "timerUpAria": "¡Se acabó el tiempo!",
     "timerTenLeft": "Quedan 10 segundos",
-    "timerFiveLeft": "Quedan 5 segundos"
+    "timerFiveLeft": "Quedan 5 segundos",
+    "welcomeBackScore": "Hola de nuevo, {name}. Tus {score} puntos siguen aquí."
   },
   "powerups": {
     "joker": "Comodín",
@@ -482,7 +491,9 @@
     "tonightWins": "{wins} victorias",
     "tonightWinsOne": "1 victoria",
     "powerupFreeze": "{source} ha congelado a {target}",
-    "powerupSteal": "{source} le roba {points} puntos a {target}"
+    "powerupSteal": "{source} le roba {points} puntos a {target}",
+    "scoringLeft": "{name} ya no juega",
+    "scoringBack": "{name} ha vuelto"
   },
   "connection": {
     "connected": "Conectado",

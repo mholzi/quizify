@@ -67,6 +67,11 @@ if TYPE_CHECKING:
 
 _LOGGER = logging.getLogger(__name__)
 
+#: How many rows the television's in-game leaderboard shows (``max`` in
+#: ``dashboard.js::renderLeaderboard``, #429). A guest below the fold left
+#: nothing on screen that would need explaining (#1150).
+TV_LEADERBOARD_ROWS = 5
+
 # GamePhase moved to phase_controller (issue #188) but is re-exported here so
 # the many `from .state import GamePhase` / `from .game.state import GamePhase`
 # call sites across the integration keep working unchanged.
@@ -214,6 +219,11 @@ class QuizifyGameState:
         # PhaseController (exposed via the delegating properties below).
         self._current_question: Question | None = None
         self._round_summary: RoundSummary | None = None
+
+        # Out of scoring (#1150), by entrant key. See the section further down.
+        self._out_requested: set[str] = set()
+        self._out_of_ranking: set[str] = set()
+        self._scoring_notices: list[dict[str, str]] = []
 
         # Memoized round-summary message dict (#414), keyed on
         # ``(game_id, round)``. ``RoundMessageBuilder.build_round_summary`` is
@@ -536,7 +546,7 @@ class QuizifyGameState:
             name=name,
             connection_id=connection_id,
             phase_value=self.phase.value,
-            average_score_fn=self._player_registry.get_average_score,
+            average_score_fn=self._late_joiner_seed_score,
             reclaim_by_name=reclaim_by_name,
         )
         success, _err = result
@@ -544,6 +554,7 @@ class QuizifyGameState:
         # round's remaining time (handled by the PhaseController, which no-ops
         # outside QUESTION_ACTIVE / when the player already has a timer).
         if success:
+            self._player_returned(name)
             self._phase_controller.add_late_joiner_timer(name)
             self._notify_state_callbacks()
         return result
@@ -573,6 +584,7 @@ class QuizifyGameState:
         """
         self._player_registry.reset()
         self._team_registry.reset()
+        self._clear_out_of_scoring()
         self._phase_controller.clear_timers()
         self._notify_state_callbacks()
 
@@ -591,6 +603,7 @@ class QuizifyGameState:
     ) -> None:
         """Re-point *player* at *connection_id* (reconnect path)."""
         self._player_registry.bind_connection(player, connection_id)
+        self._player_returned(player.name)
 
     def get_players(self) -> list[PlayerSession]:
         """Return list of all player sessions."""
@@ -884,6 +897,7 @@ class QuizifyGameState:
         self._drop_departed_team_members()
 
         # Reset player scores
+        self._clear_out_of_scoring()
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
 
@@ -1577,6 +1591,11 @@ class QuizifyGameState:
                 )
             )
 
+        # #1150: the normal reveal is where the host's call reaches the room,
+        # before the standings below are built from the ranking.
+        self._tally_missed_round()
+        self._apply_out_of_scoring(announce=True)
+
         leaderboard = self.get_standings()
 
         self._round_summary = RoundSummary(
@@ -1713,6 +1732,11 @@ class QuizifyGameState:
         """
         if self.phase == GamePhase.FINALE and self._finale_data is not None:
             return self._finale_data
+
+        # #1150: a tap on the last reveal has no later reveal to wait for, and
+        # the podium below is frozen for good. The podium itself is the news,
+        # so no banner goes with it.
+        self._apply_out_of_scoring(announce=False)
 
         self.phase = GamePhase.FINALE
         self._current_question = None
@@ -1919,6 +1943,7 @@ class QuizifyGameState:
         # set must not follow the room into the next game (#1019).
         self._question_bank.reset_shown_this_game()
 
+        self._clear_out_of_scoring()
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
 
@@ -2511,21 +2536,184 @@ class QuizifyGameState:
         Both answer to the same attribute names, so every leaderboard call site
         can take this without caring which it got — that is the whole reason
         the dashboard, reveal and finale need no team-specific rendering path.
+
+        Whoever is out of the scoring (#1150) is not in this list, which is how
+        one filter reaches the leaderboard, the TV, the podium, the awards and
+        the lasting stats. The set only changes at a normal reveal and at the
+        finale, so a running Hot Seat or Lightning Round keeps the field it
+        started with.
         """
+        if not self._out_of_ranking:
+            return self._all_participants()
+        return [
+            p
+            for p in self._all_participants()
+            if self._entrant_key(p) not in self._out_of_ranking
+        ]
+
+    def _all_participants(self) -> list[Participant]:
+        """Every row there is, teams and solo players, in or out of the scoring."""
         if not self.team_mode:
-            return list(self.get_players())
+            players: list[Participant] = list(self.get_players())
+            return players
         # A player who joined no team is a team of one, not an error state
         # (Markus, 2026-08-12) — so they keep their own row next to the teams
         # rather than dropping out of the ranking. Found by playing it: with
         # teams returned alone, the one guest who stayed solo vanished from the
         # leaderboard, the TV and the podium.
         teams: list[Participant] = list(self._team_registry.all_teams())
-        solo = [
+        solo: list[Participant] = [
             p
             for p in self.get_players()
             if self._team_registry.get_by_member(p.name) is None
         ]
         return teams + solo
+
+    # ------------------------------------------------------------------
+    # Out of scoring (#1150)
+    # ------------------------------------------------------------------
+    #
+    # Two sets on purpose. ``_out_requested`` is what the host decided, and it
+    # moves on a tap or a return. ``_out_of_ranking`` is what the room sees, and
+    # it follows at the next normal reveal or the finale, so a mistaken tap
+    # never reaches the television. Rows are keyed by entrant, so neither a
+    # player nor ``Team.members`` (#936) is touched and points simply stay.
+
+    def _clear_out_of_scoring(self) -> None:
+        self._out_requested.clear()
+        self._out_of_ranking.clear()
+        self._scoring_notices.clear()
+
+    def _late_joiner_seed_score(self) -> int:
+        """The room's average for a newcomer, without whoever the host took out."""
+        excluded: set[str] = set()
+        for entrant in self._out_requested:
+            row = self._participant_by_entrant(entrant)
+            if row is not None:
+                excluded.update(row.members)
+        return self._player_registry.get_average_score(exclude=excluded)
+
+    def _player_returned(self, name: str) -> None:
+        """A phone came back: the guest is in again, the count starts over."""
+        player = self._player_registry.get_player(name)
+        if player is not None:
+            player.rounds_missed = 0
+        row = self.get_ranked_participant_for(name)
+        if row is not None:
+            self._out_requested.discard(self._entrant_key(row))
+
+    def is_out_of_scoring(self, player_name: str) -> bool:
+        """Whether this player's row is out, as decided or as the room sees it."""
+        row = self.get_ranked_participant_for(player_name)
+        if row is None:
+            return False
+        key = self._entrant_key(row)
+        return key in self._out_requested or key in self._out_of_ranking
+
+    def _people_of(self, row: Participant) -> list[PlayerSession]:
+        roster = self._player_registry.players
+        return [roster[name] for name in row.members if name in roster]
+
+    def can_take_out_of_scoring(self, row: Participant) -> bool:
+        """The rule behind the button: nobody there, and a round went by.
+
+        A team counts as gone only when every member is, and has missed a round
+        only when all of them have. The host's own departure runs through the
+        pause (``admin_disconnected``) and is not this feature's business.
+        """
+        if self.phase in (GamePhase.LOBBY, GamePhase.FINALE):
+            return False
+        if self._entrant_key(row) in self._out_requested:
+            return False
+        people = self._people_of(row)
+        return bool(people) and all(
+            not p.connected and not p.is_admin and p.rounds_missed >= 1
+            for p in people
+        )
+
+    def take_out_of_scoring(self, entrant: str) -> bool:
+        """Take a row out at the next normal reveal. False when not allowed."""
+        row = self._participant_by_entrant(entrant)
+        if row is None or not self.can_take_out_of_scoring(row):
+            return False
+        self._out_requested.add(entrant)
+        return True
+
+    def bring_back_to_scoring(self, entrant: str) -> bool:
+        """Undo the host's call, until the podium. False when there is none."""
+        if self.phase in (GamePhase.LOBBY, GamePhase.FINALE):
+            return False
+        if entrant not in self._out_requested:
+            return False
+        self._out_requested.discard(entrant)
+        return True
+
+    def get_scoring_view(self) -> tuple[list[Participant], list[Participant]]:
+        """The host's view: (still ranked, out), by decision rather than by reveal."""
+        ranked: list[Participant] = []
+        out: list[Participant] = []
+        for row in self._all_participants():
+            target = out if self._entrant_key(row) in self._out_requested else ranked
+            target.append(row)
+        return ranked, out
+
+    def get_out_of_ranking_entrants(self) -> set[str]:
+        """The rows the room currently does not see (a copy)."""
+        return set(self._out_of_ranking)
+
+    def drain_scoring_notices(self) -> list[dict[str, str]]:
+        """Hand over the sentences for the television, once."""
+        notices = self._scoring_notices
+        self._scoring_notices = []
+        return notices
+
+    def _tally_missed_round(self) -> None:
+        """Count this round for everybody it went by without (#1150)."""
+        for player in self._player_registry.players.values():
+            if player.connected:
+                player.rounds_missed = 0
+            elif not player.submitted:
+                player.rounds_missed += 1
+
+    def _apply_out_of_scoring(self, *, announce: bool) -> None:
+        """Bring what the room sees in line with what the host decided.
+
+        ``announce`` queues the television's sentence, only for a row the room
+        was actually reading: the board shows five, and a stranger's name in a
+        banner would explain nothing. The "before" board is the one still on
+        screen, so it ranks by the score from before this round.
+        """
+        # Safety net: nobody who is here stays out, however they got here.
+        for entrant in list(self._out_requested):
+            row = self._participant_by_entrant(entrant)
+            if row is None or any(p.connected for p in self._people_of(row)):
+                self._out_requested.discard(entrant)
+
+        if self._out_requested == self._out_of_ranking:
+            return
+
+        board_before = sorted(
+            self.get_ranked_participants(),
+            key=lambda p: p.score - p.round_score,
+            reverse=True,
+        )[:TV_LEADERBOARD_ROWS]
+        leaving = self._out_requested - self._out_of_ranking
+        returning = self._out_of_ranking - self._out_requested
+        self._out_of_ranking = set(self._out_requested)
+        if not announce:
+            return
+
+        board_after = self.get_standings()[:TV_LEADERBOARD_ROWS]
+        self._scoring_notices.extend(
+            {"kind": "left", "name": p.name}
+            for p in board_before
+            if self._entrant_key(p) in leaving
+        )
+        self._scoring_notices.extend(
+            {"kind": "back", "name": p.name}
+            for p in board_after
+            if self._entrant_key(p) in returning
+        )
 
     def _keeps_own_score(self, player_name: str) -> bool:
         """Whether this player's points land in a row of their own (#923).

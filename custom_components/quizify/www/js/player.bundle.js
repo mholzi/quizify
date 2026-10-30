@@ -1899,12 +1899,19 @@
     // Memo of the previous round's leaderboard so we can compute rank deltas
     // ("↑1", "↓1", "—") without server help. Keyed by entrant id (#1015).
     var _prevRanks = null;
+    // The ranks the deltas on screen are measured against, kept apart from
+    // `_prevRanks` so a repaint for the host's buttons (#1150) does not turn
+    // every arrow into a dash.
+    var _deltaBase = null;
+    var _lastStandings = null;
+    var _scoringStatus = null;
 
     // Clear the rank-delta memo on game_reset (issue #257) — otherwise the
     // first reveal of the next game computes deltas against the previous
     // game's final ranks.
     function resetRankMemo() {
         _prevRanks = null;
+        _deltaBase = null;
     }
 
     function updateRevealView(data) {
@@ -2448,9 +2455,22 @@
         return _PLAYER_COLORS[(c + idx) % _PLAYER_COLORS.length];
     }
 
-    function renderStandings(leaderboard) {
+    /**
+     * The host's `scoring_status` (#1150). Only a host who plays along ever
+     * gets one, so for every other phone the standings stay the room's.
+     */
+    function updateScoringStatus(msg) {
+        _scoringStatus = msg;
+        if (_lastStandings) renderStandings(_lastStandings, true);
+    }
+
+    function renderStandings(leaderboard, isRepaint) {
         var container = document.getElementById('reveal-standings');
         if (!container) return;
+        _lastStandings = leaderboard;
+        if (!isRepaint) _deltaBase = _prevRanks;
+        var shared = window.QuizifyRenderShared;
+        leaderboard = shared.scoringHostRows(leaderboard, _scoringStatus);
 
         // Normalize: leaderboard may be an array of player objects with
         // {name, score} or {player_name, total_score}. The server sends the
@@ -2464,6 +2484,7 @@
                       : (typeof p.points === 'number') ? p.points : 0;
             var color = p.color || null;
             return {
+                source: p,
                 // Keyed by entrant, not by the printed name (#1015, as #759
                 // did for the in-game leaderboard): rows are teams in team
                 // mode, and two teams may share a name.
@@ -2489,8 +2510,8 @@
 
         // Compute delta vs. previous round's snapshot (if any).
         function deltaFor(key) {
-            if (!_prevRanks) return null;
-            var prev = _prevRanks[key];
+            if (!_deltaBase) return null;
+            var prev = _deltaBase[key];
             var now = newRanks[key];
             if (typeof prev !== 'number' || typeof now !== 'number') return null;
             return prev - now;  // positive = moved up
@@ -2505,6 +2526,7 @@
             var classes = ['pl-result-srow'];
             if (medalClass[r.rank]) classes.push(medalClass[r.rank]);
             if (isMe) classes.push('pl-result-srow--me');
+            var scoringNote = shared.scoringNoteHtml(r.source, _scoringStatus);
             var initial = (r.name || '?').charAt(0).toUpperCase();
             var bg = r.color || _colorFor(r.name, i);
             var displayName = isMe ? youLabel : (r.name || '');
@@ -2520,8 +2542,16 @@
                 '<span class="pl-result-nm">' + pu.escapeHtml(displayName) + '</span>' +
                 deltaHtml +
                 '<span class="pl-result-sc">' + r.score + '</span>' +
+                scoringNote +
             '</div>';
-        }).join('');
+        }).join('') + shared.scoringOutHtml(_scoringStatus);
+        if (_scoringStatus) {
+            shared.bindScoringButtons(container, function (entrantId, out) {
+                if (state.ws && state.ws.readyState === WebSocket.OPEN) {
+                    state.ws.send(JSON.stringify({ type: 'set_scoring', entrant_id: entrantId, out: out }));
+                }
+            });
+        }
 
         // Store snapshot for the NEXT round's delta computation.
         _prevRanks = newRanks;
@@ -2675,6 +2705,7 @@
 
     window.QuizifyPlayerReveal = {
         updateRevealView: updateRevealView,
+        updateScoringStatus: updateScoringStatus,
         resetRankMemo: resetRankMemo,
         renderFunFact: renderFunFact
     };
@@ -6521,6 +6552,13 @@
                     pu.saveSession(msg.session_token, state.playerName);
                 }
                 if (msg.is_admin) state.isAdmin = true;
+                // #1150: the host had taken them out, and coming back undid it.
+                if (typeof msg.welcome_back_score === 'number') {
+                    pu.showToast(t('game.welcomeBackScore', {
+                        name: state.playerName,
+                        score: msg.welcome_back_score
+                    }), 4000);
+                }
                 // #288: restore the assigned power-up on (re)join. The server
                 // sends the current power-up in `msg.powerup`; without this a
                 // reconnecting player whose power-up was assigned earlier never
@@ -6698,6 +6736,11 @@
 
             case 'powerup_applied':
                 handlePowerUpApplied(msg);
+                break;
+
+            // #1150: reaches this phone only if it is the host playing along.
+            case 'scoring_status':
+                reveal.updateScoringStatus(msg);
                 break;
 
             // (Removed dead 'rematch_started' case: the server's
@@ -7208,10 +7251,14 @@
      * would show the player a bank they do not have.
      */
     function _myScore(msg) {
-        var board = msg.leaderboard || msg.players || [];
-        for (var i = 0; i < board.length; i++) {
-            if (board[i] && board[i].name === state.playerName) {
-                return board[i].score || 0;
+        // Both lists: a guest back from "out of scoring" has no leaderboard row
+        // until the next reveal, but is on the roster with their points (#1150).
+        var boards = [msg.leaderboard || [], msg.players || []];
+        for (var b = 0; b < boards.length; b++) {
+            for (var i = 0; i < boards[b].length; i++) {
+                if (boards[b][i] && boards[b][i].name === state.playerName) {
+                    return boards[b][i].score || 0;
+                }
             }
         }
         return 0;

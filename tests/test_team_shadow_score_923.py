@@ -335,6 +335,12 @@ _SER = "server/serializers.py"
 #: score; adding it here is the moment to check that what they read is a
 #: participant and not a person standing in for one.
 _ALLOWED_SCORE_READERS: dict[str, str] = {
+    _key("server/join_handlers.py", "handle_reconnect", "own_row"): (
+        "the row a returning guest's points land in (#1150)"
+    ),
+    _key("server/serializers.py", "serialize_scoring_status", "p"): (
+        "a row out of the scoring, a participant from get_scoring_view (#1150)"
+    ),
     _key(
         "server/broadcasters.py",
         "HotSeatBroadcaster",

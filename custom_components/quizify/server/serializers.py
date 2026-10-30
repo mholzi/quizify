@@ -802,6 +802,66 @@ def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
     ]
 
 
+def serialize_scoring_status(game_state: QuizifyGameState) -> dict[str, Any]:
+    """What the host needs to run "Out of scoring" (#1150).
+
+    Sent to the host alone: the table's rows are drawn from the normal
+    leaderboard, and this says how the host's view differs from the room's.
+    The room only catches up at the next reveal, so a tap has to show here first.
+
+    * ``out`` — the rows below the ranking, with their saved points.
+    * ``back`` — rows the host already sees ranked again (a return or a "bring
+      back") that the room's leaderboard does not carry until the next reveal.
+    * ``flags`` — by entrant id, only rows with something to say. A guest with
+      no missed round has none: a locked phone is not news.
+
+    Empty outside a running game, so the finale's list stops offering a way
+    back the server would refuse.
+    """
+    if game_state.phase in (GamePhase.LOBBY, GamePhase.FINALE):
+        return {"type": "scoring_status", "out": [], "back": [], "flags": {}}
+
+    ranked, out = game_state.get_scoring_view()
+    rows = serialize_leaderboard(ranked)
+    hidden = game_state.get_out_of_ranking_entrants()
+    last_reveal = (
+        game_state.phase == GamePhase.ANSWER_REVEAL
+        and game_state.round >= game_state.total_rounds
+    )
+    ranks = {row["entrant_id"]: row["rank"] for row in rows}
+    flags: dict[str, dict[str, Any]] = {}
+    for participant in ranked:
+        roster = [
+            player
+            for name in participant.members
+            if (player := game_state.get_player(name)) is not None
+        ]
+        missing = [p for p in roster if not p.connected and p.rounds_missed >= 1]
+        if not missing or any(p.is_admin for p in missing):
+            continue
+        entrant = participant.team_id or participant.name
+        can_take_out = game_state.can_take_out_of_scoring(participant)
+        flags[entrant] = {
+            "is_team": participant.team_id is not None,
+            "missed": min(p.rounds_missed for p in missing),
+            "absent": [p.name for p in missing],
+            "present": sum(1 for p in roster if p.connected),
+            "total": len(roster),
+            "can_take_out": can_take_out,
+            # The finale freezes the podium, so this is the last chance to say.
+            "on_podium": last_reveal and can_take_out and ranks[entrant] <= 3,
+        }
+    return {
+        "type": "scoring_status",
+        "out": [
+            {"entrant_id": p.team_id or p.name, "name": p.name, "score": p.score}
+            for p in sorted(out, key=lambda p: p.score, reverse=True)
+        ],
+        "back": [row for row in rows if row["entrant_id"] in hidden],
+        "flags": flags,
+    }
+
+
 def _entrant_has_answered(entrant: Participant) -> bool:
     """Whether one leaderboard row has a response standing this round (#835).
 

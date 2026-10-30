@@ -54,6 +54,8 @@ ADMIN_REQUIRED_TYPES = {
     "pause_game",
     "resume_game",
     "kick_player",
+    # set_scoring (#1150) moves a guest out of or back into the ranking.
+    "set_scoring",
     # configure_tts pushes the narration settings during the lobby so player-
     # join announcements work before start_game (#281). Admin-only.
     "configure_tts",

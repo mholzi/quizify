@@ -29,6 +29,7 @@ import logging
 from typing import TYPE_CHECKING
 
 from custom_components.quizify.server.serializers import (
+    serialize_scoring_status,
     snapshot_house_entities,
     snapshot_tts_entities,
 )
@@ -142,6 +143,8 @@ async def handle_admin_connect(
     # panel reads state.house_entities.{lights,media_players,scenes}.
     state["house_entities"] = snapshot_house_entities(hass)
     await handler._conn.send(ws, state)
+    # #1150: a reloaded host page has to find its "not in the scoring" rows.
+    await handler._conn.send(ws, serialize_scoring_status(game_state))
 
 
 def is_authorized_admin(

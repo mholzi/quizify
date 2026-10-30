@@ -59,6 +59,10 @@ class FakeConnection:
             self.__dict__["_conn_id_maps"] = maps
         return maps
 
+    def iter_admin_and_dashboard_ws(self) -> list[tuple[Any, bool]]:
+        """No host or television socket is registered on a stub."""
+        return []
+
     def connection_id(self, ws: Any) -> str:
         by_ws, by_id = self._id_maps
         cid = by_ws.get(id(ws))

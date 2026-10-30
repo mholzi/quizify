@@ -241,6 +241,7 @@ function _t(key) { return key; }
 window.QuizifyI18n = { t: function (key) { return key; } };
 var HANDLED = [];
 function handleGameState(msg) { HANDLED.push(msg); }
+function handleScoringStatus() {}
 
 %(admin)s
 

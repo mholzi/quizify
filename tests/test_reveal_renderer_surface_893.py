@@ -35,7 +35,12 @@ _DEFINITION = re.compile(r"\bfunction\s+([A-Za-z_$][\w$]*)\s*\(")
 
 #: Renderers ``updateRevealView`` dispatches to, plus the two entry points
 #: ``player-core.js`` reaches through ``window.QuizifyPlayerReveal``.
-EXPECTED_EXPORTS = ("updateRevealView", "resetRankMemo", "renderFunFact")
+EXPECTED_EXPORTS = (
+    "updateRevealView",
+    "updateScoringStatus",
+    "resetRankMemo",
+    "renderFunFact",
+)
 
 
 def _corpus() -> str:
