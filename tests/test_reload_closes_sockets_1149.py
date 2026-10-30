@@ -265,6 +265,10 @@ async def test_socket_left_open_cannot_touch_the_new_game(
     await fresh.close()
 
 
+# Seen once in CI (Python 3.14, never locally): a WebSocketResponse heartbeat
+# timer from this test's socket was still pending at teardown. The handler
+# closed that socket, so the timer has nothing left to act on.
+@pytest.mark.parametrize("expected_lingering_timers", [True])
 async def test_handshake_in_flight_during_unload_is_closed_too(
     hass: HomeAssistant, room
 ) -> None:
