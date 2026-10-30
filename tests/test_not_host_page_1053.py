@@ -281,7 +281,7 @@ def _run_page(steps: list[dict]) -> list[dict]:
         _block(source, "function leaveNotHost() {"),
         _block(source, "function routeMessage(msg) {"),
         _block(source, "function showView(name) {"),
-        _block(source, "function send(type, payload) {"),
+        _block(source, "function send(type, payload, opts) {"),
         _block(source, "function handleMessage(msg) {"),
     ]
     js_steps = []
