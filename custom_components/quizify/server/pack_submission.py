@@ -460,7 +460,8 @@ def _check_gates(request: web.Request, ctx: AppContext) -> web.Response | None:
     """
     # CSRF gate (#785). Both routes are registered with no HA auth and file a
     # GitHub issue through the host's worker secret, so a cross-site page must
-    # not be able to reach them: refuse a foreign Origin, and require an
+    # not be able to reach them (the admin-token check runs before this view,
+    # in the wrappers in views.py, #1148): refuse a foreign Origin, and require an
     # explicit ``application/json`` body so a browser cannot get here as a CORS
     # simple request.
     refusal = check_unauthenticated_post(request, ctx.runtime)
