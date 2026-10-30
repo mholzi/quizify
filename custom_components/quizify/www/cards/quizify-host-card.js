@@ -306,7 +306,7 @@
             ws.onopen = function () {
                 if (self._ws !== ws) return;
                 self._attempts = 0;
-                self._status = 'online';
+                if (!self._refused) self._status = 'online';
                 // Token first, out of the URL (#359), then the connect frame.
                 ws.send(JSON.stringify({ type: 'admin_auth', token: self._token }));
                 ws.send(JSON.stringify({ type: 'admin_connect' }));
@@ -322,7 +322,22 @@
                 if (msg.admin_session_token && window.QuizifyUtils) {
                     window.QuizifyUtils.writeAdminToken(msg.admin_session_token);
                     self._token = msg.admin_session_token;
+                    if (self._refused) { self._refused = false; self._status = 'online'; }
                 }
+                // The server refused this browser's token (#1155): "Admin only"
+                // on the handshake, ADMIN_REQUIRED on a command. Same note as
+                // having no token, never live buttons that fail silently. Sticky
+                // until the server grants a token, since game_state is still
+                // broadcast to a refused connection.
+                if ((msg.type || msg.event) === 'error' && (msg.code === 'ADMIN_REQUIRED'
+                        || (msg.code === 'INVALID_ACTION' && msg.message === 'Admin only'))) {
+                    self._refused = true;
+                    self._status = 'no-token';
+                    self._state = null;
+                    self._render();
+                    return;
+                }
+                if (self._refused) return;
                 if (msg.type === 'game_state') {
                     self._state = msg;
                     self._render();
@@ -332,7 +347,7 @@
             ws.onclose = function () {
                 if (self._ws !== ws) return;
                 self._ws = null;
-                self._status = 'offline';
+                if (!self._refused) self._status = 'offline';
                 self._render();
                 self._scheduleRetry();
             };
