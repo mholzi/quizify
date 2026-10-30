@@ -1610,7 +1610,7 @@
     // if the socket isn't open yet — ws.onopen re-sends after admin_connect,
     // the same contract _pushTtsConfig / _pushHouseConfig work under.
     function _pushLanguage() {
-        send('set_language', { language: selectedLanguage });
+        send('set_language', { language: selectedLanguage }, { quiet: true });
     }
 
     // The same for the difficulty (#851). `GameState.difficulty` is written by
@@ -1621,7 +1621,7 @@
     // language, for the same reason and with the same no-op-if-closed
     // contract.
     function _pushDifficulty() {
-        send('set_difficulty', { difficulty: selectedDifficulty });
+        send('set_difficulty', { difficulty: selectedDifficulty }, { quiet: true });
     }
 
     // #889: everything a language pick has to do, in one callable place.
@@ -1777,7 +1777,7 @@
     // The boolean matters as much as the toast: callers were disabling their
     // button for 1.5s afterwards, which is a success animation for something
     // that never happened.
-    function send(type, payload) {
+    function send(type, payload, opts) {
         // #1053: a page the server refused as host sends the handshake and
         // nothing else. The server would refuse the rest anyway; not asking is
         // what keeps this page free of anything that could change the game.
@@ -1787,7 +1787,10 @@
             return true;
         }
         _LOG_UNDELIVERED(type);
-        showErrorToast(_t('connection.reconnecting'));
+        // #1154: the toast is visible now. The lobby pushes (language,
+        // difficulty, TTS, house) are replayed by onopen, so a push that finds
+        // the socket closed is not a failed host action; only a tap is.
+        if (!(opts && opts.quiet)) showErrorToast(_t('connection.reconnecting'));
         return false;
     }
 
@@ -3447,7 +3450,7 @@
     // Send the current TTS config to the server (no-op if the socket isn't
     // open yet — onopen re-sends after admin_connect).
     function _pushTtsConfig(cfg) {
-        send('configure_tts', cfg || _readTtsConfig());
+        send('configure_tts', cfg || _readTtsConfig(), { quiet: true });
     }
 
     // Variant B (#281): dim + disable the child event toggles when the master
@@ -3658,7 +3661,7 @@
     // Send the current house config to the server (no-op if the socket isn't
     // open yet — onopen re-sends after admin_connect).
     function _pushHouseConfig(cfg) {
-        send('configure_house', cfg || _readHouseConfig());
+        send('configure_house', cfg || _readHouseConfig(), { quiet: true });
     }
 
     // Dim + disable everything below the master switch when it is off (same
@@ -4473,17 +4476,31 @@
     }
 
     // ---- Error toast ----
+    var ERROR_TOAST_STYLE = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);' +
+        'width:max-content;max-width:calc(100vw - 32px);box-sizing:border-box;text-align:center;' +
+        'background:#D65858;color:white;padding:10px 20px;border-radius:10px;' +
+        'font-size:0.85rem;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;';
+    var _errorToastTimer = null;
+
     function showErrorToast(message) {
         var toast = document.getElementById('error-toast');
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'error-toast';
-            toast.style.cssText = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#D65858;color:white;padding:10px 20px;border-radius:10px;font-size:0.85rem;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;';
             document.body.appendChild(toast);
         }
+        // #1154: admin.html ships the element with `hidden` and no styling, so
+        // setting opacity alone never showed it (`.hidden` is display:none
+        // !important). Take the class off and style it every time.
+        toast.classList.remove('hidden');
+        toast.style.cssText = ERROR_TOAST_STYLE;
         toast.textContent = message;
         toast.style.opacity = '1';
-        setTimeout(function () { toast.style.opacity = '0'; }, 3000);
+        if (_errorToastTimer) clearTimeout(_errorToastTimer);
+        _errorToastTimer = setTimeout(function () {
+            toast.style.opacity = '0';
+            _errorToastTimer = null;
+        }, 3000);
     }
 
     // ---- Connection status ----

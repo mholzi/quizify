@@ -55,7 +55,7 @@ def test_the_string_exists_in_every_language() -> None:
 
 def test_the_admin_send_reports_failure_instead_of_swallowing_it() -> None:
     body = _function_body(
-        (_JS / "admin.js").read_text("utf-8"), "function send(type, payload)"
+        (_JS / "admin.js").read_text("utf-8"), "function send(type, payload, opts)"
     )
 
     assert "return true" in body
