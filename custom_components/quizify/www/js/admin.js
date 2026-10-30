@@ -1700,17 +1700,34 @@
     setupCollapsibles();
 
     // ---- WebSocket ----
+    // #1151: the backoff timer's id. connect() has three callers (this timer,
+    // the visibilitychange handler and the retry dot); without the id a
+    // foreground during a backoff opened a socket and the timer then opened a
+    // second one, and every frame rendered twice.
+    var _reconnectTimer = null;
+
     function connect() {
+        if (_reconnectTimer !== null) {
+            clearTimeout(_reconnectTimer);
+            _reconnectTimer = null;
+        }
+        // A live or still-connecting socket is the connection; do not stack a
+        // second one next to it.
+        if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return;
         var savedToken = QuizifyUtils.readAdminToken();
+        var sock = null;
         // #359: the admin session token used to be appended to the WS URL as
         // ?token=..., where it leaked into aiohttp / reverse-proxy access logs
         // and browser history. It is now sent as the FIRST WebSocket frame
         // (admin_auth) below, before admin_connect or any other traffic, so it
         // never lands in a URL. The server still accepts ?token= as a
         // deprecated fallback, but we no longer put it there.
-        ws = window.QuizifyClientCore.createSocket('/api/quizify/ws?role=admin', {
+        sock = ws = window.QuizifyClientCore.createSocket('/api/quizify/ws?role=admin', {
             logPrefix: '[Quizify Admin]',
             onOpen: function () {
+                // A socket that is no longer the current one (replaced while
+                // it was closing) must not act for the page (#1151).
+                if (sock !== ws) return;
                 reconnectAttempts = 0;
                 updateConnectionStatus('connected');
                 // Send the token out-of-URL first so the server can grant admin
@@ -1738,6 +1755,7 @@
             // Any frame may move currentPhase; the wake lock follows it
             // here, in one place, after the frame is handled (#1131).
             onMessage: function (msg) {
+                if (sock !== ws) return;
                 routeMessage(msg);
                 _syncWakeLock();
             },
@@ -1745,6 +1763,9 @@
                 return _lightningLive && currentPhase === 'LIGHTNING';
             },
             onClose: function () {
+                // If another socket replaced this one, its late close must
+                // neither null the live socket nor arm a second reconnect.
+                if (sock !== ws) return;
                 ws = null;
                 if (reconnectAttempts < MAX_RECONNECT) {
                     updateConnectionStatus('reconnecting');
@@ -1756,7 +1777,7 @@
                         reconnectAttempts, MAX_RECONNECT_DELAY_MS
                     );
                     reconnectAttempts++;
-                    setTimeout(connect, delay);
+                    _reconnectTimer = setTimeout(connect, delay);
                 } else {
                     // Reached the attempt cap, but recovery is still possible — the
                     // visibilitychange listener and the manual retry affordance in
