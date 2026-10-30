@@ -246,15 +246,26 @@ class QuizifyWebSocketHandler:
         ("_host_presence_task", "_cancel_host_presence"),
     )
 
+    # Set by ``retire()`` when the integration unloads (#1149). A class default
+    # so a handler assembled with ``__new__`` in a test reads as live.
+    _retired = False
+
     def __init__(
         self,
         runtime: Runtime,
         game_state_provider: Callable[[], QuizifyGameState | None],
     ) -> None:
         """Initialize handler."""
+
+        def _game_unless_retired() -> QuizifyGameState | None:
+            # #1149: a retired handler has no game. Its read loops answer
+            # ERR_GAME_NOT_STARTED and its disconnect path does nothing, so it
+            # cannot act on the next setup's game or arm timers after teardown.
+            return None if self._retired else game_state_provider()
+
         self._runtime = runtime
-        self._get_game_state = game_state_provider
-        self._conn = ConnectionManager(runtime, game_state_provider)
+        self._get_game_state = _game_unless_retired
+        self._conn = ConnectionManager(runtime, _game_unless_retired)
         # Public alias for the connection manager so collaborators (e.g.
         # __init__.py setup/teardown) use a contract-bearing accessor instead
         # of reaching into the private ``_conn`` attribute. Backed by
@@ -548,6 +559,13 @@ class QuizifyWebSocketHandler:
             )
 
             is_admin = await self._grant_admin(role, admin_token, request)
+
+            # #1149: this handshake was still in ``prepare()`` or the admin
+            # grant when ``retire()`` closed the registered sockets, so it was
+            # missed. Close it here and let the client reconnect to the live
+            # handler; the read loop below then ends at once.
+            if self._retired:
+                await self._conn.close_socket(ws)
 
             self._conn.add_connection(ws, is_admin=is_admin, is_dashboard=is_dashboard)
 
@@ -1863,6 +1881,20 @@ class QuizifyWebSocketHandler:
         self._cancel_task_group(self._CONNECTION_SCOPED_TASKS)
         await self._conn.cleanup()
         _LOGGER.debug("Cleaned up all pending game tasks")
+
+    async def retire(self) -> None:
+        """Take this handler out of service on integration unload (#1149).
+
+        The next setup builds a new handler with its own connection manager,
+        and #606 only routes *new* sockets to it. A socket left open here would
+        keep talking to this handler while round results go out through the new
+        one. So every socket is closed and the clients reconnect through
+        ``_ws_dispatch``. The flag goes first: closing runs each socket's
+        disconnect path, which must find no game to act on.
+        """
+        self._retired = True
+        await self.cleanup_game_tasks()
+        await self._conn.close_all_connections()
 
     # ------------------------------------------------------------------
     # Static message-dispatch table (#363)

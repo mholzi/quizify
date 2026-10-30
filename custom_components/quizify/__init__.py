@@ -34,8 +34,7 @@ def _ws_dispatch(hass: HomeAssistant):
 
     The route object is created once and outlives every reload, so it must not
     close over a handler instance — that is precisely the bug in #606. It looks
-    the current handler up in ``hass.data`` at call time instead, the same shape
-    the ``game_state_provider`` lambda already uses for the game.
+    the current handler up in ``hass.data`` at call time instead.
 
     While the integration is unloaded, ``hass.data[DOMAIN]`` is gone and the
     route answers 503 rather than raising: the path stays registered whether or
@@ -159,7 +158,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     ws_handler = QuizifyWebSocketHandler(
         runtime=runtime,
-        game_state_provider=lambda: hass.data.get(DOMAIN, {}).get("game"),
+        # This handler's own game, not whatever hass.data holds now (#1149): a
+        # lookup would hand a leftover handler the next setup's game.
+        game_state_provider=lambda: game_state,
     )
 
     # Load persisted admin session token (survives HA restarts).
@@ -408,7 +409,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         ws_handler = domain_data.get("ws_handler")
         if ws_handler:
-            await ws_handler.cleanup_game_tasks()
+            await ws_handler.retire()
 
         # Unsubscribe the five house consumers (#605). This is the ONLY
         # teardown path left: an options change no longer detaches anything,

@@ -10,7 +10,7 @@ import uuid
 from collections.abc import Awaitable, Callable
 from typing import TYPE_CHECKING
 
-from aiohttp import web
+from aiohttp import WSCloseCode, web
 
 from ..const import ERROR_FALLBACK_TEXT
 from .token_store import TokenStore
@@ -704,6 +704,32 @@ class ConnectionManager:
     # ------------------------------------------------------------------
     # Cleanup
     # ------------------------------------------------------------------
+
+    async def close_socket(self, ws: web.WebSocketResponse) -> None:
+        """Close *ws* so its client reconnects, within the send cap (#1149).
+
+        1012 "service restart" is the honest code, and every client page
+        reconnects on any close. ``ws.close()`` drains and can then wait up to
+        10s for the peer's close frame, so a half-dead phone would hold up the
+        unload without the cap; aiohttp drops the transport when it is
+        cancelled here. Never raises: one bad socket must not leave the others
+        open.
+        """
+        try:
+            await asyncio.wait_for(
+                ws.close(
+                    code=WSCloseCode.SERVICE_RESTART, message=b"Quizify reloading"
+                ),
+                self._SEND_TIMEOUT,
+            )
+        except TimeoutError:
+            _LOGGER.debug("Timed out closing a WebSocket; transport dropped")
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("Failed to close a WebSocket")
+
+    async def close_all_connections(self) -> None:
+        """Close every open socket (integration unload, #1149)."""
+        await asyncio.gather(*(self.close_socket(ws) for ws in list(self.connections)))
 
     async def cleanup(self) -> None:
         """Cancel all pending removal and admin-disconnect tasks."""
