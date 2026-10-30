@@ -320,6 +320,13 @@
                     pu.saveSession(msg.session_token, state.playerName);
                 }
                 if (msg.is_admin) state.isAdmin = true;
+                // #1150: the host had taken them out, and coming back undid it.
+                if (typeof msg.welcome_back_score === 'number') {
+                    pu.showToast(t('game.welcomeBackScore', {
+                        name: state.playerName,
+                        score: msg.welcome_back_score
+                    }), 4000);
+                }
                 // #288: restore the assigned power-up on (re)join. The server
                 // sends the current power-up in `msg.powerup`; without this a
                 // reconnecting player whose power-up was assigned earlier never
@@ -497,6 +504,11 @@
 
             case 'powerup_applied':
                 handlePowerUpApplied(msg);
+                break;
+
+            // #1150: reaches this phone only if it is the host playing along.
+            case 'scoring_status':
+                reveal.updateScoringStatus(msg);
                 break;
 
             // (Removed dead 'rematch_started' case: the server's
@@ -1007,10 +1019,14 @@
      * would show the player a bank they do not have.
      */
     function _myScore(msg) {
-        var board = msg.leaderboard || msg.players || [];
-        for (var i = 0; i < board.length; i++) {
-            if (board[i] && board[i].name === state.playerName) {
-                return board[i].score || 0;
+        // Both lists: a guest back from "out of scoring" has no leaderboard row
+        // until the next reveal, but is on the roster with their points (#1150).
+        var boards = [msg.leaderboard || [], msg.players || []];
+        for (var b = 0; b < boards.length; b++) {
+            for (var i = 0; i < boards[b].length; i++) {
+                if (boards[b][i] && boards[b][i].name === state.playerName) {
+                    return boards[b][i].score || 0;
+                }
             }
         }
         return 0;

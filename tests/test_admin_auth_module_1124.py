@@ -27,6 +27,7 @@ import pytest
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
 
+from custom_components.quizify.game.state import GamePhase  # noqa: E402
 from custom_components.quizify.server import admin_auth  # noqa: E402
 from custom_components.quizify.server.connection import ConnectionManager  # noqa: E402
 from custom_components.quizify.server.websocket import (  # noqa: E402
@@ -52,6 +53,8 @@ class _Player:
 
 
 class _GameState:
+    phase = GamePhase.LOBBY
+
     def __init__(self, admin: _Player | None = None) -> None:
         self._admin = admin
 
@@ -170,11 +173,11 @@ async def test_admin_connect_sends_the_token_only_to_that_socket(handler) -> Non
 
     await handler._handle_admin_connect(ws, _GameState())
 
-    handler._conn.send.assert_awaited_once()
-    sent_ws, frame = handler._conn.send.await_args.args
-    assert sent_ws is ws
-    assert frame["type"] == "game_state"
-    assert frame["admin_session_token"] == token
+    # The state frame, then the host's scoring status (#1150), both to this ws.
+    sends = [call.args for call in handler._conn.send.await_args_list]
+    assert [frame["type"] for _, frame in sends] == ["game_state", "scoring_status"]
+    assert all(sent_ws is ws for sent_ws, _ in sends)
+    assert sends[0][1]["admin_session_token"] == token
     handler._conn.broadcast.assert_not_awaited()
 
 

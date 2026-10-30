@@ -538,6 +538,11 @@
             case 'powerup_applied':
                 handlePowerUpApplied(msg);
                 break;
+            // #1150: the same strip, the same four seconds. Sent only when
+            // the guest was on this board, so the ranking moving is explained.
+            case 'scoring_notice':
+                showScoringNotice(msg);
+                break;
             case 'reactions':
                 // #896: the whole flush window in one frame.
                 (msg.reactions || []).forEach(function (r) {
@@ -667,6 +672,16 @@
                 if (el.parentNode) el.parentNode.removeChild(el);
             }, POWERUP_BANNER_EXIT_MS);
         }, POWERUP_BANNER_MS);
+    }
+
+    var SCORING_NOTICES = {
+        left: { icon: '\uD83D\uDC4B', key: 'dashboard.scoringLeft', fallback: '{name} is no longer playing' },
+        back: { icon: '\uD83D\uDC4B', key: 'dashboard.scoringBack', fallback: '{name} is back in' }
+    };
+
+    function showScoringNotice(msg) {
+        var spec = SCORING_NOTICES[msg.kind];
+        if (spec && msg.name) showPowerUpBanner(spec, { name: msg.name });
     }
 
     // Transient +/- chips on the two rows a steal moved. Held in state

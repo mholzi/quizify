@@ -261,6 +261,10 @@ async def handle_reconnect(
         await handler._conn.send(ws, {"type": "reconnect_failed"})
         return
 
+    # #1150: asked before the bind below puts them back in. The phone thanks
+    # them for coming back with their points; everyone else just reconnected.
+    was_out = game_state.is_out_of_scoring(name)
+
     # Restore player connection. The id → socket map stays in the
     # connection manager (#882); the game model only learns the new
     # opaque handle.
@@ -310,6 +314,7 @@ async def handle_reconnect(
 
     # Send reconnect success with new token
     powerup = game_state.get_player_powerup(name)
+    own_row = game_state.get_ranked_participant_for(name)
     await handler._conn.send(ws, {
         "type": "reconnected",
         "player_id": name,
@@ -318,6 +323,7 @@ async def handle_reconnect(
         # Same per-player standing as the join frame (#371) — a player who
         # reloads their phone in the lobby must not lose the line.
         "all_time": handler._all_time_standing(name),
+        "welcome_back_score": own_row.score if was_out and own_row else None,
     })
 
     # Send full game state, projected into THIS player's frame (#253):

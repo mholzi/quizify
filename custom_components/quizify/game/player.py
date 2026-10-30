@@ -87,6 +87,12 @@ class PlayerSession:
     # so a late joiner doesn't inherit a 0 average inflated by other late joiners.
     rounds_played: int = 0
 
+    # Normal rounds this player missed while disconnected, since they were
+    # last connected (#1150). The host's "Out of scoring" button appears once
+    # this reaches one: a locked phone between two rounds is normal, a round
+    # that went by without them is the first sign they have left.
+    rounds_missed: int = 0
+
     # Wager-round bookkeeping (gameplay idea #3, Jeopardy-style final round).
     # Holds the player's wager as a PERCENT of their current score (0-100).
     # None = no wager submitted yet; on the final round, the wager overrides
@@ -213,6 +219,7 @@ class PlayerSession:
         self.powerups_used = 0
         self.hard_score = 0
         self.rounds_played = 0
+        self.rounds_missed = 0
         self.streak_milestone_bonus_total = 0
         self.streak_milestones_hit = 0
         self.wager = None

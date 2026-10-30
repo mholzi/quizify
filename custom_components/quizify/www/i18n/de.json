@@ -149,7 +149,15 @@
     "starHintBefore": "Gefällt euch Quizify? Ein ⭐",
     "starHintLink": "auf GitHub",
     "starHintAfter": "hilft anderen, es zu finden.",
-    "starHintDismiss": "Hinweis schließen"
+    "starHintDismiss": "Hinweis schließen",
+    "scoringOut": "Aus der Wertung",
+    "scoringBack": "Zurückholen",
+    "scoringSection": "Nicht in der Wertung",
+    "scoringMissedOne": "Seit 1 Runde getrennt",
+    "scoringMissedMany": "Seit {count} Runden getrennt",
+    "scoringAllGone": "Alle getrennt",
+    "scoringSomeGone": "{names} getrennt, {present} von {total} da",
+    "scoringPodium": "Steht sonst auf dem Podium"
   },
   "categories": {
     "mixed": "Gemischt",
@@ -203,7 +211,8 @@
     "timerRemainingAria": "Verbleibende Zeit: {seconds} Sekunden",
     "timerUpAria": "Zeit abgelaufen!",
     "timerTenLeft": "Noch 10 Sekunden",
-    "timerFiveLeft": "Noch 5 Sekunden"
+    "timerFiveLeft": "Noch 5 Sekunden",
+    "welcomeBackScore": "Willkommen zurück, {name}. Deine {score} Punkte sind noch da."
   },
   "powerups": {
     "joker": "Joker",
@@ -482,7 +491,9 @@
     "tonightWins": "{wins} Siege",
     "tonightWinsOne": "1 Sieg",
     "powerupFreeze": "{source} hat {target} eingefroren",
-    "powerupSteal": "{source} stiehlt {points} Punkte von {target}"
+    "powerupSteal": "{source} stiehlt {points} Punkte von {target}",
+    "scoringLeft": "{name} spielt nicht mehr mit",
+    "scoringBack": "{name} ist wieder dabei"
   },
   "connection": {
     "connected": "Verbunden",

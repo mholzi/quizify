@@ -385,6 +385,10 @@ async def emit_question(
     path can reuse the identical emission without re-running the LR
     trigger check.
     """
+    # #1150: the new round's status first, so a host screen left over from the
+    # previous game never filters this game's rows.
+    await handler._send_scoring_status(game_state)
+
     # Canonical shuffle — used by admin/dashboard and as a fallback.
     indices = list(range(len(question.answers)))
     random.shuffle(indices)

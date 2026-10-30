@@ -104,6 +104,7 @@ MSG_PLAY_AGAIN = "play_again"
 MSG_PAUSE_GAME = "pause_game"
 MSG_RESUME_GAME = "resume_game"
 MSG_KICK_PLAYER = "kick_player"
+MSG_SET_SCORING = "set_scoring"
 MSG_CONFIGURE_TTS = "configure_tts"
 MSG_CONFIGURE_HOUSE = "configure_house"
 MSG_SET_LANGUAGE = "set_language"
@@ -1170,6 +1171,16 @@ class QuizifyWebSocketHandler:
         """Delegate: see :func:`game_commands.handle_kick_player` (#1124)."""
         await game_commands.handle_kick_player(self, ws, data, game_state)
 
+    async def _handle_set_scoring(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Delegate: see :func:`game_commands.handle_set_scoring` (#1150)."""
+        await game_commands.handle_set_scoring(self, ws, data, game_state)
+
+    async def _send_scoring_status(self, game_state: QuizifyGameState) -> None:
+        """Delegate: see :func:`game_commands.send_scoring_status` (#1150)."""
+        await game_commands.send_scoring_status(self, game_state)
+
     # ------------------------------------------------------------------
     # Lightning Round (issue #42)
     # ------------------------------------------------------------------
@@ -1847,6 +1858,9 @@ class QuizifyWebSocketHandler:
         game_state = self._get_game_state()
         if game_state:
             await self._round_out.send_round_summary(game_state)
+            # #1150: right behind the reveal that moved the ranking.
+            await game_commands.send_scoring_notices(self, game_state)
+            await self._send_scoring_status(game_state)
             # ONE reveal milestone (#789), after the summary broadcast: the
             # combined spoken utterance (#281) and the bus event carrying the
             # correct answer + how many got it (#366) fan out inside
@@ -1858,6 +1872,7 @@ class QuizifyWebSocketHandler:
         game_state = self._get_game_state()
         if game_state:
             await self._broadcast_finale(game_state)
+            await self._send_scoring_status(game_state)
             # Fire the HA bus event with the final leaderboard (#366), after
             # the finale broadcast so entity state is already settled.
             self._game_ended(game_state)
@@ -2003,6 +2018,10 @@ class QuizifyWebSocketHandler:
         ),
         MSG_KICK_PLAYER: (
             lambda self, ws, data, gs: self._handle_kick_player(ws, data, gs),
+            True,
+        ),
+        MSG_SET_SCORING: (
+            lambda self, ws, data, gs: self._handle_set_scoring(ws, data, gs),
             True,
         ),
         MSG_CONFIGURE_TTS: (

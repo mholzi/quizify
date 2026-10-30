@@ -93,6 +93,7 @@
             closeBets: 'Close betting', lightningRunning: 'Lightning round running',
             auctionRunning: 'Bidding for the hot seat', seatAnswering: 'The hot seat is answering',
             reveal: 'Reveal', end: 'End game', reset: 'Reset', kick: 'Kick',
+            scoringOut: 'Out of scoring', scoringBack: 'Bring back', scoringSection: 'Not in the scoring', scoringPodium: 'Otherwise on the podium',
             players: 'players', round: 'Round', join: 'Join',
             waiting: 'Waiting for players', connecting: 'Connecting…',
             offline: 'Connection lost — reconnecting',
@@ -105,6 +106,7 @@
             closeBets: 'Wetten schließen', lightningRunning: 'Blitzrunde läuft',
             auctionRunning: 'Gebote für den Hot Seat', seatAnswering: 'Der Hot Seat antwortet',
             reveal: 'Auflösen', end: 'Spiel beenden', reset: 'Zurücksetzen', kick: 'Rauswerfen',
+            scoringOut: 'Aus der Wertung', scoringBack: 'Zurückholen', scoringSection: 'Nicht in der Wertung', scoringPodium: 'Steht sonst auf dem Podium',
             players: 'Spieler', round: 'Runde', join: 'Beitreten',
             waiting: 'Warte auf Spieler', connecting: 'Verbinde…',
             offline: 'Verbindung verloren — versuche erneut',
@@ -117,6 +119,7 @@
             closeBets: 'Cerrar apuestas', lightningRunning: 'Ronda relámpago en curso',
             auctionRunning: 'Pujas por la silla caliente', seatAnswering: 'La silla caliente responde',
             reveal: 'Revelar', end: 'Terminar partida', reset: 'Reiniciar', kick: 'Expulsar',
+            scoringOut: 'Sacar de la clasificación', scoringBack: 'Recuperar', scoringSection: 'Fuera de la clasificación', scoringPodium: 'Si no, estará en el podio',
             players: 'jugadores', round: 'Ronda', join: 'Unirse',
             waiting: 'Esperando jugadores', connecting: 'Conectando…',
             offline: 'Conexión perdida — reintentando',
@@ -159,6 +162,12 @@
         '.roster .sc{font-variant-numeric:tabular-nums;color:var(--secondary-text-color)}',
         '.dot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--success-color,#4caf50)}',
         '.dot.off{background:var(--disabled-text-color,#9e9e9e)}',
+        '.roster li.wrap{flex-wrap:wrap}',
+        '.roster .hint{flex-basis:100%;color:var(--secondary-text-color);font-size:.9em}',
+        '.roster .section{padding:8px 0 2px;color:var(--secondary-text-color);font-size:.8em;',
+        'letter-spacing:.08em;text-transform:uppercase;border-bottom:0}',
+        '.scoring{min-height:44px;padding:0 12px;border:1px solid var(--divider-color);border-radius:10px;',
+        'background:transparent;color:var(--primary-text-color);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}',
         '.kick{border:0;background:transparent;cursor:pointer;color:var(--secondary-text-color);',
         'font:inherit;min-height:32px;padding:0 6px}',
         '.qr{flex:0 0 auto}',
@@ -342,6 +351,10 @@
                     self._state = msg;
                     self._render();
                 }
+                if (msg.type === 'scoring_status') {
+                    self._scoring = msg;
+                    self._render();
+                }
             };
 
             ws.onclose = function () {
@@ -457,16 +470,12 @@
                 if (players.length === 0) {
                     html += '<li><span class="nm">' + esc(t.waiting) + '</span></li>';
                 }
-                for (var i = 0; i < players.length; i++) {
-                    var p = players[i];
-                    html += '<li>' +
-                        '<span class="dot' + (p.connected ? '' : ' off') + '"></span>' +
-                        '<span class="nm">' + esc(p.name) + '</span>' +
-                        '<span class="sc">' + esc(p.score != null ? p.score : '—') + '</span>' +
-                        '<button class="kick" data-kick="' + esc(p.name) + '" ' +
-                        'title="' + esc(t.kick) + '" aria-label="' + esc(t.kick) + ' ' + esc(p.name) + '">×</button>' +
-                        '</li>';
-                }
+                // Kicking is lobby-only on the server (#1150), and an × that
+                // can only be refused is a lie. During a game the card lists
+                // the ranked rows, so a team has one button, as on the host page.
+                html += s && s.phase !== 'LOBBY'
+                    ? this._gameRosterHtml(players)
+                    : this._lobbyRosterHtml(players);
                 html += '</ul><div class="qr" id="qr"></div></div>';
 
                 var total = (s && s.total_rounds) || 0;
@@ -512,6 +521,61 @@
             if (expanded) this._drawQr(joinUrl);
         }
 
+        _lobbyRosterHtml(players) {
+            var t = this._t;
+            return players.map(function (p) {
+                return '<li>' +
+                    '<span class="dot' + (p.connected ? '' : ' off') + '"></span>' +
+                    '<span class="nm">' + esc(p.name) + '</span>' +
+                    '<span class="sc">' + esc(p.score != null ? p.score : '—') + '</span>' +
+                    '<button class="kick" data-kick="' + esc(p.name) + '" ' +
+                    'title="' + esc(t.kick) + '" aria-label="' + esc(t.kick) + ' ' + esc(p.name) + '">×</button>' +
+                    '</li>';
+            }).join('');
+        }
+
+        _gameRosterHtml(players) {
+            var t = this._t;
+            var status = this._scoring || { out: [], back: [], flags: {} };
+            var connected = {};
+            players.forEach(function (p) { connected[p.name] = p.connected; });
+            var out = {};
+            status.out.forEach(function (r) { out[r.entrant_id] = true; });
+            var board = this._state.leaderboard || players;
+            var rows = board
+                .filter(function (r) { return !out[r.entrant_id || r.name]; })
+                .concat(status.back.filter(function (r) {
+                    return !board.some(function (b) { return b.entrant_id === r.entrant_id; });
+                }))
+                .sort(function (a, b) { return b.score - a.score; });
+            var html = rows.map(function (r) {
+                var id = r.entrant_id || r.name;
+                var flag = status.flags[id];
+                var on = id in connected ? connected[id] : !(flag && flag.present === 0);
+                return '<li class="wrap">' +
+                    '<span class="dot' + (on ? '' : ' off') + '"></span>' +
+                    '<span class="nm">' + esc(r.name) + '</span>' +
+                    '<span class="sc">' + esc(r.score) + '</span>' +
+                    (flag && flag.can_take_out
+                        ? '<button class="scoring" data-scoring-out="' + esc(id) + '">' + esc(t.scoringOut) + '</button>'
+                        : '') +
+                    (flag && flag.on_podium ? '<span class="hint">' + esc(t.scoringPodium) + '</span>' : '') +
+                    '</li>';
+            }).join('');
+            if (status.out.length) {
+                html += '<li class="section">' + esc(t.scoringSection) + '</li>';
+                html += status.out.map(function (r) {
+                    return '<li>' +
+                        '<span class="dot off"></span>' +
+                        '<span class="nm">' + esc(r.name) + '</span>' +
+                        '<span class="sc">' + esc(r.score) + '</span>' +
+                        '<button class="scoring" data-scoring-back="' + esc(r.entrant_id) + '">' + esc(t.scoringBack) + '</button>' +
+                        '</li>';
+                }).join('');
+            }
+            return html;
+        }
+
         // One place decides socket vs service, so every button reaches start_game
         // the same way no matter which control fired it (#744).
         _dispatch(msg) {
@@ -538,6 +602,18 @@
                 reset.addEventListener('click', function () {
                     if (window.confirm(t.resetConfirm)) self._send('reset_game');
                 });
+            }
+            var scoring = this.shadowRoot.querySelectorAll('[data-scoring-out],[data-scoring-back]');
+            for (var c = 0; c < scoring.length; c++) {
+                (function (el) {
+                    var takeOut = el.hasAttribute('data-scoring-out');
+                    el.addEventListener('click', function () {
+                        self._send('set_scoring', {
+                            entrant_id: el.getAttribute(takeOut ? 'data-scoring-out' : 'data-scoring-back'),
+                            out: takeOut
+                        });
+                    });
+                })(scoring[c]);
             }
             var kicks = this.shadowRoot.querySelectorAll('[data-kick]');
             for (var k = 0; k < kicks.length; k++) {

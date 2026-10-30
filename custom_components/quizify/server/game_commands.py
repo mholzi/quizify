@@ -30,6 +30,7 @@ from custom_components.quizify.const import (
     ERR_NO_QUESTIONS_REMAINING,
 )
 from custom_components.quizify.game.state import GamePhase
+from custom_components.quizify.server.serializers import serialize_scoring_status
 from custom_components.quizify.server.start_settings import _coerce_toggle
 
 if TYPE_CHECKING:  # pragma: no cover - typing only
@@ -663,3 +664,83 @@ async def handle_kick_player(
 
     # Coalesced roster broadcast (#453).
     handler._mark_roster_dirty("player_left")
+
+
+async def handle_set_scoring(
+    handler: QuizifyWebSocketHandler,
+    ws: web.WebSocketResponse,
+    data: dict,
+    game_state: QuizifyGameState,
+) -> None:
+    """Take a gone guest out of the scoring, or bring them back (#1150).
+
+    Not a kick: ``kick_player`` stays lobby-only and deletes. This one keeps
+    seat, points and session token, and needs no confirmation because a return
+    or "bring back" undoes it. A refusal still answers with the current status,
+    since it usually means the host's screen is behind (the guest just returned).
+    """
+    entrant = data.get("entrant_id")
+    out = data.get("out")
+    if not isinstance(entrant, str) or not isinstance(out, bool):
+        await handler._conn.send_error(
+            ws, ERR_INVALID_ACTION, "Missing entrant_id or out"
+        )
+        return
+
+    done = (
+        game_state.take_out_of_scoring(entrant)
+        if out
+        else game_state.bring_back_to_scoring(entrant)
+    )
+    if not done:
+        await handler._conn.send_error(
+            ws, ERR_INVALID_ACTION, "That row cannot change its scoring now"
+        )
+    await send_scoring_status(handler, game_state)
+
+
+async def send_scoring_status(
+    handler: QuizifyWebSocketHandler,
+    game_state: QuizifyGameState,
+) -> None:
+    """Send the host's scoring frame to the host's sockets.
+
+    Those are the host page and card, plus the phone of a host who plays along.
+    The television connects without a token and gets none of it: whose phone
+    is asleep is the host's business, not the sofa's.
+    """
+    frame = serialize_scoring_status(game_state)
+    targets = {
+        sock
+        for sock, is_admin in handler._conn.iter_admin_and_dashboard_ws()
+        if is_admin
+    }
+    for player in game_state.get_players():
+        if player.is_admin and player.connected:
+            sock = handler._conn.socket_for(player.connection_id)
+            if sock is not None:
+                targets.add(sock)
+    for sock in targets:
+        await handler._conn.send(sock, frame)
+
+
+async def send_scoring_notices(
+    handler: QuizifyWebSocketHandler, game_state: QuizifyGameState
+) -> None:
+    """Put the queued sentences on the television, and only there (#1150)."""
+    notices = game_state.drain_scoring_notices()
+    if not notices:
+        return
+    dashboards = [
+        sock
+        for sock, is_admin in handler._conn.iter_admin_and_dashboard_ws()
+        if not is_admin
+    ]
+    for notice in notices:
+        frame = {
+            "type": "scoring_notice",
+            "kind": notice["kind"],
+            "name": notice["name"],
+        }
+        for sock in dashboards:
+            await handler._conn.send(sock, frame)

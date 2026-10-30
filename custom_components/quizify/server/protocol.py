@@ -97,6 +97,7 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         "session_token",
         "powerup",
         "all_time",
+        "welcome_back_score",
         note=(
             "The resume twin of ``joined`` — and deliberately NOT the same "
             "shape: colour and admin flag are already on the client that is "
@@ -121,6 +122,23 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         "players",
         "teams",
         note="Same builder and shape as ``player_joined``; only the animation differs.",
+    ),
+    "scoring_status": _spec(
+        "out",
+        "back",
+        "flags",
+        note=(
+            "#1150. Host sockets only: how the host's view of the ranking "
+            "differs from the room's until the next reveal."
+        ),
+    ),
+    "scoring_notice": _spec(
+        "kind",
+        "name",
+        note=(
+            "#1150. Television only, at the reveal that moves the ranking: "
+            "kind is 'left' or 'back'. Rendered in the power-up banner."
+        ),
     ),
     "kicked": _spec(
         "reason",
@@ -453,6 +471,9 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = OUT_OF_BAND_CLIENT_TYPES | frozenset({
     "resume_game",
     "admin_skip",
     "kick_player",
+    # #1150: a gone guest out of the scoring, or back in. Mid-game and undoable,
+    # where kick_player is lobby-only and final.
+    "set_scoring",
     # Host configuration (#494, #281), gated on WS-level admin (#724) because
     # both reach Home Assistant service calls with host-supplied entity ids.
     "configure_tts",

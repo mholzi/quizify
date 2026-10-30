@@ -17,7 +17,7 @@ from ..const import (
 )
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Collection
 
 from .phase_controller import MID_QUESTION_PHASES
 from .player import PLAYER_COLORS, PlayerSession
@@ -293,14 +293,21 @@ class PlayerRegistry:
             return False
         return all(p.submitted for p in participants)
 
-    def get_average_score(self) -> int:
+    def get_average_score(self, exclude: Collection[str] = ()) -> int:
         """Average score for seeding late joiners.
 
         Uses only players who have completed at least one round so that
         joining late doesn't inherit a 0-inflated average from other
-        late joiners who themselves haven't played yet.
+        late joiners who themselves haven't played yet. ``exclude`` names the
+        players the host took out of the scoring (#1150): a guest's points
+        stay saved, but a newcomer must not start on a figure lifted by
+        somebody who is no longer in the ranking.
         """
-        scored_players = [p for p in self.players.values() if p.rounds_played > 0]
+        scored_players = [
+            p
+            for p in self.players.values()
+            if p.rounds_played > 0 and p.name not in exclude
+        ]
         if not scored_players:
             return 0
         total = sum(p.score for p in scored_players)

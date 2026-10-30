@@ -205,6 +205,8 @@ async def flush_roster_after_window(handler: QuizifyWebSocketHandler) -> None:
             "teams": gs.team_registry.to_list(),
         })
         await handler._send_head_to_head(gs)
+        # #1150: a guest dropped or came back, so the host's buttons changed.
+        await handler._send_scoring_status(gs)
 
     # A roster change that landed DURING the broadcast set _roster_dirty
     # again; _ensure_roster_flush won't start a new task while this one is

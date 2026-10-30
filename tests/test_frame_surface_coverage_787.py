@@ -203,6 +203,25 @@ COVERAGE: dict[str, Coverage] = {
             ),
         },
     ),
+    "scoring_status": _c(
+        "unicast",
+        "host",
+        "phone",
+        ignored={
+            "tv": (
+                "sent to host sockets only: whose phone is asleep is not the"
+                " sofa's business (#1150)"
+            ),
+        },
+    ),
+    "scoring_notice": _c(
+        "unicast",
+        "tv",
+        ignored={
+            "host": "the host tapped the button and already sees the row move",
+            "phone": "the phones have no banner strip; the television says it",
+        },
+    ),
     "kicked": _c(
         "unicast",
         "phone",

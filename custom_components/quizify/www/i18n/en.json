@@ -149,7 +149,15 @@
     "starHintBefore": "Enjoying Quizify? A ⭐",
     "starHintLink": "on GitHub",
     "starHintAfter": "helps others find it.",
-    "starHintDismiss": "Dismiss hint"
+    "starHintDismiss": "Dismiss hint",
+    "scoringOut": "Out of scoring",
+    "scoringBack": "Bring back",
+    "scoringSection": "Not in the scoring",
+    "scoringMissedOne": "Disconnected for 1 round",
+    "scoringMissedMany": "Disconnected for {count} rounds",
+    "scoringAllGone": "All disconnected",
+    "scoringSomeGone": "{names} disconnected, {present} of {total} here",
+    "scoringPodium": "Otherwise on the podium"
   },
   "categories": {
     "mixed": "Mixed",
@@ -203,7 +211,8 @@
     "timerRemainingAria": "Time remaining: {seconds} seconds",
     "timerUpAria": "Time is up!",
     "timerTenLeft": "10 seconds left",
-    "timerFiveLeft": "5 seconds left"
+    "timerFiveLeft": "5 seconds left",
+    "welcomeBackScore": "Welcome back, {name}. Your {score} points are still here."
   },
   "powerups": {
     "joker": "Joker",
@@ -482,7 +491,9 @@
     "tonightWins": "{wins} wins",
     "tonightWinsOne": "1 win",
     "powerupFreeze": "{source} froze {target}",
-    "powerupSteal": "{source} stole {points} points from {target}"
+    "powerupSteal": "{source} stole {points} points from {target}",
+    "scoringLeft": "{name} is no longer playing",
+    "scoringBack": "{name} is back in"
   },
   "connection": {
     "connected": "Connected",
