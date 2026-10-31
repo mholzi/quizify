@@ -1,0 +1,3323 @@
+{
+  "name": "Videojuegos",
+  "language": "es",
+  "version": "1.0",
+  "theme": "trivia",
+  "questions": [
+    {
+      "id": "videojuegos_es_001",
+      "question": "¿Cómo se llama el fontanero bigotudo de gorra roja que es la mascota de Nintendo?",
+      "answers": [
+        {
+          "text": "Kirby",
+          "correct": false
+        },
+        {
+          "text": "Link",
+          "correct": false
+        },
+        {
+          "text": "Mario",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lleva gorra y bigote porque con los pocos píxeles de los primeros arcades era difícil dibujar pelo y boca. Nació como «Jumpman» en Donkey Kong.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_002",
+      "question": "¿Qué erizo azul es la mascota de Sega?",
+      "answers": [
+        {
+          "text": "Crash Bandicoot",
+          "correct": false
+        },
+        {
+          "text": "Sonic",
+          "correct": true
+        },
+        {
+          "text": "Spyro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sonic debutó en 1991 en la Mega Drive. Sega buscaba una mascota con actitud para plantar cara a Mario.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_003",
+      "question": "¿Qué criatura verde de Minecraft se acerca en silencio y explota?",
+      "answers": [
+        {
+          "text": "Zombi",
+          "correct": false
+        },
+        {
+          "text": "Enderman",
+          "correct": false
+        },
+        {
+          "text": "Creeper",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El creeper surgió de un error al programar un cerdo: el modelo salió largo y estrecho, y el creador decidió dejarlo así.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_004",
+      "question": "¿Cómo se conoció popularmente en España a Pac-Man?",
+      "answers": [
+        {
+          "text": "El Comecocos",
+          "correct": true
+        },
+        {
+          "text": "El Tragabolas",
+          "correct": false
+        },
+        {
+          "text": "El Zampapuntos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En Japón se llamaba «Puck-Man». Se cambió a Pac-Man en Estados Unidos para evitar que los gamberros convirtieran la P en otra letra en las máquinas.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_005",
+      "question": "¿Cuál es la mascota amarilla y eléctrica de Pokémon?",
+      "answers": [
+        {
+          "text": "Pikachu",
+          "correct": true
+        },
+        {
+          "text": "Charmander",
+          "correct": false
+        },
+        {
+          "text": "Squirtle",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su nombre mezcla «pika», el sonido de la chispa, y «chu», el chillido de un ratón.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_006",
+      "question": "¿Cómo se llama el protagonista de la saga The Legend of Zelda?",
+      "answers": [
+        {
+          "text": "Zelda",
+          "correct": false
+        },
+        {
+          "text": "Ganon",
+          "correct": false
+        },
+        {
+          "text": "Link",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Muchos creen que el héroe es Zelda, pero ella es la princesa. El nombre de la saga se tomó de Zelda Fitzgerald, esposa del escritor F. Scott Fitzgerald.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_007",
+      "question": "¿Qué objeto convierte a Mario en invencible durante unos segundos?",
+      "answers": [
+        {
+          "text": "El champiñón rojo",
+          "correct": false
+        },
+        {
+          "text": "La superestrella",
+          "correct": true
+        },
+        {
+          "text": "La flor de fuego",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mientras brilla, Mario derrota a cualquier enemigo solo con tocarlo y la música cambia a un ritmo más rápido.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_008",
+      "question": "¿Qué empresa fabrica la consola PlayStation?",
+      "answers": [
+        {
+          "text": "Nintendo",
+          "correct": false
+        },
+        {
+          "text": "Sega",
+          "correct": false
+        },
+        {
+          "text": "Sony",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La primera PlayStation salió en Japón en diciembre de 1994 y fue el primer gran éxito de Sony en videojuegos.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_009",
+      "question": "¿Qué empresa fabrica la consola Xbox?",
+      "answers": [
+        {
+          "text": "Atari",
+          "correct": false
+        },
+        {
+          "text": "Sony",
+          "correct": false
+        },
+        {
+          "text": "Microsoft",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La primera Xbox llegó en noviembre de 2001 y pesaba lo suyo: más de tres kilos.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_010",
+      "question": "¿A qué género pertenece Call of Duty?",
+      "answers": [
+        {
+          "text": "Juego de ritmo",
+          "correct": false
+        },
+        {
+          "text": "Estrategia por turnos",
+          "correct": false
+        },
+        {
+          "text": "Shooter en primera persona",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La saga empezó en 2003 ambientada en la Segunda Guerra Mundial y después saltó a conflictos modernos.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_011",
+      "question": "¿Qué idioma hablan los personajes de The Sims?",
+      "answers": [
+        {
+          "text": "Simlish",
+          "correct": true
+        },
+        {
+          "text": "Esperanto",
+          "correct": false
+        },
+        {
+          "text": "Latín",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El simlish se creó con sílabas sin sentido para que el juego se pudiera vender en todo el mundo sin doblaje.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_012",
+      "question": "¿Cómo se llama el jugador que sabotea al resto en Among Us?",
+      "answers": [
+        {
+          "text": "El espía",
+          "correct": false
+        },
+        {
+          "text": "El traidor",
+          "correct": false
+        },
+        {
+          "text": "El impostor",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El juego salió en 2018, pero se hizo viral en 2020, cuando medio mundo estaba en casa y jugaba con amigos.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_013",
+      "question": "¿A quién atacan los pájaros de Angry Birds con su tirachinas?",
+      "answers": [
+        {
+          "text": "A unos cerdos",
+          "correct": true
+        },
+        {
+          "text": "A unos gatos",
+          "correct": false
+        },
+        {
+          "text": "A unos zorros",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los cerdos les han robado los huevos, y esa es toda la motivación de la saga desde 2009.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_014",
+      "question": "¿Qué hay que hacer en Candy Crush Saga?",
+      "answers": [
+        {
+          "text": "Alinear caramelos iguales",
+          "correct": true
+        },
+        {
+          "text": "Disparar a alienígenas",
+          "correct": false
+        },
+        {
+          "text": "Construir una granja",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lo creó King, que lo lanzó en Facebook en 2012 antes de saltar a los móviles.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_015",
+      "question": "¿Qué tenía de especial el mando de la consola Wii?",
+      "answers": [
+        {
+          "text": "Tenía una pantalla táctil",
+          "correct": false
+        },
+        {
+          "text": "Detectaba los movimientos de la mano",
+          "correct": true
+        },
+        {
+          "text": "Se controlaba con la voz",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su nombre se pronuncia como el inglés «we», nosotros, porque Nintendo quería una consola para toda la familia.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_016",
+      "question": "¿Qué particularidad define a la Nintendo Switch?",
+      "answers": [
+        {
+          "text": "Se juega en la tele y también como portátil",
+          "correct": true
+        },
+        {
+          "text": "Solo funciona con un casco de realidad virtual",
+          "correct": false
+        },
+        {
+          "text": "Solo permite jugar con conexión a internet",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Salió el 3 de marzo de 2017 junto con The Legend of Zelda: Breath of the Wild.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_017",
+      "question": "¿Qué animal es Donkey Kong?",
+      "answers": [
+        {
+          "text": "Un oso",
+          "correct": false
+        },
+        {
+          "text": "Un burro",
+          "correct": false
+        },
+        {
+          "text": "Un gorila",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En inglés «donkey» también significa terco o tonto. Así quiso Miyamoto que sonara el nombre del gorila.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_018",
+      "question": "¿A qué se dedica Lara Croft?",
+      "answers": [
+        {
+          "text": "Es arqueóloga y aventurera",
+          "correct": true
+        },
+        {
+          "text": "Es detective privada",
+          "correct": false
+        },
+        {
+          "text": "Es piloto de combate",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Protagonizó su primer juego en 1996, creado por el estudio británico Core Design.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_019",
+      "question": "¿En qué ciudad ficticia transcurre Grand Theft Auto V?",
+      "answers": [
+        {
+          "text": "Liberty City",
+          "correct": false
+        },
+        {
+          "text": "Vice City",
+          "correct": false
+        },
+        {
+          "text": "Los Santos",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los Santos está inspirada en Los Ángeles. El juego salió en 2013 y ha vendido decenas de millones de copias.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_020",
+      "question": "¿Qué clásico arcade de 1978 enfrenta un cañón contra filas de alienígenas que descienden?",
+      "answers": [
+        {
+          "text": "Asteroids",
+          "correct": false
+        },
+        {
+          "text": "Pac-Man",
+          "correct": false
+        },
+        {
+          "text": "Space Invaders",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su creador, Tomohiro Nishikado, hizo él mismo el hardware. Los invasores van más rápido cuantos menos quedan.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_021",
+      "question": "¿Cómo se llama la bola de energía que lanza Ryu en Street Fighter?",
+      "answers": [
+        {
+          "text": "Hadouken",
+          "correct": true
+        },
+        {
+          "text": "Rasengan",
+          "correct": false
+        },
+        {
+          "text": "Kamehameha",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se ejecuta con un cuarto de círculo del mando seguido de un puñetazo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_022",
+      "question": "¿Cómo se llaman las bolas que se lanzan para capturar Pokémon?",
+      "answers": [
+        {
+          "text": "Pokégears",
+          "correct": false
+        },
+        {
+          "text": "Poké Balls",
+          "correct": true
+        },
+        {
+          "text": "Pokédex",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hay variantes como la Super Ball, la Ultra Ball y la Master Ball, que nunca falla.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_023",
+      "question": "¿En qué juego compites con karts y lanzas caparazones a los rivales?",
+      "answers": [
+        {
+          "text": "Mario Kart",
+          "correct": true
+        },
+        {
+          "text": "Crash Team Racing",
+          "correct": false
+        },
+        {
+          "text": "F-Zero",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El primer Mario Kart salió en 1992 para Super Nintendo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_024",
+      "question": "¿Qué deporte se juega con coches en Rocket League?",
+      "answers": [
+        {
+          "text": "Rugby",
+          "correct": false
+        },
+        {
+          "text": "Baloncesto",
+          "correct": false
+        },
+        {
+          "text": "Fútbol",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Salió en 2015 y es gratuito desde 2020.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_025",
+      "question": "¿Qué usa Pokémon GO para colocar Pokémon en el mundo real?",
+      "answers": [
+        {
+          "text": "Realidad aumentada y GPS",
+          "correct": true
+        },
+        {
+          "text": "Proyecciones holográficas",
+          "correct": false
+        },
+        {
+          "text": "Cascos de realidad virtual",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lo lanzó Niantic en julio de 2016 y sacó a millones de personas a la calle con el móvil en la mano.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_026",
+      "question": "¿Cómo se llama el hermano de Mario?",
+      "answers": [
+        {
+          "text": "Luigi",
+          "correct": true
+        },
+        {
+          "text": "Toad",
+          "correct": false
+        },
+        {
+          "text": "Wario",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Luigi debutó en Mario Bros., de 1983, como segundo jugador.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_027",
+      "question": "¿A quién rescata Mario normalmente en sus aventuras?",
+      "answers": [
+        {
+          "text": "A la princesa Peach",
+          "correct": true
+        },
+        {
+          "text": "A Lara Croft",
+          "correct": false
+        },
+        {
+          "text": "A la princesa Zelda",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En las versiones occidentales antiguas se la llamaba «princesa Toadstool».",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_028",
+      "question": "¿Qué enemigos aparecen sobre todo en Resident Evil?",
+      "answers": [
+        {
+          "text": "Fantasmas",
+          "correct": false
+        },
+        {
+          "text": "Zombis y criaturas mutantes",
+          "correct": true
+        },
+        {
+          "text": "Vampiros",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El primer juego, de Capcom (1996), se llama «Biohazard» en Japón.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_029",
+      "question": "¿A qué género pertenece Final Fantasy?",
+      "answers": [
+        {
+          "text": "Juego de carreras",
+          "correct": false
+        },
+        {
+          "text": "Juego de rol japonés",
+          "correct": true
+        },
+        {
+          "text": "Simulador deportivo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Según su creador, el título era un último intento: Square estaba al borde de la quiebra y pensó que sería su despedida.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_030",
+      "question": "¿Qué Pokémon inicial de Kanto es de tipo fuego?",
+      "answers": [
+        {
+          "text": "Bulbasaur",
+          "correct": false
+        },
+        {
+          "text": "Squirtle",
+          "correct": false
+        },
+        {
+          "text": "Charmander",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En Pokémon Rojo y Azul se elige entre Bulbasaur, Charmander y Squirtle para empezar.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_031",
+      "question": "¿Qué juego de cartas trae Windows desde hace décadas?",
+      "answers": [
+        {
+          "text": "El Mus",
+          "correct": false
+        },
+        {
+          "text": "El Solitario",
+          "correct": true
+        },
+        {
+          "text": "El Bridge",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Microsoft lo incluyó en Windows 3.0 (1990) para que la gente aprendiera a arrastrar y soltar con el ratón.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_032",
+      "question": "¿Para qué se usa Twitch sobre todo?",
+      "answers": [
+        {
+          "text": "Para ver partidas en directo",
+          "correct": true
+        },
+        {
+          "text": "Para comprar juegos",
+          "correct": false
+        },
+        {
+          "text": "Para editar vídeos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Empezó en 2011 como derivada de Justin.tv y Amazon la compró en 2014.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_033",
+      "question": "¿Cómo se llama un secreto que los creadores esconden en un juego?",
+      "answers": [
+        {
+          "text": "Bug de tienda",
+          "correct": false
+        },
+        {
+          "text": "Huevo de Pascua",
+          "correct": true
+        },
+        {
+          "text": "Truco de magia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El primer huevo de Pascua conocido está en Adventure, de Atari (1980): su programador escondió su nombre en una sala secreta.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_034",
+      "question": "¿De qué color es la seta que da una vida extra a Mario?",
+      "answers": [
+        {
+          "text": "Azul",
+          "correct": false
+        },
+        {
+          "text": "Verde",
+          "correct": true
+        },
+        {
+          "text": "Roja",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La seta verde apareció por primera vez en Super Mario Bros., en 1985.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_035",
+      "question": "¿Qué significan las siglas RPG en los videojuegos?",
+      "answers": [
+        {
+          "text": "Juego de carreras",
+          "correct": false
+        },
+        {
+          "text": "Juego de ritmo",
+          "correct": false
+        },
+        {
+          "text": "Juego de rol",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los RPG nacieron inspirados por el juego de mesa Dragones y Mazmorras.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_036",
+      "question": "¿Qué es un «speedrun»?",
+      "answers": [
+        {
+          "text": "Terminar un juego en el menor tiempo posible",
+          "correct": true
+        },
+        {
+          "text": "Jugar sin morir ni una vez",
+          "correct": false
+        },
+        {
+          "text": "Jugar con los ojos cerrados",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hay comunidades que llevan décadas puliendo rutas para recortar décimas en juegos como Super Mario Bros.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_037",
+      "question": "¿Qué marca de móviles popularizó el juego de la serpiente, Snake?",
+      "answers": [
+        {
+          "text": "Nokia",
+          "correct": true
+        },
+        {
+          "text": "Samsung",
+          "correct": false
+        },
+        {
+          "text": "Motorola",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Taneli Armanto lo programó para el Nokia 6110 en 1997.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_038",
+      "question": "¿Cómo se llama el reino donde transcurre Zelda?",
+      "answers": [
+        {
+          "text": "Hyrule",
+          "correct": true
+        },
+        {
+          "text": "Mordor",
+          "correct": false
+        },
+        {
+          "text": "Tamriel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cada juego redibuja el mapa, y el reino ha pasado por todos los tiempos y estilos.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_039",
+      "question": "¿Cómo se llama el zorro de dos colas amigo de Sonic?",
+      "answers": [
+        {
+          "text": "Tails",
+          "correct": true
+        },
+        {
+          "text": "Knuckles",
+          "correct": false
+        },
+        {
+          "text": "Amy",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su nombre real es Miles Prower, un juego de palabras con «miles per hour», millas por hora.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_040",
+      "question": "¿Cómo se llama el rey de los koopas, enemigo principal de Mario?",
+      "answers": [
+        {
+          "text": "Bowser",
+          "correct": true
+        },
+        {
+          "text": "Ganondorf",
+          "correct": false
+        },
+        {
+          "text": "Wario",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Debutó en Super Mario Bros., en 1985, y desde entonces secuestra a la princesa Peach.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_041",
+      "question": "¿Qué dos bandos se enfrentan en Counter-Strike?",
+      "answers": [
+        {
+          "text": "Terroristas y antiterroristas",
+          "correct": true
+        },
+        {
+          "text": "Piratas y marines",
+          "correct": false
+        },
+        {
+          "text": "Humanos y zombis",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En cada ronda se gana dinero para comprar armas, y los perdedores reciben menos.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_042",
+      "question": "¿Qué característica llevaba la Nintendo DS, lanzada en 2004?",
+      "answers": [
+        {
+          "text": "Un casco de realidad virtual",
+          "correct": false
+        },
+        {
+          "text": "Un proyector para la pared",
+          "correct": false
+        },
+        {
+          "text": "Dos pantallas, una de ellas táctil",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La DS llegó a vender más de 150 millones de unidades.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_043",
+      "question": "¿Qué recoge Sonic para no perder una vida al recibir un golpe?",
+      "answers": [
+        {
+          "text": "Estrellas",
+          "correct": false
+        },
+        {
+          "text": "Anillos",
+          "correct": true
+        },
+        {
+          "text": "Monedas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Al ser golpeado los pierde y salen disparados por la pantalla.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_044",
+      "question": "¿Quién es el entrenador pokémon que viaja con Pikachu en el anime?",
+      "answers": [
+        {
+          "text": "Brock",
+          "correct": false
+        },
+        {
+          "text": "Gary",
+          "correct": false
+        },
+        {
+          "text": "Ash Ketchum",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En Japón se llama Satoshi, un guiño a Satoshi Tajiri, creador de Pokémon.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_045",
+      "question": "¿A qué tipo pertenece Pikachu?",
+      "answers": [
+        {
+          "text": "Eléctrico",
+          "correct": true
+        },
+        {
+          "text": "Fuego",
+          "correct": false
+        },
+        {
+          "text": "Agua",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su cola con forma de rayo es el rasgo más reconocible de toda la franquicia.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_046",
+      "question": "¿Quién crea la mayoría de los juegos de Roblox?",
+      "answers": [
+        {
+          "text": "Los propios jugadores",
+          "correct": true
+        },
+        {
+          "text": "Nintendo",
+          "correct": false
+        },
+        {
+          "text": "Un único estudio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La plataforma se lanzó en 2006 y da herramientas para que cualquiera publique sus juegos.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_047",
+      "question": "¿Cómo se llama el jefe final de Minecraft?",
+      "answers": [
+        {
+          "text": "El Warden",
+          "correct": false
+        },
+        {
+          "text": "El Dragón del End",
+          "correct": true
+        },
+        {
+          "text": "El Wither",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su guarida es una isla flotante en una dimensión llamada «el End», de la que se sale con un portal.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_048",
+      "question": "¿Qué serie de Nintendo reúne minijuegos sobre tableros con dados?",
+      "answers": [
+        {
+          "text": "Mario Party",
+          "correct": true
+        },
+        {
+          "text": "Pikmin",
+          "correct": false
+        },
+        {
+          "text": "Wii Sports",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La saga arrancó en 1998 en Nintendo 64 y ha llenado muchas tardes de amigos enfadados.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_049",
+      "question": "¿Cuántos jugadores empiezan cada partida de Fortnite Battle Royale?",
+      "answers": [
+        {
+          "text": "100",
+          "correct": true
+        },
+        {
+          "text": "200",
+          "correct": false
+        },
+        {
+          "text": "50",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cada partida termina cuando solo queda un jugador o un equipo en pie.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_050",
+      "question": "¿Cuántos jugadores hay en cada equipo en una partida estándar de League of Legends?",
+      "answers": [
+        {
+          "text": "Ocho",
+          "correct": false
+        },
+        {
+          "text": "Cinco",
+          "correct": true
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las dos bases están conectadas por tres calles, llamadas «líneas».",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_051",
+      "question": "¿Qué nombre recibió Mario en su primera aparición, en Donkey Kong de 1981?",
+      "answers": [
+        {
+          "text": "Jumpman",
+          "correct": true
+        },
+        {
+          "text": "Fontanero Joe",
+          "correct": false
+        },
+        {
+          "text": "Mr. Pixel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "No era fontanero: en aquel juego era carpintero. Se volvió Mario cuando Nintendo of America lo rebautizó.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_052",
+      "question": "¿Qué comida dijo su creador que inspiró la forma de Pac-Man?",
+      "answers": [
+        {
+          "text": "Un queso",
+          "correct": false
+        },
+        {
+          "text": "Una pizza con un trozo menos",
+          "correct": true
+        },
+        {
+          "text": "Una galleta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Toru Iwatani contó que la idea le vino al ver una pizza a la que le faltaba una porción.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_053",
+      "question": "¿Qué empresa japonesa lanzó Space Invaders en 1978?",
+      "answers": [
+        {
+          "text": "Taito",
+          "correct": true
+        },
+        {
+          "text": "Capcom",
+          "correct": false
+        },
+        {
+          "text": "Namco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El juego fue un éxito tan enorme que sacó a los arcades de los bares y los puso en salas propias.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_054",
+      "question": "¿Quién cofundó Atari en 1972?",
+      "answers": [
+        {
+          "text": "Trip Hawkins",
+          "correct": false
+        },
+        {
+          "text": "Nolan Bushnell",
+          "correct": true
+        },
+        {
+          "text": "Ralph Baer",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El nombre viene de «atari», un término del juego japonés del go equivalente a «jaque».",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_055",
+      "question": "¿Cómo se llama la primera consola doméstica comercial?",
+      "answers": [
+        {
+          "text": "Magnavox Odyssey",
+          "correct": true
+        },
+        {
+          "text": "Intellivision",
+          "correct": false
+        },
+        {
+          "text": "Atari 2600",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "No tenía sonido y los jugadores pegaban láminas de plástico en la tele para decorar los escenarios. Su creador fue Ralph Baer.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_056",
+      "question": "¿Qué juego de Atari 2600 basado en una película de Spielberg se considera símbolo del crash de 1983?",
+      "answers": [
+        {
+          "text": "Pitfall!",
+          "correct": false
+        },
+        {
+          "text": "Pac-Man",
+          "correct": false
+        },
+        {
+          "text": "E.T. el extraterrestre",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se contó que Atari enterró cartuchos sin vender en el desierto de Nuevo México. En 2014 se excavó el vertedero y aparecieron.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_057",
+      "question": "¿Cómo se llamó la consola NES en Japón?",
+      "answers": [
+        {
+          "text": "Famicom",
+          "correct": true
+        },
+        {
+          "text": "Game Boy",
+          "correct": false
+        },
+        {
+          "text": "Super Famicom",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Famicom es la abreviatura de «Family Computer». Era roja y blanca, sin el diseño gris de la versión occidental.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_058",
+      "question": "¿Cómo se llamó la Sega Mega Drive en Estados Unidos?",
+      "answers": [
+        {
+          "text": "Saturn",
+          "correct": false
+        },
+        {
+          "text": "Dreamcast",
+          "correct": false
+        },
+        {
+          "text": "Genesis",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Mega Drive salió en Japón en 1988 y fue la gran rival de Super Nintendo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_059",
+      "question": "¿Quién creó a Mario, Donkey Kong y Zelda?",
+      "answers": [
+        {
+          "text": "Shigeru Miyamoto",
+          "correct": true
+        },
+        {
+          "text": "Satoru Iwata",
+          "correct": false
+        },
+        {
+          "text": "Hideo Kojima",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Miyamoto ha contado que Zelda nació de sus exploraciones de niño por cuevas y campos cerca de su pueblo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_060",
+      "question": "¿Quién dirigió Metal Gear Solid y más tarde Death Stranding?",
+      "answers": [
+        {
+          "text": "Yu Suzuki",
+          "correct": false
+        },
+        {
+          "text": "Shinji Mikami",
+          "correct": false
+        },
+        {
+          "text": "Hideo Kojima",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El primer Metal Gear (1987) salió para el ordenador MSX2.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_061",
+      "question": "¿De qué país era Alexey Pajitnov, creador de Tetris?",
+      "answers": [
+        {
+          "text": "De Japón",
+          "correct": false
+        },
+        {
+          "text": "De Estados Unidos",
+          "correct": false
+        },
+        {
+          "text": "De la Unión Soviética",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo programó en un ordenador Electronika 60 que ni siquiera tenía gráficos: dibujaba las piezas con corchetes.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_062",
+      "question": "¿Cómo se llaman las piezas de cuatro cuadrados de Tetris?",
+      "answers": [
+        {
+          "text": "Triominós",
+          "correct": false
+        },
+        {
+          "text": "Pentominós",
+          "correct": false
+        },
+        {
+          "text": "Tetrominós",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Son siete formas distintas, a las que se les da el nombre de letras: I, O, T, S, Z, J y L.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_063",
+      "question": "¿Qué empresa creó Street Fighter II?",
+      "answers": [
+        {
+          "text": "SNK",
+          "correct": false
+        },
+        {
+          "text": "Capcom",
+          "correct": true
+        },
+        {
+          "text": "Sega",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Street Fighter II (1991) inventó el género de lucha uno contra uno tal como lo conocemos hoy.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_064",
+      "question": "¿Cómo se llama la secuencia arriba, arriba, abajo, abajo, izquierda, derecha, izquierda, derecha, B, A?",
+      "answers": [
+        {
+          "text": "Código Capcom",
+          "correct": false
+        },
+        {
+          "text": "Código Konami",
+          "correct": true
+        },
+        {
+          "text": "Código Atari",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Apareció por primera vez en Gradius para NES, porque su programador lo usaba para no pasar horas depurando el juego.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_065",
+      "question": "¿Qué vendía Nintendo antes de dedicarse a los videojuegos, desde 1889?",
+      "answers": [
+        {
+          "text": "Juguetes de madera",
+          "correct": false
+        },
+        {
+          "text": "Arroz",
+          "correct": false
+        },
+        {
+          "text": "Cartas japonesas de hanafuda",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fusajiro Yamauchi la fundó en Kioto, donde sigue teniendo su sede.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_066",
+      "question": "¿Cómo se llama el marsupial naranja que saltó a la fama en PlayStation en 1996?",
+      "answers": [
+        {
+          "text": "Spyro",
+          "correct": false
+        },
+        {
+          "text": "Crash Bandicoot",
+          "correct": true
+        },
+        {
+          "text": "Rayman",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un bandicut es un marsupial australiano. El juego lo creó el estudio estadounidense Naughty Dog.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_067",
+      "question": "¿Qué estudio creó Crash Bandicoot y después Uncharted y The Last of Us?",
+      "answers": [
+        {
+          "text": "Naughty Dog",
+          "correct": true
+        },
+        {
+          "text": "Insomniac Games",
+          "correct": false
+        },
+        {
+          "text": "Santa Monica Studio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es un estudio californiano fundado por Jason Rubin y Andy Gavin.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_068",
+      "question": "¿A qué joven escolta Joel en The Last of Us?",
+      "answers": [
+        {
+          "text": "A Ellie",
+          "correct": true
+        },
+        {
+          "text": "A Tess",
+          "correct": false
+        },
+        {
+          "text": "A Maria",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En 2023 la serie de HBO adaptó la historia del primer juego.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_069",
+      "question": "¿A qué mitología pasó God of War en su entrega de 2018, tras años en Grecia?",
+      "answers": [
+        {
+          "text": "A la egipcia",
+          "correct": false
+        },
+        {
+          "text": "A la azteca",
+          "correct": false
+        },
+        {
+          "text": "A la nórdica",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kratos pasa de gritar a sus enemigos a intentar ser un padre callado y paciente.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_070",
+      "question": "¿Qué formato de película podía reproducir PlayStation 2 sin accesorios?",
+      "answers": [
+        {
+          "text": "DVD",
+          "correct": true
+        },
+        {
+          "text": "Blu-ray",
+          "correct": false
+        },
+        {
+          "text": "VHS",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En 2000, ese reproductor de DVD ayudó a que muchos hogares la compraran como primer aparato de la casa.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_071",
+      "question": "¿Qué estudio japonés creó Dark Souls y Elden Ring?",
+      "answers": [
+        {
+          "text": "Capcom",
+          "correct": false
+        },
+        {
+          "text": "FromSoftware",
+          "correct": true
+        },
+        {
+          "text": "Square Enix",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dark Souls (2011) está dirigido por Hidetaka Miyazaki, y su pantalla de «Has muerto» se hizo meme.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_072",
+      "question": "¿Qué escritor de «Juego de tronos» colaboró en el mundo de Elden Ring?",
+      "answers": [
+        {
+          "text": "Neil Gaiman",
+          "correct": false
+        },
+        {
+          "text": "George R. R. Martin",
+          "correct": true
+        },
+        {
+          "text": "Brandon Sanderson",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Escribió el trasfondo mitológico y el juego salió en febrero de 2022.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_073",
+      "question": "¿Qué juego fue el título estrella del lanzamiento de la Xbox original?",
+      "answers": [
+        {
+          "text": "Forza Motorsport",
+          "correct": false
+        },
+        {
+          "text": "Halo: Combat Evolved",
+          "correct": true
+        },
+        {
+          "text": "Gears of War",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Halo nació como un juego de estrategia para Mac antes de convertirse en un shooter para Xbox.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_074",
+      "question": "¿Cómo se llama el fallo de hardware de la Xbox 360 señalado por luces rojas?",
+      "answers": [
+        {
+          "text": "Anillo rojo de la muerte",
+          "correct": true
+        },
+        {
+          "text": "Pantalla azul de la muerte",
+          "correct": false
+        },
+        {
+          "text": "Luz verde del apocalipsis",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Microsoft tuvo que ampliar la garantía a tres años por este problema.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_075",
+      "question": "¿Cómo se llaman los puntos de logros que se acumulan en Xbox?",
+      "answers": [
+        {
+          "text": "Karma",
+          "correct": false
+        },
+        {
+          "text": "Puntos Live",
+          "correct": false
+        },
+        {
+          "text": "Gamerscore",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los logros llegaron con la Xbox 360, en 2005, y pronto se convirtieron en una obsesión.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_076",
+      "question": "¿Cómo se llama la IA que acompaña al Jefe Maestro en Halo?",
+      "answers": [
+        {
+          "text": "Siri",
+          "correct": false
+        },
+        {
+          "text": "Cortana",
+          "correct": true
+        },
+        {
+          "text": "Alexa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Microsoft le puso su nombre a su asistente virtual de Windows tiempo después.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_077",
+      "question": "¿Qué estudio creó Halo antes de crear Destiny?",
+      "answers": [
+        {
+          "text": "Respawn",
+          "correct": false
+        },
+        {
+          "text": "Epic Games",
+          "correct": false
+        },
+        {
+          "text": "Bungie",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Halo apareció en 2001 y Destiny en 2014.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_078",
+      "question": "¿Qué periférico de Xbox 360 detectaba el cuerpo del jugador sin necesidad de mando?",
+      "answers": [
+        {
+          "text": "Kinect",
+          "correct": true
+        },
+        {
+          "text": "PlayStation Move",
+          "correct": false
+        },
+        {
+          "text": "EyeToy",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se vendieron ocho millones en sus primeros 60 días, algo que entró en el libro Guinness.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_079",
+      "question": "¿Qué estudio de Texas creó Doom en 1993?",
+      "answers": [
+        {
+          "text": "Blizzard",
+          "correct": false
+        },
+        {
+          "text": "id Software",
+          "correct": true
+        },
+        {
+          "text": "Valve",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Doom se ha ejecutado en calculadoras, cajeros y hasta en una prueba de embarazo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_080",
+      "question": "¿En qué juego controlas a los terran, los zerg y los protoss?",
+      "answers": [
+        {
+          "text": "Age of Empires",
+          "correct": false
+        },
+        {
+          "text": "StarCraft",
+          "correct": true
+        },
+        {
+          "text": "Warcraft",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Blizzard lo lanzó en 1998 y en Corea del Sur se convirtió casi en un deporte nacional, con canales de televisión propios.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_081",
+      "question": "¿En qué juego nació el mod que dio origen al género MOBA?",
+      "answers": [
+        {
+          "text": "Age of Empires II",
+          "correct": false
+        },
+        {
+          "text": "Warcraft III",
+          "correct": true
+        },
+        {
+          "text": "StarCraft",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Aquel mod se llamaba Defense of the Ancients. De él nacieron Dota 2 y League of Legends.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_082",
+      "question": "¿Qué frase repiten los jugadores de Civilization para justificar jugar toda la noche?",
+      "answers": [
+        {
+          "text": "«Una ronda más»",
+          "correct": false
+        },
+        {
+          "text": "«Una vida más»",
+          "correct": false
+        },
+        {
+          "text": "«Un turno más»",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El juego de estrategia de Sid Meier es tan adictivo que ha quitado el sueño a generaciones.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_083",
+      "question": "¿Cuáles son las dos facciones principales de World of Warcraft?",
+      "answers": [
+        {
+          "text": "Luz y Sombra",
+          "correct": false
+        },
+        {
+          "text": "Norte y Sur",
+          "correct": false
+        },
+        {
+          "text": "Alianza y Horda",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El juego salió en 2004 y llegó a tener más de diez millones de suscriptores.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_084",
+      "question": "¿Quién creó Minecraft?",
+      "answers": [
+        {
+          "text": "Markus Persson, «Notch»",
+          "correct": true
+        },
+        {
+          "text": "Hideo Kojima",
+          "correct": false
+        },
+        {
+          "text": "Gabe Newell",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El sueco empezó el desarrollo en 2009 y fundó Mojang.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_085",
+      "question": "¿Qué empresa compró Mojang, el estudio de Minecraft, en 2014?",
+      "answers": [
+        {
+          "text": "Sony",
+          "correct": false
+        },
+        {
+          "text": "Google",
+          "correct": false
+        },
+        {
+          "text": "Microsoft",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pagó unos 2.500 millones de dólares.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_086",
+      "question": "¿Qué juego móvil retiró su creador en 2014 por no soportar la presión de la fama?",
+      "answers": [
+        {
+          "text": "Flappy Bird",
+          "correct": true
+        },
+        {
+          "text": "Angry Birds",
+          "correct": false
+        },
+        {
+          "text": "Temple Run",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su creador, Dong Nguyen, era un desarrollador vietnamita. El juego ganaba decenas de miles de dólares al día en publicidad.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_087",
+      "question": "¿Qué le pasó al guardia del famoso meme de Skyrim?",
+      "answers": [
+        {
+          "text": "Recibió una flecha en la rodilla",
+          "correct": true
+        },
+        {
+          "text": "Se cayó de un caballo",
+          "correct": false
+        },
+        {
+          "text": "Perdió su espada",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "«Yo era aventurero como tú, hasta que me dieron una flecha en la rodilla.» Skyrim salió en 2011.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_088",
+      "question": "¿Qué personaje muere en el primer disco de Final Fantasy VII, en una de las escenas más famosas?",
+      "answers": [
+        {
+          "text": "Aerith",
+          "correct": true
+        },
+        {
+          "text": "Barret",
+          "correct": false
+        },
+        {
+          "text": "Tifa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El juego salió en 1997 para PlayStation y supuso el salto de la saga al público mayoritario.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_089",
+      "question": "¿Cómo se llama el protagonista de Mass Effect?",
+      "answers": [
+        {
+          "text": "Jefe Maestro",
+          "correct": false
+        },
+        {
+          "text": "Capitán Price",
+          "correct": false
+        },
+        {
+          "text": "Comandante Shepard",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se puede elegir que sea hombre o mujer, y el juego es de BioWare.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_090",
+      "question": "¿Qué es un Pip-Boy en Fallout?",
+      "answers": [
+        {
+          "text": "Una bebida gaseosa",
+          "correct": false
+        },
+        {
+          "text": "Un ordenador de muñeca",
+          "correct": true
+        },
+        {
+          "text": "Un perro robot",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sirve de mapa, inventario y radio. La bebida de Fallout es la Nuka-Cola.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_091",
+      "question": "¿Qué juego ganó el Juego del Año en The Game Awards 2023?",
+      "answers": [
+        {
+          "text": "Alan Wake 2",
+          "correct": false
+        },
+        {
+          "text": "Marvel's Spider-Man 2",
+          "correct": false
+        },
+        {
+          "text": "Baldur's Gate 3",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lo creó el estudio belga Larian y se basa en las reglas de Dragones y Mazmorras.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_092",
+      "question": "¿Qué Zelda salió a la vez que la Nintendo Switch en 2017?",
+      "answers": [
+        {
+          "text": "Breath of the Wild",
+          "correct": true
+        },
+        {
+          "text": "Twilight Princess",
+          "correct": false
+        },
+        {
+          "text": "Ocarina of Time",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "También salió en Wii U, aunque Switch fue su gran escaparate.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_093",
+      "question": "¿Qué creador de Dragon Ball diseñó los personajes de Dragon Quest?",
+      "answers": [
+        {
+          "text": "Hayao Miyazaki",
+          "correct": false
+        },
+        {
+          "text": "Akira Toriyama",
+          "correct": true
+        },
+        {
+          "text": "Osamu Tezuka",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su estilo hizo que los monstruos de Dragon Quest, como los eternos slimes, se hicieran famosos.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_094",
+      "question": "¿Qué juego de 2017 popularizó el battle royale antes de Fortnite?",
+      "answers": [
+        {
+          "text": "Apex Legends",
+          "correct": false
+        },
+        {
+          "text": "PUBG: Battlegrounds",
+          "correct": true
+        },
+        {
+          "text": "Overwatch",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fortnite añadió su modo battle royale ese mismo año, copiando la idea y ganando a todos en popularidad.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_095",
+      "question": "¿En qué consola triunfó GoldenEye 007 por su multijugador a pantalla dividida?",
+      "answers": [
+        {
+          "text": "Nintendo 64",
+          "correct": true
+        },
+        {
+          "text": "PlayStation",
+          "correct": false
+        },
+        {
+          "text": "Mega Drive",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo creó Rare en 1997 y muchas tardes de la época giraban alrededor de aquel modo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_096",
+      "question": "¿Qué se escala en el juego de plataformas Celeste?",
+      "answers": [
+        {
+          "text": "Un rascacielos",
+          "correct": false
+        },
+        {
+          "text": "Un volcán",
+          "correct": false
+        },
+        {
+          "text": "Una montaña",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El juego trata también de la ansiedad de su protagonista, y tiene un modo de asistencia para quien lo necesite.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_097",
+      "question": "¿Qué tipo de criaturas habitan Hallownest en Hollow Knight?",
+      "answers": [
+        {
+          "text": "Aves",
+          "correct": false
+        },
+        {
+          "text": "Insectos y otros bichos",
+          "correct": true
+        },
+        {
+          "text": "Peces",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es un reino subterráneo dibujado a mano. Lo creó un pequeño estudio australiano.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_098",
+      "question": "¿Cuántas personas desarrollaron prácticamente todo Stardew Valley?",
+      "answers": [
+        {
+          "text": "Cuarenta",
+          "correct": false
+        },
+        {
+          "text": "Doscientas",
+          "correct": false
+        },
+        {
+          "text": "Una sola",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eric Barone lo programó, dibujó y compuso durante años él solo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_099",
+      "question": "¿En qué estilo de dibujo se inspira Cuphead?",
+      "answers": [
+        {
+          "text": "Cómics de superhéroes",
+          "correct": false
+        },
+        {
+          "text": "Dibujos animados de los años 30",
+          "correct": true
+        },
+        {
+          "text": "Anime de los 90",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Está dibujado a mano, cuadro a cuadro, como los dibujos de la época.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_100",
+      "question": "¿De qué país es Supercell, creadora de Clash of Clans?",
+      "answers": [
+        {
+          "text": "Corea del Sur",
+          "correct": false
+        },
+        {
+          "text": "Finlandia",
+          "correct": true
+        },
+        {
+          "text": "Suecia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Angry Birds también salió de Finlandia, del estudio Rovio.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_101",
+      "question": "¿En qué juego se disputa el torneo The International?",
+      "answers": [
+        {
+          "text": "League of Legends",
+          "correct": false
+        },
+        {
+          "text": "Counter-Strike",
+          "correct": false
+        },
+        {
+          "text": "Dota 2",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En 2021 su bolsa de premios superó los 40 millones de dólares, un récord en los esports.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_102",
+      "question": "¿De qué país es Faker, el jugador más famoso de League of Legends?",
+      "answers": [
+        {
+          "text": "China",
+          "correct": false
+        },
+        {
+          "text": "Corea del Sur",
+          "correct": true
+        },
+        {
+          "text": "Estados Unidos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ha ganado varios campeonatos del mundo con el equipo T1.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_103",
+      "question": "¿Qué streamer español cofundó con Gerard Piqué el equipo de esports KOI?",
+      "answers": [
+        {
+          "text": "AuronPlay",
+          "correct": false
+        },
+        {
+          "text": "Rubius",
+          "correct": false
+        },
+        {
+          "text": "Ibai Llanos",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "KOI se fundó a finales de 2020 y luego se asoció con Movistar.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_104",
+      "question": "¿Qué streamer español superó en enero de 2021 el récord de espectadores simultáneos de Twitch con el estreno de su skin de Fortnite?",
+      "answers": [
+        {
+          "text": "TheGrefg",
+          "correct": true
+        },
+        {
+          "text": "Rubius",
+          "correct": false
+        },
+        {
+          "text": "AuronPlay",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Superó los 2,4 millones de espectadores. Años después, otros eventos han superado esa cifra.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_105",
+      "question": "¿Qué estudio madrileño creó Commandos, el juego de estrategia de 1998?",
+      "answers": [
+        {
+          "text": "Pyro Studios",
+          "correct": true
+        },
+        {
+          "text": "Tequila Works",
+          "correct": false
+        },
+        {
+          "text": "Dinamic",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se ambienta en la Segunda Guerra Mundial y se controla a un grupo de soldados con habilidades distintas, como el boina verde o el espía.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_106",
+      "question": "¿Qué estudio español desarrolló Metroid Dread, de Nintendo Switch?",
+      "answers": [
+        {
+          "text": "Tequila Works",
+          "correct": false
+        },
+        {
+          "text": "Pyro Studios",
+          "correct": false
+        },
+        {
+          "text": "MercurySteam",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Antes ya había hecho Castlevania: Lords of Shadow y Metroid: Samus Returns, de 3DS.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_107",
+      "question": "¿Qué novela de Umberto Eco inspiró La Abadía del Crimen, el clásico español de 1987?",
+      "answers": [
+        {
+          "text": "El cementerio de Praga",
+          "correct": false
+        },
+        {
+          "text": "El nombre de la rosa",
+          "correct": true
+        },
+        {
+          "text": "El péndulo de Foucault",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El juego ocurre en un monasterio medieval, igual que el libro, y se considera una obra maestra del software español de 8 bits.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_108",
+      "question": "¿Qué ordenador de 8 bits fue el más extendido en España en los años 80?",
+      "answers": [
+        {
+          "text": "El Atari 800XL",
+          "correct": false
+        },
+        {
+          "text": "El ZX Spectrum",
+          "correct": true
+        },
+        {
+          "text": "El Commodore 64",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Muchos estudios españoles, como Dinamic u Opera Soft, hicieron sus primeros éxitos para el Spectrum.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_109",
+      "question": "¿Qué juego de gestión de fútbol de Dinamic Multimedia fue un fenómeno en España en los años 90?",
+      "answers": [
+        {
+          "text": "PC Fútbol",
+          "correct": true
+        },
+        {
+          "text": "FIFA Manager",
+          "correct": false
+        },
+        {
+          "text": "Championship Manager",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Salía una edición nueva casi cada año y fue uno de los juegos españoles más vendidos.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_110",
+      "question": "¿En qué país latinoamericano siguió vendiéndose con éxito durante décadas la Master System de Sega?",
+      "answers": [
+        {
+          "text": "Brasil",
+          "correct": true
+        },
+        {
+          "text": "Argentina",
+          "correct": false
+        },
+        {
+          "text": "México",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La distribuía Tec Toy, que incluso siguió lanzando nuevas versiones muchos años después de que Sega dejara de fabricarla.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_111",
+      "question": "¿Cómo se llama la hada que acompaña a Link en Ocarina of Time y repite «¡Ey, escucha!»?",
+      "answers": [
+        {
+          "text": "Navi",
+          "correct": true
+        },
+        {
+          "text": "Tatl",
+          "correct": false
+        },
+        {
+          "text": "Midna",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Navi se hizo famosa por interrumpir al jugador con sus avisos.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_112",
+      "question": "¿Cuántos días dura el ciclo del tiempo en Zelda: Majora's Mask?",
+      "answers": [
+        {
+          "text": "Diez",
+          "correct": false
+        },
+        {
+          "text": "Siete",
+          "correct": false
+        },
+        {
+          "text": "Tres",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Al final del tercer día, la luna cae sobre el mundo y Link vuelve a empezar.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_113",
+      "question": "¿Qué accesorio de la NES con forma de pistola se usaba en Duck Hunt?",
+      "answers": [
+        {
+          "text": "El Zapper",
+          "correct": true
+        },
+        {
+          "text": "El Power Glove",
+          "correct": false
+        },
+        {
+          "text": "R.O.B.",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Solo funciona en televisores antiguos de tubo, porque detecta la luz de la pantalla.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_114",
+      "question": "¿Qué luchadores de Mortal Kombat son ninjas rivales, uno amarillo y otro azul?",
+      "answers": [
+        {
+          "text": "Liu Kang y Kung Lao",
+          "correct": false
+        },
+        {
+          "text": "Scorpion y Sub-Zero",
+          "correct": true
+        },
+        {
+          "text": "Raiden y Johnny Cage",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los ninjas del juego original eran el mismo sprite con distintos colores, para ahorrar espacio.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_115",
+      "question": "¿Cuál es el fantasma rojo de Pac-Man?",
+      "answers": [
+        {
+          "text": "Blinky",
+          "correct": true
+        },
+        {
+          "text": "Inky",
+          "correct": false
+        },
+        {
+          "text": "Clyde",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los cuatro fantasmas tienen personalidades distintas: Blinky persigue directamente a Pac-Man.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_116",
+      "question": "¿Qué sorpresa guardaba el final del primer Metroid (1986) si lo terminabas rápido?",
+      "answers": [
+        {
+          "text": "Que era todo un sueño",
+          "correct": false
+        },
+        {
+          "text": "Que el villano era su hermano",
+          "correct": false
+        },
+        {
+          "text": "Que Samus es una mujer",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue un giro inesperado en su época y marcó la saga.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_117",
+      "question": "¿Qué dispara el jugador en Splatoon?",
+      "answers": [
+        {
+          "text": "Agua",
+          "correct": false
+        },
+        {
+          "text": "Confeti",
+          "correct": false
+        },
+        {
+          "text": "Tinta",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Salió en 2015 para Wii U y sus protagonistas son los Inklings, jóvenes que se transforman en calamares.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_118",
+      "question": "¿Quién te presta el dinero para tu casa en Animal Crossing?",
+      "answers": [
+        {
+          "text": "Isabelle",
+          "correct": false
+        },
+        {
+          "text": "Mr. Resetti",
+          "correct": false
+        },
+        {
+          "text": "Tom Nook",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tom Nook es un tanuki, el mapache japonés. Su hipoteca ha llegado a ser un meme.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_119",
+      "question": "¿Por qué es famosa la saga Dark Souls?",
+      "answers": [
+        {
+          "text": "Por su alta dificultad",
+          "correct": true
+        },
+        {
+          "text": "Por su humor",
+          "correct": false
+        },
+        {
+          "text": "Por su música pop",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su filosofía de «Prepárate para morir» generó una comunidad enorme, con ayudas entre jugadores.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_120",
+      "question": "¿Qué promesa resulta ser mentira en Portal?",
+      "answers": [
+        {
+          "text": "El dinero",
+          "correct": false
+        },
+        {
+          "text": "El pastel",
+          "correct": true
+        },
+        {
+          "text": "La libertad",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "«The cake is a lie» se escribe en las paredes del juego y es uno de los memes más famosos de todos los tiempos.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_121",
+      "question": "¿Qué estudio polaco creó The Witcher 3?",
+      "answers": [
+        {
+          "text": "11 bit studios",
+          "correct": false
+        },
+        {
+          "text": "Techland",
+          "correct": false
+        },
+        {
+          "text": "CD Projekt Red",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se basa en las novelas del escritor polaco Andrzej Sapkowski.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_122",
+      "question": "¿Qué empresa de Francia creó Assassin's Creed?",
+      "answers": [
+        {
+          "text": "Eidos",
+          "correct": false
+        },
+        {
+          "text": "Atari",
+          "correct": false
+        },
+        {
+          "text": "Ubisoft",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La compañía fue fundada por los hermanos Guillemot en Bretaña.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_123",
+      "question": "¿Cómo se llama el salto desde lo alto hacia un montón de heno en Assassin's Creed?",
+      "answers": [
+        {
+          "text": "Salto mortal",
+          "correct": false
+        },
+        {
+          "text": "Salto de fe",
+          "correct": true
+        },
+        {
+          "text": "Salto del águila",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El primer Assassin's Creed salió en 2007. El nombre del salto es una de las marcas de la saga.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_124",
+      "question": "¿Qué empresa se fusionó con Square en 2003, creadora de Dragon Quest?",
+      "answers": [
+        {
+          "text": "Taito",
+          "correct": false
+        },
+        {
+          "text": "Namco",
+          "correct": false
+        },
+        {
+          "text": "Enix",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Final Fantasy y Dragon Quest, grandes rivales, acabaron bajo el mismo techo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_125",
+      "question": "¿Quién compuso la música de Super Mario Bros. y de The Legend of Zelda?",
+      "answers": [
+        {
+          "text": "Nobuo Uematsu",
+          "correct": false
+        },
+        {
+          "text": "Koji Kondo",
+          "correct": true
+        },
+        {
+          "text": "Yasunori Mitsuda",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Algunos de sus temas se han tocado en conciertos sinfónicos por todo el mundo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_126",
+      "question": "¿Quién compuso la música de las primeras Final Fantasy?",
+      "answers": [
+        {
+          "text": "Nobuo Uematsu",
+          "correct": true
+        },
+        {
+          "text": "Koji Kondo",
+          "correct": false
+        },
+        {
+          "text": "Jeremy Soule",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La fanfarria de victoria de la saga es una de las melodías más reconocibles de los videojuegos.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_127",
+      "question": "¿Qué significa el 64 de Nintendo 64?",
+      "answers": [
+        {
+          "text": "Los bits de su procesador",
+          "correct": true
+        },
+        {
+          "text": "Los megas de memoria",
+          "correct": false
+        },
+        {
+          "text": "Los juegos de lanzamiento",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Salió en 1996 junto con Super Mario 64.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_128",
+      "question": "¿Cuál fue la última consola doméstica de Sega?",
+      "answers": [
+        {
+          "text": "Saturn",
+          "correct": false
+        },
+        {
+          "text": "Dreamcast",
+          "correct": true
+        },
+        {
+          "text": "Game Gear",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Llegó en Japón en 1998 y Sega dejó de fabricarla en 2001, cuando dejó de hacer consolas.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_129",
+      "question": "¿Qué pantalla tenía la Game Boy original?",
+      "answers": [
+        {
+          "text": "Táctil, con un lápiz",
+          "correct": false
+        },
+        {
+          "text": "A todo color, con 256 colores",
+          "correct": false
+        },
+        {
+          "text": "Monocroma, en tonos verdosos",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su pantalla de cuatro tonos verdosos no tenía retroiluminación, por lo que muchos jugadores buscaban una lámpara.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_130",
+      "question": "¿Con qué nombre sustituyó EA la serie FIFA en 2023?",
+      "answers": [
+        {
+          "text": "eFootball",
+          "correct": false
+        },
+        {
+          "text": "EA Football",
+          "correct": false
+        },
+        {
+          "text": "EA Sports FC",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "EA y la FIFA dejaron de colaborar tras casi treinta años.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_131",
+      "question": "¿Qué ingeniero de Nintendo creó la Game & Watch y dirigió el equipo de la Game Boy?",
+      "answers": [
+        {
+          "text": "Satoru Iwata",
+          "correct": false
+        },
+        {
+          "text": "Masayuki Uemura",
+          "correct": false
+        },
+        {
+          "text": "Gunpei Yokoi",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "También ideó Metroid y la Virtual Boy, cuyo fracaso lo hizo dejar la empresa.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_132",
+      "question": "¿Qué consola de Nintendo de 1995 mostraba gráficos 3D solo en rojo y negro?",
+      "answers": [
+        {
+          "text": "Game Boy Color",
+          "correct": false
+        },
+        {
+          "text": "Virtual Boy",
+          "correct": true
+        },
+        {
+          "text": "Nintendo 64DD",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se dejó de vender en 1996, a los pocos meses, y es uno de los grandes fracasos de la empresa.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_133",
+      "question": "¿Con qué empresa colaboró Sony en los años 90 en un lector de CD para consola antes de lanzar PlayStation?",
+      "answers": [
+        {
+          "text": "Con Atari",
+          "correct": false
+        },
+        {
+          "text": "Con Nintendo",
+          "correct": true
+        },
+        {
+          "text": "Con Sega",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tras romperse la alianza, Sony convirtió su proyecto en una consola propia, la PlayStation.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_134",
+      "question": "¿Qué estudio español creó La Abadía del Crimen?",
+      "answers": [
+        {
+          "text": "Dinamic",
+          "correct": false
+        },
+        {
+          "text": "Opera Soft",
+          "correct": true
+        },
+        {
+          "text": "Topo Soft",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su autor, Paco Menéndez, la diseñó con perspectiva isométrica y salió para Spectrum, Amstrad CPC y MSX.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_135",
+      "question": "¿Qué baloncestista español da nombre a un juego de Dinamic de 1987?",
+      "answers": [
+        {
+          "text": "Fernando Martín",
+          "correct": true
+        },
+        {
+          "text": "Epi San Epifanio",
+          "correct": false
+        },
+        {
+          "text": "Juan Antonio Corbalán",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Martín fue el primer español en jugar en la NBA, con los Portland Trail Blazers en 1986.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_136",
+      "question": "¿Cómo se llama el explorador protagonista de Abu Simbel Profanation (1985), de Dinamic?",
+      "answers": [
+        {
+          "text": "Rick Dangerous",
+          "correct": false
+        },
+        {
+          "text": "Johnny Jones",
+          "correct": true
+        },
+        {
+          "text": "Indiana Jones",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El juego se hizo famoso por su dificultad extrema, con trampas que aparecen de la nada.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_137",
+      "question": "¿Qué estudio madrileño creó la aventura gráfica Runaway?",
+      "answers": [
+        {
+          "text": "Pendulo Studios",
+          "correct": true
+        },
+        {
+          "text": "Cryo",
+          "correct": false
+        },
+        {
+          "text": "Revolution Software",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Narra la huida de Brian y Gina de unos mafiosos por Estados Unidos y es uno de los grandes éxitos del género en España.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_138",
+      "question": "¿En qué ciudad española tiene su sede Nomada Studio, creadores de Gris?",
+      "answers": [
+        {
+          "text": "Sevilla",
+          "correct": false
+        },
+        {
+          "text": "Madrid",
+          "correct": false
+        },
+        {
+          "text": "Barcelona",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gris (2018) destaca por su arte acuarelado, obra del artista Conrad Roset, y por no tener enemigos ni muerte.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_139",
+      "question": "¿En qué ciudad española está The Game Kitchen, creadores de Blasphemous?",
+      "answers": [
+        {
+          "text": "Bilbao",
+          "correct": false
+        },
+        {
+          "text": "Sevilla",
+          "correct": true
+        },
+        {
+          "text": "Valencia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El juego (2019) está inspirado en la imaginería y la Semana Santa andaluzas.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_140",
+      "question": "¿Cómo se tradujo «Gotta catch 'em all» de Pokémon en España?",
+      "answers": [
+        {
+          "text": "«¡Sé el mejor maestro!»",
+          "correct": false
+        },
+        {
+          "text": "«¡Atrápalos ya!»",
+          "correct": false
+        },
+        {
+          "text": "«¡Hazte con todos!»",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En Latinoamérica se usó otra versión: «¡Atrápalos ya!».",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_141",
+      "question": "¿Quién creó Pokémon, inspirado en su afición infantil a coleccionar insectos?",
+      "answers": [
+        {
+          "text": "Satoshi Tajiri",
+          "correct": true
+        },
+        {
+          "text": "Masahiro Sakurai",
+          "correct": false
+        },
+        {
+          "text": "Shigeru Miyamoto",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tajiri fundó Game Freak y tardó seis años en completar Pokémon Rojo y Verde.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_142",
+      "question": "¿Con qué mano maneja Link la espada en la mayoría de los Zelda?",
+      "answers": [
+        {
+          "text": "Con la derecha",
+          "correct": false
+        },
+        {
+          "text": "Con ambas por igual",
+          "correct": false
+        },
+        {
+          "text": "Con la izquierda",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En las versiones de Wii se invirtió el mundo para que el mando se sintiera natural a los diestros.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_143",
+      "question": "¿De qué juego procede el Super Mario Bros. 2 que se lanzó en Occidente?",
+      "answers": [
+        {
+          "text": "Zelda II",
+          "correct": false
+        },
+        {
+          "text": "Kid Icarus",
+          "correct": false
+        },
+        {
+          "text": "Doki Doki Panic",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Japón recibió otro Super Mario Bros. 2, que se consideró demasiado difícil para Occidente.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_144",
+      "question": "¿Cómo se llama Mega Man en Japón?",
+      "answers": [
+        {
+          "text": "Ironman",
+          "correct": false
+        },
+        {
+          "text": "Megaboy",
+          "correct": false
+        },
+        {
+          "text": "Rockman",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su hermana se llama Roll. Juntos, Rock y Roll aluden al rock and roll.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_145",
+      "question": "¿Quién compuso la banda sonora de Skyrim, con un tema cantado en la lengua de los dragones?",
+      "answers": [
+        {
+          "text": "Hans Zimmer",
+          "correct": false
+        },
+        {
+          "text": "Austin Wintory",
+          "correct": false
+        },
+        {
+          "text": "Jeremy Soule",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La lengua de los dragones, el dovahzul, se inventó expresamente para el juego.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_146",
+      "question": "¿En qué ciudad escocesa está Rockstar North, el estudio de GTA?",
+      "answers": [
+        {
+          "text": "Edimburgo",
+          "correct": true
+        },
+        {
+          "text": "Glasgow",
+          "correct": false
+        },
+        {
+          "text": "Aberdeen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Antes se llamaba DMA Design, nació en Dundee y creó Lemmings.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_147",
+      "question": "¿Quién fundó el equipo de esports G2?",
+      "answers": [
+        {
+          "text": "Carlos «Ocelote» Rodríguez",
+          "correct": true
+        },
+        {
+          "text": "Gerard Piqué",
+          "correct": false
+        },
+        {
+          "text": "Ibai Llanos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "G2 llegó a la final del Mundial de League of Legends en 2018 y 2019.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_148",
+      "question": "¿Quién cofundó Valve tras trabajar en Microsoft?",
+      "answers": [
+        {
+          "text": "Sid Meier",
+          "correct": false
+        },
+        {
+          "text": "Gabe Newell",
+          "correct": true
+        },
+        {
+          "text": "John Carmack",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su primer juego fue Half-Life (1998) y Steam llegó en 2003.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_149",
+      "question": "¿Quién creó SimCity y The Sims?",
+      "answers": [
+        {
+          "text": "Will Wright",
+          "correct": true
+        },
+        {
+          "text": "Peter Molyneux",
+          "correct": false
+        },
+        {
+          "text": "Sid Meier",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "SimCity nació casi por accidente, a partir del editor de mapas de otro juego suyo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_150",
+      "question": "¿Qué juego de id Software de 1992 popularizó los shooters en primera persona con nazis?",
+      "answers": [
+        {
+          "text": "Duke Nukem 3D",
+          "correct": false
+        },
+        {
+          "text": "Wolfenstein 3D",
+          "correct": true
+        },
+        {
+          "text": "Doom",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se inspiró en un viejo juego de 1981, Castle Wolfenstein, en el que había que escapar de un castillo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_151",
+      "question": "¿De qué juego fue originalmente una modificación Counter-Strike?",
+      "answers": [
+        {
+          "text": "Half-Life",
+          "correct": true
+        },
+        {
+          "text": "Quake",
+          "correct": false
+        },
+        {
+          "text": "Unreal Tournament",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Valve compró el mod en el año 2000 y contrató a sus creadores.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_152",
+      "question": "¿Qué estudio desarrolló el primer Gears of War (2006)?",
+      "answers": [
+        {
+          "text": "id Software",
+          "correct": false
+        },
+        {
+          "text": "Epic Games",
+          "correct": true
+        },
+        {
+          "text": "Bungie",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Es el mismo estudio de Unreal Engine y, años después, de Fortnite.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_153",
+      "question": "¿Quién creó casi en solitario Undertale?",
+      "answers": [
+        {
+          "text": "Toby Fox",
+          "correct": true
+        },
+        {
+          "text": "Eric Barone",
+          "correct": false
+        },
+        {
+          "text": "Matt Thorson",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se financió por Kickstarter en 2013 y permite pasar el juego sin matar a nadie.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_154",
+      "question": "¿Quién es el protagonista de Hades (2020)?",
+      "answers": [
+        {
+          "text": "Zagreus",
+          "correct": true
+        },
+        {
+          "text": "Ulises",
+          "correct": false
+        },
+        {
+          "text": "Hércules",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Zagreus es hijo del dios del inframundo y el juego ganó el premio BAFTA al mejor juego en 2021.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_155",
+      "question": "¿A quién filmó Jordan Mechner para animar al príncipe de Prince of Persia (1989)?",
+      "answers": [
+        {
+          "text": "A su hermano",
+          "correct": true
+        },
+        {
+          "text": "A un actor de Hollywood",
+          "correct": false
+        },
+        {
+          "text": "A un bailarín profesional",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Usó la técnica de la rotoscopia, que le dio movimientos muy fluidos para la época.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_156",
+      "question": "¿En qué año se creó la primera versión de Tetris?",
+      "type": "estimate",
+      "answer": 1984,
+      "min": 1970,
+      "max": 2000,
+      "unit": "año",
+      "difficulty": "medium",
+      "fun_fact": "Alexey Pajitnov lo programó en Moscú, en un ordenador soviético. Tardó varios años en llegar a Occidente y a las consolas.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_157",
+      "question": "¿En qué año salió Super Mario Bros. en Japón?",
+      "type": "estimate",
+      "answer": 1985,
+      "min": 1975,
+      "max": 2000,
+      "unit": "año",
+      "difficulty": "easy",
+      "fun_fact": "Salió para la Famicom en septiembre de 1985 y después fue la base del éxito de la NES en todo el mundo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_158",
+      "question": "¿En qué año salió la Game Boy en Japón?",
+      "type": "estimate",
+      "answer": 1989,
+      "min": 1975,
+      "max": 2005,
+      "unit": "año",
+      "difficulty": "medium",
+      "fun_fact": "Llegó en abril de 1989. En Occidente la acompañaba el Tetris y vendió más de cien millones de unidades en toda la familia Game Boy.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_159",
+      "question": "¿Cuántos Pokémon hay en la primera generación?",
+      "type": "estimate",
+      "answer": 151,
+      "min": 50,
+      "max": 400,
+      "unit": "Pokémon",
+      "difficulty": "medium",
+      "fun_fact": "Pokémon Rojo y Verde salieron en Japón en 1996. Mew, el número 151, no figuraba en los planes iniciales y se añadió casi al final del desarrollo.",
+      "category": "Videojuegos"
+    },
+    {
+      "id": "videojuegos_es_160",
+      "question": "¿En qué año se lanzó el arcade Pong?",
+      "type": "estimate",
+      "answer": 1972,
+      "min": 1960,
+      "max": 1995,
+      "unit": "año",
+      "difficulty": "hard",
+      "fun_fact": "Atari lo lanzó en 1972. Allan Alcorn lo creó como ejercicio de entrenamiento y la primera máquina se atascó porque se llenó de monedas.",
+      "category": "Videojuegos"
+    }
+  ]
+}

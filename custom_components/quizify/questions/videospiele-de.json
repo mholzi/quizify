@@ -1,0 +1,3323 @@
+{
+  "name": "Videospiele",
+  "language": "de",
+  "version": "1.0",
+  "theme": "trivia",
+  "questions": [
+    {
+      "id": "videospiele_de_001",
+      "question": "Welches Spiel von 1978 lässt Aliens in Reihen auf eine Laserkanone zumarschieren?",
+      "answers": [
+        {
+          "text": "Space Invaders",
+          "correct": true
+        },
+        {
+          "text": "Galaga",
+          "correct": false
+        },
+        {
+          "text": "Asteroids",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Aliens werden schneller, je weniger übrig sind – ein Nebeneffekt der damaligen Hardware, den die Entwickler bewusst beließen. Entwickelt hat es Tomohiro Nishikado für Taito.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_002",
+      "question": "In welchem Spiel hatte Mario 1981 seinen ersten Auftritt?",
+      "answers": [
+        {
+          "text": "Donkey Kong",
+          "correct": true
+        },
+        {
+          "text": "Mario Bros.",
+          "correct": false
+        },
+        {
+          "text": "Super Mario Bros.",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Damals hieß er noch „Jumpman“ und war Zimmermann, kein Klempner. Den Namen Mario bekam er erst später, angeblich nach dem Vermieter des Nintendo-Lagers in den USA.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_003",
+      "question": "Wie heißt einer der vier Geister, die Pac-Man durch das Labyrinth jagen?",
+      "answers": [
+        {
+          "text": "Clyde",
+          "correct": true
+        },
+        {
+          "text": "Casper",
+          "correct": false
+        },
+        {
+          "text": "Boo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Geister heißen Blinky, Pinky, Inky und Clyde und haben jeweils ein eigenes Jagdverhalten. Pac-Man erschien 1980 bei Namco.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_004",
+      "question": "Wovor flüchtet Pac-Man im Labyrinth, wenn er keine Kraftkugel gefressen hat?",
+      "answers": [
+        {
+          "text": "Vor Geistern",
+          "correct": true
+        },
+        {
+          "text": "Vor Robotern",
+          "correct": false
+        },
+        {
+          "text": "Vor Drachen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Name kommt vom japanischen „paku-paku“, dem Geräusch beim Kauen. In Japan hieß das Spiel zunächst „Puckman“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_005",
+      "question": "Wer gründete zusammen mit Ted Dabney die Firma Atari?",
+      "answers": [
+        {
+          "text": "Nolan Bushnell",
+          "correct": true
+        },
+        {
+          "text": "Ralph Baer",
+          "correct": false
+        },
+        {
+          "text": "Trip Hawkins",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bushnell gründete später auch die Pizza-Kette Chuck E. Cheese’s mit Spielautomaten. Ein früher Atari-Mitarbeiter war Steve Jobs, der an „Breakout“ mitwirkte.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_006",
+      "question": "Aus welchem Land stammt Alexei Paschitnow, der Erfinder von Tetris?",
+      "answers": [
+        {
+          "text": "Sowjetunion",
+          "correct": true
+        },
+        {
+          "text": "USA",
+          "correct": false
+        },
+        {
+          "text": "Japan",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name setzt sich aus dem griechischen „tetra“ (vier) und Paschitnows Lieblingssport Tennis zusammen. Die Rechte am Spiel waren später Gegenstand eines zähen Lizenzstreits zwischen Ost und West.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_007",
+      "question": "Welche Firma brachte mit der Odyssey die erste Heimkonsole für Fernseher auf den Markt, noch vor Atari?",
+      "answers": [
+        {
+          "text": "Magnavox",
+          "correct": true
+        },
+        {
+          "text": "Atari",
+          "correct": false
+        },
+        {
+          "text": "Nintendo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Entwickler war Ralph Baer. Nolan Bushnell sah ein Tennisspiel der Odyssey und ließ Atari danach „Pong“ bauen – Magnavox klagte später erfolgreich.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_008",
+      "question": "Welches Spiel soll Atari 1983 tonnenweise in der Wüste von New Mexico vergraben haben?",
+      "answers": [
+        {
+          "text": "E.T. der Außerirdische",
+          "correct": true
+        },
+        {
+          "text": "Pac-Man",
+          "correct": false
+        },
+        {
+          "text": "Pitfall!",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Legende galt lange als Mythos, bis 2014 bei Alamogordo tatsächlich Module ausgegraben wurden. Das Spiel soll in nur etwa fünf Wochen programmiert worden sein.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_009",
+      "question": "Welche heute allgegenwärtige Controller-Neuerung führte Nintendo 1982 bei einem Game & Watch ein?",
+      "answers": [
+        {
+          "text": "Das Steuerkreuz",
+          "correct": true
+        },
+        {
+          "text": "Den Analogstick",
+          "correct": false
+        },
+        {
+          "text": "Die Rumble-Funktion",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gunpei Yokoi ersetzte den Joystick durch ein flaches Kreuz, weil es auf dem kleinen Gerät besser passte. Das Prinzip steckt bis heute in fast jedem Controller.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_010",
+      "question": "Wie hieß Segas Mega Drive in Nordamerika?",
+      "answers": [
+        {
+          "text": "Genesis",
+          "correct": true
+        },
+        {
+          "text": "Saturn",
+          "correct": false
+        },
+        {
+          "text": "Master System",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mit Sonic als Maskottchen forderte Sega ab 1991 Nintendo im Duell der 16-Bit-Konsolen heraus. Das Mega Drive erschien in Japan bereits 1988.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_011",
+      "question": "Mit welchem frechen Werbespruch trat Sega in den 90ern gegen Nintendo an?",
+      "answers": [
+        {
+          "text": "Sega does what Nintendon’t",
+          "correct": true
+        },
+        {
+          "text": "Where fun begins",
+          "correct": false
+        },
+        {
+          "text": "Gaming for everyone",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Slogan stichelte gegen Nintendos braves Familienimage und gehörte zur Genesis-Kampagne. Segas Maskottchen Sonic sollte das coolere Gegenstück zu Mario sein.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_012",
+      "question": "In welchem Jahr entstand die erste Version von Tetris?",
+      "type": "estimate",
+      "answer": 1984,
+      "min": 1970,
+      "max": 2000,
+      "unit": "Jahr",
+      "difficulty": "medium",
+      "fun_fact": "Alexei Paschitnow programmierte es im Juni 1984 auf einem sowjetischen Computer in Moskau. Der Name vereint „tetra“ (vier) und Tennis.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_013",
+      "question": "Welche Konsole war die letzte von Sega?",
+      "answers": [
+        {
+          "text": "Dreamcast",
+          "correct": true
+        },
+        {
+          "text": "Saturn",
+          "correct": false
+        },
+        {
+          "text": "Game Gear",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sega stellte die Dreamcast 2001 ein und wurde danach zum reinen Softwarehersteller. In Japan war sie 1998 erschienen, im Westen 1999.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_014",
+      "question": "Welche Konsole von Nintendo aus dem Jahr 1995 zeigte alles in Rot und floppte?",
+      "answers": [
+        {
+          "text": "Virtual Boy",
+          "correct": true
+        },
+        {
+          "text": "Game Boy Color",
+          "correct": false
+        },
+        {
+          "text": "Wii U",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Gerät mit stereoskopischer 3D-Anzeige erfand Gunpei Yokoi. Es wurde nach etwa einem Jahr eingestellt, viele Spieler klagten über Kopfschmerzen.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_015",
+      "question": "Welcher Heimcomputer, 1982 vorgestellt, wurde in Deutschland zum Klassiker der Kinderzimmer?",
+      "answers": [
+        {
+          "text": "Commodore 64",
+          "correct": true
+        },
+        {
+          "text": "Amiga 500",
+          "correct": false
+        },
+        {
+          "text": "Atari ST",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sein SID-Soundchip von Bob Yannes klingt bis heute so eigenständig, dass es eine Szene für C64-Musik gibt. Amiga 500 und Atari ST kamen erst Mitte der Achtziger.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_016",
+      "question": "Wie nennt man Spiele mit zufällig erzeugten Levels, in denen der Tod meist alles zurücksetzt?",
+      "answers": [
+        {
+          "text": "Roguelike",
+          "correct": true
+        },
+        {
+          "text": "Metroidvania",
+          "correct": false
+        },
+        {
+          "text": "Beat ’em up",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name geht auf das Textspiel „Rogue“ von 1980 zurück. Das Prinzip kehrte später in Spielen wie „Hades“ oder „Dead Cells“ zurück.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_017",
+      "question": "Aus welchen zwei Spielereihen setzt sich der Begriff „Metroidvania“ zusammen?",
+      "answers": [
+        {
+          "text": "Metroid und Castlevania",
+          "correct": true
+        },
+        {
+          "text": "Metroid und Contra",
+          "correct": false
+        },
+        {
+          "text": "Metal Gear und Castlevania",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gemeint sind Spiele mit einer großen, verwinkelten Karte, deren Bereiche sich durch neue Fähigkeiten öffnen. „Castlevania: Symphony of the Night“ von 1997 prägte den zweiten Teil des Begriffs.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_018",
+      "question": "Was bezeichnet man in Spielen als „Easter Egg“?",
+      "answers": [
+        {
+          "text": "Eine versteckte Überraschung der Entwickler",
+          "correct": true
+        },
+        {
+          "text": "Ein Bonuslevel zu Ostern",
+          "correct": false
+        },
+        {
+          "text": "Einen Fehler im Spiel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das erste bekannte Easter Egg steckt im Atari-Spiel „Adventure“ von 1979: Programmierer Warren Robinett versteckte darin seinen Namen.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_019",
+      "question": "Wie heißt Marios Bruder?",
+      "answers": [
+        {
+          "text": "Luigi",
+          "correct": true
+        },
+        {
+          "text": "Wario",
+          "correct": false
+        },
+        {
+          "text": "Toad",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Luigi entstand für den Zwei-Spieler-Modus von „Mario Bros.“ und war zunächst nur eine umgefärbte Mario-Figur. Er trägt grün, Mario rot.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_020",
+      "question": "Wie heißt die Prinzessin, die Mario immer wieder aus Bowsers Burg befreien muss?",
+      "answers": [
+        {
+          "text": "Peach",
+          "correct": true
+        },
+        {
+          "text": "Zelda",
+          "correct": false
+        },
+        {
+          "text": "Samus",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Im Westen hieß sie lange Princess Toadstool. Den Namen Peach bekam sie dort erst mit „Super Mario 64“ (1996).",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_021",
+      "question": "Wie heißt die Hauptfigur der Zelda-Reihe, die man selbst steuert?",
+      "answers": [
+        {
+          "text": "Link",
+          "correct": true
+        },
+        {
+          "text": "Zelda",
+          "correct": false
+        },
+        {
+          "text": "Ganon",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Titel verwirrt viele: Zelda ist die Prinzessin, die man oft retten muss. Link spielt man, Ganon ist sein Gegenspieler.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_022",
+      "question": "Nach wem soll Shigeru Miyamoto die Prinzessin Zelda benannt haben?",
+      "answers": [
+        {
+          "text": "Nach der Ehefrau des Autors F. Scott Fitzgerald",
+          "correct": true
+        },
+        {
+          "text": "Nach seiner eigenen Tochter",
+          "correct": false
+        },
+        {
+          "text": "Nach einer Märchenfigur der Brüder Grimm",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Miyamoto gefiel der Klang des Namens von Zelda Fitzgerald, der Frau des Schriftstellers F. Scott Fitzgerald. Das erste Zelda-Spiel erschien 1986.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_023",
+      "question": "Welches Instrument spielt Link in „Ocarina of Time“, um Zauber zu wirken?",
+      "answers": [
+        {
+          "text": "Eine Okarina",
+          "correct": true
+        },
+        {
+          "text": "Eine Panflöte",
+          "correct": false
+        },
+        {
+          "text": "Eine Harfe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Spiel erschien 1998 für das Nintendo 64 und gilt vielen als eines der besten Spiele aller Zeiten. Mit der Okarina spielt man Melodien, die Zeit und Ort verändern.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_024",
+      "question": "Welche drei Tugenden verkörpern die Teile des Triforce?",
+      "answers": [
+        {
+          "text": "Kraft, Weisheit, Mut",
+          "correct": true
+        },
+        {
+          "text": "Liebe, Hoffnung, Glaube",
+          "correct": false
+        },
+        {
+          "text": "Stärke, Ehre, Treue",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ganon trägt das Triforce der Kraft, Zelda das der Weisheit, Link das des Mutes. Zusammen erfüllen sie dem Träger einen Wunsch.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_025",
+      "question": "Womit zeigt die Zelda-Reihe traditionell Links Lebensenergie an?",
+      "answers": [
+        {
+          "text": "Mit Herzen",
+          "correct": true
+        },
+        {
+          "text": "Mit einem Balken",
+          "correct": false
+        },
+        {
+          "text": "Mit Zahlen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vier gesammelte Herzteile ergeben einen neuen Herzcontainer, der die Lebensenergie erhöht.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_026",
+      "question": "Was gibt Mario in „Super Mario Bros.“ nach 100 gesammelten Stück ein Extraleben?",
+      "answers": [
+        {
+          "text": "Münzen",
+          "correct": true
+        },
+        {
+          "text": "Sterne",
+          "correct": false
+        },
+        {
+          "text": "Pilze",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Münzzähler springt nach 100 wieder auf null, und Mario bekommt ein zusätzliches Leben. Ein grüner 1-Up-Pilz bringt es sofort.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_027",
+      "question": "Wie heißt der grüne Dinosaurier, auf dem Mario reiten kann?",
+      "answers": [
+        {
+          "text": "Yoshi",
+          "correct": true
+        },
+        {
+          "text": "Spyro",
+          "correct": false
+        },
+        {
+          "text": "Toad",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Yoshi debütierte 1990 in „Super Mario World“, dem Starttitel des Super Nintendo in Japan. Er kann Gegner mit seiner langen Zunge verschlingen.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_028",
+      "question": "Was lässt Mario in der Reihe „Super Mario“ größer werden?",
+      "answers": [
+        {
+          "text": "Ein Superpilz",
+          "correct": true
+        },
+        {
+          "text": "Ein Stern",
+          "correct": false
+        },
+        {
+          "text": "Eine Münze",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Pilz verwandelt den kleinen Mario in den großen Super-Mario, der einen Treffer aushält. Der Stern macht dagegen nur kurz unverwundbar.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_029",
+      "question": "Welchen Beruf übt Mario seit „Mario Bros.“ (1983) aus?",
+      "answers": [
+        {
+          "text": "Klempner",
+          "correct": true
+        },
+        {
+          "text": "Koch",
+          "correct": false
+        },
+        {
+          "text": "Elektriker",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Spiel spielt in der Kanalisation von New York, daher die Rohre, die bis heute sein Markenzeichen sind. In „Donkey Kong“ war er noch Zimmermann.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_030",
+      "question": "Welches Item in Mario Kart trifft gezielt den aktuell Führenden?",
+      "answers": [
+        {
+          "text": "Der blaue Panzer",
+          "correct": true
+        },
+        {
+          "text": "Die Bananenschale",
+          "correct": false
+        },
+        {
+          "text": "Der Pilz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der blaue Stachi-Panzer debütierte in „Mario Kart 64“ und fliegt über die ganze Strecke. Gegen ihn hilft nur ein Schutzitem im richtigen Moment.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_031",
+      "question": "Welchen Namen trägt Nintendos würfelförmige Konsole von 2001?",
+      "answers": [
+        {
+          "text": "GameCube",
+          "correct": true
+        },
+        {
+          "text": "Nintendo 64",
+          "correct": false
+        },
+        {
+          "text": "Wii",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der GameCube spielte Mini-Discs mit acht Zentimetern Durchmesser und hatte einen Tragegriff am Gehäuse.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_032",
+      "question": "Wie viele Controller-Anschlüsse hatte das Nintendo 64?",
+      "answers": [
+        {
+          "text": "Vier",
+          "correct": true
+        },
+        {
+          "text": "Zwei",
+          "correct": false
+        },
+        {
+          "text": "Drei",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die vier Anschlüsse machten Spiele wie „Mario Kart 64“ und „GoldenEye 007“ zu Mehrspieler-Klassikern. Die PlayStation hatte dagegen nur zwei.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_033",
+      "question": "Was machte die Nintendo Wii 2006 besonders?",
+      "answers": [
+        {
+          "text": "Ein Controller, der Bewegungen im Raum erkennt",
+          "correct": true
+        },
+        {
+          "text": "Ein Controller mit eingebautem Touchscreen",
+          "correct": false
+        },
+        {
+          "text": "Ein Headset zur Sprachsteuerung",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Wii verkaufte sich über 100 Millionen Mal. Sie sprach viele Menschen an, die zuvor nie gezockt hatten.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_034",
+      "question": "Mit welchem Spiel kam die Wii im Westen standardmäßig im Bundle?",
+      "answers": [
+        {
+          "text": "Wii Sports",
+          "correct": true
+        },
+        {
+          "text": "Super Mario Galaxy",
+          "correct": false
+        },
+        {
+          "text": "Super Smash Bros. Brawl",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dadurch wurde „Wii Sports“ mit über 80 Millionen Exemplaren eines der meistverkauften Spiele überhaupt. Tennis und Bowling spielten Eltern wie Großeltern.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_035",
+      "question": "Was ist das Besondere an der Nintendo Switch von 2017?",
+      "answers": [
+        {
+          "text": "Sie lässt sich am Fernseher und unterwegs nutzen",
+          "correct": true
+        },
+        {
+          "text": "Sie ist ein reiner Handheld ohne TV-Anschluss",
+          "correct": false
+        },
+        {
+          "text": "Sie spielt nur Spiele aus dem Internet",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Konsole steckt in einer Dockingstation oder lässt sich als Handheld mitnehmen. Die abnehmbaren Joy-Con-Controller können einzeln gespielt werden.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_036",
+      "question": "Was ist das Markenzeichen des Nintendo DS von 2004?",
+      "answers": [
+        {
+          "text": "Zwei Bildschirme, einer davon berührungsempfindlich",
+          "correct": true
+        },
+        {
+          "text": "Ein 3D-Bildschirm ohne Brille",
+          "correct": false
+        },
+        {
+          "text": "Eine ausklappbare Tastatur",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Abkürzung steht für „Dual Screen“. Der DS wurde mit gut 150 Millionen verkauften Geräten zu einem der erfolgreichsten Handhelds.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_037",
+      "question": "Wie war der Bildschirm des originalen Game Boy gefärbt?",
+      "answers": [
+        {
+          "text": "Grünliche Graustufen",
+          "correct": true
+        },
+        {
+          "text": "Schwarz-Weiß",
+          "correct": false
+        },
+        {
+          "text": "Orange-Schwarz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der erste Game Boy hatte keine Hintergrundbeleuchtung – nachts brauchte man eine Lampe. Das Farbmodell Game Boy Color kam erst Jahre später, 1998.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_038",
+      "question": "Welches Spiel lag dem Game Boy im Westen beim Kauf bei?",
+      "answers": [
+        {
+          "text": "Tetris",
+          "correct": true
+        },
+        {
+          "text": "Super Mario Land",
+          "correct": false
+        },
+        {
+          "text": "Pokémon Rot",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tetris passte perfekt zu einem Gerät, das auch Nicht-Gamer ansprechen sollte. In Japan erschien zum Start dagegen „Super Mario Land“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_039",
+      "question": "Was stellte Nintendo bei der Gründung 1889 in Kyoto her?",
+      "answers": [
+        {
+          "text": "Spielkarten",
+          "correct": true
+        },
+        {
+          "text": "Porzellan",
+          "correct": false
+        },
+        {
+          "text": "Kimonos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gründer Fusajiro Yamauchi fertigte Hanafuda-Karten. Das Unternehmen ist damit älter als jede andere große Videospielfirma.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_040",
+      "question": "Wer erfand Figuren wie Mario und Zelda?",
+      "answers": [
+        {
+          "text": "Shigeru Miyamoto",
+          "correct": true
+        },
+        {
+          "text": "Satoru Iwata",
+          "correct": false
+        },
+        {
+          "text": "Hideo Kojima",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Miyamoto ließ sich für Zelda von seinen Kindheitserkundungen in den Feldern und Höhlen rund um seine Heimatstadt Sonobe inspirieren.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_041",
+      "question": "In welcher Reihe treffen Mario, Link und Pikachu im Kampf aufeinander?",
+      "answers": [
+        {
+          "text": "Super Smash Bros.",
+          "correct": true
+        },
+        {
+          "text": "Mario Party",
+          "correct": false
+        },
+        {
+          "text": "Mario Kart",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der erste Teil erschien 1999 für das Nintendo 64 mit nur zwölf Kämpfern. Heute sind es weit über achtzig.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_042",
+      "question": "Was verrät das Ende des ersten „Metroid“ (1986) über Samus Aran?",
+      "answers": [
+        {
+          "text": "Dass sie eine Frau ist",
+          "correct": true
+        },
+        {
+          "text": "Dass sie ein Roboter ist",
+          "correct": false
+        },
+        {
+          "text": "Dass sie selbst ein Metroid ist",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wer das Spiel schnell genug beendete, sah Samus ohne Anzug. Das war einer der ersten großen Twists der Spielgeschichte.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_043",
+      "question": "Welche Fähigkeit macht Kirby besonders?",
+      "answers": [
+        {
+          "text": "Er saugt Gegner ein und kopiert ihre Kräfte",
+          "correct": true
+        },
+        {
+          "text": "Er kann fliegen und Feuer spucken",
+          "correct": false
+        },
+        {
+          "text": "Er kann sich in andere Figuren verwandeln",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Kopieren kam erst im zweiten Spiel, „Kirby’s Adventure“ (1993). Das erste Spiel „Kirby’s Dream Land“ erschien 1992 für den Game Boy.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_044",
+      "question": "Was steckt im Namen von Marios Gegenstück Wario?",
+      "answers": [
+        {
+          "text": "Japanisch „warui“ (böse) plus Mario",
+          "correct": true
+        },
+        {
+          "text": "Wald plus Mario",
+          "correct": false
+        },
+        {
+          "text": "Der Nachname des Erfinders",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wario debütierte 1992 in „Super Mario Land 2“ als Gegenspieler und bekam später eigene Spiele.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_045",
+      "question": "In welchem Jahr erschien „Super Mario Bros.“ in Japan?",
+      "type": "estimate",
+      "answer": 1985,
+      "min": 1975,
+      "max": 2000,
+      "unit": "Jahr",
+      "difficulty": "medium",
+      "fun_fact": "Das Spiel erschien im September 1985 für das Famicom. Es wurde über 40 Millionen Mal verkauft.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_046",
+      "question": "In welchem Mario-Spiel hat Mario 1996 erstmals die dritte Dimension erkundet?",
+      "answers": [
+        {
+          "text": "Super Mario 64",
+          "correct": true
+        },
+        {
+          "text": "Super Mario World",
+          "correct": false
+        },
+        {
+          "text": "Super Mario Land",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es war ein Starttitel des Nintendo 64. Der Analogstick des Controllers erlaubte erstmals fließende Bewegung in alle Richtungen.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_047",
+      "question": "Wie heißt der Schildkrötendrache, der Prinzessin Peach immer wieder entführt?",
+      "answers": [
+        {
+          "text": "Bowser",
+          "correct": true
+        },
+        {
+          "text": "Ganon",
+          "correct": false
+        },
+        {
+          "text": "Dr. Eggman",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bowser ist ein Koopa-König, halb Schildkröte, halb Drache. Sein Sohn Bowser Jr. tauchte erstmals 2002 in „Super Mario Sunshine“ auf.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_048",
+      "question": "Wer erfand die Pokémon?",
+      "answers": [
+        {
+          "text": "Satoshi Tajiri",
+          "correct": true
+        },
+        {
+          "text": "Shigeru Miyamoto",
+          "correct": false
+        },
+        {
+          "text": "Masahiro Sakurai",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tajiri sammelte als Kind Insekten und wollte dieses Gefühl in ein Spiel packen. Seine Firma Game Freak entwickelte Pokémon.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_049",
+      "question": "Welches Pokémon ist das Maskottchen der Reihe?",
+      "answers": [
+        {
+          "text": "Pikachu",
+          "correct": true
+        },
+        {
+          "text": "Evoli",
+          "correct": false
+        },
+        {
+          "text": "Glumanda",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Name setzt sich aus „pika“ (Funkeln) und „chu“ (Quieken einer Maus) zusammen.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_050",
+      "question": "Mit welchen zwei Editionen startete Pokémon 1999 in Europa?",
+      "answers": [
+        {
+          "text": "Rot und Blau",
+          "correct": true
+        },
+        {
+          "text": "Gold und Silber",
+          "correct": false
+        },
+        {
+          "text": "Rot und Gelb",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In Japan hießen die Editionen noch Rot und Grün. Die gelbe Edition mit Pikachu als Begleiter folgte später.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_051",
+      "question": "Welches Pokémon kann man in den Editionen Rot und Blau als Starter wählen?",
+      "answers": [
+        {
+          "text": "Schiggy",
+          "correct": true
+        },
+        {
+          "text": "Pikachu",
+          "correct": false
+        },
+        {
+          "text": "Evoli",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Zur Wahl stehen Bisasam, Glumanda und Schiggy. Pikachu bekommt man dort nicht als Starter, in der gelben Edition begleitet es dagegen von Anfang an.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_052",
+      "question": "Womit schießt man in „Duck Hunt“ auf dem NES auf Enten?",
+      "answers": [
+        {
+          "text": "Mit einer Lichtpistole namens Zapper",
+          "correct": true
+        },
+        {
+          "text": "Mit einem Joystick",
+          "correct": false
+        },
+        {
+          "text": "Mit der Power Glove",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der lachende Hund, der bei Fehlschüssen auftaucht, wurde zur berühmtesten Figur des Spiels.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_053",
+      "question": "Von welcher Firma stammt die PlayStation?",
+      "answers": [
+        {
+          "text": "Sony",
+          "correct": true
+        },
+        {
+          "text": "Sega",
+          "correct": false
+        },
+        {
+          "text": "Nintendo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sony sollte ursprünglich ein CD-Laufwerk für das Super Nintendo bauen. Nach dem Bruch mit Nintendo entstand daraus die eigene Konsole.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_054",
+      "question": "Auf welchem Medium erschienen die Spiele der ersten PlayStation?",
+      "answers": [
+        {
+          "text": "CD-ROM",
+          "correct": true
+        },
+        {
+          "text": "Modul",
+          "correct": false
+        },
+        {
+          "text": "Diskette",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nintendo setzte beim Nintendo 64 weiter auf Module. Spiele wie „Final Fantasy VII“ wechselten deshalb zur PlayStation.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_055",
+      "question": "Welche Zusatzfunktion machte die PlayStation 2 zu einem beliebten Wohnzimmergerät?",
+      "answers": [
+        {
+          "text": "Sie konnte DVDs abspielen",
+          "correct": true
+        },
+        {
+          "text": "Sie konnte Blu-rays abspielen",
+          "correct": false
+        },
+        {
+          "text": "Sie konnte Fernsehsendungen aufnehmen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Blu-ray kam erst mit der PlayStation 3 2006 und half im Formatkrieg gegen die HD DVD.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_056",
+      "question": "Welches Beuteltier war das Maskottchen der ersten PlayStation?",
+      "answers": [
+        {
+          "text": "Crash Bandicoot",
+          "correct": true
+        },
+        {
+          "text": "Spyro",
+          "correct": false
+        },
+        {
+          "text": "Sly Cooper",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Entwickelt wurde es von Naughty Dog, die später „Uncharted“ und „The Last of Us“ schufen.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_057",
+      "question": "Welches Studio entwickelte „The Last of Us“?",
+      "answers": [
+        {
+          "text": "Naughty Dog",
+          "correct": true
+        },
+        {
+          "text": "Insomniac Games",
+          "correct": false
+        },
+        {
+          "text": "Santa Monica Studio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Spiel erschien 2013 für die PlayStation 3. Naughty Dog hatte zuvor schon Crash Bandicoot und Uncharted gemacht.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_058",
+      "question": "Wie heißt die Hauptfigur der ersten „God of War“-Spiele?",
+      "answers": [
+        {
+          "text": "Kratos",
+          "correct": true
+        },
+        {
+          "text": "Perseus",
+          "correct": false
+        },
+        {
+          "text": "Odysseus",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der erste Teil erschien 2005 für die PlayStation 2 und spielt in der griechischen Mythologie. 2018 verlegte die Reihe den Schauplatz in die nordische Welt.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_059",
+      "question": "Wie heißt der blonde Held von „Final Fantasy VII“ mit dem riesigen Schwert?",
+      "answers": [
+        {
+          "text": "Cloud Strife",
+          "correct": true
+        },
+        {
+          "text": "Squall Leonhart",
+          "correct": false
+        },
+        {
+          "text": "Tidus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Spiel erschien 1997 auf drei CDs. Es machte Rollenspiele aus Japan im Westen populär.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_060",
+      "question": "Wer ist der Schöpfer der Reihe „Metal Gear“?",
+      "answers": [
+        {
+          "text": "Hideo Kojima",
+          "correct": true
+        },
+        {
+          "text": "Hidetaka Miyazaki",
+          "correct": false
+        },
+        {
+          "text": "Yu Suzuki",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das erste Spiel erschien 1987, die Reihe machte Schleichspiele populär. Kojima schuf später „Death Stranding“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_061",
+      "question": "Welcher Schriftzug erscheint in „Dark Souls“, wenn man stirbt?",
+      "answers": [
+        {
+          "text": "You Died",
+          "correct": true
+        },
+        {
+          "text": "Game Over",
+          "correct": false
+        },
+        {
+          "text": "Try Again",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„Dark Souls“ erschien 2011 und gilt als Inbegriff der Schwierigkeit. Das Sterben ist ein fester Teil des Spielprinzips.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_062",
+      "question": "Wie heißt Sonys Handheld, das 2004 gegen den Nintendo DS antrat?",
+      "answers": [
+        {
+          "text": "PlayStation Portable",
+          "correct": true
+        },
+        {
+          "text": "PlayStation Vita",
+          "correct": false
+        },
+        {
+          "text": "PlayStation Go",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die PSP spielte Spiele auf kleinen Discs namens UMD. Der Nachfolger Vita kam 2011.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_063",
+      "question": "Welche Symbole tragen die vier Aktionstasten des PlayStation-Controllers?",
+      "answers": [
+        {
+          "text": "Dreieck, Kreis, Kreuz, Quadrat",
+          "correct": true
+        },
+        {
+          "text": "Dreieck, Stern, Kreuz, Quadrat",
+          "correct": false
+        },
+        {
+          "text": "Pfeil, Kreis, Kreuz, Raute",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Designer Teiyu Goto wählte sie: Das Dreieck steht für den Blickwinkel, das Quadrat für ein Blatt Papier, Kreis und Kreuz für „Ja“ und „Nein“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_064",
+      "question": "Wie heißt die Rennspielreihe von Polyphony Digital, die 1997 erstmals erschien?",
+      "answers": [
+        {
+          "text": "Gran Turismo",
+          "correct": true
+        },
+        {
+          "text": "Forza Motorsport",
+          "correct": false
+        },
+        {
+          "text": "Need for Speed",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kazunori Yamauchi legte Wert auf realistische Fahrphysik. Das Spiel erschien für die erste PlayStation.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_065",
+      "question": "Welcher Konzern brachte 2001 die erste Xbox auf den Markt?",
+      "answers": [
+        {
+          "text": "Microsoft",
+          "correct": true
+        },
+        {
+          "text": "Sony",
+          "correct": false
+        },
+        {
+          "text": "Apple",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Name leitet sich von „DirectX Box“ ab, der Grafikschnittstelle von Windows.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_066",
+      "question": "Wie heißt der Held der Xbox-Reihe „Halo“ in der grünen Rüstung?",
+      "answers": [
+        {
+          "text": "Master Chief",
+          "correct": true
+        },
+        {
+          "text": "Marcus Fenix",
+          "correct": false
+        },
+        {
+          "text": "Commander Shepard",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "„Halo“ war ein Starttitel der ersten Xbox. Es war zuvor als Mac-Spiel angekündigt, bis Microsoft den Entwickler Bungie kaufte.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_067",
+      "question": "Wie hieß der Online-Dienst, mit dem die Xbox ab 2002 vernetzt wurde?",
+      "answers": [
+        {
+          "text": "Xbox Live",
+          "correct": true
+        },
+        {
+          "text": "Xbox Connect",
+          "correct": false
+        },
+        {
+          "text": "Xbox Net",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Gamerscore-Punkte kamen erst mit der Xbox 360 im Jahr 2005.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_068",
+      "question": "Wofür wurde die Xbox 360 wegen ihrer Hardwareprobleme berüchtigt?",
+      "answers": [
+        {
+          "text": "Der Rote Ring des Todes",
+          "correct": true
+        },
+        {
+          "text": "Der Blue Screen of Death",
+          "correct": false
+        },
+        {
+          "text": "Der Gelbe Schirm",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Microsoft verlängerte die Garantie auf drei Jahre und kostete das über eine Milliarde Dollar.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_069",
+      "question": "Wie hieß Microsofts Kamera-Steuerung für die Xbox 360 von 2010?",
+      "answers": [
+        {
+          "text": "Kinect",
+          "correct": true
+        },
+        {
+          "text": "Move",
+          "correct": false
+        },
+        {
+          "text": "Eye",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Man spielte komplett ohne Controller, der Körper war die Steuerung. Sony reagierte mit PlayStation Move.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_070",
+      "question": "Wie viel zahlte Microsoft 2014 ungefähr für das Studio Mojang, das Minecraft entwickelt?",
+      "answers": [
+        {
+          "text": "2,5 Milliarden Dollar",
+          "correct": true
+        },
+        {
+          "text": "250 Millionen Dollar",
+          "correct": false
+        },
+        {
+          "text": "25 Milliarden Dollar",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Kauf wurde für die Fans zunächst ein Schock. Mojang-Gründer Notch verließ die Firma danach.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_071",
+      "question": "Welche Farbe prägt das Xbox-Logo?",
+      "answers": [
+        {
+          "text": "Grün",
+          "correct": true
+        },
+        {
+          "text": "Blau",
+          "correct": false
+        },
+        {
+          "text": "Rot",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der erste Xbox-Controller war so groß, dass er „Duke“ genannt wurde. Microsoft brachte bald den kleineren „Controller S“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_072",
+      "question": "Welches Spiel von 1993 schickt einen Marine gegen Höllenwesen auf dem Marsmond Phobos?",
+      "answers": [
+        {
+          "text": "Doom",
+          "correct": true
+        },
+        {
+          "text": "Duke Nukem 3D",
+          "correct": false
+        },
+        {
+          "text": "Quake",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Doom wurde auf unzähligen Geräten zum Laufen gebracht, vom Taschenrechner bis zum Drucker.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_073",
+      "question": "Welche zwei Teams treten in Counter-Strike gegeneinander an?",
+      "answers": [
+        {
+          "text": "Terroristen und Antiterroreinheit",
+          "correct": true
+        },
+        {
+          "text": "Polizei und Bankräuber",
+          "correct": false
+        },
+        {
+          "text": "Soldaten und Zombies",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es begann 1999 als Mod für Half-Life, entwickelt von Minh Le und Jess Cliffe. Valve kaufte später die Rechte.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_074",
+      "question": "Welches Werkzeug ist die Markenwaffe von Gordon Freeman in „Half-Life“?",
+      "answers": [
+        {
+          "text": "Ein Brecheisen",
+          "correct": true
+        },
+        {
+          "text": "Ein Hammer",
+          "correct": false
+        },
+        {
+          "text": "Eine Axt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Freeman ist ein Physiker im Forschungszentrum Black Mesa. „Half-Life“ erschien 1998.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_075",
+      "question": "Was ist laut dem berühmten Spruch aus „Portal“ eine Lüge?",
+      "answers": [
+        {
+          "text": "Der Kuchen",
+          "correct": true
+        },
+        {
+          "text": "Der Test",
+          "correct": false
+        },
+        {
+          "text": "Das Versprechen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Spiel kam 2007 in der „Orange Box“ und führt eine Testperson durch Aufgaben der KI GLaDOS.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_076",
+      "question": "In welchem Krieg spielt der erste „Call of Duty“ von 2003?",
+      "answers": [
+        {
+          "text": "Zweiter Weltkrieg",
+          "correct": true
+        },
+        {
+          "text": "Erster Weltkrieg",
+          "correct": false
+        },
+        {
+          "text": "Vietnamkrieg",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Studio Infinity Ward gründeten ehemalige Entwickler von „Medal of Honor: Allied Assault“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_077",
+      "question": "Wie heißt die große PC-Vertriebsplattform von Valve für Spiele?",
+      "answers": [
+        {
+          "text": "Steam",
+          "correct": true
+        },
+        {
+          "text": "Origin",
+          "correct": false
+        },
+        {
+          "text": "Uplay",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Steam startete 2003, um Counter-Strike mit Updates zu versorgen. Heute läuft ein Großteil der PC-Spiele darüber.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_078",
+      "question": "In welchem Jahr kam der Game Boy in Japan auf den Markt?",
+      "type": "estimate",
+      "answer": 1989,
+      "min": 1975,
+      "max": 2005,
+      "unit": "Jahr",
+      "difficulty": "hard",
+      "fun_fact": "Er erschien im April 1989. Trotz schwächerer Technik schlug er die Konkurrenz dank langer Akkulaufzeit und niedrigem Preis.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_079",
+      "question": "Welches Online-Rollenspiel von Blizzard startete 2004?",
+      "answers": [
+        {
+          "text": "World of Warcraft",
+          "correct": true
+        },
+        {
+          "text": "Diablo",
+          "correct": false
+        },
+        {
+          "text": "EverQuest",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Auf dem Höhepunkt 2010 hatte es über zwölf Millionen zahlende Abonnenten.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_080",
+      "question": "In welchem Land wurde „StarCraft“ zu einer Art Nationalsport?",
+      "answers": [
+        {
+          "text": "Südkorea",
+          "correct": true
+        },
+        {
+          "text": "Japan",
+          "correct": false
+        },
+        {
+          "text": "Schweden",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Matches wurden im Fernsehen übertragen, die besten Spieler waren Stars. Das Spiel erschien 1998.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_081",
+      "question": "Welches Echtzeitstrategiespiel von 1997 beginnt in der Steinzeit und führt durch mehrere Zeitalter?",
+      "answers": [
+        {
+          "text": "Age of Empires",
+          "correct": true
+        },
+        {
+          "text": "Command & Conquer",
+          "correct": false
+        },
+        {
+          "text": "Warcraft II",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Entwickelt wurde es von den Ensemble Studios. Die Reihe lebt bis heute weiter.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_082",
+      "question": "Welcher Satz beschreibt die Suchtfalle bei „Civilization“?",
+      "answers": [
+        {
+          "text": "Noch ein Zug",
+          "correct": true
+        },
+        {
+          "text": "Gleich ist Schluss",
+          "correct": false
+        },
+        {
+          "text": "Nur ein Level",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sid Meier schuf das Spiel 1991. Viele Spieler verlieren darüber die Zeit bis in den Morgen.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_083",
+      "question": "Welches Spiel von Will Wright lässt Spieler als Bürgermeister eine Stadt bauen?",
+      "answers": [
+        {
+          "text": "SimCity",
+          "correct": true
+        },
+        {
+          "text": "Civilization",
+          "correct": false
+        },
+        {
+          "text": "Populous",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Will Wright baute später „Die Sims“. Das Prinzip der Aufbausimulation hat er damit begründet.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_084",
+      "question": "In welcher Programmiersprache schrieb Chris Sawyer größtenteils „RollerCoaster Tycoon“?",
+      "answers": [
+        {
+          "text": "Assembler",
+          "correct": true
+        },
+        {
+          "text": "C++",
+          "correct": false
+        },
+        {
+          "text": "Pascal",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dadurch lief das Spiel 1999 auf alten Rechnern flüssig, obwohl es hunderte Gäste simuliert.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_085",
+      "question": "Welches Studio entwickelte „Lemmings“ und wurde später zu Rockstar North?",
+      "answers": [
+        {
+          "text": "DMA Design",
+          "correct": true
+        },
+        {
+          "text": "Rare",
+          "correct": false
+        },
+        {
+          "text": "Psygnosis",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Aus DMA Design wurde die Firma hinter „Grand Theft Auto“. „Lemmings“ erschien 1991 unter anderem für den Amiga.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_086",
+      "question": "Wozu wurde „Solitär“ in Windows 3.0 aufgenommen?",
+      "answers": [
+        {
+          "text": "Um den Umgang mit der Maus zu üben",
+          "correct": true
+        },
+        {
+          "text": "Um Tastenkürzel zu lernen",
+          "correct": false
+        },
+        {
+          "text": "Um die Grafikkarte zu testen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Ziehen und Ablegen der Karten trainierte den Umgang mit der Maus. Programmiert hat es der Praktikant Wes Cherry.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_087",
+      "question": "Wie heißt Blizzards Teamshooter, der 2016 erschien?",
+      "answers": [
+        {
+          "text": "Overwatch",
+          "correct": true
+        },
+        {
+          "text": "Team Fortress 2",
+          "correct": false
+        },
+        {
+          "text": "Apex Legends",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Er entstand aus dem eingestellten Projekt „Titan“. Es war Blizzards erste neue Marke seit Jahren.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_088",
+      "question": "Aus welchem Land stammt das Studio DICE, das „Battlefield“ entwickelt?",
+      "answers": [
+        {
+          "text": "Schweden",
+          "correct": true
+        },
+        {
+          "text": "Dänemark",
+          "correct": false
+        },
+        {
+          "text": "Kanada",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der erste Teil, „Battlefield 1942“, erschien 2002. Das Studio sitzt in Stockholm.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_089",
+      "question": "Auf welcher Konsole wurde „GoldenEye 007“ 1997 zum Klassiker des Mehrspieler-Splitscreens?",
+      "answers": [
+        {
+          "text": "Nintendo 64",
+          "correct": true
+        },
+        {
+          "text": "PlayStation",
+          "correct": false
+        },
+        {
+          "text": "Sega Saturn",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Entwickler war das britische Studio Rare. Das Spiel basiert auf dem Bond-Film von 1995.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_090",
+      "question": "In welcher Unterwasserstadt spielt „BioShock“ (2007)?",
+      "answers": [
+        {
+          "text": "Rapture",
+          "correct": true
+        },
+        {
+          "text": "Atlantis",
+          "correct": false
+        },
+        {
+          "text": "Columbia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Stadt wurde von Andrew Ryan gegründet, die Idee dahinter ist an Ideen der Autorin Ayn Rand angelehnt.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_091",
+      "question": "Wofür wurde „Crysis“ (2007) bei PC-Spielern zum Maßstab?",
+      "answers": [
+        {
+          "text": "Für die Leistungsfähigkeit eines Gaming-PCs",
+          "correct": true
+        },
+        {
+          "text": "Für die Länge eines Spiels",
+          "correct": false
+        },
+        {
+          "text": "Für die Qualität von Spielgeschichten",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„Kann es Crysis?“ wurde zum Dauerwitz, weil kaum ein Rechner die Grafik flüssig schaffte. Entwickelt hat es das Studio Crytek.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_092",
+      "question": "Was bewirkt der Drachenschrei „Fus Ro Dah“ in „Skyrim“?",
+      "answers": [
+        {
+          "text": "Er stößt Gegner mit einem Kraftstoß weg",
+          "correct": true
+        },
+        {
+          "text": "Er heilt den Spieler",
+          "correct": false
+        },
+        {
+          "text": "Er macht den Spieler unsichtbar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Wort „Fus“ bedeutet in der Drachensprache „Kraft“. Die Worte setzen sich zu „Unerbittliche Kraft“ zusammen.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_093",
+      "question": "Was traf den Abenteurer laut dem berühmten „Skyrim“-Meme „früher“?",
+      "answers": [
+        {
+          "text": "Ein Pfeil ins Knie",
+          "correct": true
+        },
+        {
+          "text": "Ein Feuerball",
+          "correct": false
+        },
+        {
+          "text": "Ein Schwert in den Rücken",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Satz stammt von Wachen in dem Spiel, das 2011 von Bethesda erschien.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_094",
+      "question": "Aus welchem Land stammt das Studio CD Projekt Red, das „The Witcher“ entwickelt?",
+      "answers": [
+        {
+          "text": "Polen",
+          "correct": true
+        },
+        {
+          "text": "Tschechien",
+          "correct": false
+        },
+        {
+          "text": "Ungarn",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Spiele basieren auf Romanen von Andrzej Sapkowski. Hauptfigur ist der Hexer Geralt von Riva.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_095",
+      "question": "Warum heißt „Final Fantasy“ angeblich „Final“?",
+      "answers": [
+        {
+          "text": "Die Firma stand kurz vor der Pleite",
+          "correct": true
+        },
+        {
+          "text": "Es sollte nur drei Teile geben",
+          "correct": false
+        },
+        {
+          "text": "Es ist ein Zauberspruch",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Square wollte mit dem ersten Teil 1987 noch einmal alles wagen. Daraus entstand eine der erfolgreichsten Rollenspielreihen.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_096",
+      "question": "Welcher gelbe Laufvogel ist in „Final Fantasy“ ein häufiges Reittier?",
+      "answers": [
+        {
+          "text": "Chocobo",
+          "correct": true
+        },
+        {
+          "text": "Moogle",
+          "correct": false
+        },
+        {
+          "text": "Cactuar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Chocobos tauchen seit dem zweiten Teil auf und sind in der ganzen Reihe zu finden.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_097",
+      "question": "Welche zwei Welten verbindet „Kingdom Hearts“?",
+      "answers": [
+        {
+          "text": "Disney und Final Fantasy",
+          "correct": true
+        },
+        {
+          "text": "Disney und Pokémon",
+          "correct": false
+        },
+        {
+          "text": "Pixar und Mario",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Spiel erschien 2002 für die PlayStation 2. Square und Disney arbeiteten dafür zusammen.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_098",
+      "question": "Wie heißt der Commander in der Reihe „Mass Effect“ von BioWare?",
+      "answers": [
+        {
+          "text": "Shepard",
+          "correct": true
+        },
+        {
+          "text": "Marcus",
+          "correct": false
+        },
+        {
+          "text": "Samus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Man kann Shepard als Mann oder Frau spielen. BioWare wurde 1995 in Edmonton gegründet.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_099",
+      "question": "Welches Rollenspiel von Larian wurde 2023 Spiel des Jahres bei den Game Awards?",
+      "answers": [
+        {
+          "text": "Baldur’s Gate 3",
+          "correct": true
+        },
+        {
+          "text": "Starfield",
+          "correct": false
+        },
+        {
+          "text": "Cyberpunk 2077",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Larian stammt aus Belgien. Das Spiel basiert auf den Regeln von „Dungeons & Dragons“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_100",
+      "question": "Was ist der Pip-Boy in der Reihe „Fallout“?",
+      "answers": [
+        {
+          "text": "Ein Computer am Handgelenk",
+          "correct": true
+        },
+        {
+          "text": "Ein Haustier",
+          "correct": false
+        },
+        {
+          "text": "Eine Waffe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Er zeigt Karte, Inventar und Missionen. Sein Aussehen geht auf die Retro-Zukunft der 1950er zurück.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_101",
+      "question": "Welcher Manga-Zeichner schuf die Figuren von „Dragon Quest“?",
+      "answers": [
+        {
+          "text": "Akira Toriyama",
+          "correct": true
+        },
+        {
+          "text": "Osamu Tezuka",
+          "correct": false
+        },
+        {
+          "text": "Rumiko Takahashi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Toriyama schuf auch „Dragon Ball“. Das Schleimmonster Slime wurde zum Maskottchen der Reihe.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_102",
+      "question": "Welcher bekannte Fantasy-Autor schrieb am Hintergrund von „Elden Ring“ mit?",
+      "answers": [
+        {
+          "text": "George R. R. Martin",
+          "correct": true
+        },
+        {
+          "text": "J. R. R. Tolkien",
+          "correct": false
+        },
+        {
+          "text": "Brandon Sanderson",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Spiel von FromSoftware erschien 2022 und wurde Spiel des Jahres bei den Game Awards.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_103",
+      "question": "Welcher Hollywoodstar spielt in „Cyberpunk 2077“ die Figur Johnny Silverhand?",
+      "answers": [
+        {
+          "text": "Keanu Reeves",
+          "correct": true
+        },
+        {
+          "text": "Brad Pitt",
+          "correct": false
+        },
+        {
+          "text": "Tom Cruise",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Spiel erschien Ende 2020 mit großen technischen Problemen, wurde aber später stark verbessert.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_104",
+      "question": "Welcher Komponist ist für die Musik von „The Elder Scrolls V: Skyrim“ bekannt?",
+      "answers": [
+        {
+          "text": "Jeremy Soule",
+          "correct": true
+        },
+        {
+          "text": "Hans Zimmer",
+          "correct": false
+        },
+        {
+          "text": "Harry Gregson-Williams",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Hauptthema wird mit Chorgesang in der erfundenen Drachensprache gesungen. Soule schrieb auch die Musik zu „Morrowind“ und „Oblivion“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_105",
+      "question": "Welches Monster explodiert in Minecraft, sobald es dem Spieler nahekommt?",
+      "answers": [
+        {
+          "text": "Der Creeper",
+          "correct": true
+        },
+        {
+          "text": "Der Zombie",
+          "correct": false
+        },
+        {
+          "text": "Der Enderman",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Creeper entstand aus einem Fehler: Markus Persson verwechselte Höhe und Breite des Schweinemodells.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_106",
+      "question": "Was ist in „Undertale“ möglich, was die meisten Rollenspiele nicht erlauben?",
+      "answers": [
+        {
+          "text": "Man kann das Spiel durchspielen, ohne jemanden zu töten",
+          "correct": true
+        },
+        {
+          "text": "Man kann jede Figur heiraten",
+          "correct": false
+        },
+        {
+          "text": "Man kann das Spiel rückwärts spielen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Toby Fox entwickelte das Spiel 2015 fast im Alleingang und schrieb auch die Musik.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_107",
+      "question": "Was erbt man zu Beginn von „Stardew Valley“?",
+      "answers": [
+        {
+          "text": "Die verfallene Farm des Großvaters",
+          "correct": true
+        },
+        {
+          "text": "Ein Schloss",
+          "correct": false
+        },
+        {
+          "text": "Eine Fabrik",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eric Barone programmierte das Spiel rund vier Jahre lang praktisch allein.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_108",
+      "question": "Welches Studio steckt hinter „Among Us“?",
+      "answers": [
+        {
+          "text": "Innersloth",
+          "correct": true
+        },
+        {
+          "text": "Klei",
+          "correct": false
+        },
+        {
+          "text": "Team Cherry",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Spiel erschien bereits 2018, wurde aber erst 2020 durch Streamer zum Hit.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_109",
+      "question": "Aus welchem Land stammt das Team Cherry, das „Hollow Knight“ entwickelt hat?",
+      "answers": [
+        {
+          "text": "Australien",
+          "correct": true
+        },
+        {
+          "text": "Kanada",
+          "correct": false
+        },
+        {
+          "text": "Schweden",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Studio sitzt in Adelaide. Das Spiel erschien 2017 und wurde ein Kritikerliebling.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_110",
+      "question": "Welches simple Handyspiel nahm sein Entwickler 2014 aus den App-Stores?",
+      "answers": [
+        {
+          "text": "Flappy Bird",
+          "correct": true
+        },
+        {
+          "text": "Doodle Jump",
+          "correct": false
+        },
+        {
+          "text": "Temple Run",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Vietnamese Dong Nguyen verdiente damit Berichten zufolge rund 50.000 Dollar am Tag, fühlte sich vom Ruhm aber überfordert.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_111",
+      "question": "An welchen Zeichenstil erinnert „Cuphead“?",
+      "answers": [
+        {
+          "text": "An Zeichentrickfilme der 1930er",
+          "correct": true
+        },
+        {
+          "text": "An Manga der 90er",
+          "correct": false
+        },
+        {
+          "text": "An moderne Pixar-Filme",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Spiel von 2017 ist komplett von Hand gezeichnet. Die Brüder Moldenhauer von Studio MDHR stecken dahinter.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_112",
+      "question": "Wie viele Pokémon gibt es in der ersten Generation?",
+      "type": "estimate",
+      "answer": 151,
+      "min": 50,
+      "max": 400,
+      "unit": "Pokémon",
+      "difficulty": "easy",
+      "fun_fact": "Das 151. Pokémon, Mew, tauchte nur versteckt auf. Es wurde erst durch Events zum Sammlerstück.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_113",
+      "question": "Welche Aufgabe hat man im Spiel „Papers, Please“?",
+      "answers": [
+        {
+          "text": "Man kontrolliert Pässe an einer Grenze",
+          "correct": true
+        },
+        {
+          "text": "Man leitet ein Gefängnis",
+          "correct": false
+        },
+        {
+          "text": "Man liefert Pakete aus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Entwickler Lucas Pope erfand dafür das Land Arstotzka.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_114",
+      "question": "Welches Tier spielt man in „Untitled Goose Game“?",
+      "answers": [
+        {
+          "text": "Eine Gans",
+          "correct": true
+        },
+        {
+          "text": "Einen Hund",
+          "correct": false
+        },
+        {
+          "text": "Eine Ente",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Studio House House sitzt in Melbourne. Das Spiel erschien 2019.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_115",
+      "question": "Wen jagen die Vögel in „Angry Birds“?",
+      "answers": [
+        {
+          "text": "Schweine",
+          "correct": true
+        },
+        {
+          "text": "Katzen",
+          "correct": false
+        },
+        {
+          "text": "Füchse",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Schweine haben die Eier der Vögel gestohlen. Man schleudert die Vögel mit einer Steinschleuder auf ihre Festungen.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_116",
+      "question": "Aus welchem Land stammt Rovio, der Entwickler von „Angry Birds“?",
+      "answers": [
+        {
+          "text": "Finnland",
+          "correct": true
+        },
+        {
+          "text": "Schweden",
+          "correct": false
+        },
+        {
+          "text": "Dänemark",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Spiel erschien 2009 und wurde zu einem der ersten großen Smartphone-Hits.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_117",
+      "question": "Welche Technik nutzt „Pokémon GO“ von 2016?",
+      "answers": [
+        {
+          "text": "GPS und Augmented Reality",
+          "correct": true
+        },
+        {
+          "text": "Eine VR-Brille",
+          "correct": false
+        },
+        {
+          "text": "Sprachsteuerung",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Entwickler war Niantic. Das Spiel schickte Millionen Menschen auf die Straße.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_118",
+      "question": "Welches finnische Studio steckt hinter „Clash of Clans“?",
+      "answers": [
+        {
+          "text": "Supercell",
+          "correct": true
+        },
+        {
+          "text": "Rovio",
+          "correct": false
+        },
+        {
+          "text": "Zynga",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Spiel erschien 2012. 2016 übernahm der chinesische Konzern Tencent die Mehrheit an Supercell für rund 8,6 Milliarden Dollar.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_119",
+      "question": "Auf welchen Handys war „Snake“ ab 1997 vorinstalliert?",
+      "answers": [
+        {
+          "text": "Nokia",
+          "correct": true
+        },
+        {
+          "text": "Motorola",
+          "correct": false
+        },
+        {
+          "text": "Ericsson",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Spiel debütierte auf dem Nokia 6110. Es war für viele das erste Handyspiel überhaupt.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_120",
+      "question": "Bei welchem Spiel heißt die Weltmeisterschaft „Worlds“?",
+      "answers": [
+        {
+          "text": "League of Legends",
+          "correct": true
+        },
+        {
+          "text": "Fortnite",
+          "correct": false
+        },
+        {
+          "text": "Counter-Strike",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "League of Legends erschien 2009 bei Riot Games.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_121",
+      "question": "Aus welchem Land stammt League-of-Legends-Legende Faker?",
+      "answers": [
+        {
+          "text": "Südkorea",
+          "correct": true
+        },
+        {
+          "text": "China",
+          "correct": false
+        },
+        {
+          "text": "Japan",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lee „Faker“ Sang-hyeok wurde mehrfach Weltmeister. Er gilt vielen als bester Spieler aller Zeiten.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_122",
+      "question": "Wie wurde das Rekord-Preisgeld des Dota-2-Turniers „The International“ größtenteils finanziert?",
+      "answers": [
+        {
+          "text": "Durch Ingame-Käufe der Spieler",
+          "correct": true
+        },
+        {
+          "text": "Durch Fernsehrechte",
+          "correct": false
+        },
+        {
+          "text": "Durch Eintrittskarten",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "2021 überschritt das Preisgeld 40 Millionen Dollar. Valve stockte es mit einem Anteil der Verkäufe im Spiel auf.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_123",
+      "question": "Welcher Konzern kaufte 2014 die Streamingplattform Twitch?",
+      "answers": [
+        {
+          "text": "Amazon",
+          "correct": true
+        },
+        {
+          "text": "Google",
+          "correct": false
+        },
+        {
+          "text": "Microsoft",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Preis lag bei rund 970 Millionen Dollar.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_124",
+      "question": "Wie alt war der Solo-Sieger des Fortnite World Cup 2019, Bugha?",
+      "answers": [
+        {
+          "text": "16 Jahre",
+          "correct": true
+        },
+        {
+          "text": "21 Jahre",
+          "correct": false
+        },
+        {
+          "text": "25 Jahre",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kyle „Bugha“ Giersdorf gewann drei Millionen Dollar. Das war ein Rekordpreisgeld für einen Einzelwettbewerb.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_125",
+      "question": "Was ist das Ziel in einem Battle-Royale-Spiel wie „Fortnite“?",
+      "answers": [
+        {
+          "text": "Als Letzter übrig zu bleiben",
+          "correct": true
+        },
+        {
+          "text": "Das meiste Gold zu sammeln",
+          "correct": false
+        },
+        {
+          "text": "Die schnellste Zeit zu fahren",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fortnite erschien 2017 von Epic Games. Der Battle-Royale-Modus kam wenige Wochen nach dem Start dazu.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_126",
+      "question": "Welches Spiel kombiniert Fußball mit ferngesteuerten Autos?",
+      "answers": [
+        {
+          "text": "Rocket League",
+          "correct": true
+        },
+        {
+          "text": "FIFA",
+          "correct": false
+        },
+        {
+          "text": "Gran Turismo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Entwickler Psyonix veröffentlichte 2015 den Nachfolger von „Supersonic Acrobatic Rocket-Powered Battle-Cars“ (2008).",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_127",
+      "question": "Wofür steht „GG“ im Chat vieler Online-Spiele?",
+      "answers": [
+        {
+          "text": "Good Game",
+          "correct": true
+        },
+        {
+          "text": "Great Gamer",
+          "correct": false
+        },
+        {
+          "text": "Get Going",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Man schreibt es nach dem Match, auch wenn man verloren hat. Es ist ein Zeichen von Fairness.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_128",
+      "question": "Wofür steht die Abkürzung „NPC“?",
+      "answers": [
+        {
+          "text": "Nicht spielbare Figur",
+          "correct": true
+        },
+        {
+          "text": "Neuer Spielercharakter",
+          "correct": false
+        },
+        {
+          "text": "Nur Pixel-Charakter",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "NPCs sind alle Figuren, die der Computer steuert, etwa Händler oder Wachen.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_129",
+      "question": "Welches Tier ist Sonic?",
+      "answers": [
+        {
+          "text": "Ein Igel",
+          "correct": true
+        },
+        {
+          "text": "Ein Fuchs",
+          "correct": false
+        },
+        {
+          "text": "Ein Eichhörnchen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sonic erschien 1991 auf dem Mega Drive. Sein Freund Tails ist dagegen ein Fuchs.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_130",
+      "question": "Was sammelt Sonic, um Treffer zu überstehen?",
+      "answers": [
+        {
+          "text": "Ringe",
+          "correct": true
+        },
+        {
+          "text": "Münzen",
+          "correct": false
+        },
+        {
+          "text": "Herzen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bei einem Treffer verliert er alle Ringe, die man dann wieder einsammeln kann. Ohne Ringe stirbt er.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_131",
+      "question": "Wie heißt Sonics zweischwänziger Freund?",
+      "answers": [
+        {
+          "text": "Tails",
+          "correct": true
+        },
+        {
+          "text": "Knuckles",
+          "correct": false
+        },
+        {
+          "text": "Shadow",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sein richtiger Name ist Miles Prower – ein Wortspiel auf „miles per hour“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_132",
+      "question": "Wie heißt der Erzfeind von Sonic?",
+      "answers": [
+        {
+          "text": "Dr. Eggman",
+          "correct": true
+        },
+        {
+          "text": "Dr. Mario",
+          "correct": false
+        },
+        {
+          "text": "Dr. Wily",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Japan heißt er Dr. Eggman, im Westen hieß er früher Dr. Robotnik.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_133",
+      "question": "Wie heißt die Heldin von „Tomb Raider“?",
+      "answers": [
+        {
+          "text": "Lara Croft",
+          "correct": true
+        },
+        {
+          "text": "Ellie",
+          "correct": false
+        },
+        {
+          "text": "Aloy",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das erste Spiel erschien 1996 von Core Design aus Derby, England.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_134",
+      "question": "In welcher Spielereihe schlüpft man in die Rolle von Assassinen, die gegen die Templer kämpfen?",
+      "answers": [
+        {
+          "text": "Assassin’s Creed",
+          "correct": true
+        },
+        {
+          "text": "Dishonored",
+          "correct": false
+        },
+        {
+          "text": "Hitman",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der erste Teil von Ubisoft erschien 2007. Das Credo der Assassinen lautet „Nichts ist wahr, alles ist erlaubt“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_135",
+      "question": "Wie heißt der tollpatschige Möchtegern-Pirat aus „Monkey Island“?",
+      "answers": [
+        {
+          "text": "Guybrush Threepwood",
+          "correct": true
+        },
+        {
+          "text": "Captain Flint",
+          "correct": false
+        },
+        {
+          "text": "Long John Silver",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Abenteuer erschien 1990 von LucasArts und Ron Gilbert.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_136",
+      "question": "Wie heißt die erfundene Sprache in „Die Sims“?",
+      "answers": [
+        {
+          "text": "Simlisch",
+          "correct": true
+        },
+        {
+          "text": "Elbisch",
+          "correct": false
+        },
+        {
+          "text": "Klingonisch",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Sims plappern in einem Kauderwelsch, das extra für das Spiel erfunden wurde. Will Wright schuf das Spiel 2000.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_137",
+      "question": "Wie heißt Ryus berühmter Feuerball in „Street Fighter“?",
+      "answers": [
+        {
+          "text": "Hadouken",
+          "correct": true
+        },
+        {
+          "text": "Kamehameha",
+          "correct": false
+        },
+        {
+          "text": "Fatality",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Feuerball wird durch eine Viertelkreisbewegung am Controller ausgelöst. „Street Fighter II“ erschien 1991 von Capcom.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_138",
+      "question": "Wie nennt sich der blutige Endzug in „Mortal Kombat“?",
+      "answers": [
+        {
+          "text": "Fatality",
+          "correct": true
+        },
+        {
+          "text": "Finish Him",
+          "correct": false
+        },
+        {
+          "text": "Brutality",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Debatte um das Spiel von 1992 führte 1994 zur Gründung der US-Altersfreigabe ESRB.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_139",
+      "question": "Welcher Komponist schrieb die Musik für „Super Mario Bros.“ und „The Legend of Zelda“?",
+      "answers": [
+        {
+          "text": "Koji Kondo",
+          "correct": true
+        },
+        {
+          "text": "Nobuo Uematsu",
+          "correct": false
+        },
+        {
+          "text": "Hans Zimmer",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der NES-Soundchip bot nur wenige Tonkanäle, trotzdem wurde die Melodie weltbekannt.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_140",
+      "question": "Wer komponierte das Stück „One-Winged Angel“ aus „Final Fantasy VII“?",
+      "answers": [
+        {
+          "text": "Nobuo Uematsu",
+          "correct": true
+        },
+        {
+          "text": "Koji Kondo",
+          "correct": false
+        },
+        {
+          "text": "Yoko Shimomura",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Uematsu spielt später mit seiner Band The Black Mages Rockversionen seiner Musik.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_141",
+      "question": "Welche Melodie ist die bekannte Titelmusik der Game-Boy-Version von Tetris?",
+      "answers": [
+        {
+          "text": "Korobeiniki",
+          "correct": true
+        },
+        {
+          "text": "Kalinka",
+          "correct": false
+        },
+        {
+          "text": "Katjuscha",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Es ist ein russisches Volkslied aus dem 19. Jahrhundert.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_142",
+      "question": "Welches Studio steckt hinter der Reihe „Grand Theft Auto“?",
+      "answers": [
+        {
+          "text": "Rockstar Games",
+          "correct": true
+        },
+        {
+          "text": "Ubisoft",
+          "correct": false
+        },
+        {
+          "text": "Electronic Arts",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "GTA V erreichte 2013 in drei Tagen eine Milliarde Dollar Umsatz.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_143",
+      "question": "Welches Studio steckt hinter Warcraft, Diablo und StarCraft?",
+      "answers": [
+        {
+          "text": "Blizzard",
+          "correct": true
+        },
+        {
+          "text": "Valve",
+          "correct": false
+        },
+        {
+          "text": "Bethesda",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Blizzard wurde 1991 als „Silicon & Synapse“ gegründet.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_144",
+      "question": "Aus welchem Land stammt Ubisoft?",
+      "answers": [
+        {
+          "text": "Frankreich",
+          "correct": true
+        },
+        {
+          "text": "Kanada",
+          "correct": false
+        },
+        {
+          "text": "Schweden",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ubisoft wurde von den Brüdern Guillemot gegründet. Hinter der Firma stehen unter anderem „Assassin’s Creed“ und „Rayman“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_145",
+      "question": "Welches japanische Studio steckt hinter Street Fighter, Resident Evil und Mega Man?",
+      "answers": [
+        {
+          "text": "Capcom",
+          "correct": true
+        },
+        {
+          "text": "Konami",
+          "correct": false
+        },
+        {
+          "text": "Namco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Japan heißt „Resident Evil“ „Biohazard“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_146",
+      "question": "In welchem Jahr erschien das Spielhallenspiel Pong?",
+      "type": "estimate",
+      "answer": 1972,
+      "min": 1960,
+      "max": 1995,
+      "unit": "Jahr",
+      "difficulty": "medium",
+      "fun_fact": "Der Prototyp stand in einer Kneipe in Kalifornien und soll angeblich ausgefallen sein, weil der Münzkasten überquoll.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_147",
+      "question": "Aus der Fusion von Square und welcher Firma entstand Square Enix?",
+      "answers": [
+        {
+          "text": "Enix",
+          "correct": true
+        },
+        {
+          "text": "Konami",
+          "correct": false
+        },
+        {
+          "text": "Taito",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Fusion fand 2003 statt. So kamen „Final Fantasy“ und „Dragon Quest“ unter ein Dach.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_148",
+      "question": "Welches britische Studio schuf „Donkey Kong Country“ und „GoldenEye 007“?",
+      "answers": [
+        {
+          "text": "Rare",
+          "correct": true
+        },
+        {
+          "text": "Codemasters",
+          "correct": false
+        },
+        {
+          "text": "Bullfrog",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Rare gehört seit 2002 zu Microsoft.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_149",
+      "question": "Bei welchem Konzern arbeiteten die Valve-Gründer, bevor sie 1996 ihr Studio gründeten?",
+      "answers": [
+        {
+          "text": "Microsoft",
+          "correct": true
+        },
+        {
+          "text": "Electronic Arts",
+          "correct": false
+        },
+        {
+          "text": "Sega",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gabe Newell und Mike Harrington verließen Microsoft. Ihr erstes Spiel war „Half-Life“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_150",
+      "question": "Wie lautet der berühmte Konami-Code?",
+      "answers": [
+        {
+          "text": "Hoch, Hoch, Runter, Runter, Links, Rechts, Links, Rechts, B, A",
+          "correct": true
+        },
+        {
+          "text": "Hoch, Runter, Hoch, Runter, Links, Rechts, A, B",
+          "correct": false
+        },
+        {
+          "text": "Links, Links, Rechts, Rechts, Hoch, Runter, B, A",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kazuhisa Hashimoto fügte ihn für das NES-Spiel „Gradius“ ein. In „Contra“ gibt er 30 Leben.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_151",
+      "question": "Wie heißt die Fußballserie von Electronic Arts, die bis 2022 „FIFA“ hieß?",
+      "answers": [
+        {
+          "text": "EA Sports FC",
+          "correct": true
+        },
+        {
+          "text": "Pro Evolution Soccer",
+          "correct": false
+        },
+        {
+          "text": "eFootball",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name änderte sich 2023, nachdem EA und der Weltverband FIFA sich getrennt hatten.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_152",
+      "question": "Welche Aufbauspielreihe aus Deutschland trägt als Titelzusatz eine Jahreszahl?",
+      "answers": [
+        {
+          "text": "Anno",
+          "correct": true
+        },
+        {
+          "text": "Die Siedler",
+          "correct": false
+        },
+        {
+          "text": "Patrizier",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„Anno 1602“ erschien 1998. Heute entwickelt Ubisoft Mainz die Reihe.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_153",
+      "question": "Auf welchem Computer erschien „Die Siedler“ 1993 zuerst?",
+      "answers": [
+        {
+          "text": "Amiga",
+          "correct": true
+        },
+        {
+          "text": "Atari ST",
+          "correct": false
+        },
+        {
+          "text": "Commodore 64",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Entwickelt wurde es bei Blue Byte in Mülheim an der Ruhr.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_154",
+      "question": "In welcher Stadt findet die Gamescom statt?",
+      "answers": [
+        {
+          "text": "Köln",
+          "correct": true
+        },
+        {
+          "text": "Leipzig",
+          "correct": false
+        },
+        {
+          "text": "Hamburg",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Messe zog 2009 von Leipzig nach Köln. Dort hieß sie zuvor „Games Convention“.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_155",
+      "question": "Welches deutsche Studio entwickelte „Far Cry“ (2004) und „Crysis“?",
+      "answers": [
+        {
+          "text": "Crytek",
+          "correct": true
+        },
+        {
+          "text": "Yager",
+          "correct": false
+        },
+        {
+          "text": "Blue Byte",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Crytek wurde 1999 in Coburg von den Brüdern Yerli gegründet und sitzt heute in Frankfurt am Main.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_156",
+      "question": "Wie heißt Deutschlands Stelle für Altersfreigaben von Videospielen?",
+      "answers": [
+        {
+          "text": "USK",
+          "correct": true
+        },
+        {
+          "text": "FSK",
+          "correct": false
+        },
+        {
+          "text": "GEMA",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die USK wurde 1994 in Berlin gegründet. Die Freigaben sind 0, 6, 12, 16 und 18 Jahre.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_157",
+      "question": "In welchem Rollenspiel von Piranha Bytes ist der namenlose Held in einer Minenkolonie gefangen?",
+      "answers": [
+        {
+          "text": "Gothic",
+          "correct": true
+        },
+        {
+          "text": "Risen",
+          "correct": false
+        },
+        {
+          "text": "Drakensang",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Studio sitzt in Essen. Das erste Gothic erschien 2001.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_158",
+      "question": "Welches Berliner Studio entwickelte „Spec Ops: The Line“ (2012)?",
+      "answers": [
+        {
+          "text": "Yager",
+          "correct": true
+        },
+        {
+          "text": "Crytek",
+          "correct": false
+        },
+        {
+          "text": "Piranha Bytes",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Spiel gilt als Kritik am Genre der Militärshooter.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_159",
+      "question": "Welche Hamburger Spieleschmiede entwickelte „Edna bricht aus“ und „Deponia“?",
+      "answers": [
+        {
+          "text": "Daedalic Entertainment",
+          "correct": true
+        },
+        {
+          "text": "Wooga",
+          "correct": false
+        },
+        {
+          "text": "Yager",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Daedalic wurde mit Point-and-Click-Adventures bekannt.",
+      "category": "Videospiele"
+    },
+    {
+      "id": "videospiele_de_160",
+      "question": "Wofür war „Moorhuhn“ ursprünglich eine Werbung?",
+      "answers": [
+        {
+          "text": "Für einen Whisky",
+          "correct": true
+        },
+        {
+          "text": "Für ein Bier",
+          "correct": false
+        },
+        {
+          "text": "Für Zigaretten",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Spiel erschien 1999 und wurde zum Büro-Phänomen. Der Hersteller Phenomedia baute es zuerst für Johnnie Walker.",
+      "category": "Videospiele"
+    }
+  ]
+}

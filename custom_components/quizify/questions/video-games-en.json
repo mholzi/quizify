@@ -1,0 +1,3323 @@
+{
+  "name": "Video Games",
+  "language": "en",
+  "version": "1.0",
+  "theme": "trivia",
+  "questions": [
+    {
+      "id": "videogames_en_001",
+      "question": "From which country was Flappy Bird's developer Dong Nguyen?",
+      "answers": [
+        {
+          "text": "Thailand",
+          "correct": false
+        },
+        {
+          "text": "Vietnam",
+          "correct": true
+        },
+        {
+          "text": "China",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He removed the game from app stores in 2014, saying it was too addictive.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_002",
+      "question": "Which studio created Crash Bandicoot?",
+      "answers": [
+        {
+          "text": "Insomniac Games",
+          "correct": false
+        },
+        {
+          "text": "Naughty Dog",
+          "correct": true
+        },
+        {
+          "text": "Sucker Punch",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Naughty Dog later made Uncharted and The Last of Us. Insomniac made Spyro, another PlayStation mascot.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_003",
+      "question": "In which colours did the 1995 Nintendo Virtual Boy display its games?",
+      "answers": [
+        {
+          "text": "Red and black",
+          "correct": true
+        },
+        {
+          "text": "Green and black",
+          "correct": false
+        },
+        {
+          "text": "Blue and white",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Players complained about headaches and a stiff neck, and the console was discontinued within a year.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_004",
+      "question": "What was the last home console that Sega released?",
+      "answers": [
+        {
+          "text": "Saturn",
+          "correct": false
+        },
+        {
+          "text": "Dreamcast",
+          "correct": true
+        },
+        {
+          "text": "Master System",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sega stopped making consoles in 2001 and became a software publisher, even putting Sonic on its former rivals' systems.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_005",
+      "question": "What is the name of the king of the Koopas in the Mario series?",
+      "answers": [
+        {
+          "text": "Donkey Kong",
+          "correct": false
+        },
+        {
+          "text": "Wario",
+          "correct": false
+        },
+        {
+          "text": "Bowser",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In Japan, he is known as Kuppa.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_006",
+      "question": "Which studio created Gears of War?",
+      "answers": [
+        {
+          "text": "Bungie",
+          "correct": false
+        },
+        {
+          "text": "id Software",
+          "correct": false
+        },
+        {
+          "text": "Epic Games",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Epic is also the company behind the Unreal Engine and Fortnite.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_007",
+      "question": "Which Blizzard game was the original home of the Defense of the Ancients mod that led to Dota?",
+      "answers": [
+        {
+          "text": "Warcraft III",
+          "correct": true
+        },
+        {
+          "text": "StarCraft",
+          "correct": false
+        },
+        {
+          "text": "Diablo II",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dota 2 was later developed by Valve with one of the mod's key designers.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_008",
+      "question": "In Beat Saber, what do you slice with your lightsabers in time to the music?",
+      "answers": [
+        {
+          "text": "Zombies",
+          "correct": false
+        },
+        {
+          "text": "Blocks",
+          "correct": true
+        },
+        {
+          "text": "Asteroids",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The VR rhythm game was acquired by Facebook in 2019.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_009",
+      "question": "What does 'GG' mean in online gaming?",
+      "answers": [
+        {
+          "text": "Get gone",
+          "correct": false
+        },
+        {
+          "text": "Great going",
+          "correct": false
+        },
+        {
+          "text": "Good game",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It is used as a sign of respect after a match.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_010",
+      "question": "Which Blizzard hero says 'Cheers, love! The cavalry's here!'?",
+      "answers": [
+        {
+          "text": "Widowmaker",
+          "correct": false
+        },
+        {
+          "text": "Tracer",
+          "correct": true
+        },
+        {
+          "text": "Mercy",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tracer is an English pilot and the face of Overwatch.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_011",
+      "question": "What nationality is Lara Croft?",
+      "answers": [
+        {
+          "text": "American",
+          "correct": false
+        },
+        {
+          "text": "Australian",
+          "correct": false
+        },
+        {
+          "text": "British",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "She is an English aristocrat who explores tombs across the globe.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_012",
+      "question": "What type of discs did the Nintendo GameCube use?",
+      "answers": [
+        {
+          "text": "Standard DVDs",
+          "correct": false
+        },
+        {
+          "text": "Small 8 cm optical discs",
+          "correct": true
+        },
+        {
+          "text": "Cartridges",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The unusual size helped to deter piracy and meant the console could not play standard DVD movies.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_013",
+      "question": "Which educational game popular in US schools made 'You have died of dysentery' famous?",
+      "answers": [
+        {
+          "text": "Where in the World Is Carmen Sandiego?",
+          "correct": false
+        },
+        {
+          "text": "Number Munchers",
+          "correct": false
+        },
+        {
+          "text": "The Oregon Trail",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Players travelled by covered wagon from Missouri to Oregon, hunting and fording rivers on the way.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_014",
+      "question": "Before Sonic, which character served as Sega's mascot?",
+      "answers": [
+        {
+          "text": "Tails",
+          "correct": false
+        },
+        {
+          "text": "Vectorman",
+          "correct": false
+        },
+        {
+          "text": "Alex Kidd",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Alex Kidd starred in games for the Master System before Sega decided it needed a mascot with more attitude.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_015",
+      "question": "Which Japanese RPG series, with art by Dragon Ball's Akira Toriyama, is famous for its slime monsters?",
+      "answers": [
+        {
+          "text": "Xenoblade",
+          "correct": false
+        },
+        {
+          "text": "Final Fantasy",
+          "correct": false
+        },
+        {
+          "text": "Dragon Quest",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dragon Quest is so popular in Japan that new releases have been known to cause crowds in stores.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_016",
+      "question": "Which studio created Rock Band?",
+      "answers": [
+        {
+          "text": "Neversoft",
+          "correct": false
+        },
+        {
+          "text": "Harmonix",
+          "correct": true
+        },
+        {
+          "text": "RedOctane",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Harmonix also created the first Guitar Hero games.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_017",
+      "question": "Which yellow arcade hero eats dots in a maze while four ghosts chase him?",
+      "answers": [
+        {
+          "text": "Pac-Man",
+          "correct": true
+        },
+        {
+          "text": "Frogger",
+          "correct": false
+        },
+        {
+          "text": "Q*bert",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In Japan he was first called Puck-Man; the name was changed for the US so vandals could not turn the P into an F on cabinets.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_018",
+      "question": "What do players ride at the start of a Fortnite match?",
+      "answers": [
+        {
+          "text": "A helicopter",
+          "correct": false
+        },
+        {
+          "text": "A cargo plane",
+          "correct": false
+        },
+        {
+          "text": "The Battle Bus",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Battle Bus is a bus carried by a hot-air balloon that flies over the island.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_019",
+      "question": "Which phone brand preinstalled Snake on its handsets from 1997?",
+      "answers": [
+        {
+          "text": "Nokia",
+          "correct": true
+        },
+        {
+          "text": "Motorola",
+          "correct": false
+        },
+        {
+          "text": "Ericsson",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The idea behind Snake goes back to the 1976 arcade game Blockade.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_020",
+      "question": "Before Halo, which Mac shooter series was Bungie best known for?",
+      "answers": [
+        {
+          "text": "Marathon",
+          "correct": true
+        },
+        {
+          "text": "Doom",
+          "correct": false
+        },
+        {
+          "text": "Myst",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Halo itself was first announced as a Mac game before Microsoft bought Bungie.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_021",
+      "question": "Which studio created the original Call of Duty?",
+      "answers": [
+        {
+          "text": "Infinity Ward",
+          "correct": true
+        },
+        {
+          "text": "Sledgehammer Games",
+          "correct": false
+        },
+        {
+          "text": "Treyarch",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Infinity Ward was founded by developers who had worked on Medal of Honor: Allied Assault.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_022",
+      "question": "Which publisher makes the Assassin's Creed series?",
+      "answers": [
+        {
+          "text": "Activision",
+          "correct": false
+        },
+        {
+          "text": "Bethesda",
+          "correct": false
+        },
+        {
+          "text": "Ubisoft",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ubisoft is headquartered in France.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_023",
+      "question": "In Skyrim, an adventurer says 'I used to be an adventurer like you, then I took an arrow in the...' what?",
+      "answers": [
+        {
+          "text": "Shoulder",
+          "correct": false
+        },
+        {
+          "text": "Elbow",
+          "correct": false
+        },
+        {
+          "text": "Knee",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The line became one of the most quoted memes in gaming.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_024",
+      "question": "Which 1978 arcade shooter had rows of descending aliens that speed up as you destroy them?",
+      "answers": [
+        {
+          "text": "Asteroids",
+          "correct": false
+        },
+        {
+          "text": "Space Invaders",
+          "correct": true
+        },
+        {
+          "text": "Galaxian",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The speed-up was a side effect: with fewer aliens to draw, the hardware ran faster. The designer kept it as a feature.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_025",
+      "question": "What colour is Luigi's cap?",
+      "answers": [
+        {
+          "text": "Red",
+          "correct": false
+        },
+        {
+          "text": "Green",
+          "correct": true
+        },
+        {
+          "text": "Yellow",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Luigi first appeared in the arcade game Mario Bros. as a second-player character wearing green.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_026",
+      "question": "Who composed the Super Mario Bros. theme?",
+      "answers": [
+        {
+          "text": "Nobuo Uematsu",
+          "correct": false
+        },
+        {
+          "text": "Koji Kondo",
+          "correct": true
+        },
+        {
+          "text": "Yuzo Koshiro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kondo also composed the main theme for The Legend of Zelda.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_027",
+      "question": "Which card game did Windows 3.0 bundle to help people learn to use a mouse?",
+      "answers": [
+        {
+          "text": "Poker",
+          "correct": false
+        },
+        {
+          "text": "Bridge",
+          "correct": false
+        },
+        {
+          "text": "Solitaire",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dragging and dropping cards taught mouse skills without anyone noticing.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_028",
+      "question": "Which game's world championship is known as 'Worlds'?",
+      "answers": [
+        {
+          "text": "Dota 2",
+          "correct": false
+        },
+        {
+          "text": "League of Legends",
+          "correct": true
+        },
+        {
+          "text": "Overwatch",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "League of Legends is made by Riot Games, and its Worlds finals have sold out large arenas around the world.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_029",
+      "question": "Which twice-yearly charity event is known for live speedruns?",
+      "answers": [
+        {
+          "text": "Gamescom",
+          "correct": false
+        },
+        {
+          "text": "BlizzCon",
+          "correct": false
+        },
+        {
+          "text": "Games Done Quick",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The events have raised tens of millions of dollars for charities such as Doctors Without Borders and the Prevent Cancer Foundation.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_030",
+      "question": "What kind of creature is Spyro?",
+      "answers": [
+        {
+          "text": "A lizard",
+          "correct": false
+        },
+        {
+          "text": "A dinosaur",
+          "correct": false
+        },
+        {
+          "text": "A dragon",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Spyro, a purple dragon, was Insomniac Games' PlayStation mascot.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_031",
+      "question": "Which fictional city in Grand Theft Auto V is based on Los Angeles?",
+      "answers": [
+        {
+          "text": "Vice City",
+          "correct": false
+        },
+        {
+          "text": "Liberty City",
+          "correct": false
+        },
+        {
+          "text": "Los Santos",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The city is in the state of San Andreas.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_032",
+      "question": "Which company created World of Warcraft?",
+      "answers": [
+        {
+          "text": "Blizzard Entertainment",
+          "correct": true
+        },
+        {
+          "text": "Bethesda",
+          "correct": false
+        },
+        {
+          "text": "Valve",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The game launched in 2004 and at its peak had millions of subscribers worldwide.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_033",
+      "question": "In Donkey Kong, what was the hero originally called before he became Mario?",
+      "answers": [
+        {
+          "text": "Luigi",
+          "correct": false
+        },
+        {
+          "text": "Wario",
+          "correct": false
+        },
+        {
+          "text": "Jumpman",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He was renamed Mario after Nintendo of America's warehouse landlord, Mario Segale, who reportedly burst in to demand rent.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_034",
+      "question": "Which 1994 SNES RPG is set in a modern America and has a hero who fights with a baseball bat?",
+      "answers": [
+        {
+          "text": "EarthBound",
+          "correct": true
+        },
+        {
+          "text": "Chrono Trigger",
+          "correct": false
+        },
+        {
+          "text": "Secret of Mana",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Its quirky tone and marketing, which included scratch-and-sniff cards, gave it a cult following.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_035",
+      "question": "Which console from 2000 could also play DVD movies, helping drive its early sales?",
+      "answers": [
+        {
+          "text": "GameCube",
+          "correct": false
+        },
+        {
+          "text": "Dreamcast",
+          "correct": false
+        },
+        {
+          "text": "PlayStation 2",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "For many families, the PS2 was their first DVD player.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_036",
+      "question": "Who shouts 'Do a barrel roll!' in Star Fox 64?",
+      "answers": [
+        {
+          "text": "Slippy Toad",
+          "correct": false
+        },
+        {
+          "text": "Peppy Hare",
+          "correct": true
+        },
+        {
+          "text": "Falco Lombardi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The line became a meme years later, and Google even added a barrel-roll Easter egg.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_037",
+      "question": "Rockstar North, the studio behind Grand Theft Auto, began as which Scottish company that made Lemmings?",
+      "answers": [
+        {
+          "text": "Rare",
+          "correct": false
+        },
+        {
+          "text": "Bullfrog",
+          "correct": false
+        },
+        {
+          "text": "DMA Design",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "DMA was founded in Dundee and became Rockstar North after Rockstar Games bought it.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_038",
+      "question": "Activision, founded in 1979, was started by programmers who had left which company?",
+      "answers": [
+        {
+          "text": "Atari",
+          "correct": true
+        },
+        {
+          "text": "Magnavox",
+          "correct": false
+        },
+        {
+          "text": "Coleco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "They wanted credit and royalties for their games. Activision became the first major independent publisher for the Atari 2600.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_039",
+      "question": "Which composer is best known for the Final Fantasy music?",
+      "answers": [
+        {
+          "text": "Nobuo Uematsu",
+          "correct": true
+        },
+        {
+          "text": "Jeremy Soule",
+          "correct": false
+        },
+        {
+          "text": "Martin O'Donnell",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Uematsu also formed a rock band, The Black Mages, to play Final Fantasy music.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_040",
+      "question": "Who is the hero of the stealth game Metal Gear Solid?",
+      "answers": [
+        {
+          "text": "Solid Snake",
+          "correct": true
+        },
+        {
+          "text": "Nathan Drake",
+          "correct": false
+        },
+        {
+          "text": "Sam Fisher",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Series creator Hideo Kojima designed the series around hiding rather than shooting.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_041",
+      "question": "What does the name of Mario's rival Wario come from?",
+      "answers": [
+        {
+          "text": "Mario plus the Japanese word for 'gold'",
+          "correct": false
+        },
+        {
+          "text": "Mario plus the Japanese word for 'bad'",
+          "correct": true
+        },
+        {
+          "text": "Mario plus 'warrior'",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Japanese word 'warui' means bad. Wario first appeared as Mario's greedy opponent in a Game Boy game.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_042",
+      "question": "Which 2009 Facebook game had friends tending virtual crops?",
+      "answers": [
+        {
+          "text": "Candy Crush Saga",
+          "correct": false
+        },
+        {
+          "text": "FarmVille",
+          "correct": true
+        },
+        {
+          "text": "Words With Friends",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "FarmVille, from Zynga, spammed news feeds with requests for help and fertiliser.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_043",
+      "question": "Which Finnish studio made Max Payne and Control?",
+      "answers": [
+        {
+          "text": "Guerrilla Games",
+          "correct": false
+        },
+        {
+          "text": "Supercell",
+          "correct": false
+        },
+        {
+          "text": "Remedy Entertainment",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Remedy is known for its cinematic storytelling and shared universe.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_044",
+      "question": "Which long-awaited 2004 Valve sequel required the Steam client to play?",
+      "answers": [
+        {
+          "text": "Half-Life 2",
+          "correct": true
+        },
+        {
+          "text": "Portal",
+          "correct": false
+        },
+        {
+          "text": "Left 4 Dead",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Many players resented being forced onto Steam, but it helped make the platform dominant.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_045",
+      "question": "What is the nickname for the Xbox 360 hardware failure signalled by flashing red lights?",
+      "answers": [
+        {
+          "text": "Blue Screen of Death",
+          "correct": false
+        },
+        {
+          "text": "Yellow Light of Doom",
+          "correct": false
+        },
+        {
+          "text": "Red Ring of Death",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Microsoft extended its warranty on the problem to three years.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_046",
+      "question": "In which country is CD Projekt Red, the maker of The Witcher games, based?",
+      "answers": [
+        {
+          "text": "Czech Republic",
+          "correct": false
+        },
+        {
+          "text": "Finland",
+          "correct": false
+        },
+        {
+          "text": "Poland",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Witcher is based on a series of Polish fantasy novels by Andrzej Sapkowski.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_047",
+      "question": "In Super Meat Boy, who kidnaps Bandage Girl?",
+      "answers": [
+        {
+          "text": "Dr. Fetus",
+          "correct": true
+        },
+        {
+          "text": "Dr. Eggman",
+          "correct": false
+        },
+        {
+          "text": "Dr. Wily",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dr. Fetus is a jar-bound, suit-wearing fetus.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_048",
+      "question": "Which Finnish studio makes Clash of Clans?",
+      "answers": [
+        {
+          "text": "Zynga",
+          "correct": false
+        },
+        {
+          "text": "King",
+          "correct": false
+        },
+        {
+          "text": "Supercell",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Supercell sold a majority stake to SoftBank in 2013 at a huge valuation.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_049",
+      "question": "Which 1990s Sega ad slogan jabbed at its biggest rival?",
+      "answers": [
+        {
+          "text": "Play it loud",
+          "correct": false
+        },
+        {
+          "text": "Sonic does it faster",
+          "correct": false
+        },
+        {
+          "text": "Genesis does what Nintendon't",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sega of America used cheeky marketing to portray itself as the cooler alternative to Nintendo in the early 1990s.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_050",
+      "question": "What type of creature is Kazooie in Banjo-Kazooie?",
+      "answers": [
+        {
+          "text": "A toucan",
+          "correct": false
+        },
+        {
+          "text": "A breegull",
+          "correct": true
+        },
+        {
+          "text": "A parrot",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Banjo carries Kazooie in his backpack, and together they were Rare's mascots.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_051",
+      "question": "In which year was the first version of Tetris created?",
+      "type": "estimate",
+      "answer": 1984,
+      "min": 1970,
+      "max": 2000,
+      "unit": "year",
+      "difficulty": "hard",
+      "fun_fact": "Alexey Pajitnov built it on a Soviet research computer in Moscow, inspired by a pentomino puzzle. He earned no money from it for years.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_052",
+      "question": "How much did Microsoft pay for Mojang, the maker of Minecraft, in 2014?",
+      "answers": [
+        {
+          "text": "$25 billion",
+          "correct": false
+        },
+        {
+          "text": "$250 million",
+          "correct": false
+        },
+        {
+          "text": "$2.5 billion",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Minecraft's creator, Markus Persson, left the studio after the sale.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_053",
+      "question": "Who is the bald, ash-white Spartan hero of God of War?",
+      "answers": [
+        {
+          "text": "Leonidas",
+          "correct": false
+        },
+        {
+          "text": "Kratos",
+          "correct": true
+        },
+        {
+          "text": "Achilles",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The series starts in ancient Greece and later moves to Norse mythology.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_054",
+      "question": "What did Nintendo originally make when it was founded in 1889?",
+      "answers": [
+        {
+          "text": "Toys",
+          "correct": false
+        },
+        {
+          "text": "Fishing tackle",
+          "correct": false
+        },
+        {
+          "text": "Playing cards",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nintendo began as a maker of handmade hanafuda cards in Kyoto.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_055",
+      "question": "What is the invented language that characters speak in The Sims called?",
+      "answers": [
+        {
+          "text": "Elvish",
+          "correct": false
+        },
+        {
+          "text": "Klingon",
+          "correct": false
+        },
+        {
+          "text": "Simlish",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Voice actors improvised nonsense syllables, and famous musicians have recorded songs in it.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_056",
+      "question": "Which 1993 shooter became the classic 'but can it run it?' test, even being played on a pregnancy test?",
+      "answers": [
+        {
+          "text": "Wolfenstein 3D",
+          "correct": false
+        },
+        {
+          "text": "Quake",
+          "correct": false
+        },
+        {
+          "text": "Doom",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Its engine was written to be portable and efficient, so enthusiasts have ported it to cameras, printers and ATMs.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_057",
+      "question": "Who is known as the father of the original PlayStation?",
+      "answers": [
+        {
+          "text": "Ken Kutaragi",
+          "correct": true
+        },
+        {
+          "text": "Hideo Kojima",
+          "correct": false
+        },
+        {
+          "text": "Akio Morita",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kutaragi was a Sony engineer who built the sound chip for the Super Nintendo and pushed for Sony to enter gaming.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_058",
+      "question": "In which country was Minecraft's original creator Markus 'Notch' Persson from?",
+      "answers": [
+        {
+          "text": "Finland",
+          "correct": false
+        },
+        {
+          "text": "Denmark",
+          "correct": false
+        },
+        {
+          "text": "Sweden",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mojang was based in Stockholm.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_059",
+      "question": "Which British space-trading game featured wireframe 3D graphics and procedurally generated galaxies?",
+      "answers": [
+        {
+          "text": "Manic Miner",
+          "correct": false
+        },
+        {
+          "text": "Jet Set Willy",
+          "correct": false
+        },
+        {
+          "text": "Elite",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Its galaxies were generated from a seed so the entire universe could fit into a few kilobytes.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_060",
+      "question": "Which game made the South Korean player Faker a global esports star?",
+      "answers": [
+        {
+          "text": "Overwatch",
+          "correct": false
+        },
+        {
+          "text": "League of Legends",
+          "correct": true
+        },
+        {
+          "text": "StarCraft",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Faker has won multiple world championships with his team T1.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_061",
+      "question": "Satoru Iwata, the late Nintendo president, started his career as a programmer at which studio?",
+      "answers": [
+        {
+          "text": "HAL Laboratory",
+          "correct": true
+        },
+        {
+          "text": "Intelligent Systems",
+          "correct": false
+        },
+        {
+          "text": "Game Freak",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "He was known for debugging and rescuing troubled projects, including helping to fit Pokémon Gold and Silver onto their cartridges.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_062",
+      "question": "In which country was Tetris created?",
+      "answers": [
+        {
+          "text": "The Soviet Union",
+          "correct": true
+        },
+        {
+          "text": "The USA",
+          "correct": false
+        },
+        {
+          "text": "Japan",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Its creator, Alexey Pajitnov, received no money for years because of the Soviet system.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_063",
+      "question": "Which artist's impossible architecture inspired Monument Valley?",
+      "answers": [
+        {
+          "text": "M.C. Escher",
+          "correct": true
+        },
+        {
+          "text": "René Magritte",
+          "correct": false
+        },
+        {
+          "text": "Salvador Dalí",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was made by the British studio ustwo.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_064",
+      "question": "What does the name 'Xbox' stand for?",
+      "answers": [
+        {
+          "text": "Extreme Box",
+          "correct": false
+        },
+        {
+          "text": "Expansion Box",
+          "correct": false
+        },
+        {
+          "text": "DirectX Box",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It refers to Microsoft's DirectX graphics technology, which the console was built on.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_065",
+      "question": "Which game's tournament 'The International' became famous for its huge crowdfunded prize pool?",
+      "answers": [
+        {
+          "text": "Overwatch",
+          "correct": false
+        },
+        {
+          "text": "Dota 2",
+          "correct": true
+        },
+        {
+          "text": "League of Legends",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Players funded the prize pool by buying in-game items.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_066",
+      "question": "Which 1997 PlayStation RPG stars a spiky-haired soldier named Cloud Strife?",
+      "answers": [
+        {
+          "text": "Final Fantasy VI",
+          "correct": false
+        },
+        {
+          "text": "Final Fantasy IX",
+          "correct": false
+        },
+        {
+          "text": "Final Fantasy VII",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It was the first Final Fantasy in 3D and introduced many Western players to Japanese RPGs.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_067",
+      "question": "Which company bought the streaming platform Twitch in 2014 for around $970 million?",
+      "answers": [
+        {
+          "text": "Amazon",
+          "correct": true
+        },
+        {
+          "text": "Google",
+          "correct": false
+        },
+        {
+          "text": "Microsoft",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Twitch began as Justin.tv and grew out of a livestream of one person's life.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_068",
+      "question": "In which game did the Konami Code (up, up, down, down, left, right, left, right, B, A) first appear?",
+      "answers": [
+        {
+          "text": "Castlevania",
+          "correct": false
+        },
+        {
+          "text": "Metal Gear",
+          "correct": false
+        },
+        {
+          "text": "Gradius",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A programmer added it to make testing the home version of Gradius easier and forgot to remove it. It later became gaming's most famous cheat.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_069",
+      "question": "What large, yellow, flightless bird can you ride in Final Fantasy games?",
+      "answers": [
+        {
+          "text": "Chocobo",
+          "correct": true
+        },
+        {
+          "text": "Moogle",
+          "correct": false
+        },
+        {
+          "text": "Cactuar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Chocobo's 'kweh' call and its role as a mount made it the franchise's mascot.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_070",
+      "question": "Which composer wrote the chant-filled music of Halo?",
+      "answers": [
+        {
+          "text": "Hans Zimmer",
+          "correct": false
+        },
+        {
+          "text": "Martin O'Donnell",
+          "correct": true
+        },
+        {
+          "text": "Yuzo Koshiro",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Gregorian-style chants helped give Halo its epic mood.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_071",
+      "question": "What is the name of the fairy who keeps shouting 'Hey! Listen!' in Ocarina of Time?",
+      "answers": [
+        {
+          "text": "Tatl",
+          "correct": false
+        },
+        {
+          "text": "Fi",
+          "correct": false
+        },
+        {
+          "text": "Navi",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Navi's constant interruptions are a running joke in the Zelda fandom.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_072",
+      "question": "What was Rockstar's school game Bully called in some European regions?",
+      "answers": [
+        {
+          "text": "Cave Canem",
+          "correct": false
+        },
+        {
+          "text": "School Days",
+          "correct": false
+        },
+        {
+          "text": "Canis Canem Edit",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Latin title means 'dog eat dog'.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_073",
+      "question": "In which year was Super Mario Bros. released in Japan?",
+      "type": "estimate",
+      "answer": 1985,
+      "min": 1975,
+      "max": 2000,
+      "unit": "year",
+      "difficulty": "medium",
+      "fun_fact": "It launched on the Famicom and helped rescue the video game market after the crash in North America.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_074",
+      "question": "Which 2015 indie RPG lets you finish the game without defeating a single monster?",
+      "answers": [
+        {
+          "text": "Celeste",
+          "correct": false
+        },
+        {
+          "text": "Undertale",
+          "correct": true
+        },
+        {
+          "text": "Hollow Knight",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Undertale's creator Toby Fox also composed the soundtrack.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_075",
+      "question": "Which Japanese studio made Dark Souls?",
+      "answers": [
+        {
+          "text": "Capcom",
+          "correct": false
+        },
+        {
+          "text": "FromSoftware",
+          "correct": true
+        },
+        {
+          "text": "Square Enix",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Its brutal difficulty became a genre in itself, with entire games described as 'Soulslike'.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_076",
+      "question": "Which Capcom hero is a blue robot who takes the powers of defeated bosses?",
+      "answers": [
+        {
+          "text": "Kirby",
+          "correct": false
+        },
+        {
+          "text": "Mega Man",
+          "correct": true
+        },
+        {
+          "text": "Sonic",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The character is known as Rockman in Japan.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_077",
+      "question": "What is the currency in the Fallout series?",
+      "answers": [
+        {
+          "text": "Gold coins",
+          "correct": false
+        },
+        {
+          "text": "Bottle caps",
+          "correct": true
+        },
+        {
+          "text": "Credits",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Caps work as money in the wasteland because they are scarce and hard to counterfeit.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_078",
+      "question": "In Mario Kart, which item targets the player currently in first place?",
+      "answers": [
+        {
+          "text": "Banana",
+          "correct": false
+        },
+        {
+          "text": "Blue Shell",
+          "correct": true
+        },
+        {
+          "text": "Bullet Bill",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It flies over the entire track and can hit the leader even if they are far ahead, which has ruined countless leads.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_079",
+      "question": "In Counter-Strike, which two teams face each other?",
+      "answers": [
+        {
+          "text": "Red and Blue",
+          "correct": false
+        },
+        {
+          "text": "Terrorists and Counter-Terrorists",
+          "correct": true
+        },
+        {
+          "text": "Attackers and Defenders",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Counter-Strike has been a staple of competitive gaming for more than two decades.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_080",
+      "question": "What is the name of the hero in The Legend of Zelda?",
+      "answers": [
+        {
+          "text": "Link",
+          "correct": true
+        },
+        {
+          "text": "Ganon",
+          "correct": false
+        },
+        {
+          "text": "Zelda",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Many people assume the hero is called Zelda, but she is the princess he usually rescues.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_081",
+      "question": "What name does Among Us give to the player who secretly sabotages the crew?",
+      "answers": [
+        {
+          "text": "Mole",
+          "correct": false
+        },
+        {
+          "text": "Impostor",
+          "correct": true
+        },
+        {
+          "text": "Traitor",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The game was released in 2018 but became a global hit in 2020.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_082",
+      "question": "Spacewar!, one of the earliest computer games, was created at which university?",
+      "answers": [
+        {
+          "text": "MIT",
+          "correct": true
+        },
+        {
+          "text": "Stanford",
+          "correct": false
+        },
+        {
+          "text": "Cambridge",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Students wrote it on a room-sized PDP-1 computer. Later arcade pioneers drew on it for early games like Computer Space.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_083",
+      "question": "Which Nintendo crossover series pits Mario, Link and Pikachu against each other?",
+      "answers": [
+        {
+          "text": "Pokkén Tournament",
+          "correct": false
+        },
+        {
+          "text": "Mario Party",
+          "correct": false
+        },
+        {
+          "text": "Super Smash Bros.",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Director Masahiro Sakurai and Satoru Iwata first built a prototype in secret before it became a full game.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_084",
+      "question": "Which game was bundled with the Game Boy in the West?",
+      "answers": [
+        {
+          "text": "Pokémon Red",
+          "correct": false
+        },
+        {
+          "text": "Tetris",
+          "correct": true
+        },
+        {
+          "text": "Super Mario Land",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bundling it with a handheld helped the game reach people who otherwise never played video games.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_085",
+      "question": "Cuphead's art style is inspired by cartoons from which decade?",
+      "answers": [
+        {
+          "text": "1930s",
+          "correct": true
+        },
+        {
+          "text": "1960s",
+          "correct": false
+        },
+        {
+          "text": "1980s",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The game was hand-drawn and painted using traditional animation techniques.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_086",
+      "question": "Magikarp evolves into which Pokémon?",
+      "answers": [
+        {
+          "text": "Gyarados",
+          "correct": true
+        },
+        {
+          "text": "Vaporeon",
+          "correct": false
+        },
+        {
+          "text": "Dragonite",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It is a rare evolution that jumps from a weak fish to a powerful sea serpent.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_087",
+      "question": "Which character is the princess of the Mushroom Kingdom in the Mario series?",
+      "answers": [
+        {
+          "text": "Zelda",
+          "correct": false
+        },
+        {
+          "text": "Daisy",
+          "correct": false
+        },
+        {
+          "text": "Peach",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In the West she was called Princess Toadstool until the late 1990s.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_088",
+      "question": "Which British studio developed GoldenEye 007 for the Nintendo 64?",
+      "answers": [
+        {
+          "text": "Codemasters",
+          "correct": false
+        },
+        {
+          "text": "Rare",
+          "correct": true
+        },
+        {
+          "text": "Bullfrog",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Its multiplayer mode was added late in development but became a classic.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_089",
+      "question": "Which British designer created Populous and Fable?",
+      "answers": [
+        {
+          "text": "David Braben",
+          "correct": false
+        },
+        {
+          "text": "Sid Meier",
+          "correct": false
+        },
+        {
+          "text": "Peter Molyneux",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Populous is often credited with creating the 'god game' genre.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_090",
+      "question": "Which Swedish studio created the Battlefield series?",
+      "answers": [
+        {
+          "text": "DICE",
+          "correct": true
+        },
+        {
+          "text": "Paradox Interactive",
+          "correct": false
+        },
+        {
+          "text": "Avalanche Studios",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "DICE stands for Digital Illusions CE.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_091",
+      "question": "Which company paid about $2 billion for the virtual-reality headset maker Oculus in 2014?",
+      "answers": [
+        {
+          "text": "HTC",
+          "correct": false
+        },
+        {
+          "text": "Valve",
+          "correct": false
+        },
+        {
+          "text": "Facebook",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Oculus began as a Kickstarter project by Palmer Luckey.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_092",
+      "question": "Which company created Sonic the Hedgehog?",
+      "answers": [
+        {
+          "text": "Nintendo",
+          "correct": false
+        },
+        {
+          "text": "Atari",
+          "correct": false
+        },
+        {
+          "text": "Sega",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sonic was designed to give Sega a mascot with attitude to rival Mario.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_093",
+      "question": "In Untitled Goose Game, what animal do you play as?",
+      "answers": [
+        {
+          "text": "A goose",
+          "correct": true
+        },
+        {
+          "text": "A swan",
+          "correct": false
+        },
+        {
+          "text": "A duck",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The goose spends its time honking and stealing items from villagers.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_094",
+      "question": "Which game won Game of the Year at The Game Awards in 2023?",
+      "answers": [
+        {
+          "text": "Marvel's Spider-Man 2",
+          "correct": false
+        },
+        {
+          "text": "Alan Wake 2",
+          "correct": false
+        },
+        {
+          "text": "Baldur's Gate 3",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Developer Larian Studios released it in 2023 after years in early access.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_095",
+      "question": "Who is the hero of Wolfenstein 3D?",
+      "answers": [
+        {
+          "text": "B.J. Blazkowicz",
+          "correct": true
+        },
+        {
+          "text": "Duke Nukem",
+          "correct": false
+        },
+        {
+          "text": "Gordon Freeman",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The series began as a stealth game before id Software turned it into a first-person shooter.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_096",
+      "question": "Which Rare brawler is infamous for its Turbo Tunnel level?",
+      "answers": [
+        {
+          "text": "Double Dragon",
+          "correct": false
+        },
+        {
+          "text": "Battletoads",
+          "correct": true
+        },
+        {
+          "text": "Streets of Rage",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The speeding obstacle-course stage has frustrated players for decades.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_097",
+      "question": "In which year was the Game Boy released in Japan?",
+      "type": "estimate",
+      "answer": 1989,
+      "min": 1975,
+      "max": 2005,
+      "unit": "year",
+      "difficulty": "medium",
+      "fun_fact": "Its small, green-tinted screen and long battery life beat more powerful rivals with colour displays.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_098",
+      "question": "Which 1996 Nintendo console launched alongside Super Mario 64?",
+      "answers": [
+        {
+          "text": "Nintendo 64",
+          "correct": true
+        },
+        {
+          "text": "Super Nintendo",
+          "correct": false
+        },
+        {
+          "text": "GameCube",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Super Mario 64 is widely credited with showing how a platformer could work in 3D.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_099",
+      "question": "Counter-Strike began as a fan-made mod for which game?",
+      "answers": [
+        {
+          "text": "Quake",
+          "correct": false
+        },
+        {
+          "text": "Half-Life",
+          "correct": true
+        },
+        {
+          "text": "Doom",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Valve hired the mod's creators and turned it into an official game.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_100",
+      "question": "How many people made the original Stardew Valley?",
+      "answers": [
+        {
+          "text": "Fifteen",
+          "correct": false
+        },
+        {
+          "text": "Five",
+          "correct": false
+        },
+        {
+          "text": "One",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eric Barone, known as ConcernedApe, worked on it alone for several years.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_101",
+      "question": "Who composed the Skyrim theme 'Dragonborn'?",
+      "answers": [
+        {
+          "text": "Nobuo Uematsu",
+          "correct": false
+        },
+        {
+          "text": "Austin Wintory",
+          "correct": false
+        },
+        {
+          "text": "Jeremy Soule",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The choir in the piece sings in the dragon language invented for the game.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_102",
+      "question": "Which Game of Thrones author contributed world-building to Elden Ring?",
+      "answers": [
+        {
+          "text": "Neil Gaiman",
+          "correct": false
+        },
+        {
+          "text": "George R. R. Martin",
+          "correct": true
+        },
+        {
+          "text": "Patrick Rothfuss",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Martin wrote the backstory and mythology, while the game's director wrote the story itself.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_103",
+      "question": "What was the codename of the Nintendo Switch during development?",
+      "answers": [
+        {
+          "text": "NX",
+          "correct": true
+        },
+        {
+          "text": "Revolution",
+          "correct": false
+        },
+        {
+          "text": "Project Cafe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Revolution was the codename of the Wii, and Project Cafe was the Wii U.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_104",
+      "question": "What is the explosive green creature in Minecraft called?",
+      "answers": [
+        {
+          "text": "Zombie",
+          "correct": false
+        },
+        {
+          "text": "Creeper",
+          "correct": true
+        },
+        {
+          "text": "Enderman",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "According to Markus Persson's account, it was born from a bug while he was trying to create a pig.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_105",
+      "question": "Which childhood hobby inspired Pokémon creator Satoshi Tajiri?",
+      "answers": [
+        {
+          "text": "Collecting insects",
+          "correct": true
+        },
+        {
+          "text": "Collecting stamps",
+          "correct": false
+        },
+        {
+          "text": "Fishing",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tajiri grew up exploring fields and ponds on the edge of Tokyo, and the habitats disappeared as the city expanded.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_106",
+      "question": "Which British studio created Tomb Raider?",
+      "answers": [
+        {
+          "text": "Bullfrog",
+          "correct": false
+        },
+        {
+          "text": "Rare",
+          "correct": false
+        },
+        {
+          "text": "Core Design",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Core Design was based in Derby, England.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_107",
+      "question": "Whose name appears in the full title of the strategy series Civilization?",
+      "answers": [
+        {
+          "text": "Sid Meier",
+          "correct": true
+        },
+        {
+          "text": "Will Wright",
+          "correct": false
+        },
+        {
+          "text": "Peter Molyneux",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Meier is also known for Pirates! and many other strategy classics.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_108",
+      "question": "Which Nintendo handheld from 2004 had two screens, one of them a touchscreen?",
+      "answers": [
+        {
+          "text": "Virtual Boy",
+          "correct": false
+        },
+        {
+          "text": "Nintendo DS",
+          "correct": true
+        },
+        {
+          "text": "Game Boy Advance SP",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 'DS' stands for 'Dual Screen'. Brain Training games helped it reach older players.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_109",
+      "question": "Which Grand Theft Auto game is set in a 1980s Miami-inspired city?",
+      "answers": [
+        {
+          "text": "Liberty City Stories",
+          "correct": false
+        },
+        {
+          "text": "San Andreas",
+          "correct": false
+        },
+        {
+          "text": "Vice City",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Its soundtrack of 1980s hits became a defining feature of the game.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_110",
+      "question": "The early 1990s violence debate and US Senate hearings led to which rating body being founded in 1994?",
+      "answers": [
+        {
+          "text": "FCC",
+          "correct": false
+        },
+        {
+          "text": "ESRB",
+          "correct": true
+        },
+        {
+          "text": "PEGI",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mortal Kombat's gory finishing moves were at the centre of the debate. The ESRB still rates US games today.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_111",
+      "question": "What job do you do in Papers, Please?",
+      "answers": [
+        {
+          "text": "Tax collector",
+          "correct": false
+        },
+        {
+          "text": "Postal clerk",
+          "correct": false
+        },
+        {
+          "text": "Border inspector",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The game is set in the fictional communist state of Arstotzka.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_112",
+      "question": "Which 1980s Sega console was called the Mega Drive in Europe and Japan?",
+      "answers": [
+        {
+          "text": "Saturn",
+          "correct": false
+        },
+        {
+          "text": "Master System",
+          "correct": false
+        },
+        {
+          "text": "Sega Genesis",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The name had to be changed in North America for trademark reasons, and Genesis went on to take on Nintendo head-to-head.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_113",
+      "question": "What was the name of Microsoft's 2010 motion-sensing camera for the Xbox 360?",
+      "answers": [
+        {
+          "text": "Wii Remote",
+          "correct": false
+        },
+        {
+          "text": "PlayStation Move",
+          "correct": false
+        },
+        {
+          "text": "Kinect",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It could track your body without a controller, which made it popular for dance games.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_114",
+      "question": "What was the name of Sony's first handheld console, released in 2004?",
+      "answers": [
+        {
+          "text": "PlayStation Portable",
+          "correct": true
+        },
+        {
+          "text": "PlayStation Vita",
+          "correct": false
+        },
+        {
+          "text": "Game Gear",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The PSP used small optical discs called UMDs, which were also used to sell movies.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_115",
+      "question": "In which world is the Diablo series set?",
+      "answers": [
+        {
+          "text": "Azeroth",
+          "correct": false
+        },
+        {
+          "text": "Sanctuary",
+          "correct": true
+        },
+        {
+          "text": "Tamriel",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sanctuary is a world created by angels and demons, with humans caught in the conflict.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_116",
+      "question": "Which arcade game from Konami has you hop a frog across a busy road and then a river?",
+      "answers": [
+        {
+          "text": "Galaga",
+          "correct": false
+        },
+        {
+          "text": "Asteroids",
+          "correct": false
+        },
+        {
+          "text": "Frogger",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Konami made it, and Sega published it in North American arcades. The frog dodges traffic, then hops across river logs.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_117",
+      "question": "Which Rare series from the SNES era used pre-rendered 3D models turned into sprites?",
+      "answers": [
+        {
+          "text": "Yoshi's Island",
+          "correct": false
+        },
+        {
+          "text": "Donkey Kong Country",
+          "correct": true
+        },
+        {
+          "text": "Banjo-Kazooie",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The game's lush look made it a showpiece for the console.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_118",
+      "question": "What surprise did the ending of the original Metroid reveal about the hero Samus Aran?",
+      "answers": [
+        {
+          "text": "She is a robot",
+          "correct": false
+        },
+        {
+          "text": "She is a woman",
+          "correct": true
+        },
+        {
+          "text": "It was all a dream",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "If you finished fast enough, Samus removed her helmet and suit. It was a shock in the mid-1980s.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_119",
+      "question": "In which country did StarCraft become a hit TV spectator sport in the 2000s?",
+      "answers": [
+        {
+          "text": "Germany",
+          "correct": false
+        },
+        {
+          "text": "South Korea",
+          "correct": true
+        },
+        {
+          "text": "Brazil",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cable channels broadcast its leagues, and top players were celebrities.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_120",
+      "question": "Which of these is one of the three starter Pokémon in Pokémon Red and Blue?",
+      "answers": [
+        {
+          "text": "Torchic",
+          "correct": false
+        },
+        {
+          "text": "Charmander",
+          "correct": true
+        },
+        {
+          "text": "Chikorita",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The starters are Bulbasaur, Charmander and Squirtle, and the choice of one is the first big decision in the game.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_121",
+      "question": "Roughly how much did Bugha win in the 2019 Fortnite World Cup solo final?",
+      "answers": [
+        {
+          "text": "$30 million",
+          "correct": false
+        },
+        {
+          "text": "$300,000",
+          "correct": false
+        },
+        {
+          "text": "$3 million",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He was 16 years old when he won.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_122",
+      "question": "Which huge, sleepy Pokémon blocks the road in Red and Blue until you wake it with the Poké Flute?",
+      "answers": [
+        {
+          "text": "Wigglytuff",
+          "correct": false
+        },
+        {
+          "text": "Snorlax",
+          "correct": true
+        },
+        {
+          "text": "Slowpoke",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Snorlax blocks two routes in the original games, and the Poké Flute is the only way to wake it up.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_123",
+      "question": "Where did Atari reportedly bury a large number of unsold E.T. the Extra-Terrestrial cartridges?",
+      "answers": [
+        {
+          "text": "At sea off California",
+          "correct": false
+        },
+        {
+          "text": "A landfill in New Mexico",
+          "correct": true
+        },
+        {
+          "text": "A desert in Nevada",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Excavators dug the site up in 2014 and found cartridges, confirming that the legend was largely true.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_124",
+      "question": "Sony built the PlayStation after a planned CD add-on partnership with which company fell apart?",
+      "answers": [
+        {
+          "text": "Sega",
+          "correct": false
+        },
+        {
+          "text": "Nintendo",
+          "correct": true
+        },
+        {
+          "text": "Atari",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sony's console started life as a CD-ROM add-on for the Super Nintendo before Nintendo walked away.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_125",
+      "question": "Which was the first commercial home video game console?",
+      "answers": [
+        {
+          "text": "Atari 2600",
+          "correct": false
+        },
+        {
+          "text": "Magnavox Odyssey",
+          "correct": true
+        },
+        {
+          "text": "Fairchild Channel F",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ralph Baer's design had no sound and used plastic overlays on the TV screen to stand in for graphics.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_126",
+      "question": "Which arcade game's level 256 'kill screen' garbles half the maze and makes it impossible to finish?",
+      "answers": [
+        {
+          "text": "Pac-Man",
+          "correct": true
+        },
+        {
+          "text": "Dig Dug",
+          "correct": false
+        },
+        {
+          "text": "Galaga",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A counter overflows at level 256 and the game tries to draw too many fruit symbols, which turns half the screen into garbage.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_127",
+      "question": "Which Pokémon is Ash's partner in the anime?",
+      "answers": [
+        {
+          "text": "Eevee",
+          "correct": false
+        },
+        {
+          "text": "Pikachu",
+          "correct": true
+        },
+        {
+          "text": "Jigglypuff",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pikachu's name combines the Japanese sounds for a spark (pika) and a mouse squeak (chu).",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_128",
+      "question": "Why was the first game in the Final Fantasy series named 'Final'?",
+      "answers": [
+        {
+          "text": "It was the last game on the console",
+          "correct": false
+        },
+        {
+          "text": "The final boss is the strongest in the series",
+          "correct": false
+        },
+        {
+          "text": "Its creator expected it to be his last game",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hironobu Sakaguchi was ready to quit if the game failed. Instead it saved Square and spawned a giant franchise.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_129",
+      "question": "Which mobile game has you fling birds at pigs with a slingshot?",
+      "answers": [
+        {
+          "text": "Flappy Bird",
+          "correct": false
+        },
+        {
+          "text": "Cut the Rope",
+          "correct": false
+        },
+        {
+          "text": "Angry Birds",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The game was made by the Finnish studio Rovio and spawned films, toys and theme parks.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_130",
+      "question": "In Super Mario Bros. 3, what does Mario become after grabbing a Super Leaf?",
+      "answers": [
+        {
+          "text": "Cape Mario",
+          "correct": false
+        },
+        {
+          "text": "Ice Mario",
+          "correct": false
+        },
+        {
+          "text": "Raccoon Mario",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The tail lets him whack enemies and, with a running start, fly briefly.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_131",
+      "question": "Which Wii accessory shaped like a bathroom scale came with Wii Fit?",
+      "answers": [
+        {
+          "text": "Balance Board",
+          "correct": true
+        },
+        {
+          "text": "Power Glove",
+          "correct": false
+        },
+        {
+          "text": "Zapper",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It measures your centre of gravity and can weigh you.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_132",
+      "question": "What does 'NPC' stand for?",
+      "answers": [
+        {
+          "text": "Normal playable character",
+          "correct": false
+        },
+        {
+          "text": "Non-player character",
+          "correct": true
+        },
+        {
+          "text": "New player challenge",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "NPCs are the characters in a game that are controlled by the computer.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_133",
+      "question": "In Skyrim, what are you destined to be?",
+      "answers": [
+        {
+          "text": "The Nerevarine",
+          "correct": false
+        },
+        {
+          "text": "The Dragonborn",
+          "correct": true
+        },
+        {
+          "text": "The Chosen One",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bethesda's game launched in 2011 and has been re-released on almost everything with a screen.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_134",
+      "question": "In which city is Rockstar North, the studio behind Grand Theft Auto, based?",
+      "answers": [
+        {
+          "text": "Glasgow",
+          "correct": false
+        },
+        {
+          "text": "Edinburgh",
+          "correct": true
+        },
+        {
+          "text": "Dundee",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The studio formerly known as DMA Design started in Dundee.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_135",
+      "question": "How many Pokémon were in the first generation?",
+      "type": "estimate",
+      "answer": 151,
+      "min": 50,
+      "max": 400,
+      "unit": "Pokémon",
+      "difficulty": "easy",
+      "fun_fact": "The 151st is Mew, a hidden Pokémon that was added to the game late in development.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_136",
+      "question": "In which year did the arcade version of Pong come out?",
+      "type": "estimate",
+      "answer": 1972,
+      "min": 1960,
+      "max": 1995,
+      "unit": "year",
+      "difficulty": "medium",
+      "fun_fact": "Atari's first hit was built by engineer Al Alcorn as a practice project, and a prototype in a California bar broke down because the coin box was full.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_137",
+      "question": "In Duck Hunt on the NES, what happens if you miss all your shots?",
+      "answers": [
+        {
+          "text": "The game ends instantly",
+          "correct": false
+        },
+        {
+          "text": "A dog laughs at you",
+          "correct": true
+        },
+        {
+          "text": "The ducks fly away happily",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The laughing dog is one of the most hated sidekicks in gaming history.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_138",
+      "question": "Which company made the arcade game Pong?",
+      "answers": [
+        {
+          "text": "Sega",
+          "correct": false
+        },
+        {
+          "text": "Atari",
+          "correct": true
+        },
+        {
+          "text": "Namco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Atari's co-founder Nolan Bushnell had an engineer build Pong as a training exercise, and it turned out to be a hit in its first bar test.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_139",
+      "question": "Which AI guides and betrays you in Portal?",
+      "answers": [
+        {
+          "text": "SHODAN",
+          "correct": false
+        },
+        {
+          "text": "HAL 9000",
+          "correct": false
+        },
+        {
+          "text": "GLaDOS",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Her name stands for Genetic Lifeform and Disk Operating System.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_140",
+      "question": "From which country is Team Cherry, the studio behind Hollow Knight?",
+      "answers": [
+        {
+          "text": "Australia",
+          "correct": true
+        },
+        {
+          "text": "Sweden",
+          "correct": false
+        },
+        {
+          "text": "Canada",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Team Cherry is based in Adelaide and was a very small team.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_141",
+      "question": "What spreads through humanity in The Last of Us?",
+      "answers": [
+        {
+          "text": "A laboratory virus",
+          "correct": false
+        },
+        {
+          "text": "Radiation poisoning",
+          "correct": false
+        },
+        {
+          "text": "A mutated Cordyceps fungus",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cordyceps is a real fungus that infects ants and takes over their behaviour.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_142",
+      "question": "What phrase does the villain use to control the player in BioShock?",
+      "answers": [
+        {
+          "text": "Do as you're told",
+          "correct": false
+        },
+        {
+          "text": "Obey me",
+          "correct": false
+        },
+        {
+          "text": "Would you kindly",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The game is set in the underwater city of Rapture.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_143",
+      "question": "Which shape is NOT one of the four face-button symbols on a PlayStation controller?",
+      "answers": [
+        {
+          "text": "Star",
+          "correct": true
+        },
+        {
+          "text": "Square",
+          "correct": false
+        },
+        {
+          "text": "Triangle",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The symbols are triangle, circle, cross and square. Each was meant to have a meaning: viewpoint, yes, no and menu.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_144",
+      "question": "Which Rockstar western stars the gunslinger John Marston?",
+      "answers": [
+        {
+          "text": "Bully",
+          "correct": false
+        },
+        {
+          "text": "Red Dead Redemption",
+          "correct": true
+        },
+        {
+          "text": "Max Payne",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Its sequel is a prequel that stars Arthur Morgan.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_145",
+      "question": "Which esport filled Beijing's Bird's Nest stadium for its 2017 world final?",
+      "answers": [
+        {
+          "text": "League of Legends",
+          "correct": true
+        },
+        {
+          "text": "StarCraft II",
+          "correct": false
+        },
+        {
+          "text": "Dota 2",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The stadium was built for the 2008 Olympic Games.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_146",
+      "question": "Which Famicom-era Capcom horror game inspired the creators of Resident Evil?",
+      "answers": [
+        {
+          "text": "Sweet Home",
+          "correct": true
+        },
+        {
+          "text": "Mega Man",
+          "correct": false
+        },
+        {
+          "text": "Street Fighter",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sweet Home was a role-playing game about exploring a haunted mansion. It was released only in Japan.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_147",
+      "question": "Which treasure hunter stars in the Uncharted series?",
+      "answers": [
+        {
+          "text": "Nathan Drake",
+          "correct": true
+        },
+        {
+          "text": "Lara Croft",
+          "correct": false
+        },
+        {
+          "text": "Indiana Jones",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Drake claims to descend from the English explorer Sir Francis Drake.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_148",
+      "question": "Which Nintendo engineer led development of the Game & Watch and the Game Boy?",
+      "answers": [
+        {
+          "text": "Satoru Iwata",
+          "correct": false
+        },
+        {
+          "text": "Hiroshi Yamauchi",
+          "correct": false
+        },
+        {
+          "text": "Gunpei Yokoi",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Yokoi's philosophy was 'lateral thinking with withered technology': using cheap, proven parts in clever ways.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_149",
+      "question": "Nolan Bushnell, co-founder of Atari, also founded which restaurant chain with arcade games?",
+      "answers": [
+        {
+          "text": "Hooters",
+          "correct": false
+        },
+        {
+          "text": "Chuck E. Cheese's",
+          "correct": true
+        },
+        {
+          "text": "Dave & Buster's",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The chain began as Pizza Time Theatre, built around the idea of combining pizza, animatronic shows and games.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_150",
+      "question": "The 1958 game Tennis for Two was played on what kind of display?",
+      "answers": [
+        {
+          "text": "An oscilloscope",
+          "correct": true
+        },
+        {
+          "text": "A TV set",
+          "correct": false
+        },
+        {
+          "text": "A typewriter",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Physicist William Higinbotham built it at Brookhaven National Laboratory to make visitor days less dull.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_151",
+      "question": "Which Valve game gave you a Gravity Gun?",
+      "answers": [
+        {
+          "text": "Portal",
+          "correct": false
+        },
+        {
+          "text": "Team Fortress 2",
+          "correct": false
+        },
+        {
+          "text": "Half-Life 2",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The gun lets you pick up and fling objects, which became a physics showpiece.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_152",
+      "question": "Who created Mario and The Legend of Zelda for Nintendo?",
+      "answers": [
+        {
+          "text": "Shigeru Miyamoto",
+          "correct": true
+        },
+        {
+          "text": "Satoru Iwata",
+          "correct": false
+        },
+        {
+          "text": "Gunpei Yokoi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Miyamoto joined Nintendo in 1977 as an artist and based Zelda partly on his childhood explorations of the countryside near Kyoto.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_153",
+      "question": "Which of these is one of the four ghosts that chase Pac-Man?",
+      "answers": [
+        {
+          "text": "Clyde",
+          "correct": true
+        },
+        {
+          "text": "Slimer",
+          "correct": false
+        },
+        {
+          "text": "Casper",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The ghosts are Blinky, Pinky, Inky and Clyde, and each has its own chase behaviour.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_154",
+      "question": "Which 2006 Nintendo console was built around a motion-sensing wand controller?",
+      "answers": [
+        {
+          "text": "Wii U",
+          "correct": false
+        },
+        {
+          "text": "Wii",
+          "correct": true
+        },
+        {
+          "text": "GameCube",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Wii sold well to families and people who had never owned a console before.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_155",
+      "question": "Who holds the mortgage on your house in Animal Crossing?",
+      "answers": [
+        {
+          "text": "K.K. Slider",
+          "correct": false
+        },
+        {
+          "text": "Tom Nook",
+          "correct": true
+        },
+        {
+          "text": "Isabelle",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nook is a tanuki, or raccoon dog, a creature from Japanese folklore.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_156",
+      "question": "The PlayStation 3's Cell processor was developed by Sony, Toshiba and which US company?",
+      "answers": [
+        {
+          "text": "AMD",
+          "correct": false
+        },
+        {
+          "text": "IBM",
+          "correct": true
+        },
+        {
+          "text": "Intel",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Cell had a notoriously difficult architecture, which made PS3 games harder to program than Xbox 360 ones.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_157",
+      "question": "Who is the armoured hero of the Halo series?",
+      "answers": [
+        {
+          "text": "Master Chief",
+          "correct": true
+        },
+        {
+          "text": "Marcus Fenix",
+          "correct": false
+        },
+        {
+          "text": "Commander Shepard",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Master Chief's real name is John-117, and his face is rarely shown.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_158",
+      "question": "What is Gordon Freeman's job in Half-Life?",
+      "answers": [
+        {
+          "text": "Army medic",
+          "correct": false
+        },
+        {
+          "text": "Janitor",
+          "correct": false
+        },
+        {
+          "text": "Theoretical physicist",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Freeman is a silent protagonist who never speaks in any of the games.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_159",
+      "question": "Which Atari arcade game used vector graphics to draw a triangular ship and drifting rocks?",
+      "answers": [
+        {
+          "text": "Asteroids",
+          "correct": true
+        },
+        {
+          "text": "Breakout",
+          "correct": false
+        },
+        {
+          "text": "Missile Command",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Vector displays draw glowing lines directly on the screen instead of using pixels, which gave Asteroids its sharp, bright look.",
+      "category": "Video Games"
+    },
+    {
+      "id": "videogames_en_160",
+      "question": "Which Mario game introduced Yoshi?",
+      "answers": [
+        {
+          "text": "Super Mario 64",
+          "correct": false
+        },
+        {
+          "text": "Super Mario Bros. 3",
+          "correct": false
+        },
+        {
+          "text": "Super Mario World",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Yoshi was reportedly planned for the first Super Mario Bros. but the hardware could not handle it.",
+      "category": "Video Games"
+    }
+  ]
+}
