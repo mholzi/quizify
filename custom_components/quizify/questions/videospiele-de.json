@@ -148,7 +148,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "Entwickler war Ralph Baer. Nolan Bushnell sah ein Tennisspiel der Odyssey und ließ Atari danach „Pong“ bauen – Magnavox klagte später erfolgreich.",
+      "fun_fact": "Entwickler war Ralph Baer. Nolan Bushnell sah ein Tennisspiel der Odyssey und ließ Atari danach „Pong“ bauen – Magnavox verklagte Atari später, der Streit endete mit einer Lizenzvereinbarung.",
       "category": "Videospiele"
     },
     {
@@ -286,7 +286,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Das Gerät mit stereoskopischer 3D-Anzeige erfand Gunpei Yokoi. Es wurde nach etwa einem Jahr eingestellt, viele Spieler klagten über Kopfschmerzen.",
+      "fun_fact": "Das Gerät mit stereoskopischer 3D-Anzeige erfand Gunpei Yokoi. Es wurde schon 1996 wieder eingestellt, viele Spieler klagten über Kopfschmerzen.",
       "category": "Videospiele"
     },
     {
@@ -307,7 +307,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Sein SID-Soundchip von Bob Yannes klingt bis heute so eigenständig, dass es eine Szene für C64-Musik gibt. Amiga 500 und Atari ST kamen erst Mitte der Achtziger.",
+      "fun_fact": "Sein SID-Soundchip von Bob Yannes klingt bis heute so eigenständig, dass es eine Szene für C64-Musik gibt. Atari ST (1985) und Amiga 500 (1987) kamen deutlich später.",
       "category": "Videospiele"
     },
     {
@@ -370,7 +370,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "Das erste bekannte Easter Egg steckt im Atari-Spiel „Adventure“ von 1979: Programmierer Warren Robinett versteckte darin seinen Namen.",
+      "fun_fact": "Als erstes bekanntes Easter Egg gilt das im Atari-Spiel „Adventure“ von 1979: Programmierer Warren Robinett versteckte darin seinen Namen.",
       "category": "Videospiele"
     },
     {
@@ -412,7 +412,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "Im Westen hieß sie lange Princess Toadstool. Den Namen Peach bekam sie dort erst mit „Super Mario 64“ (1996).",
+      "fun_fact": "Im Westen hieß sie lange Princess Toadstool. Als Peach setzte sich der Name dort mit „Super Mario 64“ (1996) durch.",
       "category": "Videospiele"
     },
     {
@@ -886,7 +886,7 @@
           "correct": true
         },
         {
-          "text": "Er kann fliegen und Feuer spucken",
+          "text": "Er kann unsichtbar werden und durch Wände gehen",
           "correct": false
         },
         {
@@ -1801,7 +1801,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Er entstand aus dem eingestellten Projekt „Titan“. Es war Blizzards erste neue Marke seit Jahren.",
+      "fun_fact": "Teile des Teams und der Ideen stammen aus dem eingestellten Projekt „Titan“. Es war Blizzards erste neue Marke seit 17 Jahren.",
       "category": "Videospiele"
     },
     {
@@ -1906,7 +1906,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Das Wort „Fus“ bedeutet in der Drachensprache „Kraft“. Die Worte setzen sich zu „Unerbittliche Kraft“ zusammen.",
+      "fun_fact": "Die Worte heißen Fus (Kraft), Ro (Gleichgewicht) und Dah (Stoß). Der Schrei heißt im Englischen „Unrelenting Force“.",
       "category": "Videospiele"
     },
     {
@@ -2179,7 +2179,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "Der Creeper entstand aus einem Fehler: Markus Persson verwechselte Höhe und Breite des Schweinemodells.",
+      "fun_fact": "Der Creeper entstand aus einem Fehler: Markus Persson vertauschte beim Modellieren eines Schweins die Maße, das Modell stand plötzlich aufrecht.",
       "category": "Videospiele"
     },
     {
@@ -2527,7 +2527,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "2021 überschritt das Preisgeld 40 Millionen Dollar. Valve stockte es mit einem Anteil der Verkäufe im Spiel auf.",
+      "fun_fact": "2021 überschritt das Preisgeld 40 Millionen Dollar. Valve legte nur eine Grundsumme von 1,6 Millionen Dollar dazu, 25 Prozent der Verkäufe im Spiel flossen in den Preispool.",
       "category": "Videospiele"
     },
     {
@@ -2569,7 +2569,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "Kyle „Bugha“ Giersdorf gewann drei Millionen Dollar. Das war ein Rekordpreisgeld für einen Einzelwettbewerb.",
+      "fun_fact": "Kyle „Bugha“ Giersdorf gewann drei Millionen Dollar als erster Solo-Weltmeister des Spiels.",
       "category": "Videospiele"
     },
     {
@@ -2590,7 +2590,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "Fortnite erschien 2017 von Epic Games. Der Battle-Royale-Modus kam wenige Wochen nach dem Start dazu.",
+      "fun_fact": "Fortnite erschien 2017 von Epic Games. Der Battle-Royale-Modus kam rund zwei Monate nach dem Start dazu.",
       "category": "Videospiele"
     },
     {
@@ -2858,7 +2858,7 @@
           "correct": false
         },
         {
-          "text": "Brutality",
+          "text": "Knockout",
           "correct": false
         }
       ],
@@ -3316,7 +3316,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "Das Spiel erschien 1999 und wurde zum Büro-Phänomen. Der Hersteller Phenomedia baute es zuerst für Johnnie Walker.",
+      "fun_fact": "Das Spiel erschien 1999 und wurde zum Büro-Phänomen. Es entstand als Werbespiel für Johnnie Walker, vermarktet hat es Phenomedia.",
       "category": "Videospiele"
     }
   ]

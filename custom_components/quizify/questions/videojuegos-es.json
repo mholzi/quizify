@@ -400,7 +400,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "Los Santos está inspirada en Los Ángeles. El juego salió en 2013 y ha vendido decenas de millones de copias.",
+      "fun_fact": "Los Santos está inspirada en Los Ángeles. El juego salió en 2013 y es uno de los videojuegos más vendidos de la historia.",
       "category": "Videojuegos"
     },
     {
@@ -1324,7 +1324,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Street Fighter II (1991) inventó el género de lucha uno contra uno tal como lo conocemos hoy.",
+      "fun_fact": "Street Fighter II (1991) popularizó el género de lucha uno contra uno tal como lo conocemos hoy.",
       "category": "Videojuegos"
     },
     {
@@ -1387,7 +1387,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Un bandicut es un marsupial australiano. El juego lo creó el estudio estadounidense Naughty Dog.",
+      "fun_fact": "Un bandicoot es un marsupial australiano. El juego lo creó el estudio estadounidense Naughty Dog.",
       "category": "Videojuegos"
     },
     {
@@ -2164,7 +2164,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "KOI se fundó a finales de 2020 y luego se asoció con Movistar.",
+      "fun_fact": "KOI se presentó en diciembre de 2021 y en 2024 se fusionó con Movistar Riders para formar Movistar KOI.",
       "category": "Videojuegos"
     },
     {
@@ -2253,7 +2253,7 @@
     },
     {
       "id": "videojuegos_es_108",
-      "question": "¿Qué ordenador de 8 bits fue el más extendido en España en los años 80?",
+      "question": "¿Cuál de estos ordenadores de 8 bits fue el más popular en España en los años 80?",
       "answers": [
         {
           "text": "El Atari 800XL",
@@ -3088,7 +3088,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "G2 llegó a la final del Mundial de League of Legends en 2018 y 2019.",
+      "fun_fact": "G2 llegó a las semifinales del Mundial de League of Legends en 2018 y a la final en 2019, que perdió contra FunPlus Phoenix.",
       "category": "Videojuegos"
     },
     {

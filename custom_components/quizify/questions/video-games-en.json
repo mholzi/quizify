@@ -384,7 +384,7 @@
     },
     {
       "id": "videogames_en_019",
-      "question": "Which phone brand preinstalled Snake on its handsets from 1997?",
+      "question": "Which phone brand preinstalled Snake on its handsets in the late 1990s?",
       "answers": [
         {
           "text": "Nokia",
@@ -699,7 +699,7 @@
     },
     {
       "id": "videogames_en_034",
-      "question": "Which 1994 SNES RPG is set in a modern America and has a hero who fights with a baseball bat?",
+      "question": "Which SNES RPG is set in a modern America and has a hero who fights with a baseball bat?",
       "answers": [
         {
           "text": "EarthBound",
@@ -778,7 +778,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "DMA was founded in Dundee and became Rockstar North after Rockstar Games bought it.",
+      "fun_fact": "DMA was founded in Dundee and became Rockstar North in 2002, after Rockstar's parent company Take-Two had bought it.",
       "category": "Video Games"
     },
     {
@@ -1009,7 +1009,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Supercell sold a majority stake to SoftBank in 2013 at a huge valuation.",
+      "fun_fact": "In 2013 SoftBank and GungHo bought a 51% stake in Supercell in a deal that valued the company at about $3 billion.",
       "category": "Video Games"
     },
     {
@@ -1273,7 +1273,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "He was known for debugging and rescuing troubled projects, including helping to fit Pokémon Gold and Silver onto their cartridges.",
+      "fun_fact": "He was known for debugging and rescuing troubled projects, including reworking the compression code for Pokémon Gold and Silver.",
       "category": "Video Games"
     },
     {
@@ -1810,7 +1810,7 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "In the West she was called Princess Toadstool until the late 1990s.",
+      "fun_fact": "In the West she was called Princess Toadstool until the mid-1990s, when Super Mario 64 made Peach her standard name.",
       "category": "Video Games"
     },
     {
@@ -2310,14 +2310,14 @@
     },
     {
       "id": "videogames_en_112",
-      "question": "Which 1980s Sega console was called the Mega Drive in Europe and Japan?",
+      "question": "What was the Sega Mega Drive called in North America?",
       "answers": [
         {
           "text": "Saturn",
           "correct": false
         },
         {
-          "text": "Master System",
+          "text": "Dreamcast",
           "correct": false
         },
         {
@@ -2326,7 +2326,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "The name had to be changed in North America for trademark reasons, and Genesis went on to take on Nintendo head-to-head.",
+      "fun_fact": "The name had to be changed in North America for trademark reasons, and the Genesis went on to take on Nintendo head-to-head.",
       "category": "Video Games"
     },
     {
