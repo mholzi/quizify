@@ -52,7 +52,7 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 **Works on Any Screen** — Dashboard mode for the TV. Players use their phones. Admin runs the show. No extra hardware needed.
 
-**Nineteen Themes, Three Languages** — 7,310 questions across 53 themed packs (Geography, Pop Culture, Film & TV, Art & Literature, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation, Picture Round, Christmas, New Year's Eve, Halloween, Sankt Martin, Thanksgiving) in German, English and Spanish. Mix them, filter them, swap mid-session.
+**Twenty Themes, Three Languages** — 7,790 questions across 56 themed packs (Geography, Pop Culture, Film & TV, Art & Literature, Video Games, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation, Picture Round, Christmas, New Year's Eve, Halloween, Sankt Martin, Thanksgiving) in German, English and Spanish. Mix them, filter them, swap mid-session.
 
 ---
 
@@ -339,7 +339,7 @@ Three ready-made blueprints, one click each:
 
 ## Question Packs
 
-Quizify ships with **7,310 questions across 53 themed packs in 19 themes**, in German, English and Spanish.
+Quizify ships with **7,790 questions across 56 themed packs in 20 themes**, in German, English and Spanish.
 
 | Theme | 🇩🇪 Deutsch | 🇬🇧 English | 🇪🇸 Español |
 |-------|-------------|-------------|-------------|
@@ -354,6 +354,7 @@ Quizify ships with **7,310 questions across 53 themed packs in 19 themes**, in G
 | 💡 **Technik / Technology / Tecnología** | 158 | 160 | 159 |
 | 🎬 **Film & Serien / Film & TV / Cine y series** | 159 | 160 | 159 |
 | 🎨 **Kunst & Literatur / Art & Literature / Arte y literatura** | 160 | 160 | 160 |
+| 🎮 **Videospiele / Video Games / Videojuegos** | 160 | 160 | 160 |
 | 🏆 **Weltmeisterschaft / World Cup / Copa Mundial** | 157 | 159 | 160 |
 | 🎯 **Schätzfragen / Estimation / Estimación** | 40 | 40 | 40 |
 | 🖼️ **Bilderrätsel / Picture Round / Ronda de Imágenes** | 40 | 40 | 40 |
