@@ -3,6 +3,26 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.26.0-RC1] — 2026-10-31
+
+**Out of the Scoring, and a Steadier Host Seat**
+
+Since 1.25.0 a guest who goes home can leave the ranking, and the host keeps control through reloads and errors.
+
+### 🚪 When a guest leaves
+
+The host can take a guest who left mid-game out of the scoring. They drop off the TV and the podium, and come back if they return.
+
+### 🎛️ A steadier host page
+
+A lobby reload keeps the host's seat, a phone coming back from the background no longer opens a second admin connection, and error messages are visible again. A refused admin token now shows a note on the host card.
+
+### 🔒 Tighter connections
+
+Pack submit and request calls need the admin token, and reloading the integration closes open connections.
+
+Also: a phone still on the join form stays there, and house light and sound effect listeners run safely on the event loop.
+
 ## [1.25.0] — 2026-10-29
 
 **Art on the Shelf, and a Screen That Stays On**
