@@ -613,27 +613,48 @@ def test_the_player_session_is_one_pair_of_keys(tmp_path: Path) -> None:
     out = _run(
         """
 const C = window.QuizifyClientCore;
-const store = {};
-global.sessionStorage = {
-  setItem: function (k, v) { store[k] = String(v); },
-  getItem: function (k) { return store[k] === undefined ? null : store[k]; },
-  removeItem: function (k) { delete store[k]; }
-};
+function mkStore() {
+  const v = {};
+  return {
+    _v: v,
+    setItem: function (k, x) { v[k] = String(x); },
+    getItem: function (k) { return v[k] === undefined ? null : v[k]; },
+    removeItem: function (k) { delete v[k]; }
+  };
+}
+global.localStorage = mkStore();
+global.sessionStorage = mkStore();
 C.saveSession('tok-1', 'Anna');
-const written = JSON.parse(JSON.stringify(store));
+const written = JSON.parse(JSON.stringify(localStorage._v));
+const tabWritten = Object.keys(sessionStorage._v).length;
 const read = C.getSession();
+// #1183: a token from an earlier evening does not walk into a later game.
+localStorage.setItem('quizify_session_saved_at', String(Date.now() - 13 * 3600 * 1000));
+const stale = C.getSession();
+C.clearSession();
+// A tab open across the update still finishes the evening on sessionStorage.
+sessionStorage.setItem('quizify_session_token', 'old');
+sessionStorage.setItem('quizify_player_name', 'Ben');
+const legacy = C.getSession();
 C.clearSession();
 console.log(JSON.stringify({
-  written: written, read: read, after: C.getSession()
+  written: written, tabWritten: tabWritten, read: read, stale: stale,
+  legacy: legacy, after: C.getSession()
 }));
 """,
         tmp_path,
     )
+    saved_at = out["written"].pop("quizify_session_saved_at")
+    assert saved_at.isdigit()
     assert out["written"] == {
         "quizify_session_token": "tok-1",
         "quizify_player_name": "Anna",
     }
+    # #1183: the session survives the tab (localStorage), not only a reload.
+    assert out["tabWritten"] == 0
     assert out["read"] == {"token": "tok-1", "name": "Anna"}
+    assert out["stale"] == {"token": None, "name": None}
+    assert out["legacy"] == {"token": "old", "name": "Ben"}
     assert out["after"] == {"token": None, "name": None}
 
 
@@ -642,7 +663,7 @@ def test_storage_that_throws_is_survivable(tmp_path: Path) -> None:
     out = _run(
         """
 const C = window.QuizifyClientCore;
-global.sessionStorage = {
+global.sessionStorage = global.localStorage = {
   setItem: function () { throw new Error('denied'); },
   getItem: function () { throw new Error('denied'); },
   removeItem: function () { throw new Error('denied'); }

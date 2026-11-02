@@ -320,6 +320,8 @@
                     pu.saveSession(msg.session_token, state.playerName);
                 }
                 if (msg.is_admin) state.isAdmin = true;
+                // #1183: from here on back is caught (see handleBack).
+                armBackGuard();
                 // #1150: the host had taken them out, and coming back undid it.
                 if (typeof msg.welcome_back_score === 'number') {
                     pu.showToast(t('game.welcomeBackScore', {
@@ -1788,7 +1790,12 @@
         end: { title: 'admin.endGameConfirm', text: 'admin.endGameWarning',
             confirm: 'admin.endGame', cancel: 'common.cancel' },
         newGame: { title: 'admin.resetGameConfirm', text: 'admin.resetGameWarning',
-            confirm: 'admin.resetGame', cancel: 'common.cancel' }
+            confirm: 'admin.resetGame', cancel: 'common.cancel' },
+        // #1183 draft ③: the back gesture mid-game. Staying is the safe and
+        // the likely answer, so it is the primary button and comes first.
+        leave: { title: 'game.leaveConfirm', text: 'game.leaveWarning',
+            confirm: 'game.leave', cancel: 'game.keepPlaying',
+            confirmClass: 'btn-secondary', cancelClass: 'btn-primary', sheet: 'modal--leave' }
     };
     var _guestResetTrigger = null;
     var _guestResetKeyHandler = null;
@@ -1814,13 +1821,20 @@
             el.setAttribute('data-i18n', pair[1]);
             if (t) el.textContent = t(pair[1]);
         });
+        var yes = document.getElementById('guest-reset-confirm-btn');
+        var no = document.getElementById('guest-reset-cancel-btn');
+        if (yes) yes.className = 'btn ' + (keys.confirmClass || 'btn-danger');
+        if (no) no.className = 'btn ' + (keys.cancelClass || 'btn-secondary');
+        var modal = document.getElementById('guest-reset-modal');
+        if (modal && modal.classList) modal.classList.toggle('modal--leave', keys.sheet === 'modal--leave');
     }
 
-    // Open the sheet for `kind`; `run` fires only from its confirm button.
-    function confirmThen(triggerBtn, kind, run) {
+    // Open the sheet for `kind`; `run` fires only from its confirm button,
+    // `onCancel` on every other way out (Cancel, backdrop, Esc, back).
+    function confirmThen(triggerBtn, kind, run, onCancel) {
         var modal = document.getElementById('guest-reset-modal');
         if (!modal) return false;
-        _confirmPending = { kind: kind, run: run || null };
+        _confirmPending = { kind: kind, run: run || null, onCancel: onCancel || null };
         _paintConfirmKind(kind);
         return _openConfirmSheet(modal, triggerBtn);
     }
@@ -1876,7 +1890,9 @@
     function closeGuestResetModal() {
         var modal = document.getElementById('guest-reset-modal');
         if (modal) modal.classList.add('hidden');
+        var pending = _confirmPending;
         _confirmPending = null;
+        if (pending && pending.onCancel) pending.onCancel();
         if (_guestResetKeyHandler) {
             document.removeEventListener('keydown', _guestResetKeyHandler, true);
             _guestResetKeyHandler = null;
@@ -1911,6 +1927,7 @@
                     // A host action (#1183). End is valid in every phase, so
                     // a bar that hid behind the sheet (the round closed
                     // meanwhile) does not swallow the host's answer.
+                    _confirmPending = null;   // confirmed: no onCancel
                     closeGuestResetModal();
                     pending.run();
                     return;
@@ -2270,6 +2287,69 @@
     // Admin Controls Wiring
     // ============================================
 
+    // ============================================
+    // Back gesture (#1183)
+    // ============================================
+    //
+    // Android's back button (or the edge swipe) left the page — open sheets
+    // and all — and for a guest who came by QR camera it closed the tab: the
+    // game was gone. Now one history entry stands in front of the page while
+    // this phone is in a game. Back closes the topmost sheet first; mid-game
+    // it asks "Leave the game?" (the session stays, so a new scan brings the
+    // guest back by token); in the lobby or on the end screen it leaves as
+    // before.
+    var BACK_SHEETS = ['guest-reset-modal', 'powerup-target-modal', 'image-zoom-overlay',
+        'invite-modal', 'qr-modal'];
+    var MID_GAME_PHASES = {
+        WAGER_ACTIVE: true, QUESTION_ACTIVE: true, PLAYING: true, ANSWER_REVEAL: true,
+        PAUSED: true, LIGHTNING: true, LIGHTNING_RECAP: true, HOT_SEAT_AUCTION: true,
+        HOT_SEAT: true, HOT_SEAT_REVEAL: true
+    };
+    var _backGuard = false;
+    // Set by "Leave": from then on back belongs to the browser, so the next
+    // press closes a QR tab that has no page behind this one.
+    var _leaving = false;
+
+    function armBackGuard() {
+        if (_backGuard || _leaving || !state.playerName) return;
+        if (!window.history || typeof window.history.pushState !== 'function') return;
+        try {
+            window.history.pushState({ quizifyBack: true }, '');
+            _backGuard = true;
+        } catch (e) { /* a sandboxed frame: back stays the browser's */ }
+    }
+
+    function _openBackSheet() {
+        for (var i = 0; i < BACK_SHEETS.length; i++) {
+            var el = document.getElementById(BACK_SHEETS[i]);
+            if (el && !el.classList.contains('hidden')) return el;
+        }
+        return null;
+    }
+
+    function handleBack() {
+        _backGuard = false;   // the browser just took the guard entry away
+        if (_openBackSheet()) {
+            // Every sheet already closes on Esc; back is the same request.
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+            armBackGuard();
+            return;
+        }
+        if (state.playerName && MID_GAME_PHASES[state.currentPhase]) {
+            var asked = confirmThen(null, 'leave', function () {
+                _leaving = true;
+                window.history.back();
+            }, armBackGuard);
+            if (asked) return;
+        }
+        // Lobby, end screen, or no game: back means back.
+        window.history.back();
+    }
+
+    function setupBackGesture() {
+        window.addEventListener('popstate', handleBack);
+    }
+
     function setupAdminControls() {
         // Skip question
         var skipBtn = document.getElementById('skip-question-btn');
@@ -2510,6 +2590,7 @@
         if (team) team.setupLobby(send);
         setupRetryConnection();
         setupAdminControls();
+        setupBackGesture();
         setupReactionBar();
         setupSoundToggle();
         setupA11yToggle();

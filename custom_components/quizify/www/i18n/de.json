@@ -220,7 +220,11 @@
     "timerUpAria": "Zeit abgelaufen!",
     "timerTenLeft": "Noch 10 Sekunden",
     "timerFiveLeft": "Noch 5 Sekunden",
-    "welcomeBackScore": "Willkommen zurück, {name}. Deine {score} Punkte sind noch da."
+    "welcomeBackScore": "Willkommen zurück, {name}. Deine {score} Punkte sind noch da.",
+    "leaveConfirm": "Spiel verlassen?",
+    "leaveWarning": "Deine Punkte bleiben. Scanne den Code wieder, dann bist du zurück.",
+    "leave": "Verlassen",
+    "keepPlaying": "Weiterspielen"
   },
   "powerups": {
     "joker": "Joker",

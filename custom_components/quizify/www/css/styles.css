@@ -6801,6 +6801,25 @@ body.is-admin .reaction-bar {
     animation: modalFadeIn var(--transition-fast);
 }
 
+/* #1183 draft ③: "Leave the game?" is a sheet from the bottom, the look of
+   the target picker, with "Keep playing" first. The confirm button stays
+   first in the DOM (and in the focus trap), so only the order on screen
+   turns around. */
+.modal.modal--leave {
+    align-items: flex-end;
+    padding: var(--space-md);
+}
+
+.modal--leave .modal-content {
+    width: 100%;
+    max-width: 420px;
+    border-radius: var(--radius-xl);
+}
+
+.modal--leave .modal-actions {
+    flex-direction: row-reverse;
+}
+
 .powerup-target-title {
     margin: 0;
     font-family: var(--font-display);

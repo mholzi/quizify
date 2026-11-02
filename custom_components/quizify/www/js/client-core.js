@@ -37,30 +37,72 @@
 
     var SESSION_TOKEN_KEY = 'quizify_session_token';
     var SESSION_NAME_KEY = 'quizify_player_name';
+    var SESSION_SAVED_KEY = 'quizify_session_saved_at';
+
+    // #1183: localStorage, not sessionStorage. A guest who came by QR camera
+    // has a tab without history; Android's back button closes it, and a
+    // sessionStorage session died with the tab. The server will not hand a
+    // disconnected name back after the lobby (player_registry, security rule
+    // #7 — by token only, never by name), so the guest who scanned again
+    // read "that name is taken", meant themselves, and started over at 0.
+    // The token now outlives the tab. It still goes on every path that ends
+    // the game for this phone (forgetIdentity: reset, kick, refused rejoin,
+    // New game), and SESSION_MAX_AGE_MS keeps one from an earlier evening
+    // from walking into a later game.
+    var SESSION_MAX_AGE_MS = 12 * 60 * 60 * 1000;
+
+    function _durable() {
+        try { return typeof localStorage !== 'undefined' ? localStorage : null; } catch (e) { return null; }
+    }
+
+    function _tab() {
+        try { return typeof sessionStorage !== 'undefined' ? sessionStorage : null; } catch (e) { return null; }
+    }
 
     function saveSession(token, name) {
+        var store = _durable() || _tab();
+        if (!store) return;
         try {
-            sessionStorage.setItem(SESSION_TOKEN_KEY, token);
-            sessionStorage.setItem(SESSION_NAME_KEY, name);
+            store.setItem(SESSION_TOKEN_KEY, token);
+            store.setItem(SESSION_NAME_KEY, name);
+            store.setItem(SESSION_SAVED_KEY, String(Date.now()));
         } catch (e) { /* storage unavailable */ }
+    }
+
+    function _read(store, checkAge) {
+        var token = store.getItem(SESSION_TOKEN_KEY);
+        var name = store.getItem(SESSION_NAME_KEY);
+        if (!token || !name) return null;
+        if (checkAge) {
+            var savedAt = Number(store.getItem(SESSION_SAVED_KEY));
+            if (!savedAt || Date.now() - savedAt > SESSION_MAX_AGE_MS) return null;
+        }
+        return { token: token, name: name };
     }
 
     function getSession() {
         try {
-            return {
-                token: sessionStorage.getItem(SESSION_TOKEN_KEY),
-                name: sessionStorage.getItem(SESSION_NAME_KEY)
-            };
+            var durable = _durable();
+            var found = durable && _read(durable, true);
+            // A tab that was open across the update still holds its session
+            // in sessionStorage; it may finish the evening on it.
+            var tab = _tab();
+            if (!found && tab && tab !== durable) found = _read(tab, false);
+            return found || { token: null, name: null };
         } catch (e) {
             return { token: null, name: null };
         }
     }
 
     function clearSession() {
-        try {
-            sessionStorage.removeItem(SESSION_TOKEN_KEY);
-            sessionStorage.removeItem(SESSION_NAME_KEY);
-        } catch (e) { /* storage unavailable */ }
+        [_durable(), _tab()].forEach(function (store) {
+            if (!store) return;
+            try {
+                store.removeItem(SESSION_TOKEN_KEY);
+                store.removeItem(SESSION_NAME_KEY);
+                store.removeItem(SESSION_SAVED_KEY);
+            } catch (e) { /* storage unavailable */ }
+        });
     }
 
     // ============================================
