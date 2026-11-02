@@ -90,6 +90,33 @@ button, .btn {
     transform: scale(0.98);
 }
 
+/* #1183: every control gives way under the finger at once — before, only
+   ten of 93 did, and a pack tile, a chip or a switch row answered only when
+   the server did, which over Wi-Fi is a noticeable wait. `scale` rather than
+   `transform`, so it composes with the transforms controls already carry
+   (centering, their own press) instead of replacing them. */
+button:not(:disabled):active,
+[role="button"]:not([aria-disabled="true"]):active,
+a.btn:active,
+.toggle-compact:active {
+    scale: 0.98;
+}
+
+/* A link dims instead: scaling text in a line of copy jumps. */
+a[href]:not(.btn):active {
+    opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    button:not(:disabled):active,
+    [role="button"]:not([aria-disabled="true"]):active,
+    a.btn:active,
+    .toggle-compact:active {
+        scale: none;
+        opacity: 0.85;
+    }
+}
+
 /* ==========================================
    Inputs
    ========================================== */
@@ -252,7 +279,9 @@ button, .btn {
 .chip-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    /* #1183: 8 px between chips — 4 px (6 measured) let a thumb take the
+       neighbour. */
+    gap: var(--space-sm);
 }
 
 .chip {
@@ -307,7 +336,7 @@ button, .btn {
     font-size: 1.5rem;
     line-height: 1;
     min-width: 48px;
-    min-height: 40px;
+    min-height: 44px;   /* #1183: was 40 */
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -732,6 +761,10 @@ button, .btn {
        The hidden <input> is absolutely positioned and out of flow, so this
        only ever spaces the switch from the label. */
     gap: 10px;
+    /* #1183: the whole row is the target, so the row is 44 px tall. It was as
+       tall as its text — 22 px for the final wager, 24 px with 2 px between
+       the seven narration switches. */
+    min-height: 44px;
 }
 
 .toggle-compact input {

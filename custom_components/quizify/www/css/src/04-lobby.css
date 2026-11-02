@@ -371,13 +371,14 @@
 .qz-team-name {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-xs);
+    gap: var(--space-sm);   /* #1183: Open and Cancel were 4 px apart */
     margin-top: var(--space-sm);
 }
 
 .qz-team-nameInput {
     flex: 1 1 100%;
     min-width: 0;
+    min-height: 44px;   /* #1183: was 39 */
     padding: var(--space-sm) var(--space-md);
     background: var(--color-surface-dark);
     border: 1px solid var(--color-border-medium);

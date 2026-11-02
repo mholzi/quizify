@@ -971,6 +971,33 @@ button, .btn {
     transform: scale(0.98);
 }
 
+/* #1183: every control gives way under the finger at once — before, only
+   ten of 93 did, and a pack tile, a chip or a switch row answered only when
+   the server did, which over Wi-Fi is a noticeable wait. `scale` rather than
+   `transform`, so it composes with the transforms controls already carry
+   (centering, their own press) instead of replacing them. */
+button:not(:disabled):active,
+[role="button"]:not([aria-disabled="true"]):active,
+a.btn:active,
+.toggle-compact:active {
+    scale: 0.98;
+}
+
+/* A link dims instead: scaling text in a line of copy jumps. */
+a[href]:not(.btn):active {
+    opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    button:not(:disabled):active,
+    [role="button"]:not([aria-disabled="true"]):active,
+    a.btn:active,
+    .toggle-compact:active {
+        scale: none;
+        opacity: 0.85;
+    }
+}
+
 /* ==========================================
    Inputs
    ========================================== */
@@ -1133,7 +1160,9 @@ button, .btn {
 .chip-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    /* #1183: 8 px between chips — 4 px (6 measured) let a thumb take the
+       neighbour. */
+    gap: var(--space-sm);
 }
 
 .chip {
@@ -1188,7 +1217,7 @@ button, .btn {
     font-size: 1.5rem;
     line-height: 1;
     min-width: 48px;
-    min-height: 40px;
+    min-height: 44px;   /* #1183: was 40 */
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1613,6 +1642,10 @@ button, .btn {
        The hidden <input> is absolutely positioned and out of flow, so this
        only ever spaces the switch from the label. */
     gap: 10px;
+    /* #1183: the whole row is the target, so the row is 44 px tall. It was as
+       tall as its text — 22 px for the final wager, 24 px with 2 px between
+       the seven narration switches. */
+    min-height: 44px;
 }
 
 .toggle-compact input {
@@ -2634,13 +2667,14 @@ button, .btn {
 .qz-team-name {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-xs);
+    gap: var(--space-sm);   /* #1183: Open and Cancel were 4 px apart */
     margin-top: var(--space-sm);
 }
 
 .qz-team-nameInput {
     flex: 1 1 100%;
     min-width: 0;
+    min-height: 44px;   /* #1183: was 39 */
     padding: var(--space-sm) var(--space-md);
     background: var(--color-surface-dark);
     border: 1px solid var(--color-border-medium);
@@ -5198,7 +5232,7 @@ footer {
 .vF-answers {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: var(--space-sm);   /* #1183: 8 px between setup chips, was 6 */
     padding-left: 30px;  /* align with question text, skipping the badge */
 }
 
@@ -5247,8 +5281,14 @@ footer {
     margin-left: 18px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 0;
     transition: opacity 160ms ease;
+}
+/* #1183 draft ⑤: 44 px rows with a hairline between them instead of 2 px of
+   air — the line shows where one row's target ends. */
+.setup-tts-children > .toggle-compact + .toggle-compact,
+.setup-house-children .toggle-compact + .toggle-compact {
+    border-top: 1px solid var(--color-border-light);
 }
 .setup-tts-children.is-disabled {
     opacity: 0.4;
@@ -5293,6 +5333,7 @@ footer {
 }
 .setup-select {
     width: 100%;
+    min-height: 44px;   /* #1183: was 34 */
     padding: 8px 10px;
     font-size: 0.9rem;
     color: var(--color-text-primary);
@@ -5362,7 +5403,7 @@ footer {
 .setup-house-presets {
     display: flex;
     align-items: stretch;
-    gap: 4px;
+    gap: var(--space-sm);   /* #1183: was 4 px */
     padding: 3px;
     background: var(--color-bg-card-alt);
     border: 1px solid var(--color-border-light);
@@ -5412,6 +5453,10 @@ footer {
     color: var(--color-accent-primary);
     font-weight: 600;
     white-space: nowrap;
+    /* #1183: a 17 px line was the link's whole target. */
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
 }
 
 /* Advanced disclosure (collapsed by default) */

@@ -118,7 +118,7 @@
                     <input type="text" id="name-input" class="name-input"
                            data-i18n-placeholder="join.namePlaceholder"
                            placeholder="Your name" maxlength="20"
-                           autocomplete="off" autocapitalize="words"
+                           autocomplete="off" autocapitalize="words" enterkeyhint="go"
                            aria-describedby="name-validation-msg">
                     <p id="name-validation-msg" class="validation-msg hidden"></p>
                 </div>
@@ -193,7 +193,7 @@
                     </button>
                     <div class="qz-team-name hidden" id="team-name-row">
                         <input type="text" id="team-name-input" class="qz-team-nameInput"
-                               maxlength="24" autocomplete="off"
+                               maxlength="24" autocomplete="off" enterkeyhint="done"
                                data-i18n-placeholder="teams.namePlaceholder" placeholder="e.g. Sofa"
                                data-i18n-aria-label="teams.openTeam" aria-label="Team name">
                         <button type="button" id="team-name-confirm" class="btn btn-primary qz-team-nameBtn" data-i18n="teams.confirmOpen">Open</button>
