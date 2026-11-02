@@ -166,6 +166,23 @@
     --color-silver: #B8B2A0;                   /* muted warm silver */
     --color-bronze: #C99466;                   /* warm bronze */
 
+    /* Accent text (#1178 step 4). The accents above are surfaces: as text
+       on cream they reach 1.5-2.5 : 1. When text has to be coloured, it
+       takes the -ink of its accent, which reaches 4.5 : 1 on cream, white,
+       surface 2 and its own tint. Accents stay for fills, borders, dots. */
+    --coral-ink: #A4524A;                      /* 5.0 : 1 on cream */
+    --sage-ink: #4C7262;                       /* 5.0 : 1 */
+    --sky-ink: #46708C;                        /* 4.9 : 1 */
+    --sun-ink: #86621F;                        /* 5.2 : 1 */
+    --error-ink: #AC4444;                      /* 5.3 : 1 */
+    --mauve-ink: #805D8E;                      /* 5.0 : 1 */
+    --gold-ink: #86621F;                       /* rank 1 numeral */
+    --silver-ink: #736C58;                     /* rank 2 numeral */
+    --bronze-ink: #8E5E33;                     /* rank 3 numeral; also the clay "mixed" icon */
+    /* Text on an accent surface: buttons, answer letters, podium digits,
+       badges (5.6-8.9 : 1 on coral, sage, sky, sun). */
+    --on-accent: #2A2820;                      /* ink */
+
     /* Spacing Tokens */
     --space-xs: 4px;
     --space-sm: 8px;
@@ -475,7 +492,7 @@ a:focus-visible,
     left: 50%;
     transform: translateX(-50%);
     background: var(--color-success-bg);
-    color: var(--color-success);
+    color: var(--sage-ink);
     border: 1px solid var(--color-success);
     border-radius: 999px;
     padding: 6px 14px;
@@ -529,6 +546,6 @@ a:focus-visible,
 }
 .flag-question-btn.is-flagged {
     opacity: 1;
-    color: var(--color-success);
+    color: var(--sage-ink);
 }
 

@@ -143,7 +143,7 @@ body.dashboard-body {
        where the room is in the game — so it scales with the rest of
        the board (#376). */
     font-size: clamp(14px, 1.2vw, 20px);
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -259,7 +259,7 @@ body.dashboard-body {
 }
 
 .dashboard-answer-progress.is-complete {
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
 }
 
 .dashboard-timer-fill {
@@ -306,7 +306,7 @@ body.dashboard-body {
     /* #707: the one signal that the board has gone dead — it has to be
        readable from wherever the room noticed the freeze. */
     font-size: clamp(15px, 1.2vw, 20px);
-    color: var(--dash-error);
+    color: var(--error-ink);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     animation: pill-in var(--dur-status) var(--ease-out) backwards;
@@ -646,7 +646,7 @@ body.dashboard-body {
        is placed on. #707 gave the same step to `.dashboard-round`;
        #707's list of four did not include this one. */
     font-size: clamp(14px, 1.2vw, 20px);
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     font-weight: 500;
@@ -717,7 +717,7 @@ body.dashboard-body {
 }
 .dnl-truth-value {
     font-family: var(--font-mono, monospace); font-weight: 700;
-    font-size: 56px; line-height: 1.1; color: var(--color-accent-primary, #E88A7F);
+    font-size: 56px; line-height: 1.1; color: var(--coral-ink);
 }
 .dnl-card {
     background: var(--color-bg-card, #fff);
@@ -746,7 +746,7 @@ body.dashboard-body {
     font-weight: 600;
     color: var(--color-text-muted, #6E6A5C); font-family: var(--font-mono, monospace);
 }
-.dnl-lbl.is-winner { color: var(--color-accent-secondary, #7FA897); }
+.dnl-lbl.is-winner { color: var(--sage-ink); }
 /* #735: in em, so the clearance from the dot grows with the label
    instead of the type creeping towards the axis as it scales. */
 .dnl-lbl--above { bottom: 1.4em; }
@@ -773,7 +773,7 @@ body.dashboard-body {
     font-family: var(--font-mono, monospace);
     /* #735: the two numbers that tell the room what the line spans. */
     font-size: clamp(16px, 1.6vw, 24px);
-    color: var(--color-text-light, #8F8A78);
+    color: var(--color-text-muted);
 }
 
 /* #1173: the estimate reveal plays only on a live round_summary (dashboard.js
@@ -914,7 +914,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: clamp(20px, 2.2vw, 28px);
     font-weight: 500;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     flex-shrink: 0;
     width: auto;
     height: auto;
@@ -941,7 +941,7 @@ body.dashboard-body {
 .dashboard-answer.correct::after {
     content: "★";
     order: 1;
-    color: var(--dash-success);
+    color: var(--sage-ink);
     font-size: 16px;
     line-height: 1;
     flex-shrink: 0;
@@ -1096,7 +1096,7 @@ body.dashboard-body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     margin-bottom: 8px;
 }
 
@@ -1195,9 +1195,9 @@ body.dashboard-body {
     text-align: center;
 }
 
-.dashboard-leaderboard .leaderboard-rank.rank-1 { color: var(--dash-gold); }
-.dashboard-leaderboard .leaderboard-rank.rank-2 { color: var(--dash-silver); }
-.dashboard-leaderboard .leaderboard-rank.rank-3 { color: var(--dash-bronze); }
+.dashboard-leaderboard .leaderboard-rank.rank-1 { color: var(--gold-ink); }
+.dashboard-leaderboard .leaderboard-rank.rank-2 { color: var(--silver-ink); }
+.dashboard-leaderboard .leaderboard-rank.rank-3 { color: var(--bronze-ink); }
 
 .dashboard-leaderboard .leaderboard-name {
     flex: 1;
@@ -1213,7 +1213,7 @@ body.dashboard-body {
     /* #376: scale for TV couch legibility */
     font-size: clamp(16px, 1.7vw, 26px);
     font-weight: 700;
-    color: var(--dash-accent-primary);
+    color: var(--color-text-primary);
     font-variant-numeric: tabular-nums;
 }
 
@@ -1221,7 +1221,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 11px;
     font-weight: 500;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     padding: 2px 8px;
     background: rgba(232, 138, 127, 0.10);
     border-radius: 4px;
@@ -1254,11 +1254,11 @@ body.dashboard-body {
     font-variant-numeric: tabular-nums;
 }
 .dashboard-leaderboard .leaderboard-delta.is-up {
-    color: var(--dash-success);
+    color: var(--sage-ink);
     background: rgba(127, 168, 151, 0.16);
 }
 .dashboard-leaderboard .leaderboard-delta.is-down {
-    color: var(--dash-error);
+    color: var(--error-ink);
     background: rgba(214, 106, 106, 0.14);
 }
 
@@ -1391,7 +1391,7 @@ body.dashboard-body {
 .dashboard-paused-icon {
     font-size: clamp(48px, 7vw, 88px);
     line-height: 1;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
 }
 .dashboard-paused-title {
     font-family: 'DM Sans', sans-serif;
@@ -1414,7 +1414,7 @@ body.dashboard-body {
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(16px, 1.8vw, 24px);
     font-weight: 600;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     max-width: 640px;
 }
 .dashboard-paused-escape[hidden] { display: none; }
@@ -1433,7 +1433,7 @@ body.dashboard-body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     margin-bottom: 8px;
 }
 .dashboard-lightning-progress {
@@ -1520,12 +1520,12 @@ body.dashboard-body {
 }
 .dashboard-lightning-recap-row .lr-qnum {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     font-weight: 700;
     margin-right: 6px;
 }
 .dashboard-lightning-recap-row .lr-correct {
-    color: var(--dash-success);
+    color: var(--sage-ink);
     font-weight: 600;
 }
 
@@ -1869,7 +1869,7 @@ body.dashboard-body {
        but stops dominating the awards-row vertical budget. */
     font-size: clamp(28px, 3.6vw, 48px);
     font-weight: 900;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     letter-spacing: -0.02em;
     line-height: 1;
     text-shadow: 0 0 40px var(--dash-success-glow);
@@ -1970,7 +1970,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #376: scale for TV couch legibility */
     font-size: clamp(14px, 1.3vw, 20px);
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     font-variant-numeric: tabular-nums;
 }
 
@@ -2001,7 +2001,7 @@ body.dashboard-body {
     /* #376: scale for TV couch legibility */
     font-size: clamp(16px, 1.8vw, 26px);
     font-weight: 700;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.04em;
 }
@@ -2059,7 +2059,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 12px;
     font-weight: 500;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     padding-bottom: 8px;
@@ -2115,7 +2115,7 @@ body.dashboard-body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
 }
 
 .award-winner {

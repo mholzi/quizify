@@ -87,7 +87,7 @@
    ========================================== */
 
 .admin-correct-answer {
-    color: var(--color-success-neon);
+    color: var(--sage-ink);
     font-weight: 600;
     margin-top: var(--space-sm);
     text-shadow: 0 0 10px var(--color-success-neon);
@@ -155,7 +155,7 @@
 
 .admin-actions #end-game-btn {
     background: var(--color-bg-surface);
-    color: var(--color-error-dark);
+    color: var(--error-ink);
     border: 1.5px solid var(--color-error);
     box-shadow: var(--shadow-sm);
 }
@@ -350,7 +350,7 @@
     flex: 0 0 auto;
     font-size: 0.8125rem;
     font-weight: var(--font-weight-semibold);
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
 }
 
 .qz-team-empty {

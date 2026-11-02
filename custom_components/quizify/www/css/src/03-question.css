@@ -44,11 +44,11 @@
 }
 
 .timer-text.warning {
-    color: var(--color-warning);
+    color: var(--sun-ink);
 }
 
 .timer-text.critical {
-    color: var(--color-error-neon);
+    color: var(--error-ink);
     animation: timer-pulse-intense 0.5s ease-in-out infinite;
 }
 
@@ -66,7 +66,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     margin-bottom: var(--space-sm);
 }
 
@@ -216,7 +216,7 @@
 .question-category {
     display: inline-block;
     font-size: 0.75rem;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-top: var(--space-sm);
@@ -282,7 +282,7 @@
     background: rgba(255, 255, 255, 0.08);
     font-weight: var(--font-weight-bold);
     font-size: 0.875rem;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     flex-shrink: 0;
 }
 
@@ -364,12 +364,12 @@
 
 .answer-btn.correct::after {
     content: "★";
-    color: var(--color-success);
+    color: var(--sage-ink);
 }
 
 .answer-btn.wrong::after {
     content: "×";
-    color: var(--color-error);
+    color: var(--error-ink);
     /* Optically larger than the star. U+00D7 is drawn small inside its em box
        in DM Sans, so at a matched font-size it reads as a faint dust speck
        next to a solid ★ — verified on device at 390 px. This is the size that
@@ -406,7 +406,7 @@
     background: linear-gradient(135deg, rgba(232, 138, 127, 0.2), rgba(232, 138, 127, 0.2));
     border: 1px solid var(--color-accent-primary);
     border-radius: var(--radius-full);
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     font-family: var(--font-system);
     font-size: 0.85rem;
     font-weight: 600;
@@ -447,7 +447,7 @@
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     margin-bottom: var(--space-sm);
 }
 

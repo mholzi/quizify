@@ -94,7 +94,7 @@
     font-size: 0.65rem;
     font-weight: 500;
     background: rgba(232, 138, 127, 0.2);
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     padding: 1px 5px;
     border-radius: 4px;
     margin-left: 4px;
@@ -226,7 +226,7 @@
   font-family: var(--font-mono);
   font-weight: 800;
   font-size: 22px;
-  color: var(--color-accent-primary);
+  color: var(--coral-ink);
   margin-top: 4px;
 }
 .pl-result-hero--streak .pl-result-pts-unit {
@@ -255,7 +255,7 @@
   font-weight: 800;
   font-size: 96px;
   line-height: 0.95;
-  color: var(--color-accent-primary);
+  color: var(--coral-ink);
   letter-spacing: -0.02em;
   text-shadow: 0 6px 22px rgba(232, 138, 127, 0.18);
 }
@@ -303,7 +303,7 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
 .pl-result-hero--missed .pl-result-sub b {
   font-family: var(--font-display);
   font-weight: 800;
-  color: var(--color-success, #7FA897);
+  color: var(--sage-ink);
   /* +20 % matching .pl-result-sub bump; bumped from 1.1 rem. */
   font-size: 1.32rem;
   letter-spacing: -0.005em;
@@ -318,7 +318,7 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   font-weight: 800;
   /* +10 % per Markus' live test 2026-05-29; bumped from 20 px. */
   font-size: 22px;
-  color: var(--color-text-light);
+  color: var(--color-text-muted);
   margin-top: 4px;
 }
 .pl-result-hero--wrong .pl-result-zero-unit,
@@ -326,14 +326,14 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   font-family: var(--font-body);
   font-weight: 500;
   font-size: 11px;
-  color: var(--color-text-light);
+  color: var(--color-text-muted);
   margin-left: 4px;
 }
 .pl-result-streak-lost {
   font-family: var(--font-body);
   /* +10 % per Markus' live test 2026-05-29; bumped from 12 px. */
   font-size: 13.2px;
-  color: var(--color-error);
+  color: var(--error-ink);
   font-weight: 600;
 }
 
@@ -359,7 +359,7 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   font-size: 14.3px;
 }
 .pl-result-answer-strip .pl-result-answer-mark {
-  color: var(--color-success);
+  color: var(--sage-ink);
   font-weight: 800;
 }
 .pl-result-answer-strip--wrong {
@@ -367,15 +367,15 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   background: var(--color-error-bg);
 }
 .pl-result-answer-strip--wrong .pl-result-answer-mark {
-  color: var(--color-error);
+  color: var(--error-ink);
 }
 .pl-result-answer-strip--missed {
   border-color: var(--color-border-light);
   background: rgba(42, 40, 32, 0.04);
-  color: var(--color-text-light);
+  color: var(--color-text-muted);
 }
 .pl-result-answer-strip--missed .pl-result-answer-mark {
-  color: var(--color-text-light);
+  color: var(--color-text-muted);
 }
 
 /* ---- Shared section heads ---- */
@@ -435,9 +435,9 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
 .pl-result-srow--silver { background: rgba(170, 182, 194, 0.18); }
 .pl-result-srow--bronze { background: rgba(205, 140, 100, 0.16); }
 .pl-result-srow .pl-result-pos { color: var(--color-text-muted); }
-.pl-result-srow--gold   .pl-result-pos { color: #B08930; }
-.pl-result-srow--silver .pl-result-pos { color: #6F7C8A; }
-.pl-result-srow--bronze .pl-result-pos { color: #A35A2B; }
+.pl-result-srow--gold   .pl-result-pos { color: var(--gold-ink); }
+.pl-result-srow--silver .pl-result-pos { color: var(--silver-ink); }
+.pl-result-srow--bronze .pl-result-pos { color: var(--bronze-ink); }
 /* "Me" indicator layers on top of any medal background. */
 .pl-result-srow--me {
   border-left: 3px solid var(--color-accent-primary);
@@ -475,9 +475,9 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   font-size: 11px;
   font-weight: 600;
 }
-.pl-result-delta--up { color: var(--color-success); }
-.pl-result-delta--down { color: var(--color-error); }
-.pl-result-delta--flat { color: var(--color-text-light); }
+.pl-result-delta--up { color: var(--sage-ink); }
+.pl-result-delta--down { color: var(--error-ink); }
+.pl-result-delta--flat { color: var(--color-text-muted); }
 .pl-result-sc {
   font-family: var(--font-mono);
   font-weight: 700;
@@ -732,7 +732,7 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
     color: #fff;
     box-shadow: 0 0 0 4px var(--color-error-light);
 }
-.pack-step.todo .pack-step-n { background: var(--color-bg-card-alt); color: var(--color-text-light); }
+.pack-step.todo .pack-step-n { background: var(--color-bg-card-alt); color: var(--color-text-muted); }
 .pack-step-l {
     font-size: 0.66rem;
     font-weight: 600;
@@ -824,15 +824,15 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
     width: 14px;
     flex: none;
 }
-.pack-vrow.ok .pack-vrow-ic { color: var(--color-success); }
-.pack-vrow.bad .pack-vrow-ic { color: var(--color-error); }
+.pack-vrow.ok .pack-vrow-ic { color: var(--sage-ink); }
+.pack-vrow.bad .pack-vrow-ic { color: var(--error-ink); }
 .pack-vrow-f { flex: 1; color: var(--color-text-secondary); }
 .pack-vrow-d {
     font-size: 0.7rem;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
     font-family: var(--font-mono);
 }
-.pack-vrow.bad .pack-vrow-d { color: var(--color-error); }
+.pack-vrow.bad .pack-vrow-d { color: var(--error-ink); }
 
 /* ---- step 3: submit ---- */
 .pack-submit-confirm {
@@ -845,8 +845,8 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
     font-size: 0.85rem;
     min-height: 1.2em;
 }
-.pack-submit-status--ok { color: var(--color-success); }
-.pack-submit-status--bad { color: var(--color-error); }
+.pack-submit-status--ok { color: var(--sage-ink); }
+.pack-submit-status--bad { color: var(--error-ink); }
 .pack-submit-status--pending { color: var(--color-text-muted); }
 
 /* shared ghost button for "back" / secondary step actions */
@@ -899,14 +899,14 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
 .pack-tli-t a { color: inherit; }
 .pack-tli-m {
     font-size: 0.7rem;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
     font-family: var(--font-mono);
     margin-top: 1px;
 }
 .pack-tli-stat { font-size: 0.7rem; font-weight: 700; margin-top: 3px; }
-.pack-tli.a .pack-tli-stat { color: var(--color-success); }
-.pack-tli.p .pack-tli-stat { color: var(--color-warning); }
-.pack-tli.d .pack-tli-stat { color: var(--color-error); }
+.pack-tli.a .pack-tli-stat { color: var(--sage-ink); }
+.pack-tli.p .pack-tli-stat { color: var(--sun-ink); }
+.pack-tli.d .pack-tli-stat { color: var(--error-ink); }
 
 /* ===========================================================================
    Lightning Round (issue #42) — Calm-Card "Variant C (refined)"
@@ -926,7 +926,7 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
     color: var(--color-text-primary);
     margin: 0 0.25rem;
 }
-.lr-score-note { color: var(--color-text-light); }
+.lr-score-note { color: var(--color-text-muted); }
 
 /* ---- end recap: per-question rows ---- */
 .lightning-recap-grid {
@@ -970,12 +970,12 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
 .lr-recap-correct {
     font-size: 0.78rem;
     font-weight: 700;
-    color: var(--color-success);
+    color: var(--sage-ink);
     line-height: 1.3;
 }
 .lr-recap-yours {
     font-size: 0.72rem;
-    color: var(--color-error);
+    color: var(--error-ink);
     line-height: 1.3;
     margin-top: 2px;
 }
@@ -987,7 +987,7 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
     letter-spacing: 0.04em;
     margin-right: 5px;
 }
-.lr-recap-yours .lr-recap-tag { color: var(--color-text-light); }
+.lr-recap-yours .lr-recap-tag { color: var(--color-text-muted); }
 
 /* ---- admin / TV recap: host overview, a chip per player per question ---- */
 .lr-admin-row {
@@ -999,7 +999,7 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
 }
 .lr-admin-q { font-size: 0.85rem; line-height: 1.35; margin-bottom: 6px; color: var(--color-text-primary); }
 .lr-admin-qnum { font-weight: 700; color: var(--color-text-muted); }
-.lr-admin-correct { font-weight: 700; color: var(--color-success); }
+.lr-admin-correct { font-weight: 700; color: var(--sage-ink); }
 .lr-admin-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .lr-admin-chip {
     font-size: 0.72rem;
@@ -1007,9 +1007,9 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
     border-radius: 999px;
     white-space: nowrap;
 }
-.lr-admin-chip--correct { background: var(--color-success-light); color: var(--color-success); }
-.lr-admin-chip--wrong   { background: rgba(214, 106, 106, 0.18); color: var(--color-error); }
-.lr-admin-chip--miss    { background: var(--color-bg-card-alt); color: var(--color-text-light); }
+.lr-admin-chip--correct { background: var(--color-success-light); color: var(--sage-ink); }
+.lr-admin-chip--wrong   { background: rgba(214, 106, 106, 0.18); color: var(--error-ink); }
+.lr-admin-chip--miss    { background: var(--color-bg-card-alt); color: var(--color-text-muted); }
 
 /* ==========================================
    Phone: three answers above the fold (#871)

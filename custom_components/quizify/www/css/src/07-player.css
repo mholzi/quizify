@@ -84,7 +84,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     margin-top: 4px;
 }
 .end-hero-name {
@@ -212,10 +212,10 @@
     font-size: 0.95rem;
     flex-shrink: 0;
 }
-.rchip-disc.disc-sun   { background: rgba(232, 196, 127, 0.22); color: #C9A24E; }
-.rchip-disc.disc-coral { background: rgba(232, 138, 127, 0.18); color: var(--color-accent-primary); }
-.rchip-disc.disc-sage  { background: rgba(127, 168, 151, 0.18); color: var(--color-accent-secondary); }
-.rchip-disc.disc-sky   { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
+.rchip-disc.disc-sun   { background: rgba(232, 196, 127, 0.22); color: var(--sun-ink); }
+.rchip-disc.disc-coral { background: rgba(232, 138, 127, 0.18); color: var(--coral-ink); }
+.rchip-disc.disc-sage  { background: rgba(127, 168, 151, 0.18); color: var(--sage-ink); }
+.rchip-disc.disc-sky   { background: rgba(127, 168, 196, 0.18); color: var(--sky-ink); }
 .rchip-main { min-width: 0; }
 .rchip-title {
     /* 12px floor + AA-contrast muted token (#382). */
@@ -521,7 +521,7 @@
 .round-indicator-text {
     font-size: 0.8rem;
     font-weight: 600;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -534,7 +534,7 @@
     background: rgba(232, 138, 127, 0.15);
     border: 1px solid rgba(232, 138, 127, 0.3);
     border-radius: var(--radius-full);
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -583,11 +583,11 @@
 }
 
 .timer--warning {
-    color: var(--color-warning);
+    color: var(--sun-ink);
 }
 
 .timer--critical {
-    color: var(--color-error-neon);
+    color: var(--error-ink);
     text-shadow: 0 0 15px var(--color-error-neon);
 }
 
@@ -666,7 +666,7 @@
     background: rgba(255, 255, 255, 0.08);
     font-weight: var(--font-weight-bold);
     font-size: 0.8rem;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     flex-shrink: 0;
 }
 
@@ -810,7 +810,7 @@
     justify-content: center;
     gap: var(--space-sm);
     padding: var(--space-md);
-    color: var(--color-success);
+    color: var(--sage-ink);
     font-size: 0.95rem;
     font-weight: 600;
 }
@@ -823,7 +823,7 @@
     height: 24px;
     border-radius: var(--radius-full);
     background: rgba(16, 185, 129, 0.15);
-    color: var(--color-success);
+    color: var(--sage-ink);
     font-size: 0.85rem;
 }
 
@@ -1002,7 +1002,7 @@
 .stat-badge--difficulty {
     background: rgba(168, 85, 247, 0.12);
     border-color: rgba(168, 85, 247, 0.3);
-    color: var(--color-neon-purple);
+    color: var(--mauve-ink);
 }
 
 /* Button variants */
@@ -1053,7 +1053,7 @@
     margin: 0;
     color: var(--color-text-heading);
 }
-.setup-hero-headline .accent { color: var(--color-accent-primary); }
+.setup-hero-headline .accent { color: var(--coral-ink); }
 
 .setup-hero-summary {
     font-family: var(--font-mono);
@@ -1071,7 +1071,7 @@
     font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--color-accent-primary, #E88A7F);
+    color: var(--coral-ink);
     margin: 6px 0 0;
     max-width: 90%;
     line-height: 1.4;
@@ -1151,7 +1151,7 @@
 }
 
 .setup-links-sep {
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
     font-size: 0.85rem;
 }
 
@@ -1195,7 +1195,7 @@
     width: 26px;
     height: 26px;
     fill: none;
-    stroke: #C9A24E;
+    stroke: var(--sun-ink);
     stroke-width: 1.9;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -1207,7 +1207,7 @@
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
 }
 .hero-feature-title {
     font-family: var(--font-display);
@@ -1236,7 +1236,7 @@
     justify-content: center;
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     transition: background 0.12s ease, color 0.12s ease;
 }
 .hero-feature.active .hero-feature-check {
@@ -1259,7 +1259,7 @@
     font-size: 0.66rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
     text-align: left;
 }
 /* Categories-forward grid (Direction A): two columns of color-tinted tiles. */
@@ -1297,7 +1297,7 @@
     position: absolute;
     top: 8px;
     right: 10px;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     font-weight: 700;
     font-size: 0.85rem;
 }
@@ -1333,11 +1333,11 @@
     letter-spacing: 0.02em;
 }
 /* Per-theme tint: icon disc background + icon stroke color. */
-.hpt-mix   .hct-icon { background: #F1ECDC;                   color: #C99B6E; }
-.hpt-coral .hct-icon { background: rgba(232, 138, 127, 0.16); color: var(--color-accent-primary); }
-.hpt-sage  .hct-icon { background: rgba(127, 168, 151, 0.18); color: var(--color-accent-secondary); }
-.hpt-sky   .hct-icon { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
-.hpt-sun   .hct-icon { background: rgba(232, 196, 127, 0.24); color: #C9A24E; }
+.hpt-mix   .hct-icon { background: #F1ECDC;                   color: var(--bronze-ink); }
+.hpt-coral .hct-icon { background: rgba(232, 138, 127, 0.16); color: var(--coral-ink); }
+.hpt-sage  .hct-icon { background: rgba(127, 168, 151, 0.18); color: var(--sage-ink); }
+.hpt-sky   .hct-icon { background: rgba(127, 168, 196, 0.18); color: var(--sky-ink); }
+.hpt-sun   .hct-icon { background: rgba(232, 196, 127, 0.24); color: var(--sun-ink); }
 
 /* #1127: the dashed "Missing a topic? / Ask for a pack" tile that closes the
    grid (pack-submit.js appendWishTile). Same box as a pack tile, but dashed
@@ -1362,7 +1362,7 @@
 }
 .hero-wish-tile .hct-icon {
     background: rgba(232, 138, 127, 0.16);
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     font-size: 1.1rem;
     font-weight: 700;
 }
@@ -1452,7 +1452,7 @@
 .preset-duration {
     font-family: var(--font-mono);
     font-size: 0.72rem;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
     align-self: center;
 }
 
@@ -1800,7 +1800,7 @@
     border-radius: 8px;
 }
 .setup-house-autohint a {
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     font-weight: 600;
     white-space: nowrap;
     /* #1183: a 17 px line was the link's whole target. */
@@ -1964,7 +1964,7 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     padding: 3px 10px;
     border-radius: 999px;
     border: 1px solid var(--color-accent-primary);
@@ -2204,7 +2204,7 @@
     font-size: clamp(1.4rem, 5vw, 2.2rem);
     line-height: 1.1;
     margin: 8px 0 0;
-    color: #E88A7F;
+    color: var(--coral-ink);
 }
 
 .lobby-e-row {
@@ -2434,7 +2434,7 @@
 }
 .lobby-e-row-card .player-chip-kick:hover {
     opacity: 1;
-    color: var(--color-error);
+    color: var(--error-ink);
     background: var(--color-error-bg);
 }
 /* On touch devices there is no hover, so opacity:0 makes the kick
@@ -2447,7 +2447,7 @@
     }
     .lobby-e-row-card .player-chip-kick:active {
         opacity: 1;
-        color: var(--color-error);
+        color: var(--error-ink);
     }
 }
 
@@ -2483,7 +2483,7 @@
     border-bottom: 1px dashed var(--color-border-light);
 }
 .lobby-e-countdown.is-ready {
-    color: var(--color-success);
+    color: var(--sage-ink);
 }
 
 .lobby-e-actions {
@@ -2588,11 +2588,11 @@ body:has(.admin-control-bar:not(.hidden)) #game-view {
 }
 
 .control-btn--danger {
-    color: var(--color-error);
+    color: var(--error-ink);
 }
 
 .control-btn--danger:hover {
-    color: var(--color-error);
+    color: var(--error-ink);
     background: rgba(239, 68, 68, 0.1);
 }
 
@@ -3068,7 +3068,7 @@ body.is-admin .reaction-bar {
     font-family: var(--font-display);
     font-size: 2rem;
     font-weight: 900;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     text-align: center;
     letter-spacing: 0.1em;
     text-shadow: 0 0 15px var(--color-accent-secondary);
@@ -3088,7 +3088,7 @@ body.is-admin .reaction-bar {
     flex: 1;
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     word-break: break-all;
     user-select: all;
 }
@@ -3101,7 +3101,7 @@ body.is-admin .reaction-bar {
     background: rgba(232, 138, 127, 0.1);
     border: 1px solid rgba(232, 138, 127, 0.3);
     border-radius: var(--radius-sm);
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     font-size: 0.8rem;
     cursor: pointer;
     transition: all var(--transition-fast);
@@ -3121,7 +3121,7 @@ body.is-admin .reaction-bar {
 
 .invite-copy-feedback {
     font-size: 0.75rem;
-    color: var(--color-success);
+    color: var(--sage-ink);
     text-align: center;
     min-height: 1.2em;
 }
@@ -3325,7 +3325,7 @@ body.is-admin .reaction-bar {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-success, #2F7A4F);
+    color: var(--sage-ink);
     background: rgba(127, 168, 151, 0.18);
     border: 1px solid rgba(127, 168, 151, 0.32);
     padding: 2px 8px;
@@ -3404,7 +3404,7 @@ body.is-admin .reaction-bar {
     font-weight: var(--font-weight-extrabold);
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--color-accent-brand-hover);
+    color: var(--coral-ink);
     font-size: 14px;
     margin-bottom: 4px;
 }
@@ -3442,7 +3442,7 @@ body.is-admin .reaction-bar {
 .lr-splash-chip b {
     font-family: var(--font-display);
     font-size: 22px;
-    color: var(--color-accent-brand-hover);
+    color: var(--coral-ink);
     font-weight: var(--font-weight-extrabold);
 }
 
@@ -3466,7 +3466,7 @@ body.is-admin .reaction-bar {
 
 .lr-splash-waithint .dots {
     display: inline-block;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
 }
 
 /* Host / TV (dashboard) — bigger medallion + title, horizontal chips.
@@ -3640,12 +3640,12 @@ body.is-admin .reaction-bar {
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 54px;
-    color: var(--color-accent-blue);
+    color: var(--sky-ink);
     font-variant-numeric: tabular-nums;
 }
 .frozen-overlay .ice-foot {
     font-size: 12px;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
 }
 
 /* Honor reduced-motion: drop the flake spin (the ring still depletes,
@@ -3785,7 +3785,7 @@ body.is-admin .reaction-bar {
     margin-top: 12px;
     font-family: var(--font-mono);
     font-size: 0.78rem;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
 }
 
 .estimate-hint {
@@ -3823,7 +3823,7 @@ body.is-admin .reaction-bar {
     font-weight: 700;
     font-size: 2.4rem;
     line-height: 1.1;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     display: flex;
     align-items: baseline;
     justify-content: center;
@@ -3877,7 +3877,7 @@ body.is-admin .reaction-bar {
     font-family: var(--font-mono);
 }
 .nl-lbl.is-winner .nl-nm {
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
 }
 .nl-lbl--above { bottom: 18px; }
 .nl-lbl--below { top: 18px; }
@@ -3914,7 +3914,7 @@ body.is-admin .reaction-bar {
     margin-top: 30px;
     font-family: var(--font-mono);
     font-size: 0.72rem;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
 }
 
 .est-winner {
@@ -3944,7 +3944,7 @@ body.is-admin .reaction-bar {
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 1.1rem;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     white-space: nowrap;
 }
 
@@ -3985,7 +3985,7 @@ body.is-admin .reaction-bar {
 .est-results .res-you-tag {
     font-size: 0.66rem;
     font-weight: 700;
-    color: var(--color-accent-blue);
+    color: var(--sky-ink);
     background: rgba(127, 168, 196, 0.15);
     padding: 1px 6px;
     border-radius: var(--radius-full);
@@ -4009,14 +4009,14 @@ body.is-admin .reaction-bar {
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 0.82rem;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     min-width: 42px;
     text-align: right;
 }
 .est-noguess {
     text-align: center;
     font-size: 0.76rem;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
     margin-top: 10px;
 }
 
@@ -4210,5 +4210,5 @@ html.conn-back .view {
     animation: wager-win-tint var(--dur-wager) var(--ease-out);
 }
 @keyframes wager-win-tint {
-    from { color: var(--color-success); }
+    from { color: var(--sage-ink); }
 }

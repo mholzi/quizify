@@ -2815,7 +2815,7 @@
         els.adminAnswerProgress.style.display = '';
         // #1170: the line turns sage when the last guest is in.
         els.adminAnswerProgress.style.transition = 'color var(--dur-status) var(--ease-out)';
-        els.adminAnswerProgress.style.color = (submitted === total) ? 'var(--color-success)' : '';
+        els.adminAnswerProgress.style.color = (submitted === total) ? 'var(--sage-ink)' : '';
     }
 
     /** The tracker belongs to one question; it goes with the question. */
@@ -5198,7 +5198,7 @@ async function showPackNews(getLanguage) {
         banner.innerHTML =
             '<span style="font-size:1.2rem;flex-shrink:0">🎁</span>' +
             '<div style="flex:1">' +
-                '<strong data-i18n="admin.packNewsTitle" style="color:#E88A7F;font-family:\'DM Sans\',sans-serif;font-weight:700">' + window.QuizifyUtils.escapeHtml(tt('admin.packNewsTitle')) + '</strong>' +
+                '<strong data-i18n="admin.packNewsTitle" style="color:var(--coral-ink);font-family:\'DM Sans\',sans-serif;font-weight:700">' + window.QuizifyUtils.escapeHtml(tt('admin.packNewsTitle')) + '</strong>' +
                 '<div class="pack-news-names"></div>' +
                 '<div class="pack-news-yours-list"></div>' +
             '</div>' +

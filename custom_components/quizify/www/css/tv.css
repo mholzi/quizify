@@ -168,6 +168,23 @@
     --color-silver: #B8B2A0;                   /* muted warm silver */
     --color-bronze: #C99466;                   /* warm bronze */
 
+    /* Accent text (#1178 step 4). The accents above are surfaces: as text
+       on cream they reach 1.5-2.5 : 1. When text has to be coloured, it
+       takes the -ink of its accent, which reaches 4.5 : 1 on cream, white,
+       surface 2 and its own tint. Accents stay for fills, borders, dots. */
+    --coral-ink: #A4524A;                      /* 5.0 : 1 on cream */
+    --sage-ink: #4C7262;                       /* 5.0 : 1 */
+    --sky-ink: #46708C;                        /* 4.9 : 1 */
+    --sun-ink: #86621F;                        /* 5.2 : 1 */
+    --error-ink: #AC4444;                      /* 5.3 : 1 */
+    --mauve-ink: #805D8E;                      /* 5.0 : 1 */
+    --gold-ink: #86621F;                       /* rank 1 numeral */
+    --silver-ink: #736C58;                     /* rank 2 numeral */
+    --bronze-ink: #8E5E33;                     /* rank 3 numeral; also the clay "mixed" icon */
+    /* Text on an accent surface: buttons, answer letters, podium digits,
+       badges (5.6-8.9 : 1 on coral, sage, sky, sun). */
+    --on-accent: #2A2820;                      /* ink */
+
     /* Spacing Tokens */
     --space-xs: 4px;
     --space-sm: 8px;
@@ -477,7 +494,7 @@ a:focus-visible,
     left: 50%;
     transform: translateX(-50%);
     background: var(--color-success-bg);
-    color: var(--color-success);
+    color: var(--sage-ink);
     border: 1px solid var(--color-success);
     border-radius: 999px;
     padding: 6px 14px;
@@ -531,7 +548,7 @@ a:focus-visible,
 }
 .flag-question-btn.is-flagged {
     opacity: 1;
-    color: var(--color-success);
+    color: var(--sage-ink);
 }
 
 /* ==========================================
@@ -691,7 +708,7 @@ body {
 }
 .admin-header-btn:hover,
 .admin-header-btn:focus-visible {
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     border-color: var(--color-accent-primary);
     background: var(--color-bg-surface);
 }
@@ -702,7 +719,7 @@ body {
    .hidden default keeps it out of layout until install is actually
    possible. */
 .pwa-install-btn.admin-header-btn {
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     border-color: rgba(232, 138, 127, 0.45);
 }
 
@@ -821,7 +838,7 @@ body {
     background: var(--color-accent-secondary);
 }
 /* Current round number in coral; muted slash separator. */
-.player-header-round-num { color: var(--color-accent-primary); }
+.player-header-round-num { color: var(--coral-ink); }
 .player-header-round-sep { color: var(--color-border-dark); }
 
 /* Sound cue mute toggle — Variant C (issue #194). Embedded as a subtle
@@ -1028,7 +1045,7 @@ a[href]:not(.btn):active {
 .validation-msg {
     margin-top: var(--space-sm);
     font-size: var(--font-size-base);
-    color: var(--color-error);
+    color: var(--error-ink);
     text-align: left;
 }
 
@@ -1128,7 +1145,7 @@ a[href]:not(.btn):active {
     margin-left: auto;
     font-size: 0.75rem;
     font-weight: 400;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     background: rgba(232, 138, 127, 0.1);
     padding: 2px 8px;
     border-radius: var(--radius-sm);
@@ -1194,7 +1211,7 @@ a[href]:not(.btn):active {
 .chip.chip--active {
     background: rgba(232, 138, 127, 0.2);
     border-color: var(--color-accent-secondary);
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
 }
 
 /* Category chips - checkmark */
@@ -1310,7 +1327,7 @@ a[href]:not(.btn):active {
     position: absolute;
     top: 8px;
     right: 10px;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     font-weight: 700;
     font-size: 1rem;
 }
@@ -1353,11 +1370,11 @@ a[href]:not(.btn):active {
 }
 .qz-icon svg .d { fill: currentColor; stroke: none; }
 /* Per-theme tint: backing disc + glyph stroke color (mirrors .hpt-* hero). */
-.qz-icon--mix   { background: #F1ECDC;                   color: #C99B6E; }
-.qz-icon--coral { background: rgba(232, 138, 127, 0.16); color: var(--color-accent-primary); }
-.qz-icon--sage  { background: rgba(127, 168, 151, 0.18); color: var(--color-accent-secondary); }
-.qz-icon--sky   { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
-.qz-icon--sun   { background: rgba(232, 196, 127, 0.24); color: #C9A24E; }
+.qz-icon--mix   { background: #F1ECDC;                   color: var(--bronze-ink); }
+.qz-icon--coral { background: rgba(232, 138, 127, 0.16); color: var(--coral-ink); }
+.qz-icon--sage  { background: rgba(127, 168, 151, 0.18); color: var(--sage-ink); }
+.qz-icon--sky   { background: rgba(127, 168, 196, 0.18); color: var(--sky-ink); }
+.qz-icon--sun   { background: rgba(232, 196, 127, 0.24); color: var(--sun-ink); }
 
 /* Icons inside a filled primary (coral) button: the tinted disc washes out on
    the coral fill (e.g. the sage play glyph on "Start Game"). Drop the disc and
@@ -1436,7 +1453,7 @@ a[href]:not(.btn):active {
     padding: 2px 8px;
     border-radius: 999px;
     background: var(--color-accent-brand-bg);
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     font-family: var(--font-mono, ui-monospace, monospace);
     font-size: 0.66rem;
     font-weight: 700;
@@ -1739,11 +1756,11 @@ a[href]:not(.btn):active {
 }
 
 .timer-text.warning {
-    color: var(--color-warning);
+    color: var(--sun-ink);
 }
 
 .timer-text.critical {
-    color: var(--color-error-neon);
+    color: var(--error-ink);
     animation: timer-pulse-intense 0.5s ease-in-out infinite;
 }
 
@@ -1761,7 +1778,7 @@ a[href]:not(.btn):active {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     margin-bottom: var(--space-sm);
 }
 
@@ -1911,7 +1928,7 @@ a[href]:not(.btn):active {
 .question-category {
     display: inline-block;
     font-size: 0.75rem;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-top: var(--space-sm);
@@ -1977,7 +1994,7 @@ a[href]:not(.btn):active {
     background: rgba(255, 255, 255, 0.08);
     font-weight: var(--font-weight-bold);
     font-size: 0.875rem;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     flex-shrink: 0;
 }
 
@@ -2059,12 +2076,12 @@ a[href]:not(.btn):active {
 
 .answer-btn.correct::after {
     content: "★";
-    color: var(--color-success);
+    color: var(--sage-ink);
 }
 
 .answer-btn.wrong::after {
     content: "×";
-    color: var(--color-error);
+    color: var(--error-ink);
     /* Optically larger than the star. U+00D7 is drawn small inside its em box
        in DM Sans, so at a matched font-size it reads as a faint dust speck
        next to a solid ★ — verified on device at 390 px. This is the size that
@@ -2101,7 +2118,7 @@ a[href]:not(.btn):active {
     background: linear-gradient(135deg, rgba(232, 138, 127, 0.2), rgba(232, 138, 127, 0.2));
     border: 1px solid var(--color-accent-primary);
     border-radius: var(--radius-full);
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     font-family: var(--font-system);
     font-size: 0.85rem;
     font-weight: 600;
@@ -2142,7 +2159,7 @@ a[href]:not(.btn):active {
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     margin-bottom: var(--space-sm);
 }
 
@@ -2383,7 +2400,7 @@ a[href]:not(.btn):active {
    ========================================== */
 
 .admin-correct-answer {
-    color: var(--color-success-neon);
+    color: var(--sage-ink);
     font-weight: 600;
     margin-top: var(--space-sm);
     text-shadow: 0 0 10px var(--color-success-neon);
@@ -2451,7 +2468,7 @@ a[href]:not(.btn):active {
 
 .admin-actions #end-game-btn {
     background: var(--color-bg-surface);
-    color: var(--color-error-dark);
+    color: var(--error-ink);
     border: 1.5px solid var(--color-error);
     box-shadow: var(--shadow-sm);
 }
@@ -2646,7 +2663,7 @@ a[href]:not(.btn):active {
     flex: 0 0 auto;
     font-size: 0.8125rem;
     font-weight: var(--font-weight-semibold);
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
 }
 
 .qz-team-empty {
@@ -2788,19 +2805,19 @@ a[href]:not(.btn):active {
 .leaderboard-rank.rank-1 {
     background: rgba(232, 196, 127, 0.36);
     border: 1px solid rgba(232, 196, 127, 0.5);
-    color: #B08930;
+    color: var(--gold-ink);
 }
 
 .leaderboard-rank.rank-2 {
     background: rgba(170, 182, 194, 0.18);
     border: 1px solid rgba(170, 182, 194, 0.3);
-    color: #6F7C8A;
+    color: var(--silver-ink);
 }
 
 .leaderboard-rank.rank-3 {
     background: rgba(205, 140, 100, 0.16);
     border: 1px solid rgba(205, 140, 100, 0.3);
-    color: #A35A2B;
+    color: var(--bronze-ink);
 }
 
 .leaderboard-name {
@@ -2817,7 +2834,7 @@ a[href]:not(.btn):active {
 
 .leaderboard-streak {
     font-size: 0.75rem;
-    color: var(--color-warning);
+    color: var(--sun-ink);
 }
 
 /* #1170: a growing streak bumps in with a sun flush; a broken one greys out
@@ -2993,12 +3010,12 @@ a[href]:not(.btn):active {
     font-size: clamp(2rem, 4vw, 3.5rem);
     font-weight: 900;
     letter-spacing: -0.02em;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     line-height: 1;
     margin: 0 0 var(--space-sm) 0;
     /* No gradient text — DESIGN.md says no gradients on text. */
     background: none;
-    -webkit-text-fill-color: var(--color-accent-primary);
+    -webkit-text-fill-color: var(--coral-ink);
 }
 
 .podium-champion-name {
@@ -3208,7 +3225,7 @@ a[href]:not(.btn):active {
     font-weight: var(--font-weight-bold);
     text-align: center;
     margin-bottom: var(--space-lg);
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     letter-spacing: 0.05em;
 }
 
@@ -3254,7 +3271,7 @@ a[href]:not(.btn):active {
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     text-align: center;
     margin-bottom: var(--space-xs);
 }
@@ -3610,12 +3627,12 @@ footer {
 }
 
 .leaderboard-delta.is-up {
-    color: var(--color-success);
+    color: var(--sage-ink);
     background: var(--color-success-light);
 }
 
 .leaderboard-delta.is-down {
-    color: var(--color-error);
+    color: var(--error-ink);
     background: var(--color-error-light);
 }
 
@@ -3654,7 +3671,7 @@ footer {
     margin: 0;
     font-size: 0.78rem;
     line-height: 1.4;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
     text-align: center;
 }
 
@@ -3675,7 +3692,7 @@ footer {
     border: 0;
     border-radius: var(--radius-full);
     background: transparent;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
     font-size: 1rem;
     line-height: 1;
     cursor: pointer;
@@ -4049,7 +4066,7 @@ body.dashboard-body {
        where the room is in the game — so it scales with the rest of
        the board (#376). */
     font-size: clamp(14px, 1.2vw, 20px);
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -4165,7 +4182,7 @@ body.dashboard-body {
 }
 
 .dashboard-answer-progress.is-complete {
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
 }
 
 .dashboard-timer-fill {
@@ -4212,7 +4229,7 @@ body.dashboard-body {
     /* #707: the one signal that the board has gone dead — it has to be
        readable from wherever the room noticed the freeze. */
     font-size: clamp(15px, 1.2vw, 20px);
-    color: var(--dash-error);
+    color: var(--error-ink);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     animation: pill-in var(--dur-status) var(--ease-out) backwards;
@@ -4552,7 +4569,7 @@ body.dashboard-body {
        is placed on. #707 gave the same step to `.dashboard-round`;
        #707's list of four did not include this one. */
     font-size: clamp(14px, 1.2vw, 20px);
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     font-weight: 500;
@@ -4623,7 +4640,7 @@ body.dashboard-body {
 }
 .dnl-truth-value {
     font-family: var(--font-mono, monospace); font-weight: 700;
-    font-size: 56px; line-height: 1.1; color: var(--color-accent-primary, #E88A7F);
+    font-size: 56px; line-height: 1.1; color: var(--coral-ink);
 }
 .dnl-card {
     background: var(--color-bg-card, #fff);
@@ -4652,7 +4669,7 @@ body.dashboard-body {
     font-weight: 600;
     color: var(--color-text-muted, #6E6A5C); font-family: var(--font-mono, monospace);
 }
-.dnl-lbl.is-winner { color: var(--color-accent-secondary, #7FA897); }
+.dnl-lbl.is-winner { color: var(--sage-ink); }
 /* #735: in em, so the clearance from the dot grows with the label
    instead of the type creeping towards the axis as it scales. */
 .dnl-lbl--above { bottom: 1.4em; }
@@ -4679,7 +4696,7 @@ body.dashboard-body {
     font-family: var(--font-mono, monospace);
     /* #735: the two numbers that tell the room what the line spans. */
     font-size: clamp(16px, 1.6vw, 24px);
-    color: var(--color-text-light, #8F8A78);
+    color: var(--color-text-muted);
 }
 
 /* #1173: the estimate reveal plays only on a live round_summary (dashboard.js
@@ -4820,7 +4837,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: clamp(20px, 2.2vw, 28px);
     font-weight: 500;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     flex-shrink: 0;
     width: auto;
     height: auto;
@@ -4847,7 +4864,7 @@ body.dashboard-body {
 .dashboard-answer.correct::after {
     content: "★";
     order: 1;
-    color: var(--dash-success);
+    color: var(--sage-ink);
     font-size: 16px;
     line-height: 1;
     flex-shrink: 0;
@@ -5002,7 +5019,7 @@ body.dashboard-body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     margin-bottom: 8px;
 }
 
@@ -5101,9 +5118,9 @@ body.dashboard-body {
     text-align: center;
 }
 
-.dashboard-leaderboard .leaderboard-rank.rank-1 { color: var(--dash-gold); }
-.dashboard-leaderboard .leaderboard-rank.rank-2 { color: var(--dash-silver); }
-.dashboard-leaderboard .leaderboard-rank.rank-3 { color: var(--dash-bronze); }
+.dashboard-leaderboard .leaderboard-rank.rank-1 { color: var(--gold-ink); }
+.dashboard-leaderboard .leaderboard-rank.rank-2 { color: var(--silver-ink); }
+.dashboard-leaderboard .leaderboard-rank.rank-3 { color: var(--bronze-ink); }
 
 .dashboard-leaderboard .leaderboard-name {
     flex: 1;
@@ -5119,7 +5136,7 @@ body.dashboard-body {
     /* #376: scale for TV couch legibility */
     font-size: clamp(16px, 1.7vw, 26px);
     font-weight: 700;
-    color: var(--dash-accent-primary);
+    color: var(--color-text-primary);
     font-variant-numeric: tabular-nums;
 }
 
@@ -5127,7 +5144,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 11px;
     font-weight: 500;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     padding: 2px 8px;
     background: rgba(232, 138, 127, 0.10);
     border-radius: 4px;
@@ -5160,11 +5177,11 @@ body.dashboard-body {
     font-variant-numeric: tabular-nums;
 }
 .dashboard-leaderboard .leaderboard-delta.is-up {
-    color: var(--dash-success);
+    color: var(--sage-ink);
     background: rgba(127, 168, 151, 0.16);
 }
 .dashboard-leaderboard .leaderboard-delta.is-down {
-    color: var(--dash-error);
+    color: var(--error-ink);
     background: rgba(214, 106, 106, 0.14);
 }
 
@@ -5297,7 +5314,7 @@ body.dashboard-body {
 .dashboard-paused-icon {
     font-size: clamp(48px, 7vw, 88px);
     line-height: 1;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
 }
 .dashboard-paused-title {
     font-family: 'DM Sans', sans-serif;
@@ -5320,7 +5337,7 @@ body.dashboard-body {
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(16px, 1.8vw, 24px);
     font-weight: 600;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     max-width: 640px;
 }
 .dashboard-paused-escape[hidden] { display: none; }
@@ -5339,7 +5356,7 @@ body.dashboard-body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     margin-bottom: 8px;
 }
 .dashboard-lightning-progress {
@@ -5426,12 +5443,12 @@ body.dashboard-body {
 }
 .dashboard-lightning-recap-row .lr-qnum {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     font-weight: 700;
     margin-right: 6px;
 }
 .dashboard-lightning-recap-row .lr-correct {
-    color: var(--dash-success);
+    color: var(--sage-ink);
     font-weight: 600;
 }
 
@@ -5775,7 +5792,7 @@ body.dashboard-body {
        but stops dominating the awards-row vertical budget. */
     font-size: clamp(28px, 3.6vw, 48px);
     font-weight: 900;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     letter-spacing: -0.02em;
     line-height: 1;
     text-shadow: 0 0 40px var(--dash-success-glow);
@@ -5876,7 +5893,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #376: scale for TV couch legibility */
     font-size: clamp(14px, 1.3vw, 20px);
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     font-variant-numeric: tabular-nums;
 }
 
@@ -5907,7 +5924,7 @@ body.dashboard-body {
     /* #376: scale for TV couch legibility */
     font-size: clamp(16px, 1.8vw, 26px);
     font-weight: 700;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.04em;
 }
@@ -5965,7 +5982,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 12px;
     font-weight: 500;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     padding-bottom: 8px;
@@ -6021,7 +6038,7 @@ body.dashboard-body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
 }
 
 .award-winner {

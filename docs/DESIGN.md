@@ -146,7 +146,7 @@ recognises them, and go away in #1178 step 11.
 | Text, warm ink | `#2A2820` | `--color-text-primary` | `--color-text-dark`, `--color-text-heading`, `--color-text-white` (misnamed: it is ink) |
 | Text, secondary | `#3C3930` | `--color-text-secondary` | |
 | Text, muted (labels, eyebrows) | `#6E6A5C` | `--color-text-muted` | `--color-text-neon-muted` |
-| Text, light | `#8F8A78` | `--color-text-light` | Fails AA as text (3.2 : 1); becomes muted in #1178 step 4 |
+| Text, light | `#8F8A78` | `--color-text-light` | Not a text colour (3.2 : 1). Since #1178 step 4 every text rule that used it uses muted; it remains on a few borders and the "missed" verdict disc |
 | Hairline | `#E5DFCF` | `--color-border-light` | `--color-border-neon` |
 | Border medium / dark | `#D4CEBC` / `#BDB597` | `--color-border-medium` / `--color-border-dark` | |
 | **Coral**, primary accent | `#E88A7F` | `--color-accent-primary` | `--color-accent-brand` |
@@ -165,8 +165,21 @@ connection-dot halos `--color-*-glow` (45 %, #983).
 
 **Accents are surfaces, not text.** Coral, sage, sky and sun on cream reach
 only 1.5–2.5 : 1 (see [Accessibility](#accessibility)). Use them for fills,
-borders, dots and bars. Coloured text gets its own darker `--*-ink` tokens in
-#1178 step 4; until then, body text stays ink or muted.
+borders, dots and bars, never in `color:` on a light ground.
+
+### Colour roles (#1178 steps 4–5)
+
+| Role | Token | Value | Rule |
+|------|-------|-------|------|
+| Accent surface | `--color-accent-primary` (coral), `--color-accent-secondary` / `--color-success` (sage), `--color-accent-blue` (sky), `--color-warning` (sun), `--color-error`, `--color-purple-primary` (mauve) | unchanged | Fill, border, dot, bar. Never text on a light ground. |
+| Accent text | `--coral-ink` · `--sage-ink` · `--sky-ink` · `--sun-ink` · `--error-ink` · `--mauve-ink` | `#A4524A` · `#4C7262` · `#46708C` · `#86621F` · `#AC4444` · `#805D8E` | When text (or an icon stroke) has to be coloured: eyebrows, scores, timer warning, "Correct", deltas. ≥ 4.5 : 1 on cream, white, surface 2 and the accent's own tint. |
+| Medal text | `--gold-ink` · `--silver-ink` · `--bronze-ink` | `#86621F` · `#736C58` · `#8E5E33` | Rank numerals and podium digits. The medal fills stay `--color-gold` / `--color-silver` / `--color-bronze`. They replace the one-off rank colours `#B08930` / `#6F7C8A` / `#A35A2B`. `--bronze-ink` also strokes the clay "mixed" category icon. |
+| Text on an accent surface | `--on-accent` | `#2A2820` (ink) | Primary buttons, "Resume", answer letters, rank discs, verdict and step badges, the error toast. Decided 2026-11-02: ink, not white (white on coral is 2.5 : 1). |
+| Body text | `--color-text-primary` · `--color-text-muted` | `#2A2820` · `#6E6A5C` | Everything else. `--color-text-light` is not a text colour. |
+
+Exceptions, on purpose: the wordmark's coral `ify` (a logotype, which WCAG
+exempts) and accent text on the dark grounds — the power-up banner (sun on ink,
+8.9 : 1) and the finale countdown overlay — keep the accent itself.
 
 ### Player dot palette
 
@@ -412,12 +425,30 @@ Contrast is WCAG 2.x relative luminance, computed from the token values
 | Error-dark `#BB5353` on white | 4.7 : 1 | AA |
 | Hairline `#E5DFCF` on cream | 1.2 : 1 | decorative only; not enough for an input border |
 
+The text tokens that replace the failing pairs (#1178 step 4):
+
+| Pair | Ratio | Result |
+|------|-------|--------|
+| `--coral-ink` `#A4524A` on cream / white / coral tint 16 % | 5.0 / 5.4 / 4.7 : 1 | AA |
+| `--sage-ink` `#4C7262` on cream / white / sage tint 18 % | 5.0 / 5.4 / 4.6 : 1 | AA |
+| `--sky-ink` `#46708C` on cream / sky tint 18 % | 4.9 / 4.6 : 1 | AA |
+| `--sun-ink` `#86621F` on cream / sun tint 24 % | 5.2 / 4.9 : 1 | AA |
+| `--error-ink` `#AC4444` on cream / white / error tint 15 % | 5.3 / 5.7 / 4.9 : 1 | AA |
+| `--mauve-ink` `#805D8E` on cream / violet tint 12 % | 5.0 / 4.7 : 1 | AA |
+| `--gold-ink` / `--silver-ink` / `--bronze-ink` on their rank tints | 4.7 / 4.7 / 4.8 : 1 | AA |
+| Muted `#6E6A5C` on surface 2 (was text-light, 3.0) | 4.7 : 1 | AA |
+| `--on-accent` (ink) on coral / sage / sky / sun | 5.9 / 5.6 / 5.8 / 8.9 : 1 | AA |
+| `--on-accent` on moss `#9DB38A` / rosé `#C7A3A0` / mauve / terracotta | 6.5 / 6.5 / 5.5 / 6.4 : 1 | AA |
+| `--on-accent` on error `#D66A6A` (error toast, `.btn-danger`) | 4.3 : 1 | **short of AA** for text; fine for the ✓ / × badges (icons, 3 : 1) |
+
 Rules that follow from this:
 
-- Body text is ink or muted. Accent colours are not text colours; coloured
-  text waits for the `--*-ink` tokens (#1178 step 4).
-- Text on an accent surface is ink (decided 2026-11-02, #1178 step 5). The
-  phone already does this for the answer letters.
+- Body text is ink or muted. Coloured text uses the `--*-ink` of its accent,
+  never the accent itself.
+- Text on an accent surface is `--on-accent` (ink; decided 2026-11-02). The
+  phone did this first, for the answer letters; admin and TV now match it.
+- Error surfaces are the one open pair: ink on `#D66A6A` is 4.3 : 1. A fix
+  needs a decision (a darker error fill, or white on `--error-ink`, 5.7 : 1).
 - Focus states: 2 px coral outline, offset 2 px. Never `outline: none` without a replacement.
 - Motion respects `prefers-reduced-motion: reduce` — durations and the motion delay tokens collapse to 0; `.a11y` does the same.
 - Minimum tap target on mobile: 44 × 44 px.

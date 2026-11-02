@@ -147,7 +147,7 @@ a[href]:not(.btn):active {
 .validation-msg {
     margin-top: var(--space-sm);
     font-size: var(--font-size-base);
-    color: var(--color-error);
+    color: var(--error-ink);
     text-align: left;
 }
 
@@ -247,7 +247,7 @@ a[href]:not(.btn):active {
     margin-left: auto;
     font-size: 0.75rem;
     font-weight: 400;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     background: rgba(232, 138, 127, 0.1);
     padding: 2px 8px;
     border-radius: var(--radius-sm);
@@ -313,7 +313,7 @@ a[href]:not(.btn):active {
 .chip.chip--active {
     background: rgba(232, 138, 127, 0.2);
     border-color: var(--color-accent-secondary);
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
 }
 
 /* Category chips - checkmark */
@@ -429,7 +429,7 @@ a[href]:not(.btn):active {
     position: absolute;
     top: 8px;
     right: 10px;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     font-weight: 700;
     font-size: 1rem;
 }
@@ -472,11 +472,11 @@ a[href]:not(.btn):active {
 }
 .qz-icon svg .d { fill: currentColor; stroke: none; }
 /* Per-theme tint: backing disc + glyph stroke color (mirrors .hpt-* hero). */
-.qz-icon--mix   { background: #F1ECDC;                   color: #C99B6E; }
-.qz-icon--coral { background: rgba(232, 138, 127, 0.16); color: var(--color-accent-primary); }
-.qz-icon--sage  { background: rgba(127, 168, 151, 0.18); color: var(--color-accent-secondary); }
-.qz-icon--sky   { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
-.qz-icon--sun   { background: rgba(232, 196, 127, 0.24); color: #C9A24E; }
+.qz-icon--mix   { background: #F1ECDC;                   color: var(--bronze-ink); }
+.qz-icon--coral { background: rgba(232, 138, 127, 0.16); color: var(--coral-ink); }
+.qz-icon--sage  { background: rgba(127, 168, 151, 0.18); color: var(--sage-ink); }
+.qz-icon--sky   { background: rgba(127, 168, 196, 0.18); color: var(--sky-ink); }
+.qz-icon--sun   { background: rgba(232, 196, 127, 0.24); color: var(--sun-ink); }
 
 /* Icons inside a filled primary (coral) button: the tinted disc washes out on
    the coral fill (e.g. the sage play glyph on "Start Game"). Drop the disc and
@@ -555,7 +555,7 @@ a[href]:not(.btn):active {
     padding: 2px 8px;
     border-radius: 999px;
     background: var(--color-accent-brand-bg);
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     font-family: var(--font-mono, ui-monospace, monospace);
     font-size: 0.66rem;
     font-weight: 700;
