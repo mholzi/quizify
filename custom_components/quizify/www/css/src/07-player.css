@@ -777,7 +777,9 @@
     align-items: center;
     gap: 4px;
     justify-content: center;
-    padding: var(--space-sm) 0;
+    /* #1183: 16 px under tile C, not 8 — one tap spends the game's only
+       power-up, and a thumb aimed at C must not land on it. */
+    padding: var(--space-md) 0 var(--space-sm);
 }
 
 /* #623: one muted line saying what the power-up does.
@@ -1514,7 +1516,7 @@
 .vF-answers {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: var(--space-sm);   /* #1183: 8 px between setup chips, was 6 */
     padding-left: 30px;  /* align with question text, skipping the badge */
 }
 
@@ -1563,8 +1565,14 @@
     margin-left: 18px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 0;
     transition: opacity 160ms ease;
+}
+/* #1183 draft ⑤: 44 px rows with a hairline between them instead of 2 px of
+   air — the line shows where one row's target ends. */
+.setup-tts-children > .toggle-compact + .toggle-compact,
+.setup-house-children .toggle-compact + .toggle-compact {
+    border-top: 1px solid var(--color-border-light);
 }
 .setup-tts-children.is-disabled {
     opacity: 0.4;
@@ -1609,6 +1617,7 @@
 }
 .setup-select {
     width: 100%;
+    min-height: 44px;   /* #1183: was 34 */
     padding: 8px 10px;
     font-size: 0.9rem;
     color: var(--color-text-primary);
@@ -1678,7 +1687,7 @@
 .setup-house-presets {
     display: flex;
     align-items: stretch;
-    gap: 4px;
+    gap: var(--space-sm);   /* #1183: was 4 px */
     padding: 3px;
     background: var(--color-bg-card-alt);
     border: 1px solid var(--color-border-light);
@@ -1728,6 +1737,10 @@
     color: var(--color-accent-primary);
     font-weight: 600;
     white-space: nowrap;
+    /* #1183: a 17 px line was the link's whole target. */
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
 }
 
 /* Advanced disclosure (collapsed by default) */
@@ -3119,6 +3132,43 @@ body.is-admin .reaction-bar {
     animation: modalFadeIn var(--transition-fast);
 }
 
+/* #1183 draft ③: "Leave the game?" is a sheet from the bottom, the look of
+   the target picker, with "Keep playing" first. The confirm button stays
+   first in the DOM (and in the focus trap), so only the order on screen
+   turns around. */
+.modal.modal--leave {
+    align-items: flex-end;
+    padding: var(--space-md);
+}
+
+.modal--leave .modal-content {
+    width: 100%;
+    max-width: 420px;
+    border-radius: var(--radius-xl);
+}
+
+.modal--leave .modal-actions {
+    flex-direction: row-reverse;
+}
+
+/* #1183 draft ④: the bet's side buttons choose, 8 px apart; the chosen one
+   fills like a primary button. "Place bet" below sends. */
+.hotseat-bet-buttons {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.hotseat-bet-buttons .btn {
+    flex: 1;
+}
+
+.hotseat-bet-side.is-selected {
+    background: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+    color: var(--color-bg-white);   /* white on coral, as .btn-primary */
+}
+
 .powerup-target-title {
     margin: 0;
     font-family: var(--font-display);
@@ -3601,11 +3651,16 @@ body.is-admin .reaction-bar {
     margin: 28px 4px 0;
 }
 /* #465: #wager-slider shares the estimate-slider treatment (34px thumb,
-   gradient track, focus-visible ring) instead of a bare native range. */
+   gradient track, focus-visible ring) instead of a bare native range.
+   #1183: so do the two hot-seat sliders (bid and bet) — one thumb for every
+   slider, 34 px to see, and a 44 px tall input to hit. iOS drew the bare
+   native thumb smaller still. */
 .estimate-slider,
-#wager-slider {
+#wager-slider,
+#hotseat-slider,
+#hotseat-bet-slider {
     width: 100%;
-    height: 28px;
+    height: 44px;
     margin: 0;
     -webkit-appearance: none;
     appearance: none;
@@ -3613,25 +3668,33 @@ body.is-admin .reaction-bar {
     cursor: pointer;
 }
 .estimate-slider:focus-visible,
-#wager-slider:focus-visible {
+#wager-slider:focus-visible,
+#hotseat-slider:focus-visible,
+#hotseat-bet-slider:focus-visible {
     outline: 2px solid var(--color-accent-primary);
     outline-offset: 4px;
     border-radius: var(--radius-full);
 }
 .estimate-slider::-webkit-slider-runnable-track,
-#wager-slider::-webkit-slider-runnable-track {
+#wager-slider::-webkit-slider-runnable-track,
+#hotseat-slider::-webkit-slider-runnable-track,
+#hotseat-bet-slider::-webkit-slider-runnable-track {
     height: 14px;
     border-radius: var(--radius-full);
     background: linear-gradient(90deg, var(--color-accent-secondary), var(--color-accent-primary));
 }
 .estimate-slider::-moz-range-track,
-#wager-slider::-moz-range-track {
+#wager-slider::-moz-range-track,
+#hotseat-slider::-moz-range-track,
+#hotseat-bet-slider::-moz-range-track {
     height: 14px;
     border-radius: var(--radius-full);
     background: linear-gradient(90deg, var(--color-accent-secondary), var(--color-accent-primary));
 }
 .estimate-slider::-webkit-slider-thumb,
-#wager-slider::-webkit-slider-thumb {
+#wager-slider::-webkit-slider-thumb,
+#hotseat-slider::-webkit-slider-thumb,
+#hotseat-bet-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 34px;
@@ -3643,7 +3706,9 @@ body.is-admin .reaction-bar {
     box-shadow: 0 4px 12px rgba(232, 138, 127, 0.30);
 }
 .estimate-slider::-moz-range-thumb,
-#wager-slider::-moz-range-thumb {
+#wager-slider::-moz-range-thumb,
+#hotseat-slider::-moz-range-thumb,
+#hotseat-bet-slider::-moz-range-thumb {
     width: 34px;
     height: 34px;
     border-radius: 50%;
@@ -3652,7 +3717,9 @@ body.is-admin .reaction-bar {
     box-shadow: 0 4px 12px rgba(232, 138, 127, 0.30);
 }
 .estimate-slider:disabled,
-#wager-slider:disabled {
+#wager-slider:disabled,
+#hotseat-slider:disabled,
+#hotseat-bet-slider:disabled {
     opacity: 0.7;
     cursor: default;
 }

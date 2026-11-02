@@ -45,6 +45,18 @@
     var MAX_BACKOFF_MS = 30000;
 
     /*
+     * #1183: a host step locks the card's buttons the moment it is sent — at
+     * least HOST_STEP_MIN_MS and until the phase has moved on, the same lock
+     * the console and the phone bar hold. Without it a second tap on the
+     * morphing main button landed on "Reveal" of the question the first tap
+     * had just started, and the server scored it on the spot: 0 points for
+     * the whole room. HOST_STEP_MAX_MS frees the buttons if nothing moves
+     * (a refused step), so the card is never left dead.
+     */
+    var HOST_STEP_MIN_MS = 1500;
+    var HOST_STEP_MAX_MS = 8000;
+
+    /*
      * Phase -> primary action. Phase strings are GamePhase in
      * game/phase_controller.py; every message here is one admin.js already
      * sends for the same phase. The card must not invent transitions.
@@ -120,7 +132,11 @@
         resetConfirm: 'admin.resetGameConfirm',
         // #1182 L2: the offline block.
         asOf: 'states.cardAsOf', offlineLine: 'states.cardOffline',
-        connectNow: 'states.connectNow', lockedNote: 'states.cardLocked'
+        connectNow: 'states.connectNow', lockedNote: 'states.cardLocked',
+        // #1183: the console's confirm sheets, word for word.
+        endConfirm: 'admin.endGameConfirm', endWarn: 'admin.endGameWarning',
+        resetWarn: 'admin.resetGameWarning', kickTitle: 'admin.kickModalTitle',
+        kickConfirm: 'admin.kickConfirm', cancel: 'common.cancel'
     };
     var FALLBACK = {
         start: 'Start game', skip: 'Reveal', next: 'Next question', resume: 'Resume',
@@ -135,7 +151,13 @@
         offline: 'Reconnecting…', noToken: 'Open Quizify once to link this dashboard',
         openAdmin: 'Open Quizify', resetConfirm: 'Reset game?',
         asOf: 'As of {time}', offlineLine: 'No connection to Quizify. We keep trying.',
-        connectNow: 'Connect now', lockedNote: 'End and Reset are locked until the connection is back.'
+        connectNow: 'Connect now', lockedNote: 'End and Reset are locked until the connection is back.',
+        endConfirm: 'End game?',
+        endWarn: 'The game ends here. Everyone jumps straight to the final results, and any remaining questions are skipped.',
+        kickTitle: 'Remove player?', kickConfirm: 'Remove {name} from the lobby?', cancel: 'Cancel'
+        // resetWarn has no fallback: its English carries an apostrophe the
+        // fallback table cannot hold verbatim, and an empty line beats a
+        // paraphrase that check_i18n would flag as drift.
     };
     var BUNDLES = {};   // lang -> parsed bundle, once fetched
     var LOADING = {};   // lang -> in-flight promise
@@ -203,6 +225,11 @@
         'font:inherit;padding:10px 12px;background:transparent;',
         'border:1px solid var(--divider-color);color:var(--primary-text-color)}',
         '.row button[disabled]{opacity:.5;cursor:default}',
+        // #1183: the confirm sheet that stands in for the controls.
+        '.confirm{display:flex;flex-direction:column;gap:.5rem}',
+        '.cf-title{margin:0;font-weight:600}',
+        '.row button.danger{background:var(--error-color,#db4437);border-color:transparent;',
+        'color:var(--text-primary-color,#fff);font-weight:600}',
         '.foot{display:flex;justify-content:space-between;align-items:center;gap:8px;',
         'color:var(--secondary-text-color);font-size:.85em}',
         '.foot a{color:var(--primary-color)}',
@@ -210,7 +237,7 @@
         // The compact card\'s only secondary action. Deliberately text-weight:
         // ending a game is rare next to the primary button, and a second solid
         // button would compete with it.
-        '.linky{border:0;background:none;padding:4px 0;cursor:pointer;font:inherit;',
+        '.linky{border:0;background:none;padding:0;min-height:44px;cursor:pointer;font:inherit;',
         'color:var(--secondary-text-color);text-decoration:underline}',
         '.linky:hover{color:var(--primary-text-color)}',
         '.split{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}',
@@ -228,8 +255,9 @@
         'letter-spacing:.08em;text-transform:uppercase;border-bottom:0}',
         '.scoring{min-height:44px;padding:0 12px;border:1px solid var(--divider-color);border-radius:10px;',
         'background:transparent;color:var(--primary-text-color);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}',
+        // #1183: 44 × 44, the size every other tap target in Quizify has.
         '.kick{border:0;background:transparent;cursor:pointer;color:var(--secondary-text-color);',
-        'font:inherit;min-height:32px;padding:0 6px}',
+        'font:inherit;min-height:44px;min-width:44px;padding:0}',
         '.qr{flex:0 0 auto}',
         '.qr img,.qr canvas{display:block;border-radius:6px}',
         '.bar{height:4px;border-radius:999px;background:var(--divider-color);overflow:hidden}',
@@ -242,6 +270,10 @@
         '.offline .line{margin:0;font-weight:600}',
         '.offline .row button{flex:0 0 auto}',
         '.stale .roster,.stale .bar{opacity:.6}',
+        // #1183: press and keyboard focus. The card re-renders on every state,
+        // so the press has to show at once, not when the server answers.
+        'button:not([disabled]):active{transform:scale(.97)}',
+        'button:focus-visible,a:focus-visible{outline:2px solid var(--primary-color);outline-offset:2px}',
         '@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}'
     ].join('');
 
@@ -286,6 +318,10 @@
             this._onWake = this._onWake.bind(this);
             this._lang = 'en';
             this._qrDrawnFor = null;
+            // #1183: the open confirm sheet, { kind, name } or null.
+            this._confirm = null;
+            // #1183: the running host-step lock, { phase, at, timer } or null.
+            this._lock = null;
         }
 
         // ---- Lovelace contract -------------------------------------------
@@ -339,6 +375,7 @@
             if (this._retry) { clearTimeout(this._retry); this._retry = null; }
             this._removed = true;   // stop reconnecting once removed
             this._listen('removeEventListener');
+            if (this._lock) { clearTimeout(this._lock.timer); this._lock = null; }
             var ws = this._ws;
             this._ws = null;
             if (ws) {
@@ -359,7 +396,7 @@
             var out = {};
             Object.keys(KEYS).forEach(function (k) {
                 var v = bundle ? lookup(bundle, KEYS[k]) : undefined;
-                out[k] = v !== undefined ? v : FALLBACK[k];
+                out[k] = v !== undefined ? v : (FALLBACK[k] || '');
             });
             return out;
         }
@@ -631,7 +668,7 @@
             return {
                 label: label,
                 msg: msg,
-                disabled: !msg || blocked || this._status !== 'online',
+                disabled: !msg || blocked || this._status !== 'online' || this._locked(),
                 blockedReason: blocked ? this._t.waiting : null
             };
         }
@@ -694,6 +731,7 @@
                 html += '<div class="bar"><i style="width:' + pct + '%"></i></div>';
             }
 
+            var joinUrl = (s && s.join_url) || '/quizify/player';
             if (offline) {
                 // L2: a lost socket used to change one footnote while every
                 // button stayed live and _send() returned without a word.
@@ -706,36 +744,42 @@
                 html += '</div>';
             }
 
-            html += '<button class="primary" id="primary"' + (primary.disabled ? ' disabled' : '') + '>' +
-                    esc(primary.label) + '</button>';
+            // #1183: while a confirm sheet is open it takes the place of the
+            // controls, so no tap can land on the main button behind it.
+            if (this._confirm && !offline) {
+                html += this._confirmHtml();
+            } else {
+                html += '<button class="primary" id="primary"' + (primary.disabled ? ' disabled' : '') + '>' +
+                        esc(primary.label) + '</button>';
 
-            if (expanded) {
-                html += '<div class="row">';
-                // Reveal is admin_skip: it cuts the timer short and shows the
-                // answer, which is what admin.js does behind the same label.
-                // Only two phases accept it (#801) — elsewhere the server
-                // answers ERR_INVALID_ACTION, so the button is not offered.
-                var lock = offline ? ' disabled' : '';
-                if (s && SKIPPABLE_PHASES[s.phase]) {
-                    html += '<button data-msg="admin_skip"' + lock + '>' + esc(t.reveal) + '</button>';
+                if (expanded) {
+                    html += '<div class="row">';
+                    // Reveal is admin_skip: it cuts the timer short and shows the
+                    // answer, which is what admin.js does behind the same label.
+                    // Only two phases accept it (#801) — elsewhere the server
+                    // answers ERR_INVALID_ACTION, so the button is not offered.
+                    var lock = offline ? ' disabled' : '';
+                    if (s && SKIPPABLE_PHASES[s.phase]) {
+                        html += '<button data-msg="admin_skip"' + (lock || (this._locked() ? ' disabled' : '')) + '>' +
+                            esc(t.reveal) + '</button>';
+                    }
+                    html += '<button data-ask="end"' + lock + '>' + esc(t.end) + '</button>' +
+                        '<button data-ask="reset"' + lock + '>' + esc(t.reset) + '</button>' +
+                        '</div>';
                 }
-                html += '<button data-msg="end_game"' + lock + '>' + esc(t.end) + '</button>' +
-                    '<button data-reset="1"' + lock + '>' + esc(t.reset) + '</button>' +
-                    '</div>';
-            }
 
-            var joinUrl = (s && s.join_url) || '/quizify/player';
-            var footNote = offline ? '' : (this._startError || primary.blockedReason || '');
-            html += '<div class="foot"><a href="' + esc(joinUrl) + '">' + esc(t.join) + '</a>' +
-                    '<span class="note">' + esc(footNote) + '</span>';
-            // End game lives in the compact footer (#278 spec). Expanded already
-            // carries it in the control row, and there is nothing to end while
-            // the lobby is still open — so it appears only where it can act.
-            if (!expanded && s && s.phase && s.phase !== 'LOBBY') {
-                html += '<button class="linky" data-msg="end_game"' + (offline ? ' disabled' : '') + '>' +
-                        esc(t.end) + '</button>';
+                var footNote = offline ? '' : (this._startError || primary.blockedReason || '');
+                html += '<div class="foot"><a href="' + esc(joinUrl) + '">' + esc(t.join) + '</a>' +
+                        '<span class="note">' + esc(footNote) + '</span>';
+                // End game lives in the compact footer (#278 spec). Expanded already
+                // carries it in the control row, and there is nothing to end while
+                // the lobby is still open — so it appears only where it can act.
+                if (!expanded && s && s.phase && s.phase !== 'LOBBY') {
+                    html += '<button class="linky" data-ask="end"' + (offline ? ' disabled' : '') + '>' +
+                            esc(t.end) + '</button>';
+                }
+                html += '</div>';
             }
-            html += '</div>';
 
             html += '</ha-card>';
             this.shadowRoot.innerHTML = html;
@@ -748,6 +792,50 @@
             return pad(date.getHours()) + ':' + pad(date.getMinutes());
         }
 
+        /*
+         * #1183: the one confirm sheet for everything that reaches every guest
+         * (end, reset) or throws one out (remove). Same words and the same
+         * button order as the console's dialogs; focus starts on Cancel.
+         */
+        _confirmHtml() {
+            var t = this._t;
+            var c = this._confirm;
+            var title = c.kind === 'end' ? t.endConfirm : c.kind === 'reset' ? t.resetConfirm : t.kickTitle;
+            var text = c.kind === 'end' ? t.endWarn
+                : c.kind === 'reset' ? t.resetWarn
+                    : fmt(t.kickConfirm, { name: c.name }, this._lang);
+            var yes = c.kind === 'end' ? t.end : c.kind === 'reset' ? t.reset : t.kick;
+            return '<div class="confirm" role="alertdialog" aria-modal="true" ' +
+                'aria-labelledby="cf-title" aria-describedby="cf-text">' +
+                '<p class="cf-title" id="cf-title">' + esc(title) + '</p>' +
+                (text ? '<p class="note" id="cf-text">' + esc(text) + '</p>' : '') +
+                '<div class="row"><button class="danger" id="cf-yes">' + esc(yes) + '</button>' +
+                '<button id="cf-no">' + esc(t.cancel) + '</button></div></div>';
+        }
+
+        _ask(kind, name) {
+            this._confirm = { kind: kind, name: name || null };
+            this._confirmFocus = true;
+            this._render();
+        }
+
+        _cancelConfirm() {
+            this._confirm = null;
+            this._render();
+        }
+
+        // The only place the card sends end_game, reset_game or kick_player.
+        _onConfirmed() {
+            var c = this._confirm;
+            this._confirm = null;
+            // #1182: nothing leaves an offline card; the sheet just closes.
+            if (this._status !== 'online') c = null;
+            if (c && c.kind === 'end') this._send('end_game');
+            else if (c && c.kind === 'reset') this._send('reset_game');
+            else if (c && c.kind === 'kick') this._send('kick_player', { name: c.name });
+            this._render();
+        }
+
         _lobbyRosterHtml(players) {
             var t = this._t;
             var lock = this._status === 'offline' ? ' disabled' : '';
@@ -756,7 +844,7 @@
                     '<span class="dot' + (p.connected ? '' : ' off') + '"></span>' +
                     '<span class="nm">' + esc(p.name) + '</span>' +
                     '<span class="sc">' + esc(p.score != null ? p.score : '—') + '</span>' +
-                    '<button class="kick" data-kick="' + esc(p.name) + '"' + lock + ' ' +
+                    '<button class="kick" data-ask="kick" data-name="' + esc(p.name) + '"' + lock + ' ' +
                     'title="' + esc(t.kick) + '" aria-label="' + esc(t.kick) + ' ' + esc(p.name) + '">×</button>' +
                     '</li>';
             }).join('');
@@ -805,6 +893,31 @@
             return html;
         }
 
+        _locked() {
+            return !!this._lock;
+        }
+
+        // Every host step goes through here (#1183): sent once, then locked.
+        _hostStep(msg) {
+            if (this._lock || !msg) return;
+            this._dispatch(msg);
+            var self = this;
+            var lock = { phase: this._state && this._state.phase, at: Date.now(), timer: null };
+            this._lock = lock;
+            function release() {
+                if (self._lock !== lock) return;
+                var phase = self._state && self._state.phase;
+                if (phase === lock.phase && Date.now() - lock.at < HOST_STEP_MAX_MS) {
+                    lock.timer = setTimeout(release, 250);
+                    return;
+                }
+                self._lock = null;
+                self._render();
+            }
+            lock.timer = setTimeout(release, HOST_STEP_MIN_MS);
+            this._render();
+        }
+
         // One place decides socket vs service, so every button reaches start_game
         // the same way no matter which control fired it (#744).
         _dispatch(msg) {
@@ -814,28 +927,38 @@
 
         _bind(primary) {
             var self = this;
-            var t = this._t;
             var again = this.shadowRoot.getElementById('reconnect');
             if (again) {
                 again.addEventListener('click', function () { self._connectNow(); });
             }
             var btn = this.shadowRoot.getElementById('primary');
             if (btn && primary.msg) {
-                btn.addEventListener('click', function () { self._dispatch(primary.msg); });
+                btn.addEventListener('click', function () { self._hostStep(primary.msg); });
             }
             var others = this.shadowRoot.querySelectorAll('[data-msg]');
             for (var i = 0; i < others.length; i++) {
                 (function (el) {
-                    el.addEventListener('click', function () { self._dispatch(el.dataset.msg); });
+                    el.addEventListener('click', function () { self._hostStep(el.dataset.msg); });
                 })(others[i]);
             }
-            var reset = this.shadowRoot.querySelector('[data-reset]');
-            if (reset) {
-                // The one destructive control — always ask.
-                reset.addEventListener('click', function () {
-                    if (self._status !== 'online') return;
-                    if (window.confirm(t.resetConfirm)) self._send('reset_game');
+            var asks = this.shadowRoot.querySelectorAll('[data-ask]');
+            for (var q = 0; q < asks.length; q++) {
+                (function (el) {
+                    el.addEventListener('click', function () {
+                        self._ask(el.dataset.ask, el.dataset.name);
+                    });
+                })(asks[q]);
+            }
+            var yes = this.shadowRoot.getElementById('cf-yes');
+            var no = this.shadowRoot.getElementById('cf-no');
+            if (yes) yes.addEventListener('click', function () { self._onConfirmed(); });
+            if (no) {
+                no.addEventListener('click', function () { self._cancelConfirm(); });
+                var sheet = this.shadowRoot.querySelector('.confirm');
+                sheet.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') { e.preventDefault(); self._cancelConfirm(); }
                 });
+                if (this._confirmFocus) { this._confirmFocus = false; no.focus(); }
             }
             var scoring = this.shadowRoot.querySelectorAll('[data-scoring-out],[data-scoring-back]');
             for (var c = 0; c < scoring.length; c++) {
@@ -848,14 +971,6 @@
                         });
                     });
                 })(scoring[c]);
-            }
-            var kicks = this.shadowRoot.querySelectorAll('[data-kick]');
-            for (var k = 0; k < kicks.length; k++) {
-                (function (el) {
-                    el.addEventListener('click', function () {
-                        self._send('kick_player', { name: el.dataset.kick });
-                    });
-                })(kicks[k]);
             }
         }
 

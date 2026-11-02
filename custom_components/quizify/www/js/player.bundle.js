@@ -626,6 +626,57 @@
     }
 
     // ============================================
+    // Host steps (#1183)
+    // ============================================
+
+    // Next, Skip, Pause and Resume advance the game for everyone. A second
+    // tap — a double tap, or a tap again because the screen has not changed
+    // yet — lands on whatever the button means next: "Next" becomes "Skip"
+    // of the question it just started, and the server scores that question
+    // at once. So the button locks the moment the step leaves: at least
+    // HOST_STEP_MIN_MS, and until the phase has moved on. HOST_STEP_MAX_MS
+    // frees it if the server refused and nothing moves, so a host is never
+    // left without a button. The console and the Lovelace card hold the same
+    // lock.
+    var HOST_STEP_MIN_MS = 1500;
+    var HOST_STEP_MAX_MS = 8000;
+    var HOST_STEP_POLL_MS = 250;
+
+    function hostStep(btn, sendFn, type, payload) {
+        if (btn && btn._qzHostLock) return false;
+        if (!sendFn(type, payload || {})) return false;
+        if (!btn) return true;
+        var lock = { phase: state.currentPhase, t0: Date.now() };
+        btn._qzHostLock = lock;
+        btn.disabled = true;
+        function release() {
+            if (btn._qzHostLock !== lock) return;
+            var waited = Date.now() - lock.t0;
+            if (state.currentPhase === lock.phase && waited < HOST_STEP_MAX_MS) {
+                setTimeout(release, HOST_STEP_POLL_MS);
+                return;
+            }
+            btn._qzHostLock = null;
+            btn.disabled = false;
+        }
+        setTimeout(release, HOST_STEP_MIN_MS);
+        return true;
+    }
+
+    // ============================================
+    // Haptics (#1183)
+    // ============================================
+
+    // A 10 ms tick when this phone's own answer, wager, bid, bet or power-up
+    // leaves. Android only, by feature detection: iOS Safari has no
+    // navigator.vibrate, and nothing here tries to fake one.
+    function submitHaptic() {
+        var nav = window.navigator;
+        if (!nav || typeof nav.vibrate !== 'function') return false;
+        try { return nav.vibrate(10) !== false; } catch (e) { return false; }
+    }
+
+    // ============================================
     // Session Storage Helpers
     // ============================================
 
@@ -733,7 +784,10 @@
         validateName: validateName,
         renderMedalStandings: renderMedalStandings,
         myEntrant: myEntrant,
-        entrantKey: entrantKey
+        entrantKey: entrantKey,
+        hostStep: hostStep,
+        submitHaptic: submitHaptic,
+        HOST_STEP_MIN_MS: HOST_STEP_MIN_MS
     };
 
 })();
@@ -3296,29 +3350,37 @@
         // #285 — the Lightning Round is now an automatic mid-game event.
 
         if (newGameBtn) {
+            // #1183: New game throws every guest out of the end screen while
+            // they are still sharing it, so it asks first — the sheet and the
+            // words the console uses for its own reset.
             newGameBtn.onclick = function () {
-                // #894: the player session belongs to QuizifyClientCore —
-                // spelling the two keys out here was a second owner waiting
-                // to drift. `quizify_is_admin` went with it: nothing in the
-                // repo has ever set that key.
-                //
-                // #981: and the in-memory half of the identity belongs to
-                // player-core's forgetIdentity(), the same call the kick, the
-                // reset and a refused join make. Resolved at click time
-                // because player-core.js loads after this module.
-                var forgetIdentity = window.QuizifyPlayer && window.QuizifyPlayer.forgetIdentity;
-                if (forgetIdentity) forgetIdentity(); else pu.clearSession();
-                try {
-                    sessionStorage.removeItem('quizify_admin_name');
-                } catch (e) { /* ignore */ }
-
-                var ws = state.ws;
-                if (ws && ws.readyState === WebSocket.OPEN) {
-                    try { ws.send(JSON.stringify({ type: 'reset_game' })); } catch (e) { /* ignore */ }
-                }
-                window.location.href = '/quizify/admin';
+                var confirmThen = window.QuizifyPlayer && window.QuizifyPlayer.confirmThen;
+                if (confirmThen) confirmThen(newGameBtn, 'newGame', _startNewGame);
             };
         }
+    }
+
+    function _startNewGame() {
+        // #894: the player session belongs to QuizifyClientCore —
+        // spelling the two keys out here was a second owner waiting
+        // to drift. `quizify_is_admin` went with it: nothing in the
+        // repo has ever set that key.
+        //
+        // #981: and the in-memory half of the identity belongs to
+        // player-core's forgetIdentity(), the same call the kick, the
+        // reset and a refused join make. Resolved at click time
+        // because player-core.js loads after this module.
+        var forgetIdentity = window.QuizifyPlayer && window.QuizifyPlayer.forgetIdentity;
+        if (forgetIdentity) forgetIdentity(); else pu.clearSession();
+        try {
+            sessionStorage.removeItem('quizify_admin_name');
+        } catch (e) { /* ignore */ }
+
+        var ws = state.ws;
+        if (ws && ws.readyState === WebSocket.OPEN) {
+            try { ws.send(JSON.stringify({ type: 'reset_game' })); } catch (e) { /* ignore */ }
+        }
+        window.location.href = '/quizify/admin';
     }
 
     // ============================================
@@ -3873,8 +3935,9 @@
         var continueBtn = document.getElementById('lightning-recap-continue-btn');
         if (continueBtn) {
             continueBtn.addEventListener('click', function () {
-                this.disabled = true;  // one-shot; avoid double-fire
-                _send('next_question', {});
+                // #1183: the shared host-step lock (≥ 1.5 s and until the
+                // phase moves on) instead of a one-shot disable.
+                window.QuizifyPlayerUtils.hostStep(continueBtn, _send, 'next_question');
             });
         }
     }
@@ -3917,6 +3980,7 @@
         bidPlaced: false,
         seated: false,
         betPlaced: false,
+        betSide: null,      // #1183: chosen, not yet placed
         score: 0,
         winner: null
     };
@@ -4053,6 +4117,7 @@
         _state.bidPlaced = false;
         _state.seated = false;
         _state.betPlaced = false;
+        _state.betSide = null;
         _state.seatAnswering = false;
         _state.winner = null;
         // #859: the settlement of the LAST chair must not be standing under
@@ -4072,6 +4137,7 @@
         _state.bidPlaced = false;
         _state.seated = false;
         _state.betPlaced = false;
+        _state.betSide = null;
         _state.score = msg.score || 0;
 
         // #802: the auction opens over whatever the last round left behind.
@@ -4356,8 +4422,12 @@
             slider.oninput = syncBetValue;
             syncBetValue();
         }
+        _state.betSide = null;
         wireBet('hotseat-bet-will', 'will');
         wireBet('hotseat-bet-wont', 'wont');
+        paintBetSide();
+        var place = el('hotseat-bet-place');
+        if (place) place.onclick = placeBet;
     }
 
     function syncBetValue() {
@@ -4371,29 +4441,37 @@
         });
     }
 
+    // #1183: a side button only chooses; "Place bet" sends (draft ④).
     function wireBet(id, side) {
         var btn = el(id);
         if (!btn) return;
         btn.disabled = false;
         btn.onclick = function () {
             if (_state.betPlaced) return;
-            var slider = el('hotseat-bet-slider');
-            var pct = slider ? parseInt(slider.value, 10) : 0;
-            _state.betPlaced = true;
-            if (slider) slider.disabled = true;
-            ['hotseat-bet-will', 'hotseat-bet-wont'].forEach(function (x) {
-                var b = el(x);
-                if (b) b.disabled = true;
-            });
-            send('hot_seat_bet', { side: side, bet: pct });
-            var hint = el('hotseat-hint');
-            if (hint) {
-                hint.textContent = t('hotSeat.betPlaced', {
-                    pct: pct,
-                    side: t(side === 'will' ? 'hotSeat.betWill' : 'hotSeat.betWont')
-                });
-            }
+            _state.betSide = side;
+            paintBetSide();
         };
+    }
+
+    function paintBetSide() {
+        [['hotseat-bet-will', 'will'], ['hotseat-bet-wont', 'wont']].forEach(function (pair) {
+            var b = el(pair[0]);
+            if (!b) return;
+            var on = _state.betSide === pair[1];
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            b.classList.toggle('is-selected', on);
+        });
+        var place = el('hotseat-bet-place');
+        if (place) place.disabled = _state.betPlaced || !_state.betSide;
+    }
+
+    function placeBet() {
+        if (_state.betPlaced || !_state.betSide) return;
+        var slider = el('hotseat-bet-slider');
+        var pct = slider ? parseInt(slider.value, 10) : 0;
+        var side = _state.betSide;
+        send('hot_seat_bet', { side: side, bet: pct });
+        lockBetUi({ pct: pct, side: side });
     }
 
     // ------------------------------------------------------------------
@@ -4709,7 +4787,7 @@
         _state.betPlaced = true;
         var slider = el('hotseat-bet-slider');
         if (slider) slider.disabled = true;
-        ['hotseat-bet-will', 'hotseat-bet-wont'].forEach(function (x) {
+        ['hotseat-bet-will', 'hotseat-bet-wont', 'hotseat-bet-place'].forEach(function (x) {
             var b = el(x);
             if (b) b.disabled = true;
         });
@@ -6692,8 +6770,12 @@
     // worse: a guest taps an answer while the socket is down, the tile lights
     // up, and the round closes without them. Nothing on screen ever said so.
     function send(type, payload) {
+        var SUBMIT_TYPES = /^(submit_answer|submit_wager|hot_seat_bid|hot_seat_bet|hot_seat_answer|lightning_answer|use_powerup)$/;
         if (state.ws && state.ws.readyState === WebSocket.OPEN) {
             state.ws.send(JSON.stringify(Object.assign({ type: type }, payload || {})));
+            // #1183: the messages that submit this phone's own move get the
+            // Android haptic tick; a send that never left gets none.
+            if (SUBMIT_TYPES.test(type) && pu.submitHaptic) pu.submitHaptic();
             return true;
         }
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
@@ -6970,6 +7052,8 @@
                     pu.saveSession(msg.session_token, state.playerName);
                 }
                 if (msg.is_admin) state.isAdmin = true;
+                // #1183: from here on back is caught (see handleBack).
+                armBackGuard();
                 // #1150: the host had taken them out, and coming back undid it.
                 if (typeof msg.welcome_back_score === 'number') {
                     pu.showToast(t('game.welcomeBackScore', {
@@ -8426,16 +8510,76 @@
     // host's own reset has always gone through #reset-game-modal; a guest
     // tap now goes through the same kind of dialog (#guest-reset-modal), and
     // only its confirm button sends anything.
+    //
+    // #1183: the same sheet now asks before every message that cannot be
+    // taken back — the host's End (bar and reveal), New game on the end
+    // screen, and a guest's reset. One dialog, its texts swapped per kind,
+    // all of them the admin console's own words, so the phone has one rule
+    // for the one kind of action instead of three.
+    var CONFIRM_KINDS = {
+        reset: { title: 'admin.resetGameConfirm', text: 'game.resetGuestWarning',
+            confirm: 'admin.resetGame', cancel: 'common.cancel' },
+        end: { title: 'admin.endGameConfirm', text: 'admin.endGameWarning',
+            confirm: 'admin.endGame', cancel: 'common.cancel' },
+        newGame: { title: 'admin.resetGameConfirm', text: 'admin.resetGameWarning',
+            confirm: 'admin.resetGame', cancel: 'common.cancel' },
+        // #1183 draft ③: the back gesture mid-game. Staying is the safe and
+        // the likely answer, so it is the primary button and comes first.
+        leave: { title: 'game.leaveConfirm', text: 'game.leaveWarning',
+            confirm: 'game.leave', cancel: 'game.keepPlaying',
+            confirmClass: 'btn-secondary', cancelClass: 'btn-primary', sheet: 'modal--leave' }
+    };
     var _guestResetTrigger = null;
     var _guestResetKeyHandler = null;
+    // { kind, run } for the open sheet; run is null for the guest reset,
+    // whose send lives on the confirm button itself.
+    var _confirmPending = null;
 
     function _focus(el) {
         if (el && typeof el.focus === 'function') el.focus();
     }
 
+    function _paintConfirmKind(kind) {
+        var keys = CONFIRM_KINDS[kind] || CONFIRM_KINDS.reset;
+        var t = window.QuizifyI18n && window.QuizifyI18n.t;
+        [
+            ['guest-reset-modal-title', keys.title],
+            ['guest-reset-modal-text', keys.text],
+            ['guest-reset-confirm-btn', keys.confirm],
+            ['guest-reset-cancel-btn', keys.cancel]
+        ].forEach(function (pair) {
+            var el = document.getElementById(pair[0]);
+            if (!el) return;
+            el.setAttribute('data-i18n', pair[1]);
+            if (t) el.textContent = t(pair[1]);
+        });
+        var yes = document.getElementById('guest-reset-confirm-btn');
+        var no = document.getElementById('guest-reset-cancel-btn');
+        if (yes) yes.className = 'btn ' + (keys.confirmClass || 'btn-danger');
+        if (no) no.className = 'btn ' + (keys.cancelClass || 'btn-secondary');
+        var modal = document.getElementById('guest-reset-modal');
+        if (modal && modal.classList) modal.classList.toggle('modal--leave', keys.sheet === 'modal--leave');
+    }
+
+    // Open the sheet for `kind`; `run` fires only from its confirm button,
+    // `onCancel` on every other way out (Cancel, backdrop, Esc, back).
+    function confirmThen(triggerBtn, kind, run, onCancel) {
+        var modal = document.getElementById('guest-reset-modal');
+        if (!modal) return false;
+        _confirmPending = { kind: kind, run: run || null, onCancel: onCancel || null };
+        _paintConfirmKind(kind);
+        return _openConfirmSheet(modal, triggerBtn);
+    }
+
     function openGuestResetModal(triggerBtn) {
         var modal = document.getElementById('guest-reset-modal');
         if (!modal) return false;
+        _confirmPending = { kind: 'reset', run: null };
+        _paintConfirmKind('reset');
+        return _openConfirmSheet(modal, triggerBtn);
+    }
+
+    function _openConfirmSheet(modal, triggerBtn) {
         _guestResetTrigger = triggerBtn || null;
         modal.classList.remove('hidden');
         var cancelBtn = document.getElementById('guest-reset-cancel-btn');
@@ -8470,9 +8614,17 @@
         return true;
     }
 
+    function isConfirmSheetOpen() {
+        var modal = document.getElementById('guest-reset-modal');
+        return !!(modal && !modal.classList.contains('hidden'));
+    }
+
     function closeGuestResetModal() {
         var modal = document.getElementById('guest-reset-modal');
         if (modal) modal.classList.add('hidden');
+        var pending = _confirmPending;
+        _confirmPending = null;
+        if (pending && pending.onCancel) pending.onCancel();
         if (_guestResetKeyHandler) {
             document.removeEventListener('keydown', _guestResetKeyHandler, true);
             _guestResetKeyHandler = null;
@@ -8502,6 +8654,16 @@
                 // Only a trigger that is still on screen may fire: the
                 // dialog closes with its button, but a tap can race that.
                 var trigger = _guestResetTrigger;
+                var pending = _confirmPending;
+                if (pending && pending.run) {
+                    // A host action (#1183). End is valid in every phase, so
+                    // a bar that hid behind the sheet (the round closed
+                    // meanwhile) does not swallow the host's answer.
+                    _confirmPending = null;   // confirmed: no onCancel
+                    closeGuestResetModal();
+                    pending.run();
+                    return;
+                }
                 if (!trigger || trigger.classList.contains('hidden')) {
                     closeGuestResetModal();
                     return;
@@ -8857,12 +9019,75 @@
     // Admin Controls Wiring
     // ============================================
 
+    // ============================================
+    // Back gesture (#1183)
+    // ============================================
+    //
+    // Android's back button (or the edge swipe) left the page — open sheets
+    // and all — and for a guest who came by QR camera it closed the tab: the
+    // game was gone. Now one history entry stands in front of the page while
+    // this phone is in a game. Back closes the topmost sheet first; mid-game
+    // it asks "Leave the game?" (the session stays, so a new scan brings the
+    // guest back by token); in the lobby or on the end screen it leaves as
+    // before.
+    var BACK_SHEETS = ['guest-reset-modal', 'powerup-target-modal', 'image-zoom-overlay',
+        'invite-modal', 'qr-modal'];
+    var MID_GAME_PHASES = {
+        WAGER_ACTIVE: true, QUESTION_ACTIVE: true, PLAYING: true, ANSWER_REVEAL: true,
+        PAUSED: true, LIGHTNING: true, LIGHTNING_RECAP: true, HOT_SEAT_AUCTION: true,
+        HOT_SEAT: true, HOT_SEAT_REVEAL: true
+    };
+    var _backGuard = false;
+    // Set by "Leave": from then on back belongs to the browser, so the next
+    // press closes a QR tab that has no page behind this one.
+    var _leaving = false;
+
+    function armBackGuard() {
+        if (_backGuard || _leaving || !state.playerName) return;
+        if (!window.history || typeof window.history.pushState !== 'function') return;
+        try {
+            window.history.pushState({ quizifyBack: true }, '');
+            _backGuard = true;
+        } catch (e) { /* a sandboxed frame: back stays the browser's */ }
+    }
+
+    function _openBackSheet() {
+        for (var i = 0; i < BACK_SHEETS.length; i++) {
+            var el = document.getElementById(BACK_SHEETS[i]);
+            if (el && !el.classList.contains('hidden')) return el;
+        }
+        return null;
+    }
+
+    function handleBack() {
+        _backGuard = false;   // the browser just took the guard entry away
+        if (_openBackSheet()) {
+            // Every sheet already closes on Esc; back is the same request.
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+            armBackGuard();
+            return;
+        }
+        if (state.playerName && MID_GAME_PHASES[state.currentPhase]) {
+            var asked = confirmThen(null, 'leave', function () {
+                _leaving = true;
+                window.history.back();
+            }, armBackGuard);
+            if (asked) return;
+        }
+        // Lobby, end screen, or no game: back means back.
+        window.history.back();
+    }
+
+    function setupBackGesture() {
+        window.addEventListener('popstate', handleBack);
+    }
+
     function setupAdminControls() {
         // Skip question
         var skipBtn = document.getElementById('skip-question-btn');
         if (skipBtn) {
             skipBtn.addEventListener('click', function () {
-                send('admin_skip', {});
+                pu.hostStep(skipBtn, send, 'admin_skip');
             });
         }
 
@@ -8870,34 +9095,35 @@
         var nextRoundAdminBtn = document.getElementById('next-round-admin-btn');
         if (nextRoundAdminBtn) {
             nextRoundAdminBtn.addEventListener('click', function () {
-                send('next_round', {});
+                pu.hostStep(nextRoundAdminBtn, send, 'next_round');
             });
         }
 
         // End game
+        // #1183: End reaches every guest and nothing brings the game back,
+        // so it asks first, in the console's words.
         var endGameBtn = document.getElementById('end-game-btn');
         if (endGameBtn) {
             endGameBtn.addEventListener('click', function () {
-                send('end_game', {});
+                confirmThen(endGameBtn, 'end', function () { send('end_game', {}); });
             });
         }
 
         // Pause / resume — toggled by handleGameState based on phase.
         var pauseBtn = document.getElementById('pause-game-btn');
         if (pauseBtn) {
-            pauseBtn.addEventListener('click', function () { send('pause_game', {}); });
+            pauseBtn.addEventListener('click', function () { pu.hostStep(pauseBtn, send, 'pause_game'); });
         }
         var resumeBtn = document.getElementById('resume-game-btn');
         if (resumeBtn) {
-            resumeBtn.addEventListener('click', function () { send('resume_game', {}); });
+            resumeBtn.addEventListener('click', function () { pu.hostStep(resumeBtn, send, 'resume_game'); });
         }
 
         // Next round (from reveal view)
         var nextRoundBtn = document.getElementById('next-round-btn');
         if (nextRoundBtn) {
             nextRoundBtn.addEventListener('click', function () {
-                nextRoundBtn.disabled = true;
-                send('next_round', {});
+                pu.hostStep(nextRoundBtn, send, 'next_round');
             });
         }
 
@@ -8907,7 +9133,7 @@
         var endFromReveal = document.getElementById('end-game-from-reveal-btn');
         if (endFromReveal) {
             endFromReveal.addEventListener('click', function () {
-                send('end_game', {});
+                confirmThen(endFromReveal, 'end', function () { send('end_game', {}); });
             });
         }
     }
@@ -9096,6 +9322,7 @@
         if (team) team.setupLobby(send);
         setupRetryConnection();
         setupAdminControls();
+        setupBackGesture();
         setupReactionBar();
         setupSoundToggle();
         setupA11yToggle();
@@ -9306,7 +9533,9 @@
         // #981: player-end.js's "New game" is the fifth place that drops this
         // phone's identity, and it lives in another module. Exported so there
         // is still only one spelling of it.
-        forgetIdentity: forgetIdentity
+        forgetIdentity: forgetIdentity,
+        // #1183: player-end.js's "New game" asks through the same sheet.
+        confirmThen: confirmThen
     };
 
     // #215: hook for sw-update.js — is the player screen idle enough that a

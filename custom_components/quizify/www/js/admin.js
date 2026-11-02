@@ -4319,8 +4319,21 @@
             btn.disabled = false;
             return;
         }
-        // Re-enable after 1.5s as a safety net (in case server doesn't respond).
-        setTimeout(function () { btn.disabled = false; }, 1500);
+        // #1183: held at least 1.5 s AND until the phase moves on, the same
+        // lock the phone bar and the Lovelace card hold — a re-enabled "Next"
+        // that still shows the old phase invites the tap that skips the
+        // question it just started. 8 s frees it if the server refused and
+        // nothing moves.
+        var phaseAtTap = currentPhase;
+        var sentAt = Date.now();
+        function release() {
+            if (currentPhase === phaseAtTap && Date.now() - sentAt < 8000) {
+                setTimeout(release, 250);
+                return;
+            }
+            btn.disabled = false;
+        }
+        setTimeout(release, 1500);
     }
     on(els.nextQuestionBtn, 'click', function () { _debouncedSend(els.nextQuestionBtn, 'next_question'); });
     // #1017: the same three messages the phone's host bar sends.
@@ -4421,14 +4434,18 @@
         closeConfirmModal('end-game-modal');
     });
 
-    on(els.newGameBtn, 'click', function () { send('reset_game', {}); });
+    // #1183: "Start new game" is a reset like the header's, so it asks in
+    // the same sheet before every phone is sent back to the join screen.
+    on(els.newGameBtn, 'click', function () {
+        openConfirmModal('reset-game-modal', 'reset-game-cancel-btn', els.newGameBtn);
+    });
     on(els.starHintDismiss, 'click', _dismissStarHint);
 
     // Lightning Round (issue #42 mechanics, #285 auto-trigger). It now fires
     // automatically mid-game and auto-advances, so there is no manual start /
     // end control. The recap's only action resumes the paused main game via
     // the normal next_question advance (server: resume_after_lightning).
-    on(els.adminLightningContinueBtn, 'click', function () { send('next_question', {}); });
+    on(els.adminLightningContinueBtn, 'click', function () { _debouncedSend(els.adminLightningContinueBtn, 'next_question'); });
 
     // ---- Reset Game button (header) ----
     on(els.resetGameBtn, 'click', function () {

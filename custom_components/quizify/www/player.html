@@ -118,7 +118,7 @@
                     <input type="text" id="name-input" class="name-input"
                            data-i18n-placeholder="join.namePlaceholder"
                            placeholder="Your name" maxlength="20"
-                           autocomplete="off" autocapitalize="words"
+                           autocomplete="off" autocapitalize="words" enterkeyhint="go"
                            aria-describedby="name-validation-msg">
                     <p id="name-validation-msg" class="validation-msg hidden"></p>
                 </div>
@@ -193,7 +193,7 @@
                     </button>
                     <div class="qz-team-name hidden" id="team-name-row">
                         <input type="text" id="team-name-input" class="qz-team-nameInput"
-                               maxlength="24" autocomplete="off"
+                               maxlength="24" autocomplete="off" enterkeyhint="done"
                                data-i18n-placeholder="teams.namePlaceholder" placeholder="e.g. Sofa"
                                data-i18n-aria-label="teams.openTeam" aria-label="Team name">
                         <button type="button" id="team-name-confirm" class="btn btn-primary qz-team-nameBtn" data-i18n="teams.confirmOpen">Open</button>
@@ -392,19 +392,25 @@
                     </div>
 
                     <!-- Spectator bet -->
+                    <!-- #1183 draft ④: two steps. The side buttons only choose
+                         (aria-pressed); the amount is the slider; only "Place
+                         bet" sends. A tap to see which side is which used to
+                         be a 20 % bet already. -->
                     <div id="hotseat-bet-stage" class="hidden">
+                        <div class="hotseat-bet-buttons" role="group" aria-labelledby="hotseat-title">
+                            <button id="hotseat-bet-will" type="button" class="btn btn-secondary hotseat-bet-side"
+                                    aria-pressed="false" data-i18n="hotSeat.betWill">They'll get it</button>
+                            <button id="hotseat-bet-wont" type="button" class="btn btn-secondary hotseat-bet-side"
+                                    aria-pressed="false" data-i18n="hotSeat.betWont">They won't</button>
+                        </div>
                         <div class="wager-slider-row">
                             <input type="range" id="hotseat-bet-slider" min="0" max="100" step="5" value="20"
                                    data-i18n-aria-label="hotSeat.betSliderAria"
                                    aria-label="Wetteinsatz in Prozent">
                             <output id="hotseat-bet-value" class="wager-value" for="hotseat-bet-slider">20%</output>
                         </div>
-                        <div class="hotseat-bet-buttons">
-                            <button id="hotseat-bet-will" type="button" class="btn btn-primary"
-                                    data-i18n="hotSeat.betWill">They'll get it</button>
-                            <button id="hotseat-bet-wont" type="button" class="btn btn-secondary"
-                                    data-i18n="hotSeat.betWont">They won't</button>
-                        </div>
+                        <button id="hotseat-bet-place" type="button" class="btn btn-primary btn-block"
+                                data-i18n="hotSeat.betPlace" disabled>Place bet</button>
                         <p class="wager-panel-hint" data-i18n="hotSeat.betOptional">Betting is optional.</p>
                     </div>
 
@@ -902,9 +908,12 @@
 
         <!-- Admin Control Bar - visible across PLAYING/REVEAL for admin -->
         <div id="admin-control-bar" class="admin-control-bar hidden">
-            <button id="skip-question-btn" class="control-btn" type="button">
-                <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="skipnext">⏭️</span>
-                <span class="control-label" id="skip-question-label" data-i18n="admin.reveal">Reveal</span>
+            <!-- #1183: End sits at the left edge, out of the right thumb's
+                 rest spot, and asks first; Skip, the frequent safe step,
+                 takes the bottom-right corner. -->
+            <button id="end-game-btn" class="control-btn control-btn--danger" type="button">
+                <span class="control-icon qz-icon qz-icon--coral" data-ui-icon="stop">🛑</span>
+                <span class="control-label" data-i18n="admin.end">End</span>
             </button>
             <button id="pause-game-btn" class="control-btn" type="button">
                 <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="pause">⏸️</span>
@@ -918,9 +927,9 @@
                 <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="skipnext">⏭️</span>
                 <span class="control-label" data-i18n="admin.next">Next</span>
             </button>
-            <button id="end-game-btn" class="control-btn control-btn--danger" type="button">
-                <span class="control-icon qz-icon qz-icon--coral" data-ui-icon="stop">🛑</span>
-                <span class="control-label" data-i18n="admin.end">End</span>
+            <button id="skip-question-btn" class="control-btn" type="button">
+                <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="skipnext">⏭️</span>
+                <span class="control-label" id="skip-question-label" data-i18n="admin.reveal">Reveal</span>
             </button>
         </div>
 

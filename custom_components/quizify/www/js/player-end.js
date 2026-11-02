@@ -446,29 +446,37 @@
         // #285 — the Lightning Round is now an automatic mid-game event.
 
         if (newGameBtn) {
+            // #1183: New game throws every guest out of the end screen while
+            // they are still sharing it, so it asks first — the sheet and the
+            // words the console uses for its own reset.
             newGameBtn.onclick = function () {
-                // #894: the player session belongs to QuizifyClientCore —
-                // spelling the two keys out here was a second owner waiting
-                // to drift. `quizify_is_admin` went with it: nothing in the
-                // repo has ever set that key.
-                //
-                // #981: and the in-memory half of the identity belongs to
-                // player-core's forgetIdentity(), the same call the kick, the
-                // reset and a refused join make. Resolved at click time
-                // because player-core.js loads after this module.
-                var forgetIdentity = window.QuizifyPlayer && window.QuizifyPlayer.forgetIdentity;
-                if (forgetIdentity) forgetIdentity(); else pu.clearSession();
-                try {
-                    sessionStorage.removeItem('quizify_admin_name');
-                } catch (e) { /* ignore */ }
-
-                var ws = state.ws;
-                if (ws && ws.readyState === WebSocket.OPEN) {
-                    try { ws.send(JSON.stringify({ type: 'reset_game' })); } catch (e) { /* ignore */ }
-                }
-                window.location.href = '/quizify/admin';
+                var confirmThen = window.QuizifyPlayer && window.QuizifyPlayer.confirmThen;
+                if (confirmThen) confirmThen(newGameBtn, 'newGame', _startNewGame);
             };
         }
+    }
+
+    function _startNewGame() {
+        // #894: the player session belongs to QuizifyClientCore —
+        // spelling the two keys out here was a second owner waiting
+        // to drift. `quizify_is_admin` went with it: nothing in the
+        // repo has ever set that key.
+        //
+        // #981: and the in-memory half of the identity belongs to
+        // player-core's forgetIdentity(), the same call the kick, the
+        // reset and a refused join make. Resolved at click time
+        // because player-core.js loads after this module.
+        var forgetIdentity = window.QuizifyPlayer && window.QuizifyPlayer.forgetIdentity;
+        if (forgetIdentity) forgetIdentity(); else pu.clearSession();
+        try {
+            sessionStorage.removeItem('quizify_admin_name');
+        } catch (e) { /* ignore */ }
+
+        var ws = state.ws;
+        if (ws && ws.readyState === WebSocket.OPEN) {
+            try { ws.send(JSON.stringify({ type: 'reset_game' })); } catch (e) { /* ignore */ }
+        }
+        window.location.href = '/quizify/admin';
     }
 
     // ============================================

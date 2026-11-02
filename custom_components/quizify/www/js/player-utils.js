@@ -621,6 +621,57 @@
     }
 
     // ============================================
+    // Host steps (#1183)
+    // ============================================
+
+    // Next, Skip, Pause and Resume advance the game for everyone. A second
+    // tap — a double tap, or a tap again because the screen has not changed
+    // yet — lands on whatever the button means next: "Next" becomes "Skip"
+    // of the question it just started, and the server scores that question
+    // at once. So the button locks the moment the step leaves: at least
+    // HOST_STEP_MIN_MS, and until the phase has moved on. HOST_STEP_MAX_MS
+    // frees it if the server refused and nothing moves, so a host is never
+    // left without a button. The console and the Lovelace card hold the same
+    // lock.
+    var HOST_STEP_MIN_MS = 1500;
+    var HOST_STEP_MAX_MS = 8000;
+    var HOST_STEP_POLL_MS = 250;
+
+    function hostStep(btn, sendFn, type, payload) {
+        if (btn && btn._qzHostLock) return false;
+        if (!sendFn(type, payload || {})) return false;
+        if (!btn) return true;
+        var lock = { phase: state.currentPhase, t0: Date.now() };
+        btn._qzHostLock = lock;
+        btn.disabled = true;
+        function release() {
+            if (btn._qzHostLock !== lock) return;
+            var waited = Date.now() - lock.t0;
+            if (state.currentPhase === lock.phase && waited < HOST_STEP_MAX_MS) {
+                setTimeout(release, HOST_STEP_POLL_MS);
+                return;
+            }
+            btn._qzHostLock = null;
+            btn.disabled = false;
+        }
+        setTimeout(release, HOST_STEP_MIN_MS);
+        return true;
+    }
+
+    // ============================================
+    // Haptics (#1183)
+    // ============================================
+
+    // A 10 ms tick when this phone's own answer, wager, bid, bet or power-up
+    // leaves. Android only, by feature detection: iOS Safari has no
+    // navigator.vibrate, and nothing here tries to fake one.
+    function submitHaptic() {
+        var nav = window.navigator;
+        if (!nav || typeof nav.vibrate !== 'function') return false;
+        try { return nav.vibrate(10) !== false; } catch (e) { return false; }
+    }
+
+    // ============================================
     // Session Storage Helpers
     // ============================================
 
@@ -728,7 +779,10 @@
         validateName: validateName,
         renderMedalStandings: renderMedalStandings,
         myEntrant: myEntrant,
-        entrantKey: entrantKey
+        entrantKey: entrantKey,
+        hostStep: hostStep,
+        submitHaptic: submitHaptic,
+        HOST_STEP_MIN_MS: HOST_STEP_MIN_MS
     };
 
 })();

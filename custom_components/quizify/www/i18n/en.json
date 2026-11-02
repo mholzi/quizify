@@ -220,7 +220,11 @@
     "timerUpAria": "Time is up!",
     "timerTenLeft": "10 seconds left",
     "timerFiveLeft": "5 seconds left",
-    "welcomeBackScore": "Welcome back, {name}. Your {score} points are still here."
+    "welcomeBackScore": "Welcome back, {name}. Your {score} points are still here.",
+    "leaveConfirm": "Leave the game?",
+    "leaveWarning": "Your points stay. Scan the code again and you're back.",
+    "leave": "Leave",
+    "keepPlaying": "Keep playing"
   },
   "powerups": {
     "joker": "Joker",
@@ -739,6 +743,7 @@
     "betSliderAria": "Bet in percent",
     "betWill": "They'll get it",
     "betWont": "They won't",
+    "betPlace": "Place bet",
     "betOptional": "Betting is optional.",
     "betPlaced": "Bet: {pct}% on {side}",
     "teamSeated": "{name} has the chair for your team — your team does not bet.",

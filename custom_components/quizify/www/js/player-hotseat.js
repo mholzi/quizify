@@ -20,6 +20,7 @@
         bidPlaced: false,
         seated: false,
         betPlaced: false,
+        betSide: null,      // #1183: chosen, not yet placed
         score: 0,
         winner: null
     };
@@ -156,6 +157,7 @@
         _state.bidPlaced = false;
         _state.seated = false;
         _state.betPlaced = false;
+        _state.betSide = null;
         _state.seatAnswering = false;
         _state.winner = null;
         // #859: the settlement of the LAST chair must not be standing under
@@ -175,6 +177,7 @@
         _state.bidPlaced = false;
         _state.seated = false;
         _state.betPlaced = false;
+        _state.betSide = null;
         _state.score = msg.score || 0;
 
         // #802: the auction opens over whatever the last round left behind.
@@ -459,8 +462,12 @@
             slider.oninput = syncBetValue;
             syncBetValue();
         }
+        _state.betSide = null;
         wireBet('hotseat-bet-will', 'will');
         wireBet('hotseat-bet-wont', 'wont');
+        paintBetSide();
+        var place = el('hotseat-bet-place');
+        if (place) place.onclick = placeBet;
     }
 
     function syncBetValue() {
@@ -474,29 +481,37 @@
         });
     }
 
+    // #1183: a side button only chooses; "Place bet" sends (draft ④).
     function wireBet(id, side) {
         var btn = el(id);
         if (!btn) return;
         btn.disabled = false;
         btn.onclick = function () {
             if (_state.betPlaced) return;
-            var slider = el('hotseat-bet-slider');
-            var pct = slider ? parseInt(slider.value, 10) : 0;
-            _state.betPlaced = true;
-            if (slider) slider.disabled = true;
-            ['hotseat-bet-will', 'hotseat-bet-wont'].forEach(function (x) {
-                var b = el(x);
-                if (b) b.disabled = true;
-            });
-            send('hot_seat_bet', { side: side, bet: pct });
-            var hint = el('hotseat-hint');
-            if (hint) {
-                hint.textContent = t('hotSeat.betPlaced', {
-                    pct: pct,
-                    side: t(side === 'will' ? 'hotSeat.betWill' : 'hotSeat.betWont')
-                });
-            }
+            _state.betSide = side;
+            paintBetSide();
         };
+    }
+
+    function paintBetSide() {
+        [['hotseat-bet-will', 'will'], ['hotseat-bet-wont', 'wont']].forEach(function (pair) {
+            var b = el(pair[0]);
+            if (!b) return;
+            var on = _state.betSide === pair[1];
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            b.classList.toggle('is-selected', on);
+        });
+        var place = el('hotseat-bet-place');
+        if (place) place.disabled = _state.betPlaced || !_state.betSide;
+    }
+
+    function placeBet() {
+        if (_state.betPlaced || !_state.betSide) return;
+        var slider = el('hotseat-bet-slider');
+        var pct = slider ? parseInt(slider.value, 10) : 0;
+        var side = _state.betSide;
+        send('hot_seat_bet', { side: side, bet: pct });
+        lockBetUi({ pct: pct, side: side });
     }
 
     // ------------------------------------------------------------------
@@ -812,7 +827,7 @@
         _state.betPlaced = true;
         var slider = el('hotseat-bet-slider');
         if (slider) slider.disabled = true;
-        ['hotseat-bet-will', 'hotseat-bet-wont'].forEach(function (x) {
+        ['hotseat-bet-will', 'hotseat-bet-wont', 'hotseat-bet-place'].forEach(function (x) {
             var b = el(x);
             if (b) b.disabled = true;
         });

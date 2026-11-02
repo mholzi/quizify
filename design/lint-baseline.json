@@ -2,11 +2,11 @@
   "$comment": "Ratchet baseline for hard-coded design values (#1178). Counts may only fall. Regenerate with: python3 scripts/design_lint.py --update-baseline",
   "totals": {
     "color": 414,
-    "font_size": 453,
-    "radius": 98,
+    "font_size": 452,
+    "radius": 97,
     "shadow": 69,
     "z_index": 31,
-    "spacing_px": 589,
+    "spacing_px": 579,
     "duration": 99
   },
   "files": {
@@ -34,7 +34,7 @@
       "radius": 11,
       "shadow": 9,
       "z_index": 0,
-      "spacing_px": 36,
+      "spacing_px": 35,
       "duration": 13
     },
     "css/src/03-question.css": {
@@ -75,11 +75,11 @@
     },
     "css/src/07-player.css": {
       "color": 173,
-      "font_size": 172,
-      "radius": 32,
+      "font_size": 171,
+      "radius": 31,
       "shadow": 27,
       "z_index": 7,
-      "spacing_px": 229,
+      "spacing_px": 222,
       "duration": 35
     },
     "css/src/08-responsive.css": {
@@ -340,7 +340,7 @@
       "radius": 5,
       "shadow": 0,
       "z_index": 0,
-      "spacing_px": 18,
+      "spacing_px": 16,
       "duration": 0
     }
   }
