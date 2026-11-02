@@ -1219,7 +1219,36 @@
         });
     }
 
+    // Streak badges (#1170). rowEls[i] belongs to rows[i] = {key, streak}
+    // (streak 0 when it does not score). Bumps a badge whose streak grew and
+    // keeps a broken one on screen for 500 ms, greyed out, before it goes.
+    // `memo` ({key: streak}) is the caller's; an entrant seen for the first
+    // time (a reload, a reconnect) never animates.
+    function motionStreaks(rowEls, rows, memo) {
+        if (!memo) return;
+        Array.prototype.forEach.call(rowEls || [], function (row, i) {
+            var r = rows[i];
+            if (!r || r.key == null || !row.querySelector) return;
+            var prev = memo[r.key], cur = r.streak || 0;
+            memo[r.key] = cur;
+            if (typeof prev !== 'number' || prev === cur || prefersReducedMotion()) return;
+            var badge = row.querySelector('.leaderboard-streak');
+            if (cur > prev) {
+                _replayClass(badge, 'streak-bump');
+            } else if (cur === 0 && !badge) {
+                badge = document.createElement('span');
+                badge.className = 'leaderboard-streak is-breaking';
+                badge.textContent = prev + 'x';
+                row.appendChild(badge);
+                setTimeout(function () {
+                    if (badge.parentNode) badge.parentNode.removeChild(badge);
+                }, 520);
+            }
+        });
+    }
+
     window.QuizifyRenderShared = {
+        motionStreaks: motionStreaks,
         prefersReducedMotion: prefersReducedMotion,
         replayClass: _replayClass,
         playEntrance: playEntrance,

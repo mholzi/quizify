@@ -240,6 +240,39 @@
         window.QuizifyClientCore.updateConnectionIndicator(status, {
             retryHandler: (opts && opts.noRetry) ? null : _connRetry
         });
+        connectionMotion(status, !(opts && opts.noRetry));
+    }
+
+    // #1170: once the socket has been up, losing it drains the phone's colour
+    // and slides the pill in; coming back turns the pill sage while the
+    // colour returns. CSS in 07-player.css; the first connect animates nothing.
+    var _connWasUp = false;
+    var _connDown = false;
+    function connectionMotion(status, canRetry) {
+        var root = document.documentElement;
+        var pill = document.getElementById('conn-status');
+        if (!root || !root.classList || !root.classList.remove) return;
+        if (status === 'connected') {
+            _connWasUp = true;
+            if (!_connDown) return;
+            _connDown = false;
+            root.classList.remove('conn-down');
+            root.classList.add('conn-back');
+            if (pill) pill.classList.add('conn-back');
+            setTimeout(function () {
+                root.classList.remove('conn-back');
+                if (pill) pill.classList.remove('conn-back');
+            }, 1250);
+        } else if (_connWasUp && canRetry && !_connDown) {
+            _connDown = true;
+            root.classList.remove('conn-back');
+            root.classList.add('conn-down');
+            if (pill) {
+                pill.classList.remove('conn-back', 'conn-slide');
+                void pill.offsetWidth;
+                pill.classList.add('conn-slide');
+            }
+        }
     }
 
     // ============================================

@@ -245,6 +245,39 @@
         window.QuizifyClientCore.updateConnectionIndicator(status, {
             retryHandler: (opts && opts.noRetry) ? null : _connRetry
         });
+        connectionMotion(status, !(opts && opts.noRetry));
+    }
+
+    // #1170: once the socket has been up, losing it drains the phone's colour
+    // and slides the pill in; coming back turns the pill sage while the
+    // colour returns. CSS in 07-player.css; the first connect animates nothing.
+    var _connWasUp = false;
+    var _connDown = false;
+    function connectionMotion(status, canRetry) {
+        var root = document.documentElement;
+        var pill = document.getElementById('conn-status');
+        if (!root || !root.classList || !root.classList.remove) return;
+        if (status === 'connected') {
+            _connWasUp = true;
+            if (!_connDown) return;
+            _connDown = false;
+            root.classList.remove('conn-down');
+            root.classList.add('conn-back');
+            if (pill) pill.classList.add('conn-back');
+            setTimeout(function () {
+                root.classList.remove('conn-back');
+                if (pill) pill.classList.remove('conn-back');
+            }, 1250);
+        } else if (_connWasUp && canRetry && !_connDown) {
+            _connDown = true;
+            root.classList.remove('conn-back');
+            root.classList.add('conn-down');
+            if (pill) {
+                pill.classList.remove('conn-back', 'conn-slide');
+                void pill.offsetWidth;
+                pill.classList.add('conn-slide');
+            }
+        }
     }
 
     // ============================================
@@ -4315,7 +4348,7 @@
      *
      * Unchanged since the mode landed in #654; not a regression from RC3.
      */
-    function handleResult(msg) {
+    function handleResult(msg, restored) {
         msg = msg || {};
         var p = panel();
         if (!p) {
@@ -4350,7 +4383,7 @@
             answerEl.classList.toggle('hidden', !msg.correct_answer);
         }
 
-        renderOwnSettlement(msg);
+        renderOwnSettlement(msg, restored);
         renderResultStandings(msg.leaderboard);
 
         var hint = el('hotseat-hint');
@@ -4382,7 +4415,7 @@
      * spectator who staked on the outcome is otherwise never told whether
      * their bet came in.
      */
-    function renderOwnSettlement(msg) {
+    function renderOwnSettlement(msg, restored) {
         var row = el('hotseat-result-you');
         if (!row) return;
         var deltas = msg.deltas || {};
@@ -4401,6 +4434,14 @@
         if (value) {
             value.textContent = (mine < 0 ? '\u2212' : '+')
                 + Math.abs(mine) + ' ' + t('reveal.ptsUnit');
+        }
+        // #1170: a win rises into place, a loss fades where it stands (the
+        // bank and the bet slider are already gone by now; the standings
+        // below roll their scores). A restore from a snapshot just shows it.
+        row.classList.remove('hs-settle--win', 'hs-settle--lose');
+        if (!restored && mine !== 0) {
+            void row.offsetWidth;
+            row.classList.add(mine > 0 ? 'hs-settle--win' : 'hs-settle--lose');
         }
     }
 
@@ -4491,7 +4532,7 @@
                 }
             }
             settled.leaderboard = (snapshot && snapshot.leaderboard) || [];
-            handleResult(settled);
+            handleResult(settled, true);
             return;
         }
 
@@ -5827,11 +5868,13 @@
     function resetRankMemo() {
         _prevLeaderboardRanks = {};
         _shownScores = {};
+        _shownStreaks = {};
     }
 
     // #1169: the score each row was last shown with, so the digit roll only
     // runs on a number that changed.
     var _shownScores = {};
+    var _shownStreaks = {};
 
     function updateLeaderboard(data, targetListId) {
         var leaderboard = data.leaderboard || [];
@@ -5875,6 +5918,13 @@
                 listEl.querySelectorAll('.entry-score'),
                 rows.map(function (e) { return { key: entrantKey(e), score: e.score }; }),
                 _shownScores
+            );
+            shared.motionStreaks(
+                listEl.querySelectorAll('.leaderboard-entry'),
+                rows.map(function (e) {
+                    return { key: entrantKey(e), streak: e.streak_active ? e.streak : 0 };
+                }),
+                _shownStreaks
             );
         }
 

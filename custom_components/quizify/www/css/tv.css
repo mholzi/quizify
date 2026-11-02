@@ -267,6 +267,16 @@
     --dur-check-delay: 120ms;
     --dur-status: 200ms;
     --dur-status-delay: 300ms;   /* the "Sent" line, after the check */
+    /* Round 2 (#1170). */
+    --dur-flip: 520ms;            /* TV leaderboard rows to their new place */
+    --dur-flip-tint: 1200ms;      /* the sage tint on a row that moved up */
+    --dur-underline: 360ms;       /* Lightning splash: the sun underline */
+    --dur-splash-stagger: 120ms;  /* title, underline, rules arrive 120 ms apart */
+    --dur-streak: 420ms;          /* streak badge bump + sun flush */
+    --dur-streak-break: 500ms;    /* a broken streak greys out, then goes */
+    --dur-settle: 420ms;          /* Hot Seat: the settlement lands */
+    --dur-desat: 400ms;           /* phone colour drains while the socket is down */
+    --dur-conn-back: 1200ms;      /* the connection pill stays sage this long */
 
     /* Z-Index Tokens */
     --z-control-bar: 100;
@@ -355,6 +365,7 @@ a:focus-visible,
         --dur-podium-glow-delay: 0ms;
         --dur-check-delay: 0ms;
         --dur-status-delay: 0ms;
+        --dur-splash-stagger: 0ms;
     }
 }
 
@@ -2734,6 +2745,26 @@ button, .btn {
     color: var(--color-warning);
 }
 
+/* #1170: a growing streak bumps in with a sun flush; a broken one greys out
+   for 500 ms and is then removed by QuizifyRenderShared.motionStreaks. The
+   flush is a `from` keyframe only, so the badge ends on its own colours. */
+.leaderboard-streak.streak-bump {
+    animation: streak-bump var(--dur-streak) var(--ease-out);
+}
+@keyframes streak-bump {
+    from { transform: scale(0.9); background-color: rgba(232, 196, 127, 0.55); }
+}
+.leaderboard-streak.is-breaking {
+    animation: streak-break var(--dur-streak-break) var(--ease-out) forwards;
+}
+@keyframes streak-break {
+    to {
+        color: var(--color-text-muted);
+        background-color: rgba(42, 40, 32, 0.06);
+        opacity: 0.45;
+    }
+}
+
 /* Out of scoring (#1150): the host's line under a disconnected row, and the
    rows below the ranking. Shared by the host page and a playing host's reveal. */
 .leaderboard-row.has-scoring-note {
@@ -3956,6 +3987,10 @@ body.dashboard-body {
     font-variant-numeric: tabular-nums;
 }
 
+.dashboard-answer-progress {
+    transition: color var(--dur-status) var(--ease-out);
+}
+
 .dashboard-answer-progress.is-complete {
     color: var(--dash-accent-primary);
 }
@@ -4009,6 +4044,14 @@ body.dashboard-body {
     text-transform: uppercase;
 }
 .dashboard-reconnect-pill[hidden] { display: none; }
+/* #1170: slides in from above when the socket drops (display none -> flex
+   restarts the animation each time). */
+.dashboard-reconnect-pill {
+    animation: pill-in var(--dur-status) var(--ease-out) backwards;
+}
+@keyframes pill-in {
+    from { opacity: 0; transform: translateY(-8px); }
+}
 .dashboard-reconnect-pill::before {
     content: '';
     width: 8px;
@@ -4795,6 +4838,18 @@ body.dashboard-body {
 }
 
 /* #429: muted "+N more" overflow hint for the capped in-game panel. */
+/* #1170: a rank change slides the row to its new place (FLIP, set up by
+   dashboard.js); a row that moved up carries a brief sage tint. */
+.dashboard-leaderboard .leaderboard-row.is-flipping {
+    transition: transform var(--dur-flip) var(--ease-out);
+}
+.dashboard-leaderboard .leaderboard-row.moved-up {
+    animation: row-moved-up var(--dur-flip-tint) var(--ease-out);
+}
+@keyframes row-moved-up {
+    from { background-color: rgba(127, 168, 151, 0.28); border-color: var(--dash-success); }
+}
+
 .dashboard-leaderboard .leaderboard-row.leaderboard-more {
     background: transparent;
     border-color: transparent;
@@ -5067,6 +5122,34 @@ body.dashboard-body {
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(16px, 1.8vw, 24px);
     color: var(--dash-text-neon-muted);
+}
+/* #1170: the splash arrives in ~0.5 s — the title rises, the sun underline
+   draws left to right, the rules follow, 120 ms apart. The `hidden` toggle
+   (display none -> flex) restarts all three each time the splash shows. */
+.dashboard-lightning-splash .dashboard-lightning-title {
+    position: relative;
+    padding-bottom: 0.2em;
+    animation: motion-enter var(--dur-enter) var(--ease-out) backwards;
+}
+.dashboard-lightning-splash .dashboard-lightning-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--dash-warning);
+    transform-origin: left center;
+    animation: splash-underline var(--dur-underline) var(--ease-out)
+        var(--dur-splash-stagger) backwards;
+}
+.dashboard-lightning-splash .dashboard-lightning-rules {
+    animation: motion-enter var(--dur-enter) var(--ease-out)
+        calc(2 * var(--dur-splash-stagger)) backwards;
+}
+@keyframes splash-underline {
+    from { transform: scaleX(0); }
 }
 .dashboard-lightning-recap-grid {
     flex: 1;

@@ -265,6 +265,16 @@
     --dur-check-delay: 120ms;
     --dur-status: 200ms;
     --dur-status-delay: 300ms;   /* the "Sent" line, after the check */
+    /* Round 2 (#1170). */
+    --dur-flip: 520ms;            /* TV leaderboard rows to their new place */
+    --dur-flip-tint: 1200ms;      /* the sage tint on a row that moved up */
+    --dur-underline: 360ms;       /* Lightning splash: the sun underline */
+    --dur-splash-stagger: 120ms;  /* title, underline, rules arrive 120 ms apart */
+    --dur-streak: 420ms;          /* streak badge bump + sun flush */
+    --dur-streak-break: 500ms;    /* a broken streak greys out, then goes */
+    --dur-settle: 420ms;          /* Hot Seat: the settlement lands */
+    --dur-desat: 400ms;           /* phone colour drains while the socket is down */
+    --dur-conn-back: 1200ms;      /* the connection pill stays sage this long */
 
     /* Z-Index Tokens */
     --z-control-bar: 100;
@@ -353,6 +363,7 @@ a:focus-visible,
         --dur-podium-glow-delay: 0ms;
         --dur-check-delay: 0ms;
         --dur-status-delay: 0ms;
+        --dur-splash-stagger: 0ms;
     }
 }
 

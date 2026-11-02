@@ -2760,6 +2760,9 @@
         }
         els.adminAnswerProgress.textContent = line;
         els.adminAnswerProgress.style.display = '';
+        // #1170: the line turns sage when the last guest is in.
+        els.adminAnswerProgress.style.transition = 'color var(--dur-status) var(--ease-out)';
+        els.adminAnswerProgress.style.color = (submitted === total) ? 'var(--color-success)' : '';
     }
 
     /** The tracker belongs to one question; it goes with the question. */
