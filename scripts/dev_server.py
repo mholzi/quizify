@@ -32,6 +32,10 @@ if str(_REPO_ROOT) not in sys.path:
 
 from aiohttp import web  # noqa: E402
 
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dev_hooks  # noqa: E402
+
 from custom_components.quizify.analytics import QuizifyAnalytics  # noqa: E402
 from custom_components.quizify.game.state import QuizifyGameState  # noqa: E402
 from custom_components.quizify.question_stats import (  # noqa: E402
@@ -84,6 +88,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "-v", "--verbose", action="store_true", help="enable debug logging"
     )
+    # #1182: dev-only state hooks (fault injection, socket drops, simulated
+    # restart, seeded rooms). All off unless asked for; see dev_hooks.py.
+    dev_hooks.add_arguments(parser)
     return parser.parse_args(argv)
 
 
@@ -189,6 +196,8 @@ def main(argv: list[str] | None = None) -> int:
         await refresh_live_version(ctx.runtime)
 
     app.on_startup.append(_load_state)
+    # After _load_state, so a seeded room is built on loaded state.
+    dev_hooks.install(app, args)
 
     web.run_app(app, host=args.host, port=args.port, print=lambda _msg: None)
     return 0
