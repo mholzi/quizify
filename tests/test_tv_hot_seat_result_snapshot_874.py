@@ -174,6 +174,7 @@ function renderLeaderboard(container, players) {{
 function handleQuestionStarted(msg) {{ seen.questions.push(msg.question_text); }}
 var QuizifyUtils = window.QuizifyUtils;
 var currentPhase = 'UNSET';
+var answersShown = null;  // #1170
 var timerDuration = 0;
 var timerRemaining = 0;
 

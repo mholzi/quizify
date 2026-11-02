@@ -250,7 +250,9 @@
     var _connDown = false;
     function connectionMotion(status, canRetry) {
         var root = document.documentElement;
-        var pill = document.getElementById('conn-status');
+        // Read, not built: the dot itself is QuizifyClientCore's (#983).
+        var pill = null;
+        try { pill = document.querySelector('#conn-status'); } catch (_e) { /* no DOM */ }
         if (!root || !root.classList || !root.classList.remove) return;
         if (status === 'connected') {
             _connWasUp = true;

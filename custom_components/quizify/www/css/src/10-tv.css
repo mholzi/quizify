@@ -309,13 +309,11 @@ body.dashboard-body {
     color: var(--dash-error);
     letter-spacing: 0.12em;
     text-transform: uppercase;
-}
-.dashboard-reconnect-pill[hidden] { display: none; }
-/* #1170: slides in from above when the socket drops (display none -> flex
-   restarts the animation each time). */
-.dashboard-reconnect-pill {
     animation: pill-in var(--dur-status) var(--ease-out) backwards;
 }
+.dashboard-reconnect-pill[hidden] { display: none; }
+/* #1170: the pill slides in from above when the socket drops (display
+   none -> flex restarts the animation each time). */
 @keyframes pill-in {
     from { opacity: 0; transform: translateY(-8px); }
 }

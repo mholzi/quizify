@@ -88,6 +88,7 @@ QZ.els({json.dumps(ids)});
 
 function renderQuestionImage() {{}}
 var currentPhase = 'UNSET';
+var answersShown = null;  // #1170
 var timerDuration = 0;
 var timerRemaining = 0;
 window.QuizifyI18n = {{
