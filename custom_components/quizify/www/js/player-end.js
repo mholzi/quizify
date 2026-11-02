@@ -55,6 +55,12 @@
 
         var superlatives = data.superlatives || [];
 
+        // #1169: the 3 → 2 → 1 reveal, once per finished game. The end view
+        // is repainted by later frames (a snapshot, the share card arriving),
+        // and replaying a 2.5 s reveal on each of them would hide the winner
+        // again every time.
+        playEndReveal(leaderboard);
+
         // 1. Header meta line: "N Runden · M Spieler"
         renderEndHeader(leaderboard, data);
 
@@ -109,6 +115,23 @@
         // Broadcast Living Room: no confetti on finale.
         // The restraint is the differentiation. A single spotlight and tabular score-tick IS the effect.
         // See DESIGN.md — "The dramatic pause IS the effect. Restraint crowns louder than chaos."
+    }
+
+    var _endRevealKey = null;
+
+    function playEndReveal(leaderboard) {
+        var view = document.getElementById('end-view');
+        if (!view || !view.classList) return;
+        var key = leaderboard.map(function (p) {
+            return (p.entrant_id || p.name) + ':' + p.score;
+        }).join('|');
+        if (key === _endRevealKey) return;
+        _endRevealKey = key;
+        view.classList.remove('is-revealing');
+        // Restart the CSS animations: without a reflow between remove and
+        // add, the browser coalesces the two and nothing replays.
+        void view.offsetWidth;
+        view.classList.add('is-revealing');
     }
 
     // ============================================
@@ -353,8 +376,11 @@
             var away = (entry.connected === false)
                 ? '<span class="sb-away">(' + pu.escapeHtml(awayText) + ')</span>' : '';
 
+            // #1169: `data-place` puts the row on the podium's 3 → 2 → 1
+            // clock (07-player.css), the same one the television runs.
             return '<div class="sb-row' + (isYou ? ' sb-row--me' : '') +
-                    (entry.connected === false ? ' sb-row--away' : '') + '">' +
+                    (entry.connected === false ? ' sb-row--away' : '') +
+                    '" data-place="' + rank + '">' +
                 '<div class="sb-rank ' + discClass + '">' + rank + '</div>' +
                 '<div class="sb-body">' +
                     '<div class="sb-nameline">' +

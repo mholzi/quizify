@@ -79,6 +79,43 @@ body.dashboard-body {
 .dashboard-view { display: none; flex-direction: column; flex: 1; min-height: 0; }
 .dashboard-view.active { display: flex; }
 
+/* Round transition (#1169, DESIGN.md Motion: "Round transition").
+   Played by dashboard.js only when the evening moves into a different kind
+   of round — regular questions, the Lightning round, the Hot Seat, the final
+   round — never between two questions of the same one, or it would wear
+   thin by question twenty. The old screen is already gone (showView), one
+   sun-to-coral band sweeps across once, and the new screen fades in behind
+   it. The band sits on top of everything and takes no clicks. */
+.round-sweep {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+    pointer-events: none;
+    background: linear-gradient(100deg,
+        transparent 0%,
+        rgba(232, 196, 127, 0.45) 40%,
+        rgba(232, 138, 127, 0.40) 60%,
+        transparent 100%);
+    transform: translateX(-110%);
+    visibility: hidden;
+}
+.round-sweep.is-playing {
+    visibility: visible;
+    animation: round-sweep var(--dur-round) var(--ease-in-out) both;
+}
+@keyframes round-sweep {
+    from { transform: translateX(-110%); }
+    to   { transform: translateX(110%); }
+}
+.dashboard-view.round-enter {
+    animation: round-card-in var(--dur-round-card) var(--ease-out) backwards;
+    animation-delay: var(--dur-round-card-delay);
+}
+@keyframes round-card-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 /* ---- Wordmark ---- */
 .wordmark {
     font-family: 'DM Sans', sans-serif;
@@ -901,10 +938,43 @@ body.dashboard-body {
     width: 0%;
     background: rgba(127, 168, 151, 0.42);  /* sage muted for wrong */
     border-radius: 999px;
-    transition: width 800ms cubic-bezier(0.22, 0.61, 0.36, 1) 400ms;
+    /* #1169: the bar grows from the left edge with `scaleX`, not by
+       transitioning `width` — a transform costs no layout, and the width is
+       written once at reveal and then left alone. */
+    transform-origin: left center;
 }
 .dashboard-answer.correct .dashboard-answer-bar-fill {
     background: var(--dash-success);  /* sage green per DESIGN.md */
+}
+
+/* #1169: the bars grow on the reveal, 70 ms apart in tile order, so the
+   room sees how it split before it sees who was right; the correct bar
+   then gets one sage halo. The container's fade above stays — it carries
+   the track and the percentage in after the correct/wrong colour — and the
+   fills grow inside it. `backwards` holds each bar at zero through its
+   delay and lets go afterwards. Lightning and Hot Seat have no per-question
+   distribution; were one to appear inside `.motion-fast` it would run at
+   half length. */
+.dashboard-answer:nth-child(2) { --motion-i: 1; }
+.dashboard-answer:nth-child(3) { --motion-i: 2; }
+.dashboard-answer:nth-child(4) { --motion-i: 3; }
+.dashboard-answer.revealed .dashboard-answer-bar-fill {
+    animation: dashboard-bar-grow var(--dur-bar) var(--ease-out) backwards;
+    animation-delay: calc(var(--dur-bar-lead) + var(--motion-i, 0) * var(--dur-bar-stagger));
+}
+@keyframes dashboard-bar-grow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+/* On the track, not the fill: the track clips its fill (`overflow:
+   hidden`), so a shadow on the fill would never be seen. */
+.dashboard-answer.revealed.correct .dashboard-answer-bar {
+    animation: dashboard-bar-halo var(--dur-halo) var(--ease-out) backwards;
+    animation-delay: calc(var(--dur-bar-lead) + var(--motion-i, 0) * var(--dur-bar-stagger) + var(--dur-halo-lead));
+}
+@keyframes dashboard-bar-halo {
+    from { box-shadow: 0 0 0 0 rgba(127, 168, 151, 0.6); }
+    to   { box-shadow: 0 0 0 8px rgba(127, 168, 151, 0); }
 }
 .dashboard-answer-percent {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -1643,7 +1713,9 @@ body.dashboard-body {
     background: radial-gradient(ellipse at 50% 30%, var(--dash-success-glow) 0%, transparent 45%);
     pointer-events: none;
     opacity: 0;
-    animation: spotlight-in 0.8s ease-out 0.2s forwards;
+    /* #1169: the room's spotlight comes up with the champion's glow, not
+       before the podium has even started — it would light an empty stage. */
+    animation: spotlight-in var(--dur-podium-glow) var(--ease-out) var(--dur-podium-glow-delay) forwards;
 }
 
 @keyframes spotlight-in {

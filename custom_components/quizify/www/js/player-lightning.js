@@ -110,6 +110,14 @@
         var timer = document.getElementById('lightning-timer');
         if (timer) timer.textContent = Math.ceil(msg.seconds || 15);
 
+        // #1169: the question entrance at half length — Lightning questions
+        // come every few seconds. The clock above is already set.
+        var shared = window.QuizifyRenderShared;
+        if (shared && shared.playEntrance) {
+            shared.playEntrance(qtext,
+                document.querySelectorAll('[data-lightning-answer]'), { fast: true });
+        }
+
         // #285: no host "end now" control during the auto round.
 
         _answeredIndex = -1;

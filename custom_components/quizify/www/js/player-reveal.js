@@ -48,7 +48,12 @@
     function resetRankMemo() {
         _prevRanks = null;
         _deltaBase = null;
+        _shownScores = {};
     }
+
+    // #1169: the total each standings row was last shown with — the digit
+    // roll runs only on a number that moved.
+    var _shownScores = {};
 
     function updateRevealView(data) {
         var players = data.players || [];
@@ -681,6 +686,13 @@
                 scoringNote +
             '</div>';
         }).join('') + shared.scoringOutHtml(_scoringStatus);
+        if (shared.rollScores && container.querySelectorAll) {
+            shared.rollScores(
+                container.querySelectorAll('.pl-result-sc'),
+                rows.map(function (r) { return { key: r.key, score: r.score }; }),
+                _shownScores
+            );
+        }
         if (_scoringStatus) {
             shared.bindScoringButtons(container, function (entrantId, out) {
                 if (state.ws && state.ws.readyState === WebSocket.OPEN) {
@@ -700,6 +712,9 @@
     function flashAnswerButtons(correctAnswerText, myEntry) {
         var answerButtons = document.getElementById('answer-buttons');
         if (!answerButtons) return;
+        // #1169: the lock-in's 40 % dim is for the wait; the reveal's own
+        // marks decide what stands out from here.
+        if (answerButtons.classList) answerButtons.classList.remove('is-locked');
 
         var buttons = answerButtons.querySelectorAll('.answer-btn');
         if (!buttons.length) return;

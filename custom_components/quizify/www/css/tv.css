@@ -228,6 +228,46 @@
     --transition-normal: 220ms ease-out;
     --transition-slow: 400ms ease-in-out;
 
+    /* Motion tokens (#1169) — the Soft Parlor motion table in DESIGN.md,
+       as numbers. Ease-out curves only; nothing here overshoots, because a
+       spring fights the warm posture. Every animation added for #1169 reads
+       its duration AND its delays from these, which is what lets the
+       reduced-motion block below and `.a11y` collapse all of them at once
+       (the global rule shortens durations but leaves delays alone, and a
+       podium that waits 1.5 s to show its champion is not "less motion"). */
+    --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.45, 0, 0.25, 1);
+
+    /* 1. Question entrance: headline fade + 10 px rise, tiles 50 ms apart. */
+    --dur-enter: 240ms;
+    --dur-enter-lead: 160ms;      /* first tile starts while the headline lands */
+    --dur-enter-stagger: 50ms;
+    /* 2. Round transition (TV): one warm band, card fades in behind it. */
+    --dur-round: 500ms;
+    --dur-round-card: 260ms;
+    --dur-round-card-delay: 240ms;
+    /* 3. Score digit roll. */
+    --dur-roll: 400ms;
+    --dur-roll-stagger: 60ms;     /* per column, left to right: ones land last */
+    /* 4. Answer distribution bars (TV reveal). */
+    --dur-bar: 520ms;
+    --dur-bar-lead: 320ms;        /* after the correct/wrong colour lands */
+    --dur-bar-stagger: 70ms;
+    --dur-halo: 900ms;
+    --dur-halo-lead: 520ms;       /* once its bar has grown */
+    /* 5. Podium 3 → 2 → 1, then the champion's glow widens. ~2.5 s. */
+    --dur-podium-rise: 320ms;
+    --dur-podium-second: 700ms;   /* third → pause → second */
+    --dur-podium-first: 1500ms;   /* second → longer pause → champion */
+    --dur-podium-glow-delay: 1750ms;
+    --dur-podium-glow: 800ms;
+    /* 6. Lock-in on the phone. */
+    --dur-lock: 220ms;
+    --dur-check: 280ms;
+    --dur-check-delay: 120ms;
+    --dur-status: 200ms;
+    --dur-status-delay: 300ms;   /* the "Sent" line, after the check */
+
     /* Z-Index Tokens */
     --z-control-bar: 100;
     --z-modal: 1000;
@@ -277,6 +317,44 @@ a:focus-visible,
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+}
+
+/* #1169: Lightning and Hot Seat questions come faster, so the question
+   entrance (1) and the distribution bars (4) run at half length there
+   instead of being dropped. Set on the animated element itself (or an
+   ancestor) by QuizifyRenderShared.playEntrance. */
+.motion-fast {
+    --dur-enter: 120ms;
+    --dur-enter-lead: 80ms;
+    --dur-enter-stagger: 25ms;
+    --dur-bar: 260ms;
+    --dur-bar-lead: 160ms;
+    --dur-bar-stagger: 35ms;
+    --dur-halo-lead: 260ms;
+}
+
+/* #1169: the rule above collapses durations but not delays, and the new
+   animations are staggered — under reduced motion a podium would otherwise
+   sit empty for 1.5 s before its champion popped in. Zeroing the delay
+   tokens makes every #1169 animation land at once, already finished.
+   `.motion-fast` is listed so its own (shorter, non-zero) delays cannot
+   win over this by being set closer to the element. */
+@media (prefers-reduced-motion: reduce) {
+    :root,
+    .motion-fast {
+        --dur-enter-lead: 0ms;
+        --dur-enter-stagger: 0ms;
+        --dur-round-card-delay: 0ms;
+        --dur-roll-stagger: 0ms;
+        --dur-bar-lead: 0ms;
+        --dur-bar-stagger: 0ms;
+        --dur-halo-lead: 0ms;
+        --dur-podium-second: 0ms;
+        --dur-podium-first: 0ms;
+        --dur-podium-glow-delay: 0ms;
+        --dur-check-delay: 0ms;
+        --dur-status-delay: 0ms;
     }
 }
 
@@ -2072,6 +2150,65 @@ button, .btn {
     opacity: 0.75;
     cursor: default;
 }
+
+/* ==========================================
+   Question entrance (#1169, DESIGN.md Motion: "Question enters")
+   ==========================================
+
+   The headline fades in with a 10 px rise, then the answer tiles follow
+   50 ms apart — the order the host reads them out. Phone and television
+   share it; QuizifyRenderShared.playEntrance adds `motion-enter` (and
+   `--motion-i` per tile) and takes the class off again on animationend.
+
+   Visual only: the question and its clock are already live when this
+   starts, and nothing waits for it to finish.
+
+   `backwards`, never `both`: an animation that keeps holding `opacity: 1`
+   and `transform: none` after it ends would out-rank every state rule on
+   the tile — the lock-in's .98 scale, the 40 % dim of the others,
+   `.is-eliminated`'s .2 and the reveal's own keyframes. */
+.motion-enter {
+    animation: motion-enter var(--dur-enter) var(--ease-out) backwards;
+    animation-delay: calc(var(--dur-enter-lead) + var(--motion-i, 0) * var(--dur-enter-stagger));
+}
+.motion-enter.motion-enter--head {
+    animation-delay: 0ms;
+}
+@keyframes motion-enter {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* ==========================================
+   Score digit roll (#1169, DESIGN.md Motion: "Score tick")
+   ==========================================
+
+   Built by QuizifyRenderShared.rollDigits over an existing score element:
+   one column of 0-9 per digit, each translated to its new value, left to
+   right so the ones column lands last. The final number sits in an
+   .sr-only span next to the columns; the columns are aria-hidden, so a
+   screen reader hears the score once, not ten digits per column. Once the
+   roll is over the element goes back to plain text. */
+.digit-roll-digits {
+    display: inline-flex;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    height: 1.2em;
+    line-height: 1.2em;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+.digit-roll-col {
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--dur-roll) var(--ease-out);
+}
+.digit-roll-col > span,
+.digit-roll-static {
+    display: block;
+    height: 1.2em;
+    text-align: center;
+}
 /* ==========================================
    Lobby
    ========================================== */
@@ -2776,16 +2913,49 @@ button, .btn {
     flex-direction: column;
     align-items: center;
     gap: var(--space-xs);
-    animation: podium-rise 0.8s ease-out both;
+    /* #1169: 3 → 2 → 1. Third place rises, a pause, second, a longer pause,
+       then the champion — room for the host to announce each one. Keyed on
+       the place the shared renderer writes into `data-place`, not on the
+       column (the columns are 2nd-1st-3rd), so a tie for first rises
+       together. The phone's end screen runs the same clock (07-player.css)
+       so no guest's phone names the winner before the television does. */
+    animation: podium-rise var(--dur-podium-rise) var(--ease-out) both;
+    position: relative;
 }
 
-.podium-place:nth-child(1) { animation-delay: 0.2s; }
-.podium-place:nth-child(2) { animation-delay: 0.4s; }
-.podium-place:nth-child(3) { animation-delay: 0.6s; }
+.podium-place[data-place="2"] { animation-delay: var(--dur-podium-second); }
+.podium-place[data-place="1"] { animation-delay: var(--dur-podium-first); }
 
 @keyframes podium-rise {
     from { transform: translateY(24px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
+}
+
+/* …then one warm gradient widens from the champion's block (DESIGN.md
+   Motion: "Podium reveal", 800 ms). Behind the block, never over it. */
+.podium-place[data-place="1"]::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 220%;
+    height: 120%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(ellipse 50% 60% at 50% 100%,
+        rgba(232, 196, 127, 0.38),
+        rgba(232, 138, 127, 0.14) 55%,
+        transparent 80%);
+    transform: translateX(-50%) scaleX(0.2);
+    opacity: 0;
+    animation: podium-glow-widen var(--dur-podium-glow) var(--ease-out) both;
+    /* Absolute, not relative to the champion: a pseudo-element's animation
+       starts with the page, not when its parent's rise ends. */
+    animation-delay: var(--dur-podium-glow-delay);
+}
+@keyframes podium-glow-widen {
+    from { opacity: 0; transform: translateX(-50%) scaleX(0.2); }
+    to   { opacity: 1; transform: translateX(-50%) scaleX(1); }
 }
 
 .podium-name {
@@ -3611,6 +3781,43 @@ body.dashboard-body {
 .dashboard-view { display: none; flex-direction: column; flex: 1; min-height: 0; }
 .dashboard-view.active { display: flex; }
 
+/* Round transition (#1169, DESIGN.md Motion: "Round transition").
+   Played by dashboard.js only when the evening moves into a different kind
+   of round — regular questions, the Lightning round, the Hot Seat, the final
+   round — never between two questions of the same one, or it would wear
+   thin by question twenty. The old screen is already gone (showView), one
+   sun-to-coral band sweeps across once, and the new screen fades in behind
+   it. The band sits on top of everything and takes no clicks. */
+.round-sweep {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+    pointer-events: none;
+    background: linear-gradient(100deg,
+        transparent 0%,
+        rgba(232, 196, 127, 0.45) 40%,
+        rgba(232, 138, 127, 0.40) 60%,
+        transparent 100%);
+    transform: translateX(-110%);
+    visibility: hidden;
+}
+.round-sweep.is-playing {
+    visibility: visible;
+    animation: round-sweep var(--dur-round) var(--ease-in-out) both;
+}
+@keyframes round-sweep {
+    from { transform: translateX(-110%); }
+    to   { transform: translateX(110%); }
+}
+.dashboard-view.round-enter {
+    animation: round-card-in var(--dur-round-card) var(--ease-out) backwards;
+    animation-delay: var(--dur-round-card-delay);
+}
+@keyframes round-card-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 /* ---- Wordmark ---- */
 .wordmark {
     font-family: 'DM Sans', sans-serif;
@@ -4433,10 +4640,43 @@ body.dashboard-body {
     width: 0%;
     background: rgba(127, 168, 151, 0.42);  /* sage muted for wrong */
     border-radius: 999px;
-    transition: width 800ms cubic-bezier(0.22, 0.61, 0.36, 1) 400ms;
+    /* #1169: the bar grows from the left edge with `scaleX`, not by
+       transitioning `width` — a transform costs no layout, and the width is
+       written once at reveal and then left alone. */
+    transform-origin: left center;
 }
 .dashboard-answer.correct .dashboard-answer-bar-fill {
     background: var(--dash-success);  /* sage green per DESIGN.md */
+}
+
+/* #1169: the bars grow on the reveal, 70 ms apart in tile order, so the
+   room sees how it split before it sees who was right; the correct bar
+   then gets one sage halo. The container's fade above stays — it carries
+   the track and the percentage in after the correct/wrong colour — and the
+   fills grow inside it. `backwards` holds each bar at zero through its
+   delay and lets go afterwards. Lightning and Hot Seat have no per-question
+   distribution; were one to appear inside `.motion-fast` it would run at
+   half length. */
+.dashboard-answer:nth-child(2) { --motion-i: 1; }
+.dashboard-answer:nth-child(3) { --motion-i: 2; }
+.dashboard-answer:nth-child(4) { --motion-i: 3; }
+.dashboard-answer.revealed .dashboard-answer-bar-fill {
+    animation: dashboard-bar-grow var(--dur-bar) var(--ease-out) backwards;
+    animation-delay: calc(var(--dur-bar-lead) + var(--motion-i, 0) * var(--dur-bar-stagger));
+}
+@keyframes dashboard-bar-grow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+/* On the track, not the fill: the track clips its fill (`overflow:
+   hidden`), so a shadow on the fill would never be seen. */
+.dashboard-answer.revealed.correct .dashboard-answer-bar {
+    animation: dashboard-bar-halo var(--dur-halo) var(--ease-out) backwards;
+    animation-delay: calc(var(--dur-bar-lead) + var(--motion-i, 0) * var(--dur-bar-stagger) + var(--dur-halo-lead));
+}
+@keyframes dashboard-bar-halo {
+    from { box-shadow: 0 0 0 0 rgba(127, 168, 151, 0.6); }
+    to   { box-shadow: 0 0 0 8px rgba(127, 168, 151, 0); }
 }
 .dashboard-answer-percent {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -5175,7 +5415,9 @@ body.dashboard-body {
     background: radial-gradient(ellipse at 50% 30%, var(--dash-success-glow) 0%, transparent 45%);
     pointer-events: none;
     opacity: 0;
-    animation: spotlight-in 0.8s ease-out 0.2s forwards;
+    /* #1169: the room's spotlight comes up with the champion's glow, not
+       before the podium has even started — it would light an empty stage. */
+    animation: spotlight-in var(--dur-podium-glow) var(--ease-out) var(--dur-podium-glow-delay) forwards;
 }
 
 @keyframes spotlight-in {

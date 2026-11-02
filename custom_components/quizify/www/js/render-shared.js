@@ -273,7 +273,10 @@
                 if (opts.medals) {
                     label = '<div class="podium-label">' + label + '</div>';
                 }
-                return '<div class="podium-place">' + label +
+                // #1169: `data-place` drives the 3 → 2 → 1 rise in
+                // 05-finale.css. The place, not the column: the columns read
+                // 2nd-1st-3rd, and a tie for first must rise together.
+                return '<div class="podium-place" data-place="' + p.place + '">' + label +
                     '<div class="podium-bar ' + (PODIUM_BAR_CLASS[p.place] || '') + '">' +
                         p.place +
                     '</div>' +
@@ -757,7 +760,130 @@
         return img;
     }
 
+    // ---- Motion (#1169). Decoration only: each helper leaves the DOM as it
+    // found it once done, and is a no-op without the element or API. Timings
+    // live in 00-tokens.css.
+
+    function prefersReducedMotion() {
+        try {
+            var root = document.documentElement;
+            // Read via className: the TV never sets `a11y`, and #880's guard
+            // counts a classList call as producing the class.
+            if (root && (' ' + root.className + ' ').indexOf(' a11y ') !== -1) return true;
+            return !!(window.matchMedia &&
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+        } catch (_e) { return false; }
+    }
+
+    // Restart a CSS animation: the reflow between remove and add is required.
+    function _replayClass(el, cls) {
+        if (!el || !el.classList) return;
+        el.classList.remove(cls);
+        void el.offsetWidth;
+        el.classList.add(cls);
+    }
+
+    // Question entrance: headline, then tiles 50 ms apart; `fast` halves it
+    // (Lightning, Hot Seat). The question and its clock are already live.
+    function playEntrance(head, tiles, opts) {
+        var fast = opts && opts.fast;
+        var list = head ? [head] : [];
+        Array.prototype.forEach.call(tiles || [], function (t) { list.push(t); });
+        list.forEach(function (el, n) {
+            if (!el || !el.classList) return;
+            var isHead = head && n === 0;
+            var cls = ['motion-enter'];
+            if (isHead) cls.push('motion-enter--head');
+            if (fast) cls.push('motion-fast');
+            el.classList.remove('motion-enter', 'motion-enter--head', 'motion-fast');
+            if (el.style && el.style.setProperty) {
+                el.style.setProperty('--motion-i', String(head ? n - 1 : n));
+            }
+            void el.offsetWidth;
+            cls.forEach(function (c) { el.classList.add(c); });
+            if (typeof el.addEventListener !== 'function') return;
+            el.addEventListener('animationend', function done(e) {
+                if (e && e.target !== el) return;
+                el.removeEventListener('animationend', done);
+                cls.forEach(function (c) { el.classList.remove(c); });
+            });
+        });
+    }
+
+    // Score digit roll: one 0-9 column per digit, rolled from the old digit
+    // (blank for a new column) to the new one, ones last. Screen readers get
+    // the final value from an .sr-only span; the columns are aria-hidden.
+    // Plain text again afterwards.
+    function rollDigits(el, from, to) {
+        if (!el || typeof from !== 'number' || typeof to !== 'number' ||
+            !isFinite(from) || !isFinite(to) || from === to ||
+            !document.createElement || prefersReducedMotion()) return;
+        var toStr = String(to), fromStr = String(from);
+        var pad = toStr.length - fromStr.length;
+        var sr = document.createElement('span');
+        sr.className = 'sr-only';
+        sr.textContent = toStr;
+        var digits = document.createElement('span');
+        digits.className = 'digit-roll-digits';
+        digits.setAttribute('aria-hidden', 'true');
+        var cols = [];
+        for (var i = 0; i < toStr.length; i++) {
+            var ch = toStr.charAt(i);
+            var span = document.createElement('span');
+            if (ch < '0' || ch > '9') {
+                span.className = 'digit-roll-static';
+                span.textContent = ch;
+            } else {
+                span.className = 'digit-roll-col';
+                for (var d = 0; d < 10; d++) {
+                    var cell = document.createElement('span');
+                    cell.textContent = String(d);
+                    span.appendChild(cell);
+                }
+                var f = fromStr.charAt(i - pad);
+                // 10 % is one cell; +10 % shows the blank above 0.
+                span.style.transition = 'none';
+                span.style.transform = 'translateY(' +
+                    ((i - pad >= 0 && f >= '0' && f <= '9') ? -10 * f : 10) + '%)';
+                cols.push({ el: span, to: -10 * ch, i: i });
+            }
+            digits.appendChild(span);
+        }
+        el.textContent = '';
+        el.appendChild(sr);
+        el.appendChild(digits);
+        void digits.offsetWidth;
+        cols.forEach(function (c) {
+            c.el.style.transition = '';  // delay after: the shorthand clears it
+            c.el.style.transitionDelay = 'calc(' + c.i + ' * var(--dur-roll-stagger))';
+            c.el.style.transform = 'translateY(' + c.to + '%)';
+        });
+        // A timer, not transitionend: a background tab never fires it.
+        setTimeout(function () {
+            if (digits.parentNode === el) el.textContent = toStr;
+        }, 500 + 60 * toStr.length);
+    }
+
+    // Roll each score whose entrant showed a different one last time. `memo`
+    // ({key: score}) is the caller's and updated in place, so a repaint with
+    // the same numbers rolls nothing. scoreEls[i] belongs to rows[i].
+    function rollScores(scoreEls, rows, memo) {
+        if (!memo) return;
+        Array.prototype.forEach.call(scoreEls || [], function (el, i) {
+            var row = rows[i];
+            if (!row || row.key == null || typeof row.score !== 'number') return;
+            var prev = memo[row.key];
+            memo[row.key] = row.score;
+            if (typeof prev === 'number') rollDigits(el, prev, row.score);
+        });
+    }
+
     window.QuizifyRenderShared = {
+        prefersReducedMotion: prefersReducedMotion,
+        replayClass: _replayClass,
+        playEntrance: playEntrance,
+        rollDigits: rollDigits,
+        rollScores: rollScores,
         SCORE_DELTA_MS: SCORE_DELTA_MS,
         POWERUP_SPECS: POWERUP_SPECS,
         PODIUM_MEDALS: PODIUM_MEDALS,

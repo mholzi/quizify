@@ -66,6 +66,27 @@
     scroll-behavior: auto !important;
 }
 
+/* …and the #1169 delay tokens, for the same reason 00-tokens.css zeroes them
+   under prefers-reduced-motion: the rule above shortens durations only, so a
+   staggered entrance or the podium's 3 → 2 → 1 would still wait out its
+   delays. The digit roll checks for `.a11y` in JS and prints the number.
+   (`.motion-fast` keeps its own 80/25 ms lead and stagger here: naming a
+   class the television renders in this phone-only sheet is what #880's
+   guard forbids, and the durations are collapsed anyway.) */
+.a11y {
+    --dur-enter-lead: 0ms;
+    --dur-enter-stagger: 0ms;
+    --dur-roll-stagger: 0ms;
+    --dur-bar-lead: 0ms;
+    --dur-bar-stagger: 0ms;
+    --dur-halo-lead: 0ms;
+    --dur-podium-second: 0ms;
+    --dur-podium-first: 0ms;
+    --dur-podium-glow-delay: 0ms;
+    --dur-check-delay: 0ms;
+    --dur-status-delay: 0ms;
+}
+
 /* The toggle itself sits in the player header next to the sound button and
    inherits that button's styling; only the pressed state differs, so the
    host can see at a glance which mode the phone is in. */

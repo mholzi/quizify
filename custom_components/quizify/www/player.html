@@ -540,9 +540,12 @@
                         <div id="powerup-hint" class="powerup-explainer hidden"></div>
                     </div>
 
-                    <div id="submitted-confirmation" class="submitted-confirmation hidden">
-                        <span class="checkmark">✓</span>
-                        <span data-i18n="game.submitted">Submitted!</span>
+                    <!-- #1169: the lock-in's "Sent" line. The check itself is
+                         drawn into the picked tile by player-game.js; the text
+                         is rewritten to "Sent · waiting for N more" while the
+                         room is still answering. -->
+                    <div id="submitted-confirmation" class="submitted-confirmation lock-in-status hidden" role="status">
+                        <span id="lock-in-status-text" data-i18n="game.sent">Sent</span>
                     </div>
                 </section>
 
