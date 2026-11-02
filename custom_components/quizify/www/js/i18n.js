@@ -281,6 +281,26 @@ window.QuizifyI18n = (function() {
                 else warnMissingKey('data-i18n', key);
             }
         });
+        // #1177: a two-line headline is ONE key with a "\n" where the line
+        // breaks, so the translator decides where it falls — it used to be
+        // two keys (setup.heroLine1/2) glued together in the markup, which
+        // fixes the word order of every language to the English one. Lines
+        // after the first carry the accent colour, as the old second span did.
+        scope.querySelectorAll('[data-i18n-lines]').forEach(function(el) {
+            var key = el.getAttribute('data-i18n-lines');
+            if (!key) return;
+            var translated = t(key);
+            if (translated === key) { warnMissingKey('data-i18n-lines', key); return; }
+            var lines = String(translated).split('\n');
+            el.textContent = '';
+            lines.forEach(function(line, i) {
+                if (i > 0) el.appendChild(document.createElement('br'));
+                var span = document.createElement('span');
+                if (i > 0) span.className = 'accent';
+                span.textContent = line;
+                el.appendChild(span);
+            });
+        });
         scope.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
             var key = el.getAttribute('data-i18n-placeholder');
             if (key) {

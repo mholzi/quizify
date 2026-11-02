@@ -1522,9 +1522,7 @@
         // Three names is what reads from a couch; a fourth turns the line
         // into a table nobody parses mid-celebration.
         var parts = leaders.slice(0, 3).map(function (entry) {
-            var wins = entry.wins === 1
-                ? t('dashboard.tonightWinsOne')
-                : t('dashboard.tonightWins', { wins: entry.wins });
+            var wins = t('dashboard.tonightWins', { wins: entry.wins });
             return QuizifyUtils.escapeHtml(entry.name) + ' ' + wins;
         });
         // parts[] is already escaped per entry — escaping the joined

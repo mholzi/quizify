@@ -39,6 +39,8 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
+from tests.i18n_node import HAVE_NODE, render
+
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
 
@@ -63,16 +65,8 @@ _I18N = _WWW / "i18n"
 
 _LANGS = ("en", "de", "es")
 
-# The five sentences renderAllTime chooses between. Only three of the four
-# (wins × games) combinations are reachable once you have won something: two
-# wins from one game is not a thing.
-_ALL_TIME_KEYS = (
-    "allTime",
-    "allTimeOneWin",
-    "allTimeOneWinOneGame",
-    "allTimeFirstWin",
-    "allTimeFirstWinOneGame",
-)
+# Since #1177 one sentence with plural rules covers what used to be five keys.
+_ALL_TIME_KEYS = ("allTime",)
 
 
 # ---------------------------------------------------------------------------
@@ -365,25 +359,45 @@ def test_every_bundle_carries_every_all_time_sentence(lang: str) -> None:
         assert key in lobby, f"{lang}.json is missing lobby.{key}"
 
 
+_ALL_TIME_CASES = {
+    # (wins, games): the four shapes renderAllTime used to pick a key for.
+    "en": {
+        (0, 1): "no win yet, 1 game",
+        (0, 4): "no win yet, 4 games",
+        (1, 1): "1 win from 1 game",
+        (1, 2): "1 win from 2 games",
+        (3, 3): "3 wins from 3 games",
+    },
+    "de": {
+        (0, 1): "noch kein Sieg, 1 Spiel",
+        (0, 4): "noch kein Sieg, 4 Spiele",
+        (1, 1): "1 Sieg aus 1 Spiel",
+        (1, 2): "1 Sieg aus 2 Spielen",
+        (3, 3): "3 Siege aus 3 Spielen",
+    },
+    "es": {
+        (0, 1): "sin victorias aún, 1 partida",
+        (0, 4): "sin victorias aún, 4 partidas",
+        (1, 1): "1 victoria en 1 partida",
+        (1, 2): "1 victoria en 2 partidas",
+        (3, 3): "3 victorias en 3 partidas",
+    },
+}
+
+
+@pytest.mark.skipif(not HAVE_NODE, reason="node not installed")
 @pytest.mark.parametrize("lang", _LANGS)
-def test_the_singular_sentences_spell_their_number_out(lang: str) -> None:
-    """"1 wins from 2 games" was the reported wording. The count that is one is
-    written into the sentence instead of interpolated, which is what lets each
-    language inflect its own noun without a pluralisation engine."""
-    lobby = _bundle(lang)["lobby"]
-
-    assert "{wins}" not in lobby["allTimeOneWin"]
-    assert "{games}" in lobby["allTimeOneWin"]
-
-    assert "{wins}" not in lobby["allTimeOneWinOneGame"]
-    assert "{games}" not in lobby["allTimeOneWinOneGame"]
-
-    assert "{games}" not in lobby["allTimeFirstWinOneGame"]
-
-    # The plural sentences keep interpolating, or they would say the same
-    # number to everyone.
-    assert "{wins}" in lobby["allTime"] and "{games}" in lobby["allTime"]
-    assert "{games}" in lobby["allTimeFirstWin"]
+def test_the_sentence_is_in_the_right_number(lang: str) -> None:
+    """"1 wins from 2 games" was the reported wording (#776). The plural rule
+    in the one key has to reach every shape the five old keys covered."""
+    cases = _ALL_TIME_CASES[lang]
+    got = render([
+        (lang, "lobby.allTime", {"rank": 5, "total": 64, "wins": w, "games": g})
+        for (w, g) in cases
+    ])
+    for (shape, want), line in zip(cases.items(), got, strict=True):
+        assert line.endswith(want), (shape, line)
+        assert "5" in line and "64" in line, line
 
 
 @pytest.mark.parametrize("lang", _LANGS)
@@ -393,15 +407,12 @@ def test_every_all_time_sentence_still_names_the_rank(lang: str) -> None:
         assert "{rank}" in lobby[key] and "{total}" in lobby[key], key
 
 
-def test_the_key_is_picked_from_both_counts() -> None:
-    """Reading the selection out of the source rather than re-implementing it:
-    the point is that games_played, not just wins, decides the sentence — the
-    first game you win is the case both a wins-only and a games-only rule get
-    wrong."""
+def test_one_key_carries_the_counts() -> None:
+    """The counts go to the bundle's plural rule as params, not into a choice
+    between keys (#1177)."""
     source = _without_comments((_JS / "player-lobby.js").read_text("utf-8"))
-    body = _js_function(source, "function _allTimeKey(standing)")
+    body = _js_function(source, "function renderAllTime(standing, elementId)")
 
-    assert "standing.games_played === 1" in body
-    assert "standing.wins === 1" in body
-    for key in _ALL_TIME_KEYS:
-        assert f"lobby.{key}" in body, key
+    assert "wins: standing.wins || 0" in body
+    assert "games: standing.games_played || 0" in body
+    assert "lobby.allTimeOneWin" not in source

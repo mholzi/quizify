@@ -273,21 +273,22 @@ class TestFrontendWiring:
         assert "function renderAllTime(standing" in bundle
         assert "renderAllTime: renderAllTime" in bundle
         assert "lobby.renderAllTime(msg.all_time)" in bundle
-        # Zero-win phrasing exists rather than rendering "0 wins".
-        assert "lobby.allTimeFirstWin" in bundle
+        # Zero-win phrasing exists rather than rendering "0 wins" — since
+        # #1177 as the =0 branch of the one plural sentence.
+        assert "'lobby.allTime'" in bundle
 
     def test_i18n_keys_in_every_language(self) -> None:
         for lang in ("de", "en", "es"):
             data = json.loads((WWW / "i18n" / f"{lang}.json").read_text("utf-8"))
             lobby = data["lobby"]
-            for key in ("allTime", "allTimeFirstWin"):
-                assert key in lobby, f"{lang}.json missing lobby.{key}"
+            assert "allTime" in lobby, f"{lang}.json missing lobby.allTime"
             assert "{rank}" in lobby["allTime"]
             assert "{total}" in lobby["allTime"]
-            assert "{wins}" in lobby["allTime"]
-            assert "{games}" in lobby["allTime"]
-            # The no-win variant must not promise a win count.
-            assert "{wins}" not in lobby["allTimeFirstWin"]
+            assert "{wins, plural," in lobby["allTime"]
+            assert "{games, plural," in lobby["allTime"]
+            # The no-win variant must not promise a win count (#1177: the
+            # =0 branch of the plural, so "0 wins" is never printed).
+            assert "{wins, plural, =0{" in lobby["allTime"]
 
     def test_css_ships_the_class(self) -> None:
         css = (WWW / "css" / "styles.css").read_text("utf-8")

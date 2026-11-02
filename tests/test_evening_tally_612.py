@@ -136,12 +136,11 @@ def test_the_strings_ship_in_every_language(code: str) -> None:
     dashboard = json.loads((_WWW / "i18n" / f"{code}.json").read_text("utf-8"))[
         "dashboard"
     ]
-    for key in ("tonightLabel", "tonightWins", "tonightWinsOne"):
+    for key in ("tonightLabel", "tonightWins"):
         assert dashboard.get(key), f"{code}.dashboard.{key} missing"
-    assert "{wins}" in dashboard["tonightWins"]
-    # The singular must not carry a placeholder — "1 wins" is the bug this
-    # separate key exists to prevent.
-    assert "{wins}" not in dashboard["tonightWinsOne"]
+    # #1177: one key with a plural rule — "1 wins" is what the old separate
+    # `tonightWinsOne` key existed to prevent.
+    assert "{wins, plural," in dashboard["tonightWins"]
 
 
 def test_the_tv_renders_it_and_does_not_double_escape() -> None:

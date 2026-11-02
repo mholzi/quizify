@@ -810,7 +810,7 @@
             els.categorySummary.textContent = _t('admin.categoryMixed');
             if (countEl) countEl.classList.add('hidden');
         } else if (selectedCategory === 'multi') {
-            els.categorySummary.textContent = _t('admin.categoriesCountPlural', { count: selectedCategories.length });
+            els.categorySummary.textContent = _t('admin.categoriesCount', { count: selectedCategories.length });
             if (countEl) {
                 var total = 0;
                 selectedCategories.forEach(function (val) {
@@ -2789,10 +2789,8 @@
         // Three names, the same cut the television makes: a fourth turns the
         // line into a table nobody reads mid-celebration.
         var parts = leaders.slice(0, 3).map(function (entry) {
-            var wins = entry.wins === 1
-                ? _tOr('dashboard.tonightWinsOne', null, '1 win')
-                : _tOr('dashboard.tonightWins', { wins: entry.wins },
-                       entry.wins + ' wins');
+            var wins = _tOr('dashboard.tonightWins', { wins: entry.wins },
+                            entry.wins + (entry.wins === 1 ? ' win' : ' wins'));
             return entry.name + ' ' + wins;
         });
         els.adminEveningTally.textContent =
@@ -3114,11 +3112,14 @@
         // hide it entirely — "Ready at 1 player · still need 0 more" is
         // noise once the Start button is visible.
         var countdownEl = document.getElementById('lobby-countdown');
-        var minEl = document.getElementById('lobby-min-players');
         var missingEl = document.getElementById('lobby-missing-players');
-        if (minEl) minEl.textContent = LOBBY_MIN_PLAYERS;
         if (missingEl) {
-            missingEl.textContent = Math.max(0, LOBBY_MIN_PLAYERS - playerCount);
+            // #1177: one sentence with a plural rule, not four fragments
+            // around two numbers ("noch 2 fehlt", "faltan 1 más"). The params
+            // ride on the element so a language switch re-renders it.
+            var missingParams = { count: Math.max(0, LOBBY_MIN_PLAYERS - playerCount) };
+            missingEl.setAttribute('data-i18n-params', JSON.stringify(missingParams));
+            missingEl.textContent = _t('lobby.missingPlayers', missingParams);
         }
         if (countdownEl) {
             countdownEl.classList.toggle('is-ready', isReady);

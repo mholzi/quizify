@@ -162,19 +162,13 @@
         });
         if (!players) players = leaderboard.length;
 
-        // #976: one flat `…One` key per count, the convention `lobby.alsoOne`
-        // and `dashboard.tonightWinsOne` already use. Written out rather than
-        // assembled from a prefix so both keys stay greppable — #798 counts a
-        // key as dead unless it appears verbatim under `www/`.
+        // #976 / #1177: the singular comes from the bundle's plural rule
+        // ({count, plural, one{…} other{…}}), not from a second `…One` key.
         var parts = [];
         if (rounds) {
-            parts.push(rounds === 1
-                ? _tf('leaderboard.roundsCountOne', '1 Runde')
-                : _tf('leaderboard.roundsCount', '{count} Runden', { count: rounds }));
+            parts.push(_tf('leaderboard.roundsCount', rounds + ' rounds', { count: rounds }));
         }
-        parts.push(players === 1
-            ? _tf('leaderboard.playersCountOne', '1 Spieler')
-            : _tf('leaderboard.playersCount', '{count} Spieler', { count: players }));
+        parts.push(_tf('leaderboard.playersCount', players + ' players', { count: players }));
         metaEl.textContent = parts.join(' · ');
     }
 

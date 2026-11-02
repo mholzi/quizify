@@ -475,9 +475,8 @@
 
     function _scoringText(flag) {
         if (!flag.is_team) {
-            return flag.missed === 1
-                ? _t('admin.scoringMissedOne', 'Disconnected for 1 round')
-                : _t('admin.scoringMissedMany', 'Disconnected for {count} rounds', { count: flag.missed });
+            return _t('admin.scoringMissed', 'Disconnected for ' + flag.missed + ' rounds',
+                { count: flag.missed });
         }
         if (flag.present === 0) return _t('admin.scoringAllGone', 'All disconnected');
         return _t('admin.scoringSomeGone', '{names} disconnected, {present} of {total} here', {

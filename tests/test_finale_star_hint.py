@@ -28,7 +28,7 @@ _WWW = _REPO / "custom_components" / "quizify" / "www"
 _ADMIN_JS = _WWW / "js" / "admin.js"
 _ADMIN_HTML = _WWW / "admin.html"
 _STUB = Path(__file__).resolve().parent / "fixtures" / "dom_stub.js"
-_KEYS = ("starHintBefore", "starHintLink", "starHintAfter", "starHintDismiss")
+_KEYS = ("starHint", "starHintDismiss")
 
 _NEEDS_NODE = pytest.mark.skipif(
     shutil.which("node") is None, reason="node not installed"
@@ -49,7 +49,8 @@ def test_hint_sits_below_new_game_inside_the_finale_actions() -> None:
     assert actions.index('id="new-game-btn"') < actions.index('id="admin-star-hint"')
     hint = re.search(r'<p id="admin-star-hint"[^>]*>', view)
     assert hint and " hidden" in hint.group(0), "must start hidden"
-    link = re.search(r'<a [^>]*data-i18n="admin.starHintLink"[^>]*>', view)
+    # #1177: one sentence, and the whole sentence is the link.
+    link = re.search(r'<a [^>]*data-i18n="admin.starHint"[^>]*>', view)
     assert link
     assert 'href="https://github.com/mholzi/quizify"' in link.group(0)
     assert 'target="_blank"' in link.group(0)
@@ -67,8 +68,8 @@ def test_every_bundle_carries_the_hint(lang: str) -> None:
     admin = json.loads((_WWW / "i18n" / f"{lang}.json").read_text("utf-8"))["admin"]
     for key in _KEYS:
         assert admin.get(key), f"{lang}: admin.{key}"
-    assert "⭐" in admin["starHintBefore"]
-    assert "GitHub" in admin["starHintLink"]
+    assert "⭐" in admin["starHint"]
+    assert "GitHub" in admin["starHint"]
 
 
 def test_live_finale_frame_carries_the_game_id() -> None:

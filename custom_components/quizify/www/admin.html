@@ -81,10 +81,7 @@
 
             <!-- HERO (variant A) -->
             <div id="setup-hero" class="setup-hero">
-                <h1 class="setup-hero-headline">
-                    <span data-i18n="setup.heroLine1">Ready for a</span><br>
-                    <span class="accent" data-i18n="setup.heroLine2">round of Quizify?</span>
-                </h1>
+                <h1 class="setup-hero-headline" data-i18n-lines="setup.hero"><span>Ready for a</span><br><span class="accent">round of Quizify?</span></h1>
                 <p class="setup-hero-summary" id="setup-summary"></p>
                 <p class="setup-hero-topics hidden" id="setup-topics"></p>
                 <!-- Featured pack spotlight — surfaces a pack on the first
@@ -790,10 +787,7 @@
         <div id="not-host-screen" class="view">
             <div class="setup-hero not-host">
                 <span class="qz-icon qz-icon--sun not-host-icon" data-ui-icon="lock" aria-hidden="true"></span>
-                <h2 class="setup-hero-headline">
-                    <span data-i18n="notHost.titleLine1">This device</span><br>
-                    <span class="accent" data-i18n="notHost.titleLine2">isn't the host.</span>
-                </h2>
+                <h2 class="setup-hero-headline" data-i18n-lines="notHost.title"><span>This device</span><br><span class="accent">isn't the host.</span></h2>
                 <p class="not-host-lead" data-i18n="notHost.body">The game is run from another device. You can still play along.</p>
                 <a id="not-host-join-link" class="btn btn-primary btn-lg btn-block" href="/quizify/player"
                    data-i18n="notHost.join">Join as a player</a>
@@ -801,11 +795,7 @@
                    data-i18n="notHost.tv">Open the TV screen</a>
                 <div class="card not-host-card">
                     <h3 class="not-host-card-title" data-i18n="notHost.hostTitle">Are you the host?</h3>
-                    <p class="not-host-card-body">
-                        <span data-i18n="notHost.hostBefore">Open this page on the device you started on. To host from here instead, run</span>
-                        <code class="not-host-code">quizify.reset_admin_session</code>
-                        <span data-i18n="notHost.hostAfter">in Home Assistant, then reload.</span>
-                    </p>
+                    <p class="not-host-card-body" data-i18n="notHost.hostHint">Open this page on the device you started on. To host from here instead, run the action quizify.reset_admin_session in Home Assistant, then reload.</p>
                 </div>
             </div>
         </div>
@@ -850,7 +840,7 @@
                             <!-- Filled by admin.js renderLobbyPlayers -->
                         </div>
                         <div id="lobby-players-empty" class="lobby-e-row-empty">
-                            <span data-i18n="lobby.waitingForPlayers">Waiting for players to join…</span>
+                            <span data-i18n="lobby.scanToJoin">Scan the code to join</span>
                         </div>
                     </div>
                 </div>
@@ -862,13 +852,8 @@
                 </a>
 
                 <div class="lobby-e-countdown" id="lobby-countdown">
-                    <span data-i18n="lobby.readyHint">Ready at</span>
-                    <strong id="lobby-min-players">2</strong>
-                    <span data-i18n="lobby.playersUnit">players</span>
-                    <span class="lobby-e-countdown-sep">·</span>
-                    <span data-i18n="lobby.stillMissing">still need</span>
-                    <strong id="lobby-missing-players">2</strong>
-                    <span data-i18n="lobby.stillMissingSuffix">more</span>
+                    <span id="lobby-missing-players" data-i18n="lobby.missingPlayers"
+                          data-i18n-params='{"count":2}'>2 more players to start</span>
                 </div>
 
                 <!-- The hidden player count node is referenced by
@@ -1004,11 +989,7 @@
                 <!-- GitHub star hint: from the third finished game on this
                      device, until dismissed (_updateStarHint in admin.js). -->
                 <p id="admin-star-hint" class="admin-star-hint" hidden>
-                    <span>
-                        <span data-i18n="admin.starHintBefore">Enjoying Quizify? A ⭐</span>
-                        <a href="https://github.com/mholzi/quizify" target="_blank" rel="noopener" data-i18n="admin.starHintLink">on GitHub</a>
-                        <span data-i18n="admin.starHintAfter">helps others find it.</span>
-                    </span>
+                    <a href="https://github.com/mholzi/quizify" target="_blank" rel="noopener" data-i18n="admin.starHint">Enjoying Quizify? A ⭐ on GitHub helps others find it.</a>
                     <button type="button" id="admin-star-hint-dismiss" class="admin-star-hint-dismiss"
                             aria-label="Dismiss hint" data-i18n-aria-label="admin.starHintDismiss">×</button>
                 </p>
