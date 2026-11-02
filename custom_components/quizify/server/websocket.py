@@ -45,6 +45,7 @@ from custom_components.quizify.server.broadcasters import (
     WagerBroadcaster,
 )
 from custom_components.quizify.server.connection import ConnectionManager
+from custom_components.quizify.server.interrupted_game import InterruptedGameMarker
 from custom_components.quizify.server.origin import reject_cross_origin
 from custom_components.quizify.server.rate_limit import SlidingWindowLimiter
 from custom_components.quizify.server.round_message_builder import RoundMessageBuilder
@@ -250,6 +251,9 @@ class QuizifyWebSocketHandler:
     # Set by ``retire()`` when the integration unloads (#1149). A class default
     # so a handler assembled with ``__new__`` in a test reads as live.
     _retired = False
+    # #1182: an inert marker for handlers assembled with ``__new__`` in tests;
+    # __init__ replaces it with a per-handler one.
+    interrupted_game = InterruptedGameMarker(None)  # type: ignore[arg-type]
 
     def __init__(
         self,
@@ -267,6 +271,9 @@ class QuizifyWebSocketHandler:
         self._runtime = runtime
         self._get_game_state = _game_unless_retired
         self._conn = ConnectionManager(runtime, _game_unless_retired)
+        # #1182 L4: remembers across a restart that a game was running, so
+        # the next lobby can say it was interrupted. Inert until loaded.
+        self.interrupted_game = InterruptedGameMarker(runtime)
         # Public alias for the connection manager so collaborators (e.g.
         # __init__.py setup/teardown) use a contract-bearing accessor instead
         # of reaching into the private ``_conn`` attribute. Backed by
@@ -1531,6 +1538,12 @@ class QuizifyWebSocketHandler:
         """
         state = serialize_state_snapshot(game_state)
         state["host_connected"] = self._host_connected(game_state)
+        # #1182 L4: only the lobby says it, and only until the next game.
+        state["interrupted_game"] = (
+            self.interrupted_game.notice
+            if game_state.phase == GamePhase.LOBBY
+            else None
+        )
         return state
 
     async def _announce_host_presence(self) -> None:
@@ -1852,6 +1865,9 @@ class QuizifyWebSocketHandler:
         current game state and no-ops if there isn't one.
         """
         await self._broadcast_dispatcher.dispatch(payload)
+        game_state = self._get_game_state()
+        if game_state is not None:
+            await self.interrupted_game.sync(game_state.phase)
 
     async def _dispatch_round_evaluated(self) -> None:
         """Handler for the ``round_evaluated`` state event."""

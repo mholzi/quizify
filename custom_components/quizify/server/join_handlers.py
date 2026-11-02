@@ -28,6 +28,7 @@ from custom_components.quizify.game.player_registry import sanitize_player_name
 from custom_components.quizify.game.state import (
     GamePhase,
 )
+from custom_components.quizify.server.connection import RECONNECT_REMOVED
 
 if TYPE_CHECKING:  # pragma: no cover - typing only
 
@@ -250,15 +251,25 @@ async def handle_reconnect(
     name = handler._conn.get_player_for_token(token)
 
     if not name:
-        # Token not found — treat as unknown, client should show join form
-        await handler._conn.send(ws, {"type": "reconnect_failed"})
+        # Token not found — the client shows the join form. #1182: with the
+        # reason, so a phone that slept through a reset or a restart can say
+        # what happened instead of "we could not bring you back".
+        await handler._conn.send(
+            ws,
+            {
+                "type": "reconnect_failed",
+                "reason": handler._conn.reconnect_failure_reason(token),
+            },
+        )
         return
 
     player = game_state.get_player(name)
     if not player:
         # Player was fully removed — token stale
         handler._conn.revoke_token(token)
-        await handler._conn.send(ws, {"type": "reconnect_failed"})
+        await handler._conn.send(
+            ws, {"type": "reconnect_failed", "reason": RECONNECT_REMOVED}
+        )
         return
 
     # #1150: asked before the bind below puts them back in. The phone thanks

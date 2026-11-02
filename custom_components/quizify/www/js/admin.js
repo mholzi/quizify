@@ -2181,6 +2181,13 @@
             if (_seat && _rosterHasName(msg.players, _seat)) _adminJoinedAs = _seat;
         }
         if (msg.players) renderLobbyPlayers(msg.players);
+        // #1182 L4: a restart mid-game threw the game away; say so in the
+        // lobby until the next game starts (the server clears it then).
+        var restartNotice = document.getElementById('lobby-restart-notice');
+        if (restartNotice) {
+            restartNotice.classList.toggle('hidden',
+                !(msg.phase === 'LOBBY' && msg.interrupted_game));
+        }
 
         // If game is running and we have a stored name, redirect to player.html
         if (msg.phase !== 'LOBBY' && msg.phase !== 'FINALE') {

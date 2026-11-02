@@ -380,6 +380,20 @@ body.dashboard-body {
     gap: 16px;
 }
 
+/* #1182 L4: one line above the QR after a restart ended the last game.
+   Readable from the sofa, sun-tinted like the host's notice, no pulse. */
+.dashboard-restart-notice {
+    margin: 0;
+    max-width: 900px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: rgba(232, 196, 127, 0.22);
+    color: var(--dash-text-white);
+    font-size: clamp(16px, 1.6vw, 22px);
+    line-height: 1.4;
+    text-align: center;
+}
+
 .dashboard-qr-section canvas,
 .dashboard-qr-section img {
     border-radius: 10px;

@@ -6952,9 +6952,18 @@
                 // re-joined under the old name (as the host, if this tab was
                 // the host's). The server has just said this identity is not
                 // joinable; retrying it is the one thing not to do.
+                //
+                // #1182: the server says why. A phone that slept through a
+                // reset (display off, the normal case) never saw game_reset
+                // and read "we could not bring you back", as if its own phone
+                // were at fault; after an HA restart nobody said the game was
+                // gone. Expired and removed keep the general hint.
                 var failedName = lastPlayerName();
                 forgetIdentity();
-                returnToJoin('join.reconnectFailedHint', failedName);
+                var failedHint = msg.reason === 'reset' ? 'join.resetHint'
+                    : msg.reason === 'restart' ? 'states.restartPhone'
+                    : 'join.reconnectFailedHint';
+                returnToJoin(failedHint, failedName);
                 break;
 
             case 'host_presence':

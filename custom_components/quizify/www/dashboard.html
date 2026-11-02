@@ -81,6 +81,10 @@
                      .dashboard-player-chip styles already in this file. The
                      JS renders the QR once and refreshes the roster on every
                      player_joined / player_left / game_state (LOBBY) message. -->
+                <!-- #1182 L4: Home Assistant restarted mid-game; one line above
+                     the QR until the next game starts. -->
+                <p id="lobby-restart-notice" class="dashboard-restart-notice hidden" role="status"
+                   data-i18n="states.restartTv">Home Assistant was restarted, so the last game has ended. Just scan again.</p>
                 <div id="lobby-qr" class="dashboard-qr-section">
                     <div id="lobby-qr-code"></div>
                     <div class="dashboard-waiting-text" data-i18n="lobby.scanToJoin">Scan the code to join</div>

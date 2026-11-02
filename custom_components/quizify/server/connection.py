@@ -41,6 +41,18 @@ def _log_task_exception(task: asyncio.Task) -> None:
 _ADMIN_TOKEN_FILENAME = "admin_token.json"
 _PLAYER_TOKEN_TTL = 24 * 60 * 60  # 24 hours
 
+#: Why a ``reconnect_failed`` was sent (#1182). The phone picks its sentence
+#: from this: ``reset`` -> "the host started a new game", ``restart`` ->
+#: "Home Assistant was restarted", the other two keep the general hint.
+RECONNECT_RESET = "reset"
+RECONNECT_RESTART = "restart"
+RECONNECT_EXPIRED = "expired"
+RECONNECT_REMOVED = "removed"
+RECONNECT_REASONS = frozenset(
+    {RECONNECT_RESET, RECONNECT_RESTART, RECONNECT_EXPIRED, RECONNECT_REMOVED}
+)
+_RETIRED_TOKEN_CAP = 500
+
 
 # A small callable that returns the active game state. Indirection so the
 # connection manager doesn't need to import the game module directly and
@@ -80,6 +92,14 @@ class ConnectionManager:
         # Token → (player_name, issued_at_monotonic). Tokens older than
         # _PLAYER_TOKEN_TTL are treated as expired.
         self._session_tokens: dict[str, tuple[str, float]] = {}
+        # Token → (reason, retired_at_monotonic) for tokens this process
+        # took back (#1182). A phone that slept through a reset used to get a
+        # bare ``reconnect_failed`` and read "we could not bring you back",
+        # as if its own phone were at fault. Remembering WHY a token died
+        # lets the server say "reset", "removed" or "expired" — and a token
+        # this process never issued at all can only come from before a
+        # restart, since session tokens live in memory.
+        self._retired_tokens: dict[str, tuple[str, float]] = {}
         self._admin_session_token: str | None = None
         self._admin_disconnect_task: asyncio.Task | None = None
         self._pending_removals: dict[str, asyncio.Task] = {}
@@ -386,6 +406,34 @@ class ConnectionManager:
         ]
         for t in expired:
             self._session_tokens.pop(t, None)
+            self._retire(t, RECONNECT_EXPIRED)
+        # The retired map is bookkeeping for a friendlier sentence, so it is
+        # bounded the same way: twice the token TTL, at most a few hundred.
+        stale = [
+            t
+            for t, (_r, at) in self._retired_tokens.items()
+            if now - at > 2 * _PLAYER_TOKEN_TTL
+        ]
+        for t in stale:
+            self._retired_tokens.pop(t, None)
+
+    def _retire(self, token: str, reason: str) -> None:
+        """Remember that *token* died for *reason* (#1182)."""
+        self._retired_tokens[token] = (reason, time.monotonic())
+        while len(self._retired_tokens) > _RETIRED_TOKEN_CAP:
+            self._retired_tokens.pop(next(iter(self._retired_tokens)))
+
+    def reconnect_failure_reason(self, token: str) -> str:
+        """Why *token* can no longer resume a seat: one of RECONNECT_REASONS.
+
+        A token this process retired carries the reason it was retired with.
+        A token it never saw was issued before the last restart — session
+        tokens are not persisted — so the honest answer is ``restart``.
+        """
+        entry = self._retired_tokens.get(token)
+        if entry is not None:
+            return entry[0]
+        return RECONNECT_RESTART
 
     def create_session_token(self, player_name: str) -> str:
         """Create and store a new session token for *player_name*."""
@@ -399,9 +447,10 @@ class ConnectionManager:
         self._session_tokens.pop(old_token, None)
         return self.create_session_token(player_name)
 
-    def revoke_token(self, token: str) -> None:
+    def revoke_token(self, token: str, reason: str = RECONNECT_REMOVED) -> None:
         """Revoke a single session *token* (no-op if unknown)."""
-        self._session_tokens.pop(token, None)
+        if self._session_tokens.pop(token, None) is not None:
+            self._retire(token, reason)
 
     def get_player_for_token(self, token: str) -> str | None:
         """Return the player name associated with *token*, or None."""
@@ -411,18 +460,24 @@ class ConnectionManager:
         name, issued_at = entry
         if time.monotonic() - issued_at > _PLAYER_TOKEN_TTL:
             self._session_tokens.pop(token, None)
+            self._retire(token, RECONNECT_EXPIRED)
             return None
         return name
 
-    def clear_player_tokens(self, player_name: str) -> None:
+    def clear_player_tokens(
+        self, player_name: str, reason: str = RECONNECT_REMOVED
+    ) -> None:
         """Remove all session tokens belonging to *player_name*."""
         stale = [t for t, (n, _ts) in self._session_tokens.items() if n == player_name]
         for t in stale:
             self._session_tokens.pop(t, None)
+            self._retire(t, reason)
 
-    def clear_all_player_tokens(self) -> None:
+    def clear_all_player_tokens(self, reason: str = RECONNECT_RESET) -> None:
         """Wipe every player token. Called on game reset to prevent
         cross-game token reuse."""
+        for t in list(self._session_tokens):
+            self._retire(t, reason)
         self._session_tokens.clear()
 
     # ------------------------------------------------------------------

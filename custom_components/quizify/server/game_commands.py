@@ -569,6 +569,8 @@ async def handle_reset_game(
     await handler._conn.cleanup()
     # Wipe player session tokens to prevent cross-game reuse.
     handler._conn.clear_all_player_tokens()
+    # #1182: the host chose a fresh start; the restart notice has done its job.
+    handler.interrupted_game.clear_notice()
 
     # Snapshot the live player WSes BEFORE clearing the registry — we
     # need them both to broadcast the reset signal and to close them

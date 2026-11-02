@@ -180,6 +180,7 @@ def main(argv: list[str] | None = None) -> int:
             await ctx.question_stats.load()
         await ctx.game.async_load_history()
         await ctx.ws_handler._conn.async_load_admin_token()
+        await ctx.ws_handler.interrupted_game.load()
         # Populate the in-memory live manifest version so the HTML serve path
         # has it without a per-request read (#343). The standalone server has
         # no background interval, but a single refresh at startup is enough —

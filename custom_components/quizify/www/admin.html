@@ -821,6 +821,11 @@
                     Waiting for players…
                 </h2>
 
+                <!-- #1182 L4: shown while the snapshot carries interrupted_game,
+                     i.e. Home Assistant restarted in the middle of a game. -->
+                <p id="lobby-restart-notice" class="lobby-e-notice hidden" role="status"
+                   data-i18n="states.restartHost">Home Assistant was restarted, so the last game has ended.</p>
+
                 <div class="lobby-e-row">
                     <div class="lobby-e-qr-col">
                         <div class="lobby-e-qr" id="qr-container" role="img"

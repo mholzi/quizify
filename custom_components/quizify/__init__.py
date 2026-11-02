@@ -166,6 +166,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Load persisted admin session token (survives HA restarts).
     # Without this, any LAN client could seize admin after every restart.
     await ws_handler.conn.async_load_admin_token()
+    # #1182: did the previous run stop in the middle of a game?
+    await ws_handler.interrupted_game.load()
 
     # Wire broadcast callback so game state can push events to clients.
     game_state.set_broadcast_callback(ws_handler.broadcast_state)

@@ -105,7 +105,13 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         ),
     ),
     "reconnect_failed": _spec(
-        note="Unknown or expired session token; the client falls back to join.",
+        "reason",
+        note=(
+            "Unknown or expired session token; the client falls back to join. "
+            "``reason`` is reset | restart | expired | removed (#1182), so a "
+            "phone that slept through a reset or an HA restart can say what "
+            "happened instead of blaming itself."
+        ),
     ),
     # --- lobby roster -----------------------------------------------------
     "player_joined": _spec(

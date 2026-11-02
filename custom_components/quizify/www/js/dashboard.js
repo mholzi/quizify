@@ -896,6 +896,9 @@
                 // connects late still shows who is playing with whom.
                 if (msg.teams) lobbyTeams = msg.teams;
                 renderLobby(msg.players);
+                // #1182 L4: the snapshot says a restart ended the last game.
+                var restartLine = document.getElementById('lobby-restart-notice');
+                if (restartLine) restartLine.classList.toggle('hidden', !msg.interrupted_game);
                 break;
             case 'WAGER_ACTIVE':
                 // #656: a TV that (re)connects mid-window. The snapshot
