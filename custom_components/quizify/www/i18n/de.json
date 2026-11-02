@@ -613,7 +613,11 @@
   "pwa": {
     "installApp": "Quizify-App installieren",
     "iosHintTitle": "Quizify installieren",
-    "iosHintBody": "Tippe auf ⬆️ Teilen und dann \"Zum Home-Bildschirm\""
+    "iosHintBody": "Tippe auf ⬆️ Teilen und dann \"Zum Home-Bildschirm\"",
+    "offerTitle": "Quizify auf den Startbildschirm?",
+    "offerBody": "Dann startest du das nächste Spiel mit einem Tipp, ohne Home Assistant zu öffnen.",
+    "offerAdd": "Hinzufügen",
+    "offerLater": "Später"
   },
   "theme": {
     "geography": "Geo",

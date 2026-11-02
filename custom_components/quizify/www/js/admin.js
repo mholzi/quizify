@@ -3062,6 +3062,53 @@
         renderPodium(els.adminPodium, standings.podium);
         renderLeaderboard(els.adminFinaleLeaderboard, standings.leaderboard);
         _updateStarHint(msg && msg.game_id);
+        // #1185 P11: one card at a time — the install offer wins this once.
+        if (_updateInstallOffer(msg && msg.game_id) && els.starHint) els.starHint.hidden = true;
+    }
+
+    // ---- Install offer on the end screen (#1185 P11) ----
+    // { games, last, state }: state 'new' → shown after game 1; 'later' →
+    // shown again from game 3; 'done' → never again (added, or asked twice).
+    var INSTALL_OFFER_KEY = 'quizify_install_offer';
+    var INSTALL_OFFER_AGAIN_AT = 3;
+
+    function _readInstallOffer() {
+        try {
+            var saved = JSON.parse(localStorage.getItem(INSTALL_OFFER_KEY) || 'null');
+            if (saved && typeof saved === 'object') return saved;
+        } catch (e) { /* storage unavailable */ }
+        return { games: 0, last: null, state: 'new' };
+    }
+
+    function _writeInstallOffer(rec) {
+        try { localStorage.setItem(INSTALL_OFFER_KEY, JSON.stringify(rec)); } catch (e) { /* session only */ }
+    }
+
+    /** Count the finished game and show the card when its turn has come.
+     *  Returns whether the card is showing. */
+    function _updateInstallOffer(gameId) {
+        var card = document.getElementById('admin-install-card');
+        if (!card) return false;
+        var rec = _readInstallOffer();
+        if (gameId && gameId !== rec.last) {
+            rec.games = (Number(rec.games) || 0) + 1;
+            rec.last = gameId;
+            _writeInstallOffer(rec);
+        }
+        var due = (rec.state === 'new' && rec.games >= 1) ||
+            (rec.state === 'later' && rec.games >= INSTALL_OFFER_AGAIN_AT);
+        var show = !!(due && _pwaInstall && _pwaInstall.available());
+        card.hidden = !show;
+        return show;
+    }
+
+    function _answerInstallOffer(add) {
+        var card = document.getElementById('admin-install-card');
+        if (card) card.hidden = true;
+        var rec = _readInstallOffer();
+        rec.state = (add || rec.state === 'later') ? 'done' : 'later';
+        _writeInstallOffer(rec);
+        if (add && _pwaInstall) _pwaInstall.run();
     }
 
     // GitHub star hint under "Start New Game". Only from the third finished
@@ -4928,6 +4975,12 @@
     // ---- Seasonal pack badges (#276) ----
     applySeasonalBadges();
 
+    // The install flow, for the end-screen offer (#1185 P11): available()
+    // and run(). Set by the block below.
+    var _pwaInstall = null;
+    on(document.getElementById('admin-install-add'), 'click', function () { _answerInstallOffer(true); });
+    on(document.getElementById('admin-install-later'), 'click', function () { _answerInstallOffer(false); });
+
     // ---- PWA install button ----
     // Android Chrome / Edge / Samsung Browser: fire beforeinstallprompt
     // when the page is install-eligible. We cache the prompt so the user
@@ -4958,7 +5011,10 @@
         // iOS detection — Safari on iPhone/iPad never fires
         // beforeinstallprompt, so surface the install button anyway
         // and let it open the manual hint modal.
-        var isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent)
+        // #1185 P11: iPadOS Safari introduces itself as a Mac; the touch
+        // points give it away. The iPad is a typical host device.
+        var isIOS = (/iPad|iPhone|iPod/.test(window.navigator.userAgent)
+            || (/Macintosh/.test(window.navigator.userAgent) && window.navigator.maxTouchPoints > 1))
             && !window.MSStream;
         var iosHint = document.getElementById('pwa-ios-hint');
         if (isIOS && iosHint) {
@@ -4976,6 +5032,11 @@
                 iosHint.classList.remove('hidden');
             }
         });
+
+        _pwaInstall = {
+            available: function () { return !!deferredPrompt || !!(isIOS && iosHint); },
+            run: function () { installBtn.click(); },
+        };
 
         var iosClose = document.getElementById('pwa-ios-hint-close');
         if (iosClose && iosHint) {

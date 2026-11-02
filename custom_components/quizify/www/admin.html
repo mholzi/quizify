@@ -958,6 +958,19 @@
                      style="font-size:0.9rem;opacity:0.75;margin-top:0.25rem;display:none;"></div>
             </section>
 
+            <!-- #1185 P11: the install offer, with a reason, once after the
+                 first finished game. "Later" asks again at the earliest after
+                 the third game, then never. The 📲 in the header stays for
+                 hosts who look for it themselves. -->
+            <section class="card-section mt-md admin-install-card" id="admin-install-card" hidden>
+                <p class="admin-install-title" data-i18n="pwa.offerTitle">Quizify on your home screen?</p>
+                <p class="admin-install-body" data-i18n="pwa.offerBody">Then you start the next game with one tap, without opening Home Assistant.</p>
+                <div class="admin-install-actions">
+                    <button type="button" class="btn btn-primary" id="admin-install-add" data-i18n="pwa.offerAdd">Add</button>
+                    <button type="button" class="btn btn-secondary" id="admin-install-later" data-i18n="pwa.offerLater">Later</button>
+                </div>
+            </section>
+
             <!-- The Lightning Round is now an automatic mid-game event (#285);
                  the manual "⚡ Lightning Round" entry button was retired. -->
             <div class="admin-actions lobby-actions--sticky mt-lg">

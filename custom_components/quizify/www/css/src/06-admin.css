@@ -402,3 +402,24 @@ footer {
     font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
 }
+
+/* #1185 P11: the install offer on the host's end screen — once, with a
+   reason and a "Later". */
+.admin-install-card[hidden] { display: none; }
+.admin-install-title {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+.admin-install-body {
+    margin: var(--space-xs) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+.admin-install-actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+.admin-install-actions .btn {
+    min-height: 44px;
+}

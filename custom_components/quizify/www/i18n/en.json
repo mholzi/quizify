@@ -613,7 +613,11 @@
   "pwa": {
     "installApp": "Install the Quizify app",
     "iosHintTitle": "Install Quizify",
-    "iosHintBody": "Tap ⬆️ Share, then \"Add to Home Screen\""
+    "iosHintBody": "Tap ⬆️ Share, then \"Add to Home Screen\"",
+    "offerTitle": "Quizify on your home screen?",
+    "offerBody": "Then you start the next game with one tap, without opening Home Assistant.",
+    "offerAdd": "Add",
+    "offerLater": "Later"
   },
   "theme": {
     "geography": "Geo",
