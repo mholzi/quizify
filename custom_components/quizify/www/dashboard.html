@@ -72,7 +72,7 @@
                 <h1 class="wordmark" style="font-size:3rem;">
                     <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
                 </h1>
-                <p class="dashboard-waiting-text" data-i18n="dashboard.waitingForStart">Waiting for game to start…</p>
+                <p class="dashboard-waiting-text" data-i18n="lobby.marqueeWaiting">Waiting for players…</p>
                 <!-- #374: the TV is the one screen everyone sees, so the join QR
                      and the live "who's in" roster live here during LOBBY. The
                      QR encodes the SAME join URL the admin QR uses
@@ -83,7 +83,7 @@
                      player_joined / player_left / game_state (LOBBY) message. -->
                 <div id="lobby-qr" class="dashboard-qr-section">
                     <div id="lobby-qr-code"></div>
-                    <div class="dashboard-waiting-text" data-i18n="lobby.scanToJoin">Scan to join the game</div>
+                    <div class="dashboard-waiting-text" data-i18n="lobby.scanToJoin">Scan the code to join</div>
                     <!-- #620: the URL in plain sight, not only when the QR
                          library fails to load. A guest on cellular data or on
                          the guest network scans, lands on an unreachable LAN
@@ -186,14 +186,14 @@
                     <div class="dashboard-question-body">
                         <!-- Intro splash, shown while splash_pending. -->
                         <div id="lightning-splash" class="dashboard-lightning-splash" hidden>
-                            <div class="dashboard-lightning-kicker" data-i18n="lightning.splashKicker">Lightning Round</div>
+                            <div class="dashboard-lightning-kicker" data-i18n="lightning.splashKicker">Lightning round</div>
                             <div class="dashboard-lightning-title" data-i18n="lightning.splashTitle">Get ready!</div>
                             <div id="lightning-splash-rules" class="dashboard-lightning-rules" data-i18n="lightning.startHint">5 rapid questions, 15 seconds each, no breaks</div>
                         </div>
                         <!-- Active question. -->
                         <div id="lightning-question-section">
                             <div class="dashboard-category">
-                                <span data-i18n="lightning.title">Lightning Round</span>
+                                <span data-i18n="lightning.title">Lightning round</span>
                                 <span id="lightning-progress" class="dashboard-lightning-progress"></span>
                             </div>
                             <div id="lightning-question-text" class="dashboard-question"></div>
@@ -209,7 +209,7 @@
                          was told the leader was last on nothing. The recap
                          panel below already says what it is showing; this one
                          now does too. -->
-                    <div class="dashboard-leaderboard-title" data-i18n="lightning.liveScoreTitle">Lightning Round · this round only</div>
+                    <div class="dashboard-leaderboard-title" data-i18n="lightning.liveScoreTitle">Lightning round · this round only</div>
                     <div id="lightning-leaderboard" class="dashboard-leaderboard"></div>
                 </div>
             </div>
@@ -225,7 +225,7 @@
                     </div>
                 </div>
                 <div class="dashboard-right">
-                    <div class="dashboard-leaderboard-title" data-i18n="lightning.recapTitle">Lightning Round Results</div>
+                    <div class="dashboard-leaderboard-title" data-i18n="lightning.recapTitle">Lightning round results</div>
                     <div id="lightning-recap-leaderboard" class="dashboard-leaderboard"></div>
                 </div>
             </div>
@@ -239,7 +239,7 @@
                  for the room, and until now the television told it the same
                  sentence for both. The data-i18n attribute is what moves, not
                  just the text, so a later language sweep keeps the right one. -->
-            <div id="paused-title" class="dashboard-paused-title" data-i18n="game.paused">Game Paused</div>
+            <div id="paused-title" class="dashboard-paused-title" data-i18n="game.paused">Game paused</div>
             <div id="paused-hint" class="dashboard-paused-hint" data-i18n="game.pausedHint">The game will resume when the host returns</div>
             <div id="paused-escape" class="dashboard-paused-escape" data-i18n="game.pausedResetHint" hidden>Any phone in the room can reset the game now</div>
         </div>

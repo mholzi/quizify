@@ -1,0 +1,42 @@
+name: i18n-check
+
+# Microcopy check (#1177): glossary terms, placeholder parity, sentence
+# fragments, length budget, punctuation and the host card's labels across
+# de/en/es. See scripts/check_i18n.py and www/i18n/glossary.json.
+#
+# A WARNING for now, on purpose, and a workflow of its own: tests.yml holds the
+# gates and forbids advisory jobs (tests/test_ci_ha_matrix_740.py). The script
+# runs in warning mode (exit 0) and this check is NOT one of the required
+# checks, so findings show up in the log and the job summary without blocking a
+# merge. Making it an error is a later step, once the backlog is at zero:
+# switch to `--strict` and move it into tests.yml then.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  i18n-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Check the UI texts (warning only)
+        run: |
+          python scripts/check_i18n.py | tee i18n-report.txt
+          {
+            echo "### i18n text check (warning only)"
+            echo
+            echo '```'
+            tail -n 1 i18n-report.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -140,7 +140,7 @@ def test_the_settlement_uses_strings_that_already_exist() -> None:
         "hotSeat.hostSettled",
         "lightning.recapWaitHint",
         "reveal.correctAnswerWas",
-        "reveal.ptsUnit",
+        "reveal.pointsDelta",
         "lobby.you",
     }
     for key in settlement_keys:
@@ -493,7 +493,7 @@ def test_the_room_is_told_what_it_is_waiting_for() -> None:
 
     assert result["seatHolder"]["hint"] == "Hang tight — the host continues the game"
     assert result["host"]["hint"] == (
-        "The chair is settled — Next Question continues the game."
+        "The chair is settled — Next question continues the game."
     )
 
 

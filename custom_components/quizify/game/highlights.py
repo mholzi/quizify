@@ -132,9 +132,9 @@ def compute_superlatives(players: Sequence[Participant]) -> list[Superlative]:
         and best_round_index is not None
     ):
         _try_award(
-            "Best Round",
+            "Best question",
             "🥇",
-            f"{best_round_score} pts in round {best_round_index}",
+            f"{best_round_score} pts on question {best_round_index}",
             best_round_player,
             award_key="highlights.awards.bestRound",
             detail_key="highlights.details.bestRound",
@@ -155,9 +155,9 @@ def compute_superlatives(players: Sequence[Participant]) -> list[Superlative]:
 
     if fastest_player and best_avg_time is not None:
         _try_award(
-            "Fastest Finger",
+            "Fastest finger",
             "⚡",
-            f"avg {best_avg_time:.1f}s per correct answer",
+            f"avg {best_avg_time:.1f} s per correct answer",
             fastest_player,
             award_key="highlights.awards.fastestFinger",
             detail_key="highlights.details.fastestFinger",
@@ -194,7 +194,7 @@ def compute_superlatives(players: Sequence[Participant]) -> list[Superlative]:
 
     if comeback_player and best_comeback is not None:
         _try_award(
-            "Comeback King",
+            "Comeback king",
             "🚀",
             f"+{best_comeback} pts in the second half",
             comeback_player,
@@ -215,7 +215,7 @@ def compute_superlatives(players: Sequence[Participant]) -> list[Superlative]:
 
     if streak_player and best_streak >= 2:
         _try_award(
-            "Hot Streak",
+            "Hot streak",
             "🔥",
             f"{best_streak} correct in a row",
             streak_player,
@@ -252,7 +252,7 @@ def compute_superlatives(players: Sequence[Participant]) -> list[Superlative]:
     ):
         pct = int(best_ratio * 100)
         _try_award(
-            "Most Accurate",
+            "Most accurate",
             "🎯",
             f"{best_correct}/{len(perfect_player_obj.round_history)} correct ({pct}%)",
             perfect_player,
@@ -298,7 +298,7 @@ def compute_superlatives(players: Sequence[Participant]) -> list[Superlative]:
 
     if expert_player and best_hard > 0:
         _try_award(
-            "Knowledge Expert",
+            "Knowledge expert",
             "🧠",
             f"{best_hard} pts on hard questions",
             expert_player,

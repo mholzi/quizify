@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Quizify">
-    <title data-i18n="join.title">Quizify - Join Game</title>
+    <title data-i18n="join.title">Quizify — Join</title>
     <!-- Fonts are self-hosted under /quizify/static/fonts/ (#737, #738): no
          third-party request on load, nothing foreign blocking the first paint.
          Preload the two faces every screen uses so they download alongside the
@@ -59,7 +59,7 @@
                  renderFinaleReveal in player-reveal.js. -->
             <span id="player-header-round" class="player-header-round" hidden aria-live="polite">
                 <span class="player-header-round-dot" aria-hidden="true"></span>
-                <span data-i18n="game.roundLabel">Round</span>
+                <span data-i18n="game.question">Question</span>
                 <span class="player-header-round-num" id="header-round-num">1</span>
                 <span class="player-header-round-sep" aria-hidden="true">/</span>
                 <span id="header-round-total">10</span>
@@ -79,7 +79,7 @@
         <!-- Loading state -->
         <div id="loading-view" class="view">
             <div class="loading-spinner"></div>
-            <p data-i18n="common.connecting">Connecting to game...</p>
+            <p data-i18n="common.connecting">Connecting to the game…</p>
         </div>
 
         <!-- Error: Game not found -->
@@ -88,7 +88,7 @@
             <h1 data-i18n="errors.gameNotFound">Game Not Found</h1>
             <p data-i18n="errors.gameNotFoundHint">This game doesn't exist or the link is incorrect.</p>
             <p class="hint" data-i18n="errors.askHostQr">Ask the host for a new QR code.</p>
-            <button id="refresh-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try Again</button>
+            <button id="refresh-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try again</button>
         </div>
 
         <!-- Error: Game ended -->
@@ -116,7 +116,7 @@
             <div class="error-icon qz-icon qz-icon--mix" data-ui-icon="hourglass">⏳</div>
             <h1 data-i18n="errors.gameInProgress">Game In Progress</h1>
             <p data-i18n="errors.gameInProgressHint">The game is currently in a round. Try again in a moment.</p>
-            <button id="retry-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try Again</button>
+            <button id="retry-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try again</button>
         </div>
 
         <!-- Join form -->
@@ -147,7 +147,7 @@
                            aria-describedby="name-validation-msg">
                     <p id="name-validation-msg" class="validation-msg hidden"></p>
                 </div>
-                <button id="join-btn" class="btn btn-primary btn-glow join-btn" disabled data-i18n="join.joinButton">Join Game</button>
+                <button id="join-btn" class="btn btn-primary btn-glow join-btn" disabled data-i18n="join.joinButton">Join game</button>
             </div>
         </div>
 
@@ -162,9 +162,9 @@
                      state.playerColor + first letter of state.playerName. -->
                 <div class="pl-megaAvatar" id="pl-mega-avatar" aria-hidden="true">·</div>
                 <h1 class="pl-megaName" id="pl-mega-name">…</h1>
-                <span class="pl-tag" data-i18n="lobby.youreIn">YOU'RE IN</span>
+                <span class="pl-tag" data-i18n="lobby.youreIn">You're in</span>
                 <p class="pl-meta" id="pl-meta">
-                    <span data-i18n="lobby.gameLobby">Game Lobby</span>
+                    <span data-i18n="lobby.gameLobby">Lobby</span>
                 </p>
             </div>
 
@@ -246,14 +246,14 @@
                     class="btn btn-secondary pl-invite-btn"
                     data-i18n-aria-label="a11y.invitePlayersAria">
                 <span class="pl-invite-btn-icon" aria-hidden="true">🔗</span>
-                <span data-i18n="lobby.invitePlayers">Invite Players</span>
+                <span data-i18n="lobby.invitePlayers">Invite players</span>
             </button>
 
             <!-- Variant D: rules. Always visible (was collapsible). -->
             <section class="pl-rules">
                 <h2 class="pl-rulesTitle">
                     <span class="qz-icon qz-icon--sky" data-ui-icon="brain" aria-hidden="true">🧠</span>
-                    <span data-i18n="lobby.howToPlay">How to Play</span>
+                    <span data-i18n="lobby.howToPlay">How to play</span>
                 </h2>
                 <ol>
                     <li data-i18n="lobby.howToPlayStep1">A question appears with 3 answers.</li>
@@ -270,7 +270,7 @@
             <span id="players-summary" class="sr-only">0</span>
             <span id="lobby-difficulty-badge" class="sr-only"></span>
             <p id="players-empty" class="sr-only hidden">
-                <span data-i18n="lobby.waitingForPlayers">Waiting for players to join…</span>
+                <span data-i18n="lobby.marqueeWaiting">Waiting for players…</span>
             </p>
             <div id="player-qr-code" class="sr-only" role="button" tabindex="-1"
                  data-i18n-aria-label="a11y.tapToEnlargeQr" aria-label="QR Code"></div>
@@ -281,14 +281,14 @@
             <!-- Lobby Status (for non-admin players) -->
             <div id="lobby-status" class="pl-status hidden">
                 <span class="pl-pulse"></span>
-                <span data-i18n="lobby.waitingForHost">Waiting for host to start the game…</span>
+                <span data-i18n="lobby.waitingForHost">Waiting for the host…</span>
             </div>
 
             <!-- Sticky Admin Actions -->
             <div id="admin-controls" class="lobby-actions lobby-actions--sticky hidden">
                 <button id="start-game-btn" class="btn btn-primary btn-large btn-full-width">
                     <span class="btn-icon qz-icon qz-icon--sun" data-ui-icon="party" aria-hidden="true">🎉</span>
-                    <span data-i18n="lobby.startGame">Start Game</span>
+                    <span data-i18n="lobby.startGame">Start game</span>
                 </button>
             </div>
         </div>
@@ -301,9 +301,9 @@
                     <div class="game-header-left">
                         <span class="section-icon qz-icon qz-icon--coral" data-ui-icon="controller" aria-hidden="true">🎮</span>
                         <span id="round-indicator" class="round-indicator-text">
-                            <span data-i18n="game.roundLabel">Round</span>
+                            <span data-i18n="game.question">Question</span>
                             <span id="current-round">1</span>
-                            <span data-i18n="game.ofLabel">of</span>
+                            <span data-i18n="game.of">of</span>
                             <span id="total-rounds">10</span>
                         </span>
                     </div>
@@ -314,7 +314,7 @@
                 </div>
                 <!-- Last Round Banner -->
                 <div id="last-round-banner" class="last-round-banner hidden" data-i18n="game.finalRound">
-                    Final Round!
+                    Final round!
                 </div>
 
                 <!-- Question Card (replaces album-cover) -->
@@ -366,7 +366,7 @@
                 <section id="wager-panel" class="wager-panel hidden" aria-live="polite">
                     <h2 class="wager-panel-title">
                         <span class="qz-icon qz-icon--sky" data-ui-icon="sparkle" aria-hidden="true">🎰</span>
-                        <span id="wager-panel-title" data-i18n="wager.title">Final round — your stake</span>
+                        <span id="wager-panel-title" data-i18n="wager.title">Final round — your wager</span>
                     </h2>
                     <p id="wager-panel-hint" class="wager-panel-hint"></p>
                     <p id="wager-panel-timeout-note" class="wager-panel-hint wager-panel-timeout-note"></p>
@@ -381,7 +381,7 @@
                         <span id="wager-bank" class="wager-bank">0</span>
                     </p>
                     <button id="wager-submit-btn" type="button" class="btn btn-primary btn-block" data-i18n="wager.submit">
-                        Einsetzen
+                        Lock in wager
                     </button>
                 </section>
 
@@ -409,7 +409,7 @@
                             <span id="hotseat-bank" class="wager-bank">0</span>
                         </p>
                         <button id="hotseat-bid-btn" type="button" class="btn btn-primary btn-block"
-                                data-i18n="hotSeat.bidSubmit">Gebot abgeben</button>
+                                data-i18n="hotSeat.bidSubmit">Place bid</button>
                         <p id="hotseat-bid-count" class="wager-panel-hint"></p>
                     </div>
 
@@ -423,11 +423,11 @@
                         </div>
                         <div class="hotseat-bet-buttons">
                             <button id="hotseat-bet-will" type="button" class="btn btn-primary"
-                                    data-i18n="hotSeat.betWill">Schafft es</button>
+                                    data-i18n="hotSeat.betWill">They'll get it</button>
                             <button id="hotseat-bet-wont" type="button" class="btn btn-secondary"
-                                    data-i18n="hotSeat.betWont">Schafft es nicht</button>
+                                    data-i18n="hotSeat.betWont">They won't</button>
                         </div>
-                        <p class="wager-panel-hint" data-i18n="hotSeat.betOptional">Mitwetten ist freiwillig.</p>
+                        <p class="wager-panel-hint" data-i18n="hotSeat.betOptional">Betting is optional.</p>
                     </div>
 
                     <!-- The settlement (#859). The chair is the game's biggest
@@ -494,7 +494,7 @@
                     <button id="estimate-submit-btn" type="button" class="btn btn-primary btn-block estimate-submit-btn" data-i18n="estimate.submit">Submit guess</button>
                     <div id="estimate-submitted-confirmation" class="submitted-confirmation hidden">
                         <span class="checkmark">✓</span>
-                        <span data-i18n="game.submitted">Submitted!</span>
+                        <span data-i18n="game.submitted">Submitted</span>
                     </div>
                 </section>
 
@@ -502,7 +502,7 @@
                 <section id="answers-container" class="card-section answer-section">
                     <h2 class="section-header">
                         <span class="section-icon qz-icon qz-icon--coral" data-ui-icon="target" aria-hidden="true">🎯</span>
-                        <span data-i18n="game.yourAnswer">Your Answer</span>
+                        <span data-i18n="game.yourAnswer">Your answer</span>
                     </h2>
                     <!-- Team indicator (#365). Says which entry in the ranking
                          is yours; the standing answer itself shows as member
@@ -532,7 +532,7 @@
                     <div class="powerup-container">
                         <button id="powerup-btn" class="powerup-btn" type="button">
                             <span class="powerup-icon qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
-                            <span class="powerup-label" data-i18n="game.powerup">Power-Up</span>
+                            <span class="powerup-label" data-i18n="game.powerup">Power-up</span>
                         </button>
                         <!-- #623: what the power-up does, filled by renderPowerUp.
                              Not aria-hidden — a screen reader user has even less
@@ -585,7 +585,7 @@
                             </svg>
                             <div id="frozen-ring-num" class="frozen-ring-num">5</div>
                         </div>
-                        <div class="ice-foot" data-i18n="game.frozenFoot">Back in a moment …</div>
+                        <div class="ice-foot" data-i18n="game.frozenFoot">Back in a moment…</div>
                     </div>
                 </div>
             </div>
@@ -635,18 +635,18 @@
                 <section class="pl-result-section">
                     <div class="pl-result-sec-head">
                         <span class="qz-icon qz-icon--sun" data-ui-icon="trophy" aria-hidden="true">🏆</span>
-                        <span data-i18n="leaderboard.standings">Standings</span>
+                        <span data-i18n="leaderboard.standings">Leaderboard</span>
                     </div>
                     <div id="reveal-standings" class="pl-result-standings"></div>
                 </section>
 
-                <div id="reveal-admin-controls" class="pl-result-admin-bar hidden" role="group" aria-label="Admin actions">
+                <div id="reveal-admin-controls" class="pl-result-admin-bar hidden" role="group" data-i18n-aria-label="a11y.hostActions" aria-label="Host actions">
                     <button id="end-game-from-reveal-btn" class="pl-result-bar-btn pl-result-bar-btn--ghost" type="button">
                         <span aria-hidden="true">⏹</span>
-                        <span data-i18n="admin.endGame">End Game</span>
+                        <span data-i18n="admin.endGame">End game</span>
                     </button>
                     <button id="next-round-btn" class="pl-result-bar-btn pl-result-bar-btn--primary" type="button">
-                        <span data-i18n="admin.nextRound">Next Round</span>
+                        <span data-i18n="admin.nextQuestion">Next question</span>
                         <span aria-hidden="true">→</span>
                     </button>
                 </div>
@@ -677,8 +677,8 @@
         <div id="paused-view" class="view hidden">
             <div class="paused-container">
                 <div class="paused-icon qz-icon qz-icon--mix" data-ui-icon="pause">⏸️</div>
-                <h1 id="pause-title" data-i18n="admin.pausedTitle">Game Paused</h1>
-                <p id="pause-message" data-i18n="admin.pausedHint">The host paused the game</p>
+                <h1 id="pause-title" data-i18n="admin.pausedTitle">Game paused</h1>
+                <p id="pause-message" data-i18n="admin.pausedHint">The host paused the game — back in a moment</p>
                 <div class="paused-spinner">
                     <div class="spinner"></div>
                 </div>
@@ -703,7 +703,7 @@
             <div class="end-container end-container--d">
                 <!-- Header: "Spiel beendet! · N Runden · M Spieler" -->
                 <div class="end-header end-header--d">
-                    <div class="end-title-d" data-i18n="leaderboard.gameOver">Game Over!</div>
+                    <div class="end-title-d" data-i18n="leaderboard.gameOver">Game over!</div>
                     <div class="end-subtitle-d" id="end-meta-line">&nbsp;</div>
                 </div>
 
@@ -729,7 +729,7 @@
                 <!-- Gesamtwertung — ranked rows with horizontal score bars,
                      inline ⚡/🔥 badges, the current player tagged "Du". -->
                 <div class="end-scoreboard-section">
-                    <div class="end-section-label" data-i18n="leaderboard.fullRankings">Full Rankings</div>
+                    <div class="end-section-label" data-i18n="leaderboard.fullRankings">Full leaderboard</div>
                     <div id="end-scoreboard" class="end-scoreboard">
                         <!-- Populated by JavaScript -->
                     </div>
@@ -768,7 +768,7 @@
                          event. -->
                     <div class="resbtn-row">
                         <button id="new-game-btn" class="resbtn resbtn--secondary" type="button" data-i18n="admin.newGameShort">
-                            New Game
+                            New game
                         </button>
                     </div>
                 </div>
@@ -789,7 +789,7 @@
             <div class="lr-splash-stage">
                 <div class="lr-splash-rays" aria-hidden="true"></div>
                 <div class="lr-splash-bolt"><span class="qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span></div>
-                <div class="lr-splash-kicker" data-i18n="lightning.splashKicker">Lightning Round</div>
+                <div class="lr-splash-kicker" data-i18n="lightning.splashKicker">Lightning round</div>
                 <div class="lr-splash-title" data-i18n="lightning.splashTitle">Get ready!</div>
                 <div class="lr-splash-chips">
                     <div class="lr-splash-chip">
@@ -821,7 +821,7 @@
                     <div class="game-header-left">
                         <span class="section-icon qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
                         <span class="round-indicator-text">
-                            <span data-i18n="lightning.title">Lightning Round</span>
+                            <span data-i18n="lightning.title">Lightning round</span>
                         </span>
                     </div>
                     <div class="stat-badge-bar">
@@ -881,7 +881,7 @@
                 <div class="end-header">
                     <p class="end-subtitle">
                         <span class="qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
-                        <span data-i18n="lightning.recapTitle">Lightning Round Results</span>
+                        <span data-i18n="lightning.recapTitle">Lightning round results</span>
                     </p>
                 </div>
 
@@ -926,7 +926,7 @@
         <div id="admin-control-bar" class="admin-control-bar hidden">
             <button id="skip-question-btn" class="control-btn" type="button">
                 <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="skipnext">⏭️</span>
-                <span class="control-label" data-i18n="admin.skip">Skip</span>
+                <span class="control-label" id="skip-question-label" data-i18n="admin.reveal">Reveal</span>
             </button>
             <button id="pause-game-btn" class="control-btn" type="button">
                 <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="pause">⏸️</span>
@@ -987,7 +987,7 @@
             <div class="reconnecting-spinner">
                 <div class="spinner"></div>
             </div>
-            <p id="reconnect-status" class="reconnect-status" data-i18n="errors.RECONNECTING">Reconnecting...</p>
+            <p id="reconnect-status" class="reconnect-status" data-i18n="errors.RECONNECTING">Reconnecting…</p>
         </div>
     </div>
 
@@ -997,7 +997,7 @@
             <div class="connection-lost-icon qz-icon qz-icon--coral" data-ui-icon="signaloff">📡</div>
             <h1 data-i18n="errors.CONNECTION_LOST">Connection Lost</h1>
             <p data-i18n="errors.connectionLostHint">We couldn't reconnect to the game server.</p>
-            <button id="retry-connection-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try Again</button>
+            <button id="retry-connection-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try again</button>
             <p class="connection-lost-hint" data-i18n="errors.checkNetwork">Make sure you're connected to the network</p>
         </div>
     </div>
@@ -1024,11 +1024,11 @@
          aria-labelledby="qr-modal-title">
         <div class="qr-modal-backdrop"></div>
         <div class="qr-modal-content">
-            <h2 id="qr-modal-title" class="sr-only" data-i18n="lobby.joinGameQr">Join Game QR Code</h2>
+            <h2 id="qr-modal-title" class="sr-only" data-i18n="lobby.joinGameQr">QR code to join</h2>
             <div id="qr-modal-code" class="qr-modal-code">
                 <!-- Large QR code rendered here -->
             </div>
-            <p class="qr-modal-label" data-i18n="lobby.scanToJoin">Scan to join the game</p>
+            <p class="qr-modal-label" data-i18n="lobby.scanToJoin">Scan the code to join</p>
             <button id="qr-modal-close" class="btn btn-secondary qr-modal-close"
                     data-i18n="common.close">Close</button>
         </div>
@@ -1039,7 +1039,7 @@
          aria-labelledby="powerup-target-title">
         <div class="powerup-target-backdrop"></div>
         <div class="powerup-target-content">
-            <h2 id="powerup-target-title" class="powerup-target-title">Pick a player</h2>
+            <h2 id="powerup-target-title" class="powerup-target-title"></h2>
             <p id="powerup-target-hint" class="powerup-target-hint" data-i18n="powerups.pickHint">Tap a player to target them</p>
             <ul id="powerup-target-list" class="powerup-target-list" role="list">
                 <!-- Buttons injected by player-game.js -->
@@ -1054,7 +1054,7 @@
          aria-labelledby="invite-modal-title">
         <div class="invite-modal-backdrop"></div>
         <div class="invite-modal-content">
-            <h2 id="invite-modal-title" class="invite-modal-title" data-i18n="lobby.invitePlayers">Invite Players</h2>
+            <h2 id="invite-modal-title" class="invite-modal-title" data-i18n="lobby.invitePlayers">Invite players</h2>
             <p class="invite-modal-hint" data-i18n="lobby.invitePlayersHint">Share this QR code or link with friends</p>
             <div id="invite-modal-code" class="invite-modal-code">
                 <!-- QR code rendered here -->

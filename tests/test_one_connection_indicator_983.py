@@ -202,7 +202,7 @@ def test_reconnecting_says_so_in_three_ways() -> None:
 
     assert "…" in result["reconnecting"]["text"]
     assert "Reconnecting" in result["reconnecting"]["text"]
-    assert result["reconnecting"]["announced"] == "Reconnecting..."
+    assert result["reconnecting"]["announced"] == "Reconnecting…"
     assert result["reconnecting"]["key"] == "connection.reconnecting"
     # The label is written from JS, so it carries the key a late language
     # switch re-renders from (#783).

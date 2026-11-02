@@ -351,7 +351,7 @@ def test_the_table_matches_the_host_card() -> None:
 def test_no_new_i18n_keys_the_buttons_use_the_existing_ones() -> None:
     html = _ADMIN_HTML.read_text("utf-8")
     for element_id, key in (
-        ("admin-skip-btn", "admin.skip"),
+        ("admin-skip-btn", "admin.reveal"),
         ("admin-pause-btn", "admin.pause"),
         ("admin-resume-btn", "admin.resume"),
     ):
@@ -360,5 +360,5 @@ def test_no_new_i18n_keys_the_buttons_use_the_existing_ones() -> None:
         assert f'data-i18n="{key}"' in m.group(0)
     for code in ("de", "en", "es"):
         bundle = json.loads((_WWW / "i18n" / f"{code}.json").read_text("utf-8"))
-        for key in ("skip", "pause", "resume"):
+        for key in ("reveal", "closeBets", "pause", "resume"):
             assert bundle["admin"].get(key), f"{code}: admin.{key}"

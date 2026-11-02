@@ -13,6 +13,7 @@ import html as _html
 import json
 import logging
 import os
+import re
 import time
 from functools import lru_cache
 from pathlib import Path
@@ -509,6 +510,8 @@ _LANGUAGE_META = {
 # Deterministic ordering for the language chips. Known languages first in this
 # order; any unknown language code is appended afterwards, alphabetically.
 _LANGUAGE_ORDER = ["de", "en", "es"]
+# A bundle file is named for its language: "de", or a region form like "pt-br".
+_LANG_CODE_RE = re.compile(r"[a-z]{2}(?:-[a-z]{2})?")
 
 # Per-language unit word for the pack-card question count ("149 Fragen" /
 # "150 questions" / "150 preguntas"). The count itself is data-driven; only
@@ -577,7 +580,12 @@ def _available_ui_languages() -> tuple[str, ...]:
     """
     i18n_dir = Path(__file__).resolve().parent.parent / "www" / "i18n"
     try:
-        present = {p.stem for p in i18n_dir.glob("*.json")}
+        # Language bundles only: the folder also holds glossary.json, the
+        # terminology file scripts/check_i18n.py reads (#1177), which must not
+        # turn into a language chip.
+        present = {
+            p.stem for p in i18n_dir.glob("*.json") if _LANG_CODE_RE.fullmatch(p.stem)
+        }
     except OSError:  # pragma: no cover - unreadable www/ is a broken install
         present = set()
     if not present:

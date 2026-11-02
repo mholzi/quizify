@@ -172,7 +172,7 @@ class TestSpanishPhraseTable:
         assert tts_phrases.join_names("es", ["Ana", "Hierro"]) == "Ana y Hierro"
 
     def test_unknown_language_still_falls_back_to_english(self) -> None:
-        assert tts_phrases.phrase("fr", "final_round") == "Final round!"
+        assert tts_phrases.phrase("fr", "final_round") == "Last question!"
 
 
 # ---------------------------------------------------------------------------
@@ -243,7 +243,7 @@ class TestLifecycleLinesAreLocalized:
         t._on_state_changed()
         t.announce_question(MagicMock(question="Frage?"), 5, 5)
         await asyncio.sleep(0)
-        assert _last_message(hass).startswith("Letzte Runde! ")
+        assert _last_message(hass).startswith("Letzte Frage! ")
 
     @pytest.mark.asyncio
     async def test_winner_line_speaks_the_game_language(self, game) -> None:
@@ -258,7 +258,7 @@ class TestLifecycleLinesAreLocalized:
         t._on_state_changed()
         await asyncio.sleep(0)
         msg = _last_message(hass)
-        assert msg == "¡Se acabó el juego! Gana Lucía con 420 puntos."
+        assert msg == "¡Se acabó la partida! Gana Lucía con 420 puntos."
         assert "winner" not in msg
 
 

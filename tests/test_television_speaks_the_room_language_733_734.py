@@ -5,7 +5,7 @@ screen, and nothing anywhere said so.
 
 **#733 — the end screen's awards.** ``renderAwards`` in ``dashboard.html``
 wrote ``s.award`` and ``s.detail`` straight into the DOM. Those two fields are
-the English fallbacks built in ``game/highlights.py`` ("Fastest Finger", "avg
+the English fallbacks built in ``game/highlights.py`` ("Fastest finger", "avg
 4.2s per correct answer"). The very same payload has always carried
 ``award_key``, ``detail_key`` and ``detail_params``, and the guests' phones
 have always used them (``js/player-end.js``). So the room read a German
@@ -61,9 +61,10 @@ _I18N_ATTRS = (
     "data-i18n-placeholder",
     "data-i18n-title",
     "data-i18n-aria-label",
+    "data-i18n-lines",
 )
 _ATTR_RE = re.compile(
-    r'(data-i18n(?:-placeholder|-title|-aria-label)?)\s*=\s*"([^"]+)"'
+    r'(data-i18n(?:-placeholder|-title|-aria-label|-lines)?)\s*=\s*"([^"]+)"'
 )
 _PLACEHOLDER_RE = re.compile(r"\{(\w+)\}")
 

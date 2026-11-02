@@ -665,7 +665,7 @@ class TestTheHouseStaysOffUntilItIsTurnedOn:
 
         assert spoken == [
             "The chair goes to Anna for 10 points.",
-            "Final round. Place your bets!",
+            "Final round. Place your wagers!",
             "Lightning round! Speed decides now.",
         ]
 

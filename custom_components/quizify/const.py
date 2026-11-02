@@ -91,26 +91,59 @@ ERR_JOIN_RATE_LIMITED = "JOIN_RATE_LIMITED"
 #: ``errors`` block of ``www/i18n/en.json`` — ``tests/test_error_fallback_text_812.py``
 #: pins that agreement, so the two can no longer drift.
 ERROR_FALLBACK_TEXT: dict[str, str] = {
-    ERR_NAME_TAKEN: "Name already taken",
-    ERR_NAME_INVALID: "Please enter a name",
-    ERR_GAME_NOT_STARTED: "No active game",
-    ERR_GAME_ALREADY_STARTED: "Game already running",
-    ERR_GAME_ENDED: "Game ended",
-    ERR_ROUND_EXPIRED: "Time expired",
+    ERR_NAME_TAKEN: (
+        "Someone is already playing under that name. "
+        "Pick another one."
+    ),
+    ERR_NAME_INVALID: "That name won't work. Use 1 to 20 characters.",
+    ERR_GAME_NOT_STARTED: (
+        "No game is running yet. "
+        "Wait for the host to start one."
+    ),
+    ERR_GAME_ALREADY_STARTED: (
+        "A game is already running. "
+        "End it or reset it before starting a new one."
+    ),
+    ERR_GAME_ENDED: "This game has finished. Ask the host to start a new one.",
+    ERR_ROUND_EXPIRED: (
+        "Too late — time was already up. "
+        "You're back in on the next question."
+    ),
     ERR_TEAM_LOCKED: "The team answer just changed — wait a moment",
     ERR_TEAM_CLOSED: "Teams are set for this game — you play on your own.",
-    ERR_ALREADY_SUBMITTED: "Already answered",
-    ERR_FROZEN: "Frozen — wait for the freeze to end",
-    ERR_NOT_IN_GAME: "Not in game",
-    ERR_INVALID_ACTION: "Invalid action",
-    ERR_ADMIN_REQUIRED: (
-        "This window is not the host — the command was refused. "
-        "Reopen the admin window from Home Assistant."
+    ERR_ALREADY_SUBMITTED: (
+        "You've already answered this question. "
+        "Wait for the reveal."
     ),
-    ERR_GAME_FULL: "Game is full",
-    ERR_NO_QUESTIONS_REMAINING: "No questions remaining",
-    ERR_ALREADY_JOINED: "Already joined",
-    ERR_JOIN_RATE_LIMITED: "Too many join attempts",
+    ERR_FROZEN: "Frozen — wait for the freeze to end",
+    ERR_NOT_IN_GAME: (
+        "You're not in this game right now. "
+        "Reload the page to join again."
+    ),
+    ERR_INVALID_ACTION: (
+        "That didn't work just now. "
+        "Wait a moment for the next question."
+    ),
+    ERR_ADMIN_REQUIRED: (
+        "This window isn't the host, so the command was refused. "
+        "Open the host page again from Home Assistant."
+    ),
+    ERR_GAME_FULL: (
+        "The game is full. "
+        "Ask the host to make room, or watch along on the TV."
+    ),
+    ERR_NO_QUESTIONS_REMAINING: (
+        "There are no questions for these settings. "
+        "Pick other topics, another difficulty or another language."
+    ),
+    ERR_ALREADY_JOINED: (
+        "You're already in this game on this device. "
+        "Go back to the tab you joined from."
+    ),
+    ERR_JOIN_RATE_LIMITED: (
+        "Too many join attempts. "
+        "Wait about a minute, then try again."
+    ),
 }
 
 # Question structure

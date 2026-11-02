@@ -119,12 +119,21 @@ function topLevelSpans(html) {
 
 // Only <span> children are parsed, because the only markup the player modules
 // build with innerHTML that the i18n sweep has to see is a row of spans.
+function decodeEntities(text) {
+    return String(text)
+        .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+        .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+}
+
 function parseSpans(html) {
     return topLevelSpans(html).map(function (span) {
         const child = makeElement(null, 'SPAN');
         const attrRe = /([a-zA-Z0-9:-]+)="([^"]*)"/g;
         let a;
-        while ((a = attrRe.exec(span.attrs)) !== null) child.setAttribute(a[1], a[2]);
+        // Attribute values are entity-decoded the way a browser does it, so a
+        // JSON `data-i18n-params` written through an HTML escaper (#1177)
+        // arrives as JSON.
+        while ((a = attrRe.exec(span.attrs)) !== null) child.setAttribute(a[1], decodeEntities(a[2]));
         if (span.inner.indexOf('<span') !== -1) child.innerHTML = span.inner;
         else child.textContent = span.inner;
         return child;

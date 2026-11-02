@@ -676,9 +676,7 @@
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || null;
         var left = hasSubmitted ? _stillAnswering() : 0;
         var text;
-        if (left === 1) {
-            text = t ? t('game.sentWaitingOne') : '';
-        } else if (left > 1) {
+        if (left > 0) {
             text = t ? t('game.sentWaiting', { count: left }) : '';
         } else {
             text = t ? t('game.sent') : '';
@@ -698,7 +696,11 @@
     function _formatEstimateValue(val) {
         // Drop a trailing .0 so integer guesses read cleanly; keep the unit.
         var n = (Math.round(val * 1000) / 1000);
-        var text = (n === Math.round(n)) ? String(Math.round(n)) : String(n);
+        // #1177: digits in the game language ("384.400", "3,5").
+        var I = window.QuizifyI18n;
+        var text = (I && I.formatNumber)
+            ? I.formatNumber(n)
+            : ((n === Math.round(n)) ? String(Math.round(n)) : String(n));
         return _estimate.unit ? (text + ' ' + _estimate.unit) : text;
     }
 
@@ -1531,8 +1533,8 @@
                 summaryEl.textContent = summary;
                 return;
             }
-            var key = others === 1 ? 'lobby.andOthersOne' : 'lobby.andOthers';
-            var params = others === 1 ? null : { count: others };
+            var key = 'lobby.andOthers';
+            var params = { count: others };
             var more = document.createElement('span');
             more.setAttribute('data-i18n', key);
             if (params) more.setAttribute('data-i18n-params', JSON.stringify(params));

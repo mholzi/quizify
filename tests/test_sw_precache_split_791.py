@@ -181,7 +181,7 @@ def test_only_the_fallback_and_the_active_language_bundle_are_precached() -> Non
     whatever the active language is — so the rule is "en plus the active one",
     never "all of them".
     """
-    shipped = {p.name for p in (WWW / "i18n").glob("*.json")}
+    shipped = {p.name for p in (WWW / "i18n").glob("??.json")}  # glossary.json is terminology, not a language (#1177)
     assert len(shipped) > 2, "expected more than two bundles, else this proves nothing"
 
     core = {_rel(url) for url in _string_list(_sw(), "PRECACHE_CORE")}

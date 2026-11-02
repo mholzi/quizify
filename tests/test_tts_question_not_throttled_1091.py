@@ -124,7 +124,7 @@ async def test_final_round_speaks_the_call_and_the_question(game, announcer) -> 
     t._on_state_changed()
     text = await _next_round(game, t)  # well inside TTS_MIN_INTERVAL of round 1
     assert len(hass.calls) == 2
-    assert hass.calls[1]["message"] == f"Final round! Question 2 of 2: {text}"
+    assert hass.calls[1]["message"] == f"Last question! Question 2 of 2: {text}"
 
 
 @pytest.mark.asyncio

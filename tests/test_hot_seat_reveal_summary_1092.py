@@ -134,6 +134,6 @@ async def test_an_unanswered_chair_is_a_miss_not_the_last_rounds_winners(
     hs = game.hot_seat
     assert hs is not None and hs.question is not None and hs.answered is None
     right = hs.question.answers[hs.correct_index].text
-    assert spoken[-1] == f"The correct answer is {right}. Nobody got it this round."
+    assert spoken[-1] == f"The correct answer is {right}. Nobody got this question."
     event = _revealed(fired)
     assert (event["correct_count"], event["total_players"]) == (0, 1)

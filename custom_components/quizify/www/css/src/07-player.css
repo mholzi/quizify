@@ -1136,16 +1136,6 @@
     color: var(--color-text-muted);
     margin: 0;
 }
-.not-host-code {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--color-text-primary);
-    background: var(--color-bg-card-alt);
-    border-radius: 6px;
-    padding: 2px 6px;
-    /* One long token: let it break rather than push a 390px page sideways. */
-    overflow-wrap: anywhere;
-}
 
 /* #627: "Adjust settings" and "Stats" share one row. Two rows would push the
    primary action off a 390px viewport, which is the thing the host actually
@@ -1905,6 +1895,7 @@
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--color-accent-primary);
     padding: 3px 10px;
     border-radius: 999px;
@@ -2423,19 +2414,9 @@
     border-top: 1px dashed var(--color-border-light);
     border-bottom: 1px dashed var(--color-border-light);
 }
-.lobby-e-countdown strong {
-    color: var(--color-success);
-    font-weight: 700;
-    margin: 0 4px;
-}
-.lobby-e-countdown-sep {
-    color: var(--color-border-medium);
-    margin: 0 6px;
-}
 .lobby-e-countdown.is-ready {
     color: var(--color-success);
 }
-.lobby-e-countdown.is-ready strong { color: var(--color-accent-primary); }
 
 .lobby-e-actions {
     display: flex;

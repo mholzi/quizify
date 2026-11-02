@@ -54,7 +54,7 @@ class TestPhraseRendering:
         assert tts_phrases.phrase(
             "en", "got_it_multi", names="Alice and Bob"
         ) == "Alice and Bob got it right."
-        assert tts_phrases.phrase("en", "nobody") == "Nobody got it this round."
+        assert tts_phrases.phrase("en", "nobody") == "Nobody got this question."
         assert tts_phrases.phrase(
             "en", "leader_change", name="Carol"
         ) == "Carol takes the lead!"
@@ -78,7 +78,7 @@ class TestFallbacks:
         # untranslated language until #745; it is a first-class one now.)
         assert tts_phrases.phrase(
             "fr", "nobody"
-        ) == "Nobody got it this round."
+        ) == "Nobody got this question."
 
     def test_unknown_key_within_known_language_uses_english(self) -> None:
         # A key absent from de but present in en still resolves via the

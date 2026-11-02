@@ -44,7 +44,7 @@ def test_awards_name_teams_not_people() -> None:
 
     assert results, "four rounds and two teams is enough for awards"
     assert {s.winner for s in results} <= {"Sofa", "Küche"}
-    assert _award(results, "Best Round") == "Sofa"
+    assert _award(results, "Best question") == "Sofa"
 
 
 def test_fastest_finger_is_the_tap_that_stood() -> None:
@@ -64,7 +64,7 @@ def test_fastest_finger_is_the_tap_that_stood() -> None:
 
     results = compute_superlatives([quick, slow])
 
-    assert _award(results, "Fastest Finger") == "Quick"
+    assert _award(results, "Fastest finger") == "Quick"
 
 
 def test_hot_streak_reads_the_team_streak() -> None:
@@ -82,7 +82,7 @@ def test_hot_streak_reads_the_team_streak() -> None:
 
     # Cold takes Best Round with its one big round, which leaves Hot Streak to
     # the team that actually strung answers together.
-    assert _award(results, "Hot Streak") == "Hot"
+    assert _award(results, "Hot streak") == "Hot"
 
 
 def test_buzzkill_names_the_team_whose_members_spent_the_freezes() -> None:

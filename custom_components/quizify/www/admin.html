@@ -8,7 +8,7 @@
          admin.js reads this to pick the initial UI language. -->
     <meta name="quizify-ha-lang" content="{{HA_LANG}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title data-i18n="page.titleAdmin">Quizify — Admin</title>
+    <title data-i18n="page.titleAdmin">Quizify — Host</title>
     <link rel="manifest" href="/quizify/static/site.webmanifest?v={{ASSET_VER}}">
     <meta name="theme-color" content="#FAF6EC">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -81,10 +81,7 @@
 
             <!-- HERO (variant A) -->
             <div id="setup-hero" class="setup-hero">
-                <h1 class="setup-hero-headline">
-                    <span data-i18n="setup.heroLine1">Ready for a</span><br>
-                    <span class="accent" data-i18n="setup.heroLine2">round of Quizify?</span>
-                </h1>
+                <h1 class="setup-hero-headline" data-i18n-lines="setup.hero"><span>Ready for a</span><br><span class="accent">round of Quizify?</span></h1>
                 <p class="setup-hero-summary" id="setup-summary"></p>
                 <p class="setup-hero-topics hidden" id="setup-topics"></p>
                 <!-- Featured pack spotlight — surfaces a pack on the first
@@ -112,7 +109,7 @@
                      thus lives here, not buried in "Adjust settings". -->
                 <div class="hero-packs" id="hero-packs">
                     <div class="hero-packs-label" data-i18n="featured.chooseCategory">Choose a category</div>
-                    <div class="hero-pack-chips" id="hero-pack-chips" role="group" aria-label="Quiz pack"></div>
+                    <div class="hero-pack-chips" id="hero-pack-chips" role="group" data-i18n-aria-label="a11y.packChips" aria-label="Question pack"></div>
                 </div>
                 <button type="button" id="start-game-btn" class="btn btn-primary btn-lg btn-block">
                     <span aria-hidden="true">▶︎</span>
@@ -249,10 +246,10 @@
                              featured pack and clears any multi-select. JS populates
                              title/meta from FEATURED_PACK[lang]. -->
                         <div class="featured-spotlight" id="featured-spotlight">
-                            <div class="spotlight-label" data-i18n="admin.spotlightFeatured">⭐ Empfohlen</div>
+                            <div class="spotlight-label" data-i18n="admin.spotlightFeatured">⭐ Featured</div>
                             <div class="spotlight-title" id="spotlight-title"></div>
                             <div class="spotlight-meta" id="spotlight-meta"></div>
-                            <button type="button" class="spotlight-play-btn" data-i18n="admin.spotlightPlay">▶︎ Spielen</button>
+                            <button type="button" class="spotlight-play-btn" data-i18n="admin.spotlightPlay">▶︎ Play now</button>
                         </div>
 
                         <!-- Phase 2: Theme-Tabs. Always visible. Filter visible sub-pack
@@ -263,15 +260,15 @@
                                  shared QuizifyIcons set) + a text-only i18n label span. The
                                  data-i18n attr lives on the inner .theme-tab-label so i18n's
                                  textContent write never clobbers the sibling SVG. -->
-                            <button type="button" class="theme-tab active" data-theme="all" aria-pressed="true"><span class="theme-tab-label" data-i18n="admin.themeAll">Alle</span></button>
+                            <button type="button" class="theme-tab active" data-theme="all" aria-pressed="true"><span class="theme-tab-label" data-i18n="admin.themeAll">All</span></button>
                             <button type="button" class="theme-tab" aria-pressed="false" data-theme="geography"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.geography">Geo</span></button>
-                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="nature"><span class="qz-icon qz-icon--sage"></span><span class="theme-tab-label" data-i18n="theme.nature">Natur</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="nature"><span class="qz-icon qz-icon--sage"></span><span class="theme-tab-label" data-i18n="theme.nature">Nature</span></button>
                             <button type="button" class="theme-tab" aria-pressed="false" data-theme="popculture"><span class="qz-icon qz-icon--sky"></span><span class="theme-tab-label" data-i18n="theme.popculture">Pop</span></button>
                             <button type="button" class="theme-tab" aria-pressed="false" data-theme="sport"><span class="qz-icon qz-icon--sun"></span><span class="theme-tab-label" data-i18n="theme.sport">Sport</span></button>
-                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="music"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.music">Musik</span></button>
-                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="science"><span class="qz-icon qz-icon--sage"></span><span class="theme-tab-label" data-i18n="theme.science">Wissen</span></button>
-                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="history"><span class="qz-icon qz-icon--sky"></span><span class="theme-tab-label" data-i18n="theme.history">Historie</span></button>
-                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="food"><span class="qz-icon qz-icon--sun"></span><span class="theme-tab-label" data-i18n="theme.food">Essen</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="music"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.music">Music</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="science"><span class="qz-icon qz-icon--sage"></span><span class="theme-tab-label" data-i18n="theme.science">Science</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="history"><span class="qz-icon qz-icon--sky"></span><span class="theme-tab-label" data-i18n="theme.history">History</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="food"><span class="qz-icon qz-icon--sun"></span><span class="theme-tab-label" data-i18n="theme.food">Food</span></button>
                             <button type="button" class="theme-tab" aria-pressed="false" data-theme="tech"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.tech">Tech</span></button>
                         </div>
 
@@ -295,7 +292,7 @@
 
                     <div class="vF-step">
                         <div class="vF-q"><span class="num">3</span><span data-i18n="setup.eigene.q3">How many rounds?</span></div>
-                        <div class="vF-answers chip-group" id="rounds-chips" role="group" data-i18n-aria-label="admin.rounds" aria-label="Rounds">
+                        <div class="vF-answers chip-group" id="rounds-chips" role="group" data-i18n-aria-label="admin.questions" aria-label="Questions">
                             <button type="button" class="chip" data-value="5">5</button>
                             <button type="button" class="chip active" data-value="10">10</button>
                             <button type="button" class="chip" data-value="15">15</button>
@@ -341,7 +338,7 @@
                          _buildStartGamePayload → lightning_enabled). Uses the
                          shared .toggle-compact switch (Beatify pattern). -->
                     <div class="vF-step">
-                        <div class="vF-q"><span class="num">6</span><span data-i18n="setup.eigene.q6">Lightning Round?</span></div>
+                        <div class="vF-q"><span class="num">6</span><span data-i18n="setup.eigene.q6">Lightning round?</span></div>
                         <label class="toggle-compact setup-lightning-toggle" id="lightning-toggle-row" for="lightning-enabled-toggle">
                             <input type="checkbox" id="lightning-enabled-toggle" checked>
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
@@ -361,7 +358,7 @@
                          Lightning already owns. Off in the kids preset —
                          losing points is the part children like least. -->
                     <div class="vF-step">
-                        <div class="vF-q"><span class="num">7</span><span data-i18n="setup.eigene.q7">Hot Seat?</span></div>
+                        <div class="vF-q"><span class="num">7</span><span data-i18n="setup.eigene.q7">Hot seat?</span></div>
                         <label class="toggle-compact setup-lightning-toggle" id="hot-seat-toggle-row" for="hot-seat-enabled-toggle">
                             <input type="checkbox" id="hot-seat-enabled-toggle" checked>
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
@@ -389,7 +386,7 @@
                         <label class="toggle-compact setup-lightning-toggle" for="powerups-enabled-toggle">
                             <input type="checkbox" id="powerups-enabled-toggle" checked>
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
-                            <span class="toggle-label" data-i18n="setup.eigene.powerupsHint">Joker, Steal, Freeze and friends are dealt out</span>
+                            <span class="toggle-label" data-i18n="setup.eigene.powerupsHint">Joker, Double, Steal, Freeze and +5 s are dealt out</span>
                         </label>
                     </div>
 
@@ -401,11 +398,11 @@
                         <label class="toggle-compact setup-lightning-toggle" id="wager-toggle-row" for="wager-enabled-toggle">
                             <input type="checkbox" id="wager-enabled-toggle" checked>
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
-                            <span class="toggle-label" data-i18n="setup.eigene.wagerHint">Stake points on the final question</span>
+                            <span class="toggle-label" data-i18n="setup.eigene.wagerHint">Wager points on the last question</span>
                         </label>
                         <!-- #804, twin of the Hot Seat note above. -->
                         <p class="vF-team-note hidden" id="wager-team-note"
-                           data-i18n="setup.eigene.wagerTeamNote">With teams: the bet is the team's, staked on the team score.</p>
+                           data-i18n="setup.eigene.wagerTeamNote">With teams: the wager is the team's, placed on the team score.</p>
                         <!-- #890: an estimate final never opens a betting
                              window (_needs_wager_window), so the same gate
                              applies to the third toggle. -->
@@ -430,7 +427,7 @@
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
                             <span class="toggle-label" data-i18n="setup.tts.enable">Narrate the game out loud</span>
                         </label>
-                        <div class="setup-tts-hint" data-i18n="setup.tts.hint">Your HA speaker becomes the quiz master.</div>
+                        <div class="setup-tts-hint" data-i18n="setup.tts.hint">Your HA speaker becomes the quizmaster.</div>
                         <div class="setup-tts-divider" aria-hidden="true"></div>
                         <div class="setup-tts-children" id="tts-children">
                             <label class="toggle-compact setup-tts-toggle" for="tts-announce-question">
@@ -475,7 +472,7 @@
                              "quizify_tts" localStorage object. Empty selection falls
                              back to the integration-options defaults. -->
                         <label class="setup-tts-select" for="tts-engine-select">
-                            <span class="setup-tts-select-label" data-i18n="setup.tts.engine">TTS engine</span>
+                            <span class="setup-tts-select-label" data-i18n="setup.tts.engine">Voice</span>
                             <select id="tts-engine-select" class="setup-select">
                                 <option value="" data-i18n="setup.tts.usedefault">Use default</option>
                             </select>
@@ -520,7 +517,7 @@
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
                             <span class="toggle-label" data-i18n="setup.house.enable">The house reacts to the game</span>
                         </label>
-                        <div class="setup-house-hint" data-i18n="setup.house.hint">Lights and sound follow the game.</div>
+                        <div class="setup-house-hint" data-i18n="setup.house.hint">Your lights and speakers play along with the quiz.</div>
                         <div class="setup-house-divider" aria-hidden="true"></div>
                         <div class="setup-house-children" id="house-children">
                             <!-- Preset segmented control. Real buttons with
@@ -530,14 +527,14 @@
                             <div class="setup-house-presets" id="house-presets" role="group"
                                  data-i18n-aria-label="setup.house.presetsLabel" aria-label="Effect preset">
                                 <button type="button" class="setup-house-preset" data-preset="cozy_glow"
-                                        aria-pressed="false" data-i18n="setup.house.presetCozy">Cozy Glow</button>
+                                        aria-pressed="false" data-i18n="setup.house.presetCozy">Cozy glow</button>
                                 <button type="button" class="setup-house-preset is-active" data-preset="game_show"
-                                        aria-pressed="true" data-i18n="setup.house.presetGameShow">Game Show</button>
+                                        aria-pressed="true" data-i18n="setup.house.presetGameShow">Game show</button>
                                 <button type="button" class="setup-house-preset" data-preset="events_only"
                                         aria-pressed="false" data-i18n="setup.house.presetEvents">Events only</button>
                             </div>
                             <div class="setup-house-preset-hint" id="house-preset-hint"
-                                 data-i18n="setup.house.hintGameShow">Full show — lights and sound on every beat.</div>
+                                 data-i18n="setup.house.hintGameShow">The full show — lights and sound on every beat.</div>
 
                             <div class="setup-house-autohint">
                                 <strong data-i18n="setup.house.autoTitle">Your own automations?</strong>
@@ -665,7 +662,7 @@
                              screen: both end as an issue and both show up in
                              the one timeline below. -->
                         <div class="pack-mode" role="tablist"
-                             aria-label="Pack submission mode">
+                             data-i18n-aria-label="a11y.packSubmitMode" aria-label="Send or request a pack">
                             <button type="button" id="pack-mode-submit-btn"
                                     class="pack-mode-btn active" role="tab"
                                     aria-selected="true" aria-controls="pack-submit-pane"
@@ -739,8 +736,7 @@
                              everyone or not at all. -->
                         <div id="pack-request-pane" class="hidden" role="tabpanel">
                             <p class="pack-submit-intro" data-i18n="packSubmit.request.intro">
-                                Describe the pack you are missing. It lands as a request issue;
-                                the finished pack comes back as a pull request for review.</p>
+                                Describe the pack you are missing. It lands as a request issue; the finished pack comes back as a pull request.</p>
 
                             <label class="pack-submit-input-label" for="pack-request-theme"
                                    data-i18n="packSubmit.request.themeLabel">Theme</label>
@@ -790,10 +786,7 @@
         <div id="not-host-screen" class="view">
             <div class="setup-hero not-host">
                 <span class="qz-icon qz-icon--sun not-host-icon" data-ui-icon="lock" aria-hidden="true"></span>
-                <h2 class="setup-hero-headline">
-                    <span data-i18n="notHost.titleLine1">This device</span><br>
-                    <span class="accent" data-i18n="notHost.titleLine2">isn't the host.</span>
-                </h2>
+                <h2 class="setup-hero-headline" data-i18n-lines="notHost.title"><span>This device</span><br><span class="accent">isn't the host.</span></h2>
                 <p class="not-host-lead" data-i18n="notHost.body">The game is run from another device. You can still play along.</p>
                 <a id="not-host-join-link" class="btn btn-primary btn-lg btn-block" href="/quizify/player"
                    data-i18n="notHost.join">Join as a player</a>
@@ -801,11 +794,7 @@
                    data-i18n="notHost.tv">Open the TV screen</a>
                 <div class="card not-host-card">
                     <h3 class="not-host-card-title" data-i18n="notHost.hostTitle">Are you the host?</h3>
-                    <p class="not-host-card-body">
-                        <span data-i18n="notHost.hostBefore">Open this page on the device you started on. To host from here instead, run</span>
-                        <code class="not-host-code">quizify.reset_admin_session</code>
-                        <span data-i18n="notHost.hostAfter">in Home Assistant, then reload.</span>
-                    </p>
+                    <p class="not-host-card-body" data-i18n="notHost.hostHint">Open this page on the device you started on. To host from here instead, run the action quizify.reset_admin_session in Home Assistant, then reload.</p>
                 </div>
             </div>
         </div>
@@ -850,7 +839,7 @@
                             <!-- Filled by admin.js renderLobbyPlayers -->
                         </div>
                         <div id="lobby-players-empty" class="lobby-e-row-empty">
-                            <span data-i18n="lobby.waitingForPlayers">Waiting for players to join…</span>
+                            <span data-i18n="lobby.scanToJoin">Scan the code to join</span>
                         </div>
                     </div>
                 </div>
@@ -862,13 +851,8 @@
                 </a>
 
                 <div class="lobby-e-countdown" id="lobby-countdown">
-                    <span data-i18n="lobby.readyHint">Ready at</span>
-                    <strong id="lobby-min-players">2</strong>
-                    <span data-i18n="lobby.playersUnit">players</span>
-                    <span class="lobby-e-countdown-sep">·</span>
-                    <span data-i18n="lobby.stillMissing">still need</span>
-                    <strong id="lobby-missing-players">2</strong>
-                    <span data-i18n="lobby.stillMissingSuffix">more</span>
+                    <span id="lobby-missing-players" data-i18n="lobby.missingPlayers"
+                          data-i18n-params='{"count":2}'>2 more players to start</span>
                 </div>
 
                 <!-- The hidden player count node is referenced by
@@ -885,11 +869,11 @@
                 <div class="lobby-e-actions">
                     <button type="button" id="start-gameplay-btn" class="btn btn-primary btn-lg btn-block hidden">
                         <span class="btn-icon qz-icon qz-icon--sage" data-ui-icon="play" aria-hidden="true">▶️</span>
-                        <span data-i18n="admin.startGameplay">Start Game</span>
+                        <span data-i18n="admin.startGameplay">Start game</span>
                     </button>
                     <button type="button" id="participate-btn" class="btn btn-secondary btn-lg btn-block">
                         <span class="btn-icon qz-icon qz-icon--coral" data-ui-icon="controller" aria-hidden="true">🎮</span>
-                        <span data-i18n="admin.joinAsPlayer">Join as Player</span>
+                        <span data-i18n="admin.joinAsPlayer">Join as player</span>
                     </button>
                 </div>
             </div>
@@ -957,12 +941,12 @@
                      them shows is decided per phase in admin.js
                      (LIVE_CONTROLS); the row itself hides when none does. -->
                 <div id="admin-live-controls" class="admin-live-controls hidden">
-                    <button type="button" id="admin-skip-btn" class="btn btn-secondary hidden" data-i18n="admin.skip">Skip</button>
+                    <button type="button" id="admin-skip-btn" class="btn btn-secondary hidden" data-i18n="admin.reveal">Reveal</button>
                     <button type="button" id="admin-pause-btn" class="btn btn-secondary hidden" data-i18n="admin.pause">Pause</button>
                     <button type="button" id="admin-resume-btn" class="btn btn-resume hidden" data-i18n="admin.resume">Resume</button>
                 </div>
-                <button type="button" id="next-question-btn" class="btn btn-primary" data-i18n="admin.nextQuestion">Next Question</button>
-                <button type="button" id="end-game-btn" class="btn btn-danger hidden" data-i18n="admin.endGame">End Game</button>
+                <button type="button" id="next-question-btn" class="btn btn-primary" data-i18n="admin.nextQuestion">Next question</button>
+                <button type="button" id="end-game-btn" class="btn btn-danger hidden" data-i18n="admin.endGame">End game</button>
             </div>
         </div>
 
@@ -1000,15 +984,11 @@
             <!-- The Lightning Round is now an automatic mid-game event (#285);
                  the manual "⚡ Lightning Round" entry button was retired. -->
             <div class="admin-actions lobby-actions--sticky mt-lg">
-                <button type="button" id="new-game-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.startNewGame">Start New Game</button>
+                <button type="button" id="new-game-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.startNewGame">Start new game</button>
                 <!-- GitHub star hint: from the third finished game on this
                      device, until dismissed (_updateStarHint in admin.js). -->
                 <p id="admin-star-hint" class="admin-star-hint" hidden>
-                    <span>
-                        <span data-i18n="admin.starHintBefore">Enjoying Quizify? A ⭐</span>
-                        <a href="https://github.com/mholzi/quizify" target="_blank" rel="noopener" data-i18n="admin.starHintLink">on GitHub</a>
-                        <span data-i18n="admin.starHintAfter">helps others find it.</span>
-                    </span>
+                    <a href="https://github.com/mholzi/quizify" target="_blank" rel="noopener" data-i18n="admin.starHint">Enjoying Quizify? A ⭐ on GitHub helps others find it.</a>
                     <button type="button" id="admin-star-hint-dismiss" class="admin-star-hint-dismiss"
                             aria-label="Dismiss hint" data-i18n-aria-label="admin.starHintDismiss">×</button>
                 </p>
@@ -1022,12 +1002,12 @@
                  auto-triggers and auto-advances (#285) — there is no host
                  Start/End control here any more. -->
             <section id="admin-lightning-splash" class="card-section" hidden>
-                <h2 class="section-header">⚡ <span data-i18n="lightning.splashKicker">Lightning Round</span></h2>
-                <p class="hint" data-i18n="lightning.splashAdminMeta">Splash visible to all players</p>
+                <h2 class="section-header">⚡ <span data-i18n="lightning.splashKicker">Lightning round</span></h2>
+                <p class="hint" data-i18n="lightning.splashAdminMeta">All players see this screen</p>
                 <p class="mt-md" id="admin-lightning-splash-rules"></p>
             </section>
             <section id="admin-lightning-question-section" class="card-section">
-                <h2 class="section-header">⚡ <span data-i18n="lightning.title">Lightning Round</span></h2>
+                <h2 class="section-header">⚡ <span data-i18n="lightning.title">Lightning round</span></h2>
                 <div id="admin-lightning-progress" class="round-indicator"></div>
                 <div id="admin-lightning-question" class="question-text" style="font-size:1.1rem;"></div>
                 <div id="admin-lightning-timer" class="timer-text mt-md"></div>
@@ -1042,7 +1022,7 @@
         <!-- Lightning Round recap view -->
         <div id="admin-lightning-recap-view" class="view">
             <section class="card-section">
-                <h2 class="section-header">⚡ <span data-i18n="lightning.recapTitle">Lightning Round Results</span></h2>
+                <h2 class="section-header">⚡ <span data-i18n="lightning.recapTitle">Lightning round results</span></h2>
                 <div id="admin-lightning-recap-leaderboard" class="leaderboard"></div>
             </section>
             <section class="card-section mt-md">
@@ -1065,7 +1045,7 @@
     <div id="admin-join-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="admin-join-modal-title">
         <div class="modal-backdrop"></div>
         <div class="modal-content">
-            <h2 id="admin-join-modal-title" data-i18n="admin.joinModalTitleStart">Start Game</h2>
+            <h2 id="admin-join-modal-title" data-i18n="admin.joinModalTitleStart">Start game</h2>
             <p id="admin-join-modal-subtitle" data-i18n="admin.joinModalSubtitleStart">What's your name? You'll play along and host the game.</p>
             <div class="form-group">
                 <input type="text" id="admin-name-input" class="name-input"
@@ -1077,7 +1057,7 @@
             <div class="modal-actions">
                 <button type="button" id="admin-join-btn" class="btn btn-primary" disabled>
                     <span class="qz-icon qz-icon--sage" data-ui-icon="play" aria-hidden="true">▶️</span>
-                    <span id="admin-join-btn-label" data-i18n="admin.joinModalBtnStart">Start &amp; Join</span>
+                    <span id="admin-join-btn-label" data-i18n="admin.joinModalBtnStart">Start and join</span>
                 </button>
                 <button type="button" id="admin-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
             </div>
@@ -1089,9 +1069,9 @@
         <div class="modal-backdrop"></div>
         <div class="modal-content">
             <h2 id="end-game-modal-title" data-i18n="admin.endGameConfirm">End game?</h2>
-            <p data-i18n="admin.endGameWarning">The quiz ends here. Everyone jumps straight to the final results, and any remaining questions are skipped.</p>
+            <p data-i18n="admin.endGameWarning">The game ends here. Everyone jumps straight to the final results, and any remaining questions are skipped.</p>
             <div class="modal-actions">
-                <button type="button" id="end-game-confirm-btn" class="btn btn-danger" data-i18n="admin.endGame">End Game</button>
+                <button type="button" id="end-game-confirm-btn" class="btn btn-danger" data-i18n="admin.endGame">End game</button>
                 <button type="button" id="end-game-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
             </div>
         </div>

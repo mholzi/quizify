@@ -264,5 +264,5 @@ def test_i18n_keys_exist_in_every_shipped_language() -> None:
         data = json.loads((WWW / "i18n" / f"{lang}.json").read_text(encoding="utf-8"))
         setup = data["setup"]
         for key in ("myPresets", "savePreset", "savePresetPrompt",
-                    "deletePreset", "deletePresetConfirm"):
+                    "deletePreset"):
             assert setup.get(key), f"{lang}.json is missing setup.{key}"

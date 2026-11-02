@@ -58,7 +58,7 @@ def test_the_steal_hint_says_round_score_not_total() -> None:
     score. A hint promising half their *total* would make players target the
     leader, which is not what the mechanic rewards.
     """
-    expectations = {"de": "dieser Runde", "en": "this round", "es": "esta ronda"}
+    expectations = {"de": "dieser Frage", "en": "this question", "es": "esta pregunta"}
     for code, phrase in expectations.items():
         hint = _powerups(code)["stealHint2"]
         assert phrase in hint, (

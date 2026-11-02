@@ -990,8 +990,9 @@
             }
             var total = data && (data.total_rounds || data.num_rounds);
             if (total) {
-                bits.push(_escape(String(total)) + ' '
-                    + _i18nSpan('admin.summaryRoundsUnit', t));
+                // #1177: one key with a plural; the count rides along as
+                // params so the sweep re-renders it in a new language.
+                bits.push(_i18nSpan('game.questionsCount', t, { count: Number(total) }));
             }
             metaEl.innerHTML = bits.length
                 ? bits.join(' · ')
@@ -1004,10 +1005,8 @@
         if (alsoEl) {
             var alsoKey = 'lobby.aloneWaiting';
             var alsoParams = null;
-            if (others.length === 1) {
-                alsoKey = 'lobby.alsoOne';
-            } else if (others.length > 1) {
-                alsoKey = 'lobby.alsoMany';
+            if (others.length > 0) {
+                alsoKey = 'lobby.also';
                 alsoParams = { count: others.length };
             }
             alsoEl.setAttribute('data-i18n', alsoKey);
@@ -1062,12 +1061,12 @@
             return;
         }
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-        var key = _allTimeKey(standing);
+        var key = _allTimeKey();
         var params = {
             rank: standing.rank,
             total: standing.total_players,
-            wins: standing.wins,
-            games: standing.games_played
+            wins: standing.wins || 0,
+            games: standing.games_played || 0
         };
         // #776: this line is written on `joined`, which lands BEFORE the first
         // game_state frame — i.e. before the phone learns the game language.
@@ -1082,23 +1081,14 @@
     }
 
     /**
-     * Pick the all-time sentence that matches the counts (#776).
+     * The all-time sentence (#776, #1177).
      *
-     * Five flat keys instead of a pluralisation engine, the same `…One`
-     * convention `lobby.alsoOne` / `highlights.tonightWinsOne` already use.
-     * Only three of the four (wins × games) combinations are reachable in the
-     * has-won branch: you cannot have two wins from one game, so a single game
-     * always means a single win.
+     * One key since #1177: the bundle's plural rule picks "no win yet" for
+     * zero wins ("0 wins" reads like a taunt on the screen you just joined),
+     * and singular/plural for wins and games — it used to be five flat keys.
      */
-    function _allTimeKey(standing) {
-        var oneGame = standing.games_played === 1;
-        if (!standing.wins) {
-            // A player with games but no win yet gets their own phrasing —
-            // "0 wins" reads like a taunt on the screen you just joined.
-            return oneGame ? 'lobby.allTimeFirstWinOneGame' : 'lobby.allTimeFirstWin';
-        }
-        if (oneGame) return 'lobby.allTimeOneWinOneGame';
-        return standing.wins === 1 ? 'lobby.allTimeOneWin' : 'lobby.allTime';
+    function _allTimeKey() {
+        return 'lobby.allTime';
     }
 
     /**
@@ -1108,8 +1098,12 @@
      * a line assembled from these spans survives a language change that lands
      * after it was painted — which a single textContent write does not.
      */
-    function _i18nSpan(key, t) {
-        return '<span data-i18n="' + _escape(key) + '">' + _escape(t(key)) + '</span>';
+    function _i18nSpan(key, t, params) {
+        var attr = params
+            ? ' data-i18n-params="' + _escape(JSON.stringify(params)) + '"'
+            : '';
+        return '<span data-i18n="' + _escape(key) + '"' + attr + '>'
+            + _escape(t(key, params)) + '</span>';
     }
 
     // Tiny helpers — keep scope tight.
@@ -2060,8 +2054,8 @@
                 nextRoundBtn.classList.add('is-final');
             } else {
                 if (nextLabel) {
-                    nextLabel.setAttribute('data-i18n', 'admin.nextRound');
-                    nextLabel.textContent = t('admin.nextRound');
+                    nextLabel.setAttribute('data-i18n', 'admin.nextQuestion');
+                    nextLabel.textContent = t('admin.nextQuestion');
                 }
                 nextRoundBtn.classList.remove('is-final');
             }
@@ -2141,7 +2135,11 @@
     function _fmtEstimate(val, unit) {
         if (val === null || val === undefined) return '—';
         var n = Math.round(val * 1000) / 1000;
-        var text = (n === Math.round(n)) ? String(Math.round(n)) : String(n);
+        // #1177: digits in the game language ("384.400", "3,5").
+        var I = window.QuizifyI18n;
+        var text = (I && I.formatNumber)
+            ? I.formatNumber(n)
+            : ((n === Math.round(n)) ? String(Math.round(n)) : String(n));
         return unit ? (text + ' ' + unit) : text;
     }
 
@@ -2959,19 +2957,13 @@
         });
         if (!players) players = leaderboard.length;
 
-        // #976: one flat `…One` key per count, the convention `lobby.alsoOne`
-        // and `dashboard.tonightWinsOne` already use. Written out rather than
-        // assembled from a prefix so both keys stay greppable — #798 counts a
-        // key as dead unless it appears verbatim under `www/`.
+        // #976 / #1177: the singular comes from the bundle's plural rule
+        // ({count, plural, one{…} other{…}}), not from a second `…One` key.
         var parts = [];
         if (rounds) {
-            parts.push(rounds === 1
-                ? _tf('leaderboard.roundsCountOne', '1 Runde')
-                : _tf('leaderboard.roundsCount', '{count} Runden', { count: rounds }));
+            parts.push(_tf('game.questionsCount', rounds + ' questions', { count: rounds }));
         }
-        parts.push(players === 1
-            ? _tf('leaderboard.playersCountOne', '1 Spieler')
-            : _tf('leaderboard.playersCount', '{count} Spieler', { count: players }));
+        parts.push(_tf('leaderboard.playersCount', players + ' players', { count: players }));
         metaEl.textContent = parts.join(' · ');
     }
 
@@ -3047,7 +3039,7 @@
                 emoji: CHIP_EMOJI.topScore,
                 tint: CHIP_TINT.topScore,
                 title: _tf('highlights.topScore', 'Höchste Punktzahl'),
-                value: _t('highlights.scoreUnit', { count: winner.score }),
+                value: _t('highlights.scoreValue', { count: winner.score }),
                 player: winner.name,
                 badge: '🏅'
             });
@@ -4464,8 +4456,11 @@
         // U+2212 for the minus, matching the settlement strings the server
         // bundles already use.
         if (value) {
-            value.textContent = (mine < 0 ? '\u2212' : '+')
-                + Math.abs(mine) + ' ' + t('reveal.ptsUnit');
+            // #1177: one key for sign, number and unit, not a unit glued on.
+            value.textContent = t('reveal.pointsDelta', {
+                sign: mine < 0 ? '\u2212' : '+',
+                points: Math.abs(mine)
+            });
         }
         // #1170: a win rises into place, a loss fades where it stands (the
         // bank and the bet slider are already gone by now; the standings
@@ -5368,9 +5363,7 @@
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || null;
         var left = hasSubmitted ? _stillAnswering() : 0;
         var text;
-        if (left === 1) {
-            text = t ? t('game.sentWaitingOne') : '';
-        } else if (left > 1) {
+        if (left > 0) {
             text = t ? t('game.sentWaiting', { count: left }) : '';
         } else {
             text = t ? t('game.sent') : '';
@@ -5390,7 +5383,11 @@
     function _formatEstimateValue(val) {
         // Drop a trailing .0 so integer guesses read cleanly; keep the unit.
         var n = (Math.round(val * 1000) / 1000);
-        var text = (n === Math.round(n)) ? String(Math.round(n)) : String(n);
+        // #1177: digits in the game language ("384.400", "3,5").
+        var I = window.QuizifyI18n;
+        var text = (I && I.formatNumber)
+            ? I.formatNumber(n)
+            : ((n === Math.round(n)) ? String(Math.round(n)) : String(n));
         return _estimate.unit ? (text + ' ' + _estimate.unit) : text;
     }
 
@@ -6223,8 +6220,8 @@
                 summaryEl.textContent = summary;
                 return;
             }
-            var key = others === 1 ? 'lobby.andOthersOne' : 'lobby.andOthers';
-            var params = others === 1 ? null : { count: others };
+            var key = 'lobby.andOthers';
+            var params = { count: others };
             var more = document.createElement('span');
             more.setAttribute('data-i18n', key);
             if (params) more.setAttribute('data-i18n-params', JSON.stringify(params));
@@ -7732,6 +7729,13 @@
         var resumeBtn = document.getElementById('resume-game-btn');
         if (nextRoundAdminBtn) nextRoundAdminBtn.classList.add('hidden');
         if (skipBtn) skipBtn.classList.toggle('hidden', !state.isAdmin);
+        // #1177: the skip button names what admin_skip does here, in the
+        // words the host page and the Lovelace card use.
+        var skipLabel = document.getElementById('skip-question-label');
+        if (skipLabel && window.QuizifyI18n) {
+            skipLabel.setAttribute('data-i18n', 'admin.closeBets');
+            skipLabel.textContent = window.QuizifyI18n.t('admin.closeBets');
+        }
         if (pauseBtn) pauseBtn.classList.add('hidden');
         if (resumeBtn) resumeBtn.classList.add('hidden');
 
@@ -7818,6 +7822,13 @@
         // admin_skip during QUESTION_ACTIVE, so this path is reachable.
         // Stays hidden for non-admins and outside an active question.
         if (skipBtn) skipBtn.classList.toggle('hidden', !state.isAdmin);
+        // #1177: the skip button names what admin_skip does here, in the
+        // words the host page and the Lovelace card use.
+        var skipLabel = document.getElementById('skip-question-label');
+        if (skipLabel && window.QuizifyI18n) {
+            skipLabel.setAttribute('data-i18n', 'admin.reveal');
+            skipLabel.textContent = window.QuizifyI18n.t('admin.reveal');
+        }
         // QUESTION_ACTIVE → Pause is the relevant CTA, Resume hidden.
         if (pauseBtn) pauseBtn.classList.remove('hidden');
         if (resumeBtn) resumeBtn.classList.add('hidden');

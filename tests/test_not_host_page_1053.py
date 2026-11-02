@@ -71,19 +71,20 @@ VIEW_IDS = {
     "notHost": "not-host-screen",
 }
 
-#: The on-screen text of the chosen design (issue #1053, option 1), verbatim.
+#: The on-screen text of the chosen design (issue #1053, option 1). Since
+#: #1177 the two-line title is one key with a line break, and the host hint is
+#: one sentence around the service name instead of two halves.
 DESIGN_EN = {
-    "titleLine1": "This device",
-    "titleLine2": "isn't the host.",
+    "title": "This device\nisn't the host.",
     "body": "The game is run from another device. You can still play along.",
     "join": "Join as a player",
     "tv": "Open the TV screen",
     "hostTitle": "Are you the host?",
-    "hostBefore": (
-        "Open this page on the device you started on. "
-        "To host from here instead, run"
+    "hostHint": (
+        "Open this page on the device you started on. To host from here "
+        "instead, run the action quizify.reset_admin_session in Home "
+        "Assistant, then reload."
     ),
-    "hostAfter": "in Home Assistant, then reload.",
 }
 
 
@@ -566,7 +567,7 @@ def test_the_view_holds_no_control_only_two_plain_links() -> None:
 def test_the_view_shows_the_host_token_nowhere() -> None:
     """The only way back it names is the Home Assistant service."""
     view = _not_host_view()
-    assert "quizify.reset_admin_session" in view.text
+    assert any("quizify.reset_admin_session" in t for t in view.text)
     markup = " ".join(view.text).lower()
     assert "token" not in markup
     source = _ADMIN_JS.read_text("utf-8")
@@ -607,14 +608,20 @@ def test_the_other_languages_carry_every_string(code: str) -> None:
 def test_every_string_in_the_view_goes_through_i18n() -> None:
     view = _not_host_view()
     keys = [a["data-i18n"] for _t, a in view.tags if a.get("data-i18n")]
+    # The title is swept through data-i18n-lines (#1177), on the h2 itself —
+    # which the subtree parser treats as the view's own content.
+    html = _ADMIN_HTML.read_text("utf-8")
+    assert 'data-i18n-lines="notHost.title"' in html
+    keys.append("notHost.title")
     assert sorted(keys) == sorted(f"notHost.{k}" for k in DESIGN_EN)
     # The markup defaults are the English bundle, so a page whose bundle has
     # not arrived yet already reads correctly.
-    for text in DESIGN_EN.values():
-        assert text in view.text
-    # The service name is an identifier, not prose: it is the one literal.
-    literal = [t for t in view.text if t not in DESIGN_EN.values()]
-    assert literal == ["quizify.reset_admin_session"]
+    lines = [line for text in DESIGN_EN.values() for line in text.split("\n")]
+    for line in lines:
+        assert line in view.text
+    # Nothing on the screen is written past the bundle.
+    literal = [t for t in view.text if t not in lines]
+    assert literal == []
 
 
 def test_the_lock_icon_is_in_the_shared_icon_set() -> None:

@@ -119,8 +119,11 @@ def test_the_wording_agrees_with_the_english_bundle() -> None:
 
 
 def test_the_expired_round_says_what_the_client_says() -> None:
-    """The exact divergence named in the issue."""
-    assert ERROR_FALLBACK_TEXT[ERR_ROUND_EXPIRED] == "Time expired"
+    """The exact divergence named in the issue — since #1177 the wording is
+    a whole sentence, so the pin reads it from the bundle."""
+    bundle = json.loads(_EN_JSON.read_text(encoding="utf-8"))["errors"]
+    assert ERROR_FALLBACK_TEXT[ERR_ROUND_EXPIRED] == bundle["ROUND_EXPIRED"]
+    assert "next question" in ERROR_FALLBACK_TEXT[ERR_ROUND_EXPIRED]
 
 
 # ---------------------------------------------------------------------------
@@ -140,7 +143,11 @@ def test_send_error_fills_the_message_from_the_map(tmp_path: Path) -> None:
     asyncio.run(conn.send_error(ws, ERR_ROUND_EXPIRED))
 
     assert sent == [
-        {"type": "error", "code": ERR_ROUND_EXPIRED, "message": "Time expired"}
+        {
+            "type": "error",
+            "code": ERR_ROUND_EXPIRED,
+            "message": ERROR_FALLBACK_TEXT[ERR_ROUND_EXPIRED],
+        }
     ]
 
 

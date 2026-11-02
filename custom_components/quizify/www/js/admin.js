@@ -810,7 +810,7 @@
             els.categorySummary.textContent = _t('admin.categoryMixed');
             if (countEl) countEl.classList.add('hidden');
         } else if (selectedCategory === 'multi') {
-            els.categorySummary.textContent = _t('admin.categoriesCountPlural', { count: selectedCategories.length });
+            els.categorySummary.textContent = _t('admin.categoriesCount', { count: selectedCategories.length });
             if (countEl) {
                 var total = 0;
                 selectedCategories.forEach(function (val) {
@@ -846,8 +846,7 @@
             var diffLabel = diffChip ? diffChip.textContent : _t('difficulties.medium');
             els.gameSettingsSummary.textContent = _t('admin.settingsSummary', {
                 difficulty: diffLabel,
-                rounds: selectedRounds,
-                roundsUnit: _t('admin.summaryRoundsUnit'),
+                questions: selectedRounds,
                 timer: selectedTimer,
             });
         }
@@ -873,11 +872,13 @@
         var langFlag = LANG_FLAGS[selectedLanguage] || '🌐';
         var parts = [];
         if (preset) parts.push(preset.label);
-        parts.push(selectedRounds + ' ' + _t('admin.summaryRoundsUnit'));
+        // #1177: "10 questions", one key with a plural, lower case mid-line
+        // (the old unit key was a capitalised heading word: "10 Rondas").
+        parts.push(_t('game.questionsCount', { count: selectedRounds }));
         parts.push(diffLabel);
-        parts.push(selectedTimer + ' s');
-        parts.push(langFlag);
-        heroEl.textContent = parts.join(' · ');
+        parts.push(selectedTimer + '\u00a0s');
+        // The flag never wraps onto a line of its own.
+        heroEl.textContent = parts.join(' · ') + '\u00a0·\u00a0' + langFlag;
 
         // Topics line below the summary row: list the manually-chosen packs
         // so the ready screen reflects a custom topic selection. Hidden for
@@ -1313,7 +1314,9 @@
         }
 
         if (!modal || !confirmBtn) {
-            if (window.confirm(_t('setup.deletePresetConfirm') + ' „' + p.name + '"')) {
+            // #1177: one sentence that names the preset, not a prefix
+            // glued to hard-coded German quotes.
+            if (window.confirm(_t('setup.deletePresetBody', { name: p.name }))) {
                 doDelete();
             }
             return;
@@ -2789,10 +2792,8 @@
         // Three names, the same cut the television makes: a fourth turns the
         // line into a table nobody reads mid-celebration.
         var parts = leaders.slice(0, 3).map(function (entry) {
-            var wins = entry.wins === 1
-                ? _tOr('dashboard.tonightWinsOne', null, '1 win')
-                : _tOr('dashboard.tonightWins', { wins: entry.wins },
-                       entry.wins + ' wins');
+            var wins = _tOr('dashboard.tonightWins', { wins: entry.wins },
+                            entry.wins + (entry.wins === 1 ? ' win' : ' wins'));
             return entry.name + ' ' + wins;
         });
         els.adminEveningTally.textContent =
@@ -2852,6 +2853,14 @@
     function setLiveControls(phase) {
         var allowed = LIVE_CONTROLS[phase] || {};
         if (els.skipBtn) els.skipBtn.classList.toggle('hidden', !allowed.skip);
+        if (els.skipBtn && allowed.skip) {
+            // #1177: one word per action on every surface, the Lovelace card
+            // included — admin_skip closes the wagers in WAGER_ACTIVE and
+            // reveals the answer in QUESTION_ACTIVE, and the button says so.
+            var skipKey = phase === 'WAGER_ACTIVE' ? 'admin.closeBets' : 'admin.reveal';
+            els.skipBtn.setAttribute('data-i18n', skipKey);
+            els.skipBtn.textContent = _t(skipKey);
+        }
         if (els.pauseBtn) els.pauseBtn.classList.toggle('hidden', !allowed.pause);
         if (els.resumeBtn) els.resumeBtn.classList.toggle('hidden', !allowed.resume);
         if (els.liveControls) {
@@ -3114,11 +3123,14 @@
         // hide it entirely — "Ready at 1 player · still need 0 more" is
         // noise once the Start button is visible.
         var countdownEl = document.getElementById('lobby-countdown');
-        var minEl = document.getElementById('lobby-min-players');
         var missingEl = document.getElementById('lobby-missing-players');
-        if (minEl) minEl.textContent = LOBBY_MIN_PLAYERS;
         if (missingEl) {
-            missingEl.textContent = Math.max(0, LOBBY_MIN_PLAYERS - playerCount);
+            // #1177: one sentence with a plural rule, not four fragments
+            // around two numbers ("noch 2 fehlt", "faltan 1 más"). The params
+            // ride on the element so a language switch re-renders it.
+            var missingParams = { count: Math.max(0, LOBBY_MIN_PLAYERS - playerCount) };
+            missingEl.setAttribute('data-i18n-params', JSON.stringify(missingParams));
+            missingEl.textContent = _t('lobby.missingPlayers', missingParams);
         }
         if (countdownEl) {
             countdownEl.classList.toggle('is-ready', isReady);

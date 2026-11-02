@@ -9,94 +9,59 @@ count, with ``{count}`` substituted into a plural.
 That is the screen a host sees most often outside a finished game, because
 ending early is exactly what you do while setting the room up.
 
-The fix follows the convention the lobby and the evening tally already use
-(``lobby.alsoOne``, ``dashboard.tonightWinsOne``): a flat ``…One`` key, chosen
-by the renderer when the count is one. No pluralisation engine, and no
-``{count}`` inside the singular — a placeholder there would reintroduce the
-bug the key exists to prevent.
-
-German only needs it for rounds ("1 Runde"); the tests still cover all three
-languages, because the parity test in ``test_i18n_hardcoded_strings_625``
-enforces one key set for all of them and a missing key there fails far from
-here.
+#976 fixed it with a flat ``…One`` key per count. Since #1177 the bundles carry
+a real plural rule (``{count, plural, one{…} other{…}}``) and the renderer asks
+for one key; the tests check what ``t()`` actually prints for one and for many,
+in all three languages.
 """
 
 from __future__ import annotations
 
-import json
 import re
 from pathlib import Path
 
 import pytest
 
+from tests.i18n_node import HAVE_NODE, render
+
 _REPO = Path(__file__).resolve().parent.parent
 _WWW = _REPO / "custom_components" / "quizify" / "www"
 _PLAYER_END = _WWW / "js" / "player-end.js"
 
-_SINGULARS = {
-    "en": {"roundsCountOne": "1 round", "playersCountOne": "1 player"},
-    "de": {"roundsCountOne": "1 Runde", "playersCountOne": "1 Spieler"},
-    "es": {"roundsCountOne": "1 ronda", "playersCountOne": "1 jugador"},
+# Since #1177 the end screen counts questions ("Frage", not "Runde").
+_EXPECTED = {
+    "en": {"rounds": ("1 question", "3 questions"), "players": ("1 player", "2 players")},
+    "de": {"rounds": ("1 Frage", "3 Fragen"), "players": ("1 Spieler", "2 Spieler")},
+    "es": {"rounds": ("1 pregunta", "3 preguntas"), "players": ("1 jugador", "2 jugadores")},
 }
 
 
-@pytest.mark.parametrize("code", sorted(_SINGULARS))
-def test_every_language_ships_both_singular_forms(code: str) -> None:
-    board = json.loads((_WWW / "i18n" / f"{code}.json").read_text("utf-8"))[
-        "leaderboard"
-    ]
-    for key, expected in _SINGULARS[code].items():
-        assert board.get(key) == expected, f"{code}.leaderboard.{key}"
+@pytest.mark.skipif(not HAVE_NODE, reason="node not installed")
+@pytest.mark.parametrize("code", sorted(_EXPECTED))
+def test_one_and_many_read_right_in_every_language(code: str) -> None:
+    got = render([
+        (code, "game.questionsCount", {"count": 1}),
+        (code, "game.questionsCount", {"count": 3}),
+        (code, "leaderboard.playersCount", {"count": 1}),
+        (code, "leaderboard.playersCount", {"count": 2}),
+    ])
+    want = list(_EXPECTED[code]["rounds"]) + list(_EXPECTED[code]["players"])
+    assert got == want
 
 
-@pytest.mark.parametrize("code", sorted(_SINGULARS))
-def test_the_singular_carries_no_placeholder(code: str) -> None:
-    """"1 rounds" came from substituting a number into a plural. A singular
-    with ``{count}`` in it could only say the same thing again."""
-    board = json.loads((_WWW / "i18n" / f"{code}.json").read_text("utf-8"))[
-        "leaderboard"
-    ]
-    for key in _SINGULARS[code]:
-        assert "{count}" not in board[key], f"{code}.leaderboard.{key}"
-
-
-@pytest.mark.parametrize("code", sorted(_SINGULARS))
-def test_the_plural_still_takes_the_number(code: str) -> None:
-    """The counterpart guard: a plural that lost its placeholder would print
-    the same sentence for two players and for twenty."""
-    board = json.loads((_WWW / "i18n" / f"{code}.json").read_text("utf-8"))[
-        "leaderboard"
-    ]
-    for key in ("roundsCount", "playersCount"):
-        assert "{count}" in board[key], f"{code}.leaderboard.{key}"
-
-
-def test_the_renderer_branches_on_one() -> None:
-    """The branch itself, read from the module the bundle is built from.
-
-    Deliberately narrow: both counts choose between the two keys, and the keys
-    are written out rather than assembled — #798 reads ``www/`` for verbatim
-    key literals, so a prefix built at runtime would make all four look dead.
-    """
+def test_the_renderer_hands_the_count_to_one_key() -> None:
+    """No `…One` branch left in renderEndHeader: the plural rule decides."""
     source = _PLAYER_END.read_text("utf-8")
     header = re.search(r"function renderEndHeader\(.+?\n    \}", source, re.S)
     assert header, "renderEndHeader missing from player-end.js"
     body = header.group(0)
-
-    assert "rounds === 1" in body
-    assert "players === 1" in body
-    for key in (
-        "leaderboard.roundsCountOne",
-        "leaderboard.roundsCount",
-        "leaderboard.playersCountOne",
-        "leaderboard.playersCount",
-    ):
-        assert "'%s'" % key in body, key
+    assert "CountOne" not in body
+    assert "'leaderboard.playersCount'" in body
 
 
 def test_the_shipped_bundle_carries_the_fix() -> None:
     """``player.bundle.js`` is generated and committed; a forgotten rebuild
     would ship the old line to every phone while the tests above stay green."""
     bundle = (_WWW / "js" / "player.bundle.js").read_text("utf-8")
-    assert "leaderboard.roundsCountOne" in bundle
-    assert "leaderboard.playersCountOne" in bundle
+    assert "leaderboard.playersCountOne" not in bundle
+    assert "'leaderboard.playersCount'" in bundle

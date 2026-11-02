@@ -214,6 +214,7 @@
   filter: drop-shadow(0 4px 10px rgba(232, 138, 127, 0.35));
 }
 .pl-result-hero--streak .pl-result-headline {
+  text-transform: uppercase;
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 24px;

@@ -74,6 +74,120 @@ window.QuizifyI18n = (function() {
         return current;
     }
 
+    // #1177: numbers and dates speak the GAME language, not the browser's.
+    // A German room reads "384.400" and "3,5", a Spanish one "12.345" — the
+    // String(n) the TV used to print gave every room "384400" and "3.5".
+    var _numberFormats = {};
+
+    function formatNumber(value, options) {
+        var num = Number(value);
+        if (value === null || value === undefined || value === '' || !isFinite(num)) {
+            return value === null || value === undefined ? '' : String(value);
+        }
+        var cacheKey = currentLanguage + '|' + (options ? JSON.stringify(options) : '');
+        try {
+            var fmt = _numberFormats[cacheKey];
+            if (!fmt) {
+                fmt = new Intl.NumberFormat(currentLanguage, options || { maximumFractionDigits: 3 });
+                _numberFormats[cacheKey] = fmt;
+            }
+            return fmt.format(num);
+        } catch (_e) {
+            return String(num);
+        }
+    }
+
+    function formatDate(value, options) {
+        var date = value instanceof Date ? value : new Date(value);
+        if (isNaN(date.getTime())) return '';
+        try {
+            return new Intl.DateTimeFormat(currentLanguage, options || {
+                dateStyle: 'medium', timeStyle: 'short'
+            }).format(date);
+        } catch (_e) {
+            return date.toISOString().slice(0, 16).replace('T', ' ');
+        }
+    }
+
+    var _pluralRules = {};
+
+    function _pluralCategory(count) {
+        try {
+            var rules = _pluralRules[currentLanguage];
+            if (!rules) {
+                rules = new Intl.PluralRules(currentLanguage);
+                _pluralRules[currentLanguage] = rules;
+            }
+            return rules.select(count);
+        } catch (_e) {
+            return count === 1 ? 'one' : 'other';
+        }
+    }
+
+    // Index of the "}" that closes the "{" at `open`, or -1.
+    function _matchBrace(text, open) {
+        var depth = 0;
+        for (var i = open; i < text.length; i++) {
+            var ch = text.charAt(i);
+            if (ch === '{') depth++;
+            else if (ch === '}') {
+                depth--;
+                if (depth === 0) return i;
+            }
+        }
+        return -1;
+    }
+
+    // #1177: ICU-style plurals, the subset the bundles need —
+    //   {count, plural, =0{…} one{…} other{…}}
+    // "#" inside a branch is the count, formatted for the language; other
+    // {params} inside a branch are filled afterwards like anywhere else.
+    // Before this every plural was a hand-built pair (lobby.alsoOne /
+    // lobby.alsoMany), which is how "1 pts" and "faltan 1 más" got shipped.
+    var PLURAL_HEAD = /\{\s*(\w+)\s*,\s*plural\s*,/g;
+
+    function _expandPlurals(text, params) {
+        if (text.indexOf('plural') === -1) return text;
+        var out = '';
+        var cursor = 0;
+        PLURAL_HEAD.lastIndex = 0;
+        var head;
+        while ((head = PLURAL_HEAD.exec(text)) !== null) {
+            var start = head.index;
+            var end = _matchBrace(text, start);
+            if (end === -1) break;  // malformed: leave the rest untouched
+            var name = head[1];
+            var raw = params ? params[name] : undefined;
+            var count = Number(raw);
+            var hasCount = raw !== undefined && raw !== null && raw !== '' && isFinite(count);
+            var branches = {};
+            var i = start + head[0].length;
+            while (i < end) {
+                var open = text.indexOf('{', i);
+                if (open === -1 || open > end) break;
+                var selector = text.slice(i, open).trim();
+                var close = _matchBrace(text, open);
+                if (close === -1 || close > end) break;
+                if (selector) branches[selector] = text.slice(open + 1, close);
+                i = close + 1;
+            }
+            var chosen;
+            if (hasCount && branches['=' + count] !== undefined) {
+                chosen = branches['=' + count];
+            } else if (hasCount && branches[_pluralCategory(count)] !== undefined) {
+                chosen = branches[_pluralCategory(count)];
+            } else {
+                chosen = branches.other !== undefined ? branches.other : '';
+            }
+            chosen = _expandPlurals(chosen, params);
+            if (hasCount) chosen = chosen.replace(/#/g, formatNumber(count));
+            out += text.slice(cursor, start) + chosen;
+            cursor = end + 1;
+            PLURAL_HEAD.lastIndex = cursor;
+        }
+        return out + text.slice(cursor);
+    }
+
     function t(key, params) {
         var value = getNestedValue(translations, key);
         if (value === undefined && currentLanguage !== 'en') {
@@ -82,9 +196,15 @@ window.QuizifyI18n = (function() {
         if (value === undefined) {
             return key;
         }
+        if (typeof value === 'string') {
+            value = _expandPlurals(value, params);
+        }
         if (params && typeof value === 'string') {
             Object.keys(params).forEach(function(param) {
-                value = value.replace(new RegExp('\\{' + param + '\\}', 'g'), params[param]);
+                var raw = params[param];
+                // Numbers are written in the language's own way (#1177).
+                var shown = (typeof raw === 'number') ? formatNumber(raw) : raw;
+                value = value.replace(new RegExp('\\{' + param + '\\}', 'g'), shown);
             });
         }
         return value;
@@ -161,6 +281,26 @@ window.QuizifyI18n = (function() {
                 else warnMissingKey('data-i18n', key);
             }
         });
+        // #1177: a two-line headline is ONE key with a "\n" where the line
+        // breaks, so the translator decides where it falls — it used to be
+        // two keys (setup.heroLine1/2) glued together in the markup, which
+        // fixes the word order of every language to the English one. Lines
+        // after the first carry the accent colour, as the old second span did.
+        scope.querySelectorAll('[data-i18n-lines]').forEach(function(el) {
+            var key = el.getAttribute('data-i18n-lines');
+            if (!key) return;
+            var translated = t(key);
+            if (translated === key) { warnMissingKey('data-i18n-lines', key); return; }
+            var lines = String(translated).split('\n');
+            el.textContent = '';
+            lines.forEach(function(line, i) {
+                if (i > 0) el.appendChild(document.createElement('br'));
+                var span = document.createElement('span');
+                if (i > 0) span.className = 'accent';
+                span.textContent = line;
+                el.appendChild(span);
+            });
+        });
         scope.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
             var key = el.getAttribute('data-i18n-placeholder');
             if (key) {
@@ -233,6 +373,8 @@ window.QuizifyI18n = (function() {
 
     return {
         t: t,
+        formatNumber: formatNumber,
+        formatDate: formatDate,
         getErrorMessage: getErrorMessage,
         setLanguage: setLanguage,
         getLanguage: getLanguage,

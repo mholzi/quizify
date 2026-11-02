@@ -98,7 +98,7 @@ def test_readme_quotes_the_real_i18n_key_count() -> None:
 
     counts = {
         path.stem: leaves(json.loads(path.read_text(encoding="utf-8")))
-        for path in sorted(i18n.glob("*.json"))
+        for path in sorted(i18n.glob("??.json"))  # glossary.json is terminology, not a language (#1177)
     }
     assert counts, "no i18n bundles found"
     assert len(set(counts.values())) == 1, f"bundles are out of parity: {counts}"

@@ -250,7 +250,7 @@ line.setAttribute('data-i18n', 'leaderboard.title');
     await new Promise(function (r) {{ setTimeout(r, 80); }});
     I.initPageTranslations();
     out.settled = line.textContent;
-    out.word = I.t('lobby.andOthersOne');
+    out.word = I.t('lobby.andOthers', {{ count: 1 }});
     out.language = I.getLanguage();
     console.log(JSON.stringify(out));
 }})();
