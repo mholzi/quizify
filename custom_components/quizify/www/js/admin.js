@@ -3114,6 +3114,8 @@
 
     function renderLobbyPlayers(players) {
         var list = window.QuizifyRenderShared.rosterList(players);
+        // #1182 L8: the first roster replaces the skeleton (innerHTML below).
+        if (els.lobbyPlayerChips) els.lobbyPlayerChips.removeAttribute('aria-busy');
         _lastLobbyPlayers = list;
         playerCount = list.length;
         if (els.lobbyPlayerCount) els.lobbyPlayerCount.textContent = playerCount;

@@ -846,10 +846,15 @@
                     </div>
                     <div class="lobby-e-roster" aria-live="polite"
                          data-i18n-aria-label="a11y.playerListRegion" aria-label="Player list">
-                        <div id="lobby-player-chips" class="lobby-e-rows">
-                            <!-- Filled by admin.js renderLobbyPlayers -->
+                        <div id="lobby-player-chips" class="lobby-e-rows" aria-busy="true">
+                            <!-- Filled by admin.js renderLobbyPlayers. #1182 L8:
+                                 until the first roster arrives this is a skeleton,
+                                 not "0" and not "waiting for players" — neither
+                                 is known yet (slow network, Nabu Casa, HA booting). -->
+                            <div class="lobby-e-row-skeleton" aria-hidden="true"></div>
+                            <div class="lobby-e-row-skeleton" aria-hidden="true"></div>
                         </div>
-                        <div id="lobby-players-empty" class="lobby-e-row-empty">
+                        <div id="lobby-players-empty" class="lobby-e-row-empty hidden">
                             <span data-i18n="lobby.scanToJoin">Scan the code to join</span>
                         </div>
                     </div>
@@ -861,7 +866,7 @@
                     <span aria-hidden="true">→</span>
                 </a>
 
-                <div class="lobby-e-countdown" id="lobby-countdown">
+                <div class="lobby-e-countdown hidden" id="lobby-countdown">
                     <span id="lobby-missing-players" data-i18n="lobby.missingPlayers"
                           data-i18n-params='{"count":2}'>2 more players to start</span>
                 </div>

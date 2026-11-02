@@ -3670,6 +3670,16 @@ footer {
 .pack-submit-unavailable p,
 .pack-submit-list-error { margin: 0 0 var(--space-sm); color: var(--color-text-muted); }
 .pack-submit-list-error { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); }
+
+/* #1182 L8: the host lobby before its first roster frame. Two quiet bars in
+   the shape of roster cards; the countdown line stays hidden until the
+   roster is known, so the HTML placeholder "2 · 2" can never be read. */
+.lobby-e-row-skeleton {
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--color-bg-card-alt);
+    animation: qz-skeleton 1.6s ease-in-out infinite;
+}
 /* ==========================================
    Player Page: END VIEW
    ========================================== */
