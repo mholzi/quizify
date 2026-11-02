@@ -110,14 +110,14 @@ const html = c => c.shadowRoot.innerHTML;
     // L2: offline locks the controls and says so.
     c = await card();
     send(c, GAME);
-    out.online = { endEnabled: html(c).includes('data-msg="end_game">'), line: html(c).includes('No connection to Quizify') };
+    out.online = { endEnabled: html(c).includes('data-ask="end">'), line: html(c).includes('No connection to Quizify') };
     sockets[0].fireClose();
     const h = html(c);
     out.offline = {
         line: h.includes('No connection to Quizify. We keep trying.'),
         locked: h.includes('End and Reset are locked'),
-        endDisabled: h.includes('data-msg="end_game" disabled'),
-        resetDisabled: h.includes('data-reset="1" disabled'),
+        endDisabled: h.includes('data-ask="end" disabled'),
+        resetDisabled: h.includes('data-ask="reset" disabled'),
         primaryDisabled: h.includes('id="primary" disabled'),
         stamp: /As of \d\d:\d\d/.test(h),
         connectNowEarly: h.includes('id="reconnect"'),
@@ -177,6 +177,7 @@ def test_a_lobby_leave_reaches_the_card(result: dict) -> None:
 
 
 def test_offline_locks_end_and_reset_and_says_so(result: dict) -> None:
+    # #1183: end and reset open the confirm sheet (data-ask) instead of sending.
     assert result["online"] == {"endEnabled": True, "line": False}
     off = result["offline"]
     assert off["line"] and off["locked"]

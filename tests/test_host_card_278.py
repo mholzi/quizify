@@ -283,10 +283,12 @@ def test_compact_footer_offers_end_game() -> None:
     text = _card_text()
     foot_at = text.index('<div class="foot"><a href="\' + esc(joinUrl)')
     footer = text[foot_at : foot_at + 700]
-    assert "end_game" in footer, (
+    # #1183: the footer asks first; the sheet's confirm button sends end_game.
+    assert 'data-ask="end"' in footer, (
         "the compact footer must carry the end-game action; without it the "
         "compact card cannot finish a game at all"
     )
+    assert "this._send('end_game')" in text
     assert "expanded" in footer, (
         "the end-game action belongs to the compact footer only — expanded "
         "already has it in the control row"

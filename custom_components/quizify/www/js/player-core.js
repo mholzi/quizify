@@ -1776,16 +1776,64 @@
     // host's own reset has always gone through #reset-game-modal; a guest
     // tap now goes through the same kind of dialog (#guest-reset-modal), and
     // only its confirm button sends anything.
+    //
+    // #1183: the same sheet now asks before every message that cannot be
+    // taken back — the host's End (bar and reveal), New game on the end
+    // screen, and a guest's reset. One dialog, its texts swapped per kind,
+    // all of them the admin console's own words, so the phone has one rule
+    // for the one kind of action instead of three.
+    var CONFIRM_KINDS = {
+        reset: { title: 'admin.resetGameConfirm', text: 'game.resetGuestWarning',
+            confirm: 'admin.resetGame', cancel: 'common.cancel' },
+        end: { title: 'admin.endGameConfirm', text: 'admin.endGameWarning',
+            confirm: 'admin.endGame', cancel: 'common.cancel' },
+        newGame: { title: 'admin.resetGameConfirm', text: 'admin.resetGameWarning',
+            confirm: 'admin.resetGame', cancel: 'common.cancel' }
+    };
     var _guestResetTrigger = null;
     var _guestResetKeyHandler = null;
+    // { kind, run } for the open sheet; run is null for the guest reset,
+    // whose send lives on the confirm button itself.
+    var _confirmPending = null;
 
     function _focus(el) {
         if (el && typeof el.focus === 'function') el.focus();
     }
 
+    function _paintConfirmKind(kind) {
+        var keys = CONFIRM_KINDS[kind] || CONFIRM_KINDS.reset;
+        var t = window.QuizifyI18n && window.QuizifyI18n.t;
+        [
+            ['guest-reset-modal-title', keys.title],
+            ['guest-reset-modal-text', keys.text],
+            ['guest-reset-confirm-btn', keys.confirm],
+            ['guest-reset-cancel-btn', keys.cancel]
+        ].forEach(function (pair) {
+            var el = document.getElementById(pair[0]);
+            if (!el) return;
+            el.setAttribute('data-i18n', pair[1]);
+            if (t) el.textContent = t(pair[1]);
+        });
+    }
+
+    // Open the sheet for `kind`; `run` fires only from its confirm button.
+    function confirmThen(triggerBtn, kind, run) {
+        var modal = document.getElementById('guest-reset-modal');
+        if (!modal) return false;
+        _confirmPending = { kind: kind, run: run || null };
+        _paintConfirmKind(kind);
+        return _openConfirmSheet(modal, triggerBtn);
+    }
+
     function openGuestResetModal(triggerBtn) {
         var modal = document.getElementById('guest-reset-modal');
         if (!modal) return false;
+        _confirmPending = { kind: 'reset', run: null };
+        _paintConfirmKind('reset');
+        return _openConfirmSheet(modal, triggerBtn);
+    }
+
+    function _openConfirmSheet(modal, triggerBtn) {
         _guestResetTrigger = triggerBtn || null;
         modal.classList.remove('hidden');
         var cancelBtn = document.getElementById('guest-reset-cancel-btn');
@@ -1820,9 +1868,15 @@
         return true;
     }
 
+    function isConfirmSheetOpen() {
+        var modal = document.getElementById('guest-reset-modal');
+        return !!(modal && !modal.classList.contains('hidden'));
+    }
+
     function closeGuestResetModal() {
         var modal = document.getElementById('guest-reset-modal');
         if (modal) modal.classList.add('hidden');
+        _confirmPending = null;
         if (_guestResetKeyHandler) {
             document.removeEventListener('keydown', _guestResetKeyHandler, true);
             _guestResetKeyHandler = null;
@@ -1852,6 +1906,15 @@
                 // Only a trigger that is still on screen may fire: the
                 // dialog closes with its button, but a tap can race that.
                 var trigger = _guestResetTrigger;
+                var pending = _confirmPending;
+                if (pending && pending.run) {
+                    // A host action (#1183). End is valid in every phase, so
+                    // a bar that hid behind the sheet (the round closed
+                    // meanwhile) does not swallow the host's answer.
+                    closeGuestResetModal();
+                    pending.run();
+                    return;
+                }
                 if (!trigger || trigger.classList.contains('hidden')) {
                     closeGuestResetModal();
                     return;
@@ -2225,10 +2288,12 @@
         }
 
         // End game
+        // #1183: End reaches every guest and nothing brings the game back,
+        // so it asks first, in the console's words.
         var endGameBtn = document.getElementById('end-game-btn');
         if (endGameBtn) {
             endGameBtn.addEventListener('click', function () {
-                send('end_game', {});
+                confirmThen(endGameBtn, 'end', function () { send('end_game', {}); });
             });
         }
 
@@ -2257,7 +2322,7 @@
         var endFromReveal = document.getElementById('end-game-from-reveal-btn');
         if (endFromReveal) {
             endFromReveal.addEventListener('click', function () {
-                send('end_game', {});
+                confirmThen(endFromReveal, 'end', function () { send('end_game', {}); });
             });
         }
     }
@@ -2656,7 +2721,9 @@
         // #981: player-end.js's "New game" is the fifth place that drops this
         // phone's identity, and it lives in another module. Exported so there
         // is still only one spelling of it.
-        forgetIdentity: forgetIdentity
+        forgetIdentity: forgetIdentity,
+        // #1183: player-end.js's "New game" asks through the same sheet.
+        confirmThen: confirmThen
     };
 
     // #215: hook for sw-update.js — is the player screen idle enough that a

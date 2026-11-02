@@ -4421,7 +4421,11 @@
         closeConfirmModal('end-game-modal');
     });
 
-    on(els.newGameBtn, 'click', function () { send('reset_game', {}); });
+    // #1183: "Start new game" is a reset like the header's, so it asks in
+    // the same sheet before every phone is sent back to the join screen.
+    on(els.newGameBtn, 'click', function () {
+        openConfirmModal('reset-game-modal', 'reset-game-cancel-btn', els.newGameBtn);
+    });
     on(els.starHintDismiss, 'click', _dismissStarHint);
 
     // Lightning Round (issue #42 mechanics, #285 auto-trigger). It now fires

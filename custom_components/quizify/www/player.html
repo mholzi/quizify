@@ -902,9 +902,12 @@
 
         <!-- Admin Control Bar - visible across PLAYING/REVEAL for admin -->
         <div id="admin-control-bar" class="admin-control-bar hidden">
-            <button id="skip-question-btn" class="control-btn" type="button">
-                <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="skipnext">⏭️</span>
-                <span class="control-label" id="skip-question-label" data-i18n="admin.reveal">Reveal</span>
+            <!-- #1183: End sits at the left edge, out of the right thumb's
+                 rest spot, and asks first; Skip, the frequent safe step,
+                 takes the bottom-right corner. -->
+            <button id="end-game-btn" class="control-btn control-btn--danger" type="button">
+                <span class="control-icon qz-icon qz-icon--coral" data-ui-icon="stop">🛑</span>
+                <span class="control-label" data-i18n="admin.end">End</span>
             </button>
             <button id="pause-game-btn" class="control-btn" type="button">
                 <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="pause">⏸️</span>
@@ -918,9 +921,9 @@
                 <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="skipnext">⏭️</span>
                 <span class="control-label" data-i18n="admin.next">Next</span>
             </button>
-            <button id="end-game-btn" class="control-btn control-btn--danger" type="button">
-                <span class="control-icon qz-icon qz-icon--coral" data-ui-icon="stop">🛑</span>
-                <span class="control-label" data-i18n="admin.end">End</span>
+            <button id="skip-question-btn" class="control-btn" type="button">
+                <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="skipnext">⏭️</span>
+                <span class="control-label" id="skip-question-label" data-i18n="admin.reveal">Reveal</span>
             </button>
         </div>
 
