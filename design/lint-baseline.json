@@ -1,13 +1,13 @@
 {
   "$comment": "Ratchet baseline for hard-coded design values (#1178). Counts may only fall. Regenerate with: python3 scripts/design_lint.py --update-baseline",
   "totals": {
-    "color": 414,
-    "font_size": 452,
+    "color": 412,
+    "font_size": 446,
     "radius": 97,
     "shadow": 69,
     "z_index": 31,
-    "spacing_px": 579,
-    "duration": 99
+    "spacing_px": 555,
+    "duration": 97
   },
   "files": {
     "css/src/00-tokens.css": {
@@ -75,12 +75,12 @@
     },
     "css/src/07-player.css": {
       "color": 173,
-      "font_size": 171,
+      "font_size": 166,
       "radius": 31,
       "shadow": 27,
       "z_index": 7,
-      "spacing_px": 222,
-      "duration": 35
+      "spacing_px": 200,
+      "duration": 33
     },
     "css/src/08-responsive.css": {
       "color": 33,
@@ -155,12 +155,12 @@
       "duration": 0
     },
     "js/admin.js": {
-      "color": 24,
-      "font_size": 6,
+      "color": 22,
+      "font_size": 5,
       "radius": 2,
       "shadow": 1,
       "z_index": 1,
-      "spacing_px": 9,
+      "spacing_px": 7,
       "duration": 1
     },
     "js/client-core.js": {
