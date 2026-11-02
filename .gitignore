@@ -86,9 +86,14 @@ Thumbs.db
 # ---- Maintainer-only files (kept locally, not shipped) ----
 CLAUDE.md
 .claude/
-DESIGN.md
+/DESIGN.md
 GAPS.md
 IMPLEMENTATION_PLAN.md
 REQUIREMENTS.md
-docs/
+# docs/ stays local working material, except DESIGN.md, which came back into the
+# repo with #1178 so builds, reviews and tests read the same design source. It
+# is outside custom_components/, so HACS never ships it. (``docs/*``, not
+# ``docs/``: git cannot un-ignore a file inside an ignored directory.)
+docs/*
+!docs/DESIGN.md
 custom_components/quizify/questions/*-review.md

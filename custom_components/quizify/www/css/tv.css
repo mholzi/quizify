@@ -2,7 +2,10 @@
 /* Edit the modules in www/css/src/ then run python3 scripts/build_css.py */
 /* Quizify — Soft Parlor Design System */
 /* Memorable thing: "Cozy and friendly — like a family board game." */
-/* Do not deviate from these tokens without reading DESIGN.md first. */
+/* Do not deviate from these tokens without reading docs/DESIGN.md first.
+   The :root block below is generated from design/tokens.json by
+   scripts/build_tokens.py (run python3 scripts/build_css.py); edit the JSON,
+   not the block. Everything outside :root is hand-written. */
 
 /* ==========================================
    Design System Tokens — Soft Parlor
@@ -1784,7 +1787,7 @@ button, .btn {
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     box-shadow: 0 1px 4px rgba(42, 40, 32, 0.18);
-    color: var(--color-text, #2a2820);
+    color: var(--color-text-primary);
     font-size: 15px;
     line-height: 1;
     cursor: pointer;
@@ -2536,7 +2539,7 @@ button, .btn {
     width: 100%;
     min-height: 52px;
     padding: var(--space-sm) var(--space-md);
-    background: var(--color-bg-cream, #FBF7EE);
+    background: #FBF7EE;
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-md);
     color: var(--color-text-primary);
@@ -2737,7 +2740,7 @@ button, .btn {
 .leaderboard-score {
     font-weight: var(--font-weight-bold);
     font-variant-numeric: tabular-nums;
-    color: var(--color-text);
+    color: inherit;
 }
 
 .leaderboard-streak {
@@ -2917,7 +2920,7 @@ button, .btn {
     font-family: var(--font-display), sans-serif;
     font-weight: 700;
     font-size: clamp(1.25rem, 2.2vw, 1.75rem);
-    color: var(--color-text);
+    color: inherit;
     letter-spacing: -0.01em;
     margin-bottom: var(--space-xl);
     line-height: 1.2;
@@ -2993,7 +2996,7 @@ button, .btn {
     font-family: var(--font-display), sans-serif;
     font-weight: 700;
     font-size: 1.1rem;
-    color: var(--color-text);
+    color: inherit;
     max-width: 14ch;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -3017,8 +3020,8 @@ button, .btn {
    Number centered as the "medal". No gradient. */
 .podium-bar {
     width: 100%;
-    background: var(--color-surface, #FFFFFF);
-    border: 1px solid var(--color-border-soft, var(--hairline, #E5DFCF));
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-md) var(--radius-md) 0 0;
     display: flex;
     align-items: flex-start;
@@ -3201,7 +3204,7 @@ button, .btn {
 
 .end-share-slip {
     background: var(--color-bg-card);
-    border: 1px solid var(--color-border, #E7DFCE);
+    border: 1px solid #E7DFCE;
     border-radius: 12px;
     padding: 14px 16px;
     display: flex;
@@ -3214,7 +3217,7 @@ button, .btn {
 .end-share-title {
     font-family: var(--font-display, inherit);
     font-weight: 700;
-    font-size: var(--fs-md, 17px);
+    font-size: 17px;
 }
 
 .end-share-facts {
@@ -3222,7 +3225,7 @@ button, .btn {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 4px 12px;
-    font-size: var(--fs-sm, 14px);
+    font-size: 14px;
 }
 
 .end-share-facts dt { color: var(--color-text-muted, #6E675E); }
@@ -3235,7 +3238,7 @@ button, .btn {
 }
 
 .end-share-strip {
-    border-top: 1px dashed var(--color-border, #E7DFCE);
+    border-top: 1px dashed #E7DFCE;
     padding-top: 8px;
     text-align: center;
     font-size: 17px;
@@ -3248,7 +3251,7 @@ button, .btn {
 
 .end-share-status {
     text-align: center;
-    font-size: var(--fs-sm, 14px);
+    font-size: 14px;
     color: var(--color-text-muted, #6E675E);
     min-height: 1.3em;
 }

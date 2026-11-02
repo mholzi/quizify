@@ -138,7 +138,7 @@
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     box-shadow: 0 1px 4px rgba(42, 40, 32, 0.18);
-    color: var(--color-text, #2a2820);
+    color: var(--color-text-primary);
     font-size: 15px;
     line-height: 1;
     cursor: pointer;

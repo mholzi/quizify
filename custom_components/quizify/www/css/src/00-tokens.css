@@ -1,6 +1,9 @@
 /* Quizify — Soft Parlor Design System */
 /* Memorable thing: "Cozy and friendly — like a family board game." */
-/* Do not deviate from these tokens without reading DESIGN.md first. */
+/* Do not deviate from these tokens without reading docs/DESIGN.md first.
+   The :root block below is generated from design/tokens.json by
+   scripts/build_tokens.py (run python3 scripts/build_css.py); edit the JSON,
+   not the block. Everything outside :root is hand-written. */
 
 /* ==========================================
    Design System Tokens — Soft Parlor
