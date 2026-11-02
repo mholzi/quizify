@@ -2275,7 +2275,7 @@
         var skipBtn = document.getElementById('skip-question-btn');
         if (skipBtn) {
             skipBtn.addEventListener('click', function () {
-                send('admin_skip', {});
+                pu.hostStep(skipBtn, send, 'admin_skip');
             });
         }
 
@@ -2283,7 +2283,7 @@
         var nextRoundAdminBtn = document.getElementById('next-round-admin-btn');
         if (nextRoundAdminBtn) {
             nextRoundAdminBtn.addEventListener('click', function () {
-                send('next_round', {});
+                pu.hostStep(nextRoundAdminBtn, send, 'next_round');
             });
         }
 
@@ -2300,19 +2300,18 @@
         // Pause / resume — toggled by handleGameState based on phase.
         var pauseBtn = document.getElementById('pause-game-btn');
         if (pauseBtn) {
-            pauseBtn.addEventListener('click', function () { send('pause_game', {}); });
+            pauseBtn.addEventListener('click', function () { pu.hostStep(pauseBtn, send, 'pause_game'); });
         }
         var resumeBtn = document.getElementById('resume-game-btn');
         if (resumeBtn) {
-            resumeBtn.addEventListener('click', function () { send('resume_game', {}); });
+            resumeBtn.addEventListener('click', function () { pu.hostStep(resumeBtn, send, 'resume_game'); });
         }
 
         // Next round (from reveal view)
         var nextRoundBtn = document.getElementById('next-round-btn');
         if (nextRoundBtn) {
             nextRoundBtn.addEventListener('click', function () {
-                nextRoundBtn.disabled = true;
-                send('next_round', {});
+                pu.hostStep(nextRoundBtn, send, 'next_round');
             });
         }
 

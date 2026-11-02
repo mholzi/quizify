@@ -279,8 +279,10 @@ def test_the_card_starts_through_the_service_not_the_socket() -> None:
     assert "callService('quizify', 'start_game'" in source
     # Every control routes through the one dispatcher, so a second start button
     # cannot quietly go back to the socket.
-    assert "self._dispatch(primary.msg)" in source
-    assert "self._dispatch(el.dataset.msg)" in source
+    # #1183: through the host-step lock, which calls the dispatcher.
+    assert "self._hostStep(primary.msg)" in source
+    assert "self._hostStep(el.dataset.msg)" in source
+    assert "this._dispatch(msg);" in source
     # …and the socket stays the fallback, so the button is never dead when the
     # card is rendered without a hass.
     assert "this._send('start_game')" in source

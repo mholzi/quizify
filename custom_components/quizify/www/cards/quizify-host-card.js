@@ -45,6 +45,18 @@
     var MAX_BACKOFF_MS = 30000;
 
     /*
+     * #1183: a host step locks the card's buttons the moment it is sent — at
+     * least HOST_STEP_MIN_MS and until the phase has moved on, the same lock
+     * the console and the phone bar hold. Without it a second tap on the
+     * morphing main button landed on "Reveal" of the question the first tap
+     * had just started, and the server scored it on the spot: 0 points for
+     * the whole room. HOST_STEP_MAX_MS frees the buttons if nothing moves
+     * (a refused step), so the card is never left dead.
+     */
+    var HOST_STEP_MIN_MS = 1500;
+    var HOST_STEP_MAX_MS = 8000;
+
+    /*
      * Phase -> primary action. Phase strings are GamePhase in
      * game/phase_controller.py; every message here is one admin.js already
      * sends for the same phase. The card must not invent transitions.
@@ -225,7 +237,7 @@
         // The compact card\'s only secondary action. Deliberately text-weight:
         // ending a game is rare next to the primary button, and a second solid
         // button would compete with it.
-        '.linky{border:0;background:none;padding:4px 0;cursor:pointer;font:inherit;',
+        '.linky{border:0;background:none;padding:0;min-height:44px;cursor:pointer;font:inherit;',
         'color:var(--secondary-text-color);text-decoration:underline}',
         '.linky:hover{color:var(--primary-text-color)}',
         '.split{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}',
@@ -243,8 +255,9 @@
         'letter-spacing:.08em;text-transform:uppercase;border-bottom:0}',
         '.scoring{min-height:44px;padding:0 12px;border:1px solid var(--divider-color);border-radius:10px;',
         'background:transparent;color:var(--primary-text-color);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}',
+        // #1183: 44 × 44, the size every other tap target in Quizify has.
         '.kick{border:0;background:transparent;cursor:pointer;color:var(--secondary-text-color);',
-        'font:inherit;min-height:32px;padding:0 6px}',
+        'font:inherit;min-height:44px;min-width:44px;padding:0}',
         '.qr{flex:0 0 auto}',
         '.qr img,.qr canvas{display:block;border-radius:6px}',
         '.bar{height:4px;border-radius:999px;background:var(--divider-color);overflow:hidden}',
@@ -257,6 +270,10 @@
         '.offline .line{margin:0;font-weight:600}',
         '.offline .row button{flex:0 0 auto}',
         '.stale .roster,.stale .bar{opacity:.6}',
+        // #1183: press and keyboard focus. The card re-renders on every state,
+        // so the press has to show at once, not when the server answers.
+        'button:not([disabled]):active{transform:scale(.97)}',
+        'button:focus-visible,a:focus-visible{outline:2px solid var(--primary-color);outline-offset:2px}',
         '@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}'
     ].join('');
 
@@ -303,6 +320,8 @@
             this._qrDrawnFor = null;
             // #1183: the open confirm sheet, { kind, name } or null.
             this._confirm = null;
+            // #1183: the running host-step lock, { phase, at, timer } or null.
+            this._lock = null;
         }
 
         // ---- Lovelace contract -------------------------------------------
@@ -356,6 +375,7 @@
             if (this._retry) { clearTimeout(this._retry); this._retry = null; }
             this._removed = true;   // stop reconnecting once removed
             this._listen('removeEventListener');
+            if (this._lock) { clearTimeout(this._lock.timer); this._lock = null; }
             var ws = this._ws;
             this._ws = null;
             if (ws) {
@@ -648,7 +668,7 @@
             return {
                 label: label,
                 msg: msg,
-                disabled: !msg || blocked || this._status !== 'online',
+                disabled: !msg || blocked || this._status !== 'online' || this._locked(),
                 blockedReason: blocked ? this._t.waiting : null
             };
         }
@@ -740,7 +760,8 @@
                     // answers ERR_INVALID_ACTION, so the button is not offered.
                     var lock = offline ? ' disabled' : '';
                     if (s && SKIPPABLE_PHASES[s.phase]) {
-                        html += '<button data-msg="admin_skip"' + lock + '>' + esc(t.reveal) + '</button>';
+                        html += '<button data-msg="admin_skip"' + (lock || (this._locked() ? ' disabled' : '')) + '>' +
+                            esc(t.reveal) + '</button>';
                     }
                     html += '<button data-ask="end"' + lock + '>' + esc(t.end) + '</button>' +
                         '<button data-ask="reset"' + lock + '>' + esc(t.reset) + '</button>' +
@@ -872,6 +893,31 @@
             return html;
         }
 
+        _locked() {
+            return !!this._lock;
+        }
+
+        // Every host step goes through here (#1183): sent once, then locked.
+        _hostStep(msg) {
+            if (this._lock || !msg) return;
+            this._dispatch(msg);
+            var self = this;
+            var lock = { phase: this._state && this._state.phase, at: Date.now(), timer: null };
+            this._lock = lock;
+            function release() {
+                if (self._lock !== lock) return;
+                var phase = self._state && self._state.phase;
+                if (phase === lock.phase && Date.now() - lock.at < HOST_STEP_MAX_MS) {
+                    lock.timer = setTimeout(release, 250);
+                    return;
+                }
+                self._lock = null;
+                self._render();
+            }
+            lock.timer = setTimeout(release, HOST_STEP_MIN_MS);
+            this._render();
+        }
+
         // One place decides socket vs service, so every button reaches start_game
         // the same way no matter which control fired it (#744).
         _dispatch(msg) {
@@ -887,12 +933,12 @@
             }
             var btn = this.shadowRoot.getElementById('primary');
             if (btn && primary.msg) {
-                btn.addEventListener('click', function () { self._dispatch(primary.msg); });
+                btn.addEventListener('click', function () { self._hostStep(primary.msg); });
             }
             var others = this.shadowRoot.querySelectorAll('[data-msg]');
             for (var i = 0; i < others.length; i++) {
                 (function (el) {
-                    el.addEventListener('click', function () { self._dispatch(el.dataset.msg); });
+                    el.addEventListener('click', function () { self._hostStep(el.dataset.msg); });
                 })(others[i]);
             }
             var asks = this.shadowRoot.querySelectorAll('[data-ask]');

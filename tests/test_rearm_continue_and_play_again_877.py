@@ -81,7 +81,15 @@ window.QuizifyPlayerUtils = {{
         return (m && (m.team_id || m.name))
             || window.QuizifyPlayerUtils.state.playerName;
     }},
-    entrantKey: function (e) {{ return (e && (e.entrant_id || e.name)) || ''; }}
+    entrantKey: function (e) {{ return (e && (e.entrant_id || e.name)) || ''; }},
+    // The host-step lock from player-utils.js (#1183), reduced to its
+    // contract here: send once, hold the button.
+    hostStep: function (btn, send, type, payload) {{
+        if (btn.disabled) return false;
+        send(type, payload || {{}});
+        btn.disabled = true;
+        return true;
+    }}
 }};
 
 QZ.load({lightning});

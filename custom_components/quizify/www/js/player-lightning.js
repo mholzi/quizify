@@ -370,8 +370,9 @@
         var continueBtn = document.getElementById('lightning-recap-continue-btn');
         if (continueBtn) {
             continueBtn.addEventListener('click', function () {
-                this.disabled = true;  // one-shot; avoid double-fire
-                _send('next_question', {});
+                // #1183: the shared host-step lock (≥ 1.5 s and until the
+                // phase moves on) instead of a one-shot disable.
+                window.QuizifyPlayerUtils.hostStep(continueBtn, _send, 'next_question');
             });
         }
     }

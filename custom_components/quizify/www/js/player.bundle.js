@@ -626,6 +626,44 @@
     }
 
     // ============================================
+    // Host steps (#1183)
+    // ============================================
+
+    // Next, Skip, Pause and Resume advance the game for everyone. A second
+    // tap — a double tap, or a tap again because the screen has not changed
+    // yet — lands on whatever the button means next: "Next" becomes "Skip"
+    // of the question it just started, and the server scores that question
+    // at once. So the button locks the moment the step leaves: at least
+    // HOST_STEP_MIN_MS, and until the phase has moved on. HOST_STEP_MAX_MS
+    // frees it if the server refused and nothing moves, so a host is never
+    // left without a button. The console and the Lovelace card hold the same
+    // lock.
+    var HOST_STEP_MIN_MS = 1500;
+    var HOST_STEP_MAX_MS = 8000;
+    var HOST_STEP_POLL_MS = 250;
+
+    function hostStep(btn, sendFn, type, payload) {
+        if (btn && btn._qzHostLock) return false;
+        if (!sendFn(type, payload || {})) return false;
+        if (!btn) return true;
+        var lock = { phase: state.currentPhase, t0: Date.now() };
+        btn._qzHostLock = lock;
+        btn.disabled = true;
+        function release() {
+            if (btn._qzHostLock !== lock) return;
+            var waited = Date.now() - lock.t0;
+            if (state.currentPhase === lock.phase && waited < HOST_STEP_MAX_MS) {
+                setTimeout(release, HOST_STEP_POLL_MS);
+                return;
+            }
+            btn._qzHostLock = null;
+            btn.disabled = false;
+        }
+        setTimeout(release, HOST_STEP_MIN_MS);
+        return true;
+    }
+
+    // ============================================
     // Session Storage Helpers
     // ============================================
 
@@ -733,7 +771,9 @@
         validateName: validateName,
         renderMedalStandings: renderMedalStandings,
         myEntrant: myEntrant,
-        entrantKey: entrantKey
+        entrantKey: entrantKey,
+        hostStep: hostStep,
+        HOST_STEP_MIN_MS: HOST_STEP_MIN_MS
     };
 
 })();
@@ -3881,8 +3921,9 @@
         var continueBtn = document.getElementById('lightning-recap-continue-btn');
         if (continueBtn) {
             continueBtn.addEventListener('click', function () {
-                this.disabled = true;  // one-shot; avoid double-fire
-                _send('next_question', {});
+                // #1183: the shared host-step lock (≥ 1.5 s and until the
+                // phase moves on) instead of a one-shot disable.
+                window.QuizifyPlayerUtils.hostStep(continueBtn, _send, 'next_question');
             });
         }
     }
@@ -8933,7 +8974,7 @@
         var skipBtn = document.getElementById('skip-question-btn');
         if (skipBtn) {
             skipBtn.addEventListener('click', function () {
-                send('admin_skip', {});
+                pu.hostStep(skipBtn, send, 'admin_skip');
             });
         }
 
@@ -8941,7 +8982,7 @@
         var nextRoundAdminBtn = document.getElementById('next-round-admin-btn');
         if (nextRoundAdminBtn) {
             nextRoundAdminBtn.addEventListener('click', function () {
-                send('next_round', {});
+                pu.hostStep(nextRoundAdminBtn, send, 'next_round');
             });
         }
 
@@ -8958,19 +8999,18 @@
         // Pause / resume — toggled by handleGameState based on phase.
         var pauseBtn = document.getElementById('pause-game-btn');
         if (pauseBtn) {
-            pauseBtn.addEventListener('click', function () { send('pause_game', {}); });
+            pauseBtn.addEventListener('click', function () { pu.hostStep(pauseBtn, send, 'pause_game'); });
         }
         var resumeBtn = document.getElementById('resume-game-btn');
         if (resumeBtn) {
-            resumeBtn.addEventListener('click', function () { send('resume_game', {}); });
+            resumeBtn.addEventListener('click', function () { pu.hostStep(resumeBtn, send, 'resume_game'); });
         }
 
         // Next round (from reveal view)
         var nextRoundBtn = document.getElementById('next-round-btn');
         if (nextRoundBtn) {
             nextRoundBtn.addEventListener('click', function () {
-                nextRoundBtn.disabled = true;
-                send('next_round', {});
+                pu.hostStep(nextRoundBtn, send, 'next_round');
             });
         }
 

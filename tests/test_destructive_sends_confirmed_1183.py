@@ -240,3 +240,51 @@ def test_no_window_confirm_on_the_lovelace_card() -> None:
     """The card's reset used window.confirm, which Companion WebViews swallow."""
     code, _blank = _strip((_WWW / "cards" / "quizify-host-card.js").read_text("utf-8"))
     assert "window.confirm" not in code
+
+
+# ---- host steps lock (#1183) ----------------------------------------------
+
+_HOST_STEP = re.compile(r"""['"](next_question|next_round|admin_skip)['"]""")
+
+# A lock helper per surface: the phone's pu.hostStep (player-utils.js), the
+# console's _debouncedSend, the card's _hostStep.
+_LOCK_CALLS = ("hostStep(", "_debouncedSend(", "_hostStep(")
+
+
+def _card_phase_map_lines(code: str) -> set[str]:
+    """The card's phase -> message table is data; its dispatch is checked below."""
+    start = code.index("var PHASE_ACTIONS = {")
+    end = code.index("};", start)
+    return {line.strip() for line in code[start:end].splitlines()}
+
+
+def test_every_host_step_goes_through_a_lock() -> None:
+    findings = []
+    for path in _sources():
+        rel = path.relative_to(_WWW).as_posix()
+        code, _blank = _strip(path.read_text("utf-8"))
+        table = _card_phase_map_lines(code) if rel.startswith("cards/") else set()
+        for m in _HOST_STEP.finditer(code):
+            line = _line_of(code, m.start()).strip()
+            if any(call in line for call in _LOCK_CALLS) or line in table:
+                continue
+            if rel.startswith("cards/") and 'data-msg="admin_skip"' in line:
+                continue
+            lineno = code.count("\n", 0, m.start()) + 1
+            findings.append(f"{rel}:{lineno} {m.group(1)} — {line}")
+    assert not findings, (
+        "a host step is sent without the lock (#1183) — a second tap lands on "
+        "whatever the button means next:\n  " + "\n  ".join(findings)
+    )
+
+
+def test_the_card_dispatches_every_click_through_the_lock() -> None:
+    """The card's table and data-msg buttons are exempt above only because
+    every click that sends one of them goes through ``_hostStep``."""
+    code, _blank = _strip(
+        (_WWW / "cards" / "quizify-host-card.js").read_text("utf-8")
+    )
+    clicks = re.findall(r"addEventListener\('click', function \(\) \{([^}]*)\}", code)
+    dispatching = [c for c in clicks if "_dispatch(" in c or "_hostStep(" in c]
+    assert dispatching, "the scan must find the card's click handlers"
+    assert all("_hostStep(" in c and "_dispatch(" not in c for c in dispatching)
