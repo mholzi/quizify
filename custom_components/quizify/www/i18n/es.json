@@ -1,4 +1,19 @@
 {
+  "states": {
+    "restartPhone": "Home Assistant se ha reiniciado, así que la partida de antes ha terminado. En cuanto el anfitrión empiece otra, entras con un toque.",
+    "restartTv": "Home Assistant se ha reiniciado, así que la última partida ha terminado. Volved a escanear.",
+    "restartHost": "Home Assistant se ha reiniciado, así que la última partida ha terminado.",
+    "imageMissingPhone": "La imagen no llega ahora mismo. Mira la tele.",
+    "imageMissingTv": "No se pudo cargar la imagen",
+    "connecting": "Conectando con el juego…",
+    "waitingTitle": "Esperando al juego…",
+    "waitingBody": "Se ha perdido la conexión. Si Home Assistant se está reiniciando, tardará unos minutos. Te reconectamos automáticamente y tus puntos se mantienen.",
+    "connectNow": "Conectar ahora",
+    "nextAttempt": "siguiente intento en {seconds} s",
+    "cardAsOf": "Datos de las {time}",
+    "cardOffline": "Sin conexión con Quizify. Seguimos intentándolo.",
+    "cardLocked": "Terminar y Reiniciar quedan bloqueados hasta que vuelva la conexión."
+  },
   "common": {
     "cancel": "Cancelar",
     "close": "Cerrar",
