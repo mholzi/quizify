@@ -425,6 +425,67 @@ class PackSubmissionStore:
                 await self._ctx.runtime.run_in_executor(self._save, data)
             return data
 
+    async def your_pack_news(self, new_packs: list[dict]) -> list[dict]:
+        """The host's own packs worth a line in the pack-news banner (#1185 P8).
+
+        ``accepted`` once a submission's issue was closed as completed, and
+        ``arrived`` once a pack of that name and language came with an update
+        (it is among ``new_packs``). Each state is said once: what the host
+        dismissed is stamped into ``news_seen`` by :meth:`mark_news_seen`.
+        Read-only — no GitHub poll is started from the news banner.
+        """
+        data = await self._ctx.runtime.run_in_executor(self._load)
+        arrived = {
+            (str(p.get("name", "")).casefold(), str(p.get("language", "")).casefold())
+            for p in new_packs
+        }
+        out: list[dict] = []
+        for sub in data.get("submissions") or []:
+            if not isinstance(sub, dict):
+                continue
+            if sub.get("kind", RECORD_KIND_SUBMISSION) != RECORD_KIND_SUBMISSION:
+                continue
+            if sub.get("status") != SUBMIT_STATUS_ACCEPTED:
+                continue
+            key = (
+                str(sub.get("name", "")).casefold(),
+                str(sub.get("language", "")).casefold(),
+            )
+            state = "arrived" if key in arrived else "accepted"
+            seen = sub.get("news_seen") or []
+            if state in seen or (state == "accepted" and "arrived" in seen):
+                continue
+            out.append(
+                {"id": sub.get("id"), "name": sub.get("name", ""), "state": state}
+            )
+        return out
+
+    async def mark_news_seen(self, entries: list[dict]) -> None:
+        """Stamp the states the host has now been told about (#1185 P8)."""
+        wanted = {
+            str(e.get("id")): str(e.get("state"))
+            for e in entries
+            if isinstance(e, dict) and e.get("state") in ("accepted", "arrived")
+        }
+        if not wanted:
+            return
+        async with self._lock:
+            data = await self._ctx.runtime.run_in_executor(self._load)
+            changed = False
+            for sub in data.get("submissions") or []:
+                if not isinstance(sub, dict):
+                    continue
+                state = wanted.get(str(sub.get("id")))
+                if state is None:
+                    continue
+                seen = list(sub.get("news_seen") or [])
+                if state not in seen:
+                    seen.append(state)
+                    sub["news_seen"] = seen
+                    changed = True
+            if changed:
+                await self._ctx.runtime.run_in_executor(self._save, data)
+
     async def add(self, record: dict) -> None:
         """Append a submission record (newest first), capped, then persist.
 

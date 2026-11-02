@@ -3714,6 +3714,36 @@ footer {
     background: var(--color-bg-card-alt);
     animation: qz-skeleton var(--dur-skeleton) ease-in-out infinite;
 }
+
+/* #1185 P7/P8: pack news. Each new pack is a chip that selects it; the
+   host's own submitted pack gets a line of its own, once. */
+.pack-news-names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+}
+.pack-news-chip {
+    min-height: 44px;
+    padding: var(--space-xs) var(--space-md);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    background: var(--color-bg-card-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+}
+.pack-news-chip:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+}
+.pack-news-yours {
+    margin-top: var(--space-xs);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
 /* ==========================================
    Responsive
    ========================================== */

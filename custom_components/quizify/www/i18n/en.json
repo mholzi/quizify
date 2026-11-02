@@ -155,7 +155,6 @@
     "settingsSummary": "{difficulty} · {questions, plural, one{1 question} other{# questions}} · {timer} s",
     "categoriesCount": "{count, plural, one{1 category} other{# categories}}",
     "packNewsTitle": "New in this update",
-    "packNewsBody": "Already installed — pick it from the category list to play it.",
     "starHint": "Enjoying Quizify? A ⭐ on GitHub helps others find it.",
     "starHintDismiss": "Dismiss hint",
     "scoringOut": "Out of scoring",
@@ -164,7 +163,9 @@
     "scoringMissed": "Disconnected for {count, plural, one{1 question} other{# questions}}",
     "scoringAllGone": "All disconnected",
     "scoringSomeGone": "{names} disconnected, {present} of {total} here",
-    "scoringPodium": "Otherwise on the podium"
+    "scoringPodium": "Otherwise on the podium",
+    "packNewsYoursAccepted": "Your pack “{name}” was accepted. Thank you!",
+    "packNewsYoursArrived": "Your pack “{name}” is in the game now."
   },
   "categories": {
     "mixed": "Mixed",

@@ -155,7 +155,6 @@
     "settingsSummary": "{difficulty} · {questions, plural, one{1 Frage} other{# Fragen}} · {timer} s",
     "categoriesCount": "{count, plural, one{1 Kategorie} other{# Kategorien}}",
     "packNewsTitle": "Neu in diesem Update",
-    "packNewsBody": "Schon installiert — such es dir in der Kategorie-Liste aus und leg los.",
     "starHint": "Gefällt dir Quizify? Ein ⭐ auf GitHub hilft anderen, es zu finden.",
     "starHintDismiss": "Hinweis schließen",
     "scoringOut": "Aus der Wertung",
@@ -164,7 +163,9 @@
     "scoringMissed": "Seit {count, plural, one{1 Frage} other{# Fragen}} getrennt",
     "scoringAllGone": "Alle getrennt",
     "scoringSomeGone": "{names} getrennt, {present} von {total} da",
-    "scoringPodium": "Steht sonst auf dem Podium"
+    "scoringPodium": "Steht sonst auf dem Podium",
+    "packNewsYoursAccepted": "Dein Pack „{name}“ ist angenommen. Danke!",
+    "packNewsYoursArrived": "Dein Pack „{name}“ ist jetzt dabei."
   },
   "categories": {
     "mixed": "Gemischt",

@@ -155,7 +155,6 @@
     "settingsSummary": "{difficulty} · {questions, plural, one{1 pregunta} other{# preguntas}} · {timer} s",
     "categoriesCount": "{count, plural, one{1 categoría} other{# categorías}}",
     "packNewsTitle": "Nuevo en esta versión",
-    "packNewsBody": "Ya está instalado: elígelo en la lista de categorías y a jugar.",
     "starHint": "¿Te gusta Quizify? Una ⭐ en GitHub ayuda a que otros lo encuentren.",
     "starHintDismiss": "Cerrar aviso",
     "scoringOut": "Sacar de la clasificación",
@@ -164,7 +163,9 @@
     "scoringMissed": "Desconectado desde hace {count, plural, one{1 pregunta} other{# preguntas}}",
     "scoringAllGone": "Todos desconectados",
     "scoringSomeGone": "Sin conexión: {names} · {present} de {total} aquí",
-    "scoringPodium": "Si no, estará en el podio"
+    "scoringPodium": "Si no, estará en el podio",
+    "packNewsYoursAccepted": "Tu paquete «{name}» ha sido aceptado. ¡Gracias!",
+    "packNewsYoursArrived": "Tu paquete «{name}» ya viene incluido."
   },
   "categories": {
     "mixed": "Mixto",

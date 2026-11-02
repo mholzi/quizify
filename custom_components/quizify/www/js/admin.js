@@ -5035,11 +5035,33 @@ function packNewsForLanguage(packs, lang) {
 function renderPackNewsNames(lang) {
     if (!_packNews) return;
     var shown = packNewsForLanguage(_packNews.packs, lang);
+    // #1185 P7: each name is a chip that picks the pack and scrolls to its
+    // tile — the banner used to send the host off to look for it.
     _packNews.namesEl.innerHTML = shown.map(function (p) {
-        return window.QuizifyUtils.escapeHtml(p.name)
-            + ' (' + window.QuizifyUtils.escapeHtml(p.question_count) + ')';
-    }).join(', ');
-    _packNews.banner.style.display = shown.length ? 'flex' : 'none';
+        return '<button type="button" class="pack-news-chip" data-slug="' + window.QuizifyUtils.escapeHtml(p.slug) + '">' +
+            window.QuizifyUtils.escapeHtml(p.name) + ' · ' + window.QuizifyUtils.escapeHtml(p.question_count) + ' ›</button>';
+    }).join('');
+    // #1185 P8: the host's own packs, once each.
+    var tt = function (key, params) { return window.t ? window.t(key, params) : key; };
+    var yours = _packNews.yours || [];
+    if (_packNews.yoursEl) _packNews.yoursEl.innerHTML = yours.map(function (y) {
+        var key = y.state === 'arrived' ? 'admin.packNewsYoursArrived' : 'admin.packNewsYoursAccepted';
+        return '<div class="pack-news-yours">' + window.QuizifyUtils.escapeHtml(tt(key, { name: y.name })) + '</div>';
+    }).join('');
+    _packNews.banner.style.display = (shown.length || yours.length) ? 'flex' : 'none';
+}
+
+// #1185 P7: a pack-news chip selects its pack the way a tap on the tile
+// does (the tile proxies to the hidden category chip), then shows the tile.
+function selectPackFromNews(slug) {
+    if (!slug) return;
+    var sel = '[data-value="' + String(slug).replace(/["\\]/g, '') + '"]';
+    var tile = document.querySelector('.hero-cat-tile' + sel);
+    var chip = document.querySelector('#category-chips .chip' + sel);
+    var target = tile || chip;
+    if (!target) return;
+    if (!target.classList.contains('active')) target.click();
+    if (tile && tile.scrollIntoView) tile.scrollIntoView({ block: 'center', behavior: 'smooth' });
 }
 
 /**
@@ -5069,11 +5091,19 @@ async function showPackNews(getLanguage) {
             try { await window.QuizifyI18n.init(); } catch (_e) { /* fall through untranslated */ }
         }
 
-        const resp = await fetch('/api/quizify/packs/news');
+        // #1185 P8: with the admin token the answer also names the host's own
+        // submitted packs ("accepted", "it is in now").
+        const newsHeaders = {};
+        const newsTok = window.QuizifyUtils && window.QuizifyUtils.readAdminToken
+            ? window.QuizifyUtils.readAdminToken()
+            : null;
+        if (newsTok) newsHeaders['X-Quizify-Token'] = newsTok;
+        const resp = await fetch('/api/quizify/packs/news', { headers: newsHeaders });
         if (!resp.ok) return;
         const data = await resp.json();
         const packs = (data && data.new_packs) || [];
-        if (packs.length === 0) return;
+        const yours = (data && Array.isArray(data.your_packs)) ? data.your_packs : [];
+        if (packs.length === 0 && yours.length === 0) return;
 
         // showPackNews lives outside the admin IIFE, so the IIFE-local `_t`
         // is out of scope here — use the global window.t (i18n). Pack
@@ -5108,8 +5138,8 @@ async function showPackNews(getLanguage) {
             '<span style="font-size:1.2rem;flex-shrink:0">🎁</span>' +
             '<div style="flex:1">' +
                 '<strong data-i18n="admin.packNewsTitle" style="color:#E88A7F;font-family:\'DM Sans\',sans-serif;font-weight:700">' + window.QuizifyUtils.escapeHtml(tt('admin.packNewsTitle')) + '</strong>' +
-                '<div class="pack-news-names" style="margin-top:3px;color:#2A2820"></div>' +
-                '<div data-i18n="admin.packNewsBody" style="margin-top:5px;font-size:0.8rem;color:#6E6A5C">' + window.QuizifyUtils.escapeHtml(tt('admin.packNewsBody')) + '</div>' +
+                '<div class="pack-news-names"></div>' +
+                '<div class="pack-news-yours-list"></div>' +
             '</div>' +
             '<button type="button" id="pack-news-dismiss" ' +
                 'style="background:none;border:none;color:#6E6A5C;cursor:pointer;font-size:1rem;padding:0;flex-shrink:0" ' +
@@ -5129,7 +5159,12 @@ async function showPackNews(getLanguage) {
                     ? window.QuizifyUtils.readAdminToken()
                     : null;
                 if (tok) headers['X-Quizify-Token'] = tok;
-                fetch('/api/quizify/packs/news/dismiss', { method: 'POST', headers: headers })
+                headers['Content-Type'] = 'application/json';
+                fetch('/api/quizify/packs/news/dismiss', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({ your_packs: yours }),
+                })
                     .catch(function (e) { console.warn('[quizify] pack news dismiss failed:', e); });
             });
         }
@@ -5143,8 +5178,14 @@ async function showPackNews(getLanguage) {
         _packNews = {
             banner: banner,
             namesEl: banner.querySelector('.pack-news-names'),
+            yoursEl: banner.querySelector('.pack-news-yours-list'),
             packs: packs,
+            yours: yours,
         };
+        _packNews.namesEl.addEventListener('click', function (ev) {
+            var chip = ev.target && ev.target.closest ? ev.target.closest('.pack-news-chip') : null;
+            if (chip) selectPackFromNews(chip.getAttribute('data-slug'));
+        });
         renderPackNewsNames(typeof getLanguage === 'function' ? getLanguage() : '');
     } catch (e) {
         // Offline or HA not ready — log so a real error (e.g. a future
