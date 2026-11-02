@@ -178,6 +178,8 @@
         if (grid && grid.classList) grid.classList.toggle('is-time-up', dim);
         var est = document.getElementById('estimate-container');
         if (est && est.classList) est.classList.toggle('is-time-up', dim);
+        var pwr = document.getElementById('powerup-btn');
+        if (pwr && pwr.classList) pwr.classList.toggle('is-time-up', dim);
     }
 
     // ============================================
@@ -1848,6 +1850,7 @@
         startCountdown: startCountdown,
         stopCountdown: stopCountdown,
         clearTimeAnnouncement: clearTimeAnnouncement,
+        isTimeUp: function () { return _timeUp; },
         startFrozenOverlay: startFrozenOverlay,
         stopFrozenOverlay: stopFrozenOverlay,
         isFrozen: isFrozen,

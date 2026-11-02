@@ -616,7 +616,12 @@
     transition: color var(--dur-time-up) var(--ease-out),
         text-shadow var(--dur-time-up) var(--ease-out);
 }
+.powerup-btn.is-time-up {
+    animation: none;
+    transform: none;
+}
 .answer-buttons.is-time-up .answer-btn,
+.powerup-btn.is-time-up,
 .estimate-section.is-time-up .estimate-slider,
 .estimate-section.is-time-up .estimate-submit-btn {
     opacity: 0.5;

@@ -2451,7 +2451,7 @@
         var powerupBtn = document.getElementById('powerup-btn');
         if (powerupBtn) {
             powerupBtn.addEventListener('click', function () {
-                if (!myPowerUp) return;
+                if (!myPowerUp || (game && game.isTimeUp && game.isTimeUp())) return;  // #1174
                 if (game && game.powerupNeedsTarget && game.powerupNeedsTarget(myPowerUp)) {
                     game.openTargetPicker(myPowerUp, function (targetName) {
                         send('use_powerup', { target_player_id: targetName });

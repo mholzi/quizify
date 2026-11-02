@@ -4870,6 +4870,8 @@
         if (grid && grid.classList) grid.classList.toggle('is-time-up', dim);
         var est = document.getElementById('estimate-container');
         if (est && est.classList) est.classList.toggle('is-time-up', dim);
+        var pwr = document.getElementById('powerup-btn');
+        if (pwr && pwr.classList) pwr.classList.toggle('is-time-up', dim);
     }
 
     // ============================================
@@ -6540,6 +6542,7 @@
         startCountdown: startCountdown,
         stopCountdown: stopCountdown,
         clearTimeAnnouncement: clearTimeAnnouncement,
+        isTimeUp: function () { return _timeUp; },
         startFrozenOverlay: startFrozenOverlay,
         stopFrozenOverlay: stopFrozenOverlay,
         isFrozen: isFrozen,
@@ -9034,7 +9037,7 @@
         var powerupBtn = document.getElementById('powerup-btn');
         if (powerupBtn) {
             powerupBtn.addEventListener('click', function () {
-                if (!myPowerUp) return;
+                if (!myPowerUp || (game && game.isTimeUp && game.isTimeUp())) return;  // #1174
                 if (game && game.powerupNeedsTarget && game.powerupNeedsTarget(myPowerUp)) {
                     game.openTargetPicker(myPowerUp, function (targetName) {
                         send('use_powerup', { target_player_id: targetName });
