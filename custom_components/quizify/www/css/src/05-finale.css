@@ -72,6 +72,26 @@
     color: var(--color-warning);
 }
 
+/* #1170: a growing streak bumps in with a sun flush; a broken one greys out
+   for 500 ms and is then removed by QuizifyRenderShared.motionStreaks. The
+   flush is a `from` keyframe only, so the badge ends on its own colours. */
+.leaderboard-streak.streak-bump {
+    animation: streak-bump var(--dur-streak) var(--ease-out);
+}
+@keyframes streak-bump {
+    from { transform: scale(0.9); background-color: rgba(232, 196, 127, 0.55); }
+}
+.leaderboard-streak.is-breaking {
+    animation: streak-break var(--dur-streak-break) var(--ease-out) forwards;
+}
+@keyframes streak-break {
+    to {
+        color: var(--color-text-muted);
+        background-color: rgba(42, 40, 32, 0.06);
+        opacity: 0.45;
+    }
+}
+
 /* Out of scoring (#1150): the host's line under a disconnected row, and the
    rows below the ranking. Shared by the host page and a playing host's reveal. */
 .leaderboard-row.has-scoring-note {

@@ -48,6 +48,12 @@
     // #1169: the last score each entrant was shown with, so a leaderboard
     // repaint rolls only the digits that actually changed.
     var shownScores = {};
+    // #1170: the streak each entrant was last shown with, the order of each
+    // board (by container id) for the FLIP reorder, and how many answers the
+    // count showed (null = a restore or reconnect: no roll).
+    var shownStreaks = {};
+    var shownOrder = {};
+    var answersShown = null;
 
     // ---- DOM ----
     var views = {
@@ -1237,6 +1243,7 @@
         // The count, never the amounts — the auction is sealed, and the
         // screen everyone can see is the last place to leak it.
         if (!els.answerProgress) return;
+        answersShown = null;
         els.answerProgress.textContent =
             window.QuizifyRenderShared.hotSeatBidCountText(msg);
         els.answerProgress.classList.remove('hidden');
@@ -1361,6 +1368,9 @@
 
     function handleQuestionStarted(msg) {
         currentPhase = 'QUESTION_ACTIVE';
+        // #1170: a live question starts at 0 answers; a snapshot (it carries
+        // time_remaining) is a restore, whose first count is only a baseline.
+        answersShown = (typeof msg.time_remaining === 'number') ? null : 0;
         showView('question');
         els.funFact.classList.remove('visible');
 
@@ -1506,7 +1516,19 @@
             return;
         }
         var submitted = msg.submitted || 0;
+        var shown = answersShown;
+        answersShown = submitted;
         els.answerProgress.textContent = submitted + '/' + total;
+        // #1170: the TV shows a count, not one ring per guest, so the count
+        // itself rolls up when someone locks in (never on a restore).
+        if (typeof shown === 'number' && submitted > shown) {
+            var num = document.createElement('span');
+            num.textContent = submitted;
+            els.answerProgress.textContent = '';
+            els.answerProgress.appendChild(num);
+            els.answerProgress.appendChild(document.createTextNode('/' + total));
+            window.QuizifyRenderShared.rollDigits(num, shown, submitted);
+        }
         els.answerProgress.classList.remove('hidden');
         els.answerProgress.classList.toggle('is-complete', submitted === total);
     }
@@ -1734,7 +1756,25 @@
                     .replace('{count}', hidden) +
                 '</span></div>';
         }
+        // #1170: where each row stands now, so a changed order can slide.
+        var keys = list.map(function (p) { return p.entrant_id || p.name; });
+        var prevKeys = shownOrder[container.id];
+        var changed = !!prevKeys && prevKeys.join('\n') !== keys.join('\n');
+        var oldTop = {};
+        if (changed && container.querySelectorAll) {
+            Array.prototype.forEach.call(
+                container.querySelectorAll('.leaderboard-row[data-entrant]'),
+                function (row) { oldTop[row.getAttribute('data-entrant')] = row.getBoundingClientRect().top; }
+            );
+        }
+        shownOrder[container.id] = keys;
         container.innerHTML = html;
+        var rowEls = container.querySelectorAll
+            ? container.querySelectorAll('.leaderboard-row:not(.leaderboard-more)') : [];
+        Array.prototype.forEach.call(rowEls, function (row, i) {
+            if (keys[i] != null) row.setAttribute('data-entrant', keys[i]);
+        });
+        if (changed) flipRows(rowEls, keys, oldTop, prevKeys);
         // #1169: roll the scores that moved since this board last showed
         // them. One memo for every leaderboard on the page — they all show
         // the same entrants, so the finale picks up where the reveal left off
@@ -1748,7 +1788,34 @@
                 }),
                 shownScores
             );
+            window.QuizifyRenderShared.motionStreaks(
+                rowEls,
+                list.map(function (p) {
+                    return { key: p.entrant_id || p.name, streak: p.streak_active ? p.streak : 0 };
+                }),
+                shownStreaks
+            );
         }
+    }
+
+    // #1170: FLIP. Rows that changed place start where they were and slide
+    // to where they are; rows that moved up also get a brief sage tint. Only
+    // called when the order really changed (the board repaints every few
+    // seconds), and never under reduced motion.
+    function flipRows(rowEls, keys, oldTop, prevKeys) {
+        if (window.QuizifyRenderShared.prefersReducedMotion()) return;
+        Array.prototype.forEach.call(rowEls, function (row, i) {
+            var key = keys[i], was = oldTop[key];
+            if (was === undefined) return;
+            var delta = was - row.getBoundingClientRect().top;
+            if (Math.abs(delta) < 2) return;
+            if (prevKeys.indexOf(key) > i) row.classList.add('moved-up');
+            row.style.transform = 'translateY(' + delta + 'px)';
+            void row.offsetWidth;
+            row.classList.add('is-flipping');
+            row.style.transform = '';
+            setTimeout(function () { row.classList.remove('is-flipping', 'moved-up'); }, 1300);
+        });
     }
 
     function renderPodium(podium) {

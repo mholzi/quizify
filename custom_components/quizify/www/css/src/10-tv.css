@@ -254,6 +254,10 @@ body.dashboard-body {
     font-variant-numeric: tabular-nums;
 }
 
+.dashboard-answer-progress {
+    transition: color var(--dur-status) var(--ease-out);
+}
+
 .dashboard-answer-progress.is-complete {
     color: var(--dash-accent-primary);
 }
@@ -305,8 +309,14 @@ body.dashboard-body {
     color: var(--dash-error);
     letter-spacing: 0.12em;
     text-transform: uppercase;
+    animation: pill-in var(--dur-status) var(--ease-out) backwards;
 }
 .dashboard-reconnect-pill[hidden] { display: none; }
+/* #1170: the pill slides in from above when the socket drops (display
+   none -> flex restarts the animation each time). */
+@keyframes pill-in {
+    from { opacity: 0; transform: translateY(-8px); }
+}
 .dashboard-reconnect-pill::before {
     content: '';
     width: 8px;
@@ -1093,6 +1103,18 @@ body.dashboard-body {
 }
 
 /* #429: muted "+N more" overflow hint for the capped in-game panel. */
+/* #1170: a rank change slides the row to its new place (FLIP, set up by
+   dashboard.js); a row that moved up carries a brief sage tint. */
+.dashboard-leaderboard .leaderboard-row.is-flipping {
+    transition: transform var(--dur-flip) var(--ease-out);
+}
+.dashboard-leaderboard .leaderboard-row.moved-up {
+    animation: row-moved-up var(--dur-flip-tint) var(--ease-out);
+}
+@keyframes row-moved-up {
+    from { background-color: rgba(127, 168, 151, 0.28); border-color: var(--dash-success); }
+}
+
 .dashboard-leaderboard .leaderboard-row.leaderboard-more {
     background: transparent;
     border-color: transparent;
@@ -1365,6 +1387,34 @@ body.dashboard-body {
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(16px, 1.8vw, 24px);
     color: var(--dash-text-neon-muted);
+}
+/* #1170: the splash arrives in ~0.5 s — the title rises, the sun underline
+   draws left to right, the rules follow, 120 ms apart. The `hidden` toggle
+   (display none -> flex) restarts all three each time the splash shows. */
+.dashboard-lightning-splash .dashboard-lightning-title {
+    position: relative;
+    padding-bottom: 0.2em;
+    animation: motion-enter var(--dur-enter) var(--ease-out) backwards;
+}
+.dashboard-lightning-splash .dashboard-lightning-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--dash-warning);
+    transform-origin: left center;
+    animation: splash-underline var(--dur-underline) var(--ease-out)
+        var(--dur-splash-stagger) backwards;
+}
+.dashboard-lightning-splash .dashboard-lightning-rules {
+    animation: motion-enter var(--dur-enter) var(--ease-out)
+        calc(2 * var(--dur-splash-stagger)) backwards;
+}
+@keyframes splash-underline {
+    from { transform: scaleX(0); }
 }
 .dashboard-lightning-recap-grid {
     flex: 1;

@@ -530,7 +530,7 @@
      *
      * Unchanged since the mode landed in #654; not a regression from RC3.
      */
-    function handleResult(msg) {
+    function handleResult(msg, restored) {
         msg = msg || {};
         var p = panel();
         if (!p) {
@@ -565,7 +565,7 @@
             answerEl.classList.toggle('hidden', !msg.correct_answer);
         }
 
-        renderOwnSettlement(msg);
+        renderOwnSettlement(msg, restored);
         renderResultStandings(msg.leaderboard);
 
         var hint = el('hotseat-hint');
@@ -597,7 +597,7 @@
      * spectator who staked on the outcome is otherwise never told whether
      * their bet came in.
      */
-    function renderOwnSettlement(msg) {
+    function renderOwnSettlement(msg, restored) {
         var row = el('hotseat-result-you');
         if (!row) return;
         var deltas = msg.deltas || {};
@@ -616,6 +616,14 @@
         if (value) {
             value.textContent = (mine < 0 ? '\u2212' : '+')
                 + Math.abs(mine) + ' ' + t('reveal.ptsUnit');
+        }
+        // #1170: a win rises into place, a loss fades where it stands (the
+        // bank and the bet slider are already gone by now; the standings
+        // below roll their scores). A restore from a snapshot just shows it.
+        row.classList.remove('hs-settle--win', 'hs-settle--lose');
+        if (!restored && mine !== 0) {
+            void row.offsetWidth;
+            row.classList.add(mine > 0 ? 'hs-settle--win' : 'hs-settle--lose');
         }
     }
 
@@ -706,7 +714,7 @@
                 }
             }
             settled.leaderboard = (snapshot && snapshot.leaderboard) || [];
-            handleResult(settled);
+            handleResult(settled, true);
             return;
         }
 

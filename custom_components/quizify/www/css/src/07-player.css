@@ -3965,3 +3965,55 @@ body.is-admin .reaction-bar {
     cursor: pointer;
 }
 .preset-chip-remove:hover { opacity: 1; }
+
+/* ==========================================
+   Round 2 motion (#1170): Hot Seat settle, connection loss
+   ========================================== */
+
+/* The settlement lands: a win rises into place (the bank taking it in), a
+   loss fades where it stands. Set by player-hotseat.js on #hotseat-result-you. */
+.hs-settle--win {
+    animation: hs-settle-win var(--dur-settle) var(--ease-out) backwards;
+}
+.hs-settle--lose {
+    animation: hs-settle-lose var(--dur-settle) var(--ease-out) backwards;
+}
+@keyframes hs-settle-win {
+    from { opacity: 0; transform: translateY(14px); }
+}
+@keyframes hs-settle-lose {
+    from { opacity: 0; }
+}
+
+/* While the socket is down the phone drains of colour over 400 ms; the
+   connection pill slides in and, on return, turns sage for a moment while
+   the colour comes back. Classes are set by player-utils.js. Not on the
+   overlay or the pill themselves, so they keep their own colours. */
+html.conn-down .view {
+    animation: conn-desat var(--dur-desat) var(--ease-out) forwards;
+}
+html.conn-back .view {
+    animation: conn-resat var(--dur-desat) var(--ease-out);
+}
+@keyframes conn-desat {
+    to { filter: saturate(0.25); }
+}
+@keyframes conn-resat {
+    from { filter: saturate(0.25); }
+}
+#conn-status.conn-slide {
+    animation: conn-slide var(--dur-status) var(--ease-out) backwards;
+}
+#conn-status.conn-back {
+    animation: conn-sage var(--dur-conn-back) var(--ease-out);
+}
+@keyframes conn-slide {
+    from { opacity: 0; transform: translateY(10px); }
+}
+@keyframes conn-sage {
+    from {
+        background-color: rgba(127, 168, 151, 0.3);
+        box-shadow: 0 0 0 6px rgba(127, 168, 151, 0.3);
+        border-radius: 999px;
+    }
+}

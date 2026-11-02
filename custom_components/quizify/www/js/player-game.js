@@ -1208,11 +1208,13 @@
     function resetRankMemo() {
         _prevLeaderboardRanks = {};
         _shownScores = {};
+        _shownStreaks = {};
     }
 
     // #1169: the score each row was last shown with, so the digit roll only
     // runs on a number that changed.
     var _shownScores = {};
+    var _shownStreaks = {};
 
     function updateLeaderboard(data, targetListId) {
         var leaderboard = data.leaderboard || [];
@@ -1256,6 +1258,13 @@
                 listEl.querySelectorAll('.entry-score'),
                 rows.map(function (e) { return { key: entrantKey(e), score: e.score }; }),
                 _shownScores
+            );
+            shared.motionStreaks(
+                listEl.querySelectorAll('.leaderboard-entry'),
+                rows.map(function (e) {
+                    return { key: entrantKey(e), streak: e.streak_active ? e.streak : 0 };
+                }),
+                _shownStreaks
             );
         }
 
