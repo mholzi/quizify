@@ -1,0 +1,112 @@
+{
+  "_about": "One thing, one word (#1177). The terminology of Quizify in de/en/es, read by scripts/check_i18n.py and meant for anyone - human or bot - writing new strings. 'terms' is the glossary; 'forbidden' is what the check reports; 'limits' is the length budget, measured on the longest language. Not a language bundle: the server skips it when it lists the UI languages.",
+  "voice": {
+    "de": "du für eine Person, ihr für die Gruppe (auch in der Ansage)",
+    "en": "you",
+    "es": "tú para una persona, vosotros para el grupo (es-ES, también en la locución)"
+  },
+  "terms": [
+    {"concept": "whole evening", "de": "Spiel", "en": "game", "es": "partida", "avoid": "es 'juego' (except the product name), 'ronda' for the whole game"},
+    {"concept": "one question", "de": "Frage", "en": "question", "es": "pregunta", "avoid": "Runde / round / ronda for a single question"},
+    {"concept": "special block", "de": "Blitzrunde · Finalrunde", "en": "lightning round · final round", "es": "ronda relámpago · ronda final", "avoid": "'Letzte Runde' for the last question"},
+    {"concept": "game leader", "de": "Host", "en": "host", "es": "anfitrión", "avoid": "Admin, Administración, Gastgeber"},
+    {"concept": "spoken voice", "de": "Quizmaster", "en": "quizmaster", "es": "presentador", "avoid": "TTS, TTS engine"},
+    {"concept": "player", "de": "Spieler", "en": "player", "es": "jugador"},
+    {"concept": "waiting room", "de": "Lobby", "en": "lobby", "es": "sala", "avoid": "Sala de juego, Sala de espera"},
+    {"concept": "power-ups (all)", "de": "Power-ups", "en": "power-ups", "es": "potenciadores", "avoid": "es 'comodines'"},
+    {"concept": "power-up names", "de": "Joker · Doppelt · Einfrieren · +5 s · Klauen", "en": "Joker · Double · Freeze · +5 s · Steal", "es": "Comodín · Doble · Congelar · +5 s · Robar", "avoid": "+5 Sek., +5 seg., +5 Sec."},
+    {"concept": "streak", "de": "Serie", "en": "streak", "es": "racha", "avoid": "de 'Streak'"},
+    {"concept": "stake in the final", "de": "Einsatz", "en": "wager", "es": "apuesta"},
+    {"concept": "hot-seat bid", "de": "Gebot", "en": "bid", "es": "puja"},
+    {"concept": "side bet on the chair", "de": "Wette", "en": "bet", "es": "apuesta lateral"},
+    {"concept": "estimate guess", "de": "Tipp", "en": "guess", "es": "estimación", "avoid": "es 'apuesta'"},
+    {"concept": "hot seat", "de": "Heißer Stuhl", "en": "hot seat", "es": "silla caliente", "avoid": "de 'Hot Seat'"},
+    {"concept": "leaderboard", "de": "Rangliste", "en": "leaderboard", "es": "clasificación", "avoid": "Gesamtwertung, Posiciones, Standings"},
+    {"concept": "remove a player", "de": "entfernen", "en": "remove", "es": "quitar", "avoid": "Kick, Rauswerfen, Expulsar"},
+    {"concept": "question pack", "de": "Pack", "en": "pack", "es": "paquete", "avoid": "es 'pack'"},
+    {"concept": "saved setting", "de": "Vorlage", "en": "preset", "es": "plantilla", "avoid": "de Preset/Voreinstellung, es ajuste"},
+    {"concept": "stats page", "de": "Statistik", "en": "stats", "es": "estadísticas", "avoid": "Analyse, Auswertung, Analytics"},
+    {"concept": "television", "de": "Fernseher", "en": "TV", "es": "tele", "avoid": "TV-Ansicht, televisor"},
+    {"concept": "HA automation", "de": "Automatisierung · Ereignis", "en": "automation · event", "es": "automatización · evento", "avoid": "de Automation, Event"},
+    {"concept": "points (short)", "de": "Pkt.", "en": "pts", "es": "pts", "avoid": "Pts."}
+  ],
+  "forbidden": {
+    "de": [
+      {"pattern": "\\bStreak\\b", "use": "Serie"},
+      {"pattern": "\\bPresets?\\b|Voreinstellung", "use": "Vorlage"},
+      {"pattern": "Rauswerfen", "use": "entfernen"},
+      {"pattern": "\\bHot Seat\\b", "use": "Heißer Stuhl"},
+      {"pattern": "\\bAdmin\\b|Gastgeber", "use": "Host"},
+      {"pattern": "\\bAutomationen?\\b", "use": "Automatisierung"},
+      {"pattern": "\\bEvents?\\b", "use": "Ereignis"},
+      {"pattern": "Gesamtwertung", "use": "Rangliste"},
+      {"pattern": "Auswertung|\\bAnalyse\\b", "use": "Statistik"},
+      {"pattern": "TV-Ansicht", "use": "Fernseher"},
+      {"pattern": "\\bTTS\\b", "use": "Stimme / Quizmaster"},
+      {"pattern": "\\bSek\\.", "use": "s"},
+      {"pattern": "\\bRunden?\\b", "use": "Frage", "except": ["setup.hero", "lightning.*"]},
+      {"pattern": "Letzte Runde", "use": "Letzte Frage / Finalrunde"}
+    ],
+    "en": [
+      {"pattern": "\\b[Rr]ounds?\\b", "use": "question", "except": ["setup.hero", "lightning.*", "game.finalRound", "wager.title", "setup.eigene.q6", "setup.eigene.lightningHint", "hostCard.lightningRunning", "tts.wager_open", "tts.lightning_started"]},
+      {"pattern": "\\bKick\\b", "use": "Remove"},
+      {"pattern": "\\b[Ss]tandings\\b", "use": "leaderboard"},
+      {"pattern": "\\bAnalytics\\b", "use": "stats"},
+      {"pattern": "\\bAdmin\\b", "use": "host"},
+      {"pattern": "\\bTTS\\b", "use": "voice / quizmaster"},
+      {"pattern": "\\bSec\\.", "use": "s"},
+      {"pattern": "\\bPts\\.", "use": "pts"},
+      {"pattern": "\\bstake[ds]?\\b", "use": "wager (final) / bid (hot seat) / bet (side bet)"}
+    ],
+    "es": [
+      {"pattern": "[Cc]omodines", "use": "potenciadores"},
+      {"pattern": "[Ee]xpuls", "use": "quitar"},
+      {"pattern": "\\bjuego\\b", "use": "partida"},
+      {"pattern": "Sala de (juego|espera)", "use": "sala"},
+      {"pattern": "\\b[Aa]juste\\b", "use": "plantilla"},
+      {"pattern": "Posiciones", "use": "clasificación"},
+      {"pattern": "televisor", "use": "tele"},
+      {"pattern": "\\bHagan\\b|\\bustedes\\b", "use": "vosotros (es-ES)"},
+      {"pattern": "\\b[Pp]acks?\\b", "use": "paquete"},
+      {"pattern": "[Aa]dministra", "use": "anfitrión"},
+      {"pattern": "\\bTTS\\b", "use": "voz / presentador"},
+      {"pattern": "\\bseg\\.", "use": "s"},
+      {"pattern": "\\bPts\\.", "use": "pts"},
+      {"pattern": "[Aa]puesta", "use": "estimación", "only": ["estimate.*"]},
+      {"pattern": "\\b[Rr]ondas?\\b", "use": "pregunta", "except": ["setup.hero", "lightning.*", "game.finalRound", "wager.title", "setup.eigene.q6", "setup.eigene.lightningHint", "hostCard.lightningRunning", "tts.wager_open", "tts.lightning_started"]}
+    ]
+  },
+  "limits": {
+    "button": {"max": 22, "keys": [
+      "lobby.startGame", "admin.startGame", "admin.startGameplay", "admin.nextQuestion",
+      "admin.endGame", "admin.resetGame", "admin.newGame", "admin.startNewGame",
+      "admin.newGameShort", "admin.playAgainSame", "admin.joinAsPlayer",
+      "admin.joinModalBtnStart", "admin.joinModalBtnJoin", "admin.reveal", "admin.closeBets",
+      "admin.kickConfirmBtn", "admin.pause", "admin.resume", "join.joinButton",
+      "wager.submit", "hotSeat.bidSubmit", "estimate.submit", "share.button",
+      "common.retry", "connection.retryConnection", "teams.openTeam", "teams.leaveTeam",
+      "lightning.splashStart", "lightning.continueGame", "setup.savePresetBtn",
+      "setup.deletePresetBtn", "setup.apply", "notHost.join"
+    ]},
+    "pill": {"max": 18, "keys": [
+      "connection.connected", "connection.reconnecting", "connection.disconnected",
+      "errors.RECONNECTING", "reveal.baseScore", "reveal.speedBonus", "reveal.difficulty",
+      "game.sent", "game.submitted", "powerups.joker", "powerups.double_points",
+      "powerups.freeze", "powerups.time_boost", "powerups.steal", "featured.tag",
+      "lobby.youreIn", "admin.hostBadge", "lobby.away", "theme.*", "difficulties.*"
+    ]},
+    "tvHeading": {"max": 28, "keys": [
+      "dashboard.leaderboard", "dashboard.awards", "dashboard.didYouKnow", "dashboard.result",
+      "dashboard.runnersUp", "dashboard.tonightLabel", "dashboard.h2hLabel",
+      "lightning.title", "lightning.recapTitle", "wager.hostWindowTitle",
+      "lobby.marqueeWaiting", "game.paused", "leaderboard.title"
+    ]}
+  },
+  "acronyms": ["QR", "HA", "TV", "JSON", "URL", "ID", "IDs", "README", "WLAN", "TTS", "SFX", "DJ", "OK"],
+  "properNouns": ["Quizify", "Home Assistant", "Home", "Assistant", "GitHub", "Joker", "Wi-Fi", "Comodín", "World", "Cup", "German", "Sofa"],
+  "punctuationExceptions": ["packSubmit.placeholder"],
+  "hardcodedAllow": {
+    "sound-toggle-btn": "aria-label written by player-core.js from game.soundMute / soundUnmute",
+    "a11y-toggle-btn": "aria-label written by player-core.js from a11y.modeOn / modeOff"
+  }
+}

@@ -147,8 +147,8 @@
   "categories": {
     "mixed": "Mixed",
     "geographie": "Geography",
-    "tiere-natur": "Animals & Nature",
-    "popkultur": "Pop Culture"
+    "tiere-natur": "Animals & nature",
+    "popkultur": "Pop culture"
   },
   "difficulties": {
     "easy": "Easy",
@@ -240,7 +240,7 @@
   "highlights": {
     "highlightsTab": "Highlights",
     "topScore": "Top score",
-    "scoreUnit": "{count, plural, one{1 point} other{# points}}",
+    "scoreValue": "{count, plural, one{1 point} other{# points}}",
     "awards": {
       "fastestFinger": "Fastest finger",
       "comebackKing": "Comeback king",
@@ -275,7 +275,7 @@
     "noAnswer": "Time ran out — no answer",
     "joinedLate": "You joined after this question started",
     "joinedLateHint": "You'll play from the next question!",
-    "ptsUnit": "pts",
+    "pointsDelta": "{sign}{points} pts",
     "finalResults": "Final results",
     "flagAriaLabel": "Flag this question as incorrect",
     "flagTitle": "Flag question",
@@ -487,7 +487,7 @@
     "title": "Stats",
     "back": "← Back",
     "loading": "Loading stats…",
-    "loadFailed": "Failed to load analytics.",
+    "loadFailed": "Couldn't load the stats. Reload the page to try again.",
     "authRequired": "Only the host can see the stats — open them from the host page.",
     "period7d": "7d",
     "period30d": "30d",

@@ -140,7 +140,7 @@ def test_the_settlement_uses_strings_that_already_exist() -> None:
         "hotSeat.hostSettled",
         "lightning.recapWaitHint",
         "reveal.correctAnswerWas",
-        "reveal.ptsUnit",
+        "reveal.pointsDelta",
         "lobby.you",
     }
     for key in settlement_keys:

@@ -181,7 +181,7 @@
     "resetGuestWarning": "Alle Punkte und Spieler werden gelöscht, alle Handys landen wieder beim Beitreten.",
     "stoleFromYou": "{name} hat dir {points} Punkte geklaut!",
     "stoleFromOpponent": "Geklaut: +{points} Pkt. von {name}!",
-    "frozen": "Du wurdest 5 Sek. eingefroren!",
+    "frozen": "Du wurdest für 5 s eingefroren!",
     "frozenTitle": "Eingefroren",
     "frozenSub": "Du kannst gerade nicht antworten",
     "frozenFoot": "Gleich geht’s weiter…",
@@ -240,7 +240,7 @@
   "highlights": {
     "highlightsTab": "Highlights",
     "topScore": "Höchste Punktzahl",
-    "scoreUnit": "{count, plural, one{1 Punkt} other{# Punkte}}",
+    "scoreValue": "{count, plural, one{1 Punkt} other{# Punkte}}",
     "awards": {
       "fastestFinger": "Schnellster Finger",
       "comebackKing": "Comeback-König",
@@ -275,7 +275,7 @@
     "noAnswer": "Zeit abgelaufen — keine Antwort",
     "joinedLate": "Du bist nach dem Start dieser Frage beigetreten",
     "joinedLateHint": "Ab der nächsten Frage spielst du mit!",
-    "ptsUnit": "Pkt.",
+    "pointsDelta": "{sign}{points} Pkt.",
     "finalResults": "Endergebnis",
     "flagAriaLabel": "Diese Frage als fehlerhaft melden",
     "flagTitle": "Frage melden",
@@ -431,7 +431,7 @@
   "estimate": {
     "badge": "Schätzfrage — am nächsten dran gewinnt",
     "yourGuess": "Dein Tipp",
-    "hint": "Schieb den Regler zu deiner Schätzung",
+    "hint": "Schieb zu deinem Tipp",
     "submit": "Tipp abgeben",
     "sliderAria": "Deine Schätzung",
     "you": "Du",
@@ -480,14 +480,14 @@
   "connection": {
     "connected": "Verbunden",
     "reconnecting": "Verbinde neu…",
-    "disconnected": "Verbindung getrennt",
+    "disconnected": "Nicht verbunden",
     "retryConnection": "Erneut verbinden"
   },
   "analytics": {
     "title": "Statistik",
     "back": "← Zurück",
     "loading": "Statistik wird geladen…",
-    "loadFailed": "Auswertung konnte nicht geladen werden.",
+    "loadFailed": "Die Statistik ließ sich nicht laden. Lade die Seite neu.",
     "authRequired": "Nur der Host sieht die Statistik — öffne sie über die Host-Seite.",
     "period7d": "7T",
     "period30d": "30T",

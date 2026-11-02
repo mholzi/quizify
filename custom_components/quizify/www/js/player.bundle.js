@@ -3039,7 +3039,7 @@
                 emoji: CHIP_EMOJI.topScore,
                 tint: CHIP_TINT.topScore,
                 title: _tf('highlights.topScore', 'Höchste Punktzahl'),
-                value: _t('highlights.scoreUnit', { count: winner.score }),
+                value: _t('highlights.scoreValue', { count: winner.score }),
                 player: winner.name,
                 badge: '🏅'
             });
@@ -4456,8 +4456,11 @@
         // U+2212 for the minus, matching the settlement strings the server
         // bundles already use.
         if (value) {
-            value.textContent = (mine < 0 ? '\u2212' : '+')
-                + Math.abs(mine) + ' ' + t('reveal.ptsUnit');
+            // #1177: one key for sign, number and unit, not a unit glued on.
+            value.textContent = t('reveal.pointsDelta', {
+                sign: mine < 0 ? '\u2212' : '+',
+                points: Math.abs(mine)
+            });
         }
         // #1170: a win rises into place, a loss fades where it stands (the
         // bank and the bet slider are already gone by now; the standings

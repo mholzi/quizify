@@ -51,7 +51,7 @@ def test_priming_returns_the_shipped_bundles() -> None:
     """
     _available_ui_languages.cache_clear()
     i18n_dir = REPO / "custom_components" / "quizify" / "www" / "i18n"
-    shipped = {p.stem for p in i18n_dir.glob("*.json")}
+    shipped = {p.stem for p in i18n_dir.glob("??.json")}  # glossary.json is terminology, not a language (#1177)
     assert shipped, "expected www/i18n/ to ship language bundles"
     assert set(prime_ui_languages()) == shipped
 

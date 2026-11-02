@@ -244,7 +244,7 @@
                 emoji: CHIP_EMOJI.topScore,
                 tint: CHIP_TINT.topScore,
                 title: _tf('highlights.topScore', 'Höchste Punktzahl'),
-                value: _t('highlights.scoreUnit', { count: winner.score }),
+                value: _t('highlights.scoreValue', { count: winner.score }),
                 player: winner.name,
                 badge: '🏅'
             });

@@ -129,7 +129,7 @@ def test_kids_preset_is_translated_everywhere() -> None:
     """Every shipped locale carries the new card's name and meta line."""
     import json
 
-    for path in sorted(_I18N.glob("*.json")):
+    for path in sorted(_I18N.glob("??.json")):  # glossary.json is terminology, not a language (#1177)
         preset = json.loads(path.read_text(encoding="utf-8"))["setup"]["preset"]
         assert preset.get("kidsName"), path.name
         assert preset.get("kidsMeta"), path.name

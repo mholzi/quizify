@@ -133,7 +133,7 @@ def test_ui_chip_renderer_marks_nothing_active() -> None:
 
 def test_bundles_on_disk_match_the_clients_supported_languages() -> None:
     """A chip the client refuses to load is a dead tap; a missing chip hides a language."""
-    on_disk = {p.stem for p in _I18N_DIR.glob("*.json")}
+    on_disk = {p.stem for p in _I18N_DIR.glob("??.json")}  # glossary.json is terminology, not a language (#1177)
 
     match = re.search(r"var SUPPORTED_LANGUAGES = \[([^\]]+)\]", _I18N_JS.read_text("utf-8"))
     assert match, "SUPPORTED_LANGUAGES vanished from i18n.js"
@@ -147,7 +147,7 @@ def test_bundles_on_disk_match_the_clients_supported_languages() -> None:
 
 
 def test_every_bundle_has_the_picker_label() -> None:
-    for path in sorted(_I18N_DIR.glob("*.json")):
+    for path in sorted(_I18N_DIR.glob("??.json")):  # glossary.json is terminology, not a language (#1177)
         data = json.loads(path.read_text("utf-8"))
         label = data.get("join", {}).get("languageAria")
         assert label, f"{path.name} is missing join.languageAria"
