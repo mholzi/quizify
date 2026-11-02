@@ -2176,6 +2176,12 @@ body.dashboard-body {
     .dashboard-left.has-image .dashboard-question-image { max-height: 32vh; }
 }
 
+/* #1183: the pointer hides after 3 s still (dashboard.js, _cursorAwake). */
+body.surface-tv.cursor-idle,
+body.surface-tv.cursor-idle * {
+    cursor: none;
+}
+
 /* Honor prefers-reduced-motion: the always-on TV must respect the OS
    reduced-motion setting. The house-style override from css/src/00-tokens.css
    is repeated here to tame the continuous animations above (pulse-bar,

@@ -2214,5 +2214,23 @@
         if (document.visibilityState === 'visible') _syncWakeLock();
     });
 
+    // #1183: a host who opened the board with a mouse left the pointer
+    // standing in the middle of the picture for the whole evening. It goes
+    // after CURSOR_IDLE_MS without movement and comes back on the next one.
+    var CURSOR_IDLE_MS = 3000;
+    var _cursorTimer = null;
+    function _cursorAwake() {
+        if (!document.body) return;
+        document.body.classList.remove('cursor-idle');
+        clearTimeout(_cursorTimer);
+        _cursorTimer = setTimeout(function () {
+            document.body.classList.add('cursor-idle');
+        }, CURSOR_IDLE_MS);
+    }
+    ['mousemove', 'mousedown', 'wheel'].forEach(function (type) {
+        document.addEventListener(type, _cursorAwake, { passive: true });
+    });
+    _cursorAwake();
+
     connect();
 })();
