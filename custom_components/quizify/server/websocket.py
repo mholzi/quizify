@@ -302,7 +302,7 @@ class QuizifyWebSocketHandler:
         self._hot_seat_task: asyncio.Task | None = None
         # Optional TTS announcer. Set by __init__.py / dev_server after
         # construction so the handler doesn't have to know about HA
-        # services. Calling announce_milestone on None is the no-op path.
+        # services. Firing a beat on None is the no-op path.
         self._tts_announcer: QuizifyTTSAnnouncer | None = None
         # Optional HA event-bus emitter (#366). Set by __init__.py after
         # construction so the handler stays HA-agnostic. Firing on None is the
@@ -316,6 +316,13 @@ class QuizifyWebSocketHandler:
         # onto them. None on the standalone dev server → configure is a no-op.
         self._party_lights: QuizifyPartyLights | None = None
         self._sound_effects: QuizifySoundEffects | None = None
+        # Streak milestones scored this round, held until the reveal (#1185).
+        # The server scores an answer the moment it is tapped, but a milestone
+        # said out loud then tells the room the answer was right while the
+        # others are still thinking. Each entry is (round, name, streak, bonus);
+        # :meth:`reveal` drains the current round, :meth:`question_shown` drops
+        # anything left over from an earlier one.
+        self._held_milestones: list[tuple[int, str, int, int]] = []
         # Per-connection message flood guard (#169). Keyed on id(ws); the
         # entry is dropped by _forget_rate_limit() on disconnect so the
         # backing dict is bounded by the number of *live* connections.
@@ -1714,6 +1721,10 @@ class QuizifyWebSocketHandler:
         the question type, never the text or the answers, which would leak the
         question to automations before the players see it.
         """
+        # A new question: whatever a previous round held is stale (#1185).
+        self._held_milestones = [
+            m for m in getattr(self, "_held_milestones", []) if m[0] == round_no
+        ]
         self._fire(
             self._tts_announcer,
             "announce_question",
@@ -1750,10 +1761,48 @@ class QuizifyWebSocketHandler:
         ``summary`` overrides the game's round summary — the Hot Seat passes
         its chair's question, which is not the round summary (#1092).
         """
-        self._fire(self._tts_announcer, "announce_reveal", game_state, summary)
+        milestones = self._drain_milestones(game_state)
+        self._fire(
+            self._tts_announcer,
+            "announce_reveal",
+            game_state,
+            summary,
+            [(name, streak) for name, streak, _bonus in milestones],
+        )
         self._fire(
             self._event_emitter, "notify_answer_revealed", game_state, summary
         )
+        # The streak goes out WITH the reveal, never before it (#1185): the
+        # bus event used to fire on the tap, and the lights and the speaker
+        # riding on it told the room the answer was right while a question was
+        # still live. Same payload, later moment — after the reveal event, so
+        # an automation always sees the answer first.
+        for name, streak, bonus in milestones:
+            self._fire(
+                self._event_emitter,
+                "notify_streak_milestone",
+                name,
+                streak,
+                bonus,
+            )
+
+    def _drain_milestones(
+        self, game_state: QuizifyGameState
+    ) -> list[tuple[str, int, int]]:
+        """Hand over this round's held milestones and forget them (#1185).
+
+        A milestone from an older round is dropped rather than announced: its
+        reveal has passed, and saying it now would be about a different
+        question.
+        """
+        held = getattr(self, "_held_milestones", [])
+        self._held_milestones = []
+        round_no = getattr(game_state, "round", None)
+        return [
+            (name, streak, bonus)
+            for rnd, name, streak, bonus in held
+            if round_no is None or rnd in (round_no, -1)
+        ]
 
     # -- MilestoneSink, the detours (#708) ------------------------------
     #
@@ -1805,19 +1854,28 @@ class QuizifyWebSocketHandler:
 
     # -- Beats no driver reports ----------------------------------------
 
-    def _streak_milestone(self, player_name: str, streak: int, bonus: int) -> None:
-        """A player hit a streak milestone (#789).
+    def _streak_milestone(
+        self,
+        player_name: str,
+        streak: int,
+        bonus: int,
+        round_no: int | None = None,
+    ) -> None:
+        """A player hit a streak milestone (#789) — held until the reveal.
 
         Not on the sink because a milestone is scored by the answer path, not
         by a mode's control loop; a driver has no occasion to report one.
+
+        Nothing goes out here any more (#1185). The answer is scored on the
+        tap, so a milestone announced from this point — spoken, flashed, rung
+        or fired on the bus — told the room the answer was right while the
+        question was still live. It is queued for :meth:`reveal`, which bundles
+        it into the reveal sentence and fires the bus event after the answer.
         """
-        self._fire(self._tts_announcer, "announce_milestone", player_name, streak)
-        self._fire(
-            self._event_emitter,
-            "notify_streak_milestone",
-            player_name,
-            streak,
-            bonus,
+        if not hasattr(self, "_held_milestones"):
+            self._held_milestones = []
+        self._held_milestones.append(
+            (round_no if round_no is not None else -1, player_name, streak, bonus)
         )
 
     def _player_joined(self, player_name: str, is_admin: bool) -> None:

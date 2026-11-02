@@ -189,7 +189,6 @@
     "points": "Punkte",
     "pointsLabel": "{count, plural, one{1 Punkt} other{# Punkte}}",
     "questionsCount": "{count, plural, one{1 Frage} other{# Fragen}}",
-    "streak": "Serie",
     "finalRound": "Finalrunde!",
     "finale": "Finale!",
     "submitted": "Abgeschickt",
@@ -209,13 +208,6 @@
     "frozenFoot": "Gleich geht’s weiter…",
     "frozenOverlayAria": "Du bist eingefroren und kannst gerade nicht antworten",
     "opponentUsedJoker": "{name} hat Joker benutzt",
-    "streakToast3": "3 in Folge!",
-    "streakToast5": "5 in Folge!",
-    "streakToast7": "7 in Folge! Du brennst!",
-    "streakToast10": "10 in Folge! Unaufhaltsam!",
-    "streakToast15": "15 in Folge! Wahnsinn!",
-    "streakToast20": "20 in Folge! Legendär!",
-    "streakToast25": "25 in Folge! Nicht von dieser Welt!",
     "timerRemainingAria": "Verbleibende Zeit: {seconds} Sekunden",
     "timerUpAria": "Zeit abgelaufen!",
     "timerTenLeft": "Noch 10 Sekunden",
@@ -501,7 +493,9 @@
     "powerupFreeze": "{source} hat {target} eingefroren",
     "powerupSteal": "{source} stiehlt {points} Punkte von {target}",
     "scoringLeft": "{name} spielt nicht mehr mit",
-    "scoringBack": "{name} ist wieder dabei"
+    "scoringBack": "{name} ist wieder dabei",
+    "streakStrip": "{name}: {points} in Folge",
+    "streakChip": "{count} in Folge"
   },
   "connection": {
     "connected": "Verbunden",

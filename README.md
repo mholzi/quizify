@@ -325,7 +325,7 @@ Three ready-made blueprints, one click each:
 | `quizify_question_shown` | A question goes on screen (`round`, `total_rounds`, `question_type`) |
 | `quizify_time_running_out` | The round timer drops to 5 seconds, once per round (`seconds_remaining`) |
 | `quizify_answer_revealed` | The answer is revealed (`round`, `correct_option_index`, `correct_option_text`, `correct_count`, `total_players`) |
-| `quizify_streak_milestone` | A player hits a streak milestone (`player_name`, `streak`, `bonus`) |
+| `quizify_streak_milestone` | A player's streak reached a milestone, fired with the answer reveal, never while the question is live (`player_name`, `streak`, `bonus`) |
 | `quizify_finale_started` | The finale begins |
 | `quizify_winner_decided` | The winner is decided (`winner_name`, `score`) |
 | `quizify_game_ended` | The game is over (`leaderboard`: list of `name`, `score`) |
@@ -425,7 +425,7 @@ Quizify speaks your guests' language.
 
 The UI follows the game language (since v1.1.24) — pick German in the pack-picker and the entire admin / player / dashboard surface switches to German labels, tooltips, error messages, fun-fact labels, and end-game awards. Switch to English or Spanish and the whole thing flips.
 
-656 i18n keys, full parity between all three locales, validated in CI.
+650 i18n keys, full parity between all three locales, validated in CI.
 
 ---
 

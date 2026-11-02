@@ -189,7 +189,6 @@
     "points": "Puntos",
     "pointsLabel": "{count, plural, one{1 punto} other{# puntos}}",
     "questionsCount": "{count, plural, one{1 pregunta} other{# preguntas}}",
-    "streak": "Racha",
     "finalRound": "¡Ronda final!",
     "finale": "¡Final!",
     "submitted": "Enviada",
@@ -209,13 +208,6 @@
     "frozenFoot": "Vuelves en un momento…",
     "frozenOverlayAria": "Estás congelado y no puedes responder ahora mismo",
     "opponentUsedJoker": "{name} usó Comodín",
-    "streakToast3": "¡3 seguidas!",
-    "streakToast5": "¡5 seguidas!",
-    "streakToast7": "¡7 seguidas! ¡Imparable!",
-    "streakToast10": "¡10 seguidas! ¡Nadie te para!",
-    "streakToast15": "¡15 seguidas! ¡Qué locura!",
-    "streakToast20": "¡20 seguidas! ¡De leyenda!",
-    "streakToast25": "¡25 seguidas! ¡De otro planeta!",
     "timerRemainingAria": "Tiempo restante: {seconds} segundos",
     "timerUpAria": "¡Se acabó el tiempo!",
     "timerTenLeft": "Quedan 10 segundos",
@@ -501,7 +493,9 @@
     "powerupFreeze": "{source} ha congelado a {target}",
     "powerupSteal": "{source} le roba {points} puntos a {target}",
     "scoringLeft": "{name} ya no juega",
-    "scoringBack": "{name} ha vuelto"
+    "scoringBack": "{name} ha vuelto",
+    "streakStrip": "{name}: {points} seguidas",
+    "streakChip": "{count} seguidas"
   },
   "connection": {
     "connected": "Conectado",

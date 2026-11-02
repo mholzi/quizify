@@ -496,13 +496,6 @@
         'game.stoleFromOpponent':  { glyph: 'steal',      tint: 'sky'   },
         'game.frozen':             { glyph: 'freeze',     tint: 'sky'   },
         'game.opponentUsedJoker':  { glyph: 'joker',      tint: 'sun'   },
-        'game.streakToast3':       { glyph: 'flame',      tint: 'sun'   },
-        'game.streakToast5':       { glyph: 'flame',      tint: 'sun'   },
-        'game.streakToast7':       { glyph: 'flame',      tint: 'sun'   },
-        'game.streakToast10':      { glyph: 'flame',      tint: 'sun'   },
-        'game.streakToast15':      { glyph: 'flame',      tint: 'sun'   },
-        'game.streakToast20':      { glyph: 'flame',      tint: 'sun'   },
-        'game.streakToast25':      { glyph: 'flame',      tint: 'sun'   },
         'powerups.stealHint':      { glyph: 'bulb',       tint: 'sun'   },
         'leaderboard.thanksEmoji': { glyph: 'party',      tint: 'coral' },
         'wager.bonusFromReaction': { glyph: 'party',      tint: 'coral' }
@@ -588,32 +581,11 @@
     }
 
     /**
-     * Celebrate a streak milestone the server just paid a bonus for (#1066).
-     *
-     * `milestone` is `milestone_streak` from the answer_result: the streak
-     * level this answer landed on, or 0. Which levels are milestones is the
-     * server's business (STREAK_MILESTONES in game/scoring.py) — this only
-     * looks for the matching string, `game.streakToast<N>`. A milestone with
-     * no string shows nothing rather than a raw key; `t` hands the key back
-     * when it has no translation, which is the test.
-     * @returns {boolean} whether a toast was shown
-     */
-    function showStreakMilestoneToast(milestone) {
-        var level = Number(milestone) || 0;
-        if (level <= 0) return false;
-        var key = 'game.streakToast' + level;
-        var text = _tt(key);
-        if (!text || text === key) return false;
-        showToast(text, 2500, key);
-        return true;
-    }
-
-    /**
      * Drop the toast on the floor (#838).
      *
      * showToast only fades the element out; the node keeps the text, and the
      * node is fixed to the page rather than to a view, so a reset that fired
-     * inside a toast's own duration carried "3 in a row!" onto the join
+     * inside a toast's own duration carried the last toast onto the join
      * screen. Emptying it as well as hiding it also takes it out of the
      * accessibility tree, where a faded-out toast is still a readable line.
      */
@@ -809,7 +781,6 @@
         feedbackLabel: feedbackLabel,
         generateQR: generateQR,
         showToast: showToast,
-        showStreakMilestoneToast: showStreakMilestoneToast,
         clearToast: clearToast,
         saveSession: saveSession,
         getSession: getSession,
@@ -7246,11 +7217,10 @@
 
             case 'answer_result':
                 game.handleAnswerResult(msg);
-                // Streak milestone toast. #1066: the server names the
-                // milestone (`milestone_streak`, 0 for none); the list of
-                // milestones is STREAK_MILESTONES in game/scoring.py and is
-                // not repeated here.
-                if (msg.correct) pu.showStreakMilestoneToast(msg.milestone_streak);
+                // #1185: no streak toast here. This frame lands while the
+                // question is still live, and "3 in a row" on a raised phone
+                // told the room the answer was right. The reveal card shows
+                // the streak, at the reveal.
                 break;
 
             case 'round_summary':

@@ -189,7 +189,6 @@
     "points": "Points",
     "pointsLabel": "{count, plural, one{1 point} other{# points}}",
     "questionsCount": "{count, plural, one{1 question} other{# questions}}",
-    "streak": "Streak",
     "finalRound": "Final round!",
     "finale": "Finale!",
     "submitted": "Submitted",
@@ -209,13 +208,6 @@
     "frozenFoot": "Back in a moment…",
     "frozenOverlayAria": "You are frozen and can't answer right now",
     "opponentUsedJoker": "{name} used Joker",
-    "streakToast3": "3 in a row!",
-    "streakToast5": "5 in a row!",
-    "streakToast7": "7 in a row! On fire!",
-    "streakToast10": "10 in a row! Unstoppable!",
-    "streakToast15": "15 in a row! Unreal!",
-    "streakToast20": "20 in a row! Legendary!",
-    "streakToast25": "25 in a row! Out of this world!",
     "timerRemainingAria": "Time remaining: {seconds} seconds",
     "timerUpAria": "Time is up!",
     "timerTenLeft": "10 seconds left",
@@ -501,7 +493,9 @@
     "powerupFreeze": "{source} froze {target}",
     "powerupSteal": "{source} stole {points} points from {target}",
     "scoringLeft": "{name} is no longer playing",
-    "scoringBack": "{name} is back in"
+    "scoringBack": "{name} is back in",
+    "streakStrip": "{name}: {points} in a row",
+    "streakChip": "{count} in a row"
   },
   "connection": {
     "connected": "Connected",

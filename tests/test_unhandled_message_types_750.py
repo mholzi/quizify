@@ -227,16 +227,16 @@ class TestStreakMilestoneRemoved:
     def test_the_broadcast_is_gone_from_the_source(self) -> None:
         assert '"streak_milestone"' not in WEBSOCKET_PY
 
-    def test_the_phone_toast_still_rides_on_answer_result(self) -> None:
-        """The consumer that always existed. Deleting the broadcast must not
-        take the celebration with it."""
+    def test_the_phone_shows_no_toast_on_answer_result(self) -> None:
+        """#1185: the toast went too. answer_result lands while the question
+        is live, so a "3 in a row" there told the room the answer was right;
+        the reveal card shows the streak instead."""
         idx = BUNDLE.index("case 'answer_result':")
-        # #1066: the toast reads the milestone the server names, not the
-        # running streak matched against a list of its own.
-        assert "milestone_streak" in BUNDLE[idx : idx + 700]
+        case = BUNDLE[idx : BUNDLE.index("break;", idx)]
+        assert "Toast" not in case
 
     @pytest.mark.asyncio
-    async def test_milestone_speaks_and_fires_but_does_not_broadcast(
+    async def test_milestone_is_held_and_does_not_broadcast(
         self, handler: QuizifyWebSocketHandler
     ) -> None:
         ws = _ws()
@@ -274,9 +274,11 @@ class TestStreakMilestoneRemoved:
             ]
             assert "streak_milestone" not in broadcast_types, broadcast_types
 
-            # The real consumers are untouched.
-            announcer.announce_milestone.assert_called_once_with("Ann", 5)
+            # #1185: held until the reveal — nothing reaches the room yet.
+            emitter.notify_streak_milestone.assert_not_called()
+            handler.reveal(gs)
             emitter.notify_streak_milestone.assert_called_once_with("Ann", 5, 50)
+            assert announcer.announce_reveal.call_args.args[2] == [("Ann", 5)]
 
             # And the player still learns about it, on the message that has
             # always carried it.

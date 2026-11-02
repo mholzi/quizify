@@ -30,10 +30,9 @@ if TYPE_CHECKING:
 
 _LOGGER = logging.getLogger(__name__)
 
-# Minimum seconds between two TTS calls. Without this, milestone storms
-# (a player on a 25-streak crossing 3/5/7/10/15/20/25 in quick succession
-# during a wager round) would stack 6 announcements on top of each
-# other. 5s gives the speaker time to finish a short sentence.
+# Minimum seconds between two TTS calls. Without this, incidental lines (a
+# lobby full of joins, the countdown) would stack on top of each other. 5s
+# gives the speaker time to finish a short sentence.
 #
 # Only the incidental lines are dropped inside the window. The question and
 # the reveal are what the room is waiting for and always go out (#1091) —
@@ -100,9 +99,8 @@ class QuizifyTTSAnnouncer:
         # Track the last phase we observed so we only announce on
         # transitions, not on every state_callback fire.
         self._last_phase: GamePhase | None = None
-        # Track which milestone broadcasts we've already announced per
-        # game so a flap (player score change replaying the same
-        # snapshot) doesn't re-trigger the same announcement.
+        # Track which streak levels we've already said per game so a replayed
+        # reveal never repeats one (#1185: they ride the reveal sentence now).
         self._announced_milestones: set[tuple[str, int]] = set()
 
         # Runtime narration config (#281). The master switch defaults OFF so
@@ -393,17 +391,27 @@ class QuizifyTTSAnnouncer:
         self._speak(message)
 
     def announce_reveal(
-        self, game_state: QuizifyGameState, summary: RoundSummary | None = None
+        self,
+        game_state: QuizifyGameState,
+        summary: RoundSummary | None = None,
+        milestones: list[tuple[str, int]] | None = None,
     ) -> None:
         """Narrate the reveal as ONE combined utterance (#281).
 
-        Fragments — correct answer, who-got-it, leader-change — are each gated
-        by their own per-event toggle and joined into a single sentence so the
-        audio flows the way a host would describe the round, instead of a
-        stutter of separate clips. No-op when the master switch is off.
+        Fragments — correct answer, who-got-it, leader-change, streaks — are
+        each gated by their own per-event toggle and joined into a single
+        sentence so the audio flows the way a host would describe the round,
+        instead of a stutter of separate clips. No-op when the master switch is
+        off.
 
         ``summary`` is the round to narrate when it is not the game's round
         summary — the Hot Seat's chair question (#1092).
+
+        ``milestones`` are the streaks this round reached, as ``(name,
+        streak)``, held by the WS handler until now (#1185). They are appended
+        to the reveal ("… Lena was right and now has 3 in a row.") rather than
+        spoken on the tap, where they gave the answer away; several players on
+        the same streak share one line.
         """
         if not self._enabled:
             return
@@ -436,6 +444,9 @@ class QuizifyTTSAnnouncer:
                 # Players answered but none correctly.
                 frags.append(tts_phrases.phrase(lang, "nobody"))
 
+        # Streaks, bundled into the same utterance (#1185).
+        frags.extend(self._streak_fragments(lang, milestones))
+
         # Standings — leader change / tie at the top. _previous_leader is
         # updated regardless of the toggle so detection stays correct even if
         # the host toggles standings off mid-game.
@@ -443,6 +454,41 @@ class QuizifyTTSAnnouncer:
 
         if frags:
             self._speak(" ".join(frags), essential=True)
+
+    def _streak_fragments(
+        self, lang: str, milestones: list[tuple[str, int]] | None
+    ) -> list[str]:
+        """One line per streak level reached this round (#1185).
+
+        "Lena and Tom now have 3 in a row." — players on the same level share
+        a line, so a round with three milestones is not three sentences. Each
+        (player, level) is said once per game, so a replayed reveal never
+        repeats it. Gated by the milestone toggle.
+        """
+        if not (self._announce_milestone and milestones):
+            return []
+        by_streak: dict[int, list[str]] = {}
+        for name, streak in milestones:
+            if not name or not streak:
+                continue
+            said = (name, streak)
+            if said in self._announced_milestones:
+                continue
+            self._announced_milestones.add(said)
+            by_streak.setdefault(int(streak), []).append(name)
+        frags: list[str] = []
+        for streak in sorted(by_streak):
+            names = by_streak[streak]
+            key = "streak_now_single" if len(names) == 1 else "streak_now_multi"
+            frags.append(
+                tts_phrases.phrase(
+                    lang,
+                    key,
+                    names=tts_phrases.join_names(lang, names),
+                    streak=streak,
+                )
+            )
+        return frags
 
     def _announce_standings_fragment(
         self, lang: str, summary: Any, frags: list[str]
@@ -552,27 +598,10 @@ class QuizifyTTSAnnouncer:
             return
         self._speak(tts_phrases.phrase(self._lang(), "lightning_started"))
 
-    def announce_milestone(self, player_name: str, streak: int) -> None:
-        """Trigger a milestone announcement. Called from the WS handler
-        when it broadcasts ``streak_milestone`` so the announcement is
-        tied to the actual award, not to a state-snapshot reading.
-
-        Localized and toggleable since #745: the line used to be a hardcoded
-        English f-string spoken into German games, and it was the one
-        announcement without a per-event switch of its own.
-        """
-        if not (self._enabled and self._announce_milestone):
-            return
-        key = (player_name, streak)
-        if key in self._announced_milestones:
-            return
-        self._announced_milestones.add(key)
-        phrase_key = "milestone_fire" if streak >= 10 else "milestone_streak"
-        self._speak(
-            tts_phrases.phrase(
-                self._lang(), phrase_key, name=player_name, streak=streak
-            )
-        )
+    # There is deliberately no ``announce_milestone`` any more (#1185). It was
+    # called on the tap, so "Lena has 3 in a row!" told the room Lena's answer
+    # was right while the others were still answering. A streak is now one
+    # clause of the reveal sentence — see :meth:`_streak_fragments`.
 
     # ------------------------------------------------------------------
     # State change handler

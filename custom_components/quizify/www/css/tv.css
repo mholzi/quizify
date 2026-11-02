@@ -5083,6 +5083,20 @@ body.dashboard-body {
     letter-spacing: 0.04em;
 }
 
+/* #1185: the streak this reveal reached, beside the name. Only from the
+   reveal to the next question — never while a question is live. */
+.dashboard-leaderboard .leaderboard-milestone {
+    margin-left: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    background: var(--dash-gold);
+    color: var(--dash-bg-primary);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+}
+
 /* #741: what a steal actually cost, on the two rows it moved. The
    strip above says what happened; the rows say what it was worth —
    the leaderboard is where the change is. */

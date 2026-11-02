@@ -484,11 +484,10 @@
 
             case 'answer_result':
                 game.handleAnswerResult(msg);
-                // Streak milestone toast. #1066: the server names the
-                // milestone (`milestone_streak`, 0 for none); the list of
-                // milestones is STREAK_MILESTONES in game/scoring.py and is
-                // not repeated here.
-                if (msg.correct) pu.showStreakMilestoneToast(msg.milestone_streak);
+                // #1185: no streak toast here. This frame lands while the
+                // question is still live, and "3 in a row" on a raised phone
+                // told the room the answer was right. The reveal card shows
+                // the streak, at the reveal.
                 break;
 
             case 'round_summary':

@@ -32,6 +32,10 @@ so treat them as an API: additive changes only.
 ``quizify_answer_revealed``   — {round, correct_option_index, correct_option_text,
                                  correct_count, total_players}
 ``quizify_streak_milestone``  — {player_name, streak, bonus}
+                                 Fired at the REVEAL, right after
+                                 ``quizify_answer_revealed`` — not on the
+                                 answer (changed in #1185; the payload is
+                                 unchanged, the moment moved).
 ``quizify_finale_started``    — {}
 ``quizify_winner_decided``    — {winner_name, score}
 ``quizify_game_ended``        — {leaderboard: [{name, score}, ...]}
@@ -308,10 +312,13 @@ class QuizifyEventEmitter:
     def notify_streak_milestone(
         self, player_name: str, streak: int, bonus: int
     ) -> None:
-        """Fire ``quizify_streak_milestone`` when a player hits a streak level.
+        """Fire ``quizify_streak_milestone`` for a streak level reached.
 
-        Mirrors the ``streak_milestone`` WS broadcast payload (#366) so an
-        automation sees the same name/streak/bonus the TV celebration does.
+        Fired at the reveal, once per milestone and after
+        ``quizify_answer_revealed`` (#1185). It used to fire on the answer,
+        while the question was still live, which told the room the answer was
+        right before anyone else had locked in. The payload (#366) is
+        unchanged; automations listening for it now run a few seconds later.
         """
         self._fire(
             EVENT_STREAK_MILESTONE,

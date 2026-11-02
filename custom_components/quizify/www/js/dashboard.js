@@ -1409,8 +1409,40 @@
         });
     }
 
+    // #1185: the streak levels this reveal reached, name -> streak. Shown as a
+    // chip on the leaderboard row until the next question, so the repaint
+    // every few seconds keeps it. Never during a question: a streak said
+    // while the room is answering gives the answer away.
+    var revealMilestones = {};
+
+    // One strip per level, names together ("Lena, Tom: 3 in a row") — one
+    // room signal per moment, not one per player.
+    function showStreakMilestones(list) {
+        revealMilestones = {};
+        if (!list || !list.length) return;
+        var byLevel = {};
+        list.forEach(function (m) {
+            if (!m || !m.name || !m.streak) return;
+            revealMilestones[m.name] = m.streak;
+            (byLevel[m.streak] = byLevel[m.streak] || []).push(m.name);
+        });
+        Object.keys(byLevel).sort(function (a, b) { return a - b; }).forEach(function (level) {
+            showPowerUpBanner(STREAK_STRIP, { name: byLevel[level].join(', '), points: level });
+        });
+        if (lastLeaderboardPlayers) renderLeaderboard(els.leaderboard, lastLeaderboardPlayers);
+    }
+
+    var STREAK_STRIP = { icon: '\uD83D\uDD25', key: 'dashboard.streakStrip', fallback: '{name}: {points} in a row' };
+
+    function streakChipHtml(level) {
+        return '<span class="leaderboard-milestone">' +
+            QuizifyUtils.escapeHtml(t('dashboard.streakChip', '{count} in a row').replace('{count}', level)) +
+            '</span>';
+    }
+
     function handleQuestionStarted(msg) {
         currentPhase = 'QUESTION_ACTIVE';
+        revealMilestones = {};
         // #1170: a live question starts at 0 answers; a snapshot (it carries
         // time_remaining) is a restore, whose first count is only a baseline.
         answersShown = (typeof msg.time_remaining === 'number') ? null : 0;
@@ -1612,6 +1644,10 @@
             els.timerFill.style.width = '0%';
             els.timerFill.className = 'dashboard-timer-fill';
         }
+
+        // #1185: the streak strip and chip, at the reveal and nowhere sooner.
+        // After the leaderboard below has painted, so the chip lands on it.
+        setTimeout(function () { showStreakMilestones(summary.streak_milestones); }, 0);
 
         // #275: estimate rounds render a number line instead of the MC
         // answer-tile highlight + distribution.
@@ -1833,6 +1869,10 @@
             ? container.querySelectorAll('.leaderboard-row:not(.leaderboard-more)') : [];
         Array.prototype.forEach.call(rowEls, function (row, i) {
             if (keys[i] != null) row.setAttribute('data-entrant', keys[i]);
+            // #1185: "3 in a row" beside a name whose streak this reveal hit.
+            var level = list[i] && revealMilestones[list[i].name];
+            var nameEl = level && row.querySelector ? row.querySelector('.leaderboard-name') : null;
+            if (nameEl) nameEl.insertAdjacentHTML('beforeend', streakChipHtml(level));
         });
         if (changed) flipRows(rowEls, keys, oldTop, ghosts.length ? null : prevKeys, ghosts.length > 0);
         if (ghosts.length) RS.slideRemoved(container, ghosts);

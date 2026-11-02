@@ -3,6 +3,12 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### ⚠️ Breaking: `quizify_streak_milestone` fires at the reveal
+
+If you have an automation on `quizify_streak_milestone`, it now runs when the answer is revealed, not when the player taps. The payload (`player_name`, `streak`, `bonus`) is the same. It fires right after `quizify_answer_revealed`. Before, the event (and the voice, lights and chime that follow it) told the room an answer was right while the others were still answering.
+
 ## [1.26.0-RC5] — 2026-11-03
 
 **Moving Screens, Safer Taps, Video Games, and a Steadier Host Seat**

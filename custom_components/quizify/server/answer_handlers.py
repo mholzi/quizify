@@ -136,17 +136,18 @@ async def handle_submit_answer(
             "milestone_streak": result.milestone_streak,
         })
         # A milestone is announced out loud and on the HA bus — not over
-        # the socket (#750). There used to be a ``streak_milestone``
-        # broadcast here "so the TV/admin view can flash", but no surface
-        # ever grew that flash, and the phone toast is driven off
-        # ``milestone_streak`` in the answer_result above (#1066; it used
-        # to match ``new_streak`` against a list of its own). A message
-        # with no reader is worse than no message: it reads like a contract.
+        # the socket (#750) — and only at the reveal (#1185). It is HELD here:
+        # announcing it on the tap said "that answer was right" to a room that
+        # was still answering. The phone shows it on the reveal card, which
+        # reads ``milestone_streak`` from the stored answer_result.
         if result.milestone_bonus:
-            # ONE milestone from the dispatch point (#789); the fan-out to
-            # the announcer and the HA bus lives in _streak_milestone.
+            # ONE milestone from the dispatch point (#789); the queue and the
+            # fan-out at the reveal live in _streak_milestone / reveal().
             handler._streak_milestone(
-                player.name, result.milestone_streak, result.milestone_bonus
+                player.name,
+                result.milestone_streak,
+                result.milestone_bonus,
+                game_state.round,
             )
         # NB: round-summary broadcast is fired exclusively by
         # state._fire_broadcast("round_evaluated") \u2192 broadcast_state().
