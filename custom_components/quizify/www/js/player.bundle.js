@@ -4824,6 +4824,7 @@
             if (remaining <= 0) {
                 timerElement.setAttribute('aria-label', t('game.timerUpAria'));
                 stopCountdown();
+                _setTimeUp(true);
             }
         }
 
@@ -4844,6 +4845,33 @@
         // statement, so a question STARTING clears the previous question's
         // announcement through here too. One place, four exits.
         clearTimeAnnouncement();
+        _setTimeUp(false);
+    }
+
+    // #1174: clock at zero, no reveal yet. An unanswered phone gets a neutral
+    // timer and dimmed tiles that refuse taps (the server answers late ones
+    // with ERR_ROUND_EXPIRED). Cleared through stopCountdown.
+    var _timeUp = false;
+
+    function _setTimeUp(on) {
+        _timeUp = !!on;
+        var grid = document.getElementById('answer-buttons');
+        var answered = hasSubmitted || _guessPending ||
+            !!(grid && grid.querySelector && grid.querySelector('.has-team-answer'));
+        var dim = _timeUp && !answered;
+        var timerEl = document.getElementById('timer');
+        if (timerEl && timerEl.classList) timerEl.classList.toggle('timer--up', dim);
+        // Variant B: the clock says game.timerUpAria (a missing bundle keeps "0").
+        if (timerEl && _timeUp) {
+            var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            var upText = t('game.timerUpAria');
+            timerEl.textContent = (dim && upText && upText !== 'game.timerUpAria') ? upText : '0';
+        }
+        if (grid && grid.classList) grid.classList.toggle('is-time-up', dim);
+        var est = document.getElementById('estimate-container');
+        if (est && est.classList) est.classList.toggle('is-time-up', dim);
+        var pwr = document.getElementById('powerup-btn');
+        if (pwr && pwr.classList) pwr.classList.toggle('is-time-up', dim);
     }
 
     // ============================================
@@ -4951,6 +4979,11 @@
         // Server sends decimals (e.g. 19.5) for smoother bar animations;
         // display as a whole-second integer so the count text reads cleanly.
         var displaySeconds = Math.ceil(remaining);
+        // #1174: a late zero tick keeps "Time is up!"; a tick with time left wins.
+        if (_timeUp) {
+            if (displaySeconds <= 0) return;
+            _setTimeUp(false);
+        }
         timerElement.textContent = displaySeconds;
         announceTimeLeft(displaySeconds);
 
@@ -5458,7 +5491,7 @@
      * showed a confirmed tick in every one of those cases.
      */
     function handleEstimateSubmit(sendFn) {
-        if (hasSubmitted || _guessPending) return;
+        if (hasSubmitted || _guessPending || _timeUp) return;
         if (isFrozen()) return;
         var slider = document.getElementById('estimate-slider');
         if (!slider) return;
@@ -5715,7 +5748,7 @@
      * @param {Function} sendFn - Function to send WS messages
      */
     function handleAnswerClick(selectedIndex, sendFn) {
-        if (hasSubmitted) return;
+        if (hasSubmitted || _timeUp) return;
         // #322: while the freeze-lockout overlay is up, hard-block submits.
         // The full-scrim overlay already swallows taps, and the server
         // rejects with ERR_FROZEN regardless — this is belt-and-suspenders
@@ -5807,6 +5840,8 @@
         var estConfirm = document.getElementById('estimate-submitted-confirmation');
         if (estConfirm) estConfirm.classList.remove('hidden');
         _estimateLockIn(true, false);
+        // #1174: answered phones see no time's-up dim.
+        if (_timeUp) _setTimeUp(true);
     }
 
     function resetSubmissionState() {
@@ -6507,6 +6542,7 @@
         startCountdown: startCountdown,
         stopCountdown: stopCountdown,
         clearTimeAnnouncement: clearTimeAnnouncement,
+        isTimeUp: function () { return _timeUp; },
         startFrozenOverlay: startFrozenOverlay,
         stopFrozenOverlay: stopFrozenOverlay,
         isFrozen: isFrozen,
@@ -7366,6 +7402,7 @@
 
             case 'ANSWER_REVEAL':
             case 'REVEAL':
+                game.stopCountdown();  // #1174: as handleRoundSummary does
                 pu.showView('reveal-view');
                 reveal.updateRevealView(msg);
                 // The hatch itself is armed by setResetStage above, which
@@ -9000,7 +9037,7 @@
         var powerupBtn = document.getElementById('powerup-btn');
         if (powerupBtn) {
             powerupBtn.addEventListener('click', function () {
-                if (!myPowerUp) return;
+                if (!myPowerUp || (game && game.isTimeUp && game.isTimeUp())) return;  // #1174
                 if (game && game.powerupNeedsTarget && game.powerupNeedsTarget(myPowerUp)) {
                     game.openTargetPicker(myPowerUp, function (targetName) {
                         send('use_powerup', { target_player_id: targetName });

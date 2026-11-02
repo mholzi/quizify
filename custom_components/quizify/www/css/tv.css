@@ -196,6 +196,7 @@
     --font-size-3xl: 28px;
     --font-size-4xl: 32px;
     --font-size-timer: 64px;
+    --font-size-timer-up: clamp(1rem, 5.2vw, 1.5rem); /* #1174: phone clock text; es fits 320 px */
     --font-size-hero: 72px;
 
     --font-weight-normal: 400;
@@ -287,6 +288,7 @@
     --dur-wager: 700ms;           /* the stake leaves the bank as a chip */
     --dur-removed-fade: 400ms;    /* a removed guest dims to 40 % */
     --dur-removed-lead: 300ms;    /* ... then the row slides to the bottom */
+    --dur-time-up: 260ms;         /* #1174: clock at zero, tiles dim */
 
     /* Z-Index Tokens */
     --z-control-bar: 100;
