@@ -280,6 +280,13 @@
     --dur-settle: 420ms;          /* Hot Seat: the settlement lands */
     --dur-desat: 400ms;           /* phone colour drains while the socket is down */
     --dur-conn-back: 1200ms;      /* the connection pill stays sage this long */
+    /* Round 3 (#1173). */
+    --dur-guess: 600ms;           /* estimate reveal: a guess slides in */
+    --dur-guess-stagger: 80ms;    /* ... each one 80 ms after the last */
+    --dur-truth: 360ms;           /* the true-value marker grows from the axis */
+    --dur-wager: 700ms;           /* the stake leaves the bank as a chip */
+    --dur-removed-fade: 400ms;    /* a removed guest dims to 40 % */
+    --dur-removed-lead: 300ms;    /* ... then the row slides to the bottom */
 
     /* Z-Index Tokens */
     --z-control-bar: 100;
@@ -369,6 +376,9 @@ a:focus-visible,
         --dur-check-delay: 0ms;
         --dur-status-delay: 0ms;
         --dur-splash-stagger: 0ms;
+        --dur-guess-stagger: 0ms;
+        --dur-guess: 0ms;   /* the truth marker waits for the guesses */
+        --dur-removed-lead: 0ms;
     }
 }
 
@@ -2766,6 +2776,19 @@ button, .btn {
         background-color: rgba(42, 40, 32, 0.06);
         opacity: 0.45;
     }
+}
+
+/* #1173: a guest taken out of the scoring (#1150) is kept on screen as a
+   ghost row (QuizifyRenderShared.slideRemoved): it dims to 40 % with its
+   points struck through, then slides to the bottom while the rest close up. */
+.is-removed {
+    opacity: 0.4;
+    transition: opacity var(--dur-removed-fade) var(--ease-in-out),
+        transform var(--dur-flip) var(--ease-out) var(--dur-removed-lead);
+}
+.is-removed .leaderboard-score,
+.is-removed .entry-score {
+    text-decoration: line-through;
 }
 
 /* Out of scoring (#1150): the host's line under a disconnected row, and the
@@ -7614,6 +7637,71 @@ html.conn-back .view {
         border-radius: 999px;
     }
 }
+
+/* ==========================================
+   Round 3 motion (#1173): estimate lock-in, wager stake
+   ========================================== */
+
+/* The guess is in: the thumb shrinks and fills coral, the track fades, and
+   the confirmation draws the same check as the answer tiles (the JS-built
+   .lock-in-check; it replaces the ✓ glyph). `est-locked` is also set on a
+   restore, where nothing animates because the section was hidden. */
+.estimate-slider,
+.estimate-slider::-webkit-slider-thumb,
+.estimate-slider::-moz-range-thumb {
+    transition: opacity var(--dur-lock) var(--ease-out),
+        transform var(--dur-lock) var(--ease-out),
+        background-color var(--dur-lock) var(--ease-out);
+}
+.est-locked .estimate-slider {
+    opacity: 0.55;
+}
+.est-locked .estimate-slider::-webkit-slider-thumb {
+    transform: scale(0.85);
+    background: var(--color-accent-primary);
+}
+.est-locked .estimate-slider::-moz-range-thumb {
+    transform: scale(0.85);
+    background: var(--color-accent-primary);
+}
+.est-lock-anim .checkmark {
+    display: none;
+}
+.est-lock-anim .lock-in-check {
+    margin-left: 0;
+}
+.est-lock-anim > span:last-child {
+    animation: lock-in-status-in var(--dur-status) var(--ease-out) backwards;
+    animation-delay: var(--dur-status-delay);
+}
+
+/* Final round: placing the bet rolls the bank down by the stake, which
+   leaves as a chip (player-game.js); at the reveal a win rolls its points
+   up in sage (player-reveal.js). */
+.wager-bank-line {
+    position: relative;
+}
+.wager-stake-chip {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-full);
+    background: var(--color-accent-brand-bg);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    animation: wager-chip-out var(--dur-wager) var(--ease-out) forwards;
+}
+@keyframes wager-chip-out {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-28px); }
+}
+.wager-win {
+    animation: wager-win-tint var(--dur-wager) var(--ease-out);
+}
+@keyframes wager-win-tint {
+    from { color: var(--color-success); }
+}
 /* @surface tv — the television's slice of this module. Everything outside a
    marked region addresses the phone or the host console; build_css.py leaves
    it out of css/tv.css, and tests/test_surface_stylesheets_880.py proves none
@@ -8822,6 +8910,8 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
     --dur-podium-glow-delay: 0ms;
     --dur-check-delay: 0ms;
     --dur-status-delay: 0ms;
+    --dur-guess-stagger: 0ms;
+    --dur-removed-lead: 0ms;
 }
 
 /* The toggle itself sits in the player header next to the sound button and

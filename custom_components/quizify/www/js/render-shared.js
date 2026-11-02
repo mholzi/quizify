@@ -906,7 +906,40 @@
         });
     }
 
+    // Taken-out guests (#1173). Before a board repaints, captureRemoved
+    // clones the rows (`sel`, keyed by data-entrant) whose key is gone from
+    // `keep`; slideRemoved, after it, puts each clone back where it stood,
+    // dims it, slides it to the bottom, then drops it. [] if none are left.
+    function captureRemoved(box, sel, keep) {
+        var out = [], kept = 0;
+        if (!box || !box.querySelectorAll || prefersReducedMotion()) return out;
+        Array.prototype.forEach.call(box.querySelectorAll(sel), function (el) {
+            var k = el.getAttribute('data-entrant');
+            if (k == null || el.classList.contains('is-removed')) return;
+            if (keep.indexOf(k) !== -1) kept++;
+            else out.push({ el: el.cloneNode(true), top: el.getBoundingClientRect().top });
+        });
+        return kept ? out : [];
+    }
+
+    function slideRemoved(box, ghosts) {
+        ghosts.forEach(function (g) {
+            var el = g.el;
+            box.appendChild(el);
+            var d = g.top - el.getBoundingClientRect().top;
+            if (Math.abs(d) < 2) { box.removeChild(el); return; }
+            el.style.transform = 'translateY(' + d + 'px)';
+            void el.offsetWidth;
+            el.classList.add('is-removed');
+            el.style.transform = '';
+            setTimeout(function () { el.style.opacity = 0; }, 900);
+            setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 1350);
+        });
+    }
+
     window.QuizifyRenderShared = {
+        captureRemoved: captureRemoved,
+        slideRemoved: slideRemoved,
         motionStreaks: motionStreaks,
         prefersReducedMotion: prefersReducedMotion,
         replayClass: _replayClass,

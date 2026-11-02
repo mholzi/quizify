@@ -762,6 +762,33 @@ body.dashboard-body {
     color: var(--color-text-light, #8F8A78);
 }
 
+/* #1173: the estimate reveal plays only on a live round_summary (dashboard.js
+   adds .dnl-play; a reconnect renders the finished line). The guesses slide
+   in from the left edge 80 ms apart, then the true-value marker grows from
+   the axis, then the closest guess gets its sage ring. --i is set inline. */
+.dnl-play .dnl-tick {
+    animation: dnl-slide var(--dur-guess) var(--ease-out)
+        calc(var(--i, 0) * var(--dur-guess-stagger)) backwards;
+}
+.dnl-play .dnl-truth-line {
+    transform-origin: bottom;
+    animation: dnl-grow var(--dur-truth) var(--ease-out)
+        calc(var(--n, 0) * var(--dur-guess-stagger) + var(--dur-guess)) backwards;
+}
+.dnl-play .dnl-truth-flag {
+    animation: dnl-fade var(--dur-status) var(--ease-out)
+        calc(var(--n, 0) * var(--dur-guess-stagger) + var(--dur-guess) + var(--dur-truth) / 2) backwards;
+}
+.dnl-play .dnl-dot.is-best {
+    animation: dnl-ring var(--dur-status) var(--ease-out)
+        calc(var(--n, 0) * var(--dur-guess-stagger) + var(--dur-guess) + var(--dur-truth)) backwards;
+}
+.dnl-dot.is-best { outline: 4px solid var(--dash-success, #7FA897); }
+@keyframes dnl-slide { from { left: 0%; } }
+@keyframes dnl-grow { from { transform: translateX(-50%) scaleY(0); } }
+@keyframes dnl-fade { from { opacity: 0; } }
+@keyframes dnl-ring { from { outline-color: transparent; } }
+
 /* Image pane — hidden unless the question carries a valid image. */
 .dashboard-question-media {
     display: none;
@@ -1106,6 +1133,10 @@ body.dashboard-body {
 /* #1170: a rank change slides the row to its new place (FLIP, set up by
    dashboard.js); a row that moved up carries a brief sage tint. */
 .dashboard-leaderboard .leaderboard-row.is-flipping {
+    transition: transform var(--dur-flip) var(--ease-out);
+}
+/* #1173: a guest card glides into its team group (dashboard.js, FLIP). */
+.dashboard-player-chip.is-flipping {
     transition: transform var(--dur-flip) var(--ease-out);
 }
 .dashboard-leaderboard .leaderboard-row.moved-up {

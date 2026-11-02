@@ -454,7 +454,37 @@
         return '0';
     }
 
+    // #1173: the bank is not on screen at the reveal (the wager panel is a
+    // one-line badge), so the stake's outcome plays in the hero's own number:
+    // a win rolls up in sage, a loss fades in. Once per bet, never on a repaint.
+    function _wagerReveal(hero, score) {
+        var game = window.QuizifyPlayerGame;
+        var stake = game && game.takeWagerStake ? game.takeWagerStake() : 0;
+        var shared = window.QuizifyRenderShared;
+        if (!stake || !score || !shared || shared.prefersReducedMotion()) return;
+        var num = hero.querySelector('.pl-result-big-points, .pl-result-pts, .pl-result-zero');
+        if (!num) return;
+        if (score < 0) {
+            num.classList.add('hs-settle--lose');
+            return;
+        }
+        var first = num.firstChild;
+        if (!first || first.nodeType !== 3) return;
+        var span = document.createElement('span');
+        span.className = 'wager-win';
+        span.textContent = score;
+        num.replaceChild(span, first);
+        num.insertBefore(document.createTextNode('+'), span);
+        shared.rollDigits(span, 0, score);
+    }
+
     function renderResultHero(player, data) {
+        _buildResultHero(player, data);
+        var hero = document.getElementById('reveal-hero');
+        if (hero && player) _wagerReveal(hero, player.round_score || player.points_earned || 0);
+    }
+
+    function _buildResultHero(player, data) {
         var hero = document.getElementById('reveal-hero');
         if (!hero) return;
 

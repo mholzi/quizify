@@ -4017,3 +4017,68 @@ html.conn-back .view {
         border-radius: 999px;
     }
 }
+
+/* ==========================================
+   Round 3 motion (#1173): estimate lock-in, wager stake
+   ========================================== */
+
+/* The guess is in: the thumb shrinks and fills coral, the track fades, and
+   the confirmation draws the same check as the answer tiles (the JS-built
+   .lock-in-check; it replaces the ✓ glyph). `est-locked` is also set on a
+   restore, where nothing animates because the section was hidden. */
+.estimate-slider,
+.estimate-slider::-webkit-slider-thumb,
+.estimate-slider::-moz-range-thumb {
+    transition: opacity var(--dur-lock) var(--ease-out),
+        transform var(--dur-lock) var(--ease-out),
+        background-color var(--dur-lock) var(--ease-out);
+}
+.est-locked .estimate-slider {
+    opacity: 0.55;
+}
+.est-locked .estimate-slider::-webkit-slider-thumb {
+    transform: scale(0.85);
+    background: var(--color-accent-primary);
+}
+.est-locked .estimate-slider::-moz-range-thumb {
+    transform: scale(0.85);
+    background: var(--color-accent-primary);
+}
+.est-lock-anim .checkmark {
+    display: none;
+}
+.est-lock-anim .lock-in-check {
+    margin-left: 0;
+}
+.est-lock-anim > span:last-child {
+    animation: lock-in-status-in var(--dur-status) var(--ease-out) backwards;
+    animation-delay: var(--dur-status-delay);
+}
+
+/* Final round: placing the bet rolls the bank down by the stake, which
+   leaves as a chip (player-game.js); at the reveal a win rolls its points
+   up in sage (player-reveal.js). */
+.wager-bank-line {
+    position: relative;
+}
+.wager-stake-chip {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-full);
+    background: var(--color-accent-brand-bg);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    animation: wager-chip-out var(--dur-wager) var(--ease-out) forwards;
+}
+@keyframes wager-chip-out {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-28px); }
+}
+.wager-win {
+    animation: wager-win-tint var(--dur-wager) var(--ease-out);
+}
+@keyframes wager-win-tint {
+    from { color: var(--color-success); }
+}
