@@ -42,7 +42,7 @@ import contextlib
 import logging
 import time
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from .game_events import (
     EVENT_ANSWER_REVEALED,
@@ -161,6 +161,9 @@ class QuizifySoundEffects:
         self._reveal_sounded = False
         # The fanfare waiting for the voice to finish (#1185).
         self._fanfare_task: asyncio.Task | None = None
+        # Sets the host's volume before a cue and restores it after (#1185);
+        # wired by house.py, ``None`` standalone.
+        self.speaker_volume: Any = None
 
     # ------------------------------------------------------------------
     # Per-game configuration (#494 Phase 4 — the "House Plays Along" panel)
@@ -443,6 +446,8 @@ class QuizifySoundEffects:
             # moment has passed, or cut the announcement short).
             _LOGGER.debug("Quizify SFX %r skipped: media_player is playing", cue)
             return False
+        if self.speaker_volume is not None:
+            self.speaker_volume.before_play(self._active_media_player)
         self._call(
             "media_player",
             "play_media",

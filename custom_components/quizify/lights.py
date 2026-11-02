@@ -490,6 +490,11 @@ class QuizifyPartyLights:
         self._call("light", "turn_on", data)
 
     def _call(self, domain: str, service: str, data: dict[str, object]) -> None:
+        ceiling = self._settings.max_brightness_pct
+        level = data.get("brightness_pct")
+        if ceiling is not None and isinstance(level, (int, float)):
+            # "Quiet evening" (#1185): no light above the ceiling.
+            data = {**data, "brightness_pct": min(level, ceiling)}
         fire_and_forget_service(
             self._hass,
             domain,

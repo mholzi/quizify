@@ -1585,8 +1585,26 @@
             lights_follow: false,
         },
     };
+    // #1185 P6: the quiet evening. Lights only for the resting colour and the
+    // winner run, the fanfare as the one sound; the voice says the question
+    // and the reveal and nothing else; volume 30 %, lights at most 60 %.
+    HOUSE_PRESETS.quiet_evening = {
+        light_question: false, light_countdown: false, light_reveal: false,
+        light_streak: false, light_winner: true, winner_scene: false,
+        sfx_correct: false, sfx_wrong: false, sfx_streak: false, sfx_winner: true,
+        lights_follow: true,
+    };
+    var QUIET_EVENING_TTS = {
+        question: true, options: false, reveal: true, standings: false,
+        join: false, countdown: false, milestone: false,
+    };
+    var QUIET_EVENING_VOLUME = 30;
+    var QUIET_EVENING_BRIGHTNESS = 60;
+    // From this hour on (host device clock) the setup suggests it.
+    var QUIET_EVENING_FROM_HOUR = 21;
     // preset id → the i18n key of the one-line hint under the segmented control.
     var HOUSE_PRESET_HINTS = {
+        quiet_evening: 'setup.house.hintQuiet',
         cozy_glow: 'setup.house.hintCozy',
         game_show: 'setup.house.hintGameShow',
         events_only: 'setup.house.hintEvents',
@@ -1599,6 +1617,11 @@
         light_streak: true, light_winner: true, winner_scene: true,
         sfx_correct: true, sfx_wrong: true, sfx_streak: true, sfx_winner: true,
         lights_follow: true,
+        // #1185 P6: null until the host moves the slider — then Quizify sets
+        // the speaker to it before each line. The brightness ceiling is only
+        // set by the quiet evening.
+        volume: null,
+        light_max_brightness: null,
         // Per-game entity overrides. [] / '' → fall back to the config-entry
         // values on the server; never send a placeholder string.
         light_entities: [],
@@ -3699,6 +3722,8 @@
             light_entities: HOUSE_DEFAULTS.light_entities.slice(),
             media_player: HOUSE_DEFAULTS.media_player,
             winner_scene_entity: HOUSE_DEFAULTS.winner_scene_entity,
+            volume: HOUSE_DEFAULTS.volume,
+            light_max_brightness: HOUSE_DEFAULTS.light_max_brightness,
         };
         HOUSE_EFFECT_KEYS.forEach(function (k) { cfg[k] = HOUSE_DEFAULTS[k]; });
         try {
@@ -3727,6 +3752,10 @@
                     }
                     if (typeof saved.winner_scene_entity === 'string') {
                         cfg.winner_scene_entity = saved.winner_scene_entity;
+                    }
+                    if (typeof saved.volume === 'number') cfg.volume = saved.volume;
+                    if (typeof saved.light_max_brightness === 'number') {
+                        cfg.light_max_brightness = saved.light_max_brightness;
                     }
                 }
             }
@@ -3804,6 +3833,7 @@
                 btn.setAttribute('aria-pressed', isOn ? 'true' : 'false');
             });
         }
+        _syncEveningChip();
         var hintKey = HOUSE_PRESET_HINTS[preset] || HOUSE_PRESET_HINTS.custom;
         if (_houseEls.presetHint) {
             _houseEls.presetHint.setAttribute('data-i18n', hintKey);
@@ -3819,6 +3849,11 @@
         HOUSE_EFFECT_KEYS.forEach(function (k) {
             if (_houseEls[k]) _houseEls[k].checked = !!map[k];
         });
+        if (preset === 'quiet_evening') {
+            // The voice and the volume belong to the quiet evening too.
+            _applyQuietEveningVoice();
+            _setHouseVolume(QUIET_EVENING_VOLUME);
+        }
         _setHousePresetActive(preset);
         _saveHouseConfig();
     }
@@ -3914,7 +3949,52 @@
         HOUSE_EFFECT_KEYS.forEach(function (k) {
             cfg[k] = _houseEls[k] ? !!_houseEls[k].checked : !!HOUSE_DEFAULTS[k];
         });
+        cfg.volume = _houseVolume;
+        cfg.light_max_brightness = _housePreset === 'quiet_evening' ? QUIET_EVENING_BRIGHTNESS : null;
         return cfg;
+    }
+
+    // ---- Volume + quiet evening (#1185 P6) ----
+    // null = the host never moved the slider: the server leaves the speaker's
+    // volume alone. Any number = set before each line, restored after.
+    var _houseVolume = null;
+
+    function _renderHouseVolume() {
+        var el = _houseEls.volume;
+        var out = _houseEls.volumeValue;
+        if (el && _houseVolume !== null) el.value = String(_houseVolume);
+        if (out) {
+            if (_houseVolume === null) {
+                out.setAttribute('data-i18n', 'setup.audio.volumeUntouched');
+                out.textContent = _t('setup.audio.volumeUntouched');
+            } else {
+                out.removeAttribute('data-i18n');
+                out.textContent = _houseVolume + ' %';
+            }
+        }
+        if (_houseEls.volumeReset) _houseEls.volumeReset.hidden = _houseVolume === null;
+    }
+
+    function _setHouseVolume(value) {
+        _houseVolume = value === null ? null : Math.max(0, Math.min(100, Math.round(Number(value) || 0)));
+        _renderHouseVolume();
+    }
+
+    // The suggestion chip: after 21:00 on the host's own clock, while the
+    // quiet evening is not already chosen. It suggests; only a tap switches.
+    function _syncEveningChip() {
+        var chip = _houseEls.eveningChip;
+        if (!chip) return;
+        var hour = new Date().getHours();
+        var late = hour >= QUIET_EVENING_FROM_HOUR || hour < 5;
+        chip.hidden = !(late && _housePreset !== 'quiet_evening');
+    }
+
+    function _applyQuietEveningVoice() {
+        Object.keys(QUIET_EVENING_TTS).forEach(function (k) {
+            if (_ttsEls[k]) _ttsEls[k].checked = QUIET_EVENING_TTS[k];
+        });
+        _saveTtsConfig();
     }
 
     function _readHouseLightEntities() {
@@ -4069,6 +4149,10 @@
             sfx_streak: document.getElementById('house-sfx-streak'),
             sfx_winner: document.getElementById('house-sfx-winner'),
             lights_follow: document.getElementById('house-lights-follow'),
+            volume: document.getElementById('house-volume'),
+            volumeValue: document.getElementById('house-volume-value'),
+            volumeReset: document.getElementById('house-volume-reset'),
+            eveningChip: document.getElementById('house-evening-chip'),
         };
         if (!_houseEls.enable) return;  // panel not on this page
         var cfg = _loadHouseConfig();
@@ -4077,8 +4161,25 @@
         HOUSE_EFFECT_KEYS.forEach(function (k) {
             if (_houseEls[k]) _houseEls[k].checked = !!cfg[k];
         });
+        _houseVolume = typeof cfg.volume === 'number' ? cfg.volume : null;
+        _renderHouseVolume();
         // Restore the preset the stored toggles resolve to (else 'custom').
         _setHousePresetActive(cfg.preset);
+        if (_houseEls.volume) {
+            on(_houseEls.volume, 'input', function () { _setHouseVolume(_houseEls.volume.value); });
+            on(_houseEls.volume, 'change', _saveHouseConfig);
+        }
+        if (_houseEls.volumeReset) {
+            on(_houseEls.volumeReset, 'click', function () { _setHouseVolume(null); _saveHouseConfig(); });
+        }
+        if (_houseEls.eveningChip) {
+            on(_houseEls.eveningChip, 'click', function () {
+                // The tap is the consent: switch the house on and take it.
+                _houseEls.enable.checked = true;
+                _syncHouseChildState();
+                _applyHousePreset('quiet_evening');
+            });
+        }
 
         on(_houseEls.enable, 'change', _saveHouseConfig);
         HOUSE_EFFECT_KEYS.forEach(function (k) {

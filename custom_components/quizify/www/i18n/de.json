@@ -407,11 +407,17 @@
       "nolights": "Keine Lampen gefunden – in HA einrichten",
       "speakerOverride": "Anderer Lautsprecher für die Effekte",
       "speakerFollow": "Wie der Spiel-Lautsprecher",
-      "lightsFollow": "Lampen färben sich mit"
+      "lightsFollow": "Lampen färben sich mit",
+      "eveningChip": "Es ist nach 21 Uhr · Leiser Abend nehmen?",
+      "presetQuiet": "Leiser Abend",
+      "hintQuiet": "Stimme nur für Frage und Auflösung, nur die Fanfare, sanftes Licht, Lautstärke 30 %."
     },
     "audio": {
       "speaker": "Lautsprecher",
-      "speakerHint": "Gilt für die Ansagen und die Soundeffekte."
+      "speakerHint": "Gilt für die Ansagen und die Soundeffekte.",
+      "volume": "Lautstärke",
+      "volumeUntouched": "wie der Lautsprecher",
+      "volumeReset": "Lautsprecher nicht verstellen"
     },
     "myPresets": "Meine Vorlagen",
     "savePreset": "Aktuelles speichern",

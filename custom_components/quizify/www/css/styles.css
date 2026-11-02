@@ -5331,6 +5331,58 @@ footer {
     font-size: 0.78rem;
     color: var(--color-text-muted);
 }
+/* #1185 P6: Quizify's own volume. Same column as the speaker picker. */
+.setup-audio-volume {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding-left: var(--space-xl);
+    margin-top: var(--space-sm);
+}
+.setup-audio-volume label {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-sm);
+}
+.setup-audio-volume output {
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-secondary);
+}
+.setup-audio-volume input[type="range"] {
+    width: 100%;
+    min-height: 44px;
+    accent-color: var(--color-accent-primary);
+}
+.setup-audio-volume-reset {
+    align-self: flex-start;
+    min-height: 44px;
+    padding: 0;
+    font: inherit;
+    font-size: var(--font-size-sm);
+    color: var(--color-accent-primary);
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+.setup-audio-volume-reset[hidden] { display: none; }
+
+/* #1185 P6: the after-21:00 suggestion. A chip, not a banner: it asks. */
+.setup-house-evening-chip {
+    align-self: flex-start;
+    min-height: 44px;
+    margin: var(--space-xs) 0 0 var(--space-xl);
+    padding: var(--space-xs) var(--space-md);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    background: var(--color-bg-card-alt);
+    border: 1px solid var(--color-accent-primary);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+}
+.setup-house-evening-chip[hidden] { display: none; }
+
 .setup-select {
     width: 100%;
     min-height: 44px;   /* #1183: was 34 */

@@ -407,11 +407,17 @@
       "nolights": "No se han encontrado luces: configúralas en HA",
       "speakerOverride": "Otro altavoz para los efectos",
       "speakerFollow": "El mismo de la partida",
-      "lightsFollow": "Las luces siguen la partida"
+      "lightsFollow": "Las luces siguen la partida",
+      "eveningChip": "Son más de las 21 h · ¿Velada tranquila?",
+      "presetQuiet": "Velada tranquila",
+      "hintQuiet": "Voz solo para pregunta y solución, solo la fanfarria, luz suave, volumen 30 %."
     },
     "audio": {
       "speaker": "Altavoz",
-      "speakerHint": "Se usa para la narración y los efectos de sonido."
+      "speakerHint": "Se usa para la narración y los efectos de sonido.",
+      "volume": "Volumen",
+      "volumeUntouched": "como el altavoz",
+      "volumeReset": "No tocar el altavoz"
     },
     "myPresets": "Mis plantillas",
     "savePreset": "Guardar actual",

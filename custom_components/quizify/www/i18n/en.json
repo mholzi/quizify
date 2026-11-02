@@ -407,11 +407,17 @@
       "nolights": "No lights found — configure in HA",
       "speakerOverride": "Different speaker for the effects",
       "speakerFollow": "Same as the game speaker",
-      "lightsFollow": "Lights follow the game"
+      "lightsFollow": "Lights follow the game",
+      "eveningChip": "It's after 9 pm · Use Quiet evening?",
+      "presetQuiet": "Quiet evening",
+      "hintQuiet": "Voice for question and answer only, the fanfare as the one sound, soft light, volume 30 %."
     },
     "audio": {
       "speaker": "Speaker",
-      "speakerHint": "Used for the narration and the sound effects."
+      "speakerHint": "Used for the narration and the sound effects.",
+      "volume": "Volume",
+      "volumeUntouched": "as the speaker is",
+      "volumeReset": "Leave the speaker as it is"
     },
     "myPresets": "My presets",
     "savePreset": "Save current",

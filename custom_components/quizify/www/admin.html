@@ -494,6 +494,19 @@
                         </select>
                     </label>
                     <div class="setup-audio-hint" data-i18n="setup.audio.speakerHint">Used for the narration and the sound effects.</div>
+                    <!-- #1185 P6: Quizify's own volume for voice and sounds. Until
+                         the host moves it, Quizify never touches the speaker's
+                         volume; once moved, it is set before each line and
+                         restored afterwards. Rides the house config ("volume"). -->
+                    <div class="setup-audio-volume">
+                        <label class="setup-audio-select-label" for="house-volume">
+                            <span data-i18n="setup.audio.volume">Volume</span>
+                            <output id="house-volume-value" for="house-volume" data-i18n="setup.audio.volumeUntouched">as the speaker is</output>
+                        </label>
+                        <input type="range" id="house-volume" min="0" max="100" step="5" value="35">
+                        <button type="button" class="setup-audio-volume-reset" id="house-volume-reset" hidden
+                                data-i18n="setup.audio.volumeReset">Leave the speaker as it is</button>
+                    </div>
 
                     <!-- House Plays Along (#494), Variant D "Presets". Master
                          switch (default OFF — silent until enabled), then a
@@ -517,6 +530,11 @@
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
                             <span class="toggle-label" data-i18n="setup.house.enable">The house reacts to the game</span>
                         </label>
+                        <!-- #1185 P6: after 21:00 (the host device's clock) the
+                             setup suggests the quiet evening. A tap takes it;
+                             nothing switches on its own. -->
+                        <button type="button" class="setup-house-evening-chip" id="house-evening-chip" hidden
+                                data-i18n="setup.house.eveningChip">It's after 9 pm · Use Quiet evening?</button>
                         <div class="setup-house-hint" data-i18n="setup.house.hint">Lights, sounds and events. Off means the lights stay as they are.</div>
                         <div class="setup-house-divider" aria-hidden="true"></div>
                         <div class="setup-house-children" id="house-children">
@@ -528,6 +546,8 @@
                                  data-i18n-aria-label="setup.house.presetsLabel" aria-label="Effect preset">
                                 <button type="button" class="setup-house-preset" data-preset="cozy_glow"
                                         aria-pressed="false" data-i18n="setup.house.presetCozy">Cozy glow</button>
+                                <button type="button" class="setup-house-preset" data-preset="quiet_evening"
+                                        aria-pressed="false" data-i18n="setup.house.presetQuiet">Quiet evening</button>
                                 <button type="button" class="setup-house-preset is-active" data-preset="game_show"
                                         aria-pressed="true" data-i18n="setup.house.presetGameShow">Game show</button>
                                 <button type="button" class="setup-house-preset" data-preset="events_only"

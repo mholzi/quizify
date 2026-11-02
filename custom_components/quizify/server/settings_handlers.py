@@ -196,6 +196,17 @@ def apply_house_config(handler: QuizifyWebSocketHandler, house: dict[str, Any]) 
         winner_scene_entity, "scene", "winner_scene_entity"
     )
 
+    # Quiet evening / volume (#1185). Written to the shared settings through
+    # whichever consumer is wired: ``volume`` is None until the host moved the
+    # slider, and only then does Quizify touch the speaker's volume.
+    volume = _pct_or_none(house.get("volume"))
+    max_brightness = _pct_or_none(house.get("light_max_brightness"))
+    for consumer in (handler._party_lights, handler._sound_effects):
+        settings = getattr(consumer, "_settings", None)
+        if settings is not None:
+            settings.volume_pct = volume
+            settings.max_brightness_pct = max_brightness
+
     lights = handler._party_lights
     if lights is not None:
         try:
@@ -240,6 +251,17 @@ def apply_house_config(handler: QuizifyWebSocketHandler, house: dict[str, Any]) 
             emitter.configure(enabled=enabled)
         except Exception:  # noqa: BLE001
             _LOGGER.exception("House event-emitter configure raised")
+
+
+def _pct_or_none(value: Any) -> int | None:
+    """A 0–100 percentage from client JSON, or ``None`` for "not set"."""
+    if value is None or isinstance(value, bool):
+        return None
+    try:
+        pct = int(round(float(value)))
+    except (TypeError, ValueError):
+        return None
+    return max(0, min(100, pct))
 
 
 async def handle_configure_house(

@@ -137,6 +137,12 @@ class HouseSettings:
     # house master switched off.
     lights_follow: bool = True
 
+    # Quizify's own volume for voice and sounds, 0–100, or ``None`` while the
+    # host has not moved the slider (#1185, P6) — then the speaker is never
+    # touched. And a brightness ceiling for the lights ("quiet evening").
+    volume_pct: int | None = None
+    max_brightness_pct: int | None = None
+
     # ------------------------------------------------------------------
     # Construction / refresh from the config entry
     # ------------------------------------------------------------------

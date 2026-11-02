@@ -138,6 +138,9 @@ class QuizifyTTSAnnouncer:
         # clip). One utterance — "Final round! Question 10 of 10: …" — has
         # neither problem.
         self._pending_intro: str | None = None
+        # Sets the host's volume before a line and restores it after (#1185);
+        # wired by house.py, ``None`` on the dev server and in unit tests.
+        self.speaker_volume: Any = None
 
     # ------------------------------------------------------------------
     # Per-game configuration (#281)
@@ -706,6 +709,8 @@ class QuizifyTTSAnnouncer:
         language = self._speech_language()
         if language:
             data["language"] = language
+        if self.speaker_volume is not None:
+            self.speaker_volume.before_play(media_player)
         fire_and_forget_service(
             self._hass,
             "tts",
