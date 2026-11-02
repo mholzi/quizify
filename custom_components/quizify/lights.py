@@ -319,14 +319,15 @@ class QuizifyPartyLights:
         winner_scene: bool = True,
         light_entities: list[str] | None = None,
         winner_scene_entity: str | None = None,
+        lights_follow: bool = True,
     ) -> None:
         """Apply the admin panel's house-lights settings (#494 P4).
 
-        Gates only the EVENT-DRIVEN ACCENTS. The phase-driven ambient recipes
-        (``_PHASE_LIGHT_RECIPES``) are deliberately untouched: they are the
-        resting colour of the room, owned by the game phase, not by the accent
-        choreography — turning the accents off should calm the room, not leave
-        it dark mid-question.
+        The master gates the accents AND the phase-driven resting colour
+        (#1185: off means off); the resting colour has a switch of its own on
+        top, ``lights_follow`` ("lights follow the game"). The per-accent
+        toggles leave the resting colour alone — turning the accents off should
+        calm the room, not leave it dark mid-question.
 
         ``light_entities`` / ``winner_scene_entity`` are the panel's entity
         pickers. Non-empty → they win for this game; empty/``None`` → fall back
@@ -338,6 +339,7 @@ class QuizifyPartyLights:
         # The master is the one panel value shared with the SFX player and the
         # event emitter, so it is written to the shared settings (#789).
         self._settings.enabled_override = bool(enabled)
+        self._settings.lights_follow = bool(lights_follow)
         self._light_question = bool(light_question)
         self._light_countdown = bool(light_countdown)
         self._light_reveal = bool(light_reveal)
@@ -381,9 +383,9 @@ class QuizifyPartyLights:
 
     @property
     def is_configured(self) -> bool:
-        # Deliberately NOT gated on the master: it only silences the
-        # event-driven accents, while the ambient phase glow (which also checks
-        # is_configured) keeps following the game.
+        # Deliberately NOT gated on the master: the master is checked where
+        # the light is driven (accents, and the resting colour since #1185),
+        # so flipping it back on mid-game needs no re-attach.
         return self._hass is not None and bool(self._active_entity_ids)
 
     def attach(self) -> None:
@@ -438,8 +440,23 @@ class QuizifyPartyLights:
         self._event_unsubs = []
         self._cancel_pulse()
 
+    @property
+    def _base_colour_on(self) -> bool:
+        """Off means off (#1185): the resting colour follows the game only
+        while the house master is on AND "lights follow the game" is on.
+
+        It used to depend on nothing but configured lights, so "house off" and
+        "events only" still recoloured the room about thirty times a game.
+        """
+        return self._settings.master_enabled and self._settings.lights_follow
+
     def _on_state_changed(self) -> None:
         if not self.is_configured:
+            return
+        if not self._base_colour_on:
+            # Leave the lights as they are, and re-sync on the next change
+            # once the switch is back on.
+            self._last_phase = None
             return
         phase = self._game.phase
         if phase == self._last_phase:

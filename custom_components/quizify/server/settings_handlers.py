@@ -148,7 +148,8 @@ def apply_house_config(handler: QuizifyWebSocketHandler, house: dict[str, Any]) 
 
     Fans out to all THREE consumers, because the panel presents one master
     switch over what are internally three independent subsystems:
-      * party lights  — the 5 accent cues + the winner scene;
+      * party lights  — the 5 accent cues + the winner scene, and the resting
+        colour (``lights_follow``, #1185);
       * sound effects — the 4 one-shot cues;
       * event emitter — the ``quizify_*`` bus events the other two ride on.
     The master ``enabled`` is a runtime override of the
@@ -208,6 +209,8 @@ def apply_house_config(handler: QuizifyWebSocketHandler, house: dict[str, Any]) 
                 winner_scene=_toggle("winner_scene"),
                 light_entities=light_entities,
                 winner_scene_entity=winner_scene_entity,
+                # #1185: the resting colour has its own switch.
+                lights_follow=_toggle("lights_follow"),
             )
         except Exception:  # noqa: BLE001
             _LOGGER.exception("House party-lights configure raised")

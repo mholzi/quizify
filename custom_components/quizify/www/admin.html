@@ -517,7 +517,7 @@
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
                             <span class="toggle-label" data-i18n="setup.house.enable">The house reacts to the game</span>
                         </label>
-                        <div class="setup-house-hint" data-i18n="setup.house.hint">Your lights and speakers play along with the quiz.</div>
+                        <div class="setup-house-hint" data-i18n="setup.house.hint">Lights, sounds and events. Off means the lights stay as they are.</div>
                         <div class="setup-house-divider" aria-hidden="true"></div>
                         <div class="setup-house-children" id="house-children">
                             <!-- Preset segmented control. Real buttons with
@@ -535,6 +535,13 @@
                             </div>
                             <div class="setup-house-preset-hint" id="house-preset-hint"
                                  data-i18n="setup.house.hintGameShow">The full show — lights and sound on every beat.</div>
+                            <!-- #1185: the resting colour has its own switch. "House
+                                 off" and "Events only" leave the lights alone. -->
+                            <label class="toggle-compact setup-house-toggle" for="house-lights-follow">
+                                <input type="checkbox" id="house-lights-follow" checked>
+                                <span class="toggle-switch-compact" aria-hidden="true"></span>
+                                <span class="toggle-label" data-i18n="setup.house.lightsFollow">Lights follow the game</span>
+                            </label>
 
                             <div class="setup-house-autohint">
                                 <strong data-i18n="setup.house.autoTitle">Your own automations?</strong>
@@ -564,7 +571,7 @@
                                 <label class="toggle-compact setup-house-toggle" for="house-light-reveal">
                                     <input type="checkbox" id="house-light-reveal" checked>
                                     <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                    <span class="toggle-label" data-i18n="setup.house.lightReveal">Green or red flash on the reveal</span>
+                                    <span class="toggle-label" data-i18n="setup.house.lightReveal">Green or amber flash on the reveal</span>
                                 </label>
                                 <label class="toggle-compact setup-house-toggle" for="house-light-streak">
                                     <input type="checkbox" id="house-light-streak" checked>

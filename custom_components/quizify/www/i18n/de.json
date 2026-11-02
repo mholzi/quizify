@@ -374,14 +374,14 @@
     "house": {
       "title": "Spielt das Haus mit?",
       "enable": "Das Haus reagiert auf das Spiel",
-      "hint": "Deine Lampen und Lautsprecher spielen mit.",
+      "hint": "Lampen, Sounds und Ereignisse. Aus heißt: Die Lampen bleiben, wie sie sind.",
       "presetsLabel": "Effekt-Vorlage",
       "presetCozy": "Gemütlich",
       "presetGameShow": "Spielshow",
       "presetEvents": "Nur Ereignisse",
       "hintCozy": "Warmes Licht zu den großen Momenten, keine Sounds.",
       "hintGameShow": "Die volle Show – Licht und Sound bei jedem Moment.",
-      "hintEvents": "Kein Licht, kein Sound – es werden nur die Quizify-Ereignisse für deine eigenen Automatisierungen ausgelöst.",
+      "hintEvents": "Kein Licht, kein Sound, die Lampen bleiben, wie sie sind. Nur die Quizify-Ereignisse feuern, für eigene Automatisierungen.",
       "hintCustom": "Deine eigene Mischung.",
       "autoTitle": "Eigene Automatisierungen?",
       "autoText": "Quizify löst 11 Ereignisse aus. Drei fertige Blueprints findest du in der README.",
@@ -391,7 +391,7 @@
       "groupSound": "Sound",
       "lightQuestion": "Farbwechsel bei jeder Frage",
       "lightCountdown": "Pulsieren im Countdown",
-      "lightReveal": "Grün oder Rot bei der Auflösung",
+      "lightReveal": "Grün oder Bernstein bei der Auflösung",
       "lightStreak": "Funkeln bei einer Serie",
       "lightWinner": "Lichtshow für den Sieger",
       "winnerScene": "Sieger-Szene aktivieren",
@@ -406,7 +406,8 @@
       "noentities": "Keine gefunden – in HA einrichten",
       "nolights": "Keine Lampen gefunden – in HA einrichten",
       "speakerOverride": "Anderer Lautsprecher für die Effekte",
-      "speakerFollow": "Wie der Spiel-Lautsprecher"
+      "speakerFollow": "Wie der Spiel-Lautsprecher",
+      "lightsFollow": "Lampen färben sich mit"
     },
     "audio": {
       "speaker": "Lautsprecher",

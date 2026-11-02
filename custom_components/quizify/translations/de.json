@@ -45,7 +45,7 @@
                     "sfx_wrong_url": "Optionale URL zu einem kurzen Sound, der abgespielt wird, wenn die meisten die Frage falsch beantwortet haben. Leer lassen, um den mitgelieferten Standard zu verwenden (falls installiert).",
                     "sfx_streak_url": "Optionale URL zu einem kurzen Sound, der abgespielt wird, wenn ein Spieler eine Antwortserie erreicht. Leer lassen, um den mitgelieferten Standard zu verwenden (falls installiert).",
                     "sfx_winner_url": "Optionale URL zu einem kurzen Sound, der abgespielt wird, wenn der Sieger feststeht. Leer lassen, um den mitgelieferten Standard zu verwenden (falls installiert). Wird über den TTS-Lautsprecher abgespielt und übersprungen, solange eine Ansage läuft.",
-                    "house_events_enabled": "Löst bei Spiel-Höhepunkten quizify_*-Events auf dem Home-Assistant-Event-Bus aus (Rundenstart, Auflösung, Serien, Sieger), damit du eigene Automationen darauf aufbauen kannst. Standardmäßig aus.",
+                    "house_events_enabled": "Das Haus spielt mit: Lampen-Effekte, Sounds und die quizify_*-Events für eigene Automationen. Standardmäßig aus. Ob die Lampen sich auch mit dem Spiel färben, hat einen eigenen Schalter im Setup.",
                     "finale_scene": "Optionale Szene, die aktiviert wird, sobald der Sieger feststeht — zusätzlich zum Sieges-Lichtschwenk der Party-Lichter, damit du einen raumweiten Feier-Look auslösen kannst. Leer lassen = keine Szene."
                 }
             }

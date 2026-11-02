@@ -113,8 +113,9 @@ def build_house_consumers(
         settings=settings,
         # The house-lights master defaults to CONF_HOUSE_EVENTS_ENABLED (off out
         # of the box) — the admin "House Plays Along" panel overrides it per game
-        # via configure() (#494 P4). Only the event-driven ACCENTS are gated by
-        # it; the phase-driven ambient glow always follows the game.
+        # via configure() (#494 P4). It gates the accents AND the resting
+        # colour (#1185: off means off); the resting colour also has its own
+        # "lights follow the game" switch.
         party_lights=QuizifyPartyLights(
             hass=hass, game_state=game_state, settings=settings
         ),

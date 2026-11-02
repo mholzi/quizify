@@ -1558,6 +1558,9 @@
         'light_question', 'light_countdown', 'light_reveal', 'light_streak',
         'light_winner', 'winner_scene',
         'sfx_correct', 'sfx_wrong', 'sfx_streak', 'sfx_winner',
+        // #1185: the resting colour has its own switch — "house off" and
+        // "events only" leave the lights exactly as they are.
+        'lights_follow',
     ];
     // preset → the exact effect-toggle set it writes. `events_only` turns every
     // effect off on purpose: the quizify_* HA events still fire, so the host can
@@ -1567,16 +1570,19 @@
             light_question: true, light_countdown: false, light_reveal: true,
             light_streak: false, light_winner: true, winner_scene: true,
             sfx_correct: false, sfx_wrong: false, sfx_streak: false, sfx_winner: false,
+            lights_follow: true,
         },
         game_show: {
             light_question: true, light_countdown: true, light_reveal: true,
             light_streak: true, light_winner: true, winner_scene: true,
             sfx_correct: true, sfx_wrong: true, sfx_streak: true, sfx_winner: true,
+            lights_follow: true,
         },
         events_only: {
             light_question: false, light_countdown: false, light_reveal: false,
             light_streak: false, light_winner: false, winner_scene: false,
             sfx_correct: false, sfx_wrong: false, sfx_streak: false, sfx_winner: false,
+            lights_follow: false,
         },
     };
     // preset id → the i18n key of the one-line hint under the segmented control.
@@ -1592,6 +1598,7 @@
         light_question: true, light_countdown: true, light_reveal: true,
         light_streak: true, light_winner: true, winner_scene: true,
         sfx_correct: true, sfx_wrong: true, sfx_streak: true, sfx_winner: true,
+        lights_follow: true,
         // Per-game entity overrides. [] / '' → fall back to the config-entry
         // values on the server; never send a placeholder string.
         light_entities: [],
@@ -4061,6 +4068,7 @@
             sfx_wrong: document.getElementById('house-sfx-wrong'),
             sfx_streak: document.getElementById('house-sfx-streak'),
             sfx_winner: document.getElementById('house-sfx-winner'),
+            lights_follow: document.getElementById('house-lights-follow'),
         };
         if (!_houseEls.enable) return;  // panel not on this page
         var cfg = _loadHouseConfig();

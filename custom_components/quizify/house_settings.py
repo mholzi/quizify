@@ -131,6 +131,12 @@ class HouseSettings:
     # speaker and the voice owns it ("one speaker, one voice").
     voice_active: bool = False
 
+    # Whether the lights change their resting colour with the game phase
+    # (#1185, "lights follow the game"). Its own switch in the setup since
+    # "house off" means off: the base colour used to keep running with the
+    # house master switched off.
+    lights_follow: bool = True
+
     # ------------------------------------------------------------------
     # Construction / refresh from the config entry
     # ------------------------------------------------------------------

@@ -374,14 +374,14 @@
     "house": {
       "title": "¿La casa participa?",
       "enable": "La casa reacciona a la partida",
-      "hint": "Tus luces y altavoces siguen la partida.",
+      "hint": "Luces, sonidos y eventos. Apagado significa que las luces se quedan como están.",
       "presetsLabel": "Plantilla de efectos",
       "presetCozy": "Acogedor",
       "presetGameShow": "Concurso",
       "presetEvents": "Solo eventos",
       "hintCozy": "Luz cálida en los momentos clave, sin efectos de sonido.",
       "hintGameShow": "El espectáculo completo: luces y sonido en cada momento.",
-      "hintEvents": "Sin luces ni sonido: solo se lanzan los eventos de Quizify para tus automatizaciones.",
+      "hintEvents": "Sin luces ni sonido, las lámparas se quedan como están. Solo se disparan los eventos de Quizify, para tus propias automatizaciones.",
       "hintCustom": "Tu propia mezcla de efectos.",
       "autoTitle": "¿Tus propias automatizaciones?",
       "autoText": "Quizify lanza 11 eventos. En el README hay tres blueprints listos para usar.",
@@ -391,7 +391,7 @@
       "groupSound": "Sonido",
       "lightQuestion": "Cambio de color en cada pregunta",
       "lightCountdown": "Parpadeo en la cuenta atrás final",
-      "lightReveal": "Destello verde o rojo al revelar",
+      "lightReveal": "Destello verde o ámbar en la solución",
       "lightStreak": "Brillo en una racha de aciertos",
       "lightWinner": "Luces para el ganador",
       "winnerScene": "Activar la escena del ganador",
@@ -406,7 +406,8 @@
       "noentities": "Ninguno encontrado: configúralo en HA",
       "nolights": "No se han encontrado luces: configúralas en HA",
       "speakerOverride": "Otro altavoz para los efectos",
-      "speakerFollow": "El mismo de la partida"
+      "speakerFollow": "El mismo de la partida",
+      "lightsFollow": "Las luces siguen la partida"
     },
     "audio": {
       "speaker": "Altavoz",
