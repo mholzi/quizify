@@ -51,6 +51,11 @@ _AND: dict[str, str] = {
 # says so; ``wager_open`` opens the final.
 _PHRASES: dict[str, dict[str, str]] = {
     "en": {
+        # The setup's probe button (#1185): one reveal, as a game says it.
+        "probe": (
+            "The correct answer is the European eel. "
+            "Lena got it right and now has 3 in a row."
+        ),
         "question": "Question {round} of {total}: {text}",
         "options": "Your options are: {options}.",
         "answer": "The correct answer is {answer}.",
@@ -79,6 +84,11 @@ _PHRASES: dict[str, dict[str, str]] = {
         "lightning_started": "Lightning round! Speed decides now.",
     },
     "de": {
+        # The setup's probe button (#1185): one reveal, as a game says it.
+        "probe": (
+            "Die richtige Antwort ist Europäischer "
+            "Aal. Lena hatte recht und hat jetzt 3 in Folge."
+        ),
         "question": "Frage {round} von {total}: {text}",
         "options": "Die Antwortmöglichkeiten sind: {options}.",
         "answer": "Die richtige Antwort ist {answer}.",
@@ -102,6 +112,11 @@ _PHRASES: dict[str, dict[str, str]] = {
         "lightning_started": "Blitzrunde! Jetzt zählt Tempo.",
     },
     "es": {
+        # The setup's probe button (#1185): one reveal, as a game says it.
+        "probe": (
+            "La respuesta correcta es la anguila "
+            "europea. Lena lo ha acertado y ya lleva 3 seguidas."
+        ),
         "question": "Pregunta {round} de {total}: {text}",
         "options": "Las opciones son: {options}.",
         "answer": "La respuesta correcta es {answer}.",

@@ -5255,88 +5255,127 @@ footer {
     pointer-events: none;
 }
 
-/* TTS narration — Variant B (#281): master switch as the header, a hairline
-   divider, then the per-event toggles nested + dimmed under it. The master row
-   reads as the heading (slightly heavier label); the children sit indented and
-   grey out + go non-interactive when the master is off (.is-disabled, toggled
-   by admin.js _syncTtsChildState). */
-.setup-tts-master .toggle-label {
-    font-weight: 600;
-    color: var(--color-text-primary);
-}
-.setup-tts-hint {
-    padding-left: 30px;
-    margin-top: 2px;
-    font-size: 0.82rem;
-    color: var(--color-text-muted);
-}
-.setup-tts-divider {
-    height: 1px;
-    background: var(--color-border-light);
-    margin: 8px 0 8px 30px;
-}
-.setup-tts-children {
-    padding-left: 12px;
-    border-left: 2px solid var(--color-border-light);
-    margin-left: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    transition: opacity 160ms ease;
-}
-/* #1183 draft ⑤: 44 px rows with a hairline between them instead of 2 px of
-   air — the line shows where one row's target ends. */
-.setup-tts-children > .toggle-compact + .toggle-compact,
-.setup-house-children .toggle-compact + .toggle-compact {
+/* #1183 draft ⑤, kept for the room step (#1185 P10): 44 px rows with a
+   hairline between them — the line shows where one row's target ends. */
+.setup-room > .toggle-compact + .toggle-compact {
     border-top: 1px solid var(--color-border-light);
 }
-.setup-tts-children.is-disabled {
-    opacity: 0.4;
-    pointer-events: none;
-}
 
-/* TTS engine + speaker dropdowns (#281) — sit under the narration toggles
-   in the same vF-step, aligned with them (skip the number badge). Soft-parlor
-   styling: label stacked over a select. */
-.setup-tts-select {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding-left: 30px;
-    margin-top: 8px;
-}
-.setup-tts-select-label {
-    font-size: 0.82rem;
-    color: var(--color-text-muted);
-}
-
-/* Game-wide speaker (#525) — same visual language as the narration dropdowns
-   above it, but a sibling of #tts-children rather than a child, so it keeps
-   full opacity and stays clickable when the narration switch is off. It also
-   drives the House sound effects, hence the hint line underneath. */
-.setup-audio-select {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding-left: 30px;
-    margin-top: 10px;
-}
+/* Small label over a control in the room step (#525, #1185 P10). */
 .setup-audio-select-label {
     font-size: 0.82rem;
     color: var(--color-text-muted);
 }
-.setup-audio-hint {
-    padding-left: 30px;
-    margin-top: 4px;
-    font-size: 0.78rem;
+/* #1185 P10: the room — moment × channel. One table, one row per moment,
+   one column per channel; every cell a 44 × 44 tap target around the
+   original checkbox. A channel that is off dims its column (still tappable:
+   a tap turns it back on); a channel the house does not have greys it and
+   shows "set up ›" in the header. */
+.setup-room {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+.setup-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+}
+.setup-matrix th,
+.setup-matrix td {
+    height: 44px;
+    padding: 0;
+    text-align: center;
+    border-bottom: 1px solid var(--color-border-light);
+}
+.setup-matrix thead th {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: var(--color-text-muted);
 }
+.setup-matrix th[scope="row"],
+.setup-matrix thead th:first-child {
+    text-align: left;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    text-transform: none;
+    letter-spacing: 0;
+}
+.setup-matrix-cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+}
+.setup-matrix-cell input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+.setup-matrix-mark {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--color-border-medium);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-card);
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+.setup-matrix-cell input:checked + .setup-matrix-mark {
+    background: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+}
+.setup-matrix-cell input:focus-visible + .setup-matrix-mark {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+}
+.setup-matrix-none {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+}
+.setup-matrix-setup {
+    display: none;
+    min-height: 44px;
+    padding: 0;
+    font: inherit;
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    text-transform: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+.setup-matrix.is-voice-off [data-col="voice"],
+.setup-matrix.is-house-off td[data-col="light"],
+.setup-matrix.is-house-off td[data-col="sound"] {
+    opacity: 0.4;
+}
+.setup-matrix.no-voice td[data-col="voice"],
+.setup-matrix.no-light td[data-col="light"],
+.setup-matrix.no-sound td[data-col="sound"] {
+    opacity: 0.3;
+    pointer-events: none;
+}
+.setup-matrix.no-voice th[data-col="voice"] .setup-matrix-setup,
+.setup-matrix.no-light th[data-col="light"] .setup-matrix-setup,
+.setup-matrix.no-sound th[data-col="sound"] .setup-matrix-setup {
+    display: block;
+    margin: 0 auto;
+}
+.setup-room-probe {
+    align-self: flex-start;
+    min-height: 44px;
+}
+
 /* #1185 P6: Quizify's own volume. Same column as the speaker picker. */
 .setup-audio-volume {
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
-    padding-left: var(--space-xl);
     margin-top: var(--space-sm);
 }
 .setup-audio-volume label {
@@ -5370,7 +5409,6 @@ footer {
 .setup-house-evening-chip {
     align-self: flex-start;
     min-height: 44px;
-    margin: var(--space-xs) 0 0 var(--space-xl);
     padding: var(--space-xs) var(--space-md);
     font: inherit;
     font-size: var(--font-size-sm);
@@ -5419,35 +5457,11 @@ footer {
     font-size: 0.9rem;
     color: var(--color-text-secondary);
 }
-.setup-house-master .toggle-label {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-text-primary);
-}
 .setup-house-hint {
     padding-left: 30px;
     margin-top: 2px;
     font-size: 0.82rem;
     color: var(--color-text-muted);
-}
-.setup-house-divider {
-    height: 1px;
-    background: var(--color-border-light);
-    margin: 8px 0 8px 30px;
-}
-.setup-house-children {
-    padding-left: 12px;
-    border-left: 2px solid var(--color-border-light);
-    margin-left: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-width: 0;
-    transition: opacity 160ms ease;
-}
-.setup-house-children.is-disabled {
-    opacity: 0.4;
-    pointer-events: none;
 }
 
 /* Preset segmented control. Equal thirds; labels wrap rather than clip so
@@ -5549,17 +5563,6 @@ footer {
 }
 .setup-house-advanced[hidden] {
     display: none;
-}
-.setup-house-subhead {
-    margin-top: 6px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-}
-.setup-house-subhead:first-child {
-    margin-top: 0;
 }
 
 /* Entity pickers. The light picker is a multi-choice checkbox list in a

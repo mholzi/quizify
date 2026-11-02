@@ -410,246 +410,169 @@
                            data-i18n="setup.eigene.needsMultipleChoice">These modes need multiple-choice questions.</p>
                     </div>
 
-                    <!-- TTS narration toggles (#281). Master switch + per-event
-                         toggles. The values ride start_game like the lightning
-                         toggle (admin.js _readTtsConfig → _buildStartGamePayload
-                         → tts). Persisted in localStorage ("quizify_tts").
-                         No-op unless a TTS entity + media player are configured
-                         in the integration options. -->
-                    <!-- Variant B (#281): master switch as the header (with a
-                         one-line hint), a divider, then the per-event toggles
-                         nested + dimmed/disabled under it. admin.js'
-                         _syncTtsChildState toggles the .is-disabled state. -->
-                    <div class="vF-step">
-                        <div class="vF-q"><span class="num">10</span><span data-i18n="setup.tts.title">Quizmaster voice?</span></div>
-                        <label class="toggle-compact setup-tts-toggle setup-tts-master" for="tts-enable-toggle">
-                            <input type="checkbox" id="tts-enable-toggle">
-                            <span class="toggle-switch-compact" aria-hidden="true"></span>
-                            <span class="toggle-label" data-i18n="setup.tts.enable">Narrate the game out loud</span>
-                        </label>
-                        <div class="setup-tts-hint" data-i18n="setup.tts.hint">Your HA speaker becomes the quizmaster.</div>
-                        <div class="setup-tts-divider" aria-hidden="true"></div>
-                        <div class="setup-tts-children" id="tts-children">
-                            <label class="toggle-compact setup-tts-toggle" for="tts-announce-question">
-                                <input type="checkbox" id="tts-announce-question" checked>
-                                <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                <span class="toggle-label" data-i18n="setup.tts.question">Read out each question</span>
-                            </label>
-                            <label class="toggle-compact setup-tts-toggle" for="tts-announce-options">
-                                <input type="checkbox" id="tts-announce-options" checked>
-                                <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                <span class="toggle-label" data-i18n="setup.tts.options">Read out the answer options</span>
-                            </label>
-                            <label class="toggle-compact setup-tts-toggle" for="tts-announce-reveal">
-                                <input type="checkbox" id="tts-announce-reveal" checked>
-                                <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                <span class="toggle-label" data-i18n="setup.tts.reveal">Announce the answer</span>
-                            </label>
-                            <label class="toggle-compact setup-tts-toggle" for="tts-announce-standings">
-                                <input type="checkbox" id="tts-announce-standings" checked>
-                                <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                <span class="toggle-label" data-i18n="setup.tts.standings">Call out the new leader</span>
-                            </label>
-                            <label class="toggle-compact setup-tts-toggle" for="tts-announce-join">
-                                <input type="checkbox" id="tts-announce-join" checked>
-                                <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                <span class="toggle-label" data-i18n="setup.tts.join">Welcome players as they join</span>
-                            </label>
-                            <label class="toggle-compact setup-tts-toggle" for="tts-announce-countdown">
-                                <input type="checkbox" id="tts-announce-countdown">
-                                <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                <span class="toggle-label" data-i18n="setup.tts.countdown">Call out the final countdown</span>
-                            </label>
-                            <label class="toggle-compact setup-tts-toggle" for="tts-announce-milestone">
-                                <input type="checkbox" id="tts-announce-milestone" checked>
-                                <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                <span class="toggle-label" data-i18n="setup.tts.milestone">Shout out answer streaks</span>
-                            </label>
+                    <!-- The room (#1185 P10): voice, lights and sound in ONE step,
+                         sorted by moment instead of by channel. The keys did not
+                         change — every cell is one of the toggles that used to sit
+                         in steps 10 and 11 (quizify_tts / quizify_house in
+                         localStorage, configure_tts / configure_house over the
+                         socket, both riding start_game). Only the grouping did.
+                         The two master switches stay as inputs, hidden: the
+                         presets drive them ("Off" turns both off), and turning a
+                         cell on turns its column's master on. -->
+                    <div class="vF-step setup-room">
+                        <div class="vF-q"><span class="num">10</span><span data-i18n="setup.room.title">Does the room play along?</span></div>
+                        <div class="setup-room-masters" hidden>
+                            <input type="checkbox" id="tts-enable-toggle" aria-hidden="true" tabindex="-1">
+                            <input type="checkbox" id="house-enable-toggle" aria-hidden="true" tabindex="-1">
                         </div>
-                        <!-- Per-game entity pickers (#281). The host can choose the
-                             TTS engine + media_player right here; populated from
-                             /api/quizify/tts-entities by admin.js, persisted in the
-                             "quizify_tts" localStorage object. Empty selection falls
-                             back to the integration-options defaults. -->
-                        <label class="setup-tts-select" for="tts-engine-select">
-                            <span class="setup-tts-select-label" data-i18n="setup.tts.engine">Voice</span>
-                            <select id="tts-engine-select" class="setup-select">
-                                <option value="" data-i18n="setup.tts.usedefault">Use default</option>
-                            </select>
-                        </label>
-                    </div>
-                    <!-- Game-wide speaker (#525). Deliberately OUTSIDE
-                         #tts-children: that container gets .is-disabled →
-                         pointer-events:none when narration is switched off, and
-                         this speaker also carries the House Plays Along sound
-                         effects — burying it behind the narration switch would
-                         make it unreachable for a host who wants effects but no
-                         quizmaster voice. Stored as quizify_tts.media_player,
-                         which stays the single source of truth; the house panel
-                         only holds an optional override. -->
-                    <label class="setup-audio-select" for="game-speaker-select">
-                        <span class="setup-audio-select-label" data-i18n="setup.audio.speaker">Speaker</span>
-                        <select id="game-speaker-select" class="setup-select">
-                            <option value="" data-i18n="setup.tts.usedefault">Use default</option>
-                        </select>
-                    </label>
-                    <div class="setup-audio-hint" data-i18n="setup.audio.speakerHint">Used for the narration and the sound effects.</div>
-                    <!-- #1185 P6: Quizify's own volume for voice and sounds. Until
-                         the host moves it, Quizify never touches the speaker's
-                         volume; once moved, it is set before each line and
-                         restored afterwards. Rides the house config ("volume"). -->
-                    <div class="setup-audio-volume">
-                        <label class="setup-audio-select-label" for="house-volume">
-                            <span data-i18n="setup.audio.volume">Volume</span>
-                            <output id="house-volume-value" for="house-volume" data-i18n="setup.audio.volumeUntouched">as the speaker is</output>
-                        </label>
-                        <input type="range" id="house-volume" min="0" max="100" step="5" value="35">
-                        <button type="button" class="setup-audio-volume-reset" id="house-volume-reset" hidden
-                                data-i18n="setup.audio.volumeReset">Leave the speaker as it is</button>
-                    </div>
-
-                    <!-- House Plays Along (#494), Variant D "Presets". Master
-                         switch (default OFF — silent until enabled), then a
-                         3-way preset segmented control that writes the whole
-                         effect-toggle set client-side, an "Advanced" disclosure
-                         with the ten per-effect toggles, and the entity pickers
-                         (party lights = multi-select checkbox list, speaker +
-                         winner scene = single selects).
-                         Persisted in localStorage ("quizify_house"), pushed to
-                         the server on every change and on ws.onopen
-                         (configure_house) so lobby-time effects work, and it
-                         also rides start_game (admin.js _readHouseConfig →
-                         _buildStartGamePayload → house). The `preset` key is
-                         frontend-only; the backend only ever sees resolved
-                         booleans. Empty entity pickers ([] / "") mean "fall back
-                         to the config-entry value". -->
-                    <div class="vF-step">
-                        <div class="vF-q"><span class="num">11</span><span data-i18n="setup.house.title">Does the house play along?</span></div>
-                        <label class="toggle-compact setup-house-toggle setup-house-master" for="house-enable-toggle">
-                            <input type="checkbox" id="house-enable-toggle">
-                            <span class="toggle-switch-compact" aria-hidden="true"></span>
-                            <span class="toggle-label" data-i18n="setup.house.enable">The house reacts to the game</span>
-                        </label>
+                        <div class="setup-house-hint" data-i18n="setup.room.hint">Voice, lights and sound in the living room.</div>
                         <!-- #1185 P6: after 21:00 (the host device's clock) the
                              setup suggests the quiet evening. A tap takes it;
                              nothing switches on its own. -->
                         <button type="button" class="setup-house-evening-chip" id="house-evening-chip" hidden
                                 data-i18n="setup.house.eveningChip">It's after 9 pm · Use Quiet evening?</button>
-                        <div class="setup-house-hint" data-i18n="setup.house.hint">Lights, sounds and events. Off means the lights stay as they are.</div>
-                        <div class="setup-house-divider" aria-hidden="true"></div>
-                        <div class="setup-house-children" id="house-children">
-                            <!-- Preset segmented control. Real buttons with
-                                 aria-pressed; admin.js _applyHousePreset writes
-                                 the ten effect toggles below. Touching any single
-                                 toggle drops the selection back to "custom". -->
-                            <div class="setup-house-presets" id="house-presets" role="group"
-                                 data-i18n-aria-label="setup.house.presetsLabel" aria-label="Effect preset">
-                                <button type="button" class="setup-house-preset" data-preset="cozy_glow"
-                                        aria-pressed="false" data-i18n="setup.house.presetCozy">Cozy glow</button>
-                                <button type="button" class="setup-house-preset" data-preset="quiet_evening"
-                                        aria-pressed="false" data-i18n="setup.house.presetQuiet">Quiet evening</button>
-                                <button type="button" class="setup-house-preset is-active" data-preset="game_show"
-                                        aria-pressed="true" data-i18n="setup.house.presetGameShow">Game show</button>
-                                <button type="button" class="setup-house-preset" data-preset="events_only"
-                                        aria-pressed="false" data-i18n="setup.house.presetEvents">Events only</button>
-                            </div>
-                            <div class="setup-house-preset-hint" id="house-preset-hint"
-                                 data-i18n="setup.house.hintGameShow">The full show — lights and sound on every beat.</div>
-                            <!-- #1185: the resting colour has its own switch. "House
-                                 off" and "Events only" leave the lights alone. -->
-                            <label class="toggle-compact setup-house-toggle" for="house-lights-follow">
-                                <input type="checkbox" id="house-lights-follow" checked>
-                                <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                <span class="toggle-label" data-i18n="setup.house.lightsFollow">Lights follow the game</span>
+                        <div class="setup-house-presets" id="house-presets" role="group"
+                             data-i18n-aria-label="setup.house.presetsLabel" aria-label="Effect preset">
+                            <button type="button" class="setup-house-preset" data-preset="off"
+                                    aria-pressed="false" data-i18n="setup.house.presetOff">Off</button>
+                            <button type="button" class="setup-house-preset" data-preset="quiet_evening"
+                                    aria-pressed="false" data-i18n="setup.house.presetQuiet">Quiet evening</button>
+                            <button type="button" class="setup-house-preset is-active" data-preset="game_show"
+                                    aria-pressed="true" data-i18n="setup.house.presetGameShow">Game show</button>
+                            <button type="button" class="setup-house-preset" data-preset="events_only"
+                                    aria-pressed="false" data-i18n="setup.house.presetEvents">Events only</button>
+                        </div>
+                        <div class="setup-house-preset-hint" id="house-preset-hint"
+                             data-i18n="setup.house.hintGameShow">The full show — lights and sound on every beat.</div>
+
+                        <!-- Moment × channel. Each cell is a 44 × 44 tap target
+                             wrapping the original checkbox. A column whose channel
+                             is not set up turns grey with "set up ›". -->
+                        <table class="setup-matrix" id="room-matrix">
+                            <thead>
+                                <tr>
+                                    <th scope="col" data-i18n="setup.room.moment">Moment</th>
+                                    <th scope="col" data-col="voice"><span data-i18n="setup.room.voice">Voice</span>
+                                        <button type="button" class="setup-matrix-setup" data-setup="voice" data-i18n="setup.room.setUp">set up ›</button></th>
+                                    <th scope="col" data-col="light"><span data-i18n="setup.room.light">Light</span>
+                                        <button type="button" class="setup-matrix-setup" data-setup="light" data-i18n="setup.room.setUp">set up ›</button></th>
+                                    <th scope="col" data-col="sound"><span data-i18n="setup.room.sound">Sound</span>
+                                        <button type="button" class="setup-matrix-setup" data-setup="sound" data-i18n="setup.room.setUp">set up ›</button></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" data-i18n="setup.room.rowQuestion">Question</th>
+                                    <td data-col="voice"><label class="setup-matrix-cell" for="tts-announce-question"><input type="checkbox" id="tts-announce-question" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.tts.question">Read out each question</span></label></td>
+                                    <td data-col="light"><label class="setup-matrix-cell" for="house-light-question"><input type="checkbox" id="house-light-question" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.house.lightQuestion">Colour shift on each question</span></label></td>
+                                    <td data-col="sound" class="setup-matrix-none">—</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="setup.room.rowCountdown">Countdown</th>
+                                    <td data-col="voice"><label class="setup-matrix-cell" for="tts-announce-countdown"><input type="checkbox" id="tts-announce-countdown"><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.tts.countdown">Call out the final countdown</span></label></td>
+                                    <td data-col="light"><label class="setup-matrix-cell" for="house-light-countdown"><input type="checkbox" id="house-light-countdown" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.house.lightCountdown">Pulse in the final countdown</span></label></td>
+                                    <!-- "Sound" here is the phones' own tick, only on
+                                         phones that have not answered yet (#1185 P4). -->
+                                    <td data-col="sound" class="setup-matrix-none" data-i18n="setup.room.phone">Phone</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="setup.room.rowReveal">Reveal</th>
+                                    <td data-col="voice"><label class="setup-matrix-cell" for="tts-announce-reveal"><input type="checkbox" id="tts-announce-reveal" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.tts.reveal">Announce the answer</span></label></td>
+                                    <td data-col="light"><label class="setup-matrix-cell" for="house-light-reveal"><input type="checkbox" id="house-light-reveal" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.house.lightReveal">Green or amber flash on the reveal</span></label></td>
+                                    <!-- One cell for both stings; admin.js mirrors
+                                         sfx_wrong onto sfx_correct. -->
+                                    <td data-col="sound"><label class="setup-matrix-cell" for="house-sfx-correct"><input type="checkbox" id="house-sfx-correct" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.room.sfxReveal">Sound on the reveal</span></label>
+                                        <input type="checkbox" id="house-sfx-wrong" checked hidden aria-hidden="true" tabindex="-1"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="setup.room.rowStreak">Streak</th>
+                                    <td data-col="voice"><label class="setup-matrix-cell" for="tts-announce-milestone"><input type="checkbox" id="tts-announce-milestone" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.tts.milestone">Shout out answer streaks</span></label></td>
+                                    <td data-col="light"><label class="setup-matrix-cell" for="house-light-streak"><input type="checkbox" id="house-light-streak" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.house.lightStreak">Sparkle on an answer streak</span></label></td>
+                                    <td data-col="sound"><label class="setup-matrix-cell" for="house-sfx-streak"><input type="checkbox" id="house-sfx-streak" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.house.sfxStreak">Sound on an answer streak</span></label></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="setup.room.rowLead">Lead</th>
+                                    <td data-col="voice"><label class="setup-matrix-cell" for="tts-announce-standings"><input type="checkbox" id="tts-announce-standings" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.tts.standings">Call out the new leader</span></label></td>
+                                    <td data-col="light" class="setup-matrix-none">—</td>
+                                    <td data-col="sound" class="setup-matrix-none">—</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="setup.room.rowJoin">New players</th>
+                                    <td data-col="voice"><label class="setup-matrix-cell" for="tts-announce-join"><input type="checkbox" id="tts-announce-join" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.tts.join">Welcome players as they join</span></label></td>
+                                    <td data-col="light" class="setup-matrix-none">—</td>
+                                    <td data-col="sound" class="setup-matrix-none">—</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="setup.room.rowWinner">Winner</th>
+                                    <!-- The winner line belongs to the voice itself;
+                                         it has no switch of its own. -->
+                                    <td data-col="voice" class="setup-matrix-none">✓</td>
+                                    <td data-col="light"><label class="setup-matrix-cell" for="house-light-winner"><input type="checkbox" id="house-light-winner" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.house.lightWinner">Winner light show</span></label></td>
+                                    <td data-col="sound"><label class="setup-matrix-cell" for="house-sfx-winner"><input type="checkbox" id="house-sfx-winner" checked><span class="setup-matrix-mark" aria-hidden="true"></span><span class="sr-only" data-i18n="setup.house.sfxWinner">Fanfare for the winner</span></label></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <label class="toggle-compact setup-house-toggle" for="tts-announce-options">
+                            <input type="checkbox" id="tts-announce-options" checked>
+                            <span class="toggle-switch-compact" aria-hidden="true"></span>
+                            <span class="toggle-label" data-i18n="setup.tts.options">Read out the answer options</span>
+                        </label>
+                        <!-- #1185 P3: the resting colour has its own switch. "Off"
+                             and "Events only" leave the lights alone. -->
+                        <label class="toggle-compact setup-house-toggle" for="house-lights-follow">
+                            <input type="checkbox" id="house-lights-follow" checked>
+                            <span class="toggle-switch-compact" aria-hidden="true"></span>
+                            <span class="toggle-label" data-i18n="setup.house.lightsFollow">Lights follow the game</span>
+                        </label>
+
+                        <!-- #1185 P6: Quizify's own volume for voice and sounds.
+                             Until the host moves it, Quizify never touches the
+                             speaker's volume; once moved, it is set before each
+                             line and restored afterwards. -->
+                        <div class="setup-audio-volume">
+                            <label class="setup-audio-select-label" for="house-volume">
+                                <span data-i18n="setup.audio.volume">Volume</span>
+                                <output id="house-volume-value" for="house-volume" data-i18n="setup.audio.volumeUntouched">as the speaker is</output>
                             </label>
+                            <input type="range" id="house-volume" min="0" max="100" step="5" value="35">
+                            <button type="button" class="setup-audio-volume-reset" id="house-volume-reset" hidden
+                                    data-i18n="setup.audio.volumeReset">Leave the speaker as it is</button>
+                        </div>
 
-                            <div class="setup-house-autohint">
-                                <strong data-i18n="setup.house.autoTitle">Your own automations?</strong>
-                                <span data-i18n="setup.house.autoText">Quizify fires 11 events. Three ready-made blueprints are in the README.</span>
-                                <a href="https://github.com/mholzi/quizify#automations" target="_blank" rel="noopener" data-i18n="setup.house.autoLink">Open guide →</a>
-                            </div>
+                        <!-- #1185: plays one reveal moment (voice, light, sound)
+                             with the settings above, without a game. -->
+                        <button type="button" class="btn btn-secondary setup-room-probe" id="house-probe-btn"
+                                data-i18n="setup.room.probe">▶︎ Try it: play a reveal</button>
 
-                            <!-- Advanced disclosure: the ten per-effect toggles,
-                                 grouped Lights / Sound. Collapsed by default. -->
-                            <button type="button" class="setup-house-adv-btn" id="house-advanced-btn"
-                                    aria-expanded="false" aria-controls="house-advanced">
-                                <span class="setup-house-adv-caret" aria-hidden="true"></span>
-                                <span data-i18n="setup.house.advanced">Customise single effects</span>
-                            </button>
-                            <div class="setup-house-advanced" id="house-advanced" hidden>
-                                <div class="setup-house-subhead" data-i18n="setup.house.groupLights">Lights</div>
-                                <label class="toggle-compact setup-house-toggle" for="house-light-question">
-                                    <input type="checkbox" id="house-light-question" checked>
-                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                    <span class="toggle-label" data-i18n="setup.house.lightQuestion">Colour shift on each question</span>
-                                </label>
-                                <label class="toggle-compact setup-house-toggle" for="house-light-countdown">
-                                    <input type="checkbox" id="house-light-countdown" checked>
-                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                    <span class="toggle-label" data-i18n="setup.house.lightCountdown">Pulse in the final countdown</span>
-                                </label>
-                                <label class="toggle-compact setup-house-toggle" for="house-light-reveal">
-                                    <input type="checkbox" id="house-light-reveal" checked>
-                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                    <span class="toggle-label" data-i18n="setup.house.lightReveal">Green or amber flash on the reveal</span>
-                                </label>
-                                <label class="toggle-compact setup-house-toggle" for="house-light-streak">
-                                    <input type="checkbox" id="house-light-streak" checked>
-                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                    <span class="toggle-label" data-i18n="setup.house.lightStreak">Sparkle on an answer streak</span>
-                                </label>
-                                <label class="toggle-compact setup-house-toggle" for="house-light-winner">
-                                    <input type="checkbox" id="house-light-winner" checked>
-                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                    <span class="toggle-label" data-i18n="setup.house.lightWinner">Winner light show</span>
-                                </label>
-                                <label class="toggle-compact setup-house-toggle" for="house-winner-scene">
-                                    <input type="checkbox" id="house-winner-scene" checked>
-                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                    <span class="toggle-label" data-i18n="setup.house.winnerScene">Activate the winner scene</span>
-                                </label>
-                                <div class="setup-house-subhead" data-i18n="setup.house.groupSound">Sound</div>
-                                <label class="toggle-compact setup-house-toggle" for="house-sfx-correct">
-                                    <input type="checkbox" id="house-sfx-correct" checked>
-                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                    <span class="toggle-label" data-i18n="setup.house.sfxCorrect">Sound on a correct answer</span>
-                                </label>
-                                <label class="toggle-compact setup-house-toggle" for="house-sfx-wrong">
-                                    <input type="checkbox" id="house-sfx-wrong" checked>
-                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                    <span class="toggle-label" data-i18n="setup.house.sfxWrong">Sound on a wrong answer</span>
-                                </label>
-                                <label class="toggle-compact setup-house-toggle" for="house-sfx-streak">
-                                    <input type="checkbox" id="house-sfx-streak" checked>
-                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                    <span class="toggle-label" data-i18n="setup.house.sfxStreak">Sound on an answer streak</span>
-                                </label>
-                                <label class="toggle-compact setup-house-toggle" for="house-sfx-winner">
-                                    <input type="checkbox" id="house-sfx-winner" checked>
-                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
-                                    <span class="toggle-label" data-i18n="setup.house.sfxWinner">Fanfare for the winner</span>
-                                </label>
-                                <!-- Optional split (#525): the game asks for ONE
-                                     speaker in step 7. A host who wants the
-                                     effects somewhere else sets it here — empty
-                                     means "follow the game speaker". admin.js
-                                     opens this disclosure automatically when a
-                                     stored setup already had two different
-                                     speakers, so the split is never carried
-                                     forward invisibly. -->
-                                <label class="setup-house-select" for="house-speaker-select">
-                                    <span class="setup-house-select-label" data-i18n="setup.house.speakerOverride">Different speaker for the effects</span>
-                                    <select id="house-speaker-select" class="setup-select">
-                                        <option value="" data-i18n="setup.house.speakerFollow">Same as the game speaker</option>
-                                    </select>
-                                </label>
-                            </div>
-
-                            <!-- Entity pickers. The light picker is a multi-choice,
-                                 so it is a scrollable checkbox list (a native
-                                 <select multiple> is miserable on a phone);
-                                 admin.js _renderHouseLightList fills it from the
-                                 admin-connect frame (msg.house_entities). -->
+                        <!-- The entity pickers, behind one disclosure: voice
+                             engine, the game speaker (#525), an optional second
+                             speaker for the effects, the lights and the scene. -->
+                        <button type="button" class="setup-house-adv-btn" id="house-advanced-btn"
+                                aria-expanded="false" aria-controls="house-advanced">
+                            <span class="setup-house-adv-caret" aria-hidden="true"></span>
+                            <span data-i18n="setup.room.devices">Speaker · lights · scene</span>
+                        </button>
+                        <div class="setup-house-advanced" id="house-advanced" hidden>
+                            <label class="setup-house-select" for="tts-engine-select">
+                                <span class="setup-house-select-label" data-i18n="setup.tts.engine">Voice</span>
+                                <select id="tts-engine-select" class="setup-select">
+                                    <option value="" data-i18n="setup.tts.usedefault">Use default</option>
+                                </select>
+                            </label>
+                            <label class="setup-house-select" for="game-speaker-select">
+                                <span class="setup-house-select-label" data-i18n="setup.audio.speaker">Speaker</span>
+                                <select id="game-speaker-select" class="setup-select">
+                                    <option value="" data-i18n="setup.tts.usedefault">Use default</option>
+                                </select>
+                            </label>
+                            <div class="setup-house-preset-hint" data-i18n="setup.audio.speakerHint">Used for the narration and the sound effects.</div>
+                            <label class="setup-house-select" for="house-speaker-select">
+                                <span class="setup-house-select-label" data-i18n="setup.house.speakerOverride">Different speaker for the effects</span>
+                                <select id="house-speaker-select" class="setup-select">
+                                    <option value="" data-i18n="setup.house.speakerFollow">Same as the game speaker</option>
+                                </select>
+                            </label>
                             <fieldset class="setup-house-fieldset">
                                 <legend class="setup-house-select-label" data-i18n="setup.house.lightsPicker">Party lights</legend>
                                 <div class="setup-house-lightlist" id="house-light-list"></div>
@@ -660,6 +583,17 @@
                                     <option value="" data-i18n="setup.house.usedefault">Use default</option>
                                 </select>
                             </label>
+                            <label class="toggle-compact setup-house-toggle" for="house-winner-scene">
+                                <input type="checkbox" id="house-winner-scene" checked>
+                                <span class="toggle-switch-compact" aria-hidden="true"></span>
+                                <span class="toggle-label" data-i18n="setup.house.winnerScene">Activate the winner scene</span>
+                            </label>
+                        </div>
+
+                        <div class="setup-house-autohint">
+                            <strong data-i18n="setup.house.autoTitle">Your own automations?</strong>
+                            <span data-i18n="setup.house.autoText">Quizify fires 11 events. Three ready-made blueprints are in the README.</span>
+                            <a href="https://github.com/mholzi/quizify#automations" target="_blank" rel="noopener" data-i18n="setup.house.autoLink">Open guide →</a>
                         </div>
                     </div>
                 </div>

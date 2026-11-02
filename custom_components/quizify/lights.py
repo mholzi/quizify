@@ -582,6 +582,17 @@ class QuizifyPartyLights:
             self._start_pulse(_ACCENT_WINNER)
         self._activate_finale_scene()
 
+    def probe_reveal(self) -> None:
+        """The setup's probe (#1185): the green reveal flash, then the
+        streak double pulse behind it — exactly a reveal with a streak."""
+        if not (self._settings.master_enabled and self._light_reveal):
+            return
+        self._reveal_at = time.monotonic()
+        self._reveal_streaked = True
+        self._start_pulse(_ACCENT_REVEAL_GREEN)
+        if self._light_streak:
+            self._queue_pulse(_ACCENT_STREAK, _STREAK_AFTER_REVEAL_S)
+
     def _activate_finale_scene(self) -> None:
         """Turn on the configured finale scene, if any (#280).
 

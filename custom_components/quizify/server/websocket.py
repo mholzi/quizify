@@ -108,13 +108,14 @@ MSG_KICK_PLAYER = "kick_player"
 MSG_SET_SCORING = "set_scoring"
 MSG_CONFIGURE_TTS = "configure_tts"
 MSG_CONFIGURE_HOUSE = "configure_house"
+MSG_HOUSE_PROBE = "house_probe"
 MSG_SET_LANGUAGE = "set_language"
 MSG_SET_DIFFICULTY = "set_difficulty"
 
 # Admin messages that require WS-level admin (a real ?role=admin tab) rather
 # than the admin-as-player relaxation ``_is_authorized_admin`` allows. These
 # two reach Home Assistant service calls with host-supplied entity ids (#724).
-_WS_ADMIN_ONLY = frozenset({MSG_CONFIGURE_TTS, MSG_CONFIGURE_HOUSE})
+_WS_ADMIN_ONLY = frozenset({MSG_CONFIGURE_TTS, MSG_CONFIGURE_HOUSE, MSG_HOUSE_PROBE})
 MSG_CREATE_TEAM = "create_team"
 MSG_JOIN_TEAM = "join_team"
 MSG_LEAVE_TEAM = "leave_team"
@@ -2108,6 +2109,12 @@ class QuizifyWebSocketHandler:
         ),
         MSG_CONFIGURE_HOUSE: (
             lambda self, ws, data, gs: self._handle_configure_house(ws, data, gs),
+            True,
+        ),
+        MSG_HOUSE_PROBE: (
+            lambda self, ws, data, gs: settings_handlers.handle_house_probe(
+                self, ws, data, gs
+            ),
             True,
         ),
         MSG_SET_LANGUAGE: (

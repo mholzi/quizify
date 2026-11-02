@@ -357,9 +357,6 @@
       "wagerTeamNote": "Mit Teams: der Einsatz gehört dem Team und geht auf den Teampunktestand."
     },
     "tts": {
-      "title": "Quizmaster-Stimme?",
-      "enable": "Spiel laut vorlesen",
-      "hint": "Der HA-Lautsprecher wird zum Quizmaster.",
       "question": "Jede Frage vorlesen",
       "options": "Antwortmöglichkeiten vorlesen",
       "reveal": "Die Antwort ansagen",
@@ -372,31 +369,22 @@
       "noentities": "Keine gefunden – in HA einrichten"
     },
     "house": {
-      "title": "Spielt das Haus mit?",
-      "enable": "Das Haus reagiert auf das Spiel",
       "hint": "Lampen, Sounds und Ereignisse. Aus heißt: Die Lampen bleiben, wie sie sind.",
       "presetsLabel": "Effekt-Vorlage",
-      "presetCozy": "Gemütlich",
       "presetGameShow": "Spielshow",
       "presetEvents": "Nur Ereignisse",
-      "hintCozy": "Warmes Licht zu den großen Momenten, keine Sounds.",
       "hintGameShow": "Die volle Show – Licht und Sound bei jedem Moment.",
       "hintEvents": "Kein Licht, kein Sound, die Lampen bleiben, wie sie sind. Nur die Quizify-Ereignisse feuern, für eigene Automatisierungen.",
       "hintCustom": "Deine eigene Mischung.",
       "autoTitle": "Eigene Automatisierungen?",
       "autoText": "Quizify löst 11 Ereignisse aus. Drei fertige Blueprints findest du in der README.",
       "autoLink": "Anleitung öffnen →",
-      "advanced": "Einzelne Effekte anpassen",
-      "groupLights": "Licht",
-      "groupSound": "Sound",
       "lightQuestion": "Farbwechsel bei jeder Frage",
       "lightCountdown": "Pulsieren im Countdown",
       "lightReveal": "Grün oder Bernstein bei der Auflösung",
       "lightStreak": "Funkeln bei einer Serie",
       "lightWinner": "Lichtshow für den Sieger",
       "winnerScene": "Sieger-Szene aktivieren",
-      "sfxCorrect": "Sound bei richtiger Antwort",
-      "sfxWrong": "Sound bei falscher Antwort",
       "sfxStreak": "Sound bei einer Serie",
       "sfxWinner": "Fanfare für den Sieger",
       "lightsPicker": "Party-Lampen",
@@ -410,7 +398,9 @@
       "lightsFollow": "Lampen färben sich mit",
       "eveningChip": "Es ist nach 21 Uhr · Leiser Abend nehmen?",
       "presetQuiet": "Leiser Abend",
-      "hintQuiet": "Stimme nur für Frage und Auflösung, nur die Fanfare, sanftes Licht, Lautstärke 30 %."
+      "hintQuiet": "Stimme nur für Frage und Auflösung, nur die Fanfare, sanftes Licht, Lautstärke 30 %.",
+      "presetOff": "Aus",
+      "hintOff": "Keine Stimme, kein Licht, kein Sound, keine Ereignisse. Die Lampen bleiben, wie sie sind."
     },
     "audio": {
       "speaker": "Lautsprecher",
@@ -429,7 +419,27 @@
     "deletePresetTitle": "Vorlage löschen?",
     "deletePresetBody": "„{name}“ wird dauerhaft entfernt.",
     "deletePresetBtn": "Löschen",
-    "deletePreset": "Vorlage löschen"
+    "deletePreset": "Vorlage löschen",
+    "room": {
+      "title": "Spielt der Raum mit?",
+      "hint": "Stimme, Lampen und Sound im Wohnzimmer.",
+      "moment": "Moment",
+      "voice": "Stimme",
+      "light": "Licht",
+      "sound": "Ton",
+      "setUp": "einrichten ›",
+      "rowQuestion": "Frage",
+      "rowCountdown": "Countdown",
+      "rowReveal": "Auflösung",
+      "rowStreak": "Serie",
+      "rowLead": "Führung",
+      "rowJoin": "Neue Spieler",
+      "rowWinner": "Sieger",
+      "phone": "Handy",
+      "sfxReveal": "Sound bei der Auflösung",
+      "probe": "▶︎ Probe: Auflösung abspielen",
+      "devices": "Lautsprecher · Lampen · Szene"
+    }
   },
   "featured": {
     "tag": "Neu",

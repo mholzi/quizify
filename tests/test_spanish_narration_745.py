@@ -416,9 +416,9 @@ class TestAdminPanelExposesTheToggle:
         html = (_WWW / "admin.html").read_text("utf-8")
         assert 'id="tts-announce-milestone"' in html
         assert 'data-i18n="setup.tts.milestone"' in html
-        # Nested under the master switch with its six siblings.
-        children = html.split('id="tts-children"', 1)[1]
-        assert 'id="tts-announce-milestone"' in children.split("</div>", 1)[0]
+        # #1185 P10: the voice column of the room matrix, row "Streak".
+        matrix = html.split('id="room-matrix"', 1)[1].split("</table>", 1)[0]
+        assert 'id="tts-announce-milestone"' in matrix
 
     def test_admin_js_reads_persists_and_pushes_it(self) -> None:
         js = (_WWW / "js" / "admin.js").read_text("utf-8")

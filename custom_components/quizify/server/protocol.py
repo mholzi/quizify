@@ -486,6 +486,9 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = OUT_OF_BAND_CLIENT_TYPES | frozenset({
     # both reach Home Assistant service calls with host-supplied entity ids.
     "configure_tts",
     "configure_house",
+    # #1185: play one reveal moment with the current house settings, without
+    # a game. Same WS-level admin bar — it reaches tts.speak and the lights.
+    "house_probe",
     # The host's language pick, pushed while the lobby is still open (#776).
     # Without it GameState.language stays "de" until start_game and every
     # phone that joins an English game is stamped German on arrival.

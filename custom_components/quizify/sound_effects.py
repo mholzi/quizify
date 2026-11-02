@@ -369,6 +369,13 @@ class QuizifySoundEffects:
         if in_reveal:
             self._reveal_sounded = played
 
+    def probe_reveal(self) -> None:
+        """The setup's probe (#1185): the reveal's sound, by the reveal's
+        rule — nothing while the voice owns the speaker."""
+        if self._voice_owns_speaker:
+            return
+        self._play_cue("correct")
+
     @hass_callback
     def _on_winner_decided(self, event: Event) -> None:  # noqa: ARG002
         """Fanfare when the winner is decided.

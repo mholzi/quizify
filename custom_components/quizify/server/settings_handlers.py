@@ -253,6 +253,33 @@ def apply_house_config(handler: QuizifyWebSocketHandler, house: dict[str, Any]) 
             _LOGGER.exception("House event-emitter configure raised")
 
 
+async def handle_house_probe(
+    handler: QuizifyWebSocketHandler,
+    ws: web.WebSocketResponse,
+    data: dict,
+    game_state: QuizifyGameState,
+) -> None:
+    """Play one reveal moment with the current settings (#1185, the probe).
+
+    The setup's "Try it" button: the voice says a sample reveal sentence, the
+    lights flash the reveal accent, and — only with the voice off, as in a real
+    reveal — the speaker plays the sting. No bus event fires: a probe must not
+    run anybody's automations. Each consumer is guarded on its own.
+    """
+    for consumer in (
+        handler._tts_announcer,
+        handler._party_lights,
+        handler._sound_effects,
+    ):
+        probe = getattr(consumer, "probe_reveal", None)
+        if probe is None:
+            continue
+        try:
+            probe()
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("House probe raised")
+
+
 def _pct_or_none(value: Any) -> int | None:
     """A 0–100 percentage from client JSON, or ``None`` for "not set"."""
     if value is None or isinstance(value, bool):

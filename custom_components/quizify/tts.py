@@ -606,6 +606,13 @@ class QuizifyTTSAnnouncer:
             return
         self._speak(tts_phrases.phrase(self._lang(), "lightning_started"))
 
+    def probe_reveal(self) -> None:
+        """The setup's probe (#1185): a sample reveal sentence, as it would
+        sound in a game — same master, same speaker, same volume."""
+        if not self._enabled:
+            return
+        self._speak(tts_phrases.phrase(self._lang(), "probe"), essential=True)
+
     # There is deliberately no ``announce_milestone`` any more (#1185). It was
     # called on the tap, so "Lena has 3 in a row!" told the room Lena's answer
     # was right while the others were still answering. A streak is now one

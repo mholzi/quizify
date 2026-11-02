@@ -10,10 +10,10 @@ demoted into step 8's "Customise single effects" disclosure.
 
 Three things have to hold, and each of them is a way the change could go wrong:
 
-1. The shared control must sit **outside** ``#tts-children``. That container
-   gets ``.is-disabled`` → ``pointer-events: none`` when narration is switched
-   off, so a speaker parked inside it would be unreachable for a host who wants
-   house effects but no quizmaster voice.
+1. The shared control must never be disabled by the narration switch, or it
+   is unreachable for a host who wants house effects but no quizmaster voice.
+   (Since #1185 P10 every picker sits in one "Speaker · lights · scene"
+   disclosure and nothing greys a container out.)
 2. The house picker must sit **inside** ``#house-advanced`` — that is what
    "behind the disclosure" means.
 3. A stored setup holding two *different* speakers must be carried forward with
@@ -79,33 +79,27 @@ def _function_body(js: str, name: str) -> str:
 # --------------------------------------------------------------------------
 
 
-def test_only_one_speaker_control_outside_the_disclosure() -> None:
-    """Exactly one speaker picker may be visible on the default path."""
+def test_one_speaker_question_first_in_the_devices_disclosure() -> None:
+    """#1185 P10 moved every entity picker behind one disclosure ("Speaker ·
+    lights · scene"). There is still one speaker question: the game speaker
+    comes first, the effects override is the optional second one."""
     html = ADMIN_HTML.read_text("utf-8")
-    _, adv_end = _element_span(html, "house-advanced")
-    adv_start, _ = _element_span(html, "house-advanced")
-    outside = html[:adv_start] + html[adv_end:]
-    selects = re.findall(r'<select id="([a-z-]*speaker[a-z-]*)"', outside)
-    assert selects == ["game-speaker-select"], (
-        "step 7 and step 8 must not both ask for a speaker outside the "
-        f"disclosure (#525); found {selects}"
-    )
+    start, end = _element_span(html, "house-advanced")
+    inside = html[start:end]
+    selects = re.findall(r'<select id="([a-z-]*speaker[a-z-]*)"', inside)
+    assert selects == ["game-speaker-select", "house-speaker-select"]
+    outside = html[:start] + html[end:]
+    assert not re.findall(r'<select id="([a-z-]*speaker[a-z-]*)"', outside)
 
 
-def test_game_speaker_is_not_inside_the_narration_children() -> None:
-    """It must survive the narration master switch being off (#525).
-
-    ``.setup-tts-children.is-disabled`` sets ``pointer-events: none``, so a
-    control parked in there cannot be operated — and this one also drives the
-    house sound effects.
-    """
-    html = ADMIN_HTML.read_text("utf-8")
-    start, end = _element_span(html, "tts-children")
-    assert 'id="game-speaker-select"' not in html[start:end], (
-        "the game-wide speaker must live outside #tts-children, otherwise it "
-        "goes pointer-events:none when narration is switched off (#525)"
-    )
-    assert 'id="game-speaker-select"' in html, "the shared picker must exist"
+def test_game_speaker_is_never_disabled_by_the_voice_switch() -> None:
+    """It must survive the narration being off (#525): nothing in the room
+    step greys a container out with pointer-events any more (#1185 P10), and
+    the voice switch never disables the game speaker."""
+    js = ADMIN_JS.read_text("utf-8")
+    body = _function_body(js, "_syncTtsChildState")
+    assert "speaker" not in body and ".disabled" not in body
+    assert 'id="game-speaker-select"' in ADMIN_HTML.read_text("utf-8")
 
 
 def test_house_speaker_moved_into_the_disclosure() -> None:
@@ -114,17 +108,6 @@ def test_house_speaker_moved_into_the_disclosure() -> None:
     start, end = _element_span(html, "house-advanced")
     assert 'id="house-speaker-select"' in html[start:end], (
         "the effects-speaker override belongs inside #house-advanced (#525)"
-    )
-
-
-def test_pointer_events_none_still_applies_to_the_narration_children() -> None:
-    """Pins the property the placement rule depends on."""
-    css = (WWW / "css" / "styles.css").read_text("utf-8")
-    block = css[css.index(".setup-tts-children.is-disabled") :]
-    block = block[block.index("{") + 1 : block.index("}")]
-    assert "pointer-events: none" in block, (
-        "if this ever stops being true, revisit test_game_speaker_is_not_"
-        "inside_the_narration_children — the placement rule exists because of it"
     )
 
 

@@ -63,6 +63,9 @@ ADMIN_REQUIRED_TYPES = {
     # lights/SFX/bus-event settings pushed during the lobby. Admin-only — it
     # reconfigures HA entities in the host's home.
     "configure_house",
+    # house_probe plays one reveal with the room settings, no game (#1185).
+    # Admin-only: it reaches tts.speak, the lights and the speaker.
+    "house_probe",
     # set_language carries the host's language pick into the still-open lobby
     # (#776), so a phone joining an English game is not stamped German on
     # arrival. Admin-only: it rewrites the language every phone in the room

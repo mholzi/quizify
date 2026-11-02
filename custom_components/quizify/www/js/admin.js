@@ -1515,6 +1515,12 @@
     // NB: these constants must be assigned BEFORE _initTtsToggles() runs — the
     // init call executes here at top-level, ahead of the helper block below, so
     // a later `var TTS_DEFAULTS = …` would still read as undefined here (#281).
+    // #1185 P10: the room matrix's state. Which channels exist is learnt from
+    // the entity lists; a missing one greys its column.
+    var _roomChannels = { voice: true, light: true, sound: true };
+    var VOICE_CELLS = ['question', 'reveal', 'standings', 'join', 'countdown', 'milestone', 'options'];
+    var HOUSE_CELLS = ['light_question', 'light_countdown', 'light_reveal', 'light_streak',
+        'light_winner', 'sfx_correct', 'sfx_streak', 'sfx_winner'];
     var TTS_STORAGE_KEY = 'quizify_tts';
     var TTS_DEFAULTS = {
         enabled: false,
@@ -1565,13 +1571,10 @@
     // preset → the exact effect-toggle set it writes. `events_only` turns every
     // effect off on purpose: the quizify_* HA events still fire, so the host can
     // drive their own automations.
+    // #1185 P10: "Cozy glow" made way for the quiet evening; a stored cozy
+    // setup simply reads as "custom" now. "Off" is handled on its own — it
+    // switches both masters off and writes no cell.
     var HOUSE_PRESETS = {
-        cozy_glow: {
-            light_question: true, light_countdown: false, light_reveal: true,
-            light_streak: false, light_winner: true, winner_scene: true,
-            sfx_correct: false, sfx_wrong: false, sfx_streak: false, sfx_winner: false,
-            lights_follow: true,
-        },
         game_show: {
             light_question: true, light_countdown: true, light_reveal: true,
             light_streak: true, light_winner: true, winner_scene: true,
@@ -1598,14 +1601,19 @@
         question: true, options: false, reveal: true, standings: false,
         join: false, countdown: false, milestone: false,
     };
+    // The game show's voice: everything but the spoken countdown (#1185 P4).
+    var GAME_SHOW_TTS = {
+        question: true, options: true, reveal: true, standings: true,
+        join: true, countdown: false, milestone: true,
+    };
     var QUIET_EVENING_VOLUME = 30;
     var QUIET_EVENING_BRIGHTNESS = 60;
     // From this hour on (host device clock) the setup suggests it.
     var QUIET_EVENING_FROM_HOUR = 21;
     // preset id → the i18n key of the one-line hint under the segmented control.
     var HOUSE_PRESET_HINTS = {
+        off: 'setup.house.hintOff',
         quiet_evening: 'setup.house.hintQuiet',
-        cozy_glow: 'setup.house.hintCozy',
         game_show: 'setup.house.hintGameShow',
         events_only: 'setup.house.hintEvents',
         custom: 'setup.house.hintCustom',
@@ -1640,6 +1648,7 @@
     var _houseLightsRendered = false;
     var _houseEntitiesLoaded = false;
     _initHouseToggles();
+    _initRoomMatrix();
 
     // Tell the server which language the lobby is being run in (#776). No-op
     // if the socket isn't open yet — ws.onopen re-sends after admin_connect,
@@ -2185,6 +2194,8 @@
         if ((msg.tts_entities || msg.media_players) && _ttsEls && _ttsEls.engine) {
             var _ttsCfg = _readTtsConfig();
             _populateEntitySelect(_ttsEls.engine, msg.tts_entities || [], _ttsCfg.tts_entity);
+            // #1185 P10: no engine anywhere → the voice column says "set up".
+            if (Array.isArray(msg.tts_entities)) _setRoomChannel('voice', msg.tts_entities.length > 0);
             _populateEntitySelect(_ttsEls.speaker, msg.media_players || [], _ttsCfg.media_player);
             _ttsEntitiesLoaded = true;
         } else if (msg.admin_session_token && !_ttsEntitiesLoaded && _ttsEls && _ttsEls.engine) {
@@ -3567,13 +3578,10 @@
 
     // Variant B (#281): dim + disable the child event toggles when the master
     // switch is off, so the master→child hierarchy is unmistakable.
+    // #1185 P10: the voice column dims while the voice is off, but its cells
+    // stay tappable — turning one on is how the host turns the voice back on.
     function _syncTtsChildState() {
-        var on = _ttsEls.enable ? !!_ttsEls.enable.checked : false;
-        var sub = document.getElementById('tts-children');
-        if (sub) sub.classList.toggle('is-disabled', !on);
-        ['question', 'options', 'reveal', 'standings', 'join', 'countdown'].forEach(function (k) {
-            if (_ttsEls[k]) _ttsEls[k].disabled = !on;
-        });
+        _syncRoomMatrix();
     }
 
     function _readTtsConfig() {
@@ -3797,6 +3805,7 @@
     // .is-disabled pattern as _syncTtsChildState): presets, the advanced
     // section and the entity pickers.
     function _syncHouseChildState() {
+        _syncRoomMatrix();
         var on = _houseEls.enable ? !!_houseEls.enable.checked : false;
         var sub = _houseEls.children;
         if (sub) {
@@ -3810,6 +3819,8 @@
     // Which preset (if any) does this exact set of effect toggles match?
     // Returns 'custom' when it matches none.
     function _detectHousePreset(cfg) {
+        var voiceOn = _ttsEls && _ttsEls.enable ? !!_ttsEls.enable.checked : !!_loadTtsConfig().enabled;
+        if (!cfg.enabled && !voiceOn) return 'off';
         var names = Object.keys(HOUSE_PRESETS);
         for (var i = 0; i < names.length; i++) {
             var map = HOUSE_PRESETS[names[i]];
@@ -3844,15 +3855,27 @@
     // Tapping a preset writes the WHOLE effect-toggle set. The entity pickers
     // are untouched — a preset only ever decides which effects fire.
     function _applyHousePreset(preset) {
+        if (preset === 'off') {
+            // Off means off (#1185 P3): voice, lights, sound and events.
+            if (_ttsEls.enable) _ttsEls.enable.checked = false;
+            if (_houseEls.enable) _houseEls.enable.checked = false;
+            _saveTtsConfig();
+            _setHousePresetActive('off');
+            _saveHouseConfig();
+            return;
+        }
         var map = HOUSE_PRESETS[preset];
         if (!map) return;
         HOUSE_EFFECT_KEYS.forEach(function (k) {
             if (_houseEls[k]) _houseEls[k].checked = !!map[k];
         });
+        if (_houseEls.enable) _houseEls.enable.checked = true;
         if (preset === 'quiet_evening') {
             // The voice and the volume belong to the quiet evening too.
-            _applyQuietEveningVoice();
+            _applyPresetVoice(QUIET_EVENING_TTS);
             _setHouseVolume(QUIET_EVENING_VOLUME);
+        } else if (preset === 'game_show') {
+            _applyPresetVoice(GAME_SHOW_TTS);
         }
         _setHousePresetActive(preset);
         _saveHouseConfig();
@@ -3990,11 +4013,84 @@
         chip.hidden = !(late && _housePreset !== 'quiet_evening');
     }
 
-    function _applyQuietEveningVoice() {
-        Object.keys(QUIET_EVENING_TTS).forEach(function (k) {
-            if (_ttsEls[k]) _ttsEls[k].checked = QUIET_EVENING_TTS[k];
+    function _applyPresetVoice(map) {
+        Object.keys(map).forEach(function (k) {
+            if (_ttsEls[k]) _ttsEls[k].checked = map[k];
         });
+        if (_ttsEls.enable) _ttsEls.enable.checked = true;
         _saveTtsConfig();
+    }
+
+    // ---- The room matrix (#1185 P10) ----
+    // Moment × channel over the same keys as before (state declared up top,
+    // next to TTS_DEFAULTS, because the init calls run before this block).
+
+    function _syncRoomMatrix() {
+        var m = document.getElementById('room-matrix');
+        if (!m) return;
+        var voiceOn = _ttsEls.enable ? !!_ttsEls.enable.checked : false;
+        var houseOn = _houseEls && _houseEls.enable ? !!_houseEls.enable.checked : false;
+        m.classList.toggle('is-voice-off', !voiceOn);
+        m.classList.toggle('is-house-off', !houseOn);
+        m.classList.toggle('no-voice', !_roomChannels.voice);
+        m.classList.toggle('no-light', !_roomChannels.light);
+        m.classList.toggle('no-sound', !_roomChannels.sound);
+    }
+
+    function _setRoomChannel(col, available) {
+        _roomChannels[col] = !!available;
+        _syncRoomMatrix();
+    }
+
+    function _initRoomMatrix() {
+        // A cell turned on wakes its column: the voice master for the voice,
+        // the house master for light and sound. Attached after the save
+        // handlers of the two init functions, so it saves again with the
+        // master on.
+        VOICE_CELLS.forEach(function (k) {
+            if (!_ttsEls[k]) return;
+            on(_ttsEls[k], 'change', function () {
+                if (_ttsEls[k].checked && _ttsEls.enable && !_ttsEls.enable.checked) {
+                    _ttsEls.enable.checked = true;
+                    _saveTtsConfig();
+                }
+                _onHouseEffectChange();
+            });
+        });
+        HOUSE_CELLS.forEach(function (k) {
+            if (!_houseEls[k]) return;
+            on(_houseEls[k], 'change', function () {
+                if (k === 'sfx_correct' && _houseEls.sfx_wrong) {
+                    // One cell for both stings.
+                    _houseEls.sfx_wrong.checked = _houseEls.sfx_correct.checked;
+                }
+                if (_houseEls[k].checked && _houseEls.enable && !_houseEls.enable.checked) {
+                    _houseEls.enable.checked = true;
+                }
+                _onHouseEffectChange();
+            });
+        });
+        var m = document.getElementById('room-matrix');
+        if (m) {
+            m.querySelectorAll('.setup-matrix-setup').forEach(function (btn) {
+                on(btn, 'click', function () {
+                    _toggleHouseAdvanced(true);
+                    if (_houseEls.advanced && _houseEls.advanced.scrollIntoView) {
+                        _houseEls.advanced.scrollIntoView({ block: 'nearest' });
+                    }
+                });
+            });
+        }
+        var probe = document.getElementById('house-probe-btn');
+        if (probe) {
+            on(probe, 'click', function () {
+                // Plays one reveal with the settings above — voice, light and
+                // sound — without a game. The server never fires bus events
+                // for it, so no automation reacts to a probe.
+                send('house_probe', {}, { quiet: true });
+            });
+        }
+        _syncRoomMatrix();
     }
 
     function _readHouseLightEntities() {
@@ -4084,6 +4180,9 @@
     // fallback endpoint.
     function _populateHouseEntities(payload, cfg) {
         var data = payload || {};
+        // #1185 P10: a channel the house does not have greys its column.
+        if (Array.isArray(data.lights)) _setRoomChannel('light', data.lights.length > 0);
+        if (Array.isArray(data.media_players)) _setRoomChannel('sound', data.media_players.length > 0);
         _renderHouseLightList(data.lights || [], cfg.light_entities);
         _houseEntitiesLoaded = true;
         // #525: restore the raw override, never the resolved value.
