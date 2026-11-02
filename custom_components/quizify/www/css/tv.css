@@ -3678,7 +3678,7 @@ footer {
     height: 40px;
     border-radius: var(--radius-md);
     background: var(--color-bg-card-alt);
-    animation: qz-skeleton 1.6s ease-in-out infinite;
+    animation: qz-skeleton var(--dur-skeleton) ease-in-out infinite;
 }
 /* ==========================================
    Responsive
