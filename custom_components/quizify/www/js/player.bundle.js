@@ -2199,7 +2199,7 @@
             var isMe = _isMyEstimateRow(g, me);
             var labelPos = (idx % 2 === 0) ? 'below' : 'above';
             var dotStyle = 'background:' + (g.color || 'var(--sky)') + ';';
-            if (isWinner) dotStyle += 'width:18px;height:18px;border-color:var(--gold,#E8C47F);';
+            if (isWinner) dotStyle += 'width:18px;height:18px;border-color:var(--color-gold);';
             var nameLabel = isMe ? t('estimate.you') : g.player_name;
             var star = isWinner ? ' ★' : '';
             markersHtml +=

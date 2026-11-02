@@ -2781,7 +2781,7 @@ body.is-admin .reaction-bar {
     font-weight: var(--font-weight-bold);
     font-size: clamp(4rem, 22vw, 9rem);
     line-height: 1;
-    color: var(--color-text-neon, #F5EFE6);
+    color: #F5EFE6;
     text-shadow: 0 0 36px rgba(245, 239, 230, 0.4);
     min-height: 1em;
 }
@@ -3701,7 +3701,7 @@ body.is-admin .reaction-bar {
     flex-wrap: wrap;
 }
 .est-truth-unit {
-    font-family: var(--font-sans);
+    font-family: inherit;
     font-size: 0.95rem;
     font-weight: 600;
     letter-spacing: 0.01em;
@@ -3942,7 +3942,7 @@ body.is-admin .reaction-bar {
 .preset-chip.is-active {
     background: var(--color-accent-primary);
     border-color: var(--color-accent-primary);
-    color: var(--color-text-on-accent, #43201B);
+    color: #43201B;
     font-weight: 600;
 }
 .preset-chip--add {

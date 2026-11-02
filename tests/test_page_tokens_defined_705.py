@@ -59,3 +59,82 @@ def test_no_broadcast_living_room_purple_is_left() -> None:
     for page in _pages():
         html = page.read_text(encoding="utf-8")
         assert "108, 92, 231" not in html, f"{page.name} still paints the old purple"
+
+
+# ---------------------------------------------------------------------------
+# #1178: the same check for the CSS modules and the scripts' style strings.
+#
+# The page test above never saw the stylesheets themselves. The design-system
+# review behind #1178 found 16 `var()` references in css/src/ to tokens that
+# do not exist — mostly DESIGN.md spellings (`--hairline`, `--fs-sm`,
+# `--color-text`, `--font-sans`) — four of them without a fallback, so the
+# declaration was dropped and the element inherited its colour by accident.
+# Here a reference *with* a fallback counts too: the fallback hides the typo,
+# it does not make the token exist.
+# ---------------------------------------------------------------------------
+
+_SRC = _WWW / "css/src"
+_JS_DIR = _WWW / "js"
+#: Generated copies of modules that are checked themselves.
+_JS_GENERATED = {"player.bundle.js", "common.bundle.js"}
+# ``var(--x`` with or without a fallback.
+_ANY_USE = re.compile(r"var\(\s*(--[\w-]+)")
+_SET_PROPERTY = re.compile(r"setProperty\(\s*['\"](--[\w-]+)")
+
+#: Known undefined references that cannot be repointed without a visible
+#: change. Each entry is (file, token). This list may only shrink.
+#:
+#: ``player-reveal.js`` paints an estimate dot / swatch with
+#: ``g.color || 'var(--sky)'``. ``--sky`` does not exist, so in the (rare) case
+#: of a player without a colour the inline background is invalid and the dot
+#: is transparent. Pointing it at ``--color-accent-blue`` would make it sky
+#: blue, which is the intent but a visible change; it belongs to the
+#: player-colour step of #1178, not to the no-visual-change step that added
+#: this check.
+_KNOWN_UNDEFINED = {("js/player-reveal.js", "--sky")}
+
+
+def _module_files() -> list[Path]:
+    files = sorted(_SRC.glob("*.css"))
+    files += sorted(p for p in _JS_DIR.glob("*.js") if p.name not in _JS_GENERATED)
+    return files
+
+
+def _all_definitions() -> set[str]:
+    defined: set[str] = set()
+    for path in _module_files() + _pages():
+        text = path.read_text(encoding="utf-8")
+        defined |= set(_DEF.findall(text))
+        defined |= set(_SET_PROPERTY.findall(text))
+    return defined
+
+
+def test_there_are_modules_to_check() -> None:
+    names = {p.name for p in _module_files()}
+    assert {"00-tokens.css", "07-player.css", "admin.js"} <= names, names
+
+
+@pytest.mark.parametrize("module", _module_files(), ids=lambda p: p.name)
+def test_every_token_a_module_uses_is_defined(module: Path) -> None:
+    rel = module.relative_to(_WWW).as_posix()
+    defined = _all_definitions()
+    used = set(_ANY_USE.findall(module.read_text(encoding="utf-8")))
+    missing = sorted(
+        t for t in used if t not in defined and (rel, t) not in _KNOWN_UNDEFINED
+    )
+    assert not missing, (
+        f"{rel} uses undefined tokens: {missing}. Without a fallback the "
+        "declaration is dropped; with one, the fallback hides a name that "
+        "exists nowhere. Use the token from css/src/00-tokens.css "
+        "(docs/DESIGN.md lists them)."
+    )
+
+
+def test_known_undefined_references_are_still_there() -> None:
+    """An allow-list entry that no longer matches must be removed."""
+    defined = _all_definitions()
+    for rel, token in sorted(_KNOWN_UNDEFINED):
+        text = (_WWW / rel).read_text(encoding="utf-8")
+        assert token in _ANY_USE.findall(text) and token not in defined, (
+            f"({rel}, {token}) is fixed — drop it from _KNOWN_UNDEFINED"
+        )
