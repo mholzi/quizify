@@ -81,6 +81,7 @@
             '--font-size-3xl': '28px',
             '--font-size-4xl': '32px',
             '--font-size-timer': '64px',
+            '--font-size-timer-up': 'clamp(1rem, 5.2vw, 1.5rem)',
             '--font-size-hero': '72px',
             '--font-weight-normal': '400',
             '--font-weight-medium': '500',

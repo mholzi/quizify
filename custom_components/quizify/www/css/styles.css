@@ -196,6 +196,7 @@
     --font-size-3xl: 28px;
     --font-size-4xl: 32px;
     --font-size-timer: 64px;
+    --font-size-timer-up: clamp(1rem, 5.2vw, 1.5rem); /* #1174: phone clock text; es fits 320 px */
     --font-size-hero: 72px;
 
     --font-weight-normal: 400;
@@ -4228,7 +4229,7 @@ footer {
 /* Time's up (#1174): clock at zero, this phone has not answered. */
 .timer.timer--up {
     /* Variant B: the text stays on one line; es fits a 320 px phone. */
-    font-size: clamp(1rem, 5.2vw, 1.5rem);
+    font-size: var(--font-size-timer-up);
     white-space: nowrap;
     max-width: 100%;
     color: var(--color-text-muted);
