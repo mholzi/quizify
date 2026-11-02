@@ -816,6 +816,7 @@
 
             case 'ANSWER_REVEAL':
             case 'REVEAL':
+                game.stopCountdown();  // #1174: as handleRoundSummary does
                 pu.showView('reveal-view');
                 reveal.updateRevealView(msg);
                 // The hatch itself is armed by setResetStage above, which

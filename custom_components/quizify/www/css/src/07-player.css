@@ -604,6 +604,24 @@
     animation: timer-pulse-intense 0.4s ease-in-out;
 }
 
+/* Time's up (#1174): clock at zero, this phone has not answered. */
+.timer.timer--up {
+    color: var(--color-text-muted);
+    text-shadow: none;
+    animation: none;
+    transition: color var(--dur-time-up) var(--ease-out),
+        text-shadow var(--dur-time-up) var(--ease-out);
+}
+.answer-buttons.is-time-up .answer-btn,
+.estimate-section.is-time-up .estimate-slider,
+.estimate-section.is-time-up .estimate-submit-btn {
+    opacity: 0.5;
+    filter: saturate(0.2);
+    pointer-events: none;
+    transition: opacity var(--dur-time-up) var(--ease-out),
+        filter var(--dur-time-up) var(--ease-out);
+}
+
 /* Answer section */
 .answer-section {
     margin-top: var(--space-md);

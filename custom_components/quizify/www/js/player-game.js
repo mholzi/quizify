@@ -132,6 +132,7 @@
             if (remaining <= 0) {
                 timerElement.setAttribute('aria-label', t('game.timerUpAria'));
                 stopCountdown();
+                _setTimeUp(true);
             }
         }
 
@@ -152,6 +153,25 @@
         // statement, so a question STARTING clears the previous question's
         // announcement through here too. One place, four exits.
         clearTimeAnnouncement();
+        _setTimeUp(false);
+    }
+
+    // #1174: clock at zero, no reveal yet. An unanswered phone gets a neutral
+    // timer and dimmed tiles that refuse taps (the server answers late ones
+    // with ERR_ROUND_EXPIRED). Cleared through stopCountdown.
+    var _timeUp = false;
+
+    function _setTimeUp(on) {
+        _timeUp = !!on;
+        var grid = document.getElementById('answer-buttons');
+        var answered = hasSubmitted || _guessPending ||
+            !!(grid && grid.querySelector && grid.querySelector('.has-team-answer'));
+        var dim = _timeUp && !answered;
+        var timerEl = document.getElementById('timer');
+        if (timerEl && timerEl.classList) timerEl.classList.toggle('timer--up', dim);
+        if (grid && grid.classList) grid.classList.toggle('is-time-up', dim);
+        var est = document.getElementById('estimate-container');
+        if (est && est.classList) est.classList.toggle('is-time-up', dim);
     }
 
     // ============================================
@@ -766,7 +786,7 @@
      * showed a confirmed tick in every one of those cases.
      */
     function handleEstimateSubmit(sendFn) {
-        if (hasSubmitted || _guessPending) return;
+        if (hasSubmitted || _guessPending || _timeUp) return;
         if (isFrozen()) return;
         var slider = document.getElementById('estimate-slider');
         if (!slider) return;
@@ -1023,7 +1043,7 @@
      * @param {Function} sendFn - Function to send WS messages
      */
     function handleAnswerClick(selectedIndex, sendFn) {
-        if (hasSubmitted) return;
+        if (hasSubmitted || _timeUp) return;
         // #322: while the freeze-lockout overlay is up, hard-block submits.
         // The full-scrim overlay already swallows taps, and the server
         // rejects with ERR_FROZEN regardless — this is belt-and-suspenders
@@ -1115,6 +1135,8 @@
         var estConfirm = document.getElementById('estimate-submitted-confirmation');
         if (estConfirm) estConfirm.classList.remove('hidden');
         _estimateLockIn(true, false);
+        // #1174: answered phones see no time's-up dim.
+        if (_timeUp) _setTimeUp(true);
     }
 
     function resetSubmissionState() {

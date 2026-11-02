@@ -287,6 +287,7 @@
     --dur-wager: 700ms;           /* the stake leaves the bank as a chip */
     --dur-removed-fade: 400ms;    /* a removed guest dims to 40 % */
     --dur-removed-lead: 300ms;    /* ... then the row slides to the bottom */
+    --dur-time-up: 260ms;         /* #1174: clock at zero, tiles dim */
 
     /* Z-Index Tokens */
     --z-control-bar: 100;

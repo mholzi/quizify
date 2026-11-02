@@ -146,6 +146,7 @@
             '--dur-wager': '700ms',
             '--dur-removed-fade': '400ms',
             '--dur-removed-lead': '300ms',
+            '--dur-time-up': '260ms',
             '--z-control-bar': '100',
             '--z-modal': '1000',
             '--z-overlay': '1100',
