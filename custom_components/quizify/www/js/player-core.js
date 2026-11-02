@@ -2605,22 +2605,6 @@
             }
         });
 
-        // Refresh / retry buttons
-        var refreshBtn = document.getElementById('refresh-btn');
-        if (refreshBtn) {
-            refreshBtn.addEventListener('click', function () {
-                pu.showView('loading-view');
-                connect();
-            });
-        }
-        var retryBtn = document.getElementById('retry-btn');
-        if (retryBtn) {
-            retryBtn.addEventListener('click', function () {
-                pu.showView('loading-view');
-                connect();
-            });
-        }
-
         // #750: back to a usable join screen after a kick. A full reload, not
         // showView('join-view') — the server closed our socket, so the join
         // button on a re-shown form would have nothing to send on. The query

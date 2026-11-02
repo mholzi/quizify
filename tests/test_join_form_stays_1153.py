@@ -24,7 +24,7 @@ pytestmark = pytest.mark.skipif(shutil.which("node") is None, reason="node missi
 
 _SCRIPT = """
 require({stub});
-var VIEWS = ['loading-view','not-found-view','ended-view','in-progress-view',
+var VIEWS = ['loading-view',
   'join-view','lobby-view','game-view','reveal-view','paused-view','end-view',
   'connection-lost-view','kicked-view','lightning-splash-view','lightning-view',
   'lightning-recap-view'];

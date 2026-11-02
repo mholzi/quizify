@@ -82,23 +82,6 @@
             <p data-i18n="common.connecting">Connecting to the game…</p>
         </div>
 
-        <!-- Error: Game not found -->
-        <div id="not-found-view" class="view hidden">
-            <div class="error-icon qz-icon qz-icon--sky" data-ui-icon="brain">🧠</div>
-            <h1 data-i18n="errors.gameNotFound">Game Not Found</h1>
-            <p data-i18n="errors.gameNotFoundHint">This game doesn't exist or the link is incorrect.</p>
-            <p class="hint" data-i18n="errors.askHostQr">Ask the host for a new QR code.</p>
-            <button id="refresh-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try again</button>
-        </div>
-
-        <!-- Error: Game ended -->
-        <div id="ended-view" class="view hidden">
-            <div class="error-icon qz-icon qz-icon--sun" data-ui-icon="party">🎉</div>
-            <h1 data-i18n="errors.gameHasEnded">Game Has Ended</h1>
-            <p data-i18n="errors.thanksForPlaying">Thanks for playing Quizify!</p>
-            <p class="hint" data-i18n="errors.askHostNewGame">Ask the host to start a new game.</p>
-        </div>
-
         <!-- Removed by the host (#750). Not an error screen in the network
              sense — the socket did exactly what it was told — so it says who
              did it and what to do next, instead of offering a "Try Again"
@@ -109,14 +92,6 @@
             <p data-i18n="errors.removedHint">The host removed you from the game.</p>
             <p class="hint" data-i18n="errors.removedRejoinHint">Ask the host to let you back in, then join again.</p>
             <button id="kicked-rejoin-btn" class="btn btn-primary btn-glow" data-i18n="errors.removedRejoin">Back to join screen</button>
-        </div>
-
-        <!-- Error: Game in progress (can't join mid-round) -->
-        <div id="in-progress-view" class="view hidden">
-            <div class="error-icon qz-icon qz-icon--mix" data-ui-icon="hourglass">⏳</div>
-            <h1 data-i18n="errors.gameInProgress">Game In Progress</h1>
-            <p data-i18n="errors.gameInProgressHint">The game is currently in a round. Try again in a moment.</p>
-            <button id="retry-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try again</button>
         </div>
 
         <!-- Join form -->

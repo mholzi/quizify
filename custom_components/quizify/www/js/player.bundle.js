@@ -80,7 +80,11 @@
     // ============================================
 
     var viewIds = [
-        'loading-view', 'not-found-view', 'ended-view', 'in-progress-view',
+        // #1182 L12: not-found-view, ended-view and in-progress-view were
+        // designed and translated but no code path ever showed them; the
+        // join form's own hints (join.refused.GAME_ENDED, resetHint, …) do
+        // that job. Deleted rather than kept for every text pass to maintain.
+        'loading-view',
         'join-view', 'lobby-view', 'game-view', 'reveal-view',
         'paused-view', 'end-view', 'connection-lost-view',
         // #750: the host-removed screen. Same registration rule as the
@@ -9250,22 +9254,6 @@
                 }
             }
         });
-
-        // Refresh / retry buttons
-        var refreshBtn = document.getElementById('refresh-btn');
-        if (refreshBtn) {
-            refreshBtn.addEventListener('click', function () {
-                pu.showView('loading-view');
-                connect();
-            });
-        }
-        var retryBtn = document.getElementById('retry-btn');
-        if (retryBtn) {
-            retryBtn.addEventListener('click', function () {
-                pu.showView('loading-view');
-                connect();
-            });
-        }
 
         // #750: back to a usable join screen after a kick. A full reload, not
         // showView('join-view') — the server closed our socket, so the join
