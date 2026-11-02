@@ -237,7 +237,7 @@
         '.note{color:var(--secondary-text-color);font-size:.9em;margin:0}',
         // #1182: the offline block. Old numbers may stay on screen, but only
         // under this block and the "as of" stamp, never looking current.
-        '.offline{display:flex;flex-direction:column;gap:8px;padding:10px 12px;border-radius:10px;',
+        '.offline{display:flex;flex-direction:column;gap:.5em;padding:.75em;border-radius:var(--ha-card-border-radius,12px);',
         'border:1px solid var(--divider-color);background:var(--secondary-background-color,transparent)}',
         '.offline .line{margin:0;font-weight:600}',
         '.offline .row button{flex:0 0 auto}',

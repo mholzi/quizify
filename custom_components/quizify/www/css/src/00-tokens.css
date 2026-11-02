@@ -279,6 +279,7 @@
     --dur-settle: 420ms;          /* Hot Seat: the settlement lands */
     --dur-desat: 400ms;           /* phone colour drains while the socket is down */
     --dur-conn-back: 1200ms;      /* the connection pill stays sage this long */
+    --dur-skeleton: 1600ms;       /* one breath of a loading skeleton (#1182) */
     /* Round 3 (#1173). */
     --dur-guess: 600ms;           /* estimate reveal: a guess slides in */
     --dur-guess-stagger: 80ms;    /* ... each one 80 ms after the last */

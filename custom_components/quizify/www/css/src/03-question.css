@@ -105,7 +105,7 @@
 }
 .question-media.is-loading {
     background: var(--color-bg-card-alt);
-    animation: qz-skeleton 1.6s ease-in-out infinite;
+    animation: qz-skeleton var(--dur-skeleton) ease-in-out infinite;
 }
 .question-media.is-missing .question-image,
 .question-media.is-missing .question-image-zoom { display: none; }
@@ -116,7 +116,7 @@
     height: 100%;
     padding: var(--space-md);
     color: var(--color-text-muted);
-    font-size: 0.95rem;
+    font-size: var(--font-size-base);
     line-height: 1.4;
     text-align: center;
 }

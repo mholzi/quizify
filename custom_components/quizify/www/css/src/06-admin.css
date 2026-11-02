@@ -349,7 +349,7 @@ footer {
     border-radius: var(--radius-md);
     background: var(--color-warning-light);
     color: var(--color-text-primary);
-    font-size: 0.9rem;
+    font-size: var(--font-size-base);
     line-height: 1.4;
     text-align: center;
 }

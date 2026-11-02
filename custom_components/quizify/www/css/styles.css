@@ -281,6 +281,7 @@
     --dur-settle: 420ms;          /* Hot Seat: the settlement lands */
     --dur-desat: 400ms;           /* phone colour drains while the socket is down */
     --dur-conn-back: 1200ms;      /* the connection pill stays sage this long */
+    --dur-skeleton: 1600ms;       /* one breath of a loading skeleton (#1182) */
     /* Round 3 (#1173). */
     --dur-guess: 600ms;           /* estimate reveal: a guess slides in */
     --dur-guess-stagger: 80ms;    /* ... each one 80 ms after the last */
@@ -1766,7 +1767,7 @@ button, .btn {
 }
 .question-media.is-loading {
     background: var(--color-bg-card-alt);
-    animation: qz-skeleton 1.6s ease-in-out infinite;
+    animation: qz-skeleton var(--dur-skeleton) ease-in-out infinite;
 }
 .question-media.is-missing .question-image,
 .question-media.is-missing .question-image-zoom { display: none; }
@@ -1777,7 +1778,7 @@ button, .btn {
     height: 100%;
     padding: var(--space-md);
     color: var(--color-text-muted);
-    font-size: 0.95rem;
+    font-size: var(--font-size-base);
     line-height: 1.4;
     text-align: center;
 }
@@ -3656,7 +3657,7 @@ footer {
     border-radius: var(--radius-md);
     background: var(--color-warning-light);
     color: var(--color-text-primary);
-    font-size: 0.9rem;
+    font-size: var(--font-size-base);
     line-height: 1.4;
     text-align: center;
 }
