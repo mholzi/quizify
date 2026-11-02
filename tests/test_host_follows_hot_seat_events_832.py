@@ -347,7 +347,7 @@ def test_the_settled_chair_offers_next_question() -> None:
     )
     assert settled["endHidden"] is False
     assert settled["question"] == (
-        "The chair is settled — Next Question continues the game."
+        "The chair is settled — Next question continues the game."
     )
 
 
@@ -397,7 +397,7 @@ def test_the_host_can_read_the_seat_question() -> None:
     seat = _run()["seatQuestion"]
 
     assert seat["question"] == "Which planet is closest to the sun?"
-    assert seat["round"] == "Question 4 / 10"
+    assert seat["round"] == "Question 4 of 10"
     assert seat["timer"]["started"] == 30
     assert seat["note"] == "Sofa took the chair for 100% (120 pts)."
 
@@ -455,7 +455,7 @@ def test_the_host_reads_it_in_their_own_language() -> None:
 
     assert settled["nextHidden"] is False
     assert settled["question"] != (
-        "The chair is settled — Next Question continues the game."
+        "The chair is settled — Next question continues the game."
     )
     assert "hotSeat." not in settled["question"]
     assert "hotSeat." not in settled["note"]

@@ -28,10 +28,11 @@ _REPO = Path(__file__).resolve().parent.parent
 _WWW = _REPO / "custom_components" / "quizify" / "www"
 _PLAYER_END = _WWW / "js" / "player-end.js"
 
+# Since #1177 the end screen counts questions ("Frage", not "Runde").
 _EXPECTED = {
-    "en": {"rounds": ("1 round", "3 rounds"), "players": ("1 player", "2 players")},
-    "de": {"rounds": ("1 Runde", "3 Runden"), "players": ("1 Spieler", "2 Spieler")},
-    "es": {"rounds": ("1 ronda", "3 rondas"), "players": ("1 jugador", "2 jugadores")},
+    "en": {"rounds": ("1 question", "3 questions"), "players": ("1 player", "2 players")},
+    "de": {"rounds": ("1 Frage", "3 Fragen"), "players": ("1 Spieler", "2 Spieler")},
+    "es": {"rounds": ("1 pregunta", "3 preguntas"), "players": ("1 jugador", "2 jugadores")},
 }
 
 
@@ -39,8 +40,8 @@ _EXPECTED = {
 @pytest.mark.parametrize("code", sorted(_EXPECTED))
 def test_one_and_many_read_right_in_every_language(code: str) -> None:
     got = render([
-        (code, "leaderboard.roundsCount", {"count": 1}),
-        (code, "leaderboard.roundsCount", {"count": 3}),
+        (code, "game.questionsCount", {"count": 1}),
+        (code, "game.questionsCount", {"count": 3}),
         (code, "leaderboard.playersCount", {"count": 1}),
         (code, "leaderboard.playersCount", {"count": 2}),
     ])

@@ -161,8 +161,8 @@
                 nextRoundBtn.classList.add('is-final');
             } else {
                 if (nextLabel) {
-                    nextLabel.setAttribute('data-i18n', 'admin.nextRound');
-                    nextLabel.textContent = t('admin.nextRound');
+                    nextLabel.setAttribute('data-i18n', 'admin.nextQuestion');
+                    nextLabel.textContent = t('admin.nextQuestion');
                 }
                 nextRoundBtn.classList.remove('is-final');
             }

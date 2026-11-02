@@ -239,7 +239,7 @@ class TestRevealCombinedUtterance:
         t.announce_reveal(game)
         await asyncio.sleep(0)
         msg = _last_message(hass)
-        assert "Nobody got it this round." in msg
+        assert "Nobody got this question." in msg
 
     @pytest.mark.asyncio
     async def test_reveal_toggle_off_drops_answer_and_who(self, game) -> None:

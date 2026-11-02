@@ -183,7 +183,7 @@ def test_the_lobby_paints_in_the_language_it_has() -> None:
     result = _lobby()
 
     assert result["english"]["also"] == "+ 2 more players"
-    assert result["english"]["meta"] == "🌱 Easy · 10 Rounds"
+    assert result["english"]["meta"] == "🌱 Easy · 10 questions"
 
 
 @_NEEDS_NODE
@@ -200,7 +200,7 @@ def test_a_late_switch_reaches_the_meta_line() -> None:
     """Both halves of it: the difficulty word and the unit after the number."""
     result = _lobby()
 
-    assert result["afterSwitch"]["meta"] == "🌱 Einfach · 10 Runden"
+    assert result["afterSwitch"]["meta"] == "🌱 Einfach · 10 Fragen"
 
 
 @_NEEDS_NODE
@@ -244,12 +244,13 @@ def test_the_meta_line_keeps_its_words_in_keys_not_in_params() -> None:
     """A composed line CAN carry params, but pre-translated pieces handed to
     the sweep as params would just freeze one level down — the sweep would
     re-render the template around the same German words. So each word gets its
-    own key on its own span, and only the round number is written as text."""
+    own key on its own span; since #1177 the question count is a plural param
+    of its own key (a number is the same in every language)."""
     source = _without_comments((_JS / "player-lobby.js").read_text("utf-8"))
     body = _js_function(source, "function _renderHeroAndOrbits(players, data)")
 
     assert "_i18nSpan('difficulties.' + diff, t)" in body
-    assert "_i18nSpan('admin.summaryRoundsUnit', t)" in body
+    assert "_i18nSpan('game.questionsCount', t, { count: Number(total) })" in body
     assert "_i18nSpan('lobby.gameLobby', t)" in body
     assert "metaEl.textContent" not in body, (
         "a textContent write is exactly what the sweep cannot follow"

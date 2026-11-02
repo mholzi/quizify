@@ -493,7 +493,7 @@ def test_the_room_is_told_what_it_is_waiting_for() -> None:
 
     assert result["seatHolder"]["hint"] == "Hang tight — the host continues the game"
     assert result["host"]["hint"] == (
-        "The chair is settled — Next Question continues the game."
+        "The chair is settled — Next question continues the game."
     )
 
 

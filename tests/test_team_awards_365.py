@@ -44,7 +44,7 @@ def test_awards_name_teams_not_people() -> None:
 
     assert results, "four rounds and two teams is enough for awards"
     assert {s.winner for s in results} <= {"Sofa", "Küche"}
-    assert _award(results, "Best round") == "Sofa"
+    assert _award(results, "Best question") == "Sofa"
 
 
 def test_fastest_finger_is_the_tap_that_stood() -> None:

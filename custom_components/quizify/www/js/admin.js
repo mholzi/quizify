@@ -846,8 +846,7 @@
             var diffLabel = diffChip ? diffChip.textContent : _t('difficulties.medium');
             els.gameSettingsSummary.textContent = _t('admin.settingsSummary', {
                 difficulty: diffLabel,
-                rounds: selectedRounds,
-                roundsUnit: _t('admin.summaryRoundsUnit'),
+                questions: selectedRounds,
                 timer: selectedTimer,
             });
         }
@@ -873,11 +872,13 @@
         var langFlag = LANG_FLAGS[selectedLanguage] || '🌐';
         var parts = [];
         if (preset) parts.push(preset.label);
-        parts.push(selectedRounds + ' ' + _t('admin.summaryRoundsUnit'));
+        // #1177: "10 questions", one key with a plural, lower case mid-line
+        // (the old unit key was a capitalised heading word: "10 Rondas").
+        parts.push(_t('game.questionsCount', { count: selectedRounds }));
         parts.push(diffLabel);
-        parts.push(selectedTimer + ' s');
-        parts.push(langFlag);
-        heroEl.textContent = parts.join(' · ');
+        parts.push(selectedTimer + '\u00a0s');
+        // The flag never wraps onto a line of its own.
+        heroEl.textContent = parts.join(' · ') + '\u00a0·\u00a0' + langFlag;
 
         // Topics line below the summary row: list the manually-chosen packs
         // so the ready screen reflects a custom topic selection. Hidden for

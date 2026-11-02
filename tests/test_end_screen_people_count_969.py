@@ -170,20 +170,20 @@ def test_two_teams_of_two_read_as_four_players() -> None:
     """The live-test room, exactly."""
     result = _render()
 
-    assert result["en"]["teams"] == "10 rounds · 4 players"
-    assert result["de"]["teams"] == "10 Runden · 4 Spieler"
+    assert result["en"]["teams"] == "10 questions · 4 players"
+    assert result["de"]["teams"] == "10 Fragen · 4 Spieler"
 
 
 @_NEEDS_NODE
 def test_a_lone_player_beside_a_team_counts_once() -> None:
     result = _render()
 
-    assert result["en"]["mixed"] == "10 rounds · 3 players"
+    assert result["en"]["mixed"] == "10 questions · 3 players"
 
 
 @_NEEDS_NODE
 def test_a_game_without_teams_is_unchanged() -> None:
     result = _render()
 
-    assert result["en"]["solo"] == "10 rounds · 3 players"
-    assert result["en"]["legacy"] == "10 rounds · 2 players"
+    assert result["en"]["solo"] == "10 questions · 3 players"
+    assert result["en"]["legacy"] == "10 questions · 2 players"

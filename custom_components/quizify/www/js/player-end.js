@@ -166,7 +166,7 @@
         // ({count, plural, one{…} other{…}}), not from a second `…One` key.
         var parts = [];
         if (rounds) {
-            parts.push(_tf('leaderboard.roundsCount', rounds + ' rounds', { count: rounds }));
+            parts.push(_tf('game.questionsCount', rounds + ' questions', { count: rounds }));
         }
         parts.push(_tf('leaderboard.playersCount', players + ' players', { count: players }));
         metaEl.textContent = parts.join(' · ');

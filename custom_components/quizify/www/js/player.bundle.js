@@ -990,8 +990,9 @@
             }
             var total = data && (data.total_rounds || data.num_rounds);
             if (total) {
-                bits.push(_escape(String(total)) + ' '
-                    + _i18nSpan('admin.summaryRoundsUnit', t));
+                // #1177: one key with a plural; the count rides along as
+                // params so the sweep re-renders it in a new language.
+                bits.push(_i18nSpan('game.questionsCount', t, { count: Number(total) }));
             }
             metaEl.innerHTML = bits.length
                 ? bits.join(' · ')
@@ -1097,8 +1098,12 @@
      * a line assembled from these spans survives a language change that lands
      * after it was painted — which a single textContent write does not.
      */
-    function _i18nSpan(key, t) {
-        return '<span data-i18n="' + _escape(key) + '">' + _escape(t(key)) + '</span>';
+    function _i18nSpan(key, t, params) {
+        var attr = params
+            ? ' data-i18n-params="' + _escape(JSON.stringify(params)) + '"'
+            : '';
+        return '<span data-i18n="' + _escape(key) + '"' + attr + '>'
+            + _escape(t(key, params)) + '</span>';
     }
 
     // Tiny helpers — keep scope tight.
@@ -2049,8 +2054,8 @@
                 nextRoundBtn.classList.add('is-final');
             } else {
                 if (nextLabel) {
-                    nextLabel.setAttribute('data-i18n', 'admin.nextRound');
-                    nextLabel.textContent = t('admin.nextRound');
+                    nextLabel.setAttribute('data-i18n', 'admin.nextQuestion');
+                    nextLabel.textContent = t('admin.nextQuestion');
                 }
                 nextRoundBtn.classList.remove('is-final');
             }
@@ -2952,7 +2957,7 @@
         // ({count, plural, one{…} other{…}}), not from a second `…One` key.
         var parts = [];
         if (rounds) {
-            parts.push(_tf('leaderboard.roundsCount', rounds + ' rounds', { count: rounds }));
+            parts.push(_tf('game.questionsCount', rounds + ' questions', { count: rounds }));
         }
         parts.push(_tf('leaderboard.playersCount', players + ' players', { count: players }));
         metaEl.textContent = parts.join(' · ');

@@ -43,6 +43,12 @@ _AND: dict[str, str] = {
 
 # str.format templates per language. Keys must be identical across languages;
 # English is the fallback for any missing language or key.
+#
+# Wording follows the app's glossary (#1177): a single question is a
+# "question" ("Frage", "pregunta"), "round" is only the lightning round and the
+# final; a group is addressed as "ihr" / "vosotros" (es-ES), never "ustedes".
+# ``final_round`` is spoken as the lead-in of the LAST QUESTION (tts.py), so it
+# says so; ``wager_open`` opens the final.
 _PHRASES: dict[str, dict[str, str]] = {
     "en": {
         "question": "Question {round} of {total}: {text}",
@@ -50,13 +56,13 @@ _PHRASES: dict[str, dict[str, str]] = {
         "answer": "The correct answer is {answer}.",
         "got_it_single": "{names} got it right.",
         "got_it_multi": "{names} got it right.",
-        "nobody": "Nobody got it this round.",
+        "nobody": "Nobody got this question.",
         "leader_change": "{name} takes the lead!",
         "tie_at_top": "It's a tie at the top.",
         "player_joined": "{name} joined the game.",
         "countdown": "{seconds} seconds left!",
         "game_start": "Quizify starting. Good luck!",
-        "final_round": "Final round!",
+        "final_round": "Last question!",
         "game_over": "Game over.",
         "game_over_winner": (
             "Game over. The winner is {name} with {score} points!"
@@ -67,7 +73,7 @@ _PHRASES: dict[str, dict[str, str]] = {
         # mode opens — the rest of a detour is narrated by the ordinary
         # question / reveal lines above.
         "hot_seat_started": "The chair goes to {name} for {points} points.",
-        "wager_open": "Final round. Place your bets!",
+        "wager_open": "Final round. Place your wagers!",
         "lightning_started": "Lightning round! Speed decides now.",
     },
     "de": {
@@ -76,13 +82,13 @@ _PHRASES: dict[str, dict[str, str]] = {
         "answer": "Die richtige Antwort ist {answer}.",
         "got_it_single": "{names} hatte recht.",
         "got_it_multi": "{names} hatten recht.",
-        "nobody": "Diese Runde hatte niemand richtig.",
+        "nobody": "Diese Frage hatte niemand richtig.",
         "leader_change": "{name} übernimmt die Führung!",
         "tie_at_top": "Gleichstand an der Spitze.",
         "player_joined": "{name} ist dabei!",
         "countdown": "Noch {seconds} Sekunden!",
         "game_start": "Quizify geht los. Viel Glück!",
-        "final_round": "Letzte Runde!",
+        "final_round": "Letzte Frage!",
         "game_over": "Das Spiel ist vorbei.",
         "game_over_winner": (
             "Das Spiel ist vorbei. Gewonnen hat {name} mit {score} Punkten!"
@@ -90,7 +96,7 @@ _PHRASES: dict[str, dict[str, str]] = {
         "milestone_streak": "{name} hat {streak} in Folge richtig!",
         "milestone_fire": "{name} ist nicht zu stoppen — {streak} in Folge!",
         "hot_seat_started": "Der Stuhl geht an {name} für {points} Punkte.",
-        "wager_open": "Letzte Runde. Setzt eure Einsätze!",
+        "wager_open": "Finalrunde. Setzt eure Einsätze!",
         "lightning_started": "Blitzrunde! Jetzt zählt Tempo.",
     },
     "es": {
@@ -99,21 +105,21 @@ _PHRASES: dict[str, dict[str, str]] = {
         "answer": "La respuesta correcta es {answer}.",
         "got_it_single": "{names} lo ha acertado.",
         "got_it_multi": "{names} lo han acertado.",
-        "nobody": "Esta ronda no la ha acertado nadie.",
+        "nobody": "Esta pregunta no la ha acertado nadie.",
         "leader_change": "¡{name} se pone en cabeza!",
         "tie_at_top": "Empate en cabeza.",
         "player_joined": "¡{name} se une a la partida!",
         "countdown": "¡Quedan {seconds} segundos!",
         "game_start": "¡Empieza Quizify! ¡Mucha suerte!",
-        "final_round": "¡Última ronda!",
-        "game_over": "Se acabó el juego.",
+        "final_round": "¡Última pregunta!",
+        "game_over": "Se acabó la partida.",
         "game_over_winner": (
-            "¡Se acabó el juego! Gana {name} con {score} puntos."
+            "¡Se acabó la partida! Gana {name} con {score} puntos."
         ),
         "milestone_streak": "¡{name} lleva {streak} seguidas!",
         "milestone_fire": "¡{name} está imparable: {streak} seguidas!",
         "hot_seat_started": "La silla es para {name} por {points} puntos.",
-        "wager_open": "Última ronda. ¡Hagan sus apuestas!",
+        "wager_open": "Ronda final. ¡Haced vuestras apuestas!",
         "lightning_started": "¡Ronda relámpago! Ahora manda la velocidad.",
     },
 }

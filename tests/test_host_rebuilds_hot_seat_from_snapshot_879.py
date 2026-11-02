@@ -391,7 +391,7 @@ def test_the_auction_snapshot_shows_the_bids_landing() -> None:
 
     assert auction["phase"] == "HOT_SEAT_AUCTION"
     assert auction["gameActive"] is True
-    assert auction["round"] == "Question 4 / 10"
+    assert auction["round"] == "Question 4 of 10"
     assert auction["question"] == "The chair goes to the highest bid"
     assert auction["note"] == "2 of 5 have bid"
     assert auction["noteShown"] is True
@@ -409,7 +409,7 @@ def test_the_seat_question_snapshot_shows_the_question_and_the_price() -> None:
 
     assert seat["phase"] == "HOT_SEAT"
     assert seat["question"] == "Which planet is closest to the sun?"
-    assert seat["round"] == "Question 4 / 10"
+    assert seat["round"] == "Question 4 of 10"
     # #804: `winner` is the person in the chair, `entrant` is who pays.
     assert seat["note"] == "Sofa took the chair for 100% (120 pts)."
 
@@ -422,7 +422,7 @@ def test_the_settled_snapshot_says_how_it_went_and_offers_next_question() -> Non
 
     assert settled["phase"] == "HOT_SEAT_REVEAL"
     assert settled["question"] == (
-        "The chair is settled — Next Question continues the game."
+        "The chair is settled — Next question continues the game."
     )
     assert settled["note"] == "Sofa got it wrong — −120 points"
     assert settled["nextHidden"] is False
@@ -446,5 +446,5 @@ def test_the_rebuilt_screen_speaks_the_room_language() -> None:
     it cannot end up with one screen translated and the other not."""
     seat = _run()["seatDe"]
 
-    assert seat["round"] == "Frage 4 / 10"
+    assert seat["round"] == "Frage 4 von 10"
     assert seat["note"] == "Sofa hat den Stuhl für 100% (120 Pkt.)."

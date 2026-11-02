@@ -101,7 +101,7 @@ def test_no_translation_key_is_read_by_nothing() -> None:
 def test_the_scan_can_see_keys_that_are_plainly_in_use() -> None:
     """Guards the guard: a corpus that failed to load would pass vacuously."""
     corpus = _reference_corpus()
-    for live in ("lobby.you", "admin.nextRound", "reveal.finalResults"):
+    for live in ("lobby.you", "admin.nextQuestion", "reveal.finalResults"):
         assert live in corpus, (
             f"{live!r} is used in the front end but the corpus missed it — the "
             "scan is not reading www/ properly"

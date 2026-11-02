@@ -132,9 +132,9 @@ def compute_superlatives(players: Sequence[Participant]) -> list[Superlative]:
         and best_round_index is not None
     ):
         _try_award(
-            "Best round",
+            "Best question",
             "🥇",
-            f"{best_round_score} pts in round {best_round_index}",
+            f"{best_round_score} pts on question {best_round_index}",
             best_round_player,
             award_key="highlights.awards.bestRound",
             detail_key="highlights.details.bestRound",
