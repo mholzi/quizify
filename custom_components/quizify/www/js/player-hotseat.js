@@ -389,6 +389,12 @@
         // same way here, and left intact.
         var host = el('answer-buttons');
         if (!host) return;
+        // #1169: no leftover lock-in from the round the detour interrupted.
+        if (host.classList) host.classList.remove('is-locked');
+        var oldChecks = host.querySelectorAll('.lock-in-check');
+        for (var c = 0; c < oldChecks.length; c++) {
+            if (oldChecks[c].parentNode) oldChecks[c].parentNode.removeChild(oldChecks[c]);
+        }
         var buttons = host.querySelectorAll('.answer-btn');
         for (var i = 0; i < buttons.length; i++) {
             var btn = buttons[i];
@@ -409,6 +415,11 @@
             if (i >= answers.length) btn.classList.add('hidden');
         }
         _state.seatAnswering = true;
+        // #1169: the question entrance, at half length in the chair.
+        var shared = window.QuizifyRenderShared;
+        if (shared && shared.playEntrance) {
+            shared.playEntrance(el('question-text'), buttons, { fast: true });
+        }
     }
 
     /**

@@ -515,3 +515,62 @@
     opacity: 0.75;
     cursor: default;
 }
+
+/* ==========================================
+   Question entrance (#1169, DESIGN.md Motion: "Question enters")
+   ==========================================
+
+   The headline fades in with a 10 px rise, then the answer tiles follow
+   50 ms apart — the order the host reads them out. Phone and television
+   share it; QuizifyRenderShared.playEntrance adds `motion-enter` (and
+   `--motion-i` per tile) and takes the class off again on animationend.
+
+   Visual only: the question and its clock are already live when this
+   starts, and nothing waits for it to finish.
+
+   `backwards`, never `both`: an animation that keeps holding `opacity: 1`
+   and `transform: none` after it ends would out-rank every state rule on
+   the tile — the lock-in's .98 scale, the 40 % dim of the others,
+   `.is-eliminated`'s .2 and the reveal's own keyframes. */
+.motion-enter {
+    animation: motion-enter var(--dur-enter) var(--ease-out) backwards;
+    animation-delay: calc(var(--dur-enter-lead) + var(--motion-i, 0) * var(--dur-enter-stagger));
+}
+.motion-enter.motion-enter--head {
+    animation-delay: 0ms;
+}
+@keyframes motion-enter {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* ==========================================
+   Score digit roll (#1169, DESIGN.md Motion: "Score tick")
+   ==========================================
+
+   Built by QuizifyRenderShared.rollDigits over an existing score element:
+   one column of 0-9 per digit, each translated to its new value, left to
+   right so the ones column lands last. The final number sits in an
+   .sr-only span next to the columns; the columns are aria-hidden, so a
+   screen reader hears the score once, not ten digits per column. Once the
+   roll is over the element goes back to plain text. */
+.digit-roll-digits {
+    display: inline-flex;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    height: 1.2em;
+    line-height: 1.2em;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+.digit-roll-col {
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--dur-roll) var(--ease-out);
+}
+.digit-roll-col > span,
+.digit-roll-static {
+    display: block;
+    height: 1.2em;
+    text-align: center;
+}

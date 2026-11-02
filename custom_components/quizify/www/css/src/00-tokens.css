@@ -226,6 +226,46 @@
     --transition-normal: 220ms ease-out;
     --transition-slow: 400ms ease-in-out;
 
+    /* Motion tokens (#1169) — the Soft Parlor motion table in DESIGN.md,
+       as numbers. Ease-out curves only; nothing here overshoots, because a
+       spring fights the warm posture. Every animation added for #1169 reads
+       its duration AND its delays from these, which is what lets the
+       reduced-motion block below and `.a11y` collapse all of them at once
+       (the global rule shortens durations but leaves delays alone, and a
+       podium that waits 1.5 s to show its champion is not "less motion"). */
+    --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.45, 0, 0.25, 1);
+
+    /* 1. Question entrance: headline fade + 10 px rise, tiles 50 ms apart. */
+    --dur-enter: 240ms;
+    --dur-enter-lead: 160ms;      /* first tile starts while the headline lands */
+    --dur-enter-stagger: 50ms;
+    /* 2. Round transition (TV): one warm band, card fades in behind it. */
+    --dur-round: 500ms;
+    --dur-round-card: 260ms;
+    --dur-round-card-delay: 240ms;
+    /* 3. Score digit roll. */
+    --dur-roll: 400ms;
+    --dur-roll-stagger: 60ms;     /* per column, left to right: ones land last */
+    /* 4. Answer distribution bars (TV reveal). */
+    --dur-bar: 520ms;
+    --dur-bar-lead: 320ms;        /* after the correct/wrong colour lands */
+    --dur-bar-stagger: 70ms;
+    --dur-halo: 900ms;
+    --dur-halo-lead: 520ms;       /* once its bar has grown */
+    /* 5. Podium 3 → 2 → 1, then the champion's glow widens. ~2.5 s. */
+    --dur-podium-rise: 320ms;
+    --dur-podium-second: 700ms;   /* third → pause → second */
+    --dur-podium-first: 1500ms;   /* second → longer pause → champion */
+    --dur-podium-glow-delay: 1750ms;
+    --dur-podium-glow: 800ms;
+    /* 6. Lock-in on the phone. */
+    --dur-lock: 220ms;
+    --dur-check: 280ms;
+    --dur-check-delay: 120ms;
+    --dur-status: 200ms;
+    --dur-status-delay: 300ms;   /* the "Sent" line, after the check */
+
     /* Z-Index Tokens */
     --z-control-bar: 100;
     --z-modal: 1000;
@@ -275,6 +315,44 @@ a:focus-visible,
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+}
+
+/* #1169: Lightning and Hot Seat questions come faster, so the question
+   entrance (1) and the distribution bars (4) run at half length there
+   instead of being dropped. Set on the animated element itself (or an
+   ancestor) by QuizifyRenderShared.playEntrance. */
+.motion-fast {
+    --dur-enter: 120ms;
+    --dur-enter-lead: 80ms;
+    --dur-enter-stagger: 25ms;
+    --dur-bar: 260ms;
+    --dur-bar-lead: 160ms;
+    --dur-bar-stagger: 35ms;
+    --dur-halo-lead: 260ms;
+}
+
+/* #1169: the rule above collapses durations but not delays, and the new
+   animations are staggered — under reduced motion a podium would otherwise
+   sit empty for 1.5 s before its champion popped in. Zeroing the delay
+   tokens makes every #1169 animation land at once, already finished.
+   `.motion-fast` is listed so its own (shorter, non-zero) delays cannot
+   win over this by being set closer to the element. */
+@media (prefers-reduced-motion: reduce) {
+    :root,
+    .motion-fast {
+        --dur-enter-lead: 0ms;
+        --dur-enter-stagger: 0ms;
+        --dur-round-card-delay: 0ms;
+        --dur-roll-stagger: 0ms;
+        --dur-bar-lead: 0ms;
+        --dur-bar-stagger: 0ms;
+        --dur-halo-lead: 0ms;
+        --dur-podium-second: 0ms;
+        --dur-podium-first: 0ms;
+        --dur-podium-glow-delay: 0ms;
+        --dur-check-delay: 0ms;
+        --dur-status-delay: 0ms;
     }
 }
 

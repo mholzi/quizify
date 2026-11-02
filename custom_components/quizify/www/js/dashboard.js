@@ -39,6 +39,15 @@
     // holds for seconds with no frame at all. createSocket's stall watchdog
     // reads this through stallGuard.
     var lightningLive = false;
+    // #1169: which kind of round the evening is in — 'quiz' (regular
+    // questions), 'lightning', 'hotseat' or 'final' — so the round
+    // transition plays when that changes and never between two questions of
+    // the same kind. Quizify has no other notion of a round: `round_num` is
+    // the question counter. null outside a game.
+    var currentSegment = null;
+    // #1169: the last score each entrant was shown with, so a leaderboard
+    // repaint rolls only the digits that actually changed.
+    var shownScores = {};
 
     // ---- DOM ----
     var views = {
@@ -423,9 +432,13 @@
                 handleGameState(msg);
                 break;
             case 'wager_progress':
+                enterSegment('final');
                 handleWagerProgress(msg);
                 break;
             case 'question_started':
+                // The final round's question follows its betting window and
+                // belongs to the same round.
+                enterSegment(currentSegment === 'final' ? 'final' : 'quiz');
                 // Clear last round's count before the new one arrives —
                 // otherwise the TV shows "5/5" over a fresh question.
                 if (els.answerProgress) {
@@ -443,6 +456,7 @@
             // the previous round's reveal frozen on it — which does not
             // read as "something else is happening", it reads as a crash.
             case 'hot_seat_auction':
+                enterSegment('hotseat');
                 // The payload carries seconds + player count, not the
                 // round numbers — the frame keeps whatever the last round
                 // put in the indicator.
@@ -484,10 +498,13 @@
                 handleHeadToHead(msg);
                 break;
             case 'finale':
+                currentSegment = null;
                 handleFinale(msg);
                 break;
             case 'game_reset':
                 currentPhase = 'LOBBY';
+                currentSegment = null;
+                shownScores = {};
                 setPaused(false);
                 showView('waiting');
                 // #374: back to the lobby — repaint QR + roster (a reset
@@ -505,9 +522,11 @@
             // to dashboards just like to the admin. Mirror admin.js's
             // handlers for the big screen.
             case 'lightning_splash':
+                enterSegment('lightning');
                 handleLightningSplash(msg);
                 break;
             case 'lightning_question':
+                enterSegment('lightning');
                 handleLightningQuestion(msg);
                 break;
             case 'lightning_tick':
@@ -557,6 +576,74 @@
                 handleReactionBonus(msg);
                 break;
         }
+        // #1169: after the handler, so the transition fades in the screen
+        // the frame just put up rather than the one it replaced.
+        if (roundChangePending) {
+            roundChangePending = false;
+            playRoundTransition();
+        }
+    }
+
+    // ============================================
+    // Round transition (#1169)
+    // ============================================
+    // A live frame that opens a different kind of round marks the change;
+    // handleMessage plays it once the new screen is up. Snapshots
+    // (game_state) set the segment silently — a television that reconnects
+    // mid-round has nothing to transition from. The first round of a game is
+    // not a change either: the board comes from the lobby.
+    var roundChangePending = false;
+    var roundSweepEl = null;
+
+    function enterSegment(segment) {
+        if (currentSegment !== null && segment !== currentSegment) {
+            roundChangePending = true;
+        }
+        currentSegment = segment;
+    }
+
+    var SEGMENT_OF_PHASE = {
+        LIGHTNING: 'lightning', LIGHTNING_RECAP: 'lightning',
+        HOT_SEAT_AUCTION: 'hotseat', HOT_SEAT: 'hotseat', HOT_SEAT_REVEAL: 'hotseat',
+        WAGER_ACTIVE: 'final'
+    };
+
+    function segmentForPhase(phase) {
+        if (SEGMENT_OF_PHASE[phase]) return SEGMENT_OF_PHASE[phase];
+        if (phase === 'PAUSED') return currentSegment;
+        if (phase === 'QUESTION_ACTIVE' || phase === 'ANSWER_REVEAL') {
+            return currentSegment === 'final' ? 'final' : 'quiz';
+        }
+        return null;
+    }
+
+    function playRoundTransition() {
+        var shared = window.QuizifyRenderShared;
+        if (!shared || shared.prefersReducedMotion()) return;
+        if (!roundSweepEl && document.body && document.createElement) {
+            roundSweepEl = document.createElement('div');
+            roundSweepEl.className = 'round-sweep';
+            roundSweepEl.setAttribute('aria-hidden', 'true');
+            document.body.appendChild(roundSweepEl);
+            roundSweepEl.addEventListener('animationend', function () {
+                roundSweepEl.classList.remove('is-playing');
+            });
+        }
+        if (roundSweepEl) shared.replayClass(roundSweepEl, 'is-playing');
+        Object.keys(views).forEach(function (name) {
+            var v = views[name];
+            if (!v || !v.classList) return;
+            if (!v.classList.contains('active')) {
+                v.classList.remove('round-enter');
+                return;
+            }
+            shared.replayClass(v, 'round-enter');
+            v.addEventListener('animationend', function done(e) {
+                if (e.target !== v) return;
+                v.removeEventListener('animationend', done);
+                v.classList.remove('round-enter');
+            });
+        });
     }
 
     // ============================================
@@ -757,7 +844,10 @@
 
     function handleGameState(msg) {
         syncServerLanguage(msg);
-        if (msg.phase) currentPhase = msg.phase;
+        if (msg.phase) {
+            currentPhase = msg.phase;
+            currentSegment = segmentForPhase(msg.phase);
+        }
         if (msg.leaderboard) renderLeaderboard(els.leaderboard, msg.leaderboard);
 
         // #296: the paused scrim is independent of the underlying view —
@@ -1001,6 +1091,15 @@
                     '</div>';
             }).join('');
         }
+        // #1169: the question entrance, at half length — Lightning
+        // questions come every few seconds.
+        if (window.QuizifyRenderShared && window.QuizifyRenderShared.playEntrance) {
+            window.QuizifyRenderShared.playEntrance(
+                els.lightningQuestionText,
+                els.lightningAnswersGrid ? els.lightningAnswersGrid.children : [],
+                { fast: true }
+            );
+        }
     }
 
     function handleLightningTick(msg) {
@@ -1165,7 +1264,9 @@
             round_num: msg.round_num,
             total_rounds: msg.total_rounds,
             category: msg.category || '',
-            image_url: msg.image_url || ''
+            image_url: msg.image_url || '',
+            // #1169: the chair's question enters at half length.
+            fast: true
         });
     }
 
@@ -1300,6 +1401,7 @@
                         QuizifyUtils.escapeHtml(rangeLabel) +
                     '</div>';
             }
+            playQuestionEntrance(els.dashboardEstimate ? [els.dashboardEstimate.firstChild] : [], msg.fast);
             return;
         }
         if (els.dashboardEstimate) els.dashboardEstimate.classList.add('hidden');
@@ -1327,6 +1429,16 @@
                 '</div>' +
                 '</div>';
         }).join('');
+        playQuestionEntrance(els.answersGrid.children, msg.fast);
+    }
+
+    // #1169: the question entrance — headline, then the tiles 50 ms apart,
+    // half that in the Hot Seat. Runs over a question that is already up
+    // with its bar already draining; it holds nothing back.
+    function playQuestionEntrance(tiles, fast) {
+        var shared = window.QuizifyRenderShared;
+        if (!shared || !shared.playEntrance) return;
+        shared.playEntrance(els.questionText, tiles, { fast: !!fast });
     }
 
     function handleHeadToHead(msg) {
@@ -1623,6 +1735,20 @@
                 '</span></div>';
         }
         container.innerHTML = html;
+        // #1169: roll the scores that moved since this board last showed
+        // them. One memo for every leaderboard on the page — they all show
+        // the same entrants, so the finale picks up where the reveal left off
+        // and a re-fit with the same numbers rolls nothing.
+        if (window.QuizifyRenderShared && window.QuizifyRenderShared.rollScores &&
+            container.querySelectorAll) {
+            window.QuizifyRenderShared.rollScores(
+                container.querySelectorAll('.leaderboard-score'),
+                list.map(function (p) {
+                    return { key: p.entrant_id || p.name, score: p.score };
+                }),
+                shownScores
+            );
+        }
     }
 
     function renderPodium(podium) {

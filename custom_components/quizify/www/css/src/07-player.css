@@ -104,6 +104,56 @@
     margin-top: 2px;
 }
 
+/* ---- 3 → 2 → 1 on the phone (#1169) ----
+   The phone has no podium since #338, but it must not name the winner
+   before the television does, so its end screen runs the podium's clock
+   (05-finale.css, same tokens): third place and everyone below at once,
+   second after the first pause, then the champion's row, the winner's name
+   and score in the banner and the highlight chips (the first chip names the
+   winner) after the longer one — and then one warm gradient widens from
+   the banner. player-end.js sets `is-revealing` once per finished game. */
+#end-view.is-revealing .sb-row {
+    animation: podium-rise var(--dur-podium-rise) var(--ease-out) both;
+}
+#end-view.is-revealing .sb-row[data-place="2"] {
+    animation-delay: var(--dur-podium-second);
+}
+#end-view.is-revealing .sb-row[data-place="1"],
+#end-view.is-revealing .end-hero-name,
+#end-view.is-revealing .end-hero-score,
+#end-view.is-revealing .end-highlights-section {
+    animation-delay: var(--dur-podium-first);
+}
+#end-view.is-revealing .end-hero-name,
+#end-view.is-revealing .end-hero-score,
+#end-view.is-revealing .end-highlights-section {
+    animation-name: end-reveal-in;
+    animation-duration: var(--dur-podium-rise);
+    animation-timing-function: var(--ease-out);
+    animation-fill-mode: both;
+}
+@keyframes end-reveal-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.end-hero { isolation: isolate; }
+#end-view.is-revealing .end-hero::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(ellipse 55% 80% at 50% 100%,
+        rgba(232, 196, 127, 0.34),
+        rgba(232, 138, 127, 0.14) 55%,
+        transparent 80%);
+    animation: podium-glow-widen var(--dur-podium-glow) var(--ease-out) both;
+    animation-delay: var(--dur-podium-glow-delay);
+}
+
 /* ---- Shared section label ---- */
 .end-section-label {
     font-family: var(--font-display);
@@ -635,6 +685,59 @@
     opacity: 0.2;
     text-decoration: line-through;
     pointer-events: none;
+}
+
+/* ---- Lock-in (#1169, design gate passed 2026-11-02) ----
+   A tapped answer has to read as landed at a glance, from arm's length, for
+   the grandparents at the table too. player-game.js sets `is-locked` on the
+   grid when a solo answer is sent (team answers stay open, #365): the picked
+   tile presses in to .98 and keeps the existing coral outline and tint of
+   `.is-selected`, the other two step back to 40 %, and a check draws itself
+   in the picked tile. The "Sent" line under the grid is the old submitted
+   confirmation with new words. The reveal takes `is-locked` off again before
+   it colours the tiles. */
+.answer-buttons.is-locked .answer-btn {
+    transition: opacity var(--dur-lock) var(--ease-out),
+        transform var(--dur-lock) var(--ease-out),
+        border-color var(--dur-lock) var(--ease-out),
+        background-color var(--dur-lock) var(--ease-out);
+}
+.answer-buttons.is-locked .answer-btn:not(.is-selected) {
+    opacity: 0.4;
+}
+.answer-buttons.is-locked .answer-btn.is-selected {
+    opacity: 1;
+    transform: scale(0.98);
+}
+.lock-in-check {
+    width: 22px;
+    height: 22px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+.lock-in-check path {
+    fill: none;
+    stroke: var(--color-accent-primary);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    animation: lock-in-draw var(--dur-check) var(--ease-out) forwards;
+    animation-delay: var(--dur-check-delay);
+}
+@keyframes lock-in-draw {
+    to { stroke-dashoffset: 0; }
+}
+.lock-in-status:not(.hidden) {
+    color: var(--color-text-neon-muted);
+    font-weight: 500;
+    animation: lock-in-status-in var(--dur-status) var(--ease-out) backwards;
+    animation-delay: var(--dur-status-delay);
+}
+@keyframes lock-in-status-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 /* Power-up container */

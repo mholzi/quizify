@@ -251,16 +251,49 @@
     flex-direction: column;
     align-items: center;
     gap: var(--space-xs);
-    animation: podium-rise 0.8s ease-out both;
+    /* #1169: 3 → 2 → 1. Third place rises, a pause, second, a longer pause,
+       then the champion — room for the host to announce each one. Keyed on
+       the place the shared renderer writes into `data-place`, not on the
+       column (the columns are 2nd-1st-3rd), so a tie for first rises
+       together. The phone's end screen runs the same clock (07-player.css)
+       so no guest's phone names the winner before the television does. */
+    animation: podium-rise var(--dur-podium-rise) var(--ease-out) both;
+    position: relative;
 }
 
-.podium-place:nth-child(1) { animation-delay: 0.2s; }
-.podium-place:nth-child(2) { animation-delay: 0.4s; }
-.podium-place:nth-child(3) { animation-delay: 0.6s; }
+.podium-place[data-place="2"] { animation-delay: var(--dur-podium-second); }
+.podium-place[data-place="1"] { animation-delay: var(--dur-podium-first); }
 
 @keyframes podium-rise {
     from { transform: translateY(24px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
+}
+
+/* …then one warm gradient widens from the champion's block (DESIGN.md
+   Motion: "Podium reveal", 800 ms). Behind the block, never over it. */
+.podium-place[data-place="1"]::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 220%;
+    height: 120%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(ellipse 50% 60% at 50% 100%,
+        rgba(232, 196, 127, 0.38),
+        rgba(232, 138, 127, 0.14) 55%,
+        transparent 80%);
+    transform: translateX(-50%) scaleX(0.2);
+    opacity: 0;
+    animation: podium-glow-widen var(--dur-podium-glow) var(--ease-out) both;
+    /* Absolute, not relative to the champion: a pseudo-element's animation
+       starts with the page, not when its parent's rise ends. */
+    animation-delay: var(--dur-podium-glow-delay);
+}
+@keyframes podium-glow-widen {
+    from { opacity: 0; transform: translateX(-50%) scaleX(0.2); }
+    to   { opacity: 1; transform: translateX(-50%) scaleX(1); }
 }
 
 .podium-name {

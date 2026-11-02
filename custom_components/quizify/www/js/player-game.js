@@ -498,6 +498,7 @@
             if (answersContainer) answersContainer.classList.add('hidden');
             _showWagerBadge(false);
             renderEstimateInput(data);
+            _playQuestionEntrance(questionText, []);
             return;
         }
         if (estimateContainer) estimateContainer.classList.add('hidden');
@@ -543,6 +544,93 @@
         // Show/hide submitted confirmation
         var confirmation = document.getElementById('submitted-confirmation');
         if (confirmation) confirmation.classList.toggle('hidden', !hasSubmitted);
+
+        _playQuestionEntrance(questionText,
+            answerButtons ? answerButtons.querySelectorAll('.answer-btn') : []);
+    }
+
+    // #1169: the question entrance — the headline, then the answer tiles
+    // 50 ms apart. Decoration over a question that is already live: the
+    // countdown is started by the caller and does not wait for it.
+    function _playQuestionEntrance(head, tiles, fast) {
+        var shared = window.QuizifyRenderShared;
+        if (shared && shared.playEntrance) shared.playEntrance(head, tiles, { fast: !!fast });
+    }
+
+    // ============================================
+    // Lock-in (#1169)
+    // ============================================
+    //
+    // The picked tile presses in, the others step back, a check draws itself
+    // in the picked tile, and the confirmation line under the grid says
+    // "Sent" — "Sent · waiting for N more" while the room is still answering.
+    // Styling in 07-player.css. Solo answers only: a team answer stays open
+    // to change until the clock stops (#365), so it is never "sent".
+
+    var LOCK_CHECK_PATH = 'M5 12.5l4.5 4.5L19 7.5';
+
+    function _applyLockIn(selectedIndex) {
+        var grid = document.getElementById('answer-buttons');
+        if (grid && grid.classList) grid.classList.add('is-locked');
+        if (grid && grid.querySelectorAll && selectedIndex >= 0 &&
+            document.createElementNS) {
+            var buttons = grid.querySelectorAll('.answer-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                var btn = buttons[i];
+                if (parseInt(btn.dataset.index, 10) !== selectedIndex) continue;
+                if (btn.querySelector && btn.querySelector('.lock-in-check')) continue;
+                var ns = 'http://www.w3.org/2000/svg';
+                var svg = document.createElementNS(ns, 'svg');
+                svg.setAttribute('class', 'lock-in-check');
+                svg.setAttribute('viewBox', '0 0 24 24');
+                svg.setAttribute('aria-hidden', 'true');
+                svg.setAttribute('focusable', 'false');
+                var path = document.createElementNS(ns, 'path');
+                path.setAttribute('d', LOCK_CHECK_PATH);
+                svg.appendChild(path);
+                btn.appendChild(svg);
+            }
+        }
+        _paintSentLine();
+    }
+
+    function _clearLockIn() {
+        var grid = document.getElementById('answer-buttons');
+        if (!grid) return;
+        if (grid.classList) grid.classList.remove('is-locked');
+        if (grid.querySelectorAll) {
+            var checks = grid.querySelectorAll('.lock-in-check');
+            for (var i = 0; i < checks.length; i++) {
+                if (checks[i].parentNode) checks[i].parentNode.removeChild(checks[i]);
+            }
+        }
+        _paintSentLine();
+    }
+
+    // How many entrants the room is still waiting on, not counting this
+    // phone's own (its answer is in, even if the tracker has not caught up).
+    function _stillAnswering() {
+        var mine = myEntrant();
+        return _latestPlayers.filter(function (p) {
+            return p && !p.submitted && entrantKey(p) !== mine;
+        }).length;
+    }
+
+    function _paintSentLine() {
+        var line = document.getElementById('lock-in-status-text');
+        if (!line) return;
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || null;
+        var left = hasSubmitted ? _stillAnswering() : 0;
+        var text;
+        if (left === 1) {
+            text = t ? t('game.sentWaitingOne') : '';
+        } else if (left > 1) {
+            text = t ? t('game.sentWaiting', { count: left }) : '';
+        } else {
+            text = t ? t('game.sent') : '';
+        }
+        // A missing bundle hands the key back; keep whatever the page shows.
+        if (text && text.indexOf('game.') !== 0) line.textContent = text;
     }
 
     // ============================================
@@ -915,6 +1003,7 @@
 
         var confirmation = document.getElementById('submitted-confirmation');
         if (confirmation) confirmation.classList.remove('hidden');
+        _applyLockIn(selectedIndex);
 
         sendFn('submit_answer', { answer_index: selectedIndex });
     }
@@ -961,6 +1050,7 @@
         }
         var confirmation = document.getElementById('submitted-confirmation');
         if (confirmation) confirmation.classList.remove('hidden');
+        if (!_isEstimateRound) _applyLockIn(marked);
 
         // #275: lock the estimate slider too on a reconnect.
         var slider = document.getElementById('estimate-slider');
@@ -990,6 +1080,7 @@
 
         var confirmation = document.getElementById('submitted-confirmation');
         if (confirmation) confirmation.classList.add('hidden');
+        _clearLockIn();
 
         // #275: reset the estimate input for the new round.
         var slider = document.getElementById('estimate-slider');
@@ -1057,6 +1148,8 @@
 
         var allSubmitted = submittedCount === totalCount && totalCount > 0;
         tracker.classList.toggle('all-submitted', allSubmitted);
+        // #1169: "Sent · waiting for N more" follows the room.
+        _paintSentLine();
 
         // #845: the row that is mine, by entrant rather than by name. #835
         // made these rows teams in team mode, and a player's name never equals
@@ -1114,7 +1207,12 @@
     // game shows phantom ▲/▼ deltas against the previous game's standings.
     function resetRankMemo() {
         _prevLeaderboardRanks = {};
+        _shownScores = {};
     }
+
+    // #1169: the score each row was last shown with, so the digit roll only
+    // runs on a number that changed.
+    var _shownScores = {};
 
     function updateLeaderboard(data, targetListId) {
         var leaderboard = data.leaderboard || [];
@@ -1149,6 +1247,17 @@
         });
 
         listEl.innerHTML = html;
+
+        // #1169: roll the scores that moved since this list last showed them.
+        var shared = window.QuizifyRenderShared;
+        if (shared && shared.rollScores && listEl.querySelectorAll) {
+            var rows = displayList.filter(function (e) { return !e.separator; });
+            shared.rollScores(
+                listEl.querySelectorAll('.entry-score'),
+                rows.map(function (e) { return { key: entrantKey(e), score: e.score }; }),
+                _shownScores
+            );
+        }
 
         // FLIP: animate from old positions to new
         var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
