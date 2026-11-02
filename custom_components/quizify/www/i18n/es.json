@@ -19,7 +19,7 @@
     "flagsError": "No se pudieron cargar las preguntas reportadas",
     "listError": "No se pudo cargar la lista",
     "submissionsError": "No se pudieron cargar tus envíos.",
-    "packSubmitUnavailable": "El envío de packs no está disponible ahora mismo."
+    "packSubmitUnavailable": "El envío de paquetes no está disponible ahora mismo."
   },
   "common": {
     "cancel": "Cancelar",
