@@ -1,0 +1,8 @@
+{
+  "_about": "Controls tests/ui/tap_targets.cjs does not warn about (#1183). Key: '#id' or '.first-class' as the script prints it. A string excuses the control; an object excuses only the named checks (target, gap, active, focus). Every entry says why.",
+  ".theme-tab": "::before extends the target vertically only, on purpose (#423)",
+  "#player-qr-code": "screen-reader only",
+  ".toggle-compact": {
+    "gap": "44 px switch rows touch, with a hairline between them instead of air (UX review 7, draft 5, approved)"
+  }
+}

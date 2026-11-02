@@ -1,0 +1,62 @@
+# Tap-target check (#1183, UX review 7 §5a).
+#
+# Drives the dev server through setup, join, lobby, question, reveal and end
+# on two touch phones and measures every visible control: hit area (with a
+# ::before extension), gap to the neighbour, :active and :focus-visible.
+#
+# NON-BLOCKING on purpose, and deliberately its own workflow rather than a
+# continue-on-error leg in test.yml (whose jobs all gate, see
+# tests/test_ci_ha_matrix_740.py). The script exits 0 and reports each finding
+# as a warning annotation; once the list is worked off, set
+# TAP_TARGETS_STRICT: "1" below and make the check required.
+name: tap-targets
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "custom_components/quizify/www/**"
+      - "tests/ui/**"
+      - ".github/workflows/tap-targets.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tap-targets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Install the dev server and Playwright
+        run: |
+          pip install aiohttp voluptuous
+          npm install --no-save --no-package-lock playwright@1.48.2
+          npx playwright install --with-deps chromium
+
+      - name: Measure (warnings only)
+        env:
+          QUIZIFY_URL: http://127.0.0.1:8080/quizify/
+          TAP_TARGETS_STRICT: "0"
+        run: |
+          python scripts/dev_server.py --port 8080 --data-dir "$RUNNER_TEMP/quizify" > "$RUNNER_TEMP/server.log" 2>&1 &
+          for i in $(seq 1 40); do curl -sf -o /dev/null http://127.0.0.1:8080/quizify/admin && break; sleep 0.5; done
+          node tests/ui/tap_targets.cjs
+
+      - name: Keep the measurement
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tap-targets
+          path: tap-targets.json
+          if-no-files-found: ignore
