@@ -5,7 +5,7 @@
     <meta name="quizify-version" content="{{VERSION}}">
     <meta name="quizify-ha-lang" content="{{HA_LANG}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Quizify — Analytics</title>
+    <title>Quizify — Stats</title>
     <link rel="stylesheet" href="/quizify/static/css/styles.css?v={{ASSET_VER}}">
     <link rel="icon" href="/quizify/static/img/icon-256.png?v={{ASSET_VER}}" type="image/png">
     <style>
@@ -218,7 +218,7 @@
             <h1 class="wordmark">
                 <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
             </h1>
-            <p class="subtitle" data-i18n="analytics.title">Analytics</p>
+            <p class="subtitle" data-i18n="analytics.title">Stats</p>
         </header>
 
         <div class="period-selector">
@@ -228,7 +228,7 @@
             <button class="period-btn" data-period="all" data-i18n="analytics.periodAll">All</button>
         </div>
 
-        <div id="loading" class="loading-state" data-i18n="analytics.loading">Loading analytics...</div>
+        <div id="loading" class="loading-state" data-i18n="analytics.loading">Loading stats…</div>
 
         <div id="content" style="display:none;">
             <!-- Stats Grid -->
@@ -239,7 +239,7 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="avg-players">0</div>
-                    <div class="stat-label" data-i18n="analytics.statAvgPlayers">Avg. Players</div>
+                    <div class="stat-label" data-i18n="analytics.statAvgPlayers">Avg. players</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="total-rounds">0</div>
@@ -249,13 +249,13 @@
 
             <!-- Games Over Time -->
             <div class="analytics-section">
-                <div class="section-title" data-i18n="analytics.sectionGamesOverTime">Games Over Time</div>
+                <div class="section-title" data-i18n="analytics.sectionGamesOverTime">Games over time</div>
                 <div id="chart" class="chart-container"></div>
             </div>
 
             <!-- Top Players -->
             <div class="analytics-section">
-                <div class="section-title" data-i18n="analytics.sectionTopPlayers">Top Players</div>
+                <div class="section-title" data-i18n="analytics.sectionTopPlayers">Top players</div>
                 <div class="card">
                     <div id="top-players"></div>
                 </div>
@@ -270,7 +270,7 @@
                             <tr>
                                 <th data-i18n="analytics.thCategory">Category</th>
                                 <th data-i18n="analytics.thGames">Games</th>
-                                <th data-i18n="analytics.thAvgScore">Avg. Score</th>
+                                <th data-i18n="analytics.thAvgScore">Avg. score</th>
                             </tr>
                         </thead>
                         <tbody id="category-stats"></tbody>
@@ -280,7 +280,7 @@
 
             <!-- Recent Games -->
             <div class="analytics-section">
-                <div class="section-title" data-i18n="analytics.sectionRecentGames">Recent Games</div>
+                <div class="section-title" data-i18n="analytics.sectionRecentGames">Recent games</div>
                 <div class="card" style="overflow-x:auto;">
                     <table class="games-table">
                         <thead>
@@ -298,7 +298,7 @@
 
             <!-- Flagged Questions — populated from /api/quizify/flags -->
             <div class="analytics-section" id="flags-section" style="display:none;">
-                <div class="section-title" data-i18n="analytics.sectionFlagged">🚩 Flagged Questions</div>
+                <div class="section-title" data-i18n="analytics.sectionFlagged">🚩 Flagged questions</div>
                 <div class="card" style="overflow-x:auto;">
                     <table class="games-table">
                         <thead>
@@ -316,7 +316,7 @@
         </div>
 
         <div id="empty" class="empty-state" style="display:none;" data-i18n="analytics.empty">
-            No games played yet. Start a quiz to see analytics!
+            No games played yet. Start a game to see your stats.
         </div>
     </div>
 

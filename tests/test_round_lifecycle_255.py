@@ -223,7 +223,7 @@ class TestComebackKingOddRounds:
         ]
         awards = compute_superlatives(players)
         names = {a.award for a in awards}
-        assert "Comeback King" not in names
+        assert "Comeback king" not in names
 
     def test_genuine_comeback_still_awarded(self) -> None:
         """A real second-half surge still earns the award (no regression).
@@ -237,7 +237,7 @@ class TestComebackKingOddRounds:
             _mk_player("Riser", [0, 5, 5, 20, 20]),  # weak start, strong finish
         ]
         awards = compute_superlatives(players)
-        comeback = [a for a in awards if a.award == "Comeback King"]
+        comeback = [a for a in awards if a.award == "Comeback king"]
         assert len(comeback) == 1
         assert comeback[0].winner == "Riser"
 

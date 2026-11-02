@@ -140,7 +140,7 @@ def test_a_pause_the_host_chose_still_reads_as_before() -> None:
     result = _run("out.deliberate = (setPaused(true), card());")
 
     assert result["deliberate"]["overlay"] is True
-    assert result["deliberate"]["title"] == "Game Paused"
+    assert result["deliberate"]["title"] == "Game paused"
     assert (
         result["deliberate"]["hint"]
         == "The game will resume when the host returns"
@@ -158,7 +158,7 @@ def test_the_host_dropping_is_not_told_as_a_deliberate_pause() -> None:
 
     assert gone["title"] == "Lost connection to the host"
     assert gone["hint"] == "Trying to reconnect the host — hang tight"
-    assert gone["title"] != "Game Paused"
+    assert gone["title"] != "Game paused"
     assert gone["hint"] != "The game will resume when the host returns"
 
 

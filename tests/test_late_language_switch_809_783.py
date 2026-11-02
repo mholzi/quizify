@@ -210,7 +210,7 @@ def test_the_lone_guest_s_line_switches_too() -> None:
     result = _lobby()
 
     assert result["aloneDe"]["also"] == "Du wartest noch allein…"
-    assert result["aloneEs"]["also"] == "Esperando tú solo…"
+    assert result["aloneEs"]["also"] == "Aún no ha llegado nadie más…"
 
 
 @_NEEDS_NODE
@@ -221,8 +221,8 @@ def test_a_roster_only_frame_still_re_translates() -> None:
     person to arrive happened to trigger."""
     result = _lobby()
 
-    assert result["rosterOnlyEs"]["meta"] == "Sala de juego"
-    assert result["rosterOnlyDe"]["meta"] == "Spiel-Lobby"
+    assert result["rosterOnlyEs"]["meta"] == "Sala"
+    assert result["rosterOnlyDe"]["meta"] == "Lobby"
     assert result["rosterOnlyDe"]["also"] == "+ 1 weiterer Spieler"
 
 
@@ -353,8 +353,8 @@ def test_it_holds_for_the_other_states_too() -> None:
     are the ones worth announcing correctly."""
     result = _conn()
 
-    assert result["reconnectingDe"]["text"] == "Verbindung wird wiederhergestellt..."
-    assert result["reconnectingEs"]["text"] == "Reconectando..."
+    assert result["reconnectingDe"]["text"] == "Verbinde neu…"
+    assert result["reconnectingEs"]["text"] == "Reconectando…"
     assert result["reconnectingEs"]["key"] == "connection.reconnecting"
 
 

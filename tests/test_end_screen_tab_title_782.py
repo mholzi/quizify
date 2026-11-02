@@ -137,7 +137,7 @@ def test_the_title_follows_the_phase_off_the_last_question() -> None:
     result = _run()
 
     assert result["duringQuestion"] == "Quizify — Question 5"
-    assert result["atTheEnd"] == "Quizify — Final Results"
+    assert result["atTheEnd"] == "Quizify — Final results"
 
 
 @_NEEDS_NODE

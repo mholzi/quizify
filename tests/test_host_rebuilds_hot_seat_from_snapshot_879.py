@@ -436,7 +436,7 @@ def test_the_wager_window_keeps_its_own_notice() -> None:
     wager = _run()["wager"]
 
     assert wager["phase"] == "WAGER_ACTIVE"
-    assert wager["question"] == "Placing bets"
+    assert wager["question"] == "Placing wagers"
     assert wager["nextHidden"] is True
 
 

@@ -1313,7 +1313,9 @@
         }
 
         if (!modal || !confirmBtn) {
-            if (window.confirm(_t('setup.deletePresetConfirm') + ' „' + p.name + '"')) {
+            // #1177: one sentence that names the preset, not a prefix
+            // glued to hard-coded German quotes.
+            if (window.confirm(_t('setup.deletePresetBody', { name: p.name }))) {
                 doDelete();
             }
             return;
