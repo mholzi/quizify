@@ -213,12 +213,15 @@ def test_a_player_phone_precaches_substantially_fewer_bytes() -> None:
     which the legacy baseline never listed, so every byte of them counts
     against the phone in full while CSS additions only count a quarter. 0.76
     still says what the test is for: the split saves the phone about a
-    quarter of the legacy download.
+    quarter of the legacy download. Raised to 0.78 on 2026-11-02 by the
+    maintainer's decision, because the states/interaction/notification work
+    adds phone code; the split still saves the phone over a fifth of the
+    legacy download.
     """
     legacy = _bytes(list(LEGACY_PRECACHE))
     player = _bytes(_precache_for("player"))
     assert legacy > 1_100_000, "the legacy list is the baseline; it should be huge"
-    assert player < legacy * 0.76, (
+    assert player < legacy * 0.78, (
         f"player precache is {player:,} B against the old {legacy:,} B — "
         "the split is not buying enough to be worth the machinery"
     )
