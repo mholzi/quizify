@@ -20,6 +20,16 @@
  * — a missed refresh is harmless (next natural load fixes it), a mid-game
  * reload is not.
  *
+ * #1185 P9, two holes closed:
+ *   - The very first install also fires controllerchange (no controller →
+ *     the new one), and the page reloaded although there was no old version
+ *     to replace — twice in 0.2 s on a guest who was already typing a name.
+ *     A reload now needs a controller that was there before.
+ *   - An update that arrived mid-question was dropped until the next natural
+ *     load, which on a tablet that never reloads could take days. It is kept
+ *     as pending and caught up on the next quiet screen (polled, and on
+ *     return to the tab). Still no text, no button.
+ *
  * Self-contained so admin.html / player.html / dashboard.html can all drop a
  * single <script> tag.
  */
@@ -32,6 +42,13 @@
     // most once per page life, so we never loop (the reload installs a fresh
     // controller, which could otherwise fire controllerchange again).
     var reloadTriggered = false;
+    // #1185 P9: was this page already controlled when it loaded? Only then is
+    // a controllerchange an update; otherwise it is the first install.
+    var hadController = !!navigator.serviceWorker.controller;
+    // An update that could not be applied yet (the screen was not idle).
+    var pendingReload = false;
+    var CATCH_UP_MS = 5000;
+    var catchUpTimer = null;
 
     // Decide whether it's safe to reload right now.
     //   - Prefer the explicit host hook window.quizifyIsIdleForReload().
@@ -52,15 +69,31 @@
 
     function maybeReload() {
         if (reloadTriggered) return;
-        if (!isIdleForReload()) return;
+        if (!isIdleForReload()) {
+            // Keep it for the next quiet screen (#1185 P9).
+            pendingReload = true;
+            if (!catchUpTimer) catchUpTimer = setInterval(maybeReload, CATCH_UP_MS);
+            return;
+        }
         reloadTriggered = true;
+        pendingReload = false;
+        if (catchUpTimer) { clearInterval(catchUpTimer); catchUpTimer = null; }
         // Full reload so the fresh SW serves the new fingerprinted assets.
         window.location.reload();
     }
 
+    function onControllerChange() {
+        if (!hadController) {
+            // First install: nothing old to replace, nothing to reload.
+            hadController = true;
+            return;
+        }
+        maybeReload();
+    }
+
     // A new SW took control of this page → its (changed) assets are now what
     // the network-first SW will serve. Reload once, but only while idle.
-    navigator.serviceWorker.addEventListener('controllerchange', maybeReload);
+    navigator.serviceWorker.addEventListener('controllerchange', onControllerChange);
 
     // updateViaCache: 'none' — the SW script (and any future importScripts)
     // must NEVER be satisfied from the browser HTTP cache. The server already
@@ -89,6 +122,7 @@
             document.addEventListener('visibilitychange', function () {
                 if (document.visibilityState === 'visible') {
                     reg.update().catch(function () { /* ignore */ });
+                    if (pendingReload) maybeReload();
                 }
             });
         })
