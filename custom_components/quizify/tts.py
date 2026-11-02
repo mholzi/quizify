@@ -114,7 +114,9 @@ class QuizifyTTSAnnouncer:
         self._announce_reveal: bool = True
         self._announce_standings: bool = True
         self._announce_join: bool = True
-        self._announce_countdown: bool = True
+        # #1185: the spoken countdown is the one beat that ships off — the
+        # phones tick and the lights breathe in the last seconds already.
+        self._announce_countdown: bool = False
         self._announce_milestone: bool = True
         # One-shot guard so the spoken countdown warning fires at most once per
         # round. Reset at every question start (see ``announce_question``).
@@ -150,7 +152,7 @@ class QuizifyTTSAnnouncer:
         announce_standings: bool,
         announce_options: bool = True,
         announce_join: bool = True,
-        announce_countdown: bool = True,
+        announce_countdown: bool = False,
         announce_milestone: bool = True,
         tts_entity: str | None = None,
         media_player: str | None = None,

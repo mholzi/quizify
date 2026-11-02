@@ -112,8 +112,9 @@
             timerElement.textContent = remaining;
             announceTimeLeft(remaining);
 
-            // Soft tick in the last 5 seconds (one per whole second).
-            if (window.QuizifyPlayerSound) window.QuizifyPlayerSound.tickFromRemaining(remaining);
+            // Soft tick in the last 5 seconds (one per whole second), only
+            // while this phone still has to answer (#1185).
+            _tick(remaining);
 
             if (remaining <= 5) {
                 timerElement.classList.remove('timer--warning');
@@ -161,11 +162,26 @@
     // with ERR_ROUND_EXPIRED). Cleared through stopCountdown.
     var _timeUp = false;
 
+    // Has this phone (or its team) already answered the live question? The
+    // time-up dimming and the countdown tick both ask (#1174, #1185).
+    function _hasAnswered() {
+        var grid = document.getElementById('answer-buttons');
+        return !!(hasSubmitted || _guessPending ||
+            (grid && grid.querySelector && grid.querySelector('.has-team-answer')));
+    }
+
+    // #1185: the last-five-seconds tick only on phones that still have to
+    // answer. It ran on every phone, each on its own clock — up to 30 offset
+    // ticks in five seconds at people who could no longer do anything.
+    function _tick(remaining) {
+        if (!window.QuizifyPlayerSound || _hasAnswered()) return;
+        window.QuizifyPlayerSound.tickFromRemaining(remaining);
+    }
+
     function _setTimeUp(on) {
         _timeUp = !!on;
         var grid = document.getElementById('answer-buttons');
-        var answered = hasSubmitted || _guessPending ||
-            !!(grid && grid.querySelector && grid.querySelector('.has-team-answer'));
+        var answered = _hasAnswered();
         var dim = _timeUp && !answered;
         var timerEl = document.getElementById('timer');
         if (timerEl && timerEl.classList) timerEl.classList.toggle('timer--up', dim);
@@ -295,8 +311,9 @@
         timerElement.textContent = displaySeconds;
         announceTimeLeft(displaySeconds);
 
-        // Soft tick in the last 5 seconds (one per whole second).
-        if (window.QuizifyPlayerSound) window.QuizifyPlayerSound.tickFromRemaining(remaining);
+        // Soft tick in the last 5 seconds (one per whole second), only while
+        // this phone still has to answer (#1185).
+        _tick(remaining);
 
         // #434: same clock, same sharpening as the board.
         setRevealBlur(remaining);

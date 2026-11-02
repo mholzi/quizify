@@ -1523,7 +1523,9 @@
         announce_reveal: true,
         announce_standings: true,
         announce_join: true,
-        announce_countdown: true,
+        // #1185: off out of the box — the phones tick and the lights breathe
+        // in the last seconds already; a third countdown was one too many.
+        announce_countdown: false,
         announce_milestone: true,
         // Per-game entity overrides (#281). Empty string → fall back to the
         // integration-options default entities on the server.

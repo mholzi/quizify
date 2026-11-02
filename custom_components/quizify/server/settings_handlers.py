@@ -99,7 +99,8 @@ def apply_tts_config(handler: QuizifyWebSocketHandler, tts: dict[str, Any]) -> N
             announce_reveal=bool(tts.get("announce_reveal", True)),
             announce_standings=bool(tts.get("announce_standings", True)),
             announce_join=bool(tts.get("announce_join", True)),
-            announce_countdown=bool(tts.get("announce_countdown", True)),
+            # #1185: off unless asked for — phones and lights count down too.
+            announce_countdown=bool(tts.get("announce_countdown", False)),
             announce_milestone=bool(tts.get("announce_milestone", True)),
             # Per-game entity overrides from the admin dropdowns (#281).
             # Empty/missing → the announcer falls back to the config-entry

@@ -551,33 +551,81 @@
         return top;
     }
 
-    function showToast(message, duration, iconKey) {
-        duration = duration || 3000;
+    // #1185: one toast at a time, the next one waits. Every caller used to
+    // write into the same element and a second toast inherited the first
+    // one's fade-out timer, so it vanished after a fraction of its time
+    // (a steal and a joker in one question were enough). Now each toast gets
+    // its whole duration, a repeat of the one on screen only restarts its
+    // clock, and the queue is short — an old toast is not worth a wait.
+    var TOAST_FADE_MS = 300;
+    var TOAST_QUEUE_MAX = 3;
+    var _toastQueue = [];
+    var _toastCurrent = null;
+    var _toastTimer = null;
+    var _toastFadeTimer = null;
+
+    function _toastEl() {
         var toast = document.getElementById('error-toast');
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'error-toast';
             // #1077: `width:max-content` + a viewport cap — shrink-to-fit
-            // under `left:50%` capped the toast at half the screen, so "10 in
-            // a row! Unstoppable!" wrapped to two lines at 390 px.
+            // under `left:50%` capped the toast at half the screen, so a long
+            // line wrapped to two lines at 390 px.
             toast.style.cssText = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);' +
                 'width:max-content;max-width:calc(100vw - 32px);box-sizing:border-box;text-align:center;' +
                 'background:#D65858;color:white;padding:10px 20px;border-radius:10px;' +
                 'font-size:0.85rem;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;';
             document.body.appendChild(toast);
         }
+        return toast;
+    }
+
+    function _paintToast(item) {
+        var toast = _toastEl();
         toast.style.top = _toastTop() + 'px';
-        var spec = iconKey && FEEDBACK_ICON[iconKey];
+        var spec = item.iconKey && FEEDBACK_ICON[item.iconKey];
         var iconHtml = spec ? feedbackIconHtml(spec.glyph, spec.tint) : '';
         if (iconHtml) {
             toast.classList.add('toast--with-icon');
-            toast.innerHTML = iconHtml + '<span class="toast-text">' + escapeHtml(message) + '</span>';
+            toast.innerHTML = iconHtml + '<span class="toast-text">' + escapeHtml(item.message) + '</span>';
         } else {
             toast.classList.remove('toast--with-icon');
-            toast.textContent = message;
+            toast.textContent = item.message;
         }
         toast.style.opacity = '1';
-        setTimeout(function () { toast.style.opacity = '0'; }, duration);
+        _toastCurrent = item;
+        _armToastTimer(item.duration);
+    }
+
+    function _armToastTimer(duration) {
+        if (_toastTimer) clearTimeout(_toastTimer);
+        if (_toastFadeTimer) { clearTimeout(_toastFadeTimer); _toastFadeTimer = null; }
+        _toastTimer = setTimeout(function () {
+            _toastTimer = null;
+            var toast = document.getElementById('error-toast');
+            if (toast) toast.style.opacity = '0';
+            _toastFadeTimer = setTimeout(function () {
+                _toastFadeTimer = null;
+                _toastCurrent = null;
+                var next = _toastQueue.shift();
+                if (next) _paintToast(next);
+            }, TOAST_FADE_MS);
+        }, duration);
+    }
+
+    function showToast(message, duration, iconKey) {
+        var item = { message: String(message == null ? '' : message), duration: duration || 3000, iconKey: iconKey || '' };
+        if (_toastCurrent && _toastCurrent.message === item.message) {
+            // The same line again: keep it up, restart its clock.
+            if (!_toastTimer) { _paintToast(item); return; }
+            _armToastTimer(item.duration);
+            return;
+        }
+        if (_toastQueue.some(function (q) { return q.message === item.message; })) return;
+        if (!_toastCurrent) { _paintToast(item); return; }
+        _toastQueue.push(item);
+        if (_toastQueue.length > TOAST_QUEUE_MAX) _toastQueue.shift();
     }
 
     /**
@@ -590,6 +638,10 @@
      * accessibility tree, where a faded-out toast is still a readable line.
      */
     function clearToast() {
+        _toastQueue = [];
+        _toastCurrent = null;
+        if (_toastTimer) { clearTimeout(_toastTimer); _toastTimer = null; }
+        if (_toastFadeTimer) { clearTimeout(_toastFadeTimer); _toastFadeTimer = null; }
         var toast = document.getElementById('error-toast');
         if (!toast) return;
         toast.style.opacity = '0';
@@ -4937,8 +4989,9 @@
             timerElement.textContent = remaining;
             announceTimeLeft(remaining);
 
-            // Soft tick in the last 5 seconds (one per whole second).
-            if (window.QuizifyPlayerSound) window.QuizifyPlayerSound.tickFromRemaining(remaining);
+            // Soft tick in the last 5 seconds (one per whole second), only
+            // while this phone still has to answer (#1185).
+            _tick(remaining);
 
             if (remaining <= 5) {
                 timerElement.classList.remove('timer--warning');
@@ -4986,11 +5039,26 @@
     // with ERR_ROUND_EXPIRED). Cleared through stopCountdown.
     var _timeUp = false;
 
+    // Has this phone (or its team) already answered the live question? The
+    // time-up dimming and the countdown tick both ask (#1174, #1185).
+    function _hasAnswered() {
+        var grid = document.getElementById('answer-buttons');
+        return !!(hasSubmitted || _guessPending ||
+            (grid && grid.querySelector && grid.querySelector('.has-team-answer')));
+    }
+
+    // #1185: the last-five-seconds tick only on phones that still have to
+    // answer. It ran on every phone, each on its own clock — up to 30 offset
+    // ticks in five seconds at people who could no longer do anything.
+    function _tick(remaining) {
+        if (!window.QuizifyPlayerSound || _hasAnswered()) return;
+        window.QuizifyPlayerSound.tickFromRemaining(remaining);
+    }
+
     function _setTimeUp(on) {
         _timeUp = !!on;
         var grid = document.getElementById('answer-buttons');
-        var answered = hasSubmitted || _guessPending ||
-            !!(grid && grid.querySelector && grid.querySelector('.has-team-answer'));
+        var answered = _hasAnswered();
         var dim = _timeUp && !answered;
         var timerEl = document.getElementById('timer');
         if (timerEl && timerEl.classList) timerEl.classList.toggle('timer--up', dim);
@@ -5120,8 +5188,9 @@
         timerElement.textContent = displaySeconds;
         announceTimeLeft(displaySeconds);
 
-        // Soft tick in the last 5 seconds (one per whole second).
-        if (window.QuizifyPlayerSound) window.QuizifyPlayerSound.tickFromRemaining(remaining);
+        // Soft tick in the last 5 seconds (one per whole second), only while
+        // this phone still has to answer (#1185).
+        _tick(remaining);
 
         // #434: same clock, same sharpening as the board.
         setRevealBlur(remaining);
