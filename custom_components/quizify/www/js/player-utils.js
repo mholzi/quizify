@@ -659,6 +659,19 @@
     }
 
     // ============================================
+    // Haptics (#1183)
+    // ============================================
+
+    // A 10 ms tick when this phone's own answer, wager, bid, bet or power-up
+    // leaves. Android only, by feature detection: iOS Safari has no
+    // navigator.vibrate, and nothing here tries to fake one.
+    function submitHaptic() {
+        var nav = window.navigator;
+        if (!nav || typeof nav.vibrate !== 'function') return false;
+        try { return nav.vibrate(10) !== false; } catch (e) { return false; }
+    }
+
+    // ============================================
     // Session Storage Helpers
     // ============================================
 
@@ -768,6 +781,7 @@
         myEntrant: myEntrant,
         entrantKey: entrantKey,
         hostStep: hostStep,
+        submitHaptic: submitHaptic,
         HOST_STEP_MIN_MS: HOST_STEP_MIN_MS
     };
 
