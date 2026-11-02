@@ -1538,7 +1538,10 @@ class QuizifyWebSocketHandler:
         """
         state = serialize_state_snapshot(game_state)
         state["host_connected"] = self._host_connected(game_state)
-        # #1182 L4: only the lobby says it, and only until the next game.
+        # #1182 L4: every state frame goes through here, which makes it the
+        # one place that sees a game leave the lobby and come back to it.
+        self.interrupted_game.note_phase(game_state.phase)
+        # Only the lobby says it, and only until the next game.
         state["interrupted_game"] = (
             self.interrupted_game.notice
             if game_state.phase == GamePhase.LOBBY
@@ -1867,7 +1870,8 @@ class QuizifyWebSocketHandler:
         await self._broadcast_dispatcher.dispatch(payload)
         game_state = self._get_game_state()
         if game_state is not None:
-            await self.interrupted_game.sync(game_state.phase)
+            # game_ended reaches FINALE without a snapshot of its own.
+            self.interrupted_game.note_phase(game_state.phase)
 
     async def _dispatch_round_evaluated(self) -> None:
         """Handler for the ``round_evaluated`` state event."""

@@ -250,3 +250,40 @@ def test_the_phone_says_why(reason: str | None, key: str) -> None:
     assert result["onJoinView"] is True
     assert result["hintKey"] == key
     assert result["nameValue"] == "Anna", "the name is handed back either way"
+
+
+@pytest.mark.asyncio
+async def test_the_snapshot_path_writes_the_marker(tmp_path: Path) -> None:
+    """Starting a game sends snapshots, not state-callback broadcasts, so the
+    marker has to be noticed where every snapshot is built."""
+    import asyncio
+
+    runtime = StandaloneRuntime(data_dir=tmp_path)
+    game = QuizifyGameState(runtime=runtime, entry_id="t")
+    h = QuizifyWebSocketHandler(runtime=runtime, game_state_provider=lambda: game)
+    await h.interrupted_game.load()
+    game.phase = GamePhase.QUESTION_ACTIVE
+    h._snapshot(game)
+    await asyncio.sleep(0.05)
+    assert (tmp_path / "game_running.json").is_file()
+    game.phase = GamePhase.LOBBY
+    h._snapshot(game)
+    await asyncio.sleep(0.05)
+    assert not (tmp_path / "game_running.json").exists()
+
+
+@pytest.mark.asyncio
+async def test_a_started_game_writes_the_marker_through_the_state_observer(
+    tmp_path: Path,
+) -> None:
+    import asyncio
+
+    runtime = StandaloneRuntime(data_dir=tmp_path)
+    game = QuizifyGameState(runtime=runtime, entry_id="t")
+    marker = InterruptedGameMarker(runtime)
+    await marker.load()
+    marker.watch(game)
+    game.phase = GamePhase.QUESTION_ACTIVE
+    game._notify_state_callbacks()
+    await asyncio.sleep(0.05)
+    assert (tmp_path / "game_running.json").is_file()

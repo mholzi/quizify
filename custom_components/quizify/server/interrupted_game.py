@@ -17,6 +17,7 @@ without a real runtime never touch the disk.
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import time
 from typing import TYPE_CHECKING, Any
@@ -42,6 +43,7 @@ class InterruptedGameMarker:
         self._file: JsonFile | None = None
         self._running_on_disk = False
         self._notice: dict[str, Any] | None = None
+        self._task: asyncio.Future | None = None
 
     @property
     def notice(self) -> dict[str, Any] | None:
@@ -73,6 +75,36 @@ class InterruptedGameMarker:
     def clear_notice(self) -> None:
         """Drop the notice (a new game started, or the host reset)."""
         self._notice = None
+
+    def watch(self, game_state: Any) -> None:
+        """Note the phase on every state change of *game_state*.
+
+        The game's own observer hook (the one the HA sensors use) fires on
+        start, every round, the finale and the reset — including the start of
+        a game, which sends no snapshot of its own.
+        """
+        game_state.register_state_callback(
+            lambda: self.note_phase(game_state.phase)
+        )
+
+    def note_phase(self, phase: Any) -> None:
+        """Called with every snapshot: schedule a write on an edge only.
+
+        Synchronous so the snapshot builder can call it; the disk I/O runs as
+        a task. A no-op until :meth:`load` has run, or without a loop.
+        """
+        if self._file is None or phase is None:
+            return
+        running = str(getattr(phase, "value", phase)) not in _IDLE_PHASES
+        if running:
+            self._notice = None
+        if running == self._running_on_disk:
+            return
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            return
+        self._task = loop.create_task(self.sync(phase))
 
     async def sync(self, phase: str | None) -> None:
         """Write or remove the marker on the edge of a game starting or ending."""
