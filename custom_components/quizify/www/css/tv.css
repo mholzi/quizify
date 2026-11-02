@@ -4542,11 +4542,11 @@ body.dashboard-body {
     animation: dnl-ring var(--dur-status) var(--ease-out)
         calc(var(--n, 0) * var(--dur-guess-stagger) + var(--dur-guess) + var(--dur-truth)) backwards;
 }
-.dnl-dot.is-best { box-shadow: 0 0 0 4px var(--dash-success, #7FA897); }
+.dnl-dot.is-best { outline: 4px solid var(--dash-success, #7FA897); }
 @keyframes dnl-slide { from { left: 0%; } }
 @keyframes dnl-grow { from { transform: translateX(-50%) scaleY(0); } }
 @keyframes dnl-fade { from { opacity: 0; } }
-@keyframes dnl-ring { from { box-shadow: 0 0 0 0 transparent; } }
+@keyframes dnl-ring { from { outline-color: transparent; } }
 
 /* Image pane — hidden unless the question carries a valid image. */
 .dashboard-question-media {

@@ -7685,7 +7685,7 @@ html.conn-back .view {
     position: absolute;
     right: 0;
     top: 0;
-    padding: 2px 10px;
+    padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-full);
     background: var(--color-accent-brand-bg);
     font-family: var(--font-mono);
