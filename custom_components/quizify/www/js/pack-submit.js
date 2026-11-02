@@ -463,9 +463,10 @@ window.QuizifyPackSubmit = (function () {
             var _tok = QuizifyUtils.readAdminToken();
             var _init = _tok ? { headers: { 'X-Quizify-Token': _tok } } : {};
             var resp = await fetch(SUBMISSIONS_URL, _init);
-            if (!resp.ok) { return; }
+            if (!resp.ok) { throw new Error('HTTP ' + resp.status); }
             var data = await resp.json();
-            var subs = (data && data.submissions) || [];
+            if (!data || !Array.isArray(data.submissions)) { throw new Error('bad body'); }
+            var subs = data.submissions;
             if (!subs.length) {
                 listEl.innerHTML = '';
                 if (card) { card.classList.add('hidden'); }
@@ -494,7 +495,41 @@ window.QuizifyPackSubmit = (function () {
             });
             listEl.innerHTML = html;
             if (card) { card.classList.remove('hidden'); }
-        } catch (_e) { /* best-effort */ }
+        } catch (_e) {
+            // #1182 L7: a failed list (or a 401 without a token) used to hide
+            // the card, which reads as "you never submitted anything". It is
+            // the host's data, so the failure is shown with a retry.
+            listEl.innerHTML = '<div class="pack-submit-list-error" role="alert">' +
+                '<span>' + QuizifyUtils.escapeHtml(t('states.submissionsError')) + '</span> ' +
+                '<button type="button" class="btn btn-secondary" id="pack-submit-list-retry">' +
+                QuizifyUtils.escapeHtml(t('common.retry')) + '</button></div>';
+            var again = el('pack-submit-list-retry');
+            if (again) { again.addEventListener('click', loadSubmissions, { once: true }); }
+            if (card) { card.classList.remove('hidden'); }
+        }
+    }
+
+    // #1182 L7: the config endpoint could not be reached. Distinct from
+    // `enabled: false` (which keeps the section hidden, as it should): the
+    // host sees the section with one line and a retry.
+    function showUnavailable(section) {
+        var box = el('pack-submit-unavailable');
+        if (!box) { return; }
+        section.classList.remove('hidden');
+        section.classList.add('is-unavailable');
+        box.classList.remove('hidden');
+        if (window.QuizifyI18n && window.QuizifyI18n.initPageTranslations) {
+            window.QuizifyI18n.initPageTranslations(box);
+        }
+        var again = el('pack-submit-unavailable-retry');
+        if (again) {
+            again.addEventListener('click', function () {
+                box.classList.add('hidden');
+                section.classList.remove('is-unavailable');
+                section.classList.add('hidden');
+                init();
+            }, { once: true });
+        }
     }
 
     async function init() {
@@ -502,12 +537,13 @@ window.QuizifyPackSubmit = (function () {
         if (!section) { return; }
         try {
             var resp = await fetch(CONFIG_URL);
-            if (!resp.ok) { return; }
+            if (!resp.ok) { showUnavailable(section); return; }
             var cfg = await resp.json();
             if (!cfg || !cfg.enabled) { return; }  // stays hidden — feature off
             if (cfg.limits) { limits = Object.assign(limits, cfg.limits); }
         } catch (_e) {
-            return;  // can't reach config → leave hidden
+            showUnavailable(section);  // can't reach config ≠ feature off (#1182)
+            return;
         }
 
         enabled = true;

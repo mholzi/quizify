@@ -3661,6 +3661,15 @@ footer {
     line-height: 1.4;
     text-align: center;
 }
+
+/* #1182 L6/L7: load failures in the setup screen. A line and a retry in the
+   place of the content, never the "none found" / hidden look of an empty
+   answer. */
+.setup-house-retry { margin-left: var(--space-sm); }
+.pack-submit-section.is-unavailable > .pack-submit-card:not(.pack-submit-unavailable) { display: none; }
+.pack-submit-unavailable p,
+.pack-submit-list-error { margin: 0 0 var(--space-sm); color: var(--color-text-muted); }
+.pack-submit-list-error { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); }
 /* ==========================================
    Player Page: END VIEW
    ========================================== */

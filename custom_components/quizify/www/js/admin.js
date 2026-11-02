@@ -3572,7 +3572,12 @@
             var none = document.createElement('option');
             none.value = '';
             none.disabled = true;
-            none.textContent = _t(noneKey || 'setup.tts.noentities');
+            // #1182 L6: null is a failed fetch, [] is a host with none. A
+            // host with 72 lights used to read "none found" and go looking
+            // for the fault in Home Assistant.
+            none.textContent = entities === null
+                ? _t('states.listError')
+                : _t(noneKey || 'setup.tts.noentities');
             sel.appendChild(none);
             sel.value = '';
             return;
@@ -3597,8 +3602,14 @@
         // #356: the tts-entities endpoint is admin-token gated. Send the
         // session token the admin page already holds.
         _adminFetch('/api/quizify/tts-entities')
-            .then(function (resp) { return resp.ok ? resp.json() : null; })
+            .then(function (resp) {
+                // #1182: a 401 before the token lands is "not yet", not an
+                // error; handleGameState refetches once the token is here.
+                if (resp.status === 401) return 'auth';
+                return resp.ok ? resp.json() : null;
+            })
             .then(function (data) {
+                if (data === 'auth') return;
                 if (!data) {
                     // No token yet (401) or an error. Show the "None found"
                     // fallback WITHOUT marking loaded, so the refetch in
@@ -3915,7 +3926,30 @@
         var selected = savedValue || [];
         var on_ = _houseEls.enable ? !!_houseEls.enable.checked : false;
         box.textContent = '';
-        if (!lights || !lights.length) {
+        if (lights === null) {
+            // #1182 L6: the fetch failed. Say so, with a way to try again,
+            // instead of "no lights found".
+            var failed = document.createElement('div');
+            failed.className = 'setup-house-empty';
+            failed.setAttribute('role', 'alert');
+            var msg = document.createElement('span');
+            msg.setAttribute('data-i18n', 'states.listError');
+            msg.textContent = _t('states.listError');
+            var again = document.createElement('button');
+            again.type = 'button';
+            again.className = 'btn btn-secondary setup-house-retry';
+            again.setAttribute('data-i18n', 'common.retry');
+            again.textContent = _t('common.retry');
+            on(again, 'click', function () {
+                _loadHouseEntities(_readHouseConfig());
+                if (!_ttsEntitiesLoaded) _loadTtsEntities(_readTtsConfig());
+            });
+            failed.appendChild(msg);
+            failed.appendChild(again);
+            box.appendChild(failed);
+            return;
+        }
+        if (!lights.length) {
             var empty = document.createElement('div');
             empty.className = 'setup-house-empty';
             empty.setAttribute('data-i18n', 'setup.house.nolights');
@@ -3971,8 +4005,12 @@
     // admin frame. Admin-token gated like /api/quizify/tts-entities (#356).
     function _loadHouseEntities(cfg) {
         _adminFetch('/api/quizify/house-entities')
-            .then(function (resp) { return resp.ok ? resp.json() : null; })
+            .then(function (resp) {
+                if (resp.status === 401) return 'auth';   // #1182, see _loadTtsEntities
+                return resp.ok ? resp.json() : null;
+            })
             .then(function (data) {
+                if (data === 'auth') return;
                 if (!data) {
                     // No token yet (401) or an error — show the "none found"
                     // fallbacks WITHOUT marking loaded, so the refetch in

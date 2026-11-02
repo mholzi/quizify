@@ -650,6 +650,12 @@
                      worker. -->
                 <section id="pack-submit-section" class="pack-submit-section hidden"
                          aria-labelledby="pack-submit-heading">
+                    <!-- #1182 L7: config unreachable is not "feature off". -->
+                    <div id="pack-submit-unavailable" class="pack-submit-card pack-submit-unavailable hidden" role="alert">
+                        <p data-i18n="states.packSubmitUnavailable">Pack submission cannot be reached right now.</p>
+                        <button type="button" id="pack-submit-unavailable-retry" class="btn btn-secondary"
+                                data-i18n="common.retry">Try again</button>
+                    </div>
                     <div class="pack-submit-card">
                         <h3 id="pack-submit-heading" class="pack-submit-heading"
                             data-i18n="packSubmit.heading">Submit a community pack</h3>
