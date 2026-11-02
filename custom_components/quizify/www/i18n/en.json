@@ -12,7 +12,14 @@
     "nextAttempt": "next attempt in {seconds} s",
     "cardAsOf": "As of {time}",
     "cardOffline": "No connection to Quizify. We keep trying.",
-    "cardLocked": "End and Reset are locked until the connection is back."
+    "cardLocked": "End and Reset are locked until the connection is back.",
+    "analyticsErrorDetail": "Home Assistant answered with an error ({status}).",
+    "reload": "Load again",
+    "loadingPeriod": "loading {period}… (still showing {current})",
+    "flagsError": "Could not load the reported questions",
+    "listError": "Could not load the list",
+    "submissionsError": "Could not load your submissions.",
+    "packSubmitUnavailable": "Pack submission cannot be reached right now."
   },
   "common": {
     "cancel": "Cancel",

@@ -12,7 +12,14 @@
     "nextAttempt": "nächster Versuch in {seconds} s",
     "cardAsOf": "Stand {time}",
     "cardOffline": "Keine Verbindung zu Quizify. Wir versuchen es weiter.",
-    "cardLocked": "Beenden und Zurücksetzen sind gesperrt, bis die Verbindung steht."
+    "cardLocked": "Beenden und Zurücksetzen sind gesperrt, bis die Verbindung steht.",
+    "analyticsErrorDetail": "Home Assistant hat mit einem Fehler geantwortet ({status}).",
+    "reload": "Nochmal laden",
+    "loadingPeriod": "lädt {period}… (zeigt noch {current})",
+    "flagsError": "Konnte die gemeldeten Fragen nicht laden",
+    "listError": "Konnte die Liste nicht laden",
+    "submissionsError": "Konnte deine Einsendungen nicht laden.",
+    "packSubmitUnavailable": "Die Pack-Einsendung ist gerade nicht erreichbar."
   },
   "common": {
     "cancel": "Abbrechen",
