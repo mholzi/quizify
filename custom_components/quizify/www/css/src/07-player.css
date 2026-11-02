@@ -606,6 +606,10 @@
 
 /* Time's up (#1174): clock at zero, this phone has not answered. */
 .timer.timer--up {
+    /* Variant B: the text stays on one line; es fits a 320 px phone. */
+    font-size: clamp(1rem, 5.2vw, 1.5rem);
+    white-space: nowrap;
+    max-width: 100%;
     color: var(--color-text-muted);
     text-shadow: none;
     animation: none;

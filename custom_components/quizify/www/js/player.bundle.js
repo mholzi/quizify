@@ -4861,6 +4861,12 @@
         var dim = _timeUp && !answered;
         var timerEl = document.getElementById('timer');
         if (timerEl && timerEl.classList) timerEl.classList.toggle('timer--up', dim);
+        // Variant B: the clock says game.timerUpAria (a missing bundle keeps "0").
+        if (timerEl && _timeUp) {
+            var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            var upText = t('game.timerUpAria');
+            timerEl.textContent = (dim && upText && upText !== 'game.timerUpAria') ? upText : '0';
+        }
         if (grid && grid.classList) grid.classList.toggle('is-time-up', dim);
         var est = document.getElementById('estimate-container');
         if (est && est.classList) est.classList.toggle('is-time-up', dim);
@@ -4971,6 +4977,11 @@
         // Server sends decimals (e.g. 19.5) for smoother bar animations;
         // display as a whole-second integer so the count text reads cleanly.
         var displaySeconds = Math.ceil(remaining);
+        // #1174: a late zero tick keeps "Time is up!"; a tick with time left wins.
+        if (_timeUp) {
+            if (displaySeconds <= 0) return;
+            _setTimeUp(false);
+        }
         timerElement.textContent = displaySeconds;
         announceTimeLeft(displaySeconds);
 
