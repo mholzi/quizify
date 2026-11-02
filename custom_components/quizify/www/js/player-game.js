@@ -375,10 +375,21 @@
         // static mount (#536/#540).
         var safeImg = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
             ? window.QuizifyUtils.safeImageUrl(imgUrl) : '';
+        // #1182 L10: the frame keeps its height while the picture loads (a
+        // skeleton, not an empty box with the clock running) and says so
+        // when it fails. It used to collapse to text-only, which turned
+        // "Who is in this picture?" into an unanswerable question that still
+        // counted. The question still counts (decision 2a); the TV may have
+        // the picture.
+        var missing = document.getElementById('question-image-missing');
+        media.classList.remove('is-loading', 'is-missing');
+        if (missing) missing.hidden = true;
+        img.onload = function() { media.classList.remove('is-loading'); };
         img.onerror = function() {
-            // Image failed → hide the banner, fall back to text-only.
             img.removeAttribute('src');
-            media.hidden = true;
+            media.classList.remove('is-loading');
+            media.classList.add('is-missing');
+            if (missing) missing.hidden = false;
         };
         // Reset first — the banner element is reused every round, so a blur
         // left over from the last question must not bleed into this one.
@@ -387,6 +398,7 @@
             // #467: populate a localized generic alt so the image question
             // isn't announced as an unlabelled graphic.
             var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            media.classList.add('is-loading');
             img.src = safeImg;
             img.alt = t('game.questionImageAlt');
             media.hidden = false;

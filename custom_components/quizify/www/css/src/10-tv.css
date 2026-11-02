@@ -832,6 +832,28 @@ body.dashboard-body {
    box and would otherwise fade the picture's own edges into the page,
    making the frame look broken rather than obscured. Scaling up and
    clipping in the parent keeps a clean edge at every blur radius. */
+/* #1182 L10: a skeleton of fixed height while the picture loads, and a
+   readable line in the same pane when it fails. */
+.dashboard-question-media.is-loading {
+    min-height: 40vh;
+    border-radius: 16px;
+    background: var(--color-bg-card-alt, #F3EEDF);
+    animation: qz-skeleton 1.6s ease-in-out infinite;
+}
+.dashboard-question-media.is-loading .dashboard-question-image { opacity: 0; }
+.dashboard-question-media.is-missing {
+    min-height: 40vh;
+    border-radius: 16px;
+    border: 1px dashed var(--dash-border-neon);
+}
+.dashboard-question-media.is-missing .dashboard-question-image { display: none; }
+.dashboard-question-image-missing {
+    padding: 24px;
+    color: var(--dash-text-muted);
+    font-size: clamp(18px, 1.8vw, 26px);
+    text-align: center;
+}
+.dashboard-question-image-missing[hidden] { display: none; }
 .dashboard-question-image.progressive-reveal {
     filter: blur(var(--reveal-blur, 0px));
     transform: scale(1.06);

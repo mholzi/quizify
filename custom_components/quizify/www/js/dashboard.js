@@ -388,12 +388,24 @@
         if (safe && revealStyle === 'progressive') {
             reveal.arm();
         }
+        // #1182 L10: skeleton while loading, a calm line when it fails.
+        // Collapsing to text-only made a picture question unanswerable
+        // without a word; the room now sees why the picture is missing.
+        var media = els.questionMedia;
+        var missing = document.getElementById('question-image-missing');
+        if (media) media.classList.remove('is-loading', 'is-missing');
+        if (missing) missing.hidden = true;
+        img.onload = function() { if (media) media.classList.remove('is-loading'); };
         img.onerror = function() {
-            // Image failed → collapse to text-only, no broken-image icon.
             img.removeAttribute('src');
-            setImageLayout(false);
+            if (media) {
+                media.classList.remove('is-loading');
+                media.classList.add('is-missing');
+            }
+            if (missing) missing.hidden = false;
         };
         if (safe) {
+            if (media) media.classList.add('is-loading');
             // #467: localized generic alt so the TV image question isn't
             // an unlabelled graphic for assistive tech.
             var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
