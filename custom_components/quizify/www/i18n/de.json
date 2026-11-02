@@ -296,7 +296,10 @@
     "copyJoinLinkAria": "Beitrittslink kopieren",
     "currentQuestionRegion": "Aktuelle Frage",
     "modeOn": "Große Schrift und ruhige Animationen einschalten",
-    "modeOff": "Große Schrift und ruhige Animationen ausschalten"
+    "modeOff": "Große Schrift und ruhige Animationen ausschalten",
+    "hostActions": "Host-Aktionen",
+    "packChips": "Fragen-Pack",
+    "packSubmitMode": "Pack senden oder wünschen"
   },
   "setup": {
     "hero": "Bereit für eine\nRunde Quizify?",

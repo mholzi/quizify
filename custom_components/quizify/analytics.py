@@ -730,6 +730,9 @@ class QuizifyAnalytics:
                     "date": datetime.fromtimestamp(
                         g["ended_at"], tz=UTC
                     ).strftime("%Y-%m-%d %H:%M"),
+                    # #1177: the raw moment, so the stats page can write the
+                    # date in the game language (Intl.DateTimeFormat).
+                    "ended_at": g["ended_at"],
                     "category": g.get("category", "mixed"),
                     "player_count": g["player_count"],
                     "rounds_played": g["rounds_played"],
@@ -769,6 +772,11 @@ class QuizifyAnalytics:
                 buckets[(now - timedelta(days=i)).strftime("%Y-%m-%d")]
                 for i in range(days - 1, -1, -1)
             ]
+            dates = [
+                (now - timedelta(days=i)).strftime("%Y-%m-%d")
+                for i in range(days - 1, -1, -1)
+            ]
+            unit = "day"
         elif period in ("30d", "90d"):
             weeks = 4 if period == "30d" else 13
             week_buckets: dict[str, int] = {}
@@ -784,6 +792,8 @@ class QuizifyAnalytics:
             sorted_keys = sorted(week_buckets.keys())
             labels = [f"W{i + 1}" for i in range(len(sorted_keys))]
             values = [week_buckets[k] for k in sorted_keys]
+            dates = list(sorted_keys)
+            unit = "week"
         else:
             month_buckets: dict[str, int] = {}
             for game in games:
@@ -796,5 +806,10 @@ class QuizifyAnalytics:
                 if sorted_keys else []
             )
             values = [month_buckets[k] for k in sorted_keys] if sorted_keys else []
+            dates = [f"{k}-01" for k in sorted_keys]
+            unit = "month"
 
-        return {"labels": labels, "values": values}
+        # ``labels`` stay English (strftime "%a"/"%b") for any older client;
+        # ``dates`` + ``unit`` let the stats page name the weekday or month in
+        # the game language instead (#1177).
+        return {"labels": labels, "values": values, "dates": dates, "unit": unit}

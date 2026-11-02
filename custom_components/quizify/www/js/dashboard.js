@@ -1429,7 +1429,11 @@
                 els.dashboardEstimate.classList.remove('hidden');
                 var est = msg.estimate;
                 var unit = est.unit || '';
-                function fmt(v) { return unit ? (v + ' ' + unit) : v; }
+                function fmt(v) {
+                    var I = window.QuizifyI18n;
+                    var shown = (I && I.formatNumber) ? I.formatNumber(v) : v;
+                    return unit ? (shown + ' ' + unit) : shown;
+                }
                 var rangeLabel = window.QuizifyI18n
                     ? window.QuizifyI18n.t('estimate.dashRange', { min: fmt(est.min), max: fmt(est.max) })
                     : 'Estimate between ' + fmt(est.min) + ' and ' + fmt(est.max);
@@ -1676,6 +1680,10 @@
         function fmt(v) {
             if (v === null || v === undefined) return '—';
             var n = Math.round(v * 1000) / 1000;
+            // #1177: in the game language — "384.400" and "3,5" in a German
+            // room, not the String(n) "384400" / "3.5" every room used to get.
+            var I = window.QuizifyI18n;
+            if (I && I.formatNumber) return I.formatNumber(n);
             return (n === Math.round(n)) ? String(Math.round(n)) : String(n);
         }
 

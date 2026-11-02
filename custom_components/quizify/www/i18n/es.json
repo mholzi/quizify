@@ -296,7 +296,10 @@
     "copyJoinLinkAria": "Copiar enlace de invitación",
     "currentQuestionRegion": "Pregunta actual",
     "modeOn": "Activar texto más grande y menos movimiento",
-    "modeOff": "Desactivar texto más grande y menos movimiento"
+    "modeOff": "Desactivar texto más grande y menos movimiento",
+    "hostActions": "Acciones del anfitrión",
+    "packChips": "Paquete de preguntas",
+    "packSubmitMode": "Enviar o pedir un paquete"
   },
   "setup": {
     "hero": "¿Te apetece una\nronda de Quizify?",

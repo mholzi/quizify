@@ -242,7 +242,11 @@
     function _fmtEstimate(val, unit) {
         if (val === null || val === undefined) return '—';
         var n = Math.round(val * 1000) / 1000;
-        var text = (n === Math.round(n)) ? String(Math.round(n)) : String(n);
+        // #1177: digits in the game language ("384.400", "3,5").
+        var I = window.QuizifyI18n;
+        var text = (I && I.formatNumber)
+            ? I.formatNumber(n)
+            : ((n === Math.round(n)) ? String(Math.round(n)) : String(n));
         return unit ? (text + ' ' + unit) : text;
     }
 

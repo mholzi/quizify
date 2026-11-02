@@ -181,7 +181,7 @@
     "resetGuestWarning": "All points and players will be cleared, and every phone goes back to the join screen.",
     "stoleFromYou": "{name} stole {points} points from you!",
     "stoleFromOpponent": "Stolen: +{points} pts from {name}!",
-    "frozen": "You were frozen for 5s!",
+    "frozen": "You were frozen for 5 s!",
     "frozenTitle": "Frozen",
     "frozenSub": "You can't answer right now",
     "frozenFoot": "Back in a moment…",
@@ -296,7 +296,10 @@
     "copyJoinLinkAria": "Copy join link",
     "currentQuestionRegion": "Current question",
     "modeOn": "Turn on larger text and calmer motion",
-    "modeOff": "Turn off larger text and calmer motion"
+    "modeOff": "Turn off larger text and calmer motion",
+    "hostActions": "Host actions",
+    "packChips": "Question pack",
+    "packSubmitMode": "Send or request a pack"
   },
   "setup": {
     "hero": "Ready for a\nround of Quizify?",

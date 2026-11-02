@@ -395,9 +395,9 @@
                     document.getElementById('empty').style.display = 'none';
 
                     // Stats
-                    document.getElementById('total-games').textContent = data.total_games;
-                    document.getElementById('avg-players').textContent = data.avg_players_per_game;
-                    document.getElementById('total-rounds').textContent = data.total_rounds;
+                    document.getElementById('total-games').textContent = fmtNum(data.total_games);
+                    document.getElementById('avg-players').textContent = fmtNum(data.avg_players_per_game);
+                    document.getElementById('total-rounds').textContent = fmtNum(data.total_rounds);
 
                     // Chart
                     renderChart(data.chart_data);
@@ -418,6 +418,36 @@
                 });
         }
 
+        // #1177: weekday and month names in the game language. The server
+        // sends ISO dates next to its English strftime labels; Intl does the
+        // naming, so a German host reads "Mo" and "Nov", not "Mon" and "Nov".
+        var CHART_DATE_FORMATS = {
+            day: { weekday: 'short', timeZone: 'UTC' },
+            week: { day: 'numeric', month: 'short', timeZone: 'UTC' },
+            month: { month: 'short', timeZone: 'UTC' }
+        };
+
+        function chartLabel(chartData, i, fallback) {
+            var iso = chartData.dates && chartData.dates[i];
+            var opts = CHART_DATE_FORMATS[chartData.unit];
+            var I = window.QuizifyI18n;
+            if (!iso || !opts || !I || !I.formatDate) return fallback;
+            var p = String(iso).split('-');
+            var when = Date.UTC(Number(p[0]), Number(p[1]) - 1, Number(p[2] || 1));
+            return I.formatDate(when, opts) || fallback;
+        }
+
+        function fmtNum(n) {
+            var I = window.QuizifyI18n;
+            return (I && I.formatNumber) ? I.formatNumber(n) : String(n);
+        }
+
+        function formatWhen(seconds, fallback) {
+            var I = window.QuizifyI18n;
+            if (!seconds || !I || !I.formatDate) return fallback || '';
+            return I.formatDate(seconds * 1000, { dateStyle: 'short', timeStyle: 'short' }) || fallback || '';
+        }
+
         function renderChart(chartData) {
             var container = document.getElementById('chart');
             if (!chartData || !chartData.labels || chartData.labels.length === 0) {
@@ -428,10 +458,11 @@
             var max = Math.max.apply(null, chartData.values) || 1;
 
             container.innerHTML = chartData.labels.map(function(label, i) {
+                label = chartLabel(chartData, i, label);
                 var val = chartData.values[i] || 0;
                 var pct = (val / max) * 100;
                 return '<div class="chart-bar-wrapper">' +
-                    '<div class="chart-value">' + val + '</div>' +
+                    '<div class="chart-value">' + escapeHtml(fmtNum(val)) + '</div>' +
                     '<div class="chart-bar" style="height:' + Math.max(pct, 2) + '%"></div>' +
                     '<div class="chart-label">' + escapeHtml(label) + '</div>' +
                     '</div>';
@@ -478,7 +509,7 @@
             }
             tbody.innerHTML = games.map(function(g) {
                 return '<tr>' +
-                    '<td>' + escapeHtml(g.date) + '</td>' +
+                    '<td>' + escapeHtml(formatWhen(g.ended_at, g.date)) + '</td>' +
                     '<td>' + escapeHtml(g.category) + '</td>' +
                     '<td>' + g.player_count + '</td>' +
                     '<td>' + escapeHtml(g.winner) + '</td>' +
@@ -500,9 +531,8 @@
                     flags.sort(function (a, b) { return (b.ts || 0) - (a.ts || 0); });
                     var tbody = document.getElementById('flagged-questions');
                     tbody.innerHTML = flags.slice(0, 100).map(function (f) {
-                        var when = f.ts
-                            ? new Date(f.ts * 1000).toLocaleString()
-                            : '';
+                        // Game language, not the browser's (#1177).
+                        var when = formatWhen(f.ts, '');
                         return '<tr>' +
                             '<td><code>' + escapeHtml(f.question_id || '') + '</code></td>' +
                             '<td>' + escapeHtml(when) + '</td>' +

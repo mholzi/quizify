@@ -156,7 +156,9 @@ def test_phone_prints_no_long_decimals(result: dict, case: str) -> None:
     assert ends is not None
     for text in ends:
         assert not text.startswith("-")
-        assert re.fullmatch(r"\d+(\.\d)?", text), (case, text)
+        # Since #1177 the digits are grouped the game language's way
+        # ("1,820" in English); the point here is still no long decimals.
+        assert re.fullmatch(r"\d{1,3}(,\d{3})*(\.\d)?", text), (case, text)
 
 
 def test_television_uses_the_shared_window() -> None:
