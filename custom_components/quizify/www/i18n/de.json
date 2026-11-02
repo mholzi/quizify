@@ -115,7 +115,8 @@
     "playAgainSame": "Nochmal spielen",
     "timer": "Zeit pro Frage",
     "correct": "Richtig",
-    "skip": "Überspringen",
+    "reveal": "Auflösen",
+    "closeBets": "Einsätze schließen",
     "next": "Nächste",
     "end": "Ende",
     "pause": "Pause",
@@ -720,5 +721,12 @@
     "resultRight": "{name} hat sie gewusst — +{pts} Punkte",
     "resultWrong": "{name} lag daneben — −{pts} Punkte",
     "resultTimeout": "{name} war zu langsam — −{pts} Punkte"
+  },
+  "hostCard": {
+    "lightningRunning": "Blitzrunde läuft",
+    "auctionRunning": "Gebote für den heißen Stuhl",
+    "seatAnswering": "Heißer Stuhl: {name} antwortet",
+    "meta": "Frage {current} von {total} · {count, plural, one{1 Spieler} other{# Spieler}}",
+    "noToken": "Öffne Quizify einmal, um dieses Dashboard zu verbinden"
   }
 }

@@ -26,12 +26,14 @@ Two things are worth pinning, and they are the two that would fail silently:
 from __future__ import annotations
 
 import asyncio
+import json
 import re
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 COMPONENT = REPO / "custom_components" / "quizify"
 CARD_JS = COMPONENT / "www" / "cards" / "quizify-host-card.js"
+I18N = COMPONENT / "www" / "i18n"
 PHASES_PY = COMPONENT / "game" / "phase_controller.py"
 CARDS_PY = COMPONENT / "cards.py"
 
@@ -78,19 +80,34 @@ def _phase_actions() -> dict[str, tuple[str, str | None]]:
 
 
 def _card_labels() -> dict[str, set[str]]:
-    """Parse the card's inline LABELS: language code -> the keys it defines."""
+    """The labels the card can render, per language: language code -> keys.
+
+    Since #1177 the card reads its words from the app's own i18n bundles
+    (``KEYS`` maps each label to a bundle key) and keeps an English
+    ``FALLBACK`` for the time before the bundle arrives. A label counts as
+    present in a language when its bundle key resolves there and the fallback
+    carries it too.
+    """
     text = _card_text()
-    block = re.search(r"var LABELS = \{(.*?)\n    \};", text, re.S)
-    assert block, "could not find LABELS in the card"
+    keys_block = re.search(r"var KEYS = \{(.*?)\n    \};", text, re.S)
+    fallback_block = re.search(r"var FALLBACK = \{(.*?)\n    \};", text, re.S)
+    assert keys_block and fallback_block, "could not find KEYS / FALLBACK in the card"
+    mapping = dict(re.findall(r"(\w+): '([\w.]+)'", keys_block.group(1)))
+    fallback = set(
+        re.findall(r"(\w+):", re.sub(r"'[^']*'", "''", fallback_block.group(1)))
+    )
+    assert mapping, "KEYS parsed as empty — the shape changed"
     out: dict[str, set[str]] = {}
-    for lang, body in re.findall(
-        r"\n        (\w+): \{(.*?)\n        \}", block.group(1), re.S
-    ):
-        # Drop the quoted values first, so a colon or a word inside a
-        # translated string cannot be mistaken for a key.
-        stripped = re.sub(r"'[^']*'", "''", body)
-        out[lang] = set(re.findall(r"(\w+):", stripped))
-    assert out, "LABELS parsed as empty — the bundle shape changed"
+    for lang in ("en", "de", "es"):
+        bundle = json.loads((I18N / f"{lang}.json").read_text(encoding="utf-8"))
+        present = set()
+        for label, key in mapping.items():
+            node = bundle
+            for part in key.split("."):
+                node = node.get(part) if isinstance(node, dict) else None
+            if isinstance(node, str) and node.strip() and label in fallback:
+                present.add(label)
+        out[lang] = present
     return out
 
 

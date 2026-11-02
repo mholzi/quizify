@@ -115,7 +115,8 @@
     "playAgainSame": "Jugar de nuevo",
     "timer": "Tiempo por pregunta",
     "correct": "Correcto",
-    "skip": "Saltar",
+    "reveal": "Revelar",
+    "closeBets": "Cerrar apuestas",
     "next": "Siguiente",
     "end": "Terminar",
     "pause": "Pausar",
@@ -720,5 +721,12 @@
     "resultRight": "{name} acertó — +{pts} puntos",
     "resultWrong": "{name} falló — −{pts} puntos",
     "resultTimeout": "A {name} se le acabó el tiempo — −{pts} puntos"
+  },
+  "hostCard": {
+    "lightningRunning": "Ronda relámpago en curso",
+    "auctionRunning": "Pujas por la silla caliente",
+    "seatAnswering": "Silla caliente: responde {name}",
+    "meta": "Pregunta {current} de {total} · {count, plural, one{1 jugador} other{# jugadores}}",
+    "noToken": "Abre Quizify una vez para enlazar este panel"
   }
 }

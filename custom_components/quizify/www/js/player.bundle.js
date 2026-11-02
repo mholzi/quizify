@@ -7718,6 +7718,13 @@
         var resumeBtn = document.getElementById('resume-game-btn');
         if (nextRoundAdminBtn) nextRoundAdminBtn.classList.add('hidden');
         if (skipBtn) skipBtn.classList.toggle('hidden', !state.isAdmin);
+        // #1177: the skip button names what admin_skip does here, in the
+        // words the host page and the Lovelace card use.
+        var skipLabel = document.getElementById('skip-question-label');
+        if (skipLabel && window.QuizifyI18n) {
+            skipLabel.setAttribute('data-i18n', 'admin.closeBets');
+            skipLabel.textContent = window.QuizifyI18n.t('admin.closeBets');
+        }
         if (pauseBtn) pauseBtn.classList.add('hidden');
         if (resumeBtn) resumeBtn.classList.add('hidden');
 
@@ -7804,6 +7811,13 @@
         // admin_skip during QUESTION_ACTIVE, so this path is reachable.
         // Stays hidden for non-admins and outside an active question.
         if (skipBtn) skipBtn.classList.toggle('hidden', !state.isAdmin);
+        // #1177: the skip button names what admin_skip does here, in the
+        // words the host page and the Lovelace card use.
+        var skipLabel = document.getElementById('skip-question-label');
+        if (skipLabel && window.QuizifyI18n) {
+            skipLabel.setAttribute('data-i18n', 'admin.reveal');
+            skipLabel.textContent = window.QuizifyI18n.t('admin.reveal');
+        }
         // QUESTION_ACTIVE → Pause is the relevant CTA, Resume hidden.
         if (pauseBtn) pauseBtn.classList.remove('hidden');
         if (resumeBtn) resumeBtn.classList.add('hidden');

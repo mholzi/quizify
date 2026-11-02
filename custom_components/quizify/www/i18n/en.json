@@ -115,7 +115,8 @@
     "playAgainSame": "Play again",
     "timer": "Time per question",
     "correct": "Correct",
-    "skip": "Skip",
+    "reveal": "Reveal",
+    "closeBets": "Close wagers",
     "next": "Next",
     "end": "End",
     "pause": "Pause",
@@ -720,5 +721,12 @@
     "resultRight": "{name} answered it — +{pts} points",
     "resultWrong": "{name} got it wrong — −{pts} points",
     "resultTimeout": "{name} ran out of time — −{pts} points"
+  },
+  "hostCard": {
+    "lightningRunning": "Lightning round running",
+    "auctionRunning": "Bidding for the hot seat",
+    "seatAnswering": "Hot seat: {name} is answering",
+    "meta": "Question {current} of {total} · {count, plural, one{1 player} other{# players}}",
+    "noToken": "Open Quizify once to link this dashboard"
   }
 }

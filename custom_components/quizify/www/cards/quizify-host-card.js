@@ -86,47 +86,93 @@
      */
     var SKIPPABLE_PHASES = { QUESTION_ACTIVE: true, WAGER_ACTIVE: true };
 
-    var LABELS = {
-        en: {
-            title: 'Quizify', start: 'Start game', skip: 'Skip to answer',
-            next: 'Next question', resume: 'Resume', again: 'Play again',
-            closeBets: 'Close betting', lightningRunning: 'Lightning round running',
-            auctionRunning: 'Bidding for the hot seat', seatAnswering: 'The hot seat is answering',
-            reveal: 'Reveal', end: 'End game', reset: 'Reset', kick: 'Kick',
-            scoringOut: 'Out of scoring', scoringBack: 'Bring back', scoringSection: 'Not in the scoring', scoringPodium: 'Otherwise on the podium',
-            players: 'players', round: 'Round', join: 'Join',
-            waiting: 'Waiting for players', connecting: 'Connecting…',
-            offline: 'Connection lost — reconnecting',
-            noToken: 'Open Quizify once to link this dashboard',
-            openAdmin: 'Open Quizify', resetConfirm: 'Reset the game?'
-        },
-        de: {
-            title: 'Quizify', start: 'Spiel starten', skip: 'Zur Auflösung',
-            next: 'Nächste Frage', resume: 'Weiter', again: 'Nochmal spielen',
-            closeBets: 'Wetten schließen', lightningRunning: 'Blitzrunde läuft',
-            auctionRunning: 'Gebote für den Hot Seat', seatAnswering: 'Der Hot Seat antwortet',
-            reveal: 'Auflösen', end: 'Spiel beenden', reset: 'Zurücksetzen', kick: 'Rauswerfen',
-            scoringOut: 'Aus der Wertung', scoringBack: 'Zurückholen', scoringSection: 'Nicht in der Wertung', scoringPodium: 'Steht sonst auf dem Podium',
-            players: 'Spieler', round: 'Runde', join: 'Beitreten',
-            waiting: 'Warte auf Spieler', connecting: 'Verbinde…',
-            offline: 'Verbindung verloren — versuche erneut',
-            noToken: 'Öffne Quizify einmal, um dieses Dashboard zu verbinden',
-            openAdmin: 'Quizify öffnen', resetConfirm: 'Spiel zurücksetzen?'
-        },
-        es: {
-            title: 'Quizify', start: 'Empezar partida', skip: 'Ir a la respuesta',
-            next: 'Siguiente pregunta', resume: 'Continuar', again: 'Jugar otra vez',
-            closeBets: 'Cerrar apuestas', lightningRunning: 'Ronda relámpago en curso',
-            auctionRunning: 'Pujas por la silla caliente', seatAnswering: 'La silla caliente responde',
-            reveal: 'Revelar', end: 'Terminar partida', reset: 'Reiniciar', kick: 'Expulsar',
-            scoringOut: 'Sacar de la clasificación', scoringBack: 'Recuperar', scoringSection: 'Fuera de la clasificación', scoringPodium: 'Si no, estará en el podio',
-            players: 'jugadores', round: 'Ronda', join: 'Unirse',
-            waiting: 'Esperando jugadores', connecting: 'Conectando…',
-            offline: 'Conexión perdida — reintentando',
-            noToken: 'Abre Quizify una vez para enlazar este panel',
-            openAdmin: 'Abrir Quizify', resetConfirm: '¿Reiniciar la partida?'
-        }
+    /*
+     * #1177: the card speaks the app's own words. It used to carry 34 labels
+     * × 3 languages of its own, and they had drifted from the host page
+     * (Kick / Rauswerfen / Expulsar for Remove, "Zur Auflösung" for Reveal,
+     * "Der Hot Seat antwortet"). Now each label names its key in
+     * /quizify/static/i18n/{lang}.json — the bundle the host page loads — and
+     * the card fetches that file. FALLBACK is English and only covers the time
+     * before the bundle arrives, or a dashboard that cannot reach it.
+     */
+    var I18N_URL = '/quizify/static/i18n/';
+    var SUPPORTED_LANGS = { en: true, de: true, es: true };
+    var KEYS = {
+        start: 'admin.startGame', skip: 'admin.reveal', next: 'admin.nextQuestion',
+        resume: 'admin.resume', again: 'admin.playAgainSame', closeBets: 'admin.closeBets',
+        lightningRunning: 'hostCard.lightningRunning', auctionRunning: 'hostCard.auctionRunning',
+        seatAnswering: 'hostCard.seatAnswering', reveal: 'admin.reveal', end: 'admin.endGame',
+        reset: 'admin.resetGame', kick: 'admin.kickConfirmBtn',
+        scoringOut: 'admin.scoringOut', scoringBack: 'admin.scoringBack',
+        scoringSection: 'admin.scoringSection', scoringPodium: 'admin.scoringPodium',
+        meta: 'hostCard.meta', join: 'admin.joinModalBtnJoin', waiting: 'lobby.marqueeWaiting',
+        connecting: 'common.connecting', offline: 'connection.reconnecting',
+        noToken: 'hostCard.noToken', openAdmin: 'launcher.openQuizify',
+        resetConfirm: 'admin.resetGameConfirm'
     };
+    var FALLBACK = {
+        start: 'Start game', skip: 'Reveal', next: 'Next question', resume: 'Resume',
+        again: 'Play again', closeBets: 'Close wagers',
+        lightningRunning: 'Lightning round running', auctionRunning: 'Bidding for the hot seat',
+        seatAnswering: 'Hot seat: {name} is answering', reveal: 'Reveal', end: 'End game',
+        reset: 'Reset game', kick: 'Remove',
+        scoringOut: 'Out of scoring', scoringBack: 'Bring back',
+        scoringSection: 'Not in the scoring', scoringPodium: 'Otherwise on the podium',
+        meta: 'Question {current} of {total} · {count, plural, one{1 player} other{# players}}',
+        join: 'Join', waiting: 'Waiting for players…', connecting: 'Connecting to the game…',
+        offline: 'Reconnecting…', noToken: 'Open Quizify once to link this dashboard',
+        openAdmin: 'Open Quizify', resetConfirm: 'Reset game?'
+    };
+    var BUNDLES = {};   // lang -> parsed bundle, once fetched
+    var LOADING = {};   // lang -> in-flight promise
+
+    function loadBundle(lang) {
+        if (BUNDLES[lang]) return Promise.resolve(BUNDLES[lang]);
+        if (!LOADING[lang]) {
+            LOADING[lang] = fetch(I18N_URL + lang + '.json')
+                .then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (json) {
+                    if (json) BUNDLES[lang] = json;
+                    return json;
+                })
+                .catch(function () { return null; })
+                .then(function (json) { delete LOADING[lang]; return json; });
+        }
+        return LOADING[lang];
+    }
+
+    function lookup(bundle, key) {
+        var node = bundle;
+        var parts = key.split('.');
+        for (var i = 0; i < parts.length; i++) {
+            if (!node || typeof node !== 'object') return undefined;
+            node = node[parts[i]];
+        }
+        return typeof node === 'string' ? node : undefined;
+    }
+
+    /*
+     * The bundles' template syntax, reduced to what the card's labels use:
+     * {param} and one level of {count, plural, one{…} other{…}} with # for
+     * the count. i18n.js is not loaded here — it would claim window.t on the
+     * Home Assistant page.
+     */
+    function fmt(template, params, lang) {
+        var text = String(template);
+        params = params || {};
+        text = text.replace(/\{(\w+), plural,((?:[^{}]|\{[^{}]*\})*)\}/g, function (_m, name, body) {
+            var count = Number(params[name]);
+            var branches = {};
+            body.replace(/(=?\w+)\{([^{}]*)\}/g, function (_b, sel, val) { branches[sel] = val; return ''; });
+            var cat = 'other';
+            try { cat = new Intl.PluralRules(lang).select(count); } catch (e) { cat = count === 1 ? 'one' : 'other'; }
+            var chosen = branches['=' + count] || branches[cat] || branches.other || '';
+            return chosen.replace(/#/g, String(count));
+        });
+        return text.replace(/\{(\w+)\}/g, function (m, name) {
+            return params[name] != null ? String(params[name]) : m;
+        });
+    }
 
     var STYLE = [
         ':host{display:block}',
@@ -247,9 +293,10 @@
             this._hass = hass;
             var lang = (hass && (hass.language || (hass.locale && hass.locale.language))) || 'en';
             lang = String(lang).slice(0, 2);
-            if (LABELS[lang] && lang !== this._lang) {
+            if (SUPPORTED_LANGS[lang] && lang !== this._lang) {
                 this._lang = lang;
                 this._render();
+                this._loadLabels();
             }
         }
 
@@ -257,6 +304,7 @@
             // Lovelace detaches and re-attaches cards on view switches and
             // reflows; a re-attached card gets its full retry budget back.
             this._attempts = 0;
+            this._loadLabels();
             this._connect();
         }
 
@@ -276,7 +324,26 @@
 
         // ---- Wiring ------------------------------------------------------
 
-        get _t() { return LABELS[this._lang] || LABELS.en; }
+        // The labels in the card's language: the app bundle's words where it
+        // has arrived, the English FALLBACK where it has not (#1177).
+        get _t() {
+            var bundle = BUNDLES[this._lang] || null;
+            var out = {};
+            Object.keys(KEYS).forEach(function (k) {
+                var v = bundle ? lookup(bundle, KEYS[k]) : undefined;
+                out[k] = v !== undefined ? v : FALLBACK[k];
+            });
+            return out;
+        }
+
+        _loadLabels() {
+            var self = this;
+            var lang = this._lang;
+            if (BUNDLES[lang]) return;
+            loadBundle(lang).then(function (bundle) {
+                if (bundle && lang === self._lang) self._render();
+            });
+        }
 
         _connect() {
             var self = this;
@@ -428,8 +495,13 @@
             // the host tap a button that refuses.
             var blocked = phase === 'LOBBY' && players.length === 0;
             var msg = (action && action.msg) || null;
+            var label = action ? this._t[action.labelKey] : this._t.connecting;
+            if (phase === 'HOT_SEAT') {
+                var seat = (this._state && this._state.hot_seat) || {};
+                label = fmt(label, { name: seat.entrant || seat.winner || '…' }, this._lang);
+            }
             return {
-                label: action ? this._t[action.labelKey] : this._t.connecting,
+                label: label,
                 msg: msg,
                 disabled: !msg || blocked || this._status !== 'online',
                 blockedReason: blocked ? this._t.waiting : null
@@ -457,8 +529,11 @@
             var players = (s && s.players) || [];
             var primary = this._primary();
             var meta = s
-                ? t.round + ' ' + (s.round || 0) + '/' + (s.total_rounds || 0) +
-                  ' · ' + players.length + ' ' + t.players
+                ? fmt(t.meta, {
+                    current: s.round || 0,
+                    total: s.total_rounds || 0,
+                    count: players.length
+                }, this._lang)
                 : t.connecting;
 
             var html = '<style>' + STYLE + '</style><ha-card>';

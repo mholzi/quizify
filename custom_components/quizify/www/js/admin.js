@@ -2853,6 +2853,14 @@
     function setLiveControls(phase) {
         var allowed = LIVE_CONTROLS[phase] || {};
         if (els.skipBtn) els.skipBtn.classList.toggle('hidden', !allowed.skip);
+        if (els.skipBtn && allowed.skip) {
+            // #1177: one word per action on every surface, the Lovelace card
+            // included — admin_skip closes the wagers in WAGER_ACTIVE and
+            // reveals the answer in QUESTION_ACTIVE, and the button says so.
+            var skipKey = phase === 'WAGER_ACTIVE' ? 'admin.closeBets' : 'admin.reveal';
+            els.skipBtn.setAttribute('data-i18n', skipKey);
+            els.skipBtn.textContent = _t(skipKey);
+        }
         if (els.pauseBtn) els.pauseBtn.classList.toggle('hidden', !allowed.pause);
         if (els.resumeBtn) els.resumeBtn.classList.toggle('hidden', !allowed.resume);
         if (els.liveControls) {
