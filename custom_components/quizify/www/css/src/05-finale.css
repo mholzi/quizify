@@ -92,6 +92,19 @@
     }
 }
 
+/* #1173: a guest taken out of the scoring (#1150) is kept on screen as a
+   ghost row (QuizifyRenderShared.slideRemoved): it dims to 40 % with its
+   points struck through, then slides to the bottom while the rest close up. */
+.is-removed {
+    opacity: 0.4;
+    transition: opacity var(--dur-removed-fade) var(--ease-in-out),
+        transform var(--dur-flip) var(--ease-out) var(--dur-removed-lead);
+}
+.is-removed .leaderboard-score,
+.is-removed .entry-score {
+    text-decoration: line-through;
+}
+
 /* Out of scoring (#1150): the host's line under a disconnected row, and the
    rows below the ranking. Shared by the host page and a playing host's reveal. */
 .leaderboard-row.has-scoring-note {

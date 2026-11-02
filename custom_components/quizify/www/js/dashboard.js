@@ -54,6 +54,8 @@
     var shownStreaks = {};
     var shownOrder = {};
     var answersShown = null;
+    // #1173: the team each lobby guest was last shown under.
+    var shownGroups = {};
 
     // ---- DOM ----
     var views = {
@@ -227,28 +229,54 @@
             // 👑 marks the host, mirroring player-lobby.js's is_admin chip.
             var crown = (p && p.is_admin)
                 ? '<span aria-hidden="true">👑</span> ' : '';
-            return '<div class="dashboard-player-chip">' + crown +
+            // data-name: #1173 keys the chip for the regroup slide.
+            return '<div class="dashboard-player-chip" data-name="' +
+                QuizifyUtils.escapeHtml(name) + '">' + crown +
                 '<span>' + QuizifyUtils.escapeHtml(name) + '</span></div>';
+        }
+
+        // #1173: where each guest stands now. When a guest we already showed
+        // sits in another group (or left their team), the chips slide (FLIP);
+        // a guest who just arrived, or a plain repaint, moves nothing.
+        var group = {}, groups = {}, moved = false, oldTop = {};
+        lobbyTeams.forEach(function (t) {
+            (t.members || []).forEach(function (n) { group[n] = t.name || ''; });
+        });
+        list.forEach(function (p) {
+            var n = String(p && p.name != null ? p.name : '');
+            groups[n] = group[n] || '';
+            if (n in shownGroups && shownGroups[n] !== groups[n]) moved = true;
+        });
+        shownGroups = groups;
+        if (moved && container.querySelectorAll) {
+            Array.prototype.forEach.call(
+                container.querySelectorAll('.dashboard-player-chip[data-name]'),
+                function (c) { oldTop[c.getAttribute('data-name')] = c.getBoundingClientRect().top; }
+            );
         }
 
         if (!lobbyTeams.length) {
             container.innerHTML = list.map(chip).join('');
-            return;
+        } else {
+            // Teamed players are shown under their team; everyone else keeps
+            // their own chip. Shared with the host page since #787 — the grouping
+            // was written twice and admin.js's copy carried a comment saying so.
+            container.innerHTML = window.QuizifyRenderShared.teamGroupedRosterHtml(
+                list,
+                lobbyTeams,
+                {
+                    entry: chip,
+                    groupClass: 'dashboard-team-group',
+                    nameClass: 'dashboard-team-name',
+                    membersClass: 'dashboard-team-members'
+                }
+            );
         }
-
-        // Teamed players are shown under their team; everyone else keeps
-        // their own chip. Shared with the host page since #787 — the grouping
-        // was written twice and admin.js's copy carried a comment saying so.
-        container.innerHTML = window.QuizifyRenderShared.teamGroupedRosterHtml(
-            list,
-            lobbyTeams,
-            {
-                entry: chip,
-                groupClass: 'dashboard-team-group',
-                nameClass: 'dashboard-team-name',
-                membersClass: 'dashboard-team-members'
-            }
-        );
+        if (moved && container.querySelectorAll) {
+            var chips = container.querySelectorAll('.dashboard-player-chip[data-name]');
+            var names = Array.prototype.map.call(chips, function (c) { return c.getAttribute('data-name'); });
+            flipRows(chips, names, oldTop, null, false);
+        }
     }
     // Called on every LOBBY snapshot: paint the QR once, refresh the roster.
     function renderLobby(players) {
@@ -1571,7 +1599,7 @@
         // #275: estimate rounds render a number line instead of the MC
         // answer-tile highlight + distribution.
         if (summary.question_type === 'estimate' && summary.estimate) {
-            renderDashboardEstimateReveal(summary.estimate);
+            renderDashboardEstimateReveal(summary.estimate, true);
             var efact = summary.fun_fact || '';
             if (efact) {
                 els.funFactText.textContent = efact;
@@ -1636,7 +1664,7 @@
 
     // #275: TV number-line reveal — every player's guess plotted along the
     // range, the true value pinned, the winner highlighted, ranked list.
-    function renderDashboardEstimateReveal(est) {
+    function renderDashboardEstimateReveal(est, live) {
         if (!els.dashboardEstimate) return;
         els.dashboardEstimate.classList.remove('hidden');
         if (els.answersGrid) els.answersGrid.innerHTML = '';
@@ -1666,8 +1694,9 @@
             var pos = (idx % 2 === 0) ? 'below' : 'above';
             var dotStyle = 'background:' + (g.color || '#7FA8C4') + ';';
             if (isWinner) dotStyle += 'width:20px;height:20px;border-color:#E8C47F;';
-            return '<div class="dnl-tick" style="left:' + left.toFixed(1) + '%;">' +
-                '<div class="dnl-dot" style="' + dotStyle + '"></div>' +
+            // #1173: --i orders the slide-in; is-best is the sage ring.
+            return '<div class="dnl-tick" style="left:' + left.toFixed(1) + '%;--i:' + idx + ';">' +
+                '<div class="dnl-dot' + (isWinner ? ' is-best' : '') + '" style="' + dotStyle + '"></div>' +
                 '<div class="dnl-lbl dnl-lbl--' + pos + (isWinner ? ' is-winner' : '') + '">' +
                     QuizifyUtils.escapeHtml(g.player_name) + (isWinner ? ' ★' : '') + ' ' + QuizifyUtils.escapeHtml(fmt(Number(g.guess))) +
                 '</div></div>';
@@ -1677,12 +1706,15 @@
         var truth = '<div class="dnl-truth-line" style="left:' + truthLeft.toFixed(1) + '%;"></div>' +
             '<div class="dnl-truth-flag" style="left:' + truthLeft.toFixed(1) + '%;">' + QuizifyUtils.escapeHtml(fmt(answer)) + ' ✓</div>';
 
+        // #1173: only a live reveal plays; a reconnect (#275) shows the finished line.
+        var play = (live && guesses.length && !window.QuizifyRenderShared.prefersReducedMotion())
+            ? ' dnl-play' : '';
         var truthLabel = window.QuizifyI18n ? window.QuizifyI18n.t('estimate.correctAnswer') : 'Correct answer';
 
         els.dashboardEstimate.innerHTML =
             '<div class="dnl-truth"><div class="dnl-truth-label">' + QuizifyUtils.escapeHtml(truthLabel) + '</div>' +
                 '<div class="dnl-truth-value">' + QuizifyUtils.escapeHtml(fmt(answer)) + (unit ? ' ' + QuizifyUtils.escapeHtml(unit) : '') + '</div></div>' +
-            '<div class="dnl-card"><div class="dnl-axis">' + markers + truth + '</div>' +
+            '<div class="dnl-card' + play + '" style="--n:' + guesses.length + ';"><div class="dnl-axis">' + markers + truth + '</div>' +
                 '<div class="dnl-scale-ends"><span>' + QuizifyUtils.escapeHtml(fmt(lo)) + '</span><span>' + QuizifyUtils.escapeHtml(fmt(hi)) + '</span></div></div>';
     }
 
@@ -1768,13 +1800,21 @@
             );
         }
         shownOrder[container.id] = keys;
+        // #1173: a guest the host took out of the scoring (#1150) is gone from
+        // the new board; keep the old row as a ghost that dims and slides down.
+        var RS = window.QuizifyRenderShared;
+        var ghosts = RS.captureRemoved
+            ? RS.captureRemoved(container, '.leaderboard-row[data-entrant]',
+                players.map(function (p) { return String(p.entrant_id || p.name); }))
+            : [];
         container.innerHTML = html;
         var rowEls = container.querySelectorAll
             ? container.querySelectorAll('.leaderboard-row:not(.leaderboard-more)') : [];
         Array.prototype.forEach.call(rowEls, function (row, i) {
             if (keys[i] != null) row.setAttribute('data-entrant', keys[i]);
         });
-        if (changed) flipRows(rowEls, keys, oldTop, prevKeys);
+        if (changed) flipRows(rowEls, keys, oldTop, ghosts.length ? null : prevKeys, ghosts.length > 0);
+        if (ghosts.length) RS.slideRemoved(container, ghosts);
         // #1169: roll the scores that moved since this board last showed
         // them. One memo for every leaderboard on the page — they all show
         // the same entrants, so the finale picks up where the reveal left off
@@ -1802,17 +1842,20 @@
     // to where they are; rows that moved up also get a brief sage tint. Only
     // called when the order really changed (the board repaints every few
     // seconds), and never under reduced motion.
-    function flipRows(rowEls, keys, oldTop, prevKeys) {
+    // #1173: also the lobby chips (prevKeys null = no sage tint); `late`
+    // holds the slide back while a removed guest's row dims first.
+    function flipRows(rowEls, keys, oldTop, prevKeys, late) {
         if (window.QuizifyRenderShared.prefersReducedMotion()) return;
         Array.prototype.forEach.call(rowEls, function (row, i) {
             var key = keys[i], was = oldTop[key];
             if (was === undefined) return;
             var delta = was - row.getBoundingClientRect().top;
             if (Math.abs(delta) < 2) return;
-            if (prevKeys.indexOf(key) > i) row.classList.add('moved-up');
+            if (prevKeys && prevKeys.indexOf(key) > i) row.classList.add('moved-up');
             row.style.transform = 'translateY(' + delta + 'px)';
             void row.offsetWidth;
             row.classList.add('is-flipping');
+            row.style.transitionDelay = late ? 'var(--dur-removed-lead)' : '';
             row.style.transform = '';
             setTimeout(function () { row.classList.remove('is-flipping', 'moved-up'); }, 1300);
         });

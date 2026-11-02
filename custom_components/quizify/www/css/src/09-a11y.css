@@ -85,6 +85,8 @@
     --dur-podium-glow-delay: 0ms;
     --dur-check-delay: 0ms;
     --dur-status-delay: 0ms;
+    --dur-guess-stagger: 0ms;
+    --dur-removed-lead: 0ms;
 }
 
 /* The toggle itself sits in the player header next to the sound button and

@@ -569,6 +569,36 @@
 
     var LOCK_CHECK_PATH = 'M5 12.5l4.5 4.5L19 7.5';
 
+    function _lockCheckSvg() {
+        var ns = 'http://www.w3.org/2000/svg';
+        var svg = document.createElementNS(ns, 'svg');
+        svg.setAttribute('class', 'lock-in-check');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.setAttribute('focusable', 'false');
+        var path = document.createElementNS(ns, 'path');
+        path.setAttribute('d', LOCK_CHECK_PATH);
+        svg.appendChild(path);
+        return svg;
+    }
+
+    // #1173: the estimate's lock-in. `est-locked` dims the track and shrinks
+    // the thumb; `animate` (a live ack, never a restore) also draws the check.
+    function _estimateLockIn(on, animate) {
+        var box = document.getElementById('estimate-container');
+        var conf = document.getElementById('estimate-submitted-confirmation');
+        if (box) box.classList.toggle('est-locked', on);
+        if (!conf) return;
+        var old = conf.querySelector('.lock-in-check');
+        if (old) conf.removeChild(old);
+        conf.classList.remove('est-lock-anim');
+        if (on && animate && document.createElementNS &&
+            window.QuizifyRenderShared && !window.QuizifyRenderShared.prefersReducedMotion()) {
+            conf.insertBefore(_lockCheckSvg(), conf.firstChild);
+            conf.classList.add('est-lock-anim');
+        }
+    }
+
     function _applyLockIn(selectedIndex) {
         var grid = document.getElementById('answer-buttons');
         if (grid && grid.classList) grid.classList.add('is-locked');
@@ -579,16 +609,7 @@
                 var btn = buttons[i];
                 if (parseInt(btn.dataset.index, 10) !== selectedIndex) continue;
                 if (btn.querySelector && btn.querySelector('.lock-in-check')) continue;
-                var ns = 'http://www.w3.org/2000/svg';
-                var svg = document.createElementNS(ns, 'svg');
-                svg.setAttribute('class', 'lock-in-check');
-                svg.setAttribute('viewBox', '0 0 24 24');
-                svg.setAttribute('aria-hidden', 'true');
-                svg.setAttribute('focusable', 'false');
-                var path = document.createElementNS(ns, 'path');
-                path.setAttribute('d', LOCK_CHECK_PATH);
-                svg.appendChild(path);
-                btn.appendChild(svg);
+                btn.appendChild(_lockCheckSvg());
             }
         }
         _paintSentLine();
@@ -706,6 +727,7 @@
         }
 
         if (confirmation) confirmation.classList.toggle('hidden', !hasSubmitted);
+        _estimateLockIn(hasSubmitted, false);
     }
 
     // #750: a guess is in flight — sent, not yet acknowledged. The estimate
@@ -775,6 +797,7 @@
         hasSubmitted = true;
         _setEstimateLocked(true);
         _showEstimateConfirmation(true);
+        _estimateLockIn(true, true);
     }
 
     /**
@@ -788,6 +811,7 @@
         _guessPending = false;
         _setEstimateLocked(false);
         _showEstimateConfirmation(false);
+        _estimateLockIn(false);
     }
 
     /**
@@ -879,7 +903,7 @@
      * its own standing bet end up identical — the drift #858 is about, on the
      * one screen where the two halves disagreeing costs points.
      */
-    function _lockWagerUi(pct) {
+    function _lockWagerUi(pct, live) {
         _wagerState.submitted = true;
         _wagerState.pct = pct;
 
@@ -899,10 +923,39 @@
         // Collapse into a "wager: 25%" badge. The player now waits for the
         // rest of the room — the question arrives on its own once the window
         // closes, so there is nothing else to do here.
-        if (panel) panel.classList.add('wager-panel--collapsed');
+        var st = _wagerState;
+        var stake = Math.floor((st.score || 0) * pct / 100);
+        var RS = window.QuizifyRenderShared;
+        var bankEl = document.getElementById('wager-bank');
+        function collapse() {
+            if (panel && st === _wagerState && st.submitted) panel.classList.add('wager-panel--collapsed');
+        }
+        // #1173: a fresh bet (not a restore) shows the stake leave the bank
+        // before the panel collapses; the reveal rolls it back (takeWagerStake).
+        if (live && stake > 0 && bankEl && RS && RS.rollDigits && !RS.prefersReducedMotion()) {
+            st.stake = stake;
+            RS.rollDigits(bankEl, st.score, st.score - stake);
+            var chip = document.createElement('span');
+            chip.className = 'wager-stake-chip';
+            chip.textContent = '\u2212' + stake;
+            bankEl.parentNode.appendChild(chip);
+            setTimeout(function () {
+                if (chip.parentNode) chip.parentNode.removeChild(chip);
+                collapse();
+            }, 750);
+        } else {
+            collapse();
+        }
         if (titleEl) titleEl.textContent = t('wager.locked', { pct: pct });
         if (hintEl) hintEl.textContent = t('wager.waitingForOthers');
         if (timeoutNoteEl) timeoutNoteEl.textContent = '';
+    }
+
+    // #1173: the stake of the bet placed on this phone, once, for the reveal.
+    function takeWagerStake() {
+        var n = _wagerState.stake || 0;
+        _wagerState.stake = 0;
+        return n;
     }
 
     function _paintWagerPanel(currentScore) {
@@ -926,6 +979,7 @@
         // is worse than none, because the player acts on it.
         if (timeoutNoteEl) timeoutNoteEl.textContent = t('wager.timeoutNote');
         if (bankEl) bankEl.textContent = currentScore;
+        _wagerState.score = currentScore;
         if (slider) {
             slider.value = '25';  // sensible default — quarter of bank
             slider.disabled = false;
@@ -947,7 +1001,7 @@
             submitBtn.onclick = function () {
                 if (_wagerState.submitted) return;
                 var pct = parseInt(slider.value, 10);
-                _lockWagerUi(pct);
+                _lockWagerUi(pct, true);
                 // Send via the player-core send() function.
                 var send = window.QuizifyPlayer && window.QuizifyPlayer.send;
                 if (send) send('submit_wager', { wager: pct });
@@ -1059,6 +1113,7 @@
         if (estSubmitBtn) estSubmitBtn.disabled = true;
         var estConfirm = document.getElementById('estimate-submitted-confirmation');
         if (estConfirm) estConfirm.classList.remove('hidden');
+        _estimateLockIn(true, false);
     }
 
     function resetSubmissionState() {
@@ -1089,6 +1144,7 @@
         if (estSubmitBtn) estSubmitBtn.disabled = false;
         var estConfirm = document.getElementById('estimate-submitted-confirmation');
         if (estConfirm) estConfirm.classList.add('hidden');
+        _estimateLockIn(false);
 
         // #953: nobody has answered a question that just opened. The tracker
         // is only redrawn by `answer_progress`, and none is sent at question
@@ -1248,6 +1304,12 @@
             html += renderLeaderboardEntry(entry);
         });
 
+        // #1173: a guest taken out of the scoring stays as a ghost row.
+        var RS = window.QuizifyRenderShared;
+        var ghosts = (RS && RS.captureRemoved)
+            ? RS.captureRemoved(listEl, '.leaderboard-entry[data-entrant]',
+                leaderboard.map(function (e) { return String(entrantKey(e)); }))
+            : [];
         listEl.innerHTML = html;
 
         // #1169: roll the scores that moved since this list last showed them.
@@ -1281,12 +1343,15 @@
                         el.style.transition = 'none';
                         requestAnimationFrame(function() {
                             el.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                            if (ghosts.length) el.style.transitionDelay = 'var(--dur-removed-lead)';
                             el.style.transform = '';
                         });
                     }
                 }
             });
         }
+
+        if (ghosts.length) RS.slideRemoved(listEl, ghosts);
 
         // Store current ranks for next update
         leaderboard.forEach(function(entry) {
@@ -1760,6 +1825,7 @@
         // one place.
         renderQuestionImageBanner: renderQuestionImageBanner,
         renderWagerWindow: renderWagerWindow,
+        takeWagerStake: takeWagerStake,
         clearRevealBlur: clearRevealBlur,
         preloadNextImage: preloadNextImage,
         handleAnswerClick: handleAnswerClick,

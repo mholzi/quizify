@@ -280,6 +280,13 @@
     --dur-settle: 420ms;          /* Hot Seat: the settlement lands */
     --dur-desat: 400ms;           /* phone colour drains while the socket is down */
     --dur-conn-back: 1200ms;      /* the connection pill stays sage this long */
+    /* Round 3 (#1173). */
+    --dur-guess: 600ms;           /* estimate reveal: a guess slides in */
+    --dur-guess-stagger: 80ms;    /* ... each one 80 ms after the last */
+    --dur-truth: 360ms;           /* the true-value marker grows from the axis */
+    --dur-wager: 700ms;           /* the stake leaves the bank as a chip */
+    --dur-removed-fade: 400ms;    /* a removed guest dims to 40 % */
+    --dur-removed-lead: 300ms;    /* ... then the row slides to the bottom */
 
     /* Z-Index Tokens */
     --z-control-bar: 100;
@@ -369,6 +376,9 @@ a:focus-visible,
         --dur-check-delay: 0ms;
         --dur-status-delay: 0ms;
         --dur-splash-stagger: 0ms;
+        --dur-guess-stagger: 0ms;
+        --dur-guess: 0ms;   /* the truth marker waits for the guesses */
+        --dur-removed-lead: 0ms;
     }
 }
 
@@ -2768,6 +2778,19 @@ button, .btn {
     }
 }
 
+/* #1173: a guest taken out of the scoring (#1150) is kept on screen as a
+   ghost row (QuizifyRenderShared.slideRemoved): it dims to 40 % with its
+   points struck through, then slides to the bottom while the rest close up. */
+.is-removed {
+    opacity: 0.4;
+    transition: opacity var(--dur-removed-fade) var(--ease-in-out),
+        transform var(--dur-flip) var(--ease-out) var(--dur-removed-lead);
+}
+.is-removed .leaderboard-score,
+.is-removed .entry-score {
+    text-decoration: line-through;
+}
+
 /* Out of scoring (#1150): the host's line under a disconnected row, and the
    rows below the ranking. Shared by the host page and a playing host's reveal. */
 .leaderboard-row.has-scoring-note {
@@ -4498,6 +4521,33 @@ body.dashboard-body {
     color: var(--color-text-light, #8F8A78);
 }
 
+/* #1173: the estimate reveal plays only on a live round_summary (dashboard.js
+   adds .dnl-play; a reconnect renders the finished line). The guesses slide
+   in from the left edge 80 ms apart, then the true-value marker grows from
+   the axis, then the closest guess gets its sage ring. --i is set inline. */
+.dnl-play .dnl-tick {
+    animation: dnl-slide var(--dur-guess) var(--ease-out)
+        calc(var(--i, 0) * var(--dur-guess-stagger)) backwards;
+}
+.dnl-play .dnl-truth-line {
+    transform-origin: bottom;
+    animation: dnl-grow var(--dur-truth) var(--ease-out)
+        calc(var(--n, 0) * var(--dur-guess-stagger) + var(--dur-guess)) backwards;
+}
+.dnl-play .dnl-truth-flag {
+    animation: dnl-fade var(--dur-status) var(--ease-out)
+        calc(var(--n, 0) * var(--dur-guess-stagger) + var(--dur-guess) + var(--dur-truth) / 2) backwards;
+}
+.dnl-play .dnl-dot.is-best {
+    animation: dnl-ring var(--dur-status) var(--ease-out)
+        calc(var(--n, 0) * var(--dur-guess-stagger) + var(--dur-guess) + var(--dur-truth)) backwards;
+}
+.dnl-dot.is-best { box-shadow: 0 0 0 4px var(--dash-success, #7FA897); }
+@keyframes dnl-slide { from { left: 0%; } }
+@keyframes dnl-grow { from { transform: translateX(-50%) scaleY(0); } }
+@keyframes dnl-fade { from { opacity: 0; } }
+@keyframes dnl-ring { from { box-shadow: 0 0 0 0 transparent; } }
+
 /* Image pane — hidden unless the question carries a valid image. */
 .dashboard-question-media {
     display: none;
@@ -4842,6 +4892,10 @@ body.dashboard-body {
 /* #1170: a rank change slides the row to its new place (FLIP, set up by
    dashboard.js); a row that moved up carries a brief sage tint. */
 .dashboard-leaderboard .leaderboard-row.is-flipping {
+    transition: transform var(--dur-flip) var(--ease-out);
+}
+/* #1173: a guest card glides into its team group (dashboard.js, FLIP). */
+.dashboard-player-chip.is-flipping {
     transition: transform var(--dur-flip) var(--ease-out);
 }
 .dashboard-leaderboard .leaderboard-row.moved-up {
