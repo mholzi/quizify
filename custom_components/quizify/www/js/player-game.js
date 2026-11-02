@@ -932,7 +932,8 @@
         }
         // #1173: a fresh bet (not a restore) shows the stake leave the bank
         // before the panel collapses; the reveal rolls it back (takeWagerStake).
-        if (live && stake > 0 && bankEl && RS && RS.rollDigits && !RS.prefersReducedMotion()) {
+        if (live && stake > 0 && bankEl && bankEl.parentNode && RS && RS.rollDigits &&
+            !RS.prefersReducedMotion()) {
             st.stake = stake;
             RS.rollDigits(bankEl, st.score, st.score - stake);
             var chip = document.createElement('span');
