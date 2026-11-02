@@ -997,11 +997,13 @@
     <!-- Connection Lost View -->
     <div id="connection-lost-view" class="view hidden">
         <div class="connection-lost-container">
-            <div class="connection-lost-icon qz-icon qz-icon--coral" data-ui-icon="signaloff">📡</div>
-            <h1 data-i18n="errors.CONNECTION_LOST">Connection Lost</h1>
-            <p data-i18n="errors.connectionLostHint">We couldn't reconnect to the game server.</p>
-            <button id="retry-connection-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try again</button>
-            <p class="connection-lost-hint" data-i18n="errors.checkNetwork">Make sure you're connected to the network</p>
+            <!-- #1182 L11 / draft 4: shown from the 30-second mark while the
+                 phone keeps trying on its own, never as a dead end. -->
+            <div class="connection-lost-icon qz-icon qz-icon--sun" data-ui-icon="hourglass">⏳</div>
+            <h1 data-i18n="states.waitingTitle">Waiting for the game…</h1>
+            <p data-i18n="states.waitingBody">The connection is gone. If Home Assistant is restarting, this takes a few minutes. We reconnect you automatically, and your points stay.</p>
+            <button id="retry-connection-btn" class="btn btn-primary btn-glow" data-i18n="states.connectNow">Connect now</button>
+            <p id="reconnect-countdown" class="connection-lost-hint" aria-live="polite"></p>
         </div>
     </div>
 

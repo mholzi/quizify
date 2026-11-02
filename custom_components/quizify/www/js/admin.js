@@ -10,10 +10,10 @@
     let ws = null;
     let reconnectAttempts = 0;
     // Mirror the player-side reconnect policy (player-utils.js): exponential
-    // backoff capped at 30s and a high attempt budget, not the old 5-attempt /
-    // ~15s budget. An HA restart takes 1-5 min, so the old budget left the
-    // host's admin tablet permanently dead with no recovery (#290).
-    const MAX_RECONNECT = 10;
+    // backoff capped at 30s. An HA restart takes 1-5 min (#290), and since
+    // #1182 there is no attempt cap at all while the page is visible: ten
+    // attempts were about three minutes, so the host often gave up just
+    // before Home Assistant came back.
     const MAX_RECONNECT_DELAY_MS = 30000;
     let _redirecting = false;
     // When the admin joined themselves as a player via "Als Spieler
@@ -1770,23 +1770,23 @@
                 // neither null the live socket nor arm a second reconnect.
                 if (sock !== ws) return;
                 ws = null;
-                if (reconnectAttempts < MAX_RECONNECT) {
+                // A hidden tab waits; visibilitychange and online reconnect it.
+                if (document.visibilityState === 'hidden') {
                     updateConnectionStatus('reconnecting');
-                    // Exponential backoff, capped at 30s — the same curve the
-                    // phone uses, which is why it lives in the shared core
-                    // since #787. 1s, 2s, 4s, 8s, 16s, 30s, 30s, … keeps
-                    // retrying across the full 1-5 min of an HA restart (#290).
-                    var delay = window.QuizifyClientCore.backoffDelay(
-                        reconnectAttempts, MAX_RECONNECT_DELAY_MS
-                    );
-                    reconnectAttempts++;
-                    _reconnectTimer = setTimeout(connect, delay);
-                } else {
-                    // Reached the attempt cap, but recovery is still possible — the
-                    // visibilitychange listener and the manual retry affordance in
-                    // updateConnectionStatus reset attempts and reconnect (#290).
-                    updateConnectionStatus('disconnected');
+                    return;
                 }
+                // Exponential backoff, capped at 30s — the same curve the
+                // phone uses, which is why it lives in the shared core
+                // since #787. 1s, 2s, 4s, 8s, 16s, 30s, 30s, … with no cap
+                // (#1182). From the first 30-second wait on, the pill turns
+                // into the tappable "Retry connection" while the automatic
+                // attempts carry on underneath.
+                var delay = window.QuizifyClientCore.backoffDelay(
+                    reconnectAttempts, MAX_RECONNECT_DELAY_MS
+                );
+                reconnectAttempts++;
+                updateConnectionStatus(delay >= MAX_RECONNECT_DELAY_MS ? 'disconnected' : 'reconnecting');
+                _reconnectTimer = setTimeout(connect, delay);
             }
         });
     }
@@ -4624,7 +4624,8 @@
     initStatsLink();
 
     connect();
-    updateConnectionStatus('reconnecting');
+    // #1182 L9: the first connection is 'connecting'; nothing to re-establish.
+    updateConnectionStatus('connecting');
 
     // Reconnect when the host brings the admin tablet back to the foreground.
     // Mirrors the player view (player-core.js): the OS may have frozen/closed
@@ -4635,6 +4636,16 @@
         if (document.visibilityState !== 'visible') return;
         // The OS dropped the wake lock when the tab hid (#1131).
         _syncWakeLock();
+        if (!ws || ws.readyState === WebSocket.CLOSING || ws.readyState === WebSocket.CLOSED) {
+            reconnectAttempts = 0;
+            updateConnectionStatus('reconnecting');
+            connect();
+        }
+    });
+    // #1182 L11: the wifi coming back is a reason to try at once rather than
+    // sit out the rest of a 30-second backoff.
+    window.addEventListener('online', function () {
+        if (document.visibilityState === 'hidden') return;
         if (!ws || ws.readyState === WebSocket.CLOSING || ws.readyState === WebSocket.CLOSED) {
             reconnectAttempts = 0;
             updateConnectionStatus('reconnecting');
