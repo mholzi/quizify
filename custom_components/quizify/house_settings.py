@@ -124,6 +124,13 @@ class HouseSettings:
     # who never opened the panel.
     enabled_override: bool | None = None
 
+    # --- runtime state the consumers share (#1185) ---------------------------
+    # Whether the quizmaster voice is live: narration switched on AND a TTS
+    # engine plus a speaker to say it on. Written by the announcer whenever it
+    # is configured; read by the room sounds, because voice and sound share one
+    # speaker and the voice owns it ("one speaker, one voice").
+    voice_active: bool = False
+
     # ------------------------------------------------------------------
     # Construction / refresh from the config entry
     # ------------------------------------------------------------------

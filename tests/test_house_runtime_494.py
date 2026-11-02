@@ -280,10 +280,14 @@ def _fire_all_light_events(hass) -> None:
 
 
 def _fire_all_sfx_events(hass) -> None:
-    """Dispatch every event the four SFX cues listen for (correct + wrong)."""
+    """Dispatch every event the four SFX cues listen for (correct + wrong).
+
+    The streak goes first: since #1185 a milestone inside a reveal moment that
+    already made its sound stays silent (one sound per moment).
+    """
+    hass.bus.dispatch(EVENT_STREAK_MILESTONE, {"player_name": "Ann", "streak": 5})
     hass.bus.dispatch(EVENT_ANSWER_REVEALED, {"correct_count": 3, "total_players": 4})
     hass.bus.dispatch(EVENT_ANSWER_REVEALED, {"correct_count": 1, "total_players": 4})
-    hass.bus.dispatch(EVENT_STREAK_MILESTONE, {"player_name": "Ann", "streak": 5})
     hass.bus.dispatch(EVENT_WINNER_DECIDED, {"winner_name": "Ann", "score": 10})
 
 
@@ -350,7 +354,7 @@ def test_sfx_master_on_plays_every_cue(sfx_calls):
 
     _fire_all_sfx_events(hass)
 
-    assert _played_cues(sfx_calls) == ["correct", "wrong", "streak", "winner"]
+    assert _played_cues(sfx_calls) == ["streak", "correct", "wrong", "winner"]
 
 
 def test_master_off_leaves_ambient_phase_glow_alone(light_calls):

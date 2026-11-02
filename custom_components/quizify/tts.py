@@ -178,6 +178,9 @@ class QuizifyTTSAnnouncer:
         self._media_player_override = clean_str(media_player)
         self._previous_leader = None
         self._pending_intro = None
+        # The room sounds read this to keep off the speaker while the voice
+        # owns it (#1185).
+        self._settings.voice_active = self._enabled and self.is_configured
 
     # There is deliberately no export/restore_runtime_config pair any more
     # (#789). It existed only because an options reload rebuilt this announcer

@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+import time
 from typing import TYPE_CHECKING
 
 from .game.state import GamePhase, QuizifyGameState
@@ -183,6 +184,14 @@ _ACCENT_STREAK: list[tuple[object, float]] = [
     (_BASELINE, 0.0),
 ]
 
+# Since #1185 the milestone fires with the reveal, a hair after the green or
+# amber flash. Started on its own it would cancel that flash before it showed,
+# so it queues behind it and starts this long after the reveal began: first
+# the verdict, then the streak.
+_STREAK_AFTER_REVEAL_S = 1.2
+# How long after a reveal a milestone still belongs to it.
+_REVEAL_MOMENT_S = 3.0
+
 # winner_decided: victory sweep in sun — 3-beat up/down/up/down/up, then settle
 # to a steady 90% sun. Settles to an explicit sun 90% rather than the phase
 # baseline because it fires alongside the FINALE transition, whose recipe is
@@ -260,6 +269,13 @@ class QuizifyPartyLights:
         # accent runs at a time — a new accent cancels the old).
         self._event_unsubs: list[Callable[[], None]] = []
         self._pulse_task: asyncio.Task | None = None
+        # The reveal moment (#1185): when the last reveal flash began, and
+        # whether a streak already pulsed in it — one streak accent per reveal,
+        # however many players hit a milestone.
+        self._reveal_at: float | None = None
+        self._reveal_streaked = False
+        # When the running accent started, so a streak can line up behind it.
+        self._pulse_started: float | None = None
 
         # --- "House Plays Along" runtime config (#494 Phase 4) ---------------
         # The master switch for the EVENT-DRIVEN ACCENTS lives on the shared
@@ -494,6 +510,8 @@ class QuizifyPartyLights:
         Guards ``total_players == 0`` (no div-by-zero) → treated as the minority
         case (amber). A strict majority (> half) flips it green.
         """
+        self._reveal_at = time.monotonic()
+        self._reveal_streaked = False
         if not (self._settings.master_enabled and self._light_reveal):
             return
         data = event.data or {}
@@ -504,10 +522,24 @@ class QuizifyPartyLights:
 
     @hass_callback
     def _on_streak_milestone(self, event: Event) -> None:  # noqa: ARG002
-        """Double-pulse bright coral to celebrate a hot streak."""
+        """Double-pulse bright coral to celebrate a hot streak.
+
+        Once per reveal, and queued behind the reveal flash (#1185): green or
+        amber first, the double pulse 1.2 s after the reveal began.
+        """
         if not (self._settings.master_enabled and self._light_streak):
             return
-        self._start_pulse(_ACCENT_STREAK)
+        in_reveal = (
+            self._reveal_at is not None
+            and time.monotonic() - self._reveal_at < _REVEAL_MOMENT_S
+        )
+        if not in_reveal:
+            self._start_pulse(_ACCENT_STREAK)
+            return
+        if self._reveal_streaked:
+            return
+        self._reveal_streaked = True
+        self._queue_pulse(_ACCENT_STREAK, _STREAK_AFTER_REVEAL_S)
 
     @hass_callback
     def _on_winner_decided(self, event: Event) -> None:  # noqa: ARG002
@@ -577,7 +609,34 @@ class QuizifyPartyLights:
         if hass is None:  # narrow for type-checkers; is_configured already guards
             return
         self._cancel_pulse()
+        self._pulse_started = time.monotonic()
         self._pulse_task = hass.async_create_task(self._run_pulse(steps))
+
+    def _queue_pulse(self, steps: list[tuple[object, float]], offset: float) -> None:
+        """Run ``steps`` once the running accent is done, ``offset`` seconds
+        after it started (#1185). With nothing running, start right away."""
+        if not self.is_configured:
+            return
+        hass = self._hass
+        if hass is None:
+            return
+        previous = self._pulse_task
+        if previous is None or previous.done():
+            self._start_pulse(steps)
+            return
+        started = self._pulse_started or time.monotonic()
+
+        async def _after() -> None:
+            try:
+                await previous
+            except asyncio.CancelledError:
+                return
+            wait = offset - (time.monotonic() - started)
+            if wait > 0:
+                await asyncio.sleep(wait)
+            await self._run_pulse(steps)
+
+        self._pulse_task = hass.async_create_task(_after())
 
     def _cancel_pulse(self) -> None:
         """Cancel any pending accent pulse (re-entrant, safe if none running)."""
