@@ -650,6 +650,12 @@
                      worker. -->
                 <section id="pack-submit-section" class="pack-submit-section hidden"
                          aria-labelledby="pack-submit-heading">
+                    <!-- #1182 L7: config unreachable is not "feature off". -->
+                    <div id="pack-submit-unavailable" class="pack-submit-card pack-submit-unavailable hidden" role="alert">
+                        <p data-i18n="states.packSubmitUnavailable">Pack submission cannot be reached right now.</p>
+                        <button type="button" id="pack-submit-unavailable-retry" class="btn btn-secondary"
+                                data-i18n="common.retry">Try again</button>
+                    </div>
                     <div class="pack-submit-card">
                         <h3 id="pack-submit-heading" class="pack-submit-heading"
                             data-i18n="packSubmit.heading">Submit a community pack</h3>
@@ -821,6 +827,11 @@
                     Waiting for players…
                 </h2>
 
+                <!-- #1182 L4: shown while the snapshot carries interrupted_game,
+                     i.e. Home Assistant restarted in the middle of a game. -->
+                <p id="lobby-restart-notice" class="lobby-e-notice hidden" role="status"
+                   data-i18n="states.restartHost">Home Assistant was restarted, so the last game has ended.</p>
+
                 <div class="lobby-e-row">
                     <div class="lobby-e-qr-col">
                         <div class="lobby-e-qr" id="qr-container" role="img"
@@ -835,10 +846,15 @@
                     </div>
                     <div class="lobby-e-roster" aria-live="polite"
                          data-i18n-aria-label="a11y.playerListRegion" aria-label="Player list">
-                        <div id="lobby-player-chips" class="lobby-e-rows">
-                            <!-- Filled by admin.js renderLobbyPlayers -->
+                        <div id="lobby-player-chips" class="lobby-e-rows" aria-busy="true">
+                            <!-- Filled by admin.js renderLobbyPlayers. #1182 L8:
+                                 until the first roster arrives this is a skeleton,
+                                 not "0" and not "waiting for players" — neither
+                                 is known yet (slow network, Nabu Casa, HA booting). -->
+                            <div class="lobby-e-row-skeleton" aria-hidden="true"></div>
+                            <div class="lobby-e-row-skeleton" aria-hidden="true"></div>
                         </div>
-                        <div id="lobby-players-empty" class="lobby-e-row-empty">
+                        <div id="lobby-players-empty" class="lobby-e-row-empty hidden">
                             <span data-i18n="lobby.scanToJoin">Scan the code to join</span>
                         </div>
                     </div>
@@ -850,7 +866,7 @@
                     <span aria-hidden="true">→</span>
                 </a>
 
-                <div class="lobby-e-countdown" id="lobby-countdown">
+                <div class="lobby-e-countdown hidden" id="lobby-countdown">
                     <span id="lobby-missing-players" data-i18n="lobby.missingPlayers"
                           data-i18n-params='{"count":2}'>2 more players to start</span>
                 </div>

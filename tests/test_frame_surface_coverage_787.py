@@ -93,6 +93,12 @@ _CASE_RE = re.compile(r"case\s+'([a-z_0-9]+)'\s*:")
 
 
 def handled_types(surface: str) -> set[str]:
+    return _cases_in(
+        SURFACE_SOURCES[surface], "function handleMessage(msg)", surface
+    )
+
+
+def _cases_in(path: Path, anchor: str, surface: str) -> set[str]:
     """The frame types one surface's message router has a case for.
 
     All three routers are the same shape — ``function handleMessage(msg) {
@@ -106,8 +112,7 @@ def handled_types(surface: str) -> set[str]:
     frame type named in a comment, or compared with ``===`` somewhere far from
     the router, would otherwise read as "handled".
     """
-    source = SURFACE_SOURCES[surface].read_text("utf-8")
-    anchor = "function handleMessage(msg)"
+    source = path.read_text("utf-8")
     assert anchor in source, (
         f"{surface} no longer has a `{anchor}` router — this guard reads the "
         "case labels out of it, so it has to be taught the new shape rather "
@@ -629,3 +634,99 @@ def test_the_host_page_has_no_recorded_gaps_left() -> None:
         "the host page is a surface, not a control panel with a switch "
         f"attached; these frames reach it and it drops them: {sorted(host)}"
     )
+
+
+# ---------------------------------------------------------------------------
+# The Lovelace host card (#1182)
+# ---------------------------------------------------------------------------
+#
+# The card is a fourth socket on ``role=admin`` that nothing here listed, and
+# that is how L1 of the states review shipped: it took players from
+# ``game_state`` alone, a lobby join produces only the coalesced
+# ``player_joined`` (#453), and the card said "0 players · Waiting for
+# players" with Start locked while the television listed everyone.
+#
+# The card is a remote control, not a fourth screen, so it does not need a
+# decision for all seventy frames. What it does need is the roster: every
+# frame that carries ``players`` on the wire is either handled or written off
+# here with the reason. A new frame that carries the roster fails this test
+# until somebody decides what the card does with it.
+
+CARD_SOURCE = _WWW / "cards" / "quizify-host-card.js"
+CARD_ANCHOR = "_handleMessage(msg) {"
+
+CARD_RENDERS = frozenset(
+    {
+        "game_state",
+        "player_joined",
+        "player_left",
+        "round_summary",
+        "game_reset",
+        "scoring_status",
+        "error",
+    }
+)
+
+CARD_IGNORES_ROSTER_FRAME: dict[str, str] = {
+    "answer_progress": (
+        "who has answered this round, not who is in the room; the card has"
+        " no answer counter"
+    ),
+    "hot_seat_auction": (
+        "the bidders for the seat; the roster is the same as before the"
+        " detour and the card shows the phase label, not the auction"
+    ),
+}
+
+
+def _frames_carrying_players() -> set[str]:
+    tree = ast.parse(_PROTOCOL.read_text("utf-8"))
+    for node in ast.walk(tree):
+        target = None
+        if isinstance(node, ast.AnnAssign):
+            target = node.target
+        elif isinstance(node, ast.Assign) and node.targets:
+            target = node.targets[0]
+        if getattr(target, "id", None) != "SERVER_FRAMES":
+            continue
+        assert isinstance(node.value, ast.Dict)
+        out = set()
+        for key, call in zip(node.value.keys, node.value.values, strict=True):
+            names = {
+                a.value
+                for a in getattr(call, "args", [])
+                if isinstance(a, ast.Constant)
+            }
+            for kw in getattr(call, "keywords", []):
+                if kw.arg == "optional" and isinstance(kw.value, ast.Tuple):
+                    names |= {
+                        e.value for e in kw.value.elts if isinstance(e, ast.Constant)
+                    }
+            if "players" in names:
+                out.add(key.value)
+        return out
+    raise AssertionError("SERVER_FRAMES not found in server/protocol.py")
+
+
+def test_the_host_card_handles_what_it_declares() -> None:
+    handled = _cases_in(CARD_SOURCE, CARD_ANCHOR, "card")
+    missing = sorted(CARD_RENDERS - handled)
+    assert not missing, f"the host card lost its case for {missing}"
+    unknown = sorted(handled - set(declared_server_frames()))
+    assert not unknown, f"the host card handles undeclared frames {unknown}"
+    extra = sorted(handled - CARD_RENDERS)
+    assert not extra, f"add {extra} to CARD_RENDERS so the table stays true"
+
+
+def test_every_roster_frame_has_a_host_card_decision() -> None:
+    roster = _frames_carrying_players()
+    assert {"player_joined", "player_left", "game_state"} <= roster
+    undecided = sorted(roster - CARD_RENDERS - set(CARD_IGNORES_ROSTER_FRAME))
+    assert not undecided, (
+        f"{undecided} carry `players` and the host card has no decision for "
+        "them — the shape of #1182 L1. Handle them in _handleMessage or add "
+        "the reason to CARD_IGNORES_ROSTER_FRAME."
+    )
+    handled = _cases_in(CARD_SOURCE, CARD_ANCHOR, "card")
+    stale = sorted(set(CARD_IGNORES_ROSTER_FRAME) & handled)
+    assert not stale, f"the card handles {stale} now; drop the ignore reason"

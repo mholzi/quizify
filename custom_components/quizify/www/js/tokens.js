@@ -141,6 +141,7 @@
             '--dur-settle': '420ms',
             '--dur-desat': '400ms',
             '--dur-conn-back': '1200ms',
+            '--dur-skeleton': '1600ms',
             '--dur-guess': '600ms',
             '--dur-guess-stagger': '80ms',
             '--dur-truth': '360ms',

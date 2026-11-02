@@ -206,6 +206,14 @@
     // what a phone the host has kicked wants (there is nothing to retry).
 
     var CONN_TONES = {
+        // #1182 L9: the first connection of a page. Sky, not sun: nothing has
+        // been lost, so the page must not say "re-" anything yet.
+        connecting: {
+            color: 'var(--color-accent-blue)',
+            glow: 'var(--color-text-muted-glow)',
+            glyph: '\u2026',
+            label: 'states.connecting'
+        },
         connected: {
             color: 'var(--color-success)',
             glow: 'var(--color-success-glow)'
@@ -260,7 +268,8 @@
     function announceConnection(status, t) {
         var announce = document.getElementById('conn-status-announce');
         if (!announce) return;
-        var key = 'connection.' + status;
+        var tone = CONN_TONES[status];
+        var key = (tone && tone.label) || 'connection.' + status;
         var msg = t(key);
         var translated = !!msg && msg !== key;
         // #1034: a known status keeps its key even when t() has no word for

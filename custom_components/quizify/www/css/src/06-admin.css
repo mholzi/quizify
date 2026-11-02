@@ -338,3 +338,37 @@ footer {
     line-height: 1;
     cursor: pointer;
 }
+
+/* #1182 L4: the host lobby's restart notice. A quiet sun-tinted line, the
+   state system's "back" tone, not an error: nothing is broken now, a game
+   was lost earlier. */
+.lobby-e-notice {
+    margin: 0 auto var(--space-sm);
+    max-width: 36rem;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--color-warning-light);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-base);
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* #1182 L6/L7: load failures in the setup screen. A line and a retry in the
+   place of the content, never the "none found" / hidden look of an empty
+   answer. */
+.setup-house-retry { margin-left: var(--space-sm); }
+.pack-submit-section.is-unavailable > .pack-submit-card:not(.pack-submit-unavailable) { display: none; }
+.pack-submit-unavailable p,
+.pack-submit-list-error { margin: 0 0 var(--space-sm); color: var(--color-text-muted); }
+.pack-submit-list-error { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); }
+
+/* #1182 L8: the host lobby before its first roster frame. Two quiet bars in
+   the shape of roster cards; the countdown line stays hidden until the
+   roster is known, so the HTML placeholder "2 · 2" can never be read. */
+.lobby-e-row-skeleton {
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--color-bg-card-alt);
+    animation: qz-skeleton var(--dur-skeleton) ease-in-out infinite;
+}

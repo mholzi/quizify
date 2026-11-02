@@ -96,6 +96,31 @@
     border: 1px solid var(--color-border-neon);
 }
 .question-media[hidden] { display: none; }
+/* #1182 L10: picture states. While loading the fixed-height frame is a
+   skeleton (a slow breath, stilled by the global reduced-motion block); when
+   the picture fails, the frame stays and says so instead of collapsing. */
+@keyframes qz-skeleton {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.55; }
+}
+.question-media.is-loading {
+    background: var(--color-bg-card-alt);
+    animation: qz-skeleton var(--dur-skeleton) ease-in-out infinite;
+}
+.question-media.is-missing .question-image,
+.question-media.is-missing .question-image-zoom { display: none; }
+.question-image-missing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: var(--space-md);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+    line-height: 1.4;
+    text-align: center;
+}
+.question-image-missing[hidden] { display: none; }
 .question-image {
     display: block;
     width: 100%;

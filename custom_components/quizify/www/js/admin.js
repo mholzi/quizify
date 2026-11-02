@@ -10,10 +10,10 @@
     let ws = null;
     let reconnectAttempts = 0;
     // Mirror the player-side reconnect policy (player-utils.js): exponential
-    // backoff capped at 30s and a high attempt budget, not the old 5-attempt /
-    // ~15s budget. An HA restart takes 1-5 min, so the old budget left the
-    // host's admin tablet permanently dead with no recovery (#290).
-    const MAX_RECONNECT = 10;
+    // backoff capped at 30s. An HA restart takes 1-5 min (#290), and since
+    // #1182 there is no attempt cap at all while the page is visible: ten
+    // attempts were about three minutes, so the host often gave up just
+    // before Home Assistant came back.
     const MAX_RECONNECT_DELAY_MS = 30000;
     let _redirecting = false;
     // When the admin joined themselves as a player via "Als Spieler
@@ -1770,23 +1770,23 @@
                 // neither null the live socket nor arm a second reconnect.
                 if (sock !== ws) return;
                 ws = null;
-                if (reconnectAttempts < MAX_RECONNECT) {
+                // A hidden tab waits; visibilitychange and online reconnect it.
+                if (document.visibilityState === 'hidden') {
                     updateConnectionStatus('reconnecting');
-                    // Exponential backoff, capped at 30s — the same curve the
-                    // phone uses, which is why it lives in the shared core
-                    // since #787. 1s, 2s, 4s, 8s, 16s, 30s, 30s, … keeps
-                    // retrying across the full 1-5 min of an HA restart (#290).
-                    var delay = window.QuizifyClientCore.backoffDelay(
-                        reconnectAttempts, MAX_RECONNECT_DELAY_MS
-                    );
-                    reconnectAttempts++;
-                    _reconnectTimer = setTimeout(connect, delay);
-                } else {
-                    // Reached the attempt cap, but recovery is still possible — the
-                    // visibilitychange listener and the manual retry affordance in
-                    // updateConnectionStatus reset attempts and reconnect (#290).
-                    updateConnectionStatus('disconnected');
+                    return;
                 }
+                // Exponential backoff, capped at 30s — the same curve the
+                // phone uses, which is why it lives in the shared core
+                // since #787. 1s, 2s, 4s, 8s, 16s, 30s, 30s, … with no cap
+                // (#1182). From the first 30-second wait on, the pill turns
+                // into the tappable "Retry connection" while the automatic
+                // attempts carry on underneath.
+                var delay = window.QuizifyClientCore.backoffDelay(
+                    reconnectAttempts, MAX_RECONNECT_DELAY_MS
+                );
+                reconnectAttempts++;
+                updateConnectionStatus(delay >= MAX_RECONNECT_DELAY_MS ? 'disconnected' : 'reconnecting');
+                _reconnectTimer = setTimeout(connect, delay);
             }
         });
     }
@@ -2181,6 +2181,13 @@
             if (_seat && _rosterHasName(msg.players, _seat)) _adminJoinedAs = _seat;
         }
         if (msg.players) renderLobbyPlayers(msg.players);
+        // #1182 L4: a restart mid-game threw the game away; say so in the
+        // lobby until the next game starts (the server clears it then).
+        var restartNotice = document.getElementById('lobby-restart-notice');
+        if (restartNotice) {
+            restartNotice.classList.toggle('hidden',
+                !(msg.phase === 'LOBBY' && msg.interrupted_game));
+        }
 
         // If game is running and we have a stored name, redirect to player.html
         if (msg.phase !== 'LOBBY' && msg.phase !== 'FINALE') {
@@ -3107,6 +3114,8 @@
 
     function renderLobbyPlayers(players) {
         var list = window.QuizifyRenderShared.rosterList(players);
+        // #1182 L8: the first roster replaces the skeleton (innerHTML below).
+        if (els.lobbyPlayerChips) els.lobbyPlayerChips.removeAttribute('aria-busy');
         _lastLobbyPlayers = list;
         playerCount = list.length;
         if (els.lobbyPlayerCount) els.lobbyPlayerCount.textContent = playerCount;
@@ -3565,7 +3574,12 @@
             var none = document.createElement('option');
             none.value = '';
             none.disabled = true;
-            none.textContent = _t(noneKey || 'setup.tts.noentities');
+            // #1182 L6: null is a failed fetch, [] is a host with none. A
+            // host with 72 lights used to read "none found" and go looking
+            // for the fault in Home Assistant.
+            none.textContent = entities === null
+                ? _t('states.listError')
+                : _t(noneKey || 'setup.tts.noentities');
             sel.appendChild(none);
             sel.value = '';
             return;
@@ -3590,8 +3604,14 @@
         // #356: the tts-entities endpoint is admin-token gated. Send the
         // session token the admin page already holds.
         _adminFetch('/api/quizify/tts-entities')
-            .then(function (resp) { return resp.ok ? resp.json() : null; })
+            .then(function (resp) {
+                // #1182: a 401 before the token lands is "not yet", not an
+                // error; handleGameState refetches once the token is here.
+                if (resp.status === 401) return 'auth';
+                return resp.ok ? resp.json() : null;
+            })
             .then(function (data) {
+                if (data === 'auth') return;
                 if (!data) {
                     // No token yet (401) or an error. Show the "None found"
                     // fallback WITHOUT marking loaded, so the refetch in
@@ -3908,7 +3928,30 @@
         var selected = savedValue || [];
         var on_ = _houseEls.enable ? !!_houseEls.enable.checked : false;
         box.textContent = '';
-        if (!lights || !lights.length) {
+        if (lights === null) {
+            // #1182 L6: the fetch failed. Say so, with a way to try again,
+            // instead of "no lights found".
+            var failed = document.createElement('div');
+            failed.className = 'setup-house-empty';
+            failed.setAttribute('role', 'alert');
+            var msg = document.createElement('span');
+            msg.setAttribute('data-i18n', 'states.listError');
+            msg.textContent = _t('states.listError');
+            var again = document.createElement('button');
+            again.type = 'button';
+            again.className = 'btn btn-secondary setup-house-retry';
+            again.setAttribute('data-i18n', 'common.retry');
+            again.textContent = _t('common.retry');
+            on(again, 'click', function () {
+                _loadHouseEntities(_readHouseConfig());
+                if (!_ttsEntitiesLoaded) _loadTtsEntities(_readTtsConfig());
+            });
+            failed.appendChild(msg);
+            failed.appendChild(again);
+            box.appendChild(failed);
+            return;
+        }
+        if (!lights.length) {
             var empty = document.createElement('div');
             empty.className = 'setup-house-empty';
             empty.setAttribute('data-i18n', 'setup.house.nolights');
@@ -3964,8 +4007,12 @@
     // admin frame. Admin-token gated like /api/quizify/tts-entities (#356).
     function _loadHouseEntities(cfg) {
         _adminFetch('/api/quizify/house-entities')
-            .then(function (resp) { return resp.ok ? resp.json() : null; })
+            .then(function (resp) {
+                if (resp.status === 401) return 'auth';   // #1182, see _loadTtsEntities
+                return resp.ok ? resp.json() : null;
+            })
             .then(function (data) {
+                if (data === 'auth') return;
                 if (!data) {
                     // No token yet (401) or an error — show the "none found"
                     // fallbacks WITHOUT marking loaded, so the refetch in
@@ -4617,7 +4664,8 @@
     initStatsLink();
 
     connect();
-    updateConnectionStatus('reconnecting');
+    // #1182 L9: the first connection is 'connecting'; nothing to re-establish.
+    updateConnectionStatus('connecting');
 
     // Reconnect when the host brings the admin tablet back to the foreground.
     // Mirrors the player view (player-core.js): the OS may have frozen/closed
@@ -4628,6 +4676,16 @@
         if (document.visibilityState !== 'visible') return;
         // The OS dropped the wake lock when the tab hid (#1131).
         _syncWakeLock();
+        if (!ws || ws.readyState === WebSocket.CLOSING || ws.readyState === WebSocket.CLOSED) {
+            reconnectAttempts = 0;
+            updateConnectionStatus('reconnecting');
+            connect();
+        }
+    });
+    // #1182 L11: the wifi coming back is a reason to try at once rather than
+    // sit out the rest of a 30-second backoff.
+    window.addEventListener('online', function () {
+        if (document.visibilityState === 'hidden') return;
         if (!ws || ws.readyState === WebSocket.CLOSING || ws.readyState === WebSocket.CLOSED) {
             reconnectAttempts = 0;
             updateConnectionStatus('reconnecting');

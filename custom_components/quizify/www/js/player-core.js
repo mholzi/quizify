@@ -369,9 +369,18 @@
                 // re-joined under the old name (as the host, if this tab was
                 // the host's). The server has just said this identity is not
                 // joinable; retrying it is the one thing not to do.
+                //
+                // #1182: the server says why. A phone that slept through a
+                // reset (display off, the normal case) never saw game_reset
+                // and read "we could not bring you back", as if its own phone
+                // were at fault; after an HA restart nobody said the game was
+                // gone. Expired and removed keep the general hint.
                 var failedName = lastPlayerName();
                 forgetIdentity();
-                returnToJoin('join.reconnectFailedHint', failedName);
+                var failedHint = msg.reason === 'reset' ? 'join.resetHint'
+                    : msg.reason === 'restart' ? 'states.restartPhone'
+                    : 'join.reconnectFailedHint';
+                returnToJoin(failedHint, failedName);
                 break;
 
             case 'host_presence':
@@ -2173,8 +2182,14 @@
     // ============================================
 
     function retryConnection() {
+        // #1182: "Connect now" cuts the pending backoff short. The screen
+        // stays where it is: the snapshot that follows a successful
+        // reconnect routes to the right view by itself.
+        if (state.reconnectTimer) {
+            clearTimeout(state.reconnectTimer);
+            state.reconnectTimer = null;
+        }
         state.reconnectAttempts = 0;
-        pu.showView('loading-view');
         connect();
     }
 
@@ -2516,8 +2531,9 @@
         pu.showView('join-view');
         if (els.joinBtn) els.joinBtn.disabled = true;
 
-        // Connect WebSocket
-        pu.updateConnectionIndicator('reconnecting');
+        // Connect WebSocket. #1182 L9: 'connecting', not 'reconnecting' —
+        // nothing can be re-established before the first connection.
+        pu.updateConnectionIndicator('connecting');
         connect();
 
         // Fallback: if WS hasn't opened after 10s, re-enable join button with error hint
@@ -2559,6 +2575,18 @@
             setTimeout(function () { clearInterval(autoJoinInterval); }, 5000);
         }
 
+        // #1182 L11: the network coming back is as good a moment as the page
+        // coming back. Without this the phone sat out up to 30 s of backoff
+        // after the wifi had already returned.
+        window.addEventListener('online', function () {
+            if (document.visibilityState === 'hidden') return;
+            var ws = state.ws;
+            if (state.playerName && (!ws || ws.readyState === WebSocket.CLOSING ||
+                    ws.readyState === WebSocket.CLOSED)) {
+                retryConnection();
+            }
+        });
+
         // iOS Safari reconnect on foreground
         document.addEventListener('visibilitychange', function () {
             if (document.visibilityState === 'visible') {
@@ -2566,8 +2594,7 @@
                 if (!ws || ws.readyState === WebSocket.CLOSING || ws.readyState === WebSocket.CLOSED) {
                     if (state.playerName) {
                         console.log('[Quizify] Page visible, WS dead \u2014 reconnecting.');
-                        state.reconnectAttempts = 0;
-                        connect();
+                        retryConnection();
                     }
                 }
                 // The OS releases wake locks when the tab hides \u2014 re-acquire
@@ -2577,22 +2604,6 @@
                 }
             }
         });
-
-        // Refresh / retry buttons
-        var refreshBtn = document.getElementById('refresh-btn');
-        if (refreshBtn) {
-            refreshBtn.addEventListener('click', function () {
-                pu.showView('loading-view');
-                connect();
-            });
-        }
-        var retryBtn = document.getElementById('retry-btn');
-        if (retryBtn) {
-            retryBtn.addEventListener('click', function () {
-                pu.showView('loading-view');
-                connect();
-            });
-        }
 
         // #750: back to a usable join screen after a kick. A full reload, not
         // showView('join-view') — the server closed our socket, so the join

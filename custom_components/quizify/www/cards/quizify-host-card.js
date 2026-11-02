@@ -8,7 +8,8 @@
  * The card speaks the SAME WebSocket protocol as www/js/admin.js: connect to
  * /api/quizify/ws?role=admin, send `admin_auth` as the FIRST frame (never
  * ?token= in the URL, #359), then `admin_connect`, and render from the
- * `game_state` broadcast. No new server endpoint and no new message type.
+ * `game_state` broadcast plus the lobby roster frames (`player_joined` /
+ * `player_left`, #1182). No new server endpoint and no new message type.
  *
  * Quizify is served from hass.http.app.router, i.e. the SAME origin as the
  * Home Assistant frontend, so this card can read the very admin token the
@@ -33,7 +34,15 @@
     var ADMIN_URL = '/quizify/admin';
     var WS_PATH = '/api/quizify/ws?role=admin';
 
-    var MAX_RECONNECT = 10;
+    /*
+     * Reconnect policy (#1182, decision 3): back off 1, 2, 4, 8, 16, 30, 30…
+     * seconds with no attempt cap while the page is visible, and try again at
+     * once when the tab comes back or the network returns. The card used to
+     * stop after ten attempts and fall silent with no way back short of a
+     * page reload. From the first 30-second wait on, the offline block offers
+     * a "Connect now" button for the host who knows the server is back.
+     */
+    var MAX_BACKOFF_MS = 30000;
 
     /*
      * Phase -> primary action. Phase strings are GamePhase in
@@ -108,7 +117,10 @@
         meta: 'hostCard.meta', join: 'admin.joinModalBtnJoin', waiting: 'lobby.marqueeWaiting',
         connecting: 'common.connecting', offline: 'connection.reconnecting',
         noToken: 'hostCard.noToken', openAdmin: 'launcher.openQuizify',
-        resetConfirm: 'admin.resetGameConfirm'
+        resetConfirm: 'admin.resetGameConfirm',
+        // #1182 L2: the offline block.
+        asOf: 'states.cardAsOf', offlineLine: 'states.cardOffline',
+        connectNow: 'states.connectNow', lockedNote: 'states.cardLocked'
     };
     var FALLBACK = {
         start: 'Start game', skip: 'Reveal', next: 'Next question', resume: 'Resume',
@@ -121,7 +133,9 @@
         meta: 'Question {current} of {total} · {count, plural, one{1 player} other{# players}}',
         join: 'Join', waiting: 'Waiting for players…', connecting: 'Connecting to the game…',
         offline: 'Reconnecting…', noToken: 'Open Quizify once to link this dashboard',
-        openAdmin: 'Open Quizify', resetConfirm: 'Reset game?'
+        openAdmin: 'Open Quizify', resetConfirm: 'Reset game?',
+        asOf: 'As of {time}', offlineLine: 'No connection to Quizify. We keep trying.',
+        connectNow: 'Connect now', lockedNote: 'End and Reset are locked until the connection is back.'
     };
     var BUNDLES = {};   // lang -> parsed bundle, once fetched
     var LOADING = {};   // lang -> in-flight promise
@@ -221,6 +235,13 @@
         '.bar{height:4px;border-radius:999px;background:var(--divider-color);overflow:hidden}',
         '.bar > i{display:block;height:100%;background:var(--primary-color)}',
         '.note{color:var(--secondary-text-color);font-size:.9em;margin:0}',
+        // #1182: the offline block. Old numbers may stay on screen, but only
+        // under this block and the "as of" stamp, never looking current.
+        '.offline{display:flex;flex-direction:column;gap:.5em;padding:.75em;border-radius:var(--ha-card-border-radius,12px);',
+        'border:1px solid var(--divider-color);background:var(--secondary-background-color,transparent)}',
+        '.offline .line{margin:0;font-weight:600}',
+        '.offline .row button{flex:0 0 auto}',
+        '.stale .roster,.stale .bar{opacity:.6}',
         '@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}'
     ].join('');
 
@@ -259,6 +280,10 @@
             this._token = undefined;   // undefined = not looked up yet, null = none
             this._attempts = 0;
             this._retry = null;
+            this._removed = false;
+            this._freshAt = null;      // when the last frame arrived
+            this._startError = '';     // a rejected quizify.start_game call
+            this._onWake = this._onWake.bind(this);
             this._lang = 'en';
             this._qrDrawnFor = null;
         }
@@ -302,15 +327,18 @@
 
         connectedCallback() {
             // Lovelace detaches and re-attaches cards on view switches and
-            // reflows; a re-attached card gets its full retry budget back.
+            // reflows; a re-attached card starts its backoff from the bottom.
             this._attempts = 0;
             this._loadLabels();
+            this._removed = false;
+            this._listen('addEventListener');
             this._connect();
         }
 
         disconnectedCallback() {
             if (this._retry) { clearTimeout(this._retry); this._retry = null; }
-            this._attempts = MAX_RECONNECT;   // stop reconnecting once removed
+            this._removed = true;   // stop reconnecting once removed
+            this._listen('removeEventListener');
             var ws = this._ws;
             this._ws = null;
             if (ws) {
@@ -382,6 +410,7 @@
             ws.onopen = function () {
                 if (self._ws !== ws) return;
                 self._attempts = 0;
+                self._retryDelay = 0;
                 if (!self._refused) self._status = 'online';
                 // Token first, out of the URL (#359), then the connect frame.
                 ws.send(JSON.stringify({ type: 'admin_auth', token: self._token }));
@@ -395,33 +424,7 @@
                 if (self._ws !== ws) return;
                 var msg;
                 try { msg = JSON.parse(evt.data); } catch (e) { return; }
-                if (msg.admin_session_token && window.QuizifyUtils) {
-                    window.QuizifyUtils.writeAdminToken(msg.admin_session_token);
-                    self._token = msg.admin_session_token;
-                    if (self._refused) { self._refused = false; self._status = 'online'; }
-                }
-                // The server refused this browser's token (#1155): "Admin only"
-                // on the handshake, ADMIN_REQUIRED on a command. Same note as
-                // having no token, never live buttons that fail silently. Sticky
-                // until the server grants a token, since game_state is still
-                // broadcast to a refused connection.
-                if ((msg.type || msg.event) === 'error' && (msg.code === 'ADMIN_REQUIRED'
-                        || (msg.code === 'INVALID_ACTION' && msg.message === 'Admin only'))) {
-                    self._refused = true;
-                    self._status = 'no-token';
-                    self._state = null;
-                    self._render();
-                    return;
-                }
-                if (self._refused) return;
-                if (msg.type === 'game_state') {
-                    self._state = msg;
-                    self._render();
-                }
-                if (msg.type === 'scoring_status') {
-                    self._scoring = msg;
-                    self._render();
-                }
+                self._handleMessage(msg);
             };
 
             ws.onclose = function () {
@@ -435,12 +438,113 @@
             ws.onerror = function () { /* onclose does the reconnecting */ };
         }
 
-        _scheduleRetry() {
-            if (this._attempts >= MAX_RECONNECT) return;
+        /*
+         * The card's message router. Same shape as the three page routers so
+         * tests/test_frame_surface_coverage_787.py can read its cases (#1182).
+         *
+         * L1 of the states review: the card used to take players from
+         * game_state alone, but a join in the lobby produces only the
+         * coalesced player_joined frame (#453) — no snapshot. The card showed
+         * "0 players · Waiting for players" with Start locked while the TV
+         * listed everyone.
+         */
+        _handleMessage(msg) {
             var self = this;
-            var delay = Math.min(1000 * Math.pow(2, this._attempts), 30000);
+            if (this._status === 'online') this._freshAt = new Date();
+            if (msg.admin_session_token && window.QuizifyUtils) {
+                window.QuizifyUtils.writeAdminToken(msg.admin_session_token);
+                self._token = msg.admin_session_token;
+                if (self._refused) { self._refused = false; self._status = 'online'; }
+            }
+            // The server refused this browser's token (#1155): "Admin only"
+            // on the handshake, ADMIN_REQUIRED on a command. Same note as
+            // having no token, never live buttons that fail silently. Sticky
+            // until the server grants a token, since game_state is still
+            // broadcast to a refused connection.
+            if ((msg.type || msg.event) === 'error' && (msg.code === 'ADMIN_REQUIRED'
+                    || (msg.code === 'INVALID_ACTION' && msg.message === 'Admin only'))) {
+                self._refused = true;
+                self._status = 'no-token';
+                self._state = null;
+                self._render();
+                return;
+            }
+            if (self._refused) return;
+            switch (msg.type || msg.event) {
+                case 'game_state':
+                    self._state = msg;
+                    self._render();
+                    break;
+                case 'player_joined':
+                case 'player_left':
+                    // The roster frame carries the whole live list, so it
+                    // replaces the snapshot's rather than patching it.
+                    if (self._state && msg.players) {
+                        self._state.players = msg.players;
+                        self._render();
+                    }
+                    break;
+                case 'round_summary':
+                    // The reveal carries the new ranking; adopt it so the
+                    // cockpit's scores move with the room's.
+                    if (self._state) {
+                        if (msg.leaderboard) self._state.leaderboard = msg.leaderboard;
+                        if (msg.players) self._state.players = msg.players;
+                        self._render();
+                    }
+                    break;
+                case 'game_reset':
+                    // The host's socket stays open through a reset and a
+                    // fresh snapshot follows; until then the old roster
+                    // is gone, not current.
+                    if (self._state) {
+                        self._state.players = [];
+                        self._state.phase = 'LOBBY';
+                        self._state.round = 0;
+                        self._render();
+                    }
+                    break;
+                case 'scoring_status':
+                    self._scoring = msg;
+                    self._render();
+                    break;
+                case 'error':
+                    // Refusals were handled above; other errors are for
+                    // the page that sent the command.
+                    break;
+            }
+        }
+
+        /*
+         * No cap while visible (#1182). A hidden tab waits; _onWake picks it
+         * up again the moment the dashboard is looked at or the network
+         * returns.
+         */
+        _scheduleRetry() {
+            if (this._removed || this._retry) return;
+            if (typeof document !== 'undefined' && document.hidden) return;
+            var self = this;
+            var delay = Math.min(1000 * Math.pow(2, this._attempts), MAX_BACKOFF_MS);
             this._attempts += 1;
-            this._retry = setTimeout(function () { self._open(); }, delay);
+            this._retryDelay = delay;
+            this._retry = setTimeout(function () { self._retry = null; self._open(); }, delay);
+        }
+
+        _listen(method) {
+            if (typeof window[method] === 'function') window[method]('online', this._onWake);
+            if (typeof document[method] === 'function') document[method]('visibilitychange', this._onWake);
+        }
+
+        _onWake() {
+            if (this._removed || this._ws || this._status === 'no-token') return;
+            if (typeof document !== 'undefined' && document.hidden) return;
+            this._connectNow();
+        }
+
+        _connectNow() {
+            if (this._retry) { clearTimeout(this._retry); this._retry = null; }
+            if (this._ws) return;
+            this._open();
         }
 
         _send(type, data) {
@@ -464,12 +568,36 @@
          * view), so the button is never dead.
          */
         _startGame() {
+            var self = this;
             var hass = this._hass;
+            this._startError = '';
             if (hass && typeof hass.callService === 'function') {
+                var call;
                 try {
-                    hass.callService('quizify', 'start_game', {});
+                    call = hass.callService('quizify', 'start_game', {});
+                } catch (e) {
+                    call = null;   // a synchronous throw: fall through to the socket
+                }
+                if (call) {
+                    // #1182: the try above only ever caught a synchronous
+                    // throw. callService returns a promise, and a refused
+                    // start (ServiceValidationError: "no players yet", "not
+                    // ready") rejected it with nobody listening — the host
+                    // tapped Start and nothing happened. The service's own
+                    // message is localized by Home Assistant, so it is shown
+                    // as is. A rejection without one means Home Assistant
+                    // itself was unreachable, and the socket is the way left.
+                    Promise.resolve(call).catch(function (err) {
+                        var text = err && (err.message || (err.error && err.error.message));
+                        if (text) {
+                            self._startError = String(text);
+                            self._render();
+                        } else {
+                            self._send('start_game');
+                        }
+                    });
                     return;
-                } catch (e) { /* fall through to the socket */ }
+                }
             }
             this._send('start_game');
         }
@@ -528,15 +656,22 @@
 
             var players = (s && s.players) || [];
             var primary = this._primary();
-            var meta = s
-                ? fmt(t.meta, {
+            var offline = this._status === 'offline';
+            var meta;
+            if (offline && s && this._freshAt) {
+                // Old numbers on an offline card carry their age (#1182).
+                meta = fmt(t.asOf, { time: this._clock(this._freshAt) }, this._lang);
+            } else if (s) {
+                meta = fmt(t.meta, {
                     current: s.round || 0,
                     total: s.total_rounds || 0,
                     count: players.length
-                }, this._lang)
-                : t.connecting;
+                }, this._lang);
+            } else {
+                meta = t.connecting;
+            }
 
-            var html = '<style>' + STYLE + '</style><ha-card>';
+            var html = '<style>' + STYLE + '</style><ha-card' + (offline ? ' class="stale"' : '') + '>';
             html += '<div class="head"><span class="name">' + esc(title) + '</span>' +
                     '<span class="meta">' + esc(meta) + '</span></div>';
 
@@ -559,6 +694,18 @@
                 html += '<div class="bar"><i style="width:' + pct + '%"></i></div>';
             }
 
+            if (offline) {
+                // L2: a lost socket used to change one footnote while every
+                // button stayed live and _send() returned without a word.
+                html += '<div class="offline" role="status">' +
+                    '<p class="line">' + esc(t.offlineLine) + '</p>';
+                if ((this._retryDelay || 0) >= MAX_BACKOFF_MS) {
+                    html += '<div class="row"><button id="reconnect">' + esc(t.connectNow) + '</button></div>';
+                }
+                if (s) html += '<p class="note">' + esc(t.lockedNote) + '</p>';
+                html += '</div>';
+            }
+
             html += '<button class="primary" id="primary"' + (primary.disabled ? ' disabled' : '') + '>' +
                     esc(primary.label) + '</button>';
 
@@ -568,24 +715,24 @@
                 // answer, which is what admin.js does behind the same label.
                 // Only two phases accept it (#801) — elsewhere the server
                 // answers ERR_INVALID_ACTION, so the button is not offered.
+                var lock = offline ? ' disabled' : '';
                 if (s && SKIPPABLE_PHASES[s.phase]) {
-                    html += '<button data-msg="admin_skip">' + esc(t.reveal) + '</button>';
+                    html += '<button data-msg="admin_skip"' + lock + '>' + esc(t.reveal) + '</button>';
                 }
-                html += '<button data-msg="end_game">' + esc(t.end) + '</button>' +
-                    '<button data-reset="1">' + esc(t.reset) + '</button>' +
+                html += '<button data-msg="end_game"' + lock + '>' + esc(t.end) + '</button>' +
+                    '<button data-reset="1"' + lock + '>' + esc(t.reset) + '</button>' +
                     '</div>';
             }
 
             var joinUrl = (s && s.join_url) || '/quizify/player';
-            var footNote = primary.blockedReason
-                || (this._status === 'offline' ? t.offline : '');
+            var footNote = offline ? '' : (this._startError || primary.blockedReason || '');
             html += '<div class="foot"><a href="' + esc(joinUrl) + '">' + esc(t.join) + '</a>' +
                     '<span class="note">' + esc(footNote) + '</span>';
             // End game lives in the compact footer (#278 spec). Expanded already
             // carries it in the control row, and there is nothing to end while
             // the lobby is still open — so it appears only where it can act.
             if (!expanded && s && s.phase && s.phase !== 'LOBBY') {
-                html += '<button class="linky" data-msg="end_game">' +
+                html += '<button class="linky" data-msg="end_game"' + (offline ? ' disabled' : '') + '>' +
                         esc(t.end) + '</button>';
             }
             html += '</div>';
@@ -596,14 +743,20 @@
             if (expanded) this._drawQr(joinUrl);
         }
 
+        _clock(date) {
+            var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+            return pad(date.getHours()) + ':' + pad(date.getMinutes());
+        }
+
         _lobbyRosterHtml(players) {
             var t = this._t;
+            var lock = this._status === 'offline' ? ' disabled' : '';
             return players.map(function (p) {
                 return '<li>' +
                     '<span class="dot' + (p.connected ? '' : ' off') + '"></span>' +
                     '<span class="nm">' + esc(p.name) + '</span>' +
                     '<span class="sc">' + esc(p.score != null ? p.score : '—') + '</span>' +
-                    '<button class="kick" data-kick="' + esc(p.name) + '" ' +
+                    '<button class="kick" data-kick="' + esc(p.name) + '"' + lock + ' ' +
                     'title="' + esc(t.kick) + '" aria-label="' + esc(t.kick) + ' ' + esc(p.name) + '">×</button>' +
                     '</li>';
             }).join('');
@@ -612,6 +765,7 @@
         _gameRosterHtml(players) {
             var t = this._t;
             var status = this._scoring || { out: [], back: [], flags: {} };
+            var offline = this._status === 'offline';
             var connected = {};
             players.forEach(function (p) { connected[p.name] = p.connected; });
             var out = {};
@@ -631,7 +785,7 @@
                     '<span class="dot' + (on ? '' : ' off') + '"></span>' +
                     '<span class="nm">' + esc(r.name) + '</span>' +
                     '<span class="sc">' + esc(r.score) + '</span>' +
-                    (flag && flag.can_take_out
+                    (flag && flag.can_take_out && !offline
                         ? '<button class="scoring" data-scoring-out="' + esc(id) + '">' + esc(t.scoringOut) + '</button>'
                         : '') +
                     (flag && flag.on_podium ? '<span class="hint">' + esc(t.scoringPodium) + '</span>' : '') +
@@ -644,7 +798,7 @@
                         '<span class="dot off"></span>' +
                         '<span class="nm">' + esc(r.name) + '</span>' +
                         '<span class="sc">' + esc(r.score) + '</span>' +
-                        '<button class="scoring" data-scoring-back="' + esc(r.entrant_id) + '">' + esc(t.scoringBack) + '</button>' +
+                        '<button class="scoring" data-scoring-back="' + esc(r.entrant_id) + '"' + (offline ? ' disabled' : '') + '>' + esc(t.scoringBack) + '</button>' +
                         '</li>';
                 }).join('');
             }
@@ -661,6 +815,10 @@
         _bind(primary) {
             var self = this;
             var t = this._t;
+            var again = this.shadowRoot.getElementById('reconnect');
+            if (again) {
+                again.addEventListener('click', function () { self._connectNow(); });
+            }
             var btn = this.shadowRoot.getElementById('primary');
             if (btn && primary.msg) {
                 btn.addEventListener('click', function () { self._dispatch(primary.msg); });
@@ -675,6 +833,7 @@
             if (reset) {
                 // The one destructive control — always ask.
                 reset.addEventListener('click', function () {
+                    if (self._status !== 'online') return;
                     if (window.confirm(t.resetConfirm)) self._send('reset_game');
                 });
             }

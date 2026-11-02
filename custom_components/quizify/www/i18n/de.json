@@ -1,4 +1,26 @@
 {
+  "states": {
+    "restartPhone": "Home Assistant wurde neu gestartet, das Spiel von eben ist beendet. Sobald der Host ein neues startet, bist du mit einem Tipp dabei.",
+    "restartTv": "Home Assistant wurde neu gestartet, das letzte Spiel ist beendet. Scannt einfach neu.",
+    "restartHost": "Home Assistant wurde neu gestartet, das letzte Spiel ist beendet.",
+    "imageMissingPhone": "Das Bild kommt gerade nicht an. Schau auf den Fernseher.",
+    "imageMissingTv": "Bild konnte nicht geladen werden",
+    "connecting": "Verbinde mit dem Spiel…",
+    "waitingTitle": "Warte auf das Spiel…",
+    "waitingBody": "Die Verbindung ist weg. Läuft Home Assistant gerade neu an, dauert das ein paar Minuten. Wir verbinden dich automatisch, deine Punkte bleiben.",
+    "connectNow": "Jetzt verbinden",
+    "nextAttempt": "nächster Versuch in {seconds} s",
+    "cardAsOf": "Stand {time}",
+    "cardOffline": "Keine Verbindung zu Quizify. Wir versuchen es weiter.",
+    "cardLocked": "Beenden und Zurücksetzen sind gesperrt, bis die Verbindung steht.",
+    "analyticsErrorDetail": "Home Assistant hat mit einem Fehler geantwortet ({status}).",
+    "reload": "Nochmal laden",
+    "loadingPeriod": "lädt {period}… (zeigt noch {current})",
+    "flagsError": "Konnte die gemeldeten Fragen nicht laden",
+    "listError": "Konnte die Liste nicht laden",
+    "submissionsError": "Konnte deine Einsendungen nicht laden.",
+    "packSubmitUnavailable": "Die Pack-Einsendung ist gerade nicht erreichbar."
+  },
   "common": {
     "cancel": "Abbrechen",
     "close": "Schließen",

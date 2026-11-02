@@ -82,23 +82,6 @@
             <p data-i18n="common.connecting">Connecting to the game…</p>
         </div>
 
-        <!-- Error: Game not found -->
-        <div id="not-found-view" class="view hidden">
-            <div class="error-icon qz-icon qz-icon--sky" data-ui-icon="brain">🧠</div>
-            <h1 data-i18n="errors.gameNotFound">Game Not Found</h1>
-            <p data-i18n="errors.gameNotFoundHint">This game doesn't exist or the link is incorrect.</p>
-            <p class="hint" data-i18n="errors.askHostQr">Ask the host for a new QR code.</p>
-            <button id="refresh-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try again</button>
-        </div>
-
-        <!-- Error: Game ended -->
-        <div id="ended-view" class="view hidden">
-            <div class="error-icon qz-icon qz-icon--sun" data-ui-icon="party">🎉</div>
-            <h1 data-i18n="errors.gameHasEnded">Game Has Ended</h1>
-            <p data-i18n="errors.thanksForPlaying">Thanks for playing Quizify!</p>
-            <p class="hint" data-i18n="errors.askHostNewGame">Ask the host to start a new game.</p>
-        </div>
-
         <!-- Removed by the host (#750). Not an error screen in the network
              sense — the socket did exactly what it was told — so it says who
              did it and what to do next, instead of offering a "Try Again"
@@ -109,14 +92,6 @@
             <p data-i18n="errors.removedHint">The host removed you from the game.</p>
             <p class="hint" data-i18n="errors.removedRejoinHint">Ask the host to let you back in, then join again.</p>
             <button id="kicked-rejoin-btn" class="btn btn-primary btn-glow" data-i18n="errors.removedRejoin">Back to join screen</button>
-        </div>
-
-        <!-- Error: Game in progress (can't join mid-round) -->
-        <div id="in-progress-view" class="view hidden">
-            <div class="error-icon qz-icon qz-icon--mix" data-ui-icon="hourglass">⏳</div>
-            <h1 data-i18n="errors.gameInProgress">Game In Progress</h1>
-            <p data-i18n="errors.gameInProgressHint">The game is currently in a round. Try again in a moment.</p>
-            <button id="retry-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try again</button>
         </div>
 
         <!-- Join form -->
@@ -333,6 +308,9 @@
                              the card collapses to the text-only layout. -->
                         <figure id="question-media" class="question-media" hidden>
                             <img id="question-image" class="question-image" alt="" />
+                            <!-- #1182 L10: shown in the same frame when the picture fails. -->
+                            <figcaption id="question-image-missing" class="question-image-missing" hidden
+                                        data-i18n="states.imageMissingPhone">The picture is not coming through right now. Look at the TV.</figcaption>
                             <button id="question-image-zoom" type="button" class="question-image-zoom"
                                     data-i18n-aria-label="game.zoomImage" aria-label="Zoom image">⤢</button>
                         </figure>
@@ -994,11 +972,13 @@
     <!-- Connection Lost View -->
     <div id="connection-lost-view" class="view hidden">
         <div class="connection-lost-container">
-            <div class="connection-lost-icon qz-icon qz-icon--coral" data-ui-icon="signaloff">📡</div>
-            <h1 data-i18n="errors.CONNECTION_LOST">Connection Lost</h1>
-            <p data-i18n="errors.connectionLostHint">We couldn't reconnect to the game server.</p>
-            <button id="retry-connection-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try again</button>
-            <p class="connection-lost-hint" data-i18n="errors.checkNetwork">Make sure you're connected to the network</p>
+            <!-- #1182 L11 / draft 4: shown from the 30-second mark while the
+                 phone keeps trying on its own, never as a dead end. -->
+            <div class="connection-lost-icon qz-icon qz-icon--sun" data-ui-icon="hourglass">⏳</div>
+            <h1 data-i18n="states.waitingTitle">Waiting for the game…</h1>
+            <p data-i18n="states.waitingBody">The connection is gone. If Home Assistant is restarting, this takes a few minutes. We reconnect you automatically, and your points stay.</p>
+            <button id="retry-connection-btn" class="btn btn-primary btn-glow" data-i18n="states.connectNow">Connect now</button>
+            <p id="reconnect-countdown" class="connection-lost-hint" aria-live="polite"></p>
         </div>
     </div>
 

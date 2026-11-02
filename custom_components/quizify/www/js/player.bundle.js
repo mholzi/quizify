@@ -33,6 +33,10 @@
         currentPhase: 'LOBBY',
         reconnectAttempts: 0,
         isReconnecting: false,
+        // #1182: when the socket was first lost (0 while connected) and the
+        // pending backoff timer, so "Connect now" can cut it short.
+        disconnectedSince: 0,
+        reconnectTimer: null,
         intentionalLeave: false,
         playerColor: '',  // assigned by server on join
     };
@@ -41,8 +45,14 @@
     // Constants
     // ============================================
 
-    var MAX_RECONNECT_ATTEMPTS = 10;
+    // #1182 L11: no attempt cap any more. Ten attempts were about three
+    // minutes (1+2+4+8+16+5x30 s) and an HA restart takes one to five, so the
+    // phone often gave up just before Home Assistant came back, while the TV
+    // kept trying forever. Now the phone keeps going while the page is
+    // visible (a hidden page waits for visibilitychange/online), and from
+    // the 30-second mark it says so honestly with a "Connect now" button.
     var MAX_RECONNECT_DELAY_MS = 30000;
+    var LONG_OUTAGE_MS = 30000;
     // Name limit lives in utils.js (QuizifyUtils.MAX_NAME_LENGTH) so the
     // player flow and the admin modal share one rule. Mirror it locally
     // for any legacy reference; validateName() delegates to the shared one.
@@ -70,7 +80,11 @@
     // ============================================
 
     var viewIds = [
-        'loading-view', 'not-found-view', 'ended-view', 'in-progress-view',
+        // #1182 L12: not-found-view, ended-view and in-progress-view were
+        // designed and translated but no code path ever showed them; the
+        // join form's own hints (join.refused.GAME_ENDED, resetHint, …) do
+        // that job. Deleted rather than kept for every text pass to maintain.
+        'loading-view',
         'join-view', 'lobby-view', 'game-view', 'reveal-view',
         'paused-view', 'end-view', 'connection-lost-view',
         // #750: the host-removed screen. Same registration rule as the
@@ -177,6 +191,8 @@
             onOpen: function () {
                 state.reconnectAttempts = 0;
                 state.isReconnecting = false;
+                state.disconnectedSince = 0;
+                stopLongOutage();
                 hideReconnectingOverlay();
                 updateConnectionIndicator('connected');
                 if (handlers.onOpen) handlers.onOpen(ws);
@@ -189,26 +205,66 @@
                     state.intentionalLeave = false;
                     return;
                 }
-                if (state.playerName && state.reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+                if (state.playerName) {
                     state.isReconnecting = true;
-                    state.reconnectAttempts++;
-                    showReconnectingOverlay();
+                    if (!state.disconnectedSince) state.disconnectedSince = Date.now();
                     updateConnectionIndicator('reconnecting');
-                    var delay = getReconnectDelay();
-                    console.log('[Quizify] WS closed. Reconnecting in ' + delay + 'ms (attempt ' + state.reconnectAttempts + ')');
-                    setTimeout(function () {
-                        if (handlers.onReconnect) handlers.onReconnect();
-                    }, delay);
-                } else if (state.reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
-                    state.isReconnecting = false;
-                    hideReconnectingOverlay();
-                    updateConnectionIndicator('disconnected');
-                    showView('connection-lost-view');
+                    if (pageHidden()) {
+                        // Paused, not given up: player-core's
+                        // visibilitychange/online handlers reconnect at once.
+                        showReconnectingOverlay();
+                    } else {
+                        state.reconnectAttempts++;
+                        var delay = getReconnectDelay();
+                        console.log('[Quizify] WS closed. Reconnecting in ' + delay + 'ms (attempt ' + state.reconnectAttempts + ')');
+                        clearTimeout(state.reconnectTimer);
+                        state.reconnectTimer = setTimeout(function () {
+                            state.reconnectTimer = null;
+                            if (handlers.onReconnect) handlers.onReconnect();
+                        }, delay);
+                        if (delay >= MAX_RECONNECT_DELAY_MS ||
+                                Date.now() - state.disconnectedSince >= LONG_OUTAGE_MS) {
+                            showLongOutage(delay);
+                        } else {
+                            showReconnectingOverlay();
+                        }
+                    }
                 }
                 if (handlers.onClose) handlers.onClose();
             }
         });
         return ws;
+    }
+
+    function pageHidden() {
+        return typeof document !== 'undefined' && document.visibilityState === 'hidden';
+    }
+
+    // The long-outage screen (#1182, draft 4): the first 30 s stay as they
+    // are (overlay, desaturation, pill from #1170/#1172); after that the
+    // phone says what is going on and when it tries next.
+    var _countdown = null;
+    function showLongOutage(delay) {
+        hideReconnectingOverlay();
+        showView('connection-lost-view');
+        var line = document.getElementById('reconnect-countdown');
+        if (!line) return;
+        var due = Date.now() + delay;
+        var paint = function () {
+            var left = Math.max(0, Math.ceil((due - Date.now()) / 1000));
+            line.textContent = left > 0
+                ? (window.QuizifyI18n && window.QuizifyI18n.t
+                    ? window.QuizifyI18n.t('states.nextAttempt', { seconds: left })
+                    : String(left))
+                : _tt('states.connecting');
+        };
+        if (_countdown) clearInterval(_countdown);
+        paint();
+        _countdown = setInterval(paint, 1000);
+    }
+
+    function stopLongOutage() {
+        if (_countdown) { clearInterval(_countdown); _countdown = null; }
     }
 
     function getReconnectDelay() {
@@ -675,7 +731,6 @@
         getSession: getSession,
         clearSession: clearSession,
         validateName: validateName,
-        MAX_RECONNECT_ATTEMPTS: MAX_RECONNECT_ATTEMPTS,
         renderMedalStandings: renderMedalStandings,
         myEntrant: myEntrant,
         entrantKey: entrantKey
@@ -5062,10 +5117,21 @@
         // static mount (#536/#540).
         var safeImg = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
             ? window.QuizifyUtils.safeImageUrl(imgUrl) : '';
+        // #1182 L10: the frame keeps its height while the picture loads (a
+        // skeleton, not an empty box with the clock running) and says so
+        // when it fails. It used to collapse to text-only, which turned
+        // "Who is in this picture?" into an unanswerable question that still
+        // counted. The question still counts (decision 2a); the TV may have
+        // the picture.
+        var missing = document.getElementById('question-image-missing');
+        media.classList.remove('is-loading', 'is-missing');
+        if (missing) missing.hidden = true;
+        img.onload = function() { media.classList.remove('is-loading'); };
         img.onerror = function() {
-            // Image failed → hide the banner, fall back to text-only.
             img.removeAttribute('src');
-            media.hidden = true;
+            media.classList.remove('is-loading');
+            media.classList.add('is-missing');
+            if (missing) missing.hidden = false;
         };
         // Reset first — the banner element is reused every round, so a blur
         // left over from the last question must not bleed into this one.
@@ -5074,6 +5140,7 @@
             // #467: populate a localized generic alt so the image question
             // isn't announced as an unlabelled graphic.
             var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            media.classList.add('is-loading');
             img.src = safeImg;
             img.alt = t('game.questionImageAlt');
             media.hidden = false;
@@ -6952,9 +7019,18 @@
                 // re-joined under the old name (as the host, if this tab was
                 // the host's). The server has just said this identity is not
                 // joinable; retrying it is the one thing not to do.
+                //
+                // #1182: the server says why. A phone that slept through a
+                // reset (display off, the normal case) never saw game_reset
+                // and read "we could not bring you back", as if its own phone
+                // were at fault; after an HA restart nobody said the game was
+                // gone. Expired and removed keep the general hint.
                 var failedName = lastPlayerName();
                 forgetIdentity();
-                returnToJoin('join.reconnectFailedHint', failedName);
+                var failedHint = msg.reason === 'reset' ? 'join.resetHint'
+                    : msg.reason === 'restart' ? 'states.restartPhone'
+                    : 'join.reconnectFailedHint';
+                returnToJoin(failedHint, failedName);
                 break;
 
             case 'host_presence':
@@ -8756,8 +8832,14 @@
     // ============================================
 
     function retryConnection() {
+        // #1182: "Connect now" cuts the pending backoff short. The screen
+        // stays where it is: the snapshot that follows a successful
+        // reconnect routes to the right view by itself.
+        if (state.reconnectTimer) {
+            clearTimeout(state.reconnectTimer);
+            state.reconnectTimer = null;
+        }
         state.reconnectAttempts = 0;
-        pu.showView('loading-view');
         connect();
     }
 
@@ -9099,8 +9181,9 @@
         pu.showView('join-view');
         if (els.joinBtn) els.joinBtn.disabled = true;
 
-        // Connect WebSocket
-        pu.updateConnectionIndicator('reconnecting');
+        // Connect WebSocket. #1182 L9: 'connecting', not 'reconnecting' —
+        // nothing can be re-established before the first connection.
+        pu.updateConnectionIndicator('connecting');
         connect();
 
         // Fallback: if WS hasn't opened after 10s, re-enable join button with error hint
@@ -9142,6 +9225,18 @@
             setTimeout(function () { clearInterval(autoJoinInterval); }, 5000);
         }
 
+        // #1182 L11: the network coming back is as good a moment as the page
+        // coming back. Without this the phone sat out up to 30 s of backoff
+        // after the wifi had already returned.
+        window.addEventListener('online', function () {
+            if (document.visibilityState === 'hidden') return;
+            var ws = state.ws;
+            if (state.playerName && (!ws || ws.readyState === WebSocket.CLOSING ||
+                    ws.readyState === WebSocket.CLOSED)) {
+                retryConnection();
+            }
+        });
+
         // iOS Safari reconnect on foreground
         document.addEventListener('visibilitychange', function () {
             if (document.visibilityState === 'visible') {
@@ -9149,8 +9244,7 @@
                 if (!ws || ws.readyState === WebSocket.CLOSING || ws.readyState === WebSocket.CLOSED) {
                     if (state.playerName) {
                         console.log('[Quizify] Page visible, WS dead \u2014 reconnecting.');
-                        state.reconnectAttempts = 0;
-                        connect();
+                        retryConnection();
                     }
                 }
                 // The OS releases wake locks when the tab hides \u2014 re-acquire
@@ -9160,22 +9254,6 @@
                 }
             }
         });
-
-        // Refresh / retry buttons
-        var refreshBtn = document.getElementById('refresh-btn');
-        if (refreshBtn) {
-            refreshBtn.addEventListener('click', function () {
-                pu.showView('loading-view');
-                connect();
-            });
-        }
-        var retryBtn = document.getElementById('retry-btn');
-        if (retryBtn) {
-            retryBtn.addEventListener('click', function () {
-                pu.showView('loading-view');
-                connect();
-            });
-        }
 
         // #750: back to a usable join screen after a kick. A full reload, not
         // showView('join-view') — the server closed our socket, so the join

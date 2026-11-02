@@ -1,4 +1,26 @@
 {
+  "states": {
+    "restartPhone": "Home Assistant was restarted, so the last game has ended. As soon as the host starts a new one, you are in with one tap.",
+    "restartTv": "Home Assistant was restarted, so the last game has ended. Just scan again.",
+    "restartHost": "Home Assistant was restarted, so the last game has ended.",
+    "imageMissingPhone": "The picture is not coming through right now. Look at the TV.",
+    "imageMissingTv": "Picture could not be loaded",
+    "connecting": "Connecting to the game…",
+    "waitingTitle": "Waiting for the game…",
+    "waitingBody": "The connection is gone. If Home Assistant is restarting, this takes a few minutes. We reconnect you automatically, and your points stay.",
+    "connectNow": "Connect now",
+    "nextAttempt": "next attempt in {seconds} s",
+    "cardAsOf": "As of {time}",
+    "cardOffline": "No connection to Quizify. We keep trying.",
+    "cardLocked": "End and Reset are locked until the connection is back.",
+    "analyticsErrorDetail": "Home Assistant answered with an error ({status}).",
+    "reload": "Load again",
+    "loadingPeriod": "loading {period}… (still showing {current})",
+    "flagsError": "Could not load the reported questions",
+    "listError": "Could not load the list",
+    "submissionsError": "Could not load your submissions.",
+    "packSubmitUnavailable": "Pack submission cannot be reached right now."
+  },
   "common": {
     "cancel": "Cancel",
     "close": "Close",

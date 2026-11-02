@@ -199,6 +199,30 @@
             color: var(--color-text-muted);
         }
 
+        /* #1182 L5: an error is shown where the content would be, with a way
+           to try again; old numbers under a new period carry a note. */
+        .analytics-error {
+            text-align: center;
+            padding: var(--space-xl) var(--space-lg);
+            border: 1px solid var(--color-border-light);
+            border-radius: var(--radius-md);
+            background: var(--color-bg-card);
+        }
+        .analytics-error[hidden] { display: none; }
+        .analytics-error-title { margin: 0 0 var(--space-xs); font-weight: 700; color: var(--color-text-primary); }
+        .analytics-error-title .glyph { color: var(--color-accent-primary); margin-right: 0.35em; }
+        .analytics-error-detail { margin: 0 0 var(--space-md); color: var(--color-text-muted); font-size: var(--font-size-base); }
+        .analytics-stale-note {
+            text-align: center;
+            margin: 0 0 var(--space-md);
+            color: var(--color-text-muted);
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: var(--font-size-sm);
+        }
+        .analytics-stale-note[hidden] { display: none; }
+        #content.is-stale .stats-grid,
+        #content.is-stale .analytics-section { opacity: 0.55; }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -229,6 +253,14 @@
         </div>
 
         <div id="loading" class="loading-state" data-i18n="analytics.loading">Loading stats…</div>
+
+        <!-- #1182 L5: a failed load is an error, never "no games yet". -->
+        <div id="load-error" class="analytics-error" role="alert" hidden>
+            <p class="analytics-error-title"><span class="glyph" aria-hidden="true">⊘</span><span data-i18n="analytics.loadFailed">Could not load the analytics.</span></p>
+            <p id="load-error-detail" class="analytics-error-detail"></p>
+            <button type="button" id="load-retry" class="btn btn-secondary" data-i18n="states.reload">Load again</button>
+        </div>
+        <p id="stale-note" class="analytics-stale-note" role="status" hidden></p>
 
         <div id="content" style="display:none;">
             <!-- Stats Grid -->
@@ -299,7 +331,12 @@
             <!-- Flagged Questions — populated from /api/quizify/flags -->
             <div class="analytics-section" id="flags-section" style="display:none;">
                 <div class="section-title" data-i18n="analytics.sectionFlagged">🚩 Flagged questions</div>
-                <div class="card" style="overflow-x:auto;">
+                <!-- #1182 L5: a failed load says so instead of hiding the section. -->
+                <div id="flags-error" class="analytics-error" role="alert" hidden>
+                    <p class="analytics-error-title"><span class="glyph" aria-hidden="true">⊘</span><span data-i18n="states.flagsError">Could not load the reported questions</span></p>
+                    <button type="button" id="flags-retry" class="btn btn-secondary" data-i18n="states.reload">Load again</button>
+                </div>
+                <div class="card" id="flags-card" style="overflow-x:auto;">
                     <table class="games-table">
                         <thead>
                             <tr>
@@ -369,20 +406,73 @@
             return tok ? { headers: { 'X-Quizify-Token': tok } } : {};
         }
 
-        function loadData() {
-            fetch('/api/quizify/analytics/data?period=' + currentPeriod, adminInit())
+        // #1182 L5. Three lies lived here: (a) only 401 was checked, so a 403,
+        // 429 or 500 with a JSON body ran on as data and every tile and list
+        // said "no data"; (b) after the first success #loading was hidden,
+        // so a later failure wrote its message into an invisible element;
+        // (c) a new period kept showing the old numbers without a word.
+        // Now: anything that is not a 2xx with analytics in it is an error,
+        // retried once quietly after 2 s and then shown in place with a
+        // "Load again" button; while a new period loads, the old numbers are
+        // dimmed under "loading 90d… (still showing 30d)".
+        var _shownPeriod = null;
+
+        function periodLabel(period) {
+            var btn = document.querySelector('.period-btn[data-period="' + period + '"]');
+            return btn ? btn.textContent.trim() : period;
+        }
+
+        function HttpError(status) { this.status = status; }
+
+        function showLoadError(status) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').style.display = 'none';
+            document.getElementById('content').classList.remove('is-stale');
+            document.getElementById('empty').style.display = 'none';
+            document.getElementById('stale-note').hidden = true;
+            document.getElementById('load-error-detail').textContent = status
+                ? t('states.analyticsErrorDetail', { status: status }) : '';
+            document.getElementById('load-error').hidden = false;
+        }
+
+        function loadData(retried) {
+            var period = currentPeriod;
+            document.getElementById('load-error').hidden = true;
+            if (_shownPeriod && _shownPeriod !== period) {
+                document.getElementById('content').classList.add('is-stale');
+                var note = document.getElementById('stale-note');
+                note.textContent = t('states.loadingPeriod', {
+                    period: periodLabel(period), current: periodLabel(_shownPeriod)
+                });
+                note.hidden = false;
+            } else if (!_shownPeriod) {
+                document.getElementById('loading').style.display = '';
+            }
+            fetch('/api/quizify/analytics/data?period=' + period, adminInit())
                 .then(function(r) {
                     if (r.status === 401) {
                         var tAuth = (window.QuizifyI18n && window.QuizifyI18n.t)
                             || function (k) { return k; };
+                        document.getElementById('loading').style.display = '';
                         document.getElementById('loading').textContent =
                             tAuth('analytics.authRequired');
                         return null;
                     }
-                    return r.json();
+                    if (!r.ok) throw new HttpError(r.status);
+                    return r.json().then(function (body) {
+                        if (!body || typeof body.total_games !== 'number') {
+                            throw new HttpError(r.status);
+                        }
+                        return body;
+                    });
                 })
                 .then(function(data) {
                     if (!data) { return; }
+                    // A slower answer for a period the host has left behind.
+                    if (period !== currentPeriod) { return; }
+                    _shownPeriod = period;
+                    document.getElementById('stale-note').hidden = true;
+                    document.getElementById('content').classList.remove('is-stale');
                     document.getElementById('loading').style.display = 'none';
 
                     if (data.total_games === 0) {
@@ -412,9 +502,15 @@
                     renderRecentGames(data.recent_games || []);
                 })
                 .catch(function(err) {
+                    if (period !== currentPeriod) { return; }
                     console.error('Failed to load analytics:', err);
-                    var tFail = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-                    document.getElementById('loading').textContent = tFail('analytics.loadFailed');
+                    if (!retried) {
+                        setTimeout(function () {
+                            if (period === currentPeriod) loadData(true);
+                        }, 2000);
+                        return;
+                    }
+                    showLoadError(err && err.status);
                 });
         }
 
@@ -447,6 +543,10 @@
             if (!seconds || !I || !I.formatDate) return fallback || '';
             return I.formatDate(seconds * 1000, { dateStyle: 'short', timeStyle: 'short' }) || fallback || '';
         }
+
+        document.getElementById('load-retry').addEventListener('click', function () {
+            loadData(true);
+        });
 
         function renderChart(chartData) {
             var container = document.getElementById('chart');
@@ -517,11 +617,25 @@
             }).join('');
         }
 
+        function showFlagsError(on) {
+            document.getElementById('flags-error').hidden = !on;
+            document.getElementById('flags-card').style.display = on ? 'none' : '';
+            if (on) document.getElementById('flags-section').style.display = 'block';
+        }
+
         function loadFlags() {
             fetch('/api/quizify/flags', adminInit())
-                .then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (r) {
+                    // #1182 L5: a refused or failed request is not "nothing
+                    // reported" — it used to hide the section exactly as if
+                    // no question had ever been flagged.
+                    if (!r.ok) throw new HttpError(r.status);
+                    return r.json();
+                })
                 .then(function (data) {
-                    var flags = (data && data.flags) || [];
+                    if (!data || !Array.isArray(data.flags)) throw new HttpError(0);
+                    var flags = data.flags;
+                    showFlagsError(false);
                     if (!flags.length) {
                         document.getElementById('flags-section').style.display = 'none';
                         return;
@@ -543,8 +657,11 @@
                 })
                 .catch(function (err) {
                     console.warn('Failed to load flags:', err);
+                    showFlagsError(true);
                 });
         }
+
+        document.getElementById('flags-retry').addEventListener('click', loadFlags);
 
         if (window.QuizifyI18n && typeof window.QuizifyI18n.init === 'function') {
             window.QuizifyI18n.init(window.QuizifyI18n.getPreferredLanguage()).then(function () {
