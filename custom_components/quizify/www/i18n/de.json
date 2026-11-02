@@ -743,6 +743,7 @@
     "betSliderAria": "Wetteinsatz in Prozent",
     "betWill": "Schafft es",
     "betWont": "Schafft es nicht",
+    "betPlace": "Wette setzen",
     "betOptional": "Mitwetten ist freiwillig.",
     "betPlaced": "Gewettet: {pct}% auf {side}",
     "teamSeated": "{name} sitzt für euer Team im Stuhl — euer Team wettet nicht.",

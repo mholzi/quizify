@@ -392,19 +392,25 @@
                     </div>
 
                     <!-- Spectator bet -->
+                    <!-- #1183 draft ④: two steps. The side buttons only choose
+                         (aria-pressed); the amount is the slider; only "Place
+                         bet" sends. A tap to see which side is which used to
+                         be a 20 % bet already. -->
                     <div id="hotseat-bet-stage" class="hidden">
+                        <div class="hotseat-bet-buttons" role="group" aria-labelledby="hotseat-title">
+                            <button id="hotseat-bet-will" type="button" class="btn btn-secondary hotseat-bet-side"
+                                    aria-pressed="false" data-i18n="hotSeat.betWill">They'll get it</button>
+                            <button id="hotseat-bet-wont" type="button" class="btn btn-secondary hotseat-bet-side"
+                                    aria-pressed="false" data-i18n="hotSeat.betWont">They won't</button>
+                        </div>
                         <div class="wager-slider-row">
                             <input type="range" id="hotseat-bet-slider" min="0" max="100" step="5" value="20"
                                    data-i18n-aria-label="hotSeat.betSliderAria"
                                    aria-label="Wetteinsatz in Prozent">
                             <output id="hotseat-bet-value" class="wager-value" for="hotseat-bet-slider">20%</output>
                         </div>
-                        <div class="hotseat-bet-buttons">
-                            <button id="hotseat-bet-will" type="button" class="btn btn-primary"
-                                    data-i18n="hotSeat.betWill">They'll get it</button>
-                            <button id="hotseat-bet-wont" type="button" class="btn btn-secondary"
-                                    data-i18n="hotSeat.betWont">They won't</button>
-                        </div>
+                        <button id="hotseat-bet-place" type="button" class="btn btn-primary btn-block"
+                                data-i18n="hotSeat.betPlace" disabled>Place bet</button>
                         <p class="wager-panel-hint" data-i18n="hotSeat.betOptional">Betting is optional.</p>
                     </div>
 

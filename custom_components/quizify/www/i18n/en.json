@@ -743,6 +743,7 @@
     "betSliderAria": "Bet in percent",
     "betWill": "They'll get it",
     "betWont": "They won't",
+    "betPlace": "Place bet",
     "betOptional": "Betting is optional.",
     "betPlaced": "Bet: {pct}% on {side}",
     "teamSeated": "{name} has the chair for your team — your team does not bet.",
