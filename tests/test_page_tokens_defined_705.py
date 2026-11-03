@@ -37,8 +37,9 @@ def test_there_are_pages_to_check() -> None:
 @pytest.mark.parametrize("page", _pages(), ids=lambda p: p.name)
 def test_every_token_a_page_uses_is_defined(page: Path) -> None:
     html = page.read_text(encoding="utf-8")
-    # A page may define its own tokens inline (dashboard.html does, with its
-    # --dash-* set), so both sources count as a definition.
+    # A page may define its own tokens inline, so both sources count as a
+    # definition. (The launcher takes its tokens from css/tokens.css, which
+    # is the same generated :root block styles.css starts with.)
     defined = set(_DEF.findall(_STYLES.read_text(encoding="utf-8")))
     defined |= set(_DEF.findall(html))
     missing = sorted(t for t in set(_USE.findall(html)) if t not in defined)

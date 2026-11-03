@@ -1,7 +1,7 @@
 {
   "$comment": "Ratchet baseline for hard-coded design values (#1178). Counts may only fall. Regenerate with: python3 scripts/design_lint.py --update-baseline",
   "totals": {
-    "color": 412,
+    "color": 335,
     "font_size": 446,
     "radius": 97,
     "shadow": 69,
@@ -29,7 +29,7 @@
       "duration": 4
     },
     "css/src/02-shared.css": {
-      "color": 35,
+      "color": 30,
       "font_size": 23,
       "radius": 11,
       "shadow": 9,
@@ -38,7 +38,7 @@
       "duration": 13
     },
     "css/src/03-question.css": {
-      "color": 24,
+      "color": 23,
       "font_size": 15,
       "radius": 1,
       "shadow": 6,
@@ -47,7 +47,7 @@
       "duration": 7
     },
     "css/src/04-lobby.css": {
-      "color": 2,
+      "color": 1,
       "font_size": 12,
       "radius": 2,
       "shadow": 3,
@@ -56,7 +56,7 @@
       "duration": 0
     },
     "css/src/05-finale.css": {
-      "color": 25,
+      "color": 22,
       "font_size": 17,
       "radius": 1,
       "shadow": 2,
@@ -74,7 +74,7 @@
       "duration": 4
     },
     "css/src/07-player.css": {
-      "color": 173,
+      "color": 161,
       "font_size": 166,
       "radius": 31,
       "shadow": 27,
@@ -83,7 +83,7 @@
       "duration": 33
     },
     "css/src/08-responsive.css": {
-      "color": 33,
+      "color": 23,
       "font_size": 76,
       "radius": 12,
       "shadow": 3,
@@ -101,7 +101,7 @@
       "duration": 2
     },
     "css/src/10-tv.css": {
-      "color": 34,
+      "color": 18,
       "font_size": 73,
       "radius": 22,
       "shadow": 9,
@@ -119,7 +119,7 @@
       "duration": 0
     },
     "analytics.html": {
-      "color": 2,
+      "color": 0,
       "font_size": 10,
       "radius": 1,
       "shadow": 0,
@@ -137,7 +137,7 @@
       "duration": 0
     },
     "launcher.html": {
-      "color": 12,
+      "color": 4,
       "font_size": 6,
       "radius": 1,
       "shadow": 2,
@@ -155,7 +155,7 @@
       "duration": 0
     },
     "js/admin.js": {
-      "color": 22,
+      "color": 11,
       "font_size": 5,
       "radius": 2,
       "shadow": 1,
@@ -272,7 +272,7 @@
       "duration": 0
     },
     "js/player-reveal.js": {
-      "color": 8,
+      "color": 0,
       "font_size": 0,
       "radius": 0,
       "shadow": 0,

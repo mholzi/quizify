@@ -516,7 +516,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    color: #FFFFFF;
+    color: var(--on-accent);
     font-size: 0.6875rem;
     font-weight: var(--font-weight-semibold);
     line-height: 1;

@@ -462,7 +462,7 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 10px;
-  color: #fff;
+  color: var(--on-accent);
 }
 .pl-result-nm {
   font-family: var(--font-body);

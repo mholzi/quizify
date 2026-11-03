@@ -1627,7 +1627,7 @@
     padding: 0;
     font: inherit;
     font-size: var(--font-size-xs);
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     text-transform: none;
     background: none;
     border: 0;
@@ -1682,7 +1682,7 @@
     padding: 0;
     font: inherit;
     font-size: var(--font-size-sm);
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     background: none;
     border: 0;
     cursor: pointer;
@@ -2377,7 +2377,7 @@
     font-weight: 700;
     font-size: 1.05rem;
     line-height: 1;
-    color: var(--color-bg-primary);
+    color: var(--on-accent);      /* ink initial on the player colour (#1178) */
 }
 
 /* Host marker (crown emoji) on the admin's own player row.
@@ -3500,7 +3500,7 @@ body.is-admin .reaction-bar {
 .toast--with-icon .feedback-icon.qz-icon { margin-right: 0; vertical-align: middle; }
 /* On the coral error-toast fill, the tinted disc washes out — drop the disc
    and paint the glyph white to match the white toast text. */
-#error-toast.toast--with-icon .feedback-icon.qz-icon { background: transparent; color: var(--on-accent); }
+#error-toast.toast--with-icon .feedback-icon.qz-icon { background: transparent; color: #fff; }
 /* STEAL power-up hint: icon + text-only hint side by side. */
 .powerup-hint--with-icon {
     display: inline-flex;

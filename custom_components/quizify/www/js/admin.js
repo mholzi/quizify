@@ -3161,12 +3161,11 @@
 
     // ---- Renderers ----
 
-    // Player palette mirrors PLAYER_COLORS in game/player.py so the
-    // dot in the lobby card matches the dot the player sees on their phone.
-    var _LOBBY_COLORS = [
-        '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD',
-        '#98D8C8', '#F7DC6F', '#BB8FCE', '#F0A500',
-    ];
+    // Fallback for a roster entry without a server colour. The palette is
+    // generated from design/tokens.json, the same list as PLAYER_COLORS in
+    // game/palette.py (#1178), so the dot in the lobby card matches the dot
+    // the player sees on their phone.
+    var _LOBBY_COLORS = window.QuizifyTokens.players;
 
     // Minimum players required before "ready" — keep in sync with
     // const.MIN_PLAYERS on the server (currently 1: solo play allowed).

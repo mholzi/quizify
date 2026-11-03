@@ -14,6 +14,9 @@
          stylesheet instead of after it. -->
     <link rel="preload" as="font" type="font/woff2" href="/quizify/static/fonts/dm-sans-latin.woff2" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="/quizify/static/fonts/jetbrains-mono-latin.woff2" crossorigin>
+    <!-- The design tokens, generated from design/tokens.json (#1178). The
+         launcher does not pull styles.css; this is only the :root block. -->
+    <link rel="stylesheet" href="/quizify/static/css/tokens.css?v={{ASSET_VER}}">
     <style>
         /* The launcher is self-contained — it does not pull styles.css — so it
            carries its own @font-face declarations for the self-hosted faces
@@ -50,17 +53,6 @@
             font-display: swap;
             src: url('/quizify/static/fonts/jetbrains-mono-latin-ext.woff2') format('woff2');
             unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-        }
-
-        :root {
-            /* Soft Parlor launcher tokens */
-            --color-bg-primary: #FAF6EC;
-            --color-accent-primary: #E88A7F;
-            --color-accent-secondary: #7FA897;
-            --color-text-primary: #2A2820;
-            --color-text-muted: #6E6A5C;
-            --color-surface-dark: #FFFFFF;
-            --color-border-neon: #E5DFCF;
         }
 
         * {
@@ -116,7 +108,7 @@
             gap: 10px;
             padding: 16px 36px;
             background: var(--color-accent-primary);
-            color: #FFFFFF;
+            color: var(--on-accent);           /* ink on coral, 5.9 : 1 (#1178) */
             text-decoration: none;
             border-radius: 10px;
             font-family: 'DM Sans', system-ui, sans-serif;

@@ -128,6 +128,7 @@
     --color-warning-glow: rgba(232, 196, 127, 0.45);
     --color-error-glow: rgba(214, 106, 106, 0.45);
     --color-text-muted-glow: rgba(110, 106, 92, 0.25);
+    --color-success-glow-soft: rgba(127, 168, 151, 0.35); /* TV: tick halo, podium glow (#1178) */
 
     /* Player-dot / pill palette (muted mauve for variety) */
     --color-purple-primary: #B78FC7;

@@ -53,10 +53,13 @@ PLAYER_MODULES = [
 ]
 
 # The shared half (#787), loaded by dashboard.html, admin.html and
-# player.html alike. client-core.js first: render-shared.js does not depend on
-# it today, but the load order on the pages is the same one, and keeping the
-# bundle in that order means the file reads like the pages do.
+# player.html alike. tokens.js first, because scripts on all three pages read
+# the player palette from it (#1178). Then client-core.js: render-shared.js
+# does not depend on it today, but the load order on the pages is the same
+# one, and keeping the bundle in that order means the file reads like the
+# pages do.
 COMMON_MODULES = [
+    "tokens.js",          # window.QuizifyTokens, generated (#1178): player palette
     "client-core.js",
     "render-shared.js",
 ]

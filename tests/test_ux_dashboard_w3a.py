@@ -170,7 +170,7 @@ def test_qr_fallback_not_white() -> None:
     fn = fn[: fn.index("function renderLobbyPlayers")]
     assert "color:#fff" not in fn
     assert "color: #fff" not in fn
-    assert "var(--dash-text-white)" in fn
+    assert "var(--color-text-primary)" in fn
 
 
 # ---- #429: leaderboard overflow hint ----
