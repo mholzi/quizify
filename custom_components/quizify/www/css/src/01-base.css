@@ -155,7 +155,7 @@ body {
 }
 .admin-header-btn:hover,
 .admin-header-btn:focus-visible {
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     border-color: var(--color-accent-primary);
     background: var(--color-bg-surface);
 }
@@ -166,7 +166,7 @@ body {
    .hidden default keeps it out of layout until install is actually
    possible. */
 .pwa-install-btn.admin-header-btn {
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     border-color: rgba(232, 138, 127, 0.45);
 }
 
@@ -285,7 +285,7 @@ body {
     background: var(--color-accent-secondary);
 }
 /* Current round number in coral; muted slash separator. */
-.player-header-round-num { color: var(--color-accent-primary); }
+.player-header-round-num { color: var(--coral-ink); }
 .player-header-round-sep { color: var(--color-border-dark); }
 
 /* Sound cue mute toggle — Variant C (issue #194). Embedded as a subtle

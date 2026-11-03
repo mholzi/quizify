@@ -40,19 +40,19 @@
 .leaderboard-rank.rank-1 {
     background: rgba(232, 196, 127, 0.36);
     border: 1px solid rgba(232, 196, 127, 0.5);
-    color: #B08930;
+    color: var(--gold-ink);
 }
 
 .leaderboard-rank.rank-2 {
     background: rgba(170, 182, 194, 0.18);
     border: 1px solid rgba(170, 182, 194, 0.3);
-    color: #6F7C8A;
+    color: var(--silver-ink);
 }
 
 .leaderboard-rank.rank-3 {
     background: rgba(205, 140, 100, 0.16);
     border: 1px solid rgba(205, 140, 100, 0.3);
-    color: #A35A2B;
+    color: var(--bronze-ink);
 }
 
 .leaderboard-name {
@@ -69,7 +69,7 @@
 
 .leaderboard-streak {
     font-size: 0.75rem;
-    color: var(--color-warning);
+    color: var(--sun-ink);
 }
 
 /* #1170: a growing streak bumps in with a sun flush; a broken one greys out
@@ -245,12 +245,12 @@
     font-size: clamp(2rem, 4vw, 3.5rem);
     font-weight: 900;
     letter-spacing: -0.02em;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     line-height: 1;
     margin: 0 0 var(--space-sm) 0;
     /* No gradient text — DESIGN.md says no gradients on text. */
     background: none;
-    -webkit-text-fill-color: var(--color-accent-primary);
+    -webkit-text-fill-color: var(--coral-ink);
 }
 
 .podium-champion-name {
@@ -377,7 +377,7 @@
 .podium-bar.first {
     height: 200px;
     border-top: 3px solid var(--color-gold, #E8C47F);
-    color: var(--color-accent-primary, #E88A7F);
+    color: var(--coral-ink);
     font-size: 3.5rem;
 }
 .podium-bar.first::before {
@@ -460,7 +460,7 @@
     font-weight: var(--font-weight-bold);
     text-align: center;
     margin-bottom: var(--space-lg);
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     letter-spacing: 0.05em;
 }
 
@@ -506,7 +506,7 @@
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     text-align: center;
     margin-bottom: var(--space-xs);
 }

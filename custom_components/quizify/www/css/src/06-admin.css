@@ -268,12 +268,12 @@ footer {
 }
 
 .leaderboard-delta.is-up {
-    color: var(--color-success);
+    color: var(--sage-ink);
     background: var(--color-success-light);
 }
 
 .leaderboard-delta.is-down {
-    color: var(--color-error);
+    color: var(--error-ink);
     background: var(--color-error-light);
 }
 
@@ -312,7 +312,7 @@ footer {
     margin: 0;
     font-size: 0.78rem;
     line-height: 1.4;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
     text-align: center;
 }
 
@@ -333,7 +333,7 @@ footer {
     border: 0;
     border-radius: var(--radius-full);
     background: transparent;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
     font-size: 1rem;
     line-height: 1;
     cursor: pointer;

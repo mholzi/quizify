@@ -7,26 +7,14 @@ edit by hand. Change the colours there and run
 
 from __future__ import annotations
 
-# Palette of distinct, accessible colours for player identification
+# Soft Parlor player colours (#1178); past eight players they repeat
 PLAYER_COLORS = [
-    "#FF6B6B",  # coral red
-    "#4ECDC4",  # teal
-    "#45B7D1",  # sky blue
-    "#96CEB4",  # sage green
-    "#FFEAA7",  # soft yellow
-    "#DDA0DD",  # plum
-    "#98D8C8",  # mint
-    "#F7DC6F",  # gold
-    "#BB8FCE",  # lavender
-    "#F0A500",  # amber
-    "#6BCB77",  # green
-    "#FF9F43",  # orange
-    "#A29BFE",  # periwinkle
-    "#FD79A8",  # pink
-    "#74B9FF",  # light blue
-    "#55EFC4",  # aquamarine
-    "#FDCB6E",  # mango
-    "#E17055",  # terracotta
-    "#00CEC9",  # cyan
-    "#6C5CE7",  # purple
+    "#E88A7F",  # coral
+    "#7FA897",  # sage
+    "#7FA8C4",  # sky
+    "#E8C47F",  # sun
+    "#B78FC7",  # mauve
+    "#D89E6F",  # terracotta
+    "#9DB38A",  # moss
+    "#C7A3A0",  # rose
 ]

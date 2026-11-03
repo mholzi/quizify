@@ -209,7 +209,7 @@
             // #428: the body is cream (#FAF6EC), so a white URL was invisible
             // when the vendor lib failed. Use the dark-ink token + bigger type.
             container.innerHTML = '<div style="padding:20px;word-break:break-all;' +
-                'font-size:20px;color:var(--dash-text-white);">' + QuizifyUtils.escapeHtml(url) + '</div>';
+                'font-size:20px;color:var(--color-text-primary);">' + QuizifyUtils.escapeHtml(url) + '</div>';
         }
     }
     // The teams as of the last roster/snapshot (#365). Kept here rather

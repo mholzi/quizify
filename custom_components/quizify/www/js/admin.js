@@ -2815,7 +2815,7 @@
         els.adminAnswerProgress.style.display = '';
         // #1170: the line turns sage when the last guest is in.
         els.adminAnswerProgress.style.transition = 'color var(--dur-status) var(--ease-out)';
-        els.adminAnswerProgress.style.color = (submitted === total) ? 'var(--color-success)' : '';
+        els.adminAnswerProgress.style.color = (submitted === total) ? 'var(--sage-ink)' : '';
     }
 
     /** The tracker belongs to one question; it goes with the question. */
@@ -3161,12 +3161,14 @@
 
     // ---- Renderers ----
 
-    // Player palette mirrors PLAYER_COLORS in game/player.py so the
-    // dot in the lobby card matches the dot the player sees on their phone.
-    var _LOBBY_COLORS = [
-        '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD',
-        '#98D8C8', '#F7DC6F', '#BB8FCE', '#F0A500',
-    ];
+    // Fallback for a roster entry without a server colour. The palette is
+    // generated from design/tokens.json, the same list as PLAYER_COLORS in
+    // game/palette.py (#1178), so the dot in the lobby card matches the dot
+    // the player sees on their phone. Read on use (tokens.js leads
+    // common.bundle.js, but the module should not depend on load order).
+    function _lobbyPalette() {
+        return (window.QuizifyTokens && window.QuizifyTokens.players) || ['var(--color-text-light)'];
+    }
 
     // Minimum players required before "ready" — keep in sync with
     // const.MIN_PLAYERS on the server (currently 1: solo play allowed).
@@ -3283,7 +3285,8 @@
             var card = function (p, idx) {
                     var name = typeof p === 'string' ? p : (p.name || p);
                     var isAdmin = typeof p === 'object' && p && p.is_admin;
-                    var fallbackColor = _LOBBY_COLORS[idx % _LOBBY_COLORS.length];
+                    var palette = _lobbyPalette();
+                    var fallbackColor = palette[idx % palette.length];
                     // #312 defense-in-depth: p.color is server-provided and is
                     // injected into a style="background:..." attribute. Accept
                     // only a strict #rrggbb hex; otherwise fall back to the
@@ -5198,7 +5201,7 @@ async function showPackNews(getLanguage) {
         banner.innerHTML =
             '<span style="font-size:1.2rem;flex-shrink:0">🎁</span>' +
             '<div style="flex:1">' +
-                '<strong data-i18n="admin.packNewsTitle" style="color:#E88A7F;font-family:\'DM Sans\',sans-serif;font-weight:700">' + window.QuizifyUtils.escapeHtml(tt('admin.packNewsTitle')) + '</strong>' +
+                '<strong data-i18n="admin.packNewsTitle" style="color:var(--coral-ink);font-family:\'DM Sans\',sans-serif;font-weight:700">' + window.QuizifyUtils.escapeHtml(tt('admin.packNewsTitle')) + '</strong>' +
                 '<div class="pack-news-names"></div>' +
                 '<div class="pack-news-yours-list"></div>' +
             '</div>' +

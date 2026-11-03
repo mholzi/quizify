@@ -130,6 +130,7 @@
     --color-warning-glow: rgba(232, 196, 127, 0.45);
     --color-error-glow: rgba(214, 106, 106, 0.45);
     --color-text-muted-glow: rgba(110, 106, 92, 0.25);
+    --color-success-glow-soft: rgba(127, 168, 151, 0.35); /* TV: tick halo, podium glow (#1178) */
 
     /* Player-dot / pill palette (muted mauve for variety) */
     --color-purple-primary: #B78FC7;
@@ -167,6 +168,23 @@
     --color-gold: #E8C47F;                     /* sun */
     --color-silver: #B8B2A0;                   /* muted warm silver */
     --color-bronze: #C99466;                   /* warm bronze */
+
+    /* Accent text (#1178 step 4). The accents above are surfaces: as text
+       on cream they reach 1.5-2.5 : 1. When text has to be coloured, it
+       takes the -ink of its accent, which reaches 4.5 : 1 on cream, white,
+       surface 2 and its own tint. Accents stay for fills, borders, dots. */
+    --coral-ink: #A4524A;                      /* 5.0 : 1 on cream */
+    --sage-ink: #4C7262;                       /* 5.0 : 1 */
+    --sky-ink: #46708C;                        /* 4.9 : 1 */
+    --sun-ink: #86621F;                        /* 5.2 : 1 */
+    --error-ink: #AC4444;                      /* 5.3 : 1 */
+    --mauve-ink: #805D8E;                      /* 5.0 : 1 */
+    --gold-ink: #86621F;                       /* rank 1 numeral */
+    --silver-ink: #736C58;                     /* rank 2 numeral */
+    --bronze-ink: #8E5E33;                     /* rank 3 numeral; also the clay "mixed" icon */
+    /* Text on an accent surface: buttons, answer letters, podium digits,
+       badges (5.6-8.9 : 1 on coral, sage, sky, sun). */
+    --on-accent: #2A2820;                      /* ink */
 
     /* Spacing Tokens */
     --space-xs: 4px;
@@ -477,7 +495,7 @@ a:focus-visible,
     left: 50%;
     transform: translateX(-50%);
     background: var(--color-success-bg);
-    color: var(--color-success);
+    color: var(--sage-ink);
     border: 1px solid var(--color-success);
     border-radius: 999px;
     padding: 6px 14px;
@@ -531,7 +549,7 @@ a:focus-visible,
 }
 .flag-question-btn.is-flagged {
     opacity: 1;
-    color: var(--color-success);
+    color: var(--sage-ink);
 }
 
 /* ==========================================
@@ -691,7 +709,7 @@ body {
 }
 .admin-header-btn:hover,
 .admin-header-btn:focus-visible {
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     border-color: var(--color-accent-primary);
     background: var(--color-bg-surface);
 }
@@ -702,7 +720,7 @@ body {
    .hidden default keeps it out of layout until install is actually
    possible. */
 .pwa-install-btn.admin-header-btn {
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     border-color: rgba(232, 138, 127, 0.45);
 }
 
@@ -821,7 +839,7 @@ body {
     background: var(--color-accent-secondary);
 }
 /* Current round number in coral; muted slash separator. */
-.player-header-round-num { color: var(--color-accent-primary); }
+.player-header-round-num { color: var(--coral-ink); }
 .player-header-round-sep { color: var(--color-border-dark); }
 
 /* Sound cue mute toggle — Variant C (issue #194). Embedded as a subtle
@@ -909,7 +927,7 @@ button, .btn {
 
 .btn-primary {
     background: var(--color-accent-primary);
-    color: #FFFFFF;                              /* white on coral for max contrast */
+    color: var(--on-accent);                      /* ink on coral, 5.9 : 1 (#1178) */
     font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: 0.02em;
@@ -1028,7 +1046,7 @@ a[href]:not(.btn):active {
 .validation-msg {
     margin-top: var(--space-sm);
     font-size: var(--font-size-base);
-    color: var(--color-error);
+    color: var(--error-ink);
     text-align: left;
 }
 
@@ -1128,7 +1146,7 @@ a[href]:not(.btn):active {
     margin-left: auto;
     font-size: 0.75rem;
     font-weight: 400;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     background: rgba(232, 138, 127, 0.1);
     padding: 2px 8px;
     border-radius: var(--radius-sm);
@@ -1194,7 +1212,7 @@ a[href]:not(.btn):active {
 .chip.chip--active {
     background: rgba(232, 138, 127, 0.2);
     border-color: var(--color-accent-secondary);
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
 }
 
 /* Category chips - checkmark */
@@ -1310,7 +1328,7 @@ a[href]:not(.btn):active {
     position: absolute;
     top: 8px;
     right: 10px;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     font-weight: 700;
     font-size: 1rem;
 }
@@ -1353,11 +1371,11 @@ a[href]:not(.btn):active {
 }
 .qz-icon svg .d { fill: currentColor; stroke: none; }
 /* Per-theme tint: backing disc + glyph stroke color (mirrors .hpt-* hero). */
-.qz-icon--mix   { background: #F1ECDC;                   color: #C99B6E; }
-.qz-icon--coral { background: rgba(232, 138, 127, 0.16); color: var(--color-accent-primary); }
-.qz-icon--sage  { background: rgba(127, 168, 151, 0.18); color: var(--color-accent-secondary); }
-.qz-icon--sky   { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
-.qz-icon--sun   { background: rgba(232, 196, 127, 0.24); color: #C9A24E; }
+.qz-icon--mix   { background: #F1ECDC;                   color: var(--bronze-ink); }
+.qz-icon--coral { background: rgba(232, 138, 127, 0.16); color: var(--coral-ink); }
+.qz-icon--sage  { background: rgba(127, 168, 151, 0.18); color: var(--sage-ink); }
+.qz-icon--sky   { background: rgba(127, 168, 196, 0.18); color: var(--sky-ink); }
+.qz-icon--sun   { background: rgba(232, 196, 127, 0.24); color: var(--sun-ink); }
 
 /* Icons inside a filled primary (coral) button: the tinted disc washes out on
    the coral fill (e.g. the sage play glyph on "Start Game"). Drop the disc and
@@ -1365,7 +1383,7 @@ a[href]:not(.btn):active {
    outline buttons keep their tinted discs. (Markus 2026-06-10 live QA.) */
 .btn-primary .qz-icon {
     background: transparent;
-    color: #fff;
+    color: var(--on-accent);
 }
 
 /* Theme filter tabs: small duotone icon + text label, side by side. */
@@ -1436,7 +1454,7 @@ a[href]:not(.btn):active {
     padding: 2px 8px;
     border-radius: 999px;
     background: var(--color-accent-brand-bg);
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     font-family: var(--font-mono, ui-monospace, monospace);
     font-size: 0.66rem;
     font-weight: 700;
@@ -1486,7 +1504,7 @@ a[href]:not(.btn):active {
     background: #E88A7F;
     border-radius: 14px;
     padding: 14px 16px 12px;
-    color: #FFFFFF;
+    color: var(--on-accent);
     margin-bottom: var(--space-md);
     overflow: hidden;
     box-shadow: 0 4px 14px rgba(232, 138, 127, 0.22);
@@ -1739,11 +1757,11 @@ a[href]:not(.btn):active {
 }
 
 .timer-text.warning {
-    color: var(--color-warning);
+    color: var(--sun-ink);
 }
 
 .timer-text.critical {
-    color: var(--color-error-neon);
+    color: var(--error-ink);
     animation: timer-pulse-intense 0.5s ease-in-out infinite;
 }
 
@@ -1761,7 +1779,7 @@ a[href]:not(.btn):active {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     margin-bottom: var(--space-sm);
 }
 
@@ -1911,7 +1929,7 @@ a[href]:not(.btn):active {
 .question-category {
     display: inline-block;
     font-size: 0.75rem;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-top: var(--space-sm);
@@ -1977,7 +1995,7 @@ a[href]:not(.btn):active {
     background: rgba(255, 255, 255, 0.08);
     font-weight: var(--font-weight-bold);
     font-size: 0.875rem;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     flex-shrink: 0;
 }
 
@@ -1994,7 +2012,7 @@ a[href]:not(.btn):active {
 
 .answer-btn.selected .answer-label {
     background: var(--color-accent-primary);
-    color: var(--color-bg-primary);
+    color: var(--on-accent);
 }
 
 .answer-btn.correct {
@@ -2005,7 +2023,7 @@ a[href]:not(.btn):active {
 
 .answer-btn.correct .answer-label {
     background: var(--color-success);
-    color: var(--color-bg-primary);
+    color: var(--on-accent);
 }
 
 @keyframes glow-correct {
@@ -2059,12 +2077,12 @@ a[href]:not(.btn):active {
 
 .answer-btn.correct::after {
     content: "★";
-    color: var(--color-success);
+    color: var(--sage-ink);
 }
 
 .answer-btn.wrong::after {
     content: "×";
-    color: var(--color-error);
+    color: var(--error-ink);
     /* Optically larger than the star. U+00D7 is drawn small inside its em box
        in DM Sans, so at a matched font-size it reads as a faint dust speck
        next to a solid ★ — verified on device at 390 px. This is the size that
@@ -2101,7 +2119,7 @@ a[href]:not(.btn):active {
     background: linear-gradient(135deg, rgba(232, 138, 127, 0.2), rgba(232, 138, 127, 0.2));
     border: 1px solid var(--color-accent-primary);
     border-radius: var(--radius-full);
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     font-family: var(--font-system);
     font-size: 0.85rem;
     font-weight: 600;
@@ -2142,7 +2160,7 @@ a[href]:not(.btn):active {
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     margin-bottom: var(--space-sm);
 }
 
@@ -2211,7 +2229,7 @@ a[href]:not(.btn):active {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    color: #FFFFFF;
+    color: var(--on-accent);
     font-size: 0.6875rem;
     font-weight: var(--font-weight-semibold);
     line-height: 1;
@@ -2383,7 +2401,7 @@ a[href]:not(.btn):active {
    ========================================== */
 
 .admin-correct-answer {
-    color: var(--color-success-neon);
+    color: var(--sage-ink);
     font-weight: 600;
     margin-top: var(--space-sm);
     text-shadow: 0 0 10px var(--color-success-neon);
@@ -2422,7 +2440,7 @@ a[href]:not(.btn):active {
    secondary, so the only filled button in a paused bar is the way back in. */
 .btn-resume {
     background: var(--color-accent-secondary);
-    color: #FFFFFF;
+    color: var(--on-accent);
     font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: 0.02em;
@@ -2451,7 +2469,7 @@ a[href]:not(.btn):active {
 
 .admin-actions #end-game-btn {
     background: var(--color-bg-surface);
-    color: var(--color-error-dark);
+    color: var(--error-ink);
     border: 1.5px solid var(--color-error);
     box-shadow: var(--shadow-sm);
 }
@@ -2646,7 +2664,7 @@ a[href]:not(.btn):active {
     flex: 0 0 auto;
     font-size: 0.8125rem;
     font-weight: var(--font-weight-semibold);
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
 }
 
 .qz-team-empty {
@@ -2788,19 +2806,19 @@ a[href]:not(.btn):active {
 .leaderboard-rank.rank-1 {
     background: rgba(232, 196, 127, 0.36);
     border: 1px solid rgba(232, 196, 127, 0.5);
-    color: #B08930;
+    color: var(--gold-ink);
 }
 
 .leaderboard-rank.rank-2 {
     background: rgba(170, 182, 194, 0.18);
     border: 1px solid rgba(170, 182, 194, 0.3);
-    color: #6F7C8A;
+    color: var(--silver-ink);
 }
 
 .leaderboard-rank.rank-3 {
     background: rgba(205, 140, 100, 0.16);
     border: 1px solid rgba(205, 140, 100, 0.3);
-    color: #A35A2B;
+    color: var(--bronze-ink);
 }
 
 .leaderboard-name {
@@ -2817,7 +2835,7 @@ a[href]:not(.btn):active {
 
 .leaderboard-streak {
     font-size: 0.75rem;
-    color: var(--color-warning);
+    color: var(--sun-ink);
 }
 
 /* #1170: a growing streak bumps in with a sun flush; a broken one greys out
@@ -2993,12 +3011,12 @@ a[href]:not(.btn):active {
     font-size: clamp(2rem, 4vw, 3.5rem);
     font-weight: 900;
     letter-spacing: -0.02em;
-    color: var(--color-accent-primary);
+    color: var(--coral-ink);
     line-height: 1;
     margin: 0 0 var(--space-sm) 0;
     /* No gradient text — DESIGN.md says no gradients on text. */
     background: none;
-    -webkit-text-fill-color: var(--color-accent-primary);
+    -webkit-text-fill-color: var(--coral-ink);
 }
 
 .podium-champion-name {
@@ -3125,7 +3143,7 @@ a[href]:not(.btn):active {
 .podium-bar.first {
     height: 200px;
     border-top: 3px solid var(--color-gold, #E8C47F);
-    color: var(--color-accent-primary, #E88A7F);
+    color: var(--coral-ink);
     font-size: 3.5rem;
 }
 .podium-bar.first::before {
@@ -3208,7 +3226,7 @@ a[href]:not(.btn):active {
     font-weight: var(--font-weight-bold);
     text-align: center;
     margin-bottom: var(--space-lg);
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     letter-spacing: 0.05em;
 }
 
@@ -3254,7 +3272,7 @@ a[href]:not(.btn):active {
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--color-accent-secondary);
+    color: var(--sage-ink);
     text-align: center;
     margin-bottom: var(--space-xs);
 }
@@ -3610,12 +3628,12 @@ footer {
 }
 
 .leaderboard-delta.is-up {
-    color: var(--color-success);
+    color: var(--sage-ink);
     background: var(--color-success-light);
 }
 
 .leaderboard-delta.is-down {
-    color: var(--color-error);
+    color: var(--error-ink);
     background: var(--color-error-light);
 }
 
@@ -3654,7 +3672,7 @@ footer {
     margin: 0;
     font-size: 0.78rem;
     line-height: 1.4;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
     text-align: center;
 }
 
@@ -3675,7 +3693,7 @@ footer {
     border: 0;
     border-radius: var(--radius-full);
     background: transparent;
-    color: var(--color-text-light);
+    color: var(--color-text-muted);
     font-size: 1rem;
     line-height: 1;
     cursor: pointer;
@@ -3927,45 +3945,20 @@ footer {
    Dashboard — TV Host (Soft Parlor)
    The signature surface. Cream paper, coral + sage accents,
    warm ink. Soft shadows, rounded edges. No confetti.
-   See DESIGN.md.
+   See docs/DESIGN.md. Colours come from the shared tokens in
+   00-tokens.css (generated from design/tokens.json); the television's
+   own copy of them (the dash- set) is gone since #1178.
    ========================================== */
-
-:root {
-    /* Broadcast Living Room tokens. They were duplicated here so the
-       dashboard would survive styles.css drifting; since #880 the drift
-       cannot reach it — the television reads its own sheet — and they are
-       kept because they are the surface's palette, not a hedge. */
-    --dash-bg-primary: #FAF6EC;              /* cream paper */              /* studio navy */
-    --dash-accent-primary: #E88A7F;          /* warm coral */          /* broadcast gold */
-    --dash-accent-secondary: #7FA897;        /* muted sage */        /* single accent — aliased */
-    --dash-surface-dark: #FFFFFF;            /* lifted paper */            /* lifted card */
-    --dash-surface-2: #F3EEDF;               /* cream tint */               /* modals, hover */
-    --dash-border-neon: #E5DFCF;             /* warm hairline */             /* hairline */
-    --dash-text-neon-muted: #6E6A5C;         /* warm olive-gray */         /* cool blue-gray */
-    /* #705: eight declarations on this page ask for --dash-text-muted,
-       which was never defined — the palette only had the -neon- name.
-       Every one of them was invalidated, so the secondary lines were
-       inheriting full-strength ink instead of the muted olive-gray. */
-    --dash-text-muted: #6E6A5C;              /* warm olive-gray */
-    --dash-text-white: #2A2820;              /* dark ink on cream */              /* warm parchment, NOT white */
-    --dash-success: #7FA897;                 /* sage for correct */                 /* correct = gold */
-    --dash-success-glow: rgba(127, 168, 151, 0.35);
-    --dash-error: #D66A6A;                   /* warm red */
-    --dash-warning: #E8C47F;                 /* sun */
-    --dash-gold: #E8C47F;                    /* sun for podium 1st */
-    --dash-silver: #B8B2A0;                  /* warm silver */
-    --dash-bronze: #C99466;                  /* warm bronze */
-}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body.dashboard-body {
-    background: var(--dash-bg-primary);
+    background: var(--color-bg-primary);
     background-image:
-        linear-gradient(var(--dash-bg-primary), var(--dash-bg-primary)),
+        linear-gradient(var(--color-bg-primary), var(--color-bg-primary)),
         radial-gradient(ellipse at 85% 15%, rgba(232, 138, 127, 0.08) 0%, transparent 55%);
     background-blend-mode: normal;
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
     font-family: 'DM Sans', sans-serif;
     overflow: hidden;
     min-height: 100dvh;
@@ -4031,8 +4024,8 @@ body.dashboard-body {
     line-height: 1;
 }
 
-.wordmark-quiz { color: var(--dash-text-white); }
-.wordmark-ify  { color: var(--dash-accent-primary); }
+.wordmark-quiz { color: var(--color-text-primary); }
+.wordmark-ify  { color: var(--color-accent-primary); }
 
 /* ---- Dashboard Header ---- */
 .dashboard-header {
@@ -4049,12 +4042,12 @@ body.dashboard-body {
        where the room is in the game — so it scales with the rest of
        the board (#376). */
     font-size: clamp(14px, 1.2vw, 20px);
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     padding: 8px 0 6px;
-    border-bottom: 1px solid var(--dash-accent-primary);
+    border-bottom: 1px solid var(--color-accent-primary);
     margin-top: 6px;
 }
 
@@ -4064,7 +4057,7 @@ body.dashboard-body {
 .dashboard-timer {
     position: relative;
     height: 12px;
-    background: var(--dash-border-neon);
+    background: var(--color-border-light);
     border-radius: 6px;
     flex-shrink: 0;
     margin-bottom: clamp(20px, 2.4vw, 32px);
@@ -4080,7 +4073,7 @@ body.dashboard-body {
 
 .dashboard-join-or {
     font-size: clamp(0.8rem, 1.1vw, 1rem);
-    color: var(--dash-text-muted);
+    color: var(--color-text-muted);
     margin-bottom: 4px;
 }
 
@@ -4092,14 +4085,14 @@ body.dashboard-body {
        the primary route. */
     font-size: clamp(1rem, 1.5vw, 1.35rem);
     font-weight: 600;
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
     word-break: break-all;
     line-height: 1.25;
 }
 
 .dashboard-join-hint {
     font-size: clamp(0.8rem, 1.1vw, 1rem);
-    color: var(--dash-text-muted);
+    color: var(--color-text-muted);
     margin-top: 4px;
 }
 
@@ -4107,7 +4100,7 @@ body.dashboard-body {
     margin-top: 14px;
     text-align: center;
     font-size: clamp(1rem, 1.7vw, 1.35rem);
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
     font-variant-numeric: tabular-nums;
 }
 
@@ -4116,7 +4109,7 @@ body.dashboard-body {
     font-size: 0.72em;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--dash-text-muted);
+    color: var(--color-text-muted);
     margin-bottom: 3px;
 }
 
@@ -4127,19 +4120,19 @@ body.dashboard-body {
 .dashboard-h2h--end {
     margin-top: 10px;
     padding-top: 10px;
-    border-top: 1px solid var(--dash-border-neon);
+    border-top: 1px solid var(--color-border-light);
     font-size: clamp(0.9rem, 1.3vw, 1.1rem);
 }
 
 .dashboard-h2h .h2h-scope {
     font-size: 0.68em;
-    color: var(--dash-text-muted);
+    color: var(--color-text-muted);
     margin-left: 8px;
 }
 
 .dashboard-evening-tally {
     font-size: clamp(1rem, 1.7vw, 1.4rem);
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
     text-align: center;
     margin-bottom: 10px;
     flex-shrink: 0;
@@ -4147,13 +4140,13 @@ body.dashboard-body {
 }
 
 .dashboard-evening-tally .tally-label {
-    color: var(--dash-text-muted);
+    color: var(--color-text-muted);
     margin-right: 8px;
 }
 
 .dashboard-answer-progress {
     font-size: clamp(0.9rem, 1.4vw, 1.15rem);
-    color: var(--dash-text-muted);
+    color: var(--color-text-muted);
     text-align: right;
     margin-bottom: 6px;
     flex-shrink: 0;
@@ -4165,24 +4158,24 @@ body.dashboard-body {
 }
 
 .dashboard-answer-progress.is-complete {
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
 }
 
 .dashboard-timer-fill {
     height: 100%;
-    background: var(--dash-accent-primary);
-    box-shadow: 0 0 12px var(--dash-success-glow);
+    background: var(--color-accent-primary);
+    box-shadow: 0 0 12px var(--color-success-glow-soft);
     border-radius: 6px;
     transition: width 0.8s linear;
     width: 100%;
 }
 
 .dashboard-timer-fill.warning {
-    background: var(--dash-warning);
+    background: var(--color-warning);
 }
 
 .dashboard-timer-fill.critical {
-    background: var(--dash-error);
+    background: var(--color-error);
     box-shadow: 0 0 16px rgba(214, 106, 106, 0.28);
     animation: pulse-bar 0.5s ease-in-out infinite alternate;
 }
@@ -4207,12 +4200,12 @@ body.dashboard-body {
     padding: 8px 16px;
     border-radius: 999px;
     background: rgba(214, 106, 106, 0.15);
-    border: 1px solid var(--dash-error);
+    border: 1px solid var(--color-error);
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #707: the one signal that the board has gone dead — it has to be
        readable from wherever the room noticed the freeze. */
     font-size: clamp(15px, 1.2vw, 20px);
-    color: var(--dash-error);
+    color: var(--error-ink);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     animation: pill-in var(--dur-status) var(--ease-out) backwards;
@@ -4228,7 +4221,7 @@ body.dashboard-body {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--dash-error);
+    background: var(--color-error);
     animation: fade-pulse 1s ease-in-out infinite;
 }
 
@@ -4262,7 +4255,7 @@ body.dashboard-body {
        this screen; the join-URL fallback (#620) was already sized for
        three metres and the caption above it was not. */
     font-size: clamp(16px, 1.6vw, 22px);
-    color: var(--dash-text-neon-muted);
+    color: var(--color-text-muted);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     animation: fade-pulse 2s ease-in-out infinite;
@@ -4293,8 +4286,8 @@ body.dashboard-body {
     max-width: 900px;
     padding: var(--space-sm) var(--space-lg);
     border-radius: var(--radius-md);
-    background: color-mix(in srgb, var(--dash-warning) 22%, transparent);
-    color: var(--dash-text-white);
+    background: color-mix(in srgb, var(--color-warning) 22%, transparent);
+    color: var(--color-text-primary);
     font-size: var(--font-size-xl);
     line-height: 1.4;
     text-align: center;
@@ -4303,7 +4296,7 @@ body.dashboard-body {
 .dashboard-qr-section canvas,
 .dashboard-qr-section img {
     border-radius: 10px;
-    border: 1px solid var(--dash-border-neon);
+    border: 1px solid var(--color-border-light);
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
 }
 
@@ -4464,8 +4457,8 @@ body.dashboard-body {
     align-items: center;
     gap: 10px;
     padding: 8px 16px;
-    background: var(--dash-surface-dark);
-    border: 1px solid var(--dash-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: 9999px;
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #667: this chip carries a guest's name — the thing they look up
@@ -4474,7 +4467,7 @@ body.dashboard-body {
        The uppercase goes with it: capitals cost legibility at
        distance and buy nothing here. */
     font-size: clamp(15px, 1.4vw, 20px);
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
     font-weight: 500;
     letter-spacing: 0.08em;
 }
@@ -4493,7 +4486,7 @@ body.dashboard-body {
     align-items: center;
     gap: 6px;
     padding: 10px 14px;
-    border: 1px solid var(--dash-border-neon, #E5DFCF);
+    border: 1px solid var(--color-border-light, #E5DFCF);
     border-radius: 16px;
 }
 
@@ -4552,13 +4545,13 @@ body.dashboard-body {
        is placed on. #707 gave the same step to `.dashboard-round`;
        #707's list of four did not include this one. */
     font-size: clamp(14px, 1.2vw, 20px);
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     font-weight: 500;
     margin-bottom: 12px;
     padding-bottom: 6px;
-    border-bottom: 1px solid var(--dash-accent-primary);
+    border-bottom: 1px solid var(--color-accent-primary);
     display: inline-block;
     align-self: flex-start;
 }
@@ -4569,7 +4562,7 @@ body.dashboard-body {
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.02em;
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
     margin-bottom: clamp(24px, 3vw, 40px);
     max-width: 24ch;
 }
@@ -4623,7 +4616,7 @@ body.dashboard-body {
 }
 .dnl-truth-value {
     font-family: var(--font-mono, monospace); font-weight: 700;
-    font-size: 56px; line-height: 1.1; color: var(--color-accent-primary, #E88A7F);
+    font-size: 56px; line-height: 1.1; color: var(--coral-ink);
 }
 .dnl-card {
     background: var(--color-bg-card, #fff);
@@ -4652,7 +4645,7 @@ body.dashboard-body {
     font-weight: 600;
     color: var(--color-text-muted, #6E6A5C); font-family: var(--font-mono, monospace);
 }
-.dnl-lbl.is-winner { color: var(--color-accent-secondary, #7FA897); }
+.dnl-lbl.is-winner { color: var(--sage-ink); }
 /* #735: in em, so the clearance from the dot grows with the label
    instead of the type creeping towards the axis as it scales. */
 .dnl-lbl--above { bottom: 1.4em; }
@@ -4663,7 +4656,7 @@ body.dashboard-body {
 }
 .dnl-truth-flag {
     position: absolute; top: -62px; transform: translateX(-50%);
-    background: var(--color-accent-primary, #E88A7F); color: #fff;
+    background: var(--color-accent-primary, #E88A7F); color: var(--on-accent);
     font-family: var(--font-mono, monospace); font-weight: 700;
     /* #735: the true value sitting on the line, next to the guesses it
        is being compared against — the same step as the guesses. */
@@ -4679,7 +4672,7 @@ body.dashboard-body {
     font-family: var(--font-mono, monospace);
     /* #735: the two numbers that tell the room what the line spans. */
     font-size: clamp(16px, 1.6vw, 24px);
-    color: var(--color-text-light, #8F8A78);
+    color: var(--color-text-muted);
 }
 
 /* #1173: the estimate reveal plays only on a live round_summary (dashboard.js
@@ -4703,7 +4696,7 @@ body.dashboard-body {
     animation: dnl-ring var(--dur-status) var(--ease-out)
         calc(var(--n, 0) * var(--dur-guess-stagger) + var(--dur-guess) + var(--dur-truth)) backwards;
 }
-.dnl-dot.is-best { outline: 4px solid var(--dash-success, #7FA897); }
+.dnl-dot.is-best { outline: 4px solid var(--color-success, #7FA897); }
 @keyframes dnl-slide { from { left: 0%; } }
 @keyframes dnl-grow { from { transform: translateX(-50%) scaleY(0); } }
 @keyframes dnl-fade { from { opacity: 0; } }
@@ -4727,7 +4720,7 @@ body.dashboard-body {
     width: auto;
     height: auto;
     border-radius: 16px;
-    border: 1px solid var(--dash-border-neon);
+    border: 1px solid var(--color-border-light);
     object-fit: contain;
 }
 /* #434 progressive reveal. The blur amount is a custom property the
@@ -4750,12 +4743,12 @@ body.dashboard-body {
 .dashboard-question-media.is-missing {
     min-height: 40vh;
     border-radius: var(--radius-xl);
-    border: 1px dashed var(--dash-border-neon);
+    border: 1px dashed var(--color-border-light);
 }
 .dashboard-question-media.is-missing .dashboard-question-image { display: none; }
 .dashboard-question-image-missing {
     padding: var(--space-lg);
-    color: var(--dash-text-muted);
+    color: var(--color-text-muted);
     font-size: var(--font-size-2xl);
     text-align: center;
 }
@@ -4790,13 +4783,13 @@ body.dashboard-body {
     align-items: center;
     gap: clamp(14px, 1.6vw, 20px);
     padding: clamp(16px, 1.8vw, 24px) clamp(18px, 2vw, 28px);
-    background: var(--dash-surface-dark);
-    border: 1px solid var(--dash-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: 10px;
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(16px, 1.8vw, 22px);
     font-weight: 500;
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
     transition: border-color 120ms ease-out, background 120ms ease-out, box-shadow 320ms ease-out;
     min-height: 80px;
 }
@@ -4820,7 +4813,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: clamp(20px, 2.2vw, 28px);
     font-weight: 500;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     flex-shrink: 0;
     width: auto;
     height: auto;
@@ -4830,7 +4823,7 @@ body.dashboard-body {
 
 /* Correct-answer reveal */
 .dashboard-answer.correct {
-    border-color: var(--dash-success);
+    border-color: var(--color-success);
     background: rgba(127, 168, 151, 0.10);
 }
 
@@ -4847,7 +4840,7 @@ body.dashboard-body {
 .dashboard-answer.correct::after {
     content: "★";
     order: 1;
-    color: var(--dash-success);
+    color: var(--sage-ink);
     font-size: 16px;
     line-height: 1;
     flex-shrink: 0;
@@ -4923,7 +4916,7 @@ body.dashboard-body {
     transform-origin: left center;
 }
 .dashboard-answer.correct .dashboard-answer-bar-fill {
-    background: var(--dash-success);  /* sage green per DESIGN.md */
+    background: var(--color-success);  /* sage green per DESIGN.md */
 }
 
 /* #1169: the bars grow on the reveal, 70 ms apart in tile order, so the
@@ -4959,7 +4952,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: clamp(16px, 1.6vw, 22px);
     font-weight: 600;
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
     min-width: clamp(48px, 4.5vw, 72px);
     text-align: right;
     font-variant-numeric: tabular-nums;
@@ -4974,15 +4967,15 @@ body.dashboard-body {
        how to give. */
     flex-shrink: 0;
     padding: 20px 24px;
-    background: var(--dash-surface-dark);
-    border: 1px solid var(--dash-border-neon);
-    border-left: 3px solid var(--dash-accent-primary);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-left: 3px solid var(--color-accent-primary);
     border-radius: 10px;
     font-family: 'DM Sans', sans-serif;
     /* #376: scale for TV couch legibility (viewed from 2-3m) */
     font-size: clamp(18px, 1.8vw, 26px);
     line-height: 1.6;
-    color: var(--dash-text-neon-muted);
+    color: var(--color-text-muted);
     transform: translateY(16px);
     opacity: 0;
     transition: all 0.5s ease-out;
@@ -5002,12 +4995,12 @@ body.dashboard-body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     margin-bottom: 8px;
 }
 
 .dashboard-funfact .fun-fact-text {
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
 }
 
 /* Right: leaderboard */
@@ -5027,10 +5020,10 @@ body.dashboard-body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: var(--dash-text-neon-muted);
+    color: var(--color-text-muted);
     margin-bottom: 16px;
     padding-bottom: 10px;
-    border-bottom: 1px solid var(--dash-border-neon);
+    border-bottom: 1px solid var(--color-border-light);
 }
 
 .dashboard-leaderboard {
@@ -5047,12 +5040,12 @@ body.dashboard-body {
     gap: 14px;
     padding: 12px 16px;
     border-radius: 8px;
-    background: var(--dash-surface-dark);
-    border: 1px solid var(--dash-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     font-family: 'DM Sans', sans-serif;
     /* #376: scale for TV couch legibility */
     font-size: clamp(16px, 1.6vw, 24px);
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
     transition: border-color 120ms ease-out, background 120ms ease-out;
 }
 
@@ -5066,7 +5059,7 @@ body.dashboard-body {
     /* #376: scale rank badge with rows */
     font-size: clamp(15px, 1.5vw, 22px);
     font-weight: 700;
-    color: var(--dash-text-neon-muted);
+    color: var(--color-text-muted);
     flex-shrink: 0;
     font-variant-numeric: tabular-nums;
 }
@@ -5085,14 +5078,14 @@ body.dashboard-body {
     animation: row-moved-up var(--dur-flip-tint) var(--ease-out);
 }
 @keyframes row-moved-up {
-    from { background-color: rgba(127, 168, 151, 0.28); border-color: var(--dash-success); }
+    from { background-color: rgba(127, 168, 151, 0.28); border-color: var(--color-success); }
 }
 
 .dashboard-leaderboard .leaderboard-row.leaderboard-more {
     background: transparent;
     border-color: transparent;
     justify-content: center;
-    color: var(--dash-text-neon-muted);
+    color: var(--color-text-muted);
     font-style: italic;
     padding: 8px 16px;
 }
@@ -5101,9 +5094,9 @@ body.dashboard-body {
     text-align: center;
 }
 
-.dashboard-leaderboard .leaderboard-rank.rank-1 { color: var(--dash-gold); }
-.dashboard-leaderboard .leaderboard-rank.rank-2 { color: var(--dash-silver); }
-.dashboard-leaderboard .leaderboard-rank.rank-3 { color: var(--dash-bronze); }
+.dashboard-leaderboard .leaderboard-rank.rank-1 { color: var(--gold-ink); }
+.dashboard-leaderboard .leaderboard-rank.rank-2 { color: var(--silver-ink); }
+.dashboard-leaderboard .leaderboard-rank.rank-3 { color: var(--bronze-ink); }
 
 .dashboard-leaderboard .leaderboard-name {
     flex: 1;
@@ -5119,7 +5112,7 @@ body.dashboard-body {
     /* #376: scale for TV couch legibility */
     font-size: clamp(16px, 1.7vw, 26px);
     font-weight: 700;
-    color: var(--dash-accent-primary);
+    color: var(--color-text-primary);
     font-variant-numeric: tabular-nums;
 }
 
@@ -5127,7 +5120,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 11px;
     font-weight: 500;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     padding: 2px 8px;
     background: rgba(232, 138, 127, 0.10);
     border-radius: 4px;
@@ -5140,8 +5133,8 @@ body.dashboard-body {
     margin-left: var(--space-sm);
     padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-sm);
-    background: var(--dash-gold);
-    color: var(--dash-bg-primary);
+    background: var(--color-gold);
+    color: var(--color-bg-primary);
     font-family: var(--font-mono);
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);
@@ -5160,11 +5153,11 @@ body.dashboard-body {
     font-variant-numeric: tabular-nums;
 }
 .dashboard-leaderboard .leaderboard-delta.is-up {
-    color: var(--dash-success);
+    color: var(--sage-ink);
     background: rgba(127, 168, 151, 0.16);
 }
 .dashboard-leaderboard .leaderboard-delta.is-down {
-    color: var(--dash-error);
+    color: var(--error-ink);
     background: rgba(214, 106, 106, 0.14);
 }
 
@@ -5201,8 +5194,8 @@ body.dashboard-body {
        ink token as the ground, cream type on it. A cream strip on a
        cream board would need a hairline to exist at all, and a
        hairline is not something you read from a sofa. */
-    background: var(--dash-text-white);
-    color: var(--dash-bg-primary);
+    background: var(--color-text-primary);
+    color: var(--color-bg-primary);
     font-family: 'DM Sans', sans-serif;
     /* #376/#707: content the room reads, not an eyebrow label. */
     font-size: clamp(20px, 2.2vw, 38px);
@@ -5224,13 +5217,13 @@ body.dashboard-body {
 }
 
 .dashboard-powerup-name {
-    color: var(--dash-gold);
+    color: var(--color-gold);
     font-weight: 700;
 }
 
 .dashboard-powerup-points {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    color: var(--dash-gold);
+    color: var(--color-gold);
     font-weight: 700;
     font-variant-numeric: tabular-nums;
 }
@@ -5297,18 +5290,18 @@ body.dashboard-body {
 .dashboard-paused-icon {
     font-size: clamp(48px, 7vw, 88px);
     line-height: 1;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
 }
 .dashboard-paused-title {
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(28px, 4vw, 56px);
     font-weight: 700;
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
 }
 .dashboard-paused-hint {
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(16px, 1.8vw, 24px);
-    color: var(--dash-text-neon-muted);
+    color: var(--color-text-muted);
     max-width: 640px;
 }
 
@@ -5320,7 +5313,7 @@ body.dashboard-body {
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(16px, 1.8vw, 24px);
     font-weight: 600;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     max-width: 640px;
 }
 .dashboard-paused-escape[hidden] { display: none; }
@@ -5339,14 +5332,14 @@ body.dashboard-body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     margin-bottom: 8px;
 }
 .dashboard-lightning-progress {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: clamp(14px, 1.4vw, 20px);
     font-weight: 700;
-    color: var(--dash-text-neon-muted);
+    color: var(--color-text-muted);
     font-variant-numeric: tabular-nums;
     margin-left: auto;
 }
@@ -5368,12 +5361,12 @@ body.dashboard-body {
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(32px, 5vw, 64px);
     font-weight: 700;
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
 }
 .dashboard-lightning-splash .dashboard-lightning-rules {
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(16px, 1.8vw, 24px);
-    color: var(--dash-text-neon-muted);
+    color: var(--color-text-muted);
 }
 /* #1170: the splash arrives in ~0.5 s — the title rises, the sun underline
    draws left to right, the rules follow, 120 ms apart. The `hidden` toggle
@@ -5391,7 +5384,7 @@ body.dashboard-body {
     bottom: 0;
     height: 4px;
     border-radius: 2px;
-    background: var(--dash-warning);
+    background: var(--color-warning);
     transform-origin: left center;
     animation: splash-underline var(--dur-underline) var(--ease-out)
         var(--dur-splash-stagger) backwards;
@@ -5414,24 +5407,24 @@ body.dashboard-body {
 .dashboard-lightning-recap-row {
     padding: 12px 16px;
     border-radius: 8px;
-    background: var(--dash-surface-dark);
-    border: 1px solid var(--dash-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     font-family: 'DM Sans', sans-serif;
     /* #707: the recap is the only moment the room ever sees the
        lightning answers — the phone says so explicitly ("answers
        revealed at the end"). Sized like the leaderboard rows it sits
        among, not like the phone it was copied from. */
     font-size: clamp(16px, 1.6vw, 24px);
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
 }
 .dashboard-lightning-recap-row .lr-qnum {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     font-weight: 700;
     margin-right: 6px;
 }
 .dashboard-lightning-recap-row .lr-correct {
-    color: var(--dash-success);
+    color: var(--sage-ink);
     font-weight: 600;
 }
 
@@ -5747,7 +5740,7 @@ body.dashboard-body {
     transform: translateX(-50%);
     width: 80%;
     height: 100%;
-    background: radial-gradient(ellipse at 50% 30%, var(--dash-success-glow) 0%, transparent 45%);
+    background: radial-gradient(ellipse at 50% 30%, var(--color-success-glow-soft) 0%, transparent 45%);
     pointer-events: none;
     opacity: 0;
     /* #1169: the room's spotlight comes up with the champion's glow, not
@@ -5775,10 +5768,10 @@ body.dashboard-body {
        but stops dominating the awards-row vertical budget. */
     font-size: clamp(28px, 3.6vw, 48px);
     font-weight: 900;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     letter-spacing: -0.02em;
     line-height: 1;
-    text-shadow: 0 0 40px var(--dash-success-glow);
+    text-shadow: 0 0 40px var(--color-success-glow-soft);
 }
 
 /* Podium row: labels (medal + name + score) hover at the top in a
@@ -5840,7 +5833,7 @@ body.dashboard-body {
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--dash-text-neon-muted);
+    color: var(--color-text-muted);
     margin-bottom: 4px;
 }
 .podium-other-row {
@@ -5849,15 +5842,15 @@ body.dashboard-body {
     justify-content: space-between;
     gap: 12px;
     padding: 8px 12px;
-    background: var(--dash-surface-dark);
-    border: 1px solid var(--dash-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: 8px;
     font-family: 'DM Sans', sans-serif;
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
 }
 .podium-other-rank {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    color: var(--dash-text-neon-muted);
+    color: var(--color-text-muted);
     /* #891: 11-12px is a phone eyebrow. Floored for the television,
        the way #707 floored the four main strings and #808 the
        category — same clamp, so the labels step together. */
@@ -5876,7 +5869,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #376: scale for TV couch legibility */
     font-size: clamp(14px, 1.3vw, 20px);
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     font-variant-numeric: tabular-nums;
 }
 
@@ -5894,7 +5887,7 @@ body.dashboard-body {
        cut ordinary names off at the finale. */
     font-size: clamp(18px, 1.8vw, 28px);
     font-weight: 600;
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
     max-width: clamp(160px, 16vw, 300px);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -5907,7 +5900,7 @@ body.dashboard-body {
     /* #376: scale for TV couch legibility */
     font-size: clamp(16px, 1.8vw, 26px);
     font-weight: 700;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.04em;
 }
@@ -5921,30 +5914,30 @@ body.dashboard-body {
     font-size: 2rem;
     font-weight: 900;
     border-radius: 0;
-    color: var(--dash-text-neon-muted);
-    background: var(--dash-surface-dark);
-    border-top: 3px solid var(--dash-bronze);
+    color: var(--color-text-muted);
+    background: var(--color-bg-surface);
+    border-top: 3px solid var(--color-bronze);
 }
 
 /* Bar heights stay proportional but scaled down — fits in the
    220 px podium-place height with room for the top label. */
 .podium-bar.first {
     height: 150px;
-    border-top: 3px solid var(--dash-accent-primary);
-    color: var(--dash-accent-primary);
-    box-shadow: 0 -20px 40px var(--dash-success-glow);
+    border-top: 3px solid var(--color-accent-primary);
+    color: var(--coral-ink);
+    box-shadow: 0 -20px 40px var(--color-success-glow-soft);
 }
 
 .podium-bar.second {
     height: 122px;
-    border-top: 3px solid var(--dash-silver);
-    color: var(--dash-silver);
+    border-top: 3px solid var(--color-silver);
+    color: var(--silver-ink);
 }
 
 .podium-bar.third {
     height: 102px;
-    border-top: 3px solid var(--dash-bronze);
-    color: var(--dash-bronze);
+    border-top: 3px solid var(--color-bronze);
+    color: var(--bronze-ink);
 }
 
 /* Awards / Superlatives */
@@ -5965,11 +5958,11 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 12px;
     font-weight: 500;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     padding-bottom: 8px;
-    border-bottom: 1px solid var(--dash-accent-primary);
+    border-bottom: 1px solid var(--color-accent-primary);
 }
 
 .awards-grid {
@@ -5991,8 +5984,8 @@ body.dashboard-body {
     align-items: center;
     gap: 14px;
     padding: 12px 18px;
-    background: var(--dash-surface-dark);
-    border: 1px solid var(--dash-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: 999px;
     min-width: 220px;
     text-align: left;
@@ -6021,7 +6014,7 @@ body.dashboard-body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
 }
 
 .award-winner {
@@ -6030,22 +6023,22 @@ body.dashboard-body {
        straight after the podium. Two steps above the eyebrow above it. */
     font-size: clamp(20px, 1.6vw, 28px);
     font-weight: 600;
-    color: var(--dash-text-white);
+    color: var(--color-text-primary);
 }
 
 .award-detail {
     font-family: 'DM Sans', sans-serif;
     /* #376: scale for TV couch legibility */
     font-size: clamp(15px, 1.4vw, 22px);
-    color: var(--dash-text-neon-muted);
+    color: var(--color-text-muted);
 }
 
 /* Finale leaderboard card */
 .finale-leaderboard-card {
     width: 100%;
     max-width: 640px;
-    background: var(--dash-surface-dark);
-    border: 1px solid var(--dash-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: 10px;
     overflow: hidden;
     position: relative;
@@ -6073,9 +6066,9 @@ body.dashboard-body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: var(--dash-text-neon-muted);
+    color: var(--color-text-muted);
     padding: 16px 20px 12px;
-    border-bottom: 1px solid var(--dash-border-neon);
+    border-bottom: 1px solid var(--color-border-light);
 }
 
 .finale-leaderboard-card .dashboard-leaderboard {

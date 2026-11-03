@@ -622,12 +622,15 @@
     // Standings — top 3 with medal tints, "me" row with coral left border,
     // rank-delta arrows computed from the previous round's snapshot.
     // ============================================
-    var _PLAYER_COLORS = ['#E88A7F','#7FA8C4','#7FA897','#E8C47F','#B78FC7','#D66A6A','#6E9685','#6A9AB6'];
+    // Fallback when a standings row carries no server colour: the generated
+    // palette, the same list the server assigns from (#1178). Read on use, so
+    // the module does not depend on tokens.js having run first.
     function _colorFor(name, idx) {
+        var palette = (window.QuizifyTokens && window.QuizifyTokens.players) || ['var(--color-text-light)'];
         // Stable color per name: hash first char, fall back to position.
-        if (!name) return _PLAYER_COLORS[idx % _PLAYER_COLORS.length];
+        if (!name) return palette[idx % palette.length];
         var c = name.charCodeAt(0) || 0;
-        return _PLAYER_COLORS[(c + idx) % _PLAYER_COLORS.length];
+        return palette[(c + idx) % palette.length];
     }
 
     /**
