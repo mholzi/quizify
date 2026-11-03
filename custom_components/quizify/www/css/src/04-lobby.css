@@ -435,11 +435,7 @@
 .qz-team-leaveBtn {
     flex: 0 0 auto;
     padding: var(--space-xs) var(--space-sm);
-    background: none;
-    border: 1px solid var(--color-border-medium);
-    border-radius: var(--radius-md);
-    color: var(--color-text-muted);
-    font-family: var(--font-system);
+    border-radius: var(--radius-md);             /* look: .btn-ghost (#1204) */
     font-size: var(--fs-2);
     cursor: pointer;
 }

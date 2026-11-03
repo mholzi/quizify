@@ -220,7 +220,7 @@
                         <span class="qz-team-mineName" id="team-mine-name"></span>
                         <span class="qz-team-mineMembers" id="team-mine-members"></span>
                     </div>
-                    <button type="button" id="team-leave-btn" class="qz-team-leaveBtn" data-i18n="teams.leaveTeam">Leave team</button>
+                    <button type="button" id="team-leave-btn" class="qz-team-leaveBtn btn-ghost" data-i18n="teams.leaveTeam">Leave team</button>
                 </div>
 
                 <p class="qz-team-note hidden" id="team-note" aria-live="polite"></p>
@@ -637,11 +637,11 @@
                 </section>
 
                 <div id="reveal-admin-controls" class="pl-result-admin-bar hidden" role="group" data-i18n-aria-label="a11y.hostActions" aria-label="Host actions">
-                    <button id="end-game-from-reveal-btn" class="pl-result-bar-btn pl-result-bar-btn--ghost" type="button">
+                    <button id="end-game-from-reveal-btn" class="pl-result-bar-btn pl-result-bar-btn--ghost btn-ghost" type="button">
                         <span aria-hidden="true">⏹</span>
                         <span data-i18n="admin.endGame">End game</span>
                     </button>
-                    <button id="next-round-btn" class="pl-result-bar-btn pl-result-bar-btn--primary" type="button">
+                    <button id="next-round-btn" class="pl-result-bar-btn pl-result-bar-btn--primary btn-primary" type="button">
                         <span data-i18n="admin.nextQuestion">Next question</span>
                         <span aria-hidden="true">→</span>
                     </button>
@@ -747,7 +747,7 @@
                         <dl class="end-share-facts" id="end-share-facts"></dl>
                         <div class="end-share-strip" id="end-share-strip" aria-hidden="true"></div>
                     </div>
-                    <button id="end-share-btn" class="resbtn resbtn--primary end-share-btn" type="button" data-i18n="share.button">
+                    <button id="end-share-btn" class="resbtn resbtn--primary btn-primary end-share-btn" type="button" data-i18n="share.button">
                         Share card
                     </button>
                     <div class="end-share-status" id="end-share-status" role="status" aria-live="polite"></div>
@@ -756,14 +756,14 @@
                 <!-- CTA stack — Nochmal spielen (play again) + Beenden (new game).
                      Admin-only; players see the waiting message instead. -->
                 <div id="end-admin-controls" class="end-admin-controls hidden">
-                    <button id="play-again-same-btn" class="resbtn resbtn--primary" type="button" data-i18n="admin.playAgainSame">
+                    <button id="play-again-same-btn" class="resbtn resbtn--primary btn-primary" type="button" data-i18n="admin.playAgainSame">
                         Play again
                     </button>
                     <!-- The manual "⚡ Lightning" finale entry was retired in
                          #285 — the Lightning Round is now an automatic mid-game
                          event. -->
                     <div class="resbtn-row">
-                        <button id="new-game-btn" class="resbtn resbtn--secondary" type="button" data-i18n="admin.newGameShort">
+                        <button id="new-game-btn" class="resbtn resbtn--secondary btn-secondary" type="button" data-i18n="admin.newGameShort">
                             New game
                         </button>
                     </div>
@@ -895,7 +895,7 @@
                      is to resume the paused main game. The #294 "Lightning
                      again" dead-end button was retired. -->
                 <div id="lightning-recap-admin" class="end-admin-controls hidden">
-                    <button id="lightning-recap-continue-btn" class="resbtn resbtn--primary" type="button">
+                    <button id="lightning-recap-continue-btn" class="resbtn resbtn--primary btn-primary" type="button">
                         <span data-i18n="lightning.continueGame">Continue game</span>
                     </button>
                 </div>
@@ -1064,7 +1064,7 @@
                 <input type="text" id="invite-modal-url" class="invite-modal-url" readonly
                        data-i18n-aria-label="a11y.joinUrlAria"
                        aria-label="Join URL">
-                <button id="invite-copy-btn" class="invite-copy-btn" type="button"
+                <button id="invite-copy-btn" class="invite-copy-btn btn-secondary" type="button"
                         data-i18n-aria-label="a11y.copyJoinLinkAria"
                         aria-label="Copy join link">
                     <span class="invite-copy-icon qz-icon qz-icon--sage" data-ui-icon="copy">📋</span>

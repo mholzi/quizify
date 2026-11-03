@@ -112,6 +112,23 @@
     --font-size-timer: 64px;
     --font-size-timer-up: clamp(1rem, 5.2vw, 1.5rem); /* #1174: phone clock text; es fits 320 px */
     --font-size-hero: 72px;
+    /* Television scale (#1204). The TV keeps the 16 px root (a larger root
+       would also grow every rem size the shared modules give it), so its
+       steps are their own: each has a floor that is today's 1280 px size
+       and a ceiling that is today's 1920 px size. At 1280 x 720 nothing is
+       smaller than before #1204; at 1920 x 1080 every step is within 1 px. */
+    --tv-fs-1: clamp(15px, 0.85vw, 16px);                   /* 15 -> 16 px: join hints */
+    --tv-fs-2: 18px;                                        /* 18 px: answer count, end head-to-head, tight ranks */
+    --tv-fs-3: clamp(18px, 1.05vw, 20px);                   /* 18 -> 20 px: labels, kickers, chips, podium list */
+    --tv-fs-4: clamp(20px, 1.6vw, 22px);                    /* 20.5 -> 22 px: join URL, waiting line, percent, rank */
+    --tv-fs-5: 22px;                                        /* 22 px: answers, head-to-head line */
+    --tv-fs-6: clamp(20px, 1.6vw, 24px);                    /* 20.5 -> 24 px: leaderboard rows, scale labels */
+    --tv-fs-7: 24px;                                        /* 24 px: pause hints, lightning rules */
+    --tv-fs-8: clamp(23px, 1.8vw, 26px);                    /* 23 -> 26 px: fun fact, scores */
+    --tv-fs-9: clamp(23px, 1.8vw, 28px);                    /* 23 -> 28 px: podium names, winners */
+    --tv-fs-10: clamp(28px, 3.6vw, 48px);                   /* 46 -> 48 px: podium title */
+    --tv-fs-11: clamp(32px, 4.2vw, 56px);                   /* 54 -> 56 px: question, pause title */
+    --tv-fs-12: 64px;                                       /* 64 px: lightning title, waiting wordmark */
 
     --font-weight-normal: 400;
     --font-weight-medium: 500;

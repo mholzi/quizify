@@ -77,6 +77,18 @@
             '--font-size-timer': '64px',
             '--font-size-timer-up': 'clamp(1rem, 5.2vw, 1.5rem)',
             '--font-size-hero': '72px',
+            '--tv-fs-1': 'clamp(15px, 0.85vw, 16px)',
+            '--tv-fs-2': '18px',
+            '--tv-fs-3': 'clamp(18px, 1.05vw, 20px)',
+            '--tv-fs-4': 'clamp(20px, 1.6vw, 22px)',
+            '--tv-fs-5': '22px',
+            '--tv-fs-6': 'clamp(20px, 1.6vw, 24px)',
+            '--tv-fs-7': '24px',
+            '--tv-fs-8': 'clamp(23px, 1.8vw, 26px)',
+            '--tv-fs-9': 'clamp(23px, 1.8vw, 28px)',
+            '--tv-fs-10': 'clamp(28px, 3.6vw, 48px)',
+            '--tv-fs-11': 'clamp(32px, 4.2vw, 56px)',
+            '--tv-fs-12': '64px',
             '--font-weight-normal': '400',
             '--font-weight-medium': '500',
             '--font-weight-semibold': '600',
@@ -707,7 +719,7 @@
         return '<div class="scoring-note">' +
             '<span class="scoring-off">' + _esc(_scoringText(flag)) + '</span>' +
             (flag.can_take_out
-                ? '<button type="button" class="scoring-btn" data-scoring-out="' + _esc(_entrantOf(row)) + '">' +
+                ? '<button type="button" class="scoring-btn btn-secondary" data-scoring-out="' + _esc(_entrantOf(row)) + '">' +
                     _esc(_t('admin.scoringOut', 'Out of scoring')) + '</button>'
                 : '') +
             (flag.on_podium
@@ -728,7 +740,7 @@
                     '<span class="scoring-out-rank" aria-hidden="true">\u2013</span>' +
                     '<span class="scoring-out-name">' + _esc(row.name) + '</span>' +
                     '<span class="scoring-out-score">' + _esc(row.score) + '</span>' +
-                    '<button type="button" class="scoring-btn" data-scoring-back="' + _esc(_entrantOf(row)) + '">' +
+                    '<button type="button" class="scoring-btn btn-secondary" data-scoring-back="' + _esc(_entrantOf(row)) + '">' +
                         _esc(_t('admin.scoringBack', 'Bring back')) + '</button>' +
                     '</div>';
             }).join('');

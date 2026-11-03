@@ -62,6 +62,7 @@ button, .btn {
 .btn-danger {
     background: var(--color-error-fill);
     color: var(--on-accent);                      /* ink on the error fill, 4.57 : 1 (#1178) */
+    font-weight: 700;                             /* #1204: as heavy as the primary label */
 }
 
 /* Hover lifts like the other buttons instead of darkening: a darker red under
@@ -73,6 +74,37 @@ button, .btn {
 
 .btn-block {
     width: 100%;
+}
+
+/* Ghost (#1204): a quiet action beside a primary one — "back", "end game"
+   on the phone's result bar, the host header's icon buttons. */
+.btn-ghost {
+    background: transparent;
+    border: 1px solid var(--color-border-medium);
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+.btn-ghost:hover:not(:disabled) {
+    background: var(--color-bg-card-alt);
+    color: var(--color-text-primary);
+}
+
+/* Icon (#1204): a round button that carries one glyph and no text. Size and
+   place stay with the family (close, dismiss, flag). Not `.btn-icon`: that
+   name is the glyph span inside a labelled button. */
+.btn-icon-only {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: var(--radius-full);
+    color: var(--color-text-muted);
+    line-height: 1;
+}
+
+.btn-icon-only:hover:not(:disabled) {
+    background: var(--color-bg-card-alt);
+    color: var(--color-text-primary);
 }
 
 .btn-lg {

@@ -196,6 +196,23 @@
     --font-size-timer: 64px;
     --font-size-timer-up: clamp(1rem, 5.2vw, 1.5rem); /* #1174: phone clock text; es fits 320 px */
     --font-size-hero: 72px;
+    /* Television scale (#1204). The TV keeps the 16 px root (a larger root
+       would also grow every rem size the shared modules give it), so its
+       steps are their own: each has a floor that is today's 1280 px size
+       and a ceiling that is today's 1920 px size. At 1280 x 720 nothing is
+       smaller than before #1204; at 1920 x 1080 every step is within 1 px. */
+    --tv-fs-1: clamp(15px, 0.85vw, 16px);                   /* 15 -> 16 px: join hints */
+    --tv-fs-2: 18px;                                        /* 18 px: answer count, end head-to-head, tight ranks */
+    --tv-fs-3: clamp(18px, 1.05vw, 20px);                   /* 18 -> 20 px: labels, kickers, chips, podium list */
+    --tv-fs-4: clamp(20px, 1.6vw, 22px);                    /* 20.5 -> 22 px: join URL, waiting line, percent, rank */
+    --tv-fs-5: 22px;                                        /* 22 px: answers, head-to-head line */
+    --tv-fs-6: clamp(20px, 1.6vw, 24px);                    /* 20.5 -> 24 px: leaderboard rows, scale labels */
+    --tv-fs-7: 24px;                                        /* 24 px: pause hints, lightning rules */
+    --tv-fs-8: clamp(23px, 1.8vw, 26px);                    /* 23 -> 26 px: fun fact, scores */
+    --tv-fs-9: clamp(23px, 1.8vw, 28px);                    /* 23 -> 28 px: podium names, winners */
+    --tv-fs-10: clamp(28px, 3.6vw, 48px);                   /* 46 -> 48 px: podium title */
+    --tv-fs-11: clamp(32px, 4.2vw, 56px);                   /* 54 -> 56 px: question, pause title */
+    --tv-fs-12: 64px;                                       /* 64 px: lightning title, waiting wordmark */
 
     --font-weight-normal: 400;
     --font-weight-medium: 500;
@@ -671,10 +688,8 @@ body {
 /* Icon-only button used in the admin header (e.g. reset-game-btn). Subtle
  * by default so it doesn't compete with the wordmark, lights up on hover. */
 .admin-header-btn {
-    background: transparent;
-    border: 1px solid var(--color-border-light);
+    /* look: .btn-ghost (02-shared.css, #1204) */
     border-radius: var(--radius-md);
-    color: var(--color-text-muted);
     cursor: pointer;
     font-size: var(--fs-3);
     line-height: 1;
@@ -683,9 +698,7 @@ body {
 }
 .admin-header-btn:hover,
 .admin-header-btn:focus-visible {
-    color: var(--coral-ink);
     border-color: var(--color-accent-primary);
-    background: var(--color-bg-surface);
 }
 
 /* PWA Install Button — same admin-header-btn frame but coral-leaning
@@ -735,12 +748,7 @@ body {
     position: absolute;
     top: 8px;
     right: 12px;
-    background: transparent;
-    border: 0;
-    color: var(--color-text-muted);
-    font-size: var(--fs-4);
-    line-height: 1;
-    padding: 4px 8px;
+    font-size: var(--fs-4);                      /* look: .btn-icon-only (#1204) */
     cursor: pointer;
 }
 @keyframes pwa-fade-in {
@@ -935,6 +943,7 @@ button, .btn {
 .btn-danger {
     background: var(--color-error-fill);
     color: var(--on-accent);                      /* ink on the error fill, 4.57 : 1 (#1178) */
+    font-weight: 700;                             /* #1204: as heavy as the primary label */
 }
 
 /* Hover lifts like the other buttons instead of darkening: a darker red under
@@ -946,6 +955,37 @@ button, .btn {
 
 .btn-block {
     width: 100%;
+}
+
+/* Ghost (#1204): a quiet action beside a primary one — "back", "end game"
+   on the phone's result bar, the host header's icon buttons. */
+.btn-ghost {
+    background: transparent;
+    border: 1px solid var(--color-border-medium);
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+.btn-ghost:hover:not(:disabled) {
+    background: var(--color-bg-card-alt);
+    color: var(--color-text-primary);
+}
+
+/* Icon (#1204): a round button that carries one glyph and no text. Size and
+   place stay with the family (close, dismiss, flag). Not `.btn-icon`: that
+   name is the glyph span inside a labelled button. */
+.btn-icon-only {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: var(--radius-full);
+    color: var(--color-text-muted);
+    line-height: 1;
+}
+
+.btn-icon-only:hover:not(:disabled) {
+    background: var(--color-bg-card-alt);
+    color: var(--color-text-primary);
 }
 
 .btn-lg {
@@ -2754,11 +2794,7 @@ a[href]:not(.btn):active {
 .qz-team-leaveBtn {
     flex: 0 0 auto;
     padding: var(--space-xs) var(--space-sm);
-    background: none;
-    border: 1px solid var(--color-border-medium);
-    border-radius: var(--radius-md);
-    color: var(--color-text-muted);
-    font-family: var(--font-system);
+    border-radius: var(--radius-md);             /* look: .btn-ghost (#1204) */
     font-size: var(--fs-2);
     cursor: pointer;
 }
@@ -2775,23 +2811,29 @@ a[href]:not(.btn):active {
 
 .leaderboard {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
 }
 
+/* Rank row (#1178 step 10, #1204): one card row for every ranking — the
+   phone's reveal standings (.mstand-row) and end scoreboard (.sb-row), the
+   host's list and the television's board (both .leaderboard-row, built by
+   QuizifyRenderShared.leaderboardRowsHtml). The surface, hairline and radius
+   live here once; each surface keeps only its padding, gap and type size. */
+.qz-rank-row,
 .leaderboard-row {
     display: flex;
     align-items: center;
+    gap: 11px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+}
+
+.leaderboard-row {
     gap: var(--space-md);
-    padding: var(--space-md);
-    border-bottom: 1px solid var(--color-border-light);
-    transition: background-color 0.2s ease;
-}
-
-.leaderboard-row:last-child {
-    border-bottom: none;
-}
-
-.leaderboard-row:hover {
-    background: rgba(157, 78, 221, 0.1);
+    padding: var(--space-sm) var(--space-md);
 }
 
 .leaderboard-rank {
@@ -2918,11 +2960,8 @@ a[href]:not(.btn):active {
 .scoring-btn {
     min-height: 44px;
     padding: 0 12px;
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-md);
-    background: var(--color-bg-surface);
-    color: var(--color-text-primary);
-    font: 600 13.5px var(--font-body);
+    border-radius: var(--radius-md);             /* look: .btn-secondary (#1204) */
+    font-size: var(--fs-2);
     white-space: nowrap;
     cursor: pointer;
 }
@@ -3346,7 +3385,7 @@ a[href]:not(.btn):active {
 
 .end-share-strip {
     border-top: 1px dashed #E7DFCE;
-    padding-top: 8px;
+    padding-top: var(--space-sm);
     text-align: center;
     font-size: var(--fs-3);
     letter-spacing: 2px;
@@ -3693,13 +3732,7 @@ footer {
     flex: none;
     width: 28px;
     height: 28px;
-    padding: 0;
-    border: 0;
-    border-radius: var(--radius-full);
-    background: transparent;
-    color: var(--color-text-muted);
-    font-size: var(--fs-3);
-    line-height: 1;
+    font-size: var(--fs-3);                      /* look: .btn-icon-only (#1204) */
     cursor: pointer;
 }
 
@@ -4036,17 +4069,9 @@ footer {
 
 /* ---- Gesamtwertung scoreboard with score bars ---- */
 .end-scoreboard-section { margin-top: 2px; }
-/* Rank row base (#1178 step 10): the end scoreboard (.sb-row) and the
-   reveal standings (.mstand-row) are one card row; each keeps only its
-   padding and alignment. */
-.qz-rank-row {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    background: var(--color-bg-surface);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-lg);
-}
+/* The rank row base (.qz-rank-row) lives in 05-finale.css since #1204, so
+   the host's and the television's rows share it; .sb-row and .mstand-row
+   keep only their padding and alignment. */
 .sb-row {
     align-items: flex-start;
     padding: 11px 13px;
@@ -4148,9 +4173,7 @@ footer {
 
 /* Shared results-screen action buttons (Buttons A). */
 .resbtn {
-    border: 0;
-    border-radius: var(--radius-lg);
-    font: 700 14px/1.1 system-ui, -apple-system, sans-serif;
+    line-height: 1.1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -4159,9 +4182,8 @@ footer {
     cursor: pointer;
 }
 
+/* Look: .btn-primary / .btn-secondary (02-shared.css, #1204). */
 .resbtn--primary {
-    background: var(--color-accent-primary);
-    color: var(--on-accent);
     height: 48px;
     width: 100%;
     font-size: var(--fs-3);
@@ -4176,9 +4198,6 @@ footer {
 .resbtn--secondary {
     height: 44px;
     flex: 1;
-    background: #fff;
-    color: #2A2820;
-    border: 1px solid #ECE4D2;
 }
 
 .resbtn:disabled {
@@ -5966,22 +5985,10 @@ footer {
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    background: var(--color-bg-surface);
-    color: var(--color-text-muted);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-full);
-    font-family: var(--font-system, inherit);
+    border-radius: var(--radius-full);           /* look: .btn-secondary (#1204) */
     font-size: var(--fs-2);
-    font-weight: 600;
     cursor: pointer;
-    transition: all 0.14s ease;
     margin-bottom: 4px;
-}
-.lobby-back-btn:hover,
-.lobby-back-btn:focus {
-    color: var(--color-text-primary);
-    border-color: var(--color-border-medium);
-    background: var(--color-bg-card-alt);
 }
 
 .lobby-marquee {
@@ -6824,21 +6831,12 @@ body.is-admin .reaction-bar {
     align-items: center;
     justify-content: center;
     padding: var(--space-xs) var(--space-sm);
-    background: rgba(232, 138, 127, 0.1);
-    border: 1px solid rgba(232, 138, 127, 0.3);
-    border-radius: var(--radius-sm);
-    color: var(--sage-ink);
+    border-radius: var(--radius-sm);             /* look: .btn-secondary (#1204) */
     font-size: var(--fs-2);
     cursor: pointer;
-    transition: all var(--transition-fast);
-    font-family: var(--font-system);
     white-space: nowrap;
     min-width: auto;
     min-height: auto;
-}
-
-.invite-copy-btn:hover {
-    background: rgba(232, 138, 127, 0.2);
 }
 
 .invite-copy-icon {
@@ -8439,31 +8437,15 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-family: var(--font-body);
-  font-weight: 700;
   font-size: var(--fs-2);
   border-radius: var(--radius-md);
   cursor: pointer;
   padding: 11px 14px;
-  border: 1px solid transparent;
   line-height: 1;
 }
-.pl-result-bar-btn--ghost {
-  background: transparent;
-  /* Bar is a fixed cream surface regardless of theme, so the ghost
-     text must be dark ink (not the theme-aware text token, which goes
-     cream in dark mode and disappears against the bar). #149-style
-     visibility fix for the admin "End game" button on dark-OS hosts. */
-  border-color: #C9C0A8;
-  color: #2A2820;
-}
-.pl-result-bar-btn--ghost:hover { background: rgba(42, 40, 32, 0.06); }
-.pl-result-bar-btn--primary {
-  background: var(--color-accent-primary);
-  color: var(--on-accent);
-  box-shadow: var(--glow-primary);
-}
-.pl-result-bar-btn--primary:hover { background: var(--color-accent-brand-hover); }
+/* The look is .btn-ghost / .btn-primary (02-shared.css, #1204). The primary
+   keeps a transparent 1 px border so both buttons stand the same height. */
+.pl-result-bar-btn--primary { border: 1px solid transparent; }
 .pl-result-bar-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
 /* When the admin bar isn't visible, the result page doesn't need bottom
@@ -8774,12 +8756,9 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
 .pack-submit-status--bad { color: var(--error-ink); }
 .pack-submit-status--pending { color: var(--color-text-muted); }
 
-/* shared ghost button for "back" / secondary step actions */
-.btn-ghost {
-    background: transparent;
-    border: 1px solid var(--color-border-medium);
-    color: var(--color-text-secondary);
-    font-weight: 600;
+/* The ghost look lives in 02-shared.css (#1204); here only its place under
+   the pack-submit step's primary button. */
+.pack-step-pane .btn-ghost {
     margin-top: 8px;
 }
 

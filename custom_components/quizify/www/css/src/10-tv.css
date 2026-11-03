@@ -117,7 +117,7 @@ body.dashboard-body {
     /* #707: 12px was a phone label. It carries "Question 4 / 10" —
        where the room is in the game — so it scales with the rest of
        the board (#376). */
-    font-size: clamp(14px, 1.2vw, 20px);
+    font-size: var(--tv-fs-3);
     color: var(--coral-ink);
     font-weight: 500;
     letter-spacing: 0.2em;
@@ -148,7 +148,7 @@ body.dashboard-body {
 }
 
 .dashboard-join-or {
-    font-size: clamp(0.8rem, 1.1vw, 1rem);
+    font-size: var(--tv-fs-1);
     color: var(--color-text-muted);
     margin-bottom: 4px;
 }
@@ -159,7 +159,7 @@ body.dashboard-body {
        meant to back up. This still reads from a couch — it has to,
        someone is typing it from three metres away — without becoming
        the primary route. */
-    font-size: clamp(1rem, 1.5vw, 1.35rem);
+    font-size: var(--tv-fs-4);
     font-weight: 600;
     color: var(--color-text-primary);
     word-break: break-all;
@@ -167,7 +167,7 @@ body.dashboard-body {
 }
 
 .dashboard-join-hint {
-    font-size: clamp(0.8rem, 1.1vw, 1rem);
+    font-size: var(--tv-fs-1);
     color: var(--color-text-muted);
     margin-top: 4px;
 }
@@ -175,7 +175,7 @@ body.dashboard-body {
 .dashboard-h2h {
     margin-top: 14px;
     text-align: center;
-    font-size: clamp(1rem, 1.7vw, 1.35rem);
+    font-size: var(--tv-fs-5);
     color: var(--color-text-primary);
     font-variant-numeric: tabular-nums;
 }
@@ -197,7 +197,7 @@ body.dashboard-body {
     margin-top: 10px;
     padding-top: 10px;
     border-top: 1px solid var(--color-border-light);
-    font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+    font-size: var(--tv-fs-2);
 }
 
 .dashboard-h2h .h2h-scope {
@@ -207,7 +207,7 @@ body.dashboard-body {
 }
 
 .dashboard-evening-tally {
-    font-size: clamp(1rem, 1.7vw, 1.4rem);
+    font-size: var(--tv-fs-5);
     color: var(--color-text-primary);
     text-align: center;
     margin-bottom: 10px;
@@ -221,7 +221,7 @@ body.dashboard-body {
 }
 
 .dashboard-answer-progress {
-    font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+    font-size: var(--tv-fs-2);
     color: var(--color-text-muted);
     text-align: right;
     margin-bottom: 6px;
@@ -280,7 +280,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #707: the one signal that the board has gone dead — it has to be
        readable from wherever the room noticed the freeze. */
-    font-size: clamp(15px, 1.2vw, 20px);
+    font-size: var(--tv-fs-3);
     color: var(--error-ink);
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -321,7 +321,7 @@ body.dashboard-body {
     gap: 24px;
 }
 
-.dashboard-waiting .wordmark { font-size: clamp(40px, 5vw, 64px); }
+.dashboard-waiting .wordmark { font-size: var(--tv-fs-12); }
 
 .dashboard-waiting-text {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -330,7 +330,7 @@ body.dashboard-body {
        Same clamp the couch-legibility pass (#376) gave the rest of
        this screen; the join-URL fallback (#620) was already sized for
        three metres and the caption above it was not. */
-    font-size: clamp(16px, 1.6vw, 22px);
+    font-size: var(--tv-fs-4);
     color: var(--color-text-muted);
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -542,7 +542,7 @@ body.dashboard-body {
        was roughly a third of what #376 deemed readable across a room.
        The uppercase goes with it: capitals cost legibility at
        distance and buy nothing here. */
-    font-size: clamp(15px, 1.4vw, 20px);
+    font-size: var(--tv-fs-3);
     color: var(--color-text-primary);
     font-weight: 500;
     letter-spacing: 0.08em;
@@ -620,7 +620,7 @@ body.dashboard-body {
        lock-in tally and the category is the only clue the room's bet
        is placed on. #707 gave the same step to `.dashboard-round`;
        #707's list of four did not include this one. */
-    font-size: clamp(14px, 1.2vw, 20px);
+    font-size: var(--tv-fs-3);
     color: var(--coral-ink);
     text-transform: uppercase;
     letter-spacing: 0.2em;
@@ -634,7 +634,7 @@ body.dashboard-body {
 
 .dashboard-question {
     font-family: 'DM Sans', sans-serif;
-    font-size: clamp(32px, 4.2vw, 56px);
+    font-size: var(--tv-fs-11);
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.02em;
@@ -673,7 +673,7 @@ body.dashboard-body {
        phone sizes. This carries the range the room is guessing inside
        ("Schätzfrage zwischen 10 und 500"), so it takes the step #707
        gave the podium name — the largest of the four it settled. */
-    font-size: clamp(18px, 1.8vw, 28px);
+    font-size: var(--tv-fs-9);
     font-weight: 600;
     color: var(--color-text-muted, #6E6A5C);
     margin-top: 16px;
@@ -686,7 +686,7 @@ body.dashboard-body {
 .dnl-truth-label {
     /* #735: an eyebrow naming the block below it ("RICHTIGE ANTWORT"),
        so it takes the same step as the round indicator in #707. */
-    font-size: clamp(14px, 1.2vw, 20px);
+    font-size: var(--tv-fs-3);
     text-transform: uppercase; letter-spacing: 0.1em;
     color: var(--color-text-muted, #6E6A5C); font-weight: 600;
 }
@@ -717,7 +717,7 @@ body.dashboard-body {
        and it was 17px on a 1920px screen. It is a name plus a number
        in a row, exactly what the leaderboard and the lightning recap
        carry, so it takes their step (#376/#707). */
-    font-size: clamp(16px, 1.6vw, 24px);
+    font-size: var(--tv-fs-6);
     font-weight: 600;
     color: var(--color-text-muted, #6E6A5C); font-family: var(--font-mono, monospace);
 }
@@ -736,7 +736,7 @@ body.dashboard-body {
     font-family: var(--font-mono, monospace); font-weight: 700;
     /* #735: the true value sitting on the line, next to the guesses it
        is being compared against — the same step as the guesses. */
-    font-size: clamp(16px, 1.6vw, 24px);
+    font-size: var(--tv-fs-6);
     padding: 4px 12px; border-radius: var(--radius-full); white-space: nowrap;
 }
 .dnl-scale-ends {
@@ -747,7 +747,7 @@ body.dashboard-body {
     margin-top: 2.4em;
     font-family: var(--font-mono, monospace);
     /* #735: the two numbers that tell the room what the line spans. */
-    font-size: clamp(16px, 1.6vw, 24px);
+    font-size: var(--tv-fs-6);
     color: var(--color-text-muted);
 }
 
@@ -863,7 +863,7 @@ body.dashboard-body {
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-md);
     font-family: 'DM Sans', sans-serif;
-    font-size: clamp(16px, 1.8vw, 22px);
+    font-size: var(--tv-fs-5);
     font-weight: 500;
     color: var(--color-text-primary);
     transition: border-color 120ms ease-out, background 120ms ease-out, box-shadow 320ms ease-out;
@@ -887,7 +887,7 @@ body.dashboard-body {
     align-items: center;
     justify-content: center;
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: clamp(20px, 2.2vw, 28px);
+    font-size: var(--fs-5);
     font-weight: 500;
     color: var(--coral-ink);
     flex-shrink: 0;
@@ -1026,7 +1026,7 @@ body.dashboard-body {
 }
 .dashboard-answer-percent {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: clamp(16px, 1.6vw, 22px);
+    font-size: var(--tv-fs-4);
     font-weight: 600;
     color: var(--color-text-primary);
     min-width: clamp(48px, 4.5vw, 72px);
@@ -1049,7 +1049,7 @@ body.dashboard-body {
     border-radius: var(--radius-md);
     font-family: 'DM Sans', sans-serif;
     /* #376: scale for TV couch legibility (viewed from 2-3m) */
-    font-size: clamp(18px, 1.8vw, 26px);
+    font-size: var(--tv-fs-8);
     line-height: 1.6;
     color: var(--color-text-muted);
     transform: translateY(16px);
@@ -1067,7 +1067,7 @@ body.dashboard-body {
     /* #891: 11-12px is a phone eyebrow. Floored for the television,
        the way #707 floored the four main strings and #808 the
        category — same clamp, so the labels step together. */
-    font-size: clamp(16px, 1.1vw, 20px);
+    font-size: var(--tv-fs-3);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
@@ -1092,7 +1092,7 @@ body.dashboard-body {
     /* #891: 11-12px is a phone eyebrow. Floored for the television,
        the way #707 floored the four main strings and #808 the
        category — same clamp, so the labels step together. */
-    font-size: clamp(16px, 1.1vw, 20px);
+    font-size: var(--tv-fs-3);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
@@ -1115,12 +1115,10 @@ body.dashboard-body {
     align-items: center;
     gap: 14px;
     padding: 12px 16px;
-    border-radius: var(--radius-md);
-    background: var(--color-bg-surface);
-    border: 1px solid var(--color-border-light);
+    /* Surface, hairline and radius: the shared rank row (05-finale.css, #1204). */
     font-family: 'DM Sans', sans-serif;
     /* #376: scale for TV couch legibility */
-    font-size: clamp(16px, 1.6vw, 24px);
+    font-size: var(--tv-fs-6);
     color: var(--color-text-primary);
     transition: border-color 120ms ease-out, background 120ms ease-out;
 }
@@ -1133,7 +1131,7 @@ body.dashboard-body {
     height: 32px;
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #376: scale rank badge with rows */
-    font-size: clamp(15px, 1.5vw, 22px);
+    font-size: var(--tv-fs-4);
     font-weight: 700;
     color: var(--color-text-muted);
     flex-shrink: 0;
@@ -1186,7 +1184,7 @@ body.dashboard-body {
 .dashboard-leaderboard .leaderboard-score {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #376: scale for TV couch legibility */
-    font-size: clamp(16px, 1.7vw, 26px);
+    font-size: var(--tv-fs-8);
     font-weight: 700;
     color: var(--color-text-primary);
     font-variant-numeric: tabular-nums;
@@ -1194,7 +1192,7 @@ body.dashboard-body {
 
 .dashboard-leaderboard .leaderboard-streak {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 11px;
+    font-size: var(--fs-1);
     font-weight: 500;
     color: var(--coral-ink);
     padding: 2px 8px;
@@ -1222,7 +1220,7 @@ body.dashboard-body {
    the leaderboard is where the change is. */
 .dashboard-leaderboard .leaderboard-delta {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: clamp(14px, 1.3vw, 20px);
+    font-size: var(--tv-fs-3);
     font-weight: 700;
     padding: 2px 8px;
     border-radius: var(--radius-sm);
@@ -1370,13 +1368,13 @@ body.dashboard-body {
 }
 .dashboard-paused-title {
     font-family: 'DM Sans', sans-serif;
-    font-size: clamp(28px, 4vw, 56px);
+    font-size: var(--tv-fs-11);
     font-weight: 700;
     color: var(--color-text-primary);
 }
 .dashboard-paused-hint {
     font-family: 'DM Sans', sans-serif;
-    font-size: clamp(16px, 1.8vw, 24px);
+    font-size: var(--tv-fs-7);
     color: var(--color-text-muted);
     max-width: 640px;
 }
@@ -1387,7 +1385,7 @@ body.dashboard-body {
    back. */
 .dashboard-paused-escape {
     font-family: 'DM Sans', sans-serif;
-    font-size: clamp(16px, 1.8vw, 24px);
+    font-size: var(--tv-fs-7);
     font-weight: 600;
     color: var(--coral-ink);
     max-width: 640px;
@@ -1404,7 +1402,7 @@ body.dashboard-body {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #808: the splash headline's kicker carried the same fixed 12px
        as `.dashboard-category`. */
-    font-size: clamp(14px, 1.2vw, 20px);
+    font-size: var(--tv-fs-3);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
@@ -1413,7 +1411,7 @@ body.dashboard-body {
 }
 .dashboard-lightning-progress {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: clamp(14px, 1.4vw, 20px);
+    font-size: var(--tv-fs-3);
     font-weight: 700;
     color: var(--color-text-muted);
     font-variant-numeric: tabular-nums;
@@ -1435,13 +1433,13 @@ body.dashboard-body {
 }
 .dashboard-lightning-splash .dashboard-lightning-title {
     font-family: 'DM Sans', sans-serif;
-    font-size: clamp(32px, 5vw, 64px);
+    font-size: var(--tv-fs-12);
     font-weight: 700;
     color: var(--color-text-primary);
 }
 .dashboard-lightning-splash .dashboard-lightning-rules {
     font-family: 'DM Sans', sans-serif;
-    font-size: clamp(16px, 1.8vw, 24px);
+    font-size: var(--tv-fs-7);
     color: var(--color-text-muted);
 }
 /* #1170: the splash arrives in ~0.5 s — the title rises, the sun underline
@@ -1490,7 +1488,7 @@ body.dashboard-body {
        lightning answers — the phone says so explicitly ("answers
        revealed at the end"). Sized like the leaderboard rows it sits
        among, not like the phone it was copied from. */
-    font-size: clamp(16px, 1.6vw, 24px);
+    font-size: var(--tv-fs-6);
     color: var(--color-text-primary);
 }
 .dashboard-lightning-recap-row .lr-qnum {
@@ -1761,15 +1759,15 @@ body.dashboard-body {
 #finale-view .dashboard-leaderboard.is-dense .leaderboard-row {
     padding: 4px 12px;
     gap: 8px;
-    font-size: clamp(17px, 1.35vw, 20px);
+    font-size: var(--tv-fs-3);
 }
 #finale-view .dashboard-leaderboard.is-dense .leaderboard-rank {
     width: 23px;
     height: 23px;
-    font-size: clamp(16px, 1.25vw, 19px);
+    font-size: var(--tv-fs-3);
 }
 #finale-view .dashboard-leaderboard.is-dense .leaderboard-score {
-    font-size: clamp(17px, 1.4vw, 21px);
+    font-size: var(--tv-fs-3);
 }
 
 /* The last step. 16px is where it stops: that is the floor #376 set
@@ -1781,15 +1779,15 @@ body.dashboard-body {
 #finale-view .dashboard-leaderboard.is-tight .leaderboard-row {
     padding: 2px 10px;
     gap: 8px;
-    font-size: clamp(16px, 1.3vw, 19px);
+    font-size: var(--tv-fs-3);
 }
 #finale-view .dashboard-leaderboard.is-tight .leaderboard-rank {
     width: 21px;
     height: 21px;
-    font-size: clamp(16px, 1.2vw, 18px);
+    font-size: var(--tv-fs-2);
 }
 #finale-view .dashboard-leaderboard.is-tight .leaderboard-score {
-    font-size: clamp(16px, 1.35vw, 20px);
+    font-size: var(--tv-fs-3);
 }
 
 /* #775: the title overflowed by 9-10px at all three resolutions, for
@@ -1803,7 +1801,7 @@ body.dashboard-body {
    id, so the responsive sheet no longer wins) and giving the line real
    height settles both. */
 #finale-view .podium-title {
-    font-size: clamp(28px, 3.6vw, 48px);
+    font-size: var(--tv-fs-10);
     line-height: 1.3;
 }
 
@@ -1842,7 +1840,7 @@ body.dashboard-body {
     font-family: 'DM Sans', sans-serif;
     /* clamp top dropped 72 → 48 so 'Result' is still TV-legible
        but stops dominating the awards-row vertical budget. */
-    font-size: clamp(28px, 3.6vw, 48px);
+    font-size: var(--tv-fs-10);
     font-weight: 900;
     color: var(--coral-ink);
     letter-spacing: -0.02em;
@@ -1905,7 +1903,7 @@ body.dashboard-body {
     /* #891: 11-12px is a phone eyebrow. Floored for the television,
        the way #707 floored the four main strings and #808 the
        category — same clamp, so the labels step together. */
-    font-size: clamp(16px, 1.1vw, 20px);
+    font-size: var(--tv-fs-3);
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -1930,13 +1928,13 @@ body.dashboard-body {
     /* #891: 11-12px is a phone eyebrow. Floored for the television,
        the way #707 floored the four main strings and #808 the
        category — same clamp, so the labels step together. */
-    font-size: clamp(16px, 1.1vw, 20px);
+    font-size: var(--tv-fs-3);
     min-width: 24px;
 }
 .podium-other-name {
     flex: 1 1 auto;
     /* #376: scale for TV couch legibility */
-    font-size: clamp(15px, 1.4vw, 20px);
+    font-size: var(--tv-fs-3);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1944,7 +1942,7 @@ body.dashboard-body {
 .podium-other-score {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #376: scale for TV couch legibility */
-    font-size: clamp(14px, 1.3vw, 20px);
+    font-size: var(--tv-fs-3);
     color: var(--coral-ink);
     font-variant-numeric: tabular-nums;
 }
@@ -1961,7 +1959,7 @@ body.dashboard-body {
        who won read smaller than the list of everyone else. Scaled with
        the score under it, and the truncation width scales too: 160px
        cut ordinary names off at the finale. */
-    font-size: clamp(18px, 1.8vw, 28px);
+    font-size: var(--tv-fs-9);
     font-weight: 600;
     color: var(--color-text-primary);
     max-width: clamp(160px, 16vw, 300px);
@@ -1974,7 +1972,7 @@ body.dashboard-body {
 .podium-score {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #376: scale for TV couch legibility */
-    font-size: clamp(16px, 1.8vw, 26px);
+    font-size: var(--tv-fs-8);
     font-weight: 700;
     color: var(--coral-ink);
     font-variant-numeric: tabular-nums;
@@ -2086,7 +2084,7 @@ body.dashboard-body {
     /* #891: 11-12px is a phone eyebrow. Floored for the television,
        the way #707 floored the four main strings and #808 the
        category — same clamp, so the labels step together. */
-    font-size: clamp(16px, 1.1vw, 20px);
+    font-size: var(--tv-fs-3);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.16em;
@@ -2097,7 +2095,7 @@ body.dashboard-body {
     font-family: 'DM Sans', sans-serif;
     /* #891: 1.05rem is ~17px — a phone size on the line the room reads
        straight after the podium. Two steps above the eyebrow above it. */
-    font-size: clamp(20px, 1.6vw, 28px);
+    font-size: var(--tv-fs-9);
     font-weight: 600;
     color: var(--color-text-primary);
 }
@@ -2105,7 +2103,7 @@ body.dashboard-body {
 .award-detail {
     font-family: 'DM Sans', sans-serif;
     /* #376: scale for TV couch legibility */
-    font-size: clamp(15px, 1.4vw, 22px);
+    font-size: var(--tv-fs-4);
     color: var(--color-text-muted);
 }
 
@@ -2138,7 +2136,7 @@ body.dashboard-body {
        1280x720. */
     margin-bottom: 0;
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 11px;
+    font-size: var(--fs-1);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
@@ -2156,7 +2154,7 @@ body.dashboard-body {
     .dashboard-columns { flex-direction: column; gap: 20px; }
     .dashboard-question { font-size: var(--fs-5); }
     .dashboard-answers { grid-template-columns: 1fr; }
-    .dashboard-answer { font-size: 16px; padding: 14px 16px; min-height: 56px; }
+    .dashboard-answer { font-size: var(--fs-3); padding: 14px 16px; min-height: 56px; }
     /* Narrow screens: stack the split layout (image above Q&A). */
     .dashboard-left.has-image {
         grid-template-columns: 1fr;

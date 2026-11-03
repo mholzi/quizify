@@ -420,8 +420,17 @@ def dashboard_css() -> str:
     come from the shared modules as well as from ``10-tv.css``, and an
     assertion about how the television looks should see the same cascade the
     television does.
+
+    #1204: the television's sizes are tokens now (``--tv-fs-1`` …). Each
+    ``var(--tv-fs-N)`` in a declaration is replaced by the step's value from
+    the sheet's own ``:root``, so a size assertion reads the clamp() the
+    browser resolves, not the token's name. The definitions stay as they are.
     """
-    return (_WWW_DIR / "css" / "tv.css").read_text("utf-8")
+    css = (_WWW_DIR / "css" / "tv.css").read_text("utf-8")
+    steps = dict(re.findall(r"(--tv-fs-\d+):\s*([^;]+);", css))
+    return re.sub(
+        r"var\((--tv-fs-\d+)\)", lambda m: steps.get(m.group(1), m.group(0)), css
+    )
 
 
 def dashboard_markup() -> str:

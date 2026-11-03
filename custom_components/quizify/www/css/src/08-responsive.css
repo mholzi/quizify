@@ -514,31 +514,15 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-family: var(--font-body);
-  font-weight: 700;
   font-size: var(--fs-2);
   border-radius: var(--radius-md);
   cursor: pointer;
   padding: 11px 14px;
-  border: 1px solid transparent;
   line-height: 1;
 }
-.pl-result-bar-btn--ghost {
-  background: transparent;
-  /* Bar is a fixed cream surface regardless of theme, so the ghost
-     text must be dark ink (not the theme-aware text token, which goes
-     cream in dark mode and disappears against the bar). #149-style
-     visibility fix for the admin "End game" button on dark-OS hosts. */
-  border-color: #C9C0A8;
-  color: #2A2820;
-}
-.pl-result-bar-btn--ghost:hover { background: rgba(42, 40, 32, 0.06); }
-.pl-result-bar-btn--primary {
-  background: var(--color-accent-primary);
-  color: var(--on-accent);
-  box-shadow: var(--glow-primary);
-}
-.pl-result-bar-btn--primary:hover { background: var(--color-accent-brand-hover); }
+/* The look is .btn-ghost / .btn-primary (02-shared.css, #1204). The primary
+   keeps a transparent 1 px border so both buttons stand the same height. */
+.pl-result-bar-btn--primary { border: 1px solid transparent; }
 .pl-result-bar-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
 /* When the admin bar isn't visible, the result page doesn't need bottom
@@ -849,12 +833,9 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
 .pack-submit-status--bad { color: var(--error-ink); }
 .pack-submit-status--pending { color: var(--color-text-muted); }
 
-/* shared ghost button for "back" / secondary step actions */
-.btn-ghost {
-    background: transparent;
-    border: 1px solid var(--color-border-medium);
-    color: var(--color-text-secondary);
-    font-weight: 600;
+/* The ghost look lives in 02-shared.css (#1204); here only its place under
+   the pack-submit step's primary button. */
+.pack-step-pane .btn-ghost {
     margin-top: 8px;
 }
 
