@@ -636,9 +636,9 @@
     var HOST_STEP_MIN_MS = 1500;
     var HOST_STEP_MAX_MS = 8000;
     var HOST_STEP_POLL_MS = 250;
-    // #1192: how long a new state must have been on screen before a tap on
-    // the re-enabled button counts as a decision rather than a double tap.
-    var HOST_STEP_FRESH_MS = 250;
+    // #1192: a second tap this soon after the first is a double tap, even when
+    // the game has already moved on and the button is live again.
+    var HOST_STEP_DOUBLE_TAP_MS = 600;
 
     // #1192: the lock keys on the state the tap left, not on the phase name
     // alone. A question that ends inside the 1.5 s floor goes question ->
@@ -648,10 +648,7 @@
     // reached through its question, differs from round 1's.
     function setPhase(phase) {
         // A repeated push of the phase we are in is not a new state.
-        if (phase !== state.currentPhase) {
-            state.phaseSeq = (state.phaseSeq || 0) + 1;
-            state.phaseAt = Date.now();
-        }
+        if (phase !== state.currentPhase) state.phaseSeq = (state.phaseSeq || 0) + 1;
         state.currentPhase = phase;
     }
 
@@ -666,15 +663,13 @@
             // floor has passed and the game has moved on, an enabled button
             // is a live button, whatever the release poll has not yet done.
             if (btn.disabled || !lockMoved(held)) return false;
-            // #1192: the 1.5 s floor is measured from the tap, so a question
-            // that ends fast puts a fresh reveal (and a re-enabled button) on
-            // screen inside it, and the host's tap on that reveal was dropped
-            // for up to 0.6 s. What the floor guards is the double tap, which
-            // lands within a few hundred ms of the state the first tap
-            // produced. A tap on a state that has been showing for a moment is
-            // a decision.
-            if (Date.now() - held.t0 < HOST_STEP_MIN_MS
-                && Date.now() - (state.phaseAt || 0) < HOST_STEP_FRESH_MS) return false;
+            // #1192: the 1.5 s floor guards a tap on an unchanged screen,
+            // and that is what the lock check above already does. Once the
+            // state has moved and the button is live, only a double tap (a
+            // second tap within moments of the first) is dropped; a question
+            // that ended fast puts a fresh reveal on screen inside 1.5 s and
+            // the host's tap on it is a decision.
+            if (Date.now() - held.t0 < HOST_STEP_DOUBLE_TAP_MS) return false;
             btn._qzHostLock = null;
         }
         if (!sendFn(type, payload || {})) return false;

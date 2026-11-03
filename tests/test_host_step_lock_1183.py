@@ -247,9 +247,22 @@ btn.disabled = false;
 advance(290);
 out.lockStillHeld = !!btn._qzHostLock;
 out.tapOnFreshReveal = pu.hostStep(btn, send, 'next_round');
+// The second live run: tap at 0, reveal at +700, host taps at +926.
+var b3 = QZ.el('pause-game-btn');
+advance(5000);
+pu.setPhase('ANSWER_REVEAL');
+pu.hostStep(b3, send, 'next_round');
+advance(10);
+pu.setPhase('QUESTION_ACTIVE');
+advance(700);
+pu.setPhase('ANSWER_REVEAL');
+b3.disabled = false;
+advance(216);
+out.tapAt926 = pu.hostStep(b3, send, 'next_round');
 
 // A double tap stays guarded: the reveal appears 100 ms after the tap and the
-// second tap follows 100 ms later.
+// second tap follows 100 ms later. (Live: a second tap 926 ms after the first,
+// 210 ms into the reveal, must go out.)
 var b2 = QZ.el('skip-question-btn');
 advance(5000);
 pu.setPhase('ANSWER_REVEAL');
@@ -279,5 +292,6 @@ def test_a_tap_on_a_fresh_reveal_inside_the_floor_is_not_dropped_1192() -> None:
     assert out["first"] is True
     assert out["lockStillHeld"], "the render re-enabled the button under a live lock"
     assert out["tapOnFreshReveal"] is True, "the host's tap on the new reveal must send"
+    assert out["tapAt926"] is True, "a tap 210 ms into the reveal must send"
     assert out["doubleTap"] is False, "a double tap on a just-appeared reveal stays guarded"
-    assert out["sent"] == ["next_round", "next_round", "next_round"]
+    assert out["sent"] == ["next_round"] * 5
