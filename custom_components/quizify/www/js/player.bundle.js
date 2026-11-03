@@ -9623,6 +9623,11 @@
         // Check if admin via URL param
         if (urlParams.get('admin') === 'true') {
             state.isAdmin = true;
+            // #1212: the host's seat stays in this tab, never in the
+            // session every tab of the browser shares.
+            if (window.QuizifyClientCore && window.QuizifyClientCore.useHostSeat) {
+                window.QuizifyClientCore.useHostSeat();
+            }
         }
 
         // i18n init. A stored per-player choice (#492) wins over browser

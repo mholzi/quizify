@@ -28,21 +28,41 @@
     // Player session (token + name)
     // ============================================
     //
-    // The phone writes these on join and reads them on reload; the host page
-    // writes the same two keys when it joins as a player, so that the redirect
-    // to /quizify/player resumes the session instead of racing a fresh join
-    // against its own still-open admin socket. Before this module the host
-    // spelled the key names out as string literals of its own — renaming one
-    // on the phone would have broken the host with nothing to catch it.
+    // The phone writes these on join and reads them on reload. The host page,
+    // when it joins as a player, writes its seat (HOST_SEAT_KEYS, #1212) so
+    // that the redirect to /quizify/player resumes the session instead of
+    // racing a fresh join against its own still-open admin socket. Before
+    // this module the host spelled the key names out as string literals of
+    // its own — renaming one on the phone would have broken the host with
+    // nothing to catch it.
 
-    var SESSION_TOKEN_KEY = 'quizify_session_token';
-    var SESSION_NAME_KEY = 'quizify_player_name';
-    var SESSION_SAVED_KEY = 'quizify_session_saved_at';
-    // #1193: the game this seat last sat in ('' = the lobby before any game
-    // started). A reload into the same game rejoins silently; a stored seat
-    // whose game is over asks first. Absent on a session saved before the
-    // key existed, which keeps the old silent behaviour.
-    var SESSION_GAME_KEY = 'quizify_session_game';
+    var PLAYER_KEYS = {
+        token: 'quizify_session_token',
+        name: 'quizify_player_name',
+        saved: 'quizify_session_saved_at',
+        // #1193: the game this seat last sat in ('' = the lobby before any
+        // game started). A reload into the same game rejoins silently; a
+        // stored seat whose game is over asks first. Absent on a session
+        // saved before the key existed, which keeps the old silent
+        // behaviour.
+        game: 'quizify_session_game'
+    };
+
+    // #1212: the host's own seat ("Join as player" on /quizify/admin, then
+    // the redirect to /quizify/player?admin=true) lives under keys of its
+    // own, in sessionStorage only. It used to be written into PLAYER_KEYS in
+    // localStorage, which every tab of the browser shares: a /quizify/player
+    // tab opened later on the host's phone silently reconnected as the host
+    // (same running game, so no #1193 prompt). sessionStorage belongs to the
+    // tab and survives its reload and the same-tab redirect, which is all
+    // the host seat needs. A player page never reads these keys; only a page
+    // that called useHostSeat() does, and only from its own tab.
+    var HOST_SEAT_KEYS = {
+        token: 'quizify_host_seat_token',
+        name: 'quizify_host_seat_name',
+        saved: 'quizify_host_seat_saved_at',
+        game: 'quizify_host_seat_game'
+    };
 
     // #1183: localStorage, not sessionStorage. A guest who came by QR camera
     // has a tab without history; Android's back button closes it, and a
@@ -56,6 +76,10 @@
     // from walking into a later game.
     var SESSION_MAX_AGE_MS = 12 * 60 * 60 * 1000;
 
+    // #1212: set once by the host's player page (?admin=true); from then on
+    // the four session functions below work on the host seat instead.
+    var _hostSeat = false;
+
     function _durable() {
         try { return typeof localStorage !== 'undefined' ? localStorage : null; } catch (e) { return null; }
     }
@@ -64,65 +88,92 @@
         try { return typeof sessionStorage !== 'undefined' ? sessionStorage : null; } catch (e) { return null; }
     }
 
-    function saveSession(token, name) {
-        var store = _durable() || _tab();
+    function _write(store, keys, token, name) {
         if (!store) return;
         try {
             // A different seat does not inherit the last one's game (#1193).
-            if (store.getItem(SESSION_NAME_KEY) !== name) store.removeItem(SESSION_GAME_KEY);
-            store.setItem(SESSION_TOKEN_KEY, token);
-            store.setItem(SESSION_NAME_KEY, name);
-            store.setItem(SESSION_SAVED_KEY, String(Date.now()));
+            if (store.getItem(keys.name) !== name) store.removeItem(keys.game);
+            store.setItem(keys.token, token);
+            store.setItem(keys.name, name);
+            store.setItem(keys.saved, String(Date.now()));
         } catch (e) { /* storage unavailable */ }
+    }
+
+    function saveSession(token, name) {
+        if (_hostSeat) { saveHostSeat(token, name); return; }
+        _write(_durable() || _tab(), PLAYER_KEYS, token, name);
+    }
+
+    /** The host's seat, in this tab only (#1212). Never in localStorage. */
+    function saveHostSeat(token, name) {
+        _write(_tab(), HOST_SEAT_KEYS, token, name);
     }
 
     // #1193: written from every snapshot that carries `game_id` while this
     // phone holds a seat, so it follows the seat from the lobby into the
     // game and on into the next one after "Play again".
     function saveSessionGame(gameId) {
-        var store = _durable() || _tab();
+        var keys = _hostSeat ? HOST_SEAT_KEYS : PLAYER_KEYS;
+        var store = _hostSeat ? _tab() : (_durable() || _tab());
         if (!store) return;
         try {
-            if (!store.getItem(SESSION_TOKEN_KEY)) return;
-            store.setItem(SESSION_GAME_KEY, gameId ? String(gameId) : '');
+            if (!store.getItem(keys.token)) return;
+            store.setItem(keys.game, gameId ? String(gameId) : '');
         } catch (e) { /* storage unavailable */ }
     }
 
-    function _read(store, checkAge) {
-        var token = store.getItem(SESSION_TOKEN_KEY);
-        var name = store.getItem(SESSION_NAME_KEY);
+    function _read(store, keys, checkAge) {
+        var token = store.getItem(keys.token);
+        var name = store.getItem(keys.name);
         if (!token || !name) return null;
         if (checkAge) {
-            var savedAt = Number(store.getItem(SESSION_SAVED_KEY));
+            var savedAt = Number(store.getItem(keys.saved));
             if (!savedAt || Date.now() - savedAt > SESSION_MAX_AGE_MS) return null;
         }
-        return { token: token, name: name, game: store.getItem(SESSION_GAME_KEY) };
+        return { token: token, name: name, game: store.getItem(keys.game) };
     }
 
     function getSession() {
         try {
+            if (_hostSeat) {
+                // Only this tab's own host seat: never the shared player
+                // session, which may be a guest's on this browser.
+                var own = _tab();
+                return (own && _read(own, HOST_SEAT_KEYS, true)) ||
+                    { token: null, name: null, game: null };
+            }
             var durable = _durable();
-            var found = durable && _read(durable, true);
+            var found = durable && _read(durable, PLAYER_KEYS, true);
             // A tab that was open across the update still holds its session
             // in sessionStorage; it may finish the evening on it.
             var tab = _tab();
-            if (!found && tab && tab !== durable) found = _read(tab, false);
+            if (!found && tab && tab !== durable) found = _read(tab, PLAYER_KEYS, false);
             return found || { token: null, name: null, game: null };
         } catch (e) {
             return { token: null, name: null, game: null };
         }
     }
 
+    function _clear(store, keys) {
+        if (!store) return;
+        try {
+            store.removeItem(keys.token);
+            store.removeItem(keys.name);
+            store.removeItem(keys.saved);
+            store.removeItem(keys.game);
+        } catch (e) { /* storage unavailable */ }
+    }
+
     function clearSession() {
-        [_durable(), _tab()].forEach(function (store) {
-            if (!store) return;
-            try {
-                store.removeItem(SESSION_TOKEN_KEY);
-                store.removeItem(SESSION_NAME_KEY);
-                store.removeItem(SESSION_SAVED_KEY);
-                store.removeItem(SESSION_GAME_KEY);
-            } catch (e) { /* storage unavailable */ }
-        });
+        // The host seat page leaves the shared player session alone: it may
+        // be a guest's on the same browser.
+        if (_hostSeat) { _clear(_tab(), HOST_SEAT_KEYS); return; }
+        [_durable(), _tab()].forEach(function (store) { _clear(store, PLAYER_KEYS); });
+    }
+
+    /** The host's player page (?admin=true) works on the host seat (#1212). */
+    function useHostSeat() {
+        _hostSeat = true;
     }
 
     // ============================================
@@ -387,8 +438,9 @@
         announceConnection(status, t);
     }
 
-    // The two key names and `socketUrl` stay private: saveSession /
-    // getSession / clearSession are the only way in, which is the whole point
+    // The key names and `socketUrl` stay private: saveSession /
+    // getSession / clearSession (and saveHostSeat / useHostSeat for the
+    // host's own seat, #1212) are the only way in, which is the whole point
     // of #787 — one owner for the spelling — and `createSocket` is the only
     // caller a page ever needs.
     window.QuizifyClientCore = {
@@ -396,6 +448,8 @@
         saveSessionGame: saveSessionGame,
         getSession: getSession,
         clearSession: clearSession,
+        saveHostSeat: saveHostSeat,
+        useHostSeat: useHostSeat,
         backoffDelay: backoffDelay,
         createSocket: createSocket,
         STALL_TIMEOUT_MS: STALL_TIMEOUT_MS,
