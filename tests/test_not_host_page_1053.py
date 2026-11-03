@@ -239,6 +239,8 @@ Object.keys(VIEW_IDS).forEach(function (name) {
 var els = { resetGameBtn: QZ.el('reset-game-btn'), endGameBtn: null };
 
 var _redirecting = false;
+// #1209: no seat joined from this page; the lobby phase.
+var _adminJoinedAs = null, currentPhase = 'LOBBY';
 var WIRE = [];
 var ws = { readyState: 1,
            send: function (raw) { WIRE.push(JSON.parse(raw).type); } };
@@ -287,6 +289,16 @@ def _run_page(steps: list[dict]) -> list[dict]:
     source = _ADMIN_JS.read_text("utf-8")
     flag = re.search(r"^\s*var _notHost = false;$", source, re.M)
     hconf = re.search(r"^\s*var _hostConfirmedSock = null;$", source, re.M)
+    # #1209: the lobby-reload state _onHostConfirmed / routeMessage read.
+    reload_vars = [
+        m.group(0)
+        for pat in (
+            r"^\s*var LOBBY_RELOAD_KEY = .*;$",
+            r"^\s*var ADMIN_SEAT_TOKEN_KEY = .*;$",
+            r"^\s*var _lobbyReloadDone = false;$",
+        )
+        if (m := re.search(pat, source, re.M))
+    ]
     parts = [
         flag.group(0) if flag else "",
         _block(source, "var NOT_HOST_SENDABLE = {"),
@@ -294,14 +306,21 @@ def _run_page(steps: list[dict]) -> list[dict]:
         _block(source, "function enterNotHost() {"),
         _block(source, "function leaveNotHost() {"),
         hconf.group(0) if hconf else "",
+        *reload_vars,
         _block(source, "function _sendLobbyPush(type, payload) {"),
         _block(source, "function _isHostConfirmation(msg) {"),
-        _block(source, "function _onHostConfirmed() {"),
+        _block(source, "function _onHostConfirmed(msg) {"),
         _block(source, "function _pushLanguage() {"),
         _block(source, "function _pushDifficulty() {"),
         _block(source, "function _pushTtsConfig(cfg) {"),
         _block(source, "function _pushHouseConfig(cfg) {"),
         _block(source, "function routeMessage(msg) {"),
+        _block(source, "function _afterLobbyFrame(msg) {"),
+        _block(source, "function _resumeLobbyAfterReload(msg) {"),
+        _block(source, "function _storeGet(key) {"),
+        _block(source, "function _storeSet(key, value) {"),
+        _block(source, "function _forgetLobbyReload() {"),
+        _block(source, "function _rosterHasName(players, name) {"),
         _block(source, "function showView(name) {"),
         _block(source, "function send(type, payload, opts) {"),
         _block(source, "function handleMessage(msg) {"),
