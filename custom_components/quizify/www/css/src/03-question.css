@@ -36,9 +36,9 @@
 
 .timer-text {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: var(--fs-4);
     font-weight: var(--font-weight-bold);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     font-variant-numeric: tabular-nums;
     margin-bottom: var(--space-sm);
 }
@@ -62,7 +62,7 @@
    ========================================== */
 
 .round-indicator {
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -73,10 +73,10 @@
 .question-text {
     /* -20 % per Markus' live test 2026-05-29: previous 1.35 rem felt too
        heavy on phones once 3-line questions started appearing. */
-    font-size: 1.08rem;
+    font-size: var(--fs-3);
     font-weight: var(--font-weight-bold);
     line-height: 1.4;
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     padding: 0 var(--space-sm);
 }
 
@@ -92,8 +92,8 @@
     margin: var(--space-sm) 0;
     border-radius: var(--radius-md, 12px);
     overflow: hidden;
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
 }
 .question-media[hidden] { display: none; }
 /* #1182 L10: picture states. While loading the fixed-height frame is a
@@ -116,7 +116,7 @@
     height: 100%;
     padding: var(--space-md);
     color: var(--color-text-muted);
-    font-size: var(--font-size-base);
+    font-size: var(--fs-2);
     line-height: 1.4;
     text-align: center;
 }
@@ -162,9 +162,9 @@
     background: rgba(255, 255, 255, 0.78);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
-    box-shadow: 0 1px 4px rgba(42, 40, 32, 0.18);
+    box-shadow: var(--elevation-1);
     color: var(--color-text-primary);
-    font-size: 15px;
+    font-size: var(--fs-3);
     line-height: 1;
     cursor: pointer;
     display: flex;
@@ -184,7 +184,7 @@
 .image-zoom-overlay {
     position: fixed;
     inset: 0;
-    z-index: 1000;
+    z-index: var(--z-modal);
     background: rgba(0, 0, 0, 0.92);
     display: flex;
     align-items: center;
@@ -208,14 +208,14 @@
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.15);
     color: #fff;
-    font-size: 18px;
+    font-size: var(--fs-4);
     line-height: 1;
     cursor: pointer;
 }
 
 .question-category {
     display: inline-block;
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     color: var(--sage-ink);
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -240,12 +240,12 @@
     width: 100%;
     min-height: 60px;
     padding: var(--space-md) var(--space-lg);
-    background: var(--color-dark-surface);
-    border: 2px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 2px solid var(--color-border-light);
     border-radius: var(--radius-lg);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     font-family: var(--font-system);
-    font-size: 1rem;
+    font-size: var(--fs-3);
     font-weight: var(--font-weight-medium);
     text-align: left;
     cursor: pointer;
@@ -279,9 +279,8 @@
     width: 32px;
     height: 32px;
     border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.08);
     font-weight: var(--font-weight-bold);
-    font-size: 0.875rem;
+    font-size: var(--fs-2);
     color: var(--sage-ink);
     flex-shrink: 0;
 }
@@ -327,7 +326,7 @@
 
 .answer-btn.wrong .answer-label {
     background: var(--color-error);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
 }
 
 @keyframes shake {
@@ -357,7 +356,7 @@
     right: var(--space-md);
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1.1rem;
+    font-size: var(--fs-3);
     line-height: 1;
     pointer-events: none;
 }
@@ -374,7 +373,7 @@
        in DM Sans, so at a matched font-size it reads as a faint dust speck
        next to a solid ★ — verified on device at 390 px. This is the size that
        makes the two glyphs look equally weighted, not equally specified. */
-    font-size: 1.5rem;
+    font-size: var(--fs-4);
 }
 
 /* Keep the answer text clear of the glyph. Only while a state is showing,
@@ -408,7 +407,7 @@
     border-radius: var(--radius-full);
     color: var(--sage-ink);
     font-family: var(--font-system);
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     font-weight: 600;
     cursor: pointer;
     transition: all var(--transition-normal);
@@ -443,7 +442,7 @@
    ========================================== */
 
 .fun-fact-label {
-    font-size: 0.7rem;
+    font-size: var(--fs-1);
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -452,9 +451,9 @@
 }
 
 .fun-fact-text {
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     line-height: 1.6;
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
 }
 
 
@@ -473,7 +472,7 @@
     align-items: center;
     gap: var(--space-xs);
     margin-bottom: var(--space-sm);
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
 }
 
@@ -517,7 +516,7 @@
     height: 20px;
     border-radius: 50%;
     color: var(--on-accent);
-    font-size: 0.6875rem;
+    font-size: var(--fs-1);
     font-weight: var(--font-weight-semibold);
     line-height: 1;
     opacity: 0.55;
@@ -526,7 +525,7 @@
 /* Whoever set the answer that stands is the solid one. */
 .qz-team-dots .qz-team-dot.is-setter {
     opacity: 1;
-    box-shadow: 0 0 0 2px var(--color-surface-dark);
+    box-shadow: 0 0 0 2px var(--color-bg-surface);
 }
 
 .answer-btn.has-team-answer {

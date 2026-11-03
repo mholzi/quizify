@@ -90,9 +90,6 @@
     /* Background — warm cream paper */
     --color-bg-primary: #FAF6EC;       /* cream paper */
     --color-bg-surface: #FFFFFF;       /* lifted surface (cards) */
-    --color-bg-light: #FAF6EC;
-    --color-bg-white: #FFFFFF;
-    --color-bg-card: #FFFFFF;
     --color-bg-card-alt: #F3EEDF;
 
     /* Primary accent: warm coral. Secondary accents: sage, sky, sun. */
@@ -100,25 +97,19 @@
        cohesive party-game palette, always at the same muted saturation. */
     --color-accent-primary: #E88A7F;           /* warm coral \u2014 primary CTAs, correct answers */
     --color-accent-secondary: #7FA897;         /* muted sage */
-    --color-accent-brand: #E88A7F;             /* legacy alias \u2192 coral */
     --color-accent-brand-hover: #D97568;
     --color-accent-blue: #7FA8C4;              /* muted sky */
-    --color-accent-blue-hover: #6A9AB6;
 
     /* Semantic */
     --color-success: #7FA897;                  /* sage for correct */
     --color-success-hover: #6E9685;
     --color-success-light: rgba(127, 168, 151, 0.18);
-    --color-success-alt: #7FA897;
-    --color-success-neon: #7FA897;
     --color-warning: #E8C47F;                  /* sun (warm yellow) */
-    --color-warning-dark: #D1AC65;
     --color-warning-light: rgba(232, 196, 127, 0.20);
-    --color-warning-alt: #E8C47F;
     --color-error: #D66A6A;                    /* muted brick \u2014 never fire-engine */
+    --color-error-fill: #D97070;               /* error surface under ink: toast, .btn-danger (ink 4.57 : 1, #1178) */
     --color-error-dark: #BB5353;
     --color-error-light: rgba(214, 106, 106, 0.15);
-    --color-error-neon: #D66A6A;
 
     /* Connection-dot halo (#983). The indicator's glow sits at .45 alpha,
        brighter than the --color-*-light fills above, which are backgrounds
@@ -132,7 +123,6 @@
 
     /* Player-dot / pill palette (muted mauve for variety) */
     --color-purple-primary: #B78FC7;
-    --color-neon-purple: #B78FC7;
 
     /* Badge backgrounds (soft tints of the accent colors) */
     --color-success-bg: rgba(127, 168, 151, 0.18);
@@ -144,23 +134,14 @@
     --color-text-secondary: #3C3930;
     --color-text-muted: #6E6A5C;               /* warm olive-gray */
     --color-text-light: #8F8A78;
-    --color-text-white: #2A2820;               /* on cream body, "text-white" = dark ink */
-    --color-text-dark: #2A2820;
-    --color-text-heading: #2A2820;
-    --color-text-neon-muted: #6E6A5C;
 
     /* Borders — subtle warm neutrals */
     --color-border-light: #E5DFCF;             /* hairline on cream */
     --color-border-medium: #D4CEBC;
     --color-border-dark: #BDB597;
-    --color-border-neon: #E5DFCF;              /* legacy alias \u2192 hairline */
 
     /* Surface colors (Soft Parlor is light-primary, so "dark surface"
        tokens are remapped to lifted-paper whites) */
-    --color-dark-surface: #FFFFFF;
-    --color-dark-surface-hover: #F3EEDF;
-    --color-dark-card: #FFFFFF;
-    --color-surface-dark: #FFFFFF;
 
     /* Medal colors */
     --color-gold: #E8C47F;                     /* sun */
@@ -202,15 +183,14 @@
     --font-system: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
-    --font-size-xs: 10px;
-    --font-size-sm: 12px;
-    --font-size-base: 14px;
-    --font-size-md: 16px;
-    --font-size-lg: 18px;
-    --font-size-xl: 20px;
-    --font-size-2xl: 24px;
-    --font-size-3xl: 28px;
-    --font-size-4xl: 32px;
+    /* Type scale (#1178 step 8): six steps in rem, so the .a11y root
+       percentage scales all of them. Nothing below --fs-1 (12 px). */
+    --fs-1: 0.75rem;        /* 12 px: eyebrows, meta, table heads (the floor) */
+    --fs-2: 0.875rem;       /* 14 px: hints, secondary text, chips */
+    --fs-3: 1rem;           /* 16 px: body, answer text, buttons */
+    --fs-4: 1.25rem;        /* 20 px: phone question, section titles */
+    --fs-5: 1.75rem;        /* 28 px: page titles, timer, big scores */
+    --fs-6: 2.5rem;         /* 40 px: TV question, champion, wordmark */
     --font-size-timer: 64px;
     --font-size-timer-up: clamp(1rem, 5.2vw, 1.5rem); /* #1174: phone clock text; es fits 320 px */
     --font-size-hero: 72px;
@@ -223,24 +203,16 @@
 
     /* Effect Tokens \u2014 soft shadows, no neon glow */
     --glow-primary: 0 4px 12px rgba(232, 138, 127, 0.22);
-    --glow-secondary: 0 4px 12px rgba(127, 168, 151, 0.22);
-    --glow-success: 0 4px 14px rgba(127, 168, 151, 0.28);
-    --glow-warning: 0 4px 12px rgba(232, 196, 127, 0.22);
-    --glow-error: 0 4px 12px rgba(214, 106, 106, 0.22);
-    --accent-glow: rgba(232, 138, 127, 0.22);
 
-    /* Shadow Tokens \u2014 soft drop shadows, layered depth */
-    --shadow-sm: 0 1px 2px rgba(42, 40, 32, 0.06);
-    --shadow-md: 0 2px 8px rgba(42, 40, 32, 0.08);
-    --shadow-lg: 0 6px 20px rgba(42, 40, 32, 0.10);
-    --shadow-xl: 0 16px 40px rgba(42, 40, 32, 0.14);
+    /* Elevation (#1178 step 9). Level 0 is flat: hairline only. */
+    --elevation-1: 0 1px 2px rgba(42, 40, 32, 0.06);         /* cards, tiles */
+    --elevation-2: 0 6px 20px rgba(42, 40, 32, 0.10);        /* toast, dropdown, timer pill */
+    --elevation-3: 0 16px 40px rgba(42, 40, 32, 0.14);       /* modal (with a scrim) */
 
     /* Border Radius Tokens \u2014 rounded, friendly, but never bubbly */
-    --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 12px;
-    --radius-xl: 14px;
-    --radius-2xl: 14px;
+    --radius-sm: 6px;       /* chips, badges */
+    --radius-md: 10px;      /* buttons, tiles, inputs */
+    --radius-lg: 14px;      /* cards, modals, panels; 12 px merged in (#1178) */
     --radius-full: 9999px;
 
     /* Transition Tokens */
@@ -308,9 +280,11 @@
     --dur-time-up: 260ms;         /* #1174: clock at zero, tiles dim */
 
     /* Z-Index Tokens */
-    --z-control-bar: 100;
-    --z-modal: 1000;
-    --z-overlay: 1100;
+    --z-sticky: 10;         /* sticky header, bottom bars */
+    --z-control-bar: 100;   /* host control bar */
+    --z-toast: 900;         /* toasts, floating reactions */
+    --z-modal: 1000;        /* modals and their scrim */
+    --z-overlay: 1100;      /* system: frozen, connection, round sweep */
 }
 
 /* Accessibility: visible focus ring for keyboard navigation. Browsers
@@ -321,7 +295,7 @@
 :focus-visible {
     outline: 2px solid var(--color-accent-primary);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
 }
 button:focus-visible,
 input:focus-visible,
@@ -411,7 +385,7 @@ a:focus-visible,
 .wager-panel {
     background: var(--color-bg-surface);
     border: 2px solid var(--color-accent-primary);
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     padding: var(--space-lg);
     margin: var(--space-md) 0;
     box-shadow: 0 4px 16px rgba(232, 138, 127, 0.18);
@@ -419,18 +393,18 @@ a:focus-visible,
 .wager-panel-title {
     margin: 0 0 var(--space-sm);
     font-family: var(--font-display);
-    font-size: 1.1rem;
-    color: var(--color-text-heading);
+    font-size: var(--fs-3);
+    color: var(--color-text-primary);
 }
 .wager-panel-hint {
     margin: 0 0 var(--space-md);
     color: var(--color-text-muted);
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
 }
 /* Timeout-keeps-stake clarification (#301): de-emphasised vs the main hint
    so it reads as a footnote rule, not a second instruction. */
 .wager-panel-timeout-note {
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     font-style: italic;
     opacity: 0.85;
 }
@@ -447,13 +421,13 @@ a:focus-visible,
 .wager-value {
     font-family: var(--font-mono);
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     min-width: 6.5em;
     text-align: right;
 }
 .wager-bank-line {
     margin: 0 0 var(--space-md);
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
 }
 .wager-bank {
@@ -474,7 +448,7 @@ a:focus-visible,
 }
 .wager-panel--collapsed .wager-panel-title {
     margin: 0;
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
 }
 .wager-panel--collapsed .wager-panel-hint,
 .wager-panel--collapsed .wager-slider-row,
@@ -495,11 +469,11 @@ a:focus-visible,
     background: var(--color-success-bg);
     color: var(--sage-ink);
     border: 1px solid var(--color-success);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     padding: 6px 14px;
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
     font-weight: 600;
-    z-index: 9999;
+    z-index: var(--z-toast);
     pointer-events: none;
     animation: reaction-bonus-rise 1500ms ease-out forwards;
 }
@@ -519,7 +493,7 @@ a:focus-visible,
     margin-left: auto;
     border: 0;
     background: transparent;
-    font-size: 1.1rem;
+    font-size: var(--fs-3);
     line-height: 1;
     width: 36px;
     height: 36px;

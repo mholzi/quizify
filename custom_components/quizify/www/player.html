@@ -1007,10 +1007,10 @@
          #reset-game-modal in admin.html: a guest tap on any of the four
          reset buttons opens this, and only its confirm button sends
          reset_game. -->
-    <div id="guest-reset-modal" class="modal hidden" role="dialog" aria-modal="true"
+    <div id="guest-reset-modal" class="modal qz-modal hidden" role="dialog" aria-modal="true"
          aria-labelledby="guest-reset-modal-title" aria-describedby="guest-reset-modal-text">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
+        <div class="modal-backdrop qz-modal-backdrop"></div>
+        <div class="modal-content qz-modal-card">
             <h2 id="guest-reset-modal-title" data-i18n="admin.resetGameConfirm">Reset game?</h2>
             <p id="guest-reset-modal-text" data-i18n="game.resetGuestWarning">All points and players will be cleared, and every phone goes back to the join screen.</p>
             <div class="modal-actions">
@@ -1021,10 +1021,10 @@
     </div>
 
     <!-- QR Modal (Lobby - full screen) -->
-    <div id="qr-modal" class="qr-modal hidden" role="dialog" aria-modal="true"
+    <div id="qr-modal" class="qr-modal qz-modal hidden" role="dialog" aria-modal="true"
          aria-labelledby="qr-modal-title">
-        <div class="qr-modal-backdrop"></div>
-        <div class="qr-modal-content">
+        <div class="qr-modal-backdrop qz-modal-backdrop"></div>
+        <div class="qr-modal-content qz-modal-card">
             <h2 id="qr-modal-title" class="sr-only" data-i18n="lobby.joinGameQr">QR code to join</h2>
             <div id="qr-modal-code" class="qr-modal-code">
                 <!-- Large QR code rendered here -->
@@ -1036,10 +1036,10 @@
     </div>
 
     <!-- Power-up target picker (freeze / steal) -->
-    <div id="powerup-target-modal" class="powerup-target-modal hidden" role="dialog" aria-modal="true"
+    <div id="powerup-target-modal" class="powerup-target-modal qz-modal hidden" role="dialog" aria-modal="true"
          aria-labelledby="powerup-target-title">
-        <div class="powerup-target-backdrop"></div>
-        <div class="powerup-target-content">
+        <div class="powerup-target-backdrop qz-modal-backdrop"></div>
+        <div class="powerup-target-content qz-modal-card">
             <h2 id="powerup-target-title" class="powerup-target-title"></h2>
             <p id="powerup-target-hint" class="powerup-target-hint" data-i18n="powerups.pickHint">Tap a player to target them</p>
             <ul id="powerup-target-list" class="powerup-target-list" role="list">
@@ -1051,10 +1051,10 @@
     </div>
 
     <!-- Invite Modal (QR code during active game for admin) -->
-    <div id="invite-modal" class="invite-modal hidden" role="dialog" aria-modal="true"
+    <div id="invite-modal" class="invite-modal qz-modal hidden" role="dialog" aria-modal="true"
          aria-labelledby="invite-modal-title">
-        <div class="invite-modal-backdrop"></div>
-        <div class="invite-modal-content">
+        <div class="invite-modal-backdrop qz-modal-backdrop"></div>
+        <div class="invite-modal-content qz-modal-card">
             <h2 id="invite-modal-title" class="invite-modal-title" data-i18n="lobby.invitePlayers">Invite players</h2>
             <p class="invite-modal-hint" data-i18n="lobby.invitePlayersHint">Share this QR code or link with friends</p>
             <div id="invite-modal-code" class="invite-modal-code">

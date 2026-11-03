@@ -134,7 +134,7 @@ body.dashboard-body {
     position: relative;
     height: 12px;
     background: var(--color-border-light);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     flex-shrink: 0;
     margin-bottom: clamp(20px, 2.4vw, 32px);
     overflow: hidden;
@@ -241,7 +241,7 @@ body.dashboard-body {
     height: 100%;
     background: var(--color-accent-primary);
     box-shadow: 0 0 12px var(--color-success-glow-soft);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     transition: width 0.8s linear;
     width: 100%;
 }
@@ -269,12 +269,12 @@ body.dashboard-body {
     position: fixed;
     top: 16px;
     right: 16px;
-    z-index: 100;
+    z-index: var(--z-control-bar);
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: rgba(214, 106, 106, 0.15);
     border: 1px solid var(--color-error);
     font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -364,14 +364,14 @@ body.dashboard-body {
     border-radius: var(--radius-md);
     background: color-mix(in srgb, var(--color-warning) 22%, transparent);
     color: var(--color-text-primary);
-    font-size: var(--font-size-xl);
+    font-size: var(--fs-4);
     line-height: 1.4;
     text-align: center;
 }
 
 .dashboard-qr-section canvas,
 .dashboard-qr-section img {
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     border: 1px solid var(--color-border-light);
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
 }
@@ -535,7 +535,7 @@ body.dashboard-body {
     padding: 8px 16px;
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #667: this chip carries a guest's name — the thing they look up
        at the television to check after scanning. At 12px uppercase it
@@ -563,7 +563,7 @@ body.dashboard-body {
     gap: 6px;
     padding: 10px 14px;
     border: 1px solid var(--color-border-light, #E5DFCF);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
 }
 
 .dashboard-team-name {
@@ -695,20 +695,20 @@ body.dashboard-body {
     font-size: 56px; line-height: 1.1; color: var(--coral-ink);
 }
 .dnl-card {
-    background: var(--color-bg-card, #fff);
+    background: var(--color-bg-surface, #fff);
     border: 1px solid var(--color-border-light, #E5DFCF);
-    border-radius: 16px; padding: 72px 32px 40px; margin: 12px 0;
+    border-radius: var(--radius-lg); padding: 72px 32px 40px; margin: 12px 0;
     position: relative;
 }
 .dnl-axis {
     position: relative; height: 5px;
-    background: var(--color-bg-card-alt, #F3EEDF); border-radius: 9999px;
+    background: var(--color-bg-card-alt, #F3EEDF); border-radius: var(--radius-full);
 }
 .dnl-tick { position: absolute; top: 50%; transform: translate(-50%, -50%); }
 .dnl-dot {
     width: 18px; height: 18px; border-radius: 50%;
-    border: 2px solid var(--color-bg-card, #fff);
-    box-shadow: 0 1px 4px rgba(42,40,32,0.25);
+    border: 2px solid var(--color-bg-surface, #fff);
+    box-shadow: var(--elevation-1);
 }
 .dnl-lbl {
     position: absolute; left: 50%; transform: translateX(-50%);
@@ -737,7 +737,7 @@ body.dashboard-body {
     /* #735: the true value sitting on the line, next to the guesses it
        is being compared against — the same step as the guesses. */
     font-size: clamp(16px, 1.6vw, 24px);
-    padding: 4px 12px; border-radius: 9999px; white-space: nowrap;
+    padding: 4px 12px; border-radius: var(--radius-full); white-space: nowrap;
 }
 .dnl-scale-ends {
     display: flex; justify-content: space-between;
@@ -795,7 +795,7 @@ body.dashboard-body {
     max-height: 62vh;
     width: auto;
     height: auto;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     border: 1px solid var(--color-border-light);
     object-fit: contain;
 }
@@ -811,21 +811,21 @@ body.dashboard-body {
    readable line in the same pane when it fails. */
 .dashboard-question-media.is-loading {
     min-height: 40vh;
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
     background: var(--color-bg-card-alt, #F3EEDF);
     animation: qz-skeleton var(--dur-skeleton) ease-in-out infinite;
 }
 .dashboard-question-media.is-loading .dashboard-question-image { opacity: 0; }
 .dashboard-question-media.is-missing {
     min-height: 40vh;
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
     border: 1px dashed var(--color-border-light);
 }
 .dashboard-question-media.is-missing .dashboard-question-image { display: none; }
 .dashboard-question-image-missing {
     padding: var(--space-lg);
     color: var(--color-text-muted);
-    font-size: var(--font-size-2xl);
+    font-size: 1.5rem;
     text-align: center;
 }
 .dashboard-question-image-missing[hidden] { display: none; }
@@ -861,7 +861,7 @@ body.dashboard-body {
     padding: clamp(16px, 1.8vw, 24px) clamp(18px, 2vw, 28px);
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(16px, 1.8vw, 22px);
     font-weight: 500;
@@ -917,7 +917,7 @@ body.dashboard-body {
     content: "★";
     order: 1;
     color: var(--sage-ink);
-    font-size: 16px;
+    font-size: var(--fs-3);
     line-height: 1;
     flex-shrink: 0;
 }
@@ -978,14 +978,14 @@ body.dashboard-body {
     min-width: clamp(56px, 5vw, 90px);
     height: clamp(10px, 1vw, 14px);
     background: #E5DFCF;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     overflow: hidden;
 }
 .dashboard-answer-bar-fill {
     height: 100%;
     width: 0%;
     background: rgba(127, 168, 151, 0.42);  /* sage muted for wrong */
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     /* #1169: the bar grows from the left edge with `scaleX`, not by
        transitioning `width` — a transform costs no layout, and the width is
        written once at reveal and then left alone. */
@@ -1046,7 +1046,7 @@ body.dashboard-body {
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     border-left: 3px solid var(--color-accent-primary);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     font-family: 'DM Sans', sans-serif;
     /* #376: scale for TV couch legibility (viewed from 2-3m) */
     font-size: clamp(18px, 1.8vw, 26px);
@@ -1115,7 +1115,7 @@ body.dashboard-body {
     align-items: center;
     gap: 14px;
     padding: 12px 16px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     font-family: 'DM Sans', sans-serif;
@@ -1199,7 +1199,7 @@ body.dashboard-body {
     color: var(--coral-ink);
     padding: 2px 8px;
     background: rgba(232, 138, 127, 0.10);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     letter-spacing: 0.04em;
 }
 
@@ -1212,7 +1212,7 @@ body.dashboard-body {
     background: var(--color-gold);
     color: var(--color-bg-primary);
     font-family: var(--font-mono);
-    font-size: var(--font-size-xs);
+    font-size: 10px;
     font-weight: var(--font-weight-semibold);
     white-space: nowrap;
 }
@@ -1225,7 +1225,7 @@ body.dashboard-body {
     font-size: clamp(14px, 1.3vw, 20px);
     font-weight: 700;
     padding: 2px 8px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-variant-numeric: tabular-nums;
 }
 .dashboard-leaderboard .leaderboard-delta.is-up {
@@ -1278,7 +1278,7 @@ body.dashboard-body {
     font-weight: 600;
     line-height: 1.2;
     text-align: center;
-    box-shadow: 0 6px 24px rgba(42, 40, 32, 0.22);
+    box-shadow: var(--elevation-2);
     animation: dashboard-powerup-in 260ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
 }
 
@@ -1482,7 +1482,7 @@ body.dashboard-body {
 }
 .dashboard-lightning-recap-row {
     padding: 12px 16px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     font-family: 'DM Sans', sans-serif;
@@ -1920,7 +1920,7 @@ body.dashboard-body {
     padding: 8px 12px;
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-family: 'DM Sans', sans-serif;
     color: var(--color-text-primary);
 }
@@ -2032,7 +2032,7 @@ body.dashboard-body {
 
 .awards-title {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 12px;
+    font-size: var(--fs-1);
     font-weight: 500;
     color: var(--coral-ink);
     text-transform: uppercase;
@@ -2062,7 +2062,7 @@ body.dashboard-body {
     padding: 12px 18px;
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     min-width: 220px;
     text-align: left;
     opacity: 0;
@@ -2115,7 +2115,7 @@ body.dashboard-body {
     max-width: 640px;
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     overflow: hidden;
     position: relative;
     z-index: 1;
@@ -2154,7 +2154,7 @@ body.dashboard-body {
 /* ---- Responsive ---- */
 @media (max-width: 768px) {
     .dashboard-columns { flex-direction: column; gap: 20px; }
-    .dashboard-question { font-size: 28px; }
+    .dashboard-question { font-size: var(--fs-5); }
     .dashboard-answers { grid-template-columns: 1fr; }
     .dashboard-answer { font-size: 16px; padding: 14px 16px; min-height: 56px; }
     /* Narrow screens: stack the split layout (image above Q&A). */

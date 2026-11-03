@@ -567,13 +567,9 @@
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'error-toast';
-            // #1077: `width:max-content` + a viewport cap — shrink-to-fit
-            // under `left:50%` capped the toast at half the screen, so a long
-            // line wrapped to two lines at 390 px.
-            toast.style.cssText = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);' +
-                'width:max-content;max-width:calc(100vw - 32px);box-sizing:border-box;text-align:center;' +
-                'background:#D65858;color:white;padding:10px 20px;border-radius:10px;' +
-                'font-size:0.85rem;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;';
+            // The look lives in CSS (.qz-toast, 02-shared.css, #1178), including
+            // #1077's `width:max-content` + viewport cap.
+            toast.className = 'qz-toast qz-toast--error';
             document.body.appendChild(toast);
         }
         return toast;
@@ -799,7 +795,7 @@
         container.innerHTML = (rows || []).map(function (r) {
             var rank = r.rank;
             var discCls = 'mstand-disc' + (medalClass[rank] ? ' ' + medalClass[rank] : '');
-            var rowCls = 'mstand-row' + (r.isYou ? ' mstand-row--me' : '');
+            var rowCls = 'qz-rank-row mstand-row' + (r.isYou ? ' mstand-row--me' : '');
             var youTag = r.isYou
                 ? '<span class="mstand-you">' + escapeHtml(youLabel) + '</span>' : '';
             return '<div class="' + rowCls + '">' +

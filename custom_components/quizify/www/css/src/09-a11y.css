@@ -29,29 +29,14 @@
    box exists, and so a future setup screen can read it the same way.
    ========================================== */
 
-/* Type scale, ~1.125×. Both channels have to move together: 138 rules in
-   07-player.css size themselves in `rem` (so the root percentage reaches
-   them), while the --font-size-* tokens are absolute px (so the percentage
-   does NOT). Bumping only one of the two would grow half the screen and
-   leave the other half behind, which reads as a rendering bug rather than a
-   setting. `.a11y` and `:root` have equal specificity and land on the same
-   element — this file is ordered after 00-tokens.css in build_css.py, so
-   source order decides and these win. Keep that ordering. */
+/* Type scale, ~1.125×. Since #1178 step 8 every font size is a --fs-* token
+   in rem (or a rem/em literal), so the root percentage alone grows the whole
+   screen. The px-based --font-size-* ladder this block used to restate is
+   gone. --font-size-timer and --font-size-hero stay px on purpose: at 64/72px
+   they are already the largest things on the screen, and scaling them is
+   what pushes the question text off a 390 px viewport. */
 .a11y {
     font-size: 112.5%;
-
-    --font-size-xs: 11px;
-    --font-size-sm: 14px;
-    --font-size-base: 16px;
-    --font-size-md: 18px;
-    --font-size-lg: 20px;
-    --font-size-xl: 23px;
-    --font-size-2xl: 27px;
-    --font-size-3xl: 32px;
-    --font-size-4xl: 36px;
-    /* --font-size-timer and --font-size-hero stay put: at 64/72px they are
-       already the largest things on the screen, and scaling them is what
-       pushes the question text off a 390 px viewport. */
 }
 
 /* Motion held still. Mirrors the global prefers-reduced-motion block in

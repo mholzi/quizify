@@ -29,7 +29,7 @@
             border: 1px solid var(--color-border-light);
             border-radius: var(--radius-full);
             font-family: var(--font-body);
-            font-size: 0.85rem;
+            font-size: var(--fs-2);
             color: var(--color-text-primary);
             cursor: pointer;
             transition: all var(--transition-fast);
@@ -49,7 +49,7 @@
         }
 
         .stat-card {
-            background: var(--color-bg-card);
+            background: var(--color-bg-surface);
             border: 1px solid var(--color-border-light);
             border-radius: var(--radius-lg);
             padding: var(--space-lg);
@@ -57,14 +57,14 @@
         }
 
         .stat-value {
-            font-size: 1.8rem;
+            font-size: var(--fs-5);
             font-weight: 800;
             color: var(--coral-ink);
             font-variant-numeric: tabular-nums;
         }
 
         .stat-label {
-            font-size: 0.75rem;
+            font-size: var(--fs-1);
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: var(--color-text-muted);
@@ -72,7 +72,7 @@
         }
 
         .section-title {
-            font-size: 0.85rem;
+            font-size: var(--fs-2);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -94,7 +94,7 @@
             padding: var(--space-sm) var(--space-md);
             text-align: left;
             border-bottom: 1px solid var(--color-border-light);
-            font-size: 0.85rem;
+            font-size: var(--fs-2);
         }
 
         .games-table th {
@@ -102,7 +102,7 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            font-size: 0.7rem;
+            font-size: var(--fs-1);
         }
 
         .games-table td {
@@ -110,7 +110,7 @@
         }
 
         .chart-container {
-            background: var(--color-bg-card);
+            background: var(--color-bg-surface);
             border: 1px solid var(--color-border-light);
             border-radius: var(--radius-lg);
             padding: var(--space-lg);
@@ -137,19 +137,19 @@
                 var(--color-accent-primary),
                 var(--color-accent-brand-hover)
             );
-            border-radius: 4px 4px 0 0;
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
             min-height: 2px;
             transition: height var(--transition-normal);
         }
 
         .chart-label {
-            font-size: 0.65rem;
+            font-size: var(--fs-1);
             color: var(--color-text-muted);
             margin-top: var(--space-xs);
         }
 
         .chart-value {
-            font-size: 0.7rem;
+            font-size: var(--fs-1);
             color: var(--color-text-muted);
             margin-bottom: var(--space-xs);
         }
@@ -173,7 +173,7 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: var(--fs-2);
             border-radius: var(--radius-full);
             background: var(--color-bg-surface);
             color: var(--color-text-muted);
@@ -206,18 +206,18 @@
             padding: var(--space-xl) var(--space-lg);
             border: 1px solid var(--color-border-light);
             border-radius: var(--radius-md);
-            background: var(--color-bg-card);
+            background: var(--color-bg-surface);
         }
         .analytics-error[hidden] { display: none; }
         .analytics-error-title { margin: 0 0 var(--space-xs); font-weight: 700; color: var(--color-text-primary); }
         .analytics-error-title .glyph { color: var(--coral-ink); margin-right: 0.35em; }
-        .analytics-error-detail { margin: 0 0 var(--space-md); color: var(--color-text-muted); font-size: var(--font-size-base); }
+        .analytics-error-detail { margin: 0 0 var(--space-md); color: var(--color-text-muted); font-size: var(--fs-2); }
         .analytics-stale-note {
             text-align: center;
             margin: 0 0 var(--space-md);
             color: var(--color-text-muted);
             font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: var(--font-size-sm);
+            font-size: var(--fs-1);
         }
         .analytics-stale-note[hidden] { display: none; }
         #content.is-stale .stats-grid,
@@ -229,7 +229,7 @@
             gap: var(--space-sm);
             color: var(--coral-ink);
             text-decoration: underline;
-            font-size: 0.85rem;
+            font-size: var(--fs-2);
             margin-bottom: var(--space-lg);
         }
     </style>

@@ -34,10 +34,13 @@ literals per file against the baseline; after lowering a count, run
 a token that exists, in pages, CSS modules and JS style strings alike
 (`tests/test_page_tokens_defined_705.py`).
 
-Migration status: #1178 steps 1–7 (this file, the generator, the lint, accent
-text tokens, ink on accent surfaces, one player palette, the television and the
-launcher without token copies). The remaining steps (type scale,
-radii/elevation/z-index, component merges, clean-up) are listed in #1178. Where this document describes a target that is not built yet, it says so.
+Migration status: #1178 steps 1–11 are in (this file, the generator, the
+lint, accent text tokens, ink on accent surfaces, one player palette, the
+television and the launcher without token copies, the type scale, radii /
+elevation / z-index, the shared toast, modal and rank-row bases, and the
+alias clean-up). Two parts are deliberately open and marked below: the
+television's type scale (it keeps its `clamp()` sizes) and the visual
+merge of the remaining button families and leaderboard builds.
 
 ## Product Context
 
@@ -97,33 +100,35 @@ the fallback immediately and never sits invisible.
 
 Licence texts and the full file list live in [`www/fonts/README.md`](../custom_components/quizify/www/fonts/README.md).
 
-### Scale (as built)
+### Scale (#1178 step 8)
 
-| Token | Size | `.a11y` (#372) |
-|-------|------|----------------|
-| `--font-size-xs` | 10px | 11px |
-| `--font-size-sm` | 12px | 14px |
-| `--font-size-base` | 14px | 16px |
-| `--font-size-md` | 16px | 18px |
-| `--font-size-lg` | 18px | 20px |
-| `--font-size-xl` | 20px | 23px |
-| `--font-size-2xl` | 24px | 27px |
-| `--font-size-3xl` | 28px | 32px |
-| `--font-size-4xl` | 32px | 36px |
-| `--font-size-timer` | 64px | — |
-| `--font-size-hero` | 72px | — |
+Six steps in rem. The `.a11y` mode (#372) sets the root to 112.5 %, so every
+step grows with it; there is no second ladder to keep in step any more.
 
-Honest status: these tokens are used in about 18 rules. The CSS carries
-roughly 150 different literal font sizes, 54 of them below 12 px, and the TV
-uses its own `clamp()` expressions (the TV question is
-`clamp(28px, 4.2vw, 56px)`). The lint baseline holds that number so it cannot
-grow.
+| Token | rem | At a 16 px root | `.a11y` | For |
+|-------|-----|-----------------|---------|-----|
+| `--fs-1` | 0.75rem | 12 px | 13.5 px | eyebrows, meta, table heads. The floor: nothing smaller. |
+| `--fs-2` | 0.875rem | 14 px | 15.75 px | hints, secondary text, chips |
+| `--fs-3` | 1rem | 16 px | 18 px | body, answer text, buttons |
+| `--fs-4` | 1.25rem | 20 px | 22.5 px | phone question, section titles, lede |
+| `--fs-5` | 1.75rem | 28 px | 31.5 px | page titles, timer, big scores |
+| `--fs-6` | 2.5rem | 40 px | 45 px | champion, wordmark, hero lines |
 
-Target (#1178 step 8, not built): six steps `--fs-1 … --fs-6` in rem
-(12 / 14 / 16 / 20 / 28 / 40 px at the default root), minimum 12 px, and the TV
-reaching its sizes through a larger root size instead of its own ladder. The
-earlier DESIGN.md ladder (`--fs-mono`, `--fs-body` … `--fs-4xl`) was never in
-the code; those names do not exist.
+Kept outside the scale on purpose: `--font-size-timer` (64 px) and
+`--font-size-hero` (72 px), which `.a11y` must not grow; `--font-size-timer-up`
+(a `clamp()` that keeps the Spanish clock on a 320 px phone); `em` sizes
+(relative to their parent); responsive `clamp()` headlines on the phone; and a
+handful of sizes above 44 px (podium numerals, the end-screen hero). Mapping
+rule used for the migration: below 12.4 px → `--fs-1`, below 14.8 → `--fs-2`,
+below 18 → `--fs-3`, up to 24 → `--fs-4`, below 34 → `--fs-5`, up to 44 →
+`--fs-6`.
+
+**Television: not migrated (open).** The plan puts the TV on the same six steps
+through a larger root (`html { font-size: clamp(16px, 1.25vw, 26px) }` in
+`10-tv.css`). At 1920 px that matches today's sizes within a few pixels, but at
+1280 px the root is 16 px and the TV would shrink to phone sizes (answers 22 →
+14 px, the question 54 → 40 px). The TV keeps its `clamp()` sizes until that
+is decided; the lint baseline holds them.
 
 ### Fonts blacklist (never use)
 
@@ -135,28 +140,30 @@ A four-color party palette at muted saturation, plus one warm cream neutral. The
 
 ### Palette
 
-The code has several aliases per value (left over from earlier themes). The
-first token in each row is the one to use; the others are listed so a reader
-recognises them, and go away in #1178 step 11.
+One token per value. The aliases left over from earlier themes
+(`--color-text-white` that was ink, `--color-dark-surface` that was white, the
+`*-neon` names and a dozen more) were renamed to the token in the third
+column or removed in #1178 step 11; the last column lists only the semantic
+names that stay on purpose.
 
 | Role | Hex | Token (use) | Aliases with the same value |
 |------|-----|-------------|-----------------------------|
-| Page background, cream paper | `#FAF6EC` | `--color-bg-primary` | `--color-bg-light` |
-| Surface (cards, tiles, rails) | `#FFFFFF` | `--color-bg-surface` | `--color-bg-white`, `--color-bg-card`, `--color-dark-surface`, `--color-dark-card`, `--color-surface-dark` |
-| Surface 2 (hover, chips, modals) | `#F3EEDF` | `--color-bg-card-alt` | `--color-dark-surface-hover` |
-| Text, warm ink | `#2A2820` | `--color-text-primary` | `--color-text-dark`, `--color-text-heading`, `--color-text-white` (misnamed: it is ink) |
+| Page background, cream paper | `#FAF6EC` | `--color-bg-primary` | |
+| Surface (cards, tiles, rails) | `#FFFFFF` | `--color-bg-surface` | |
+| Surface 2 (hover, chips, modals) | `#F3EEDF` | `--color-bg-card-alt` | |
+| Text, warm ink | `#2A2820` | `--color-text-primary` | |
 | Text, secondary | `#3C3930` | `--color-text-secondary` | |
-| Text, muted (labels, eyebrows) | `#6E6A5C` | `--color-text-muted` | `--color-text-neon-muted` |
+| Text, muted (labels, eyebrows) | `#6E6A5C` | `--color-text-muted` | |
 | Text, light | `#8F8A78` | `--color-text-light` | Not a text colour (3.2 : 1). Since #1178 step 4 every text rule that used it uses muted; it remains on a few borders and the "missed" verdict disc |
-| Hairline | `#E5DFCF` | `--color-border-light` | `--color-border-neon` |
+| Hairline | `#E5DFCF` | `--color-border-light` | |
 | Border medium / dark | `#D4CEBC` / `#BDB597` | `--color-border-medium` / `--color-border-dark` | |
-| **Coral**, primary accent | `#E88A7F` | `--color-accent-primary` | `--color-accent-brand` |
+| **Coral**, primary accent | `#E88A7F` | `--color-accent-primary` | |
 | Coral hover | `#D97568` | `--color-accent-brand-hover` | |
-| **Sage** | `#7FA897` | `--color-accent-secondary` | `--color-success`, `--color-success-alt`, `--color-success-neon` |
-| **Sky** | `#7FA8C4` | `--color-accent-blue` | hover `--color-accent-blue-hover` `#6A9AB6` |
-| **Sun** | `#E8C47F` | `--color-warning` | `--color-warning-alt`, `--color-gold` |
-| Error, warm brick (never fire-engine) | `#D66A6A` | `--color-error` | `--color-error-neon`; dark `--color-error-dark` `#BB5353` |
-| Mauve | `#B78FC7` | `--color-purple-primary` | `--color-neon-purple` |
+| **Sage** | `#7FA897` | `--color-accent-secondary` | `--color-success` (semantic) |
+| **Sky** | `#7FA8C4` | `--color-accent-blue` | |
+| **Sun** | `#E8C47F` | `--color-warning` | `--color-gold` (medal) |
+| Error, warm brick (never fire-engine) | `#D66A6A` | `--color-error` | fill under ink `--color-error-fill` `#D97070`; dark `--color-error-dark` `#BB5353` |
+| Mauve | `#B78FC7` | `--color-purple-primary` | |
 | Medals | `#E8C47F` / `#B8B2A0` / `#C99466` | `--color-gold` / `--color-silver` / `--color-bronze` | |
 
 Tints and glows: `--color-success-light` / `-bg` (sage 18 %),
@@ -176,6 +183,7 @@ borders, dots and bars, never in `color:` on a light ground.
 | Accent text | `--coral-ink` · `--sage-ink` · `--sky-ink` · `--sun-ink` · `--error-ink` · `--mauve-ink` | `#A4524A` · `#4C7262` · `#46708C` · `#86621F` · `#AC4444` · `#805D8E` | When text (or an icon stroke) has to be coloured: eyebrows, scores, timer warning, "Correct", deltas. ≥ 4.5 : 1 on cream, white, surface 2 and the accent's own tint. |
 | Medal text | `--gold-ink` · `--silver-ink` · `--bronze-ink` | `#86621F` · `#736C58` · `#8E5E33` | Rank numerals and podium digits. The medal fills stay `--color-gold` / `--color-silver` / `--color-bronze`. They replace the one-off rank colours `#B08930` / `#6F7C8A` / `#A35A2B`. `--bronze-ink` also strokes the clay "mixed" category icon. |
 | Text on an accent surface | `--on-accent` | `#2A2820` (ink) | Primary buttons, "Resume", answer letters, rank discs, verdict and step badges, initials on player dots. Decided 2026-11-02: ink, not white (white on coral is 2.5 : 1). |
+| Error surface with text | `--color-error-fill` | `#D97070` | Error toast, `.btn-danger`; ink on it is 4.57 : 1 (#1178 step 10). |
 | Body text | `--color-text-primary` · `--color-text-muted` | `#2A2820` · `#6E6A5C` | Everything else. `--color-text-light` is not a text colour. |
 
 Exceptions, on purpose: the wordmark's coral `ify` (a logotype, which WCAG
@@ -254,40 +262,49 @@ no Quizify tokens beyond fallback values.
 - **Max content width:** 1200 px on desktop/admin. TV is always full-bleed.
 - **Grid:** single-column on mobile, 12-column on admin with 4-unit gutter, 3-column answer row on TV.
 
-### Radii
+### Radii (#1178 step 9)
 
 | Token | Value | Use |
 |-------|-------|-----|
 | `--radius-sm` | 6px | chips, badges |
 | `--radius-md` | 10px | buttons, answer tiles, inputs |
-| `--radius-lg` | 12px | cards (merges into 14 px, see below) |
-| `--radius-xl` | 14px | cards, modals, panels |
-| `--radius-2xl` | 14px | duplicate of `--radius-xl` |
+| `--radius-lg` | 14px | cards, modals, panels |
 | `--radius-full` | 9999px | player dots, pills |
 
-Decided 2026-11-02 (#1178 step 9, not built): three radii only — 6, 10, 14 —
-plus full. 12 px merges into 14 px. **Nothing above 14 px**; eight rules in the
-code still use 16–22 px.
+Three radii plus full (decided 2026-11-02). 12 px merged into 14 px, and the
+duplicate `--radius-xl` / `--radius-2xl` are gone. **Nothing above 14 px**: the
+rules at 16–22 px (error/pause icon discs, the Lightning bolt, the frozen card,
+the end hero, TV cards) now use `--radius-lg`. Literal radii were mapped 4–7 →
+sm, 8–11 → md, 12 and up → lg, 999 → full; 2–3 px hairline details and `50 %`
+circles stay as they are.
 
 ### Elevation
 
-| Token | Value |
-|-------|-------|
-| `--shadow-sm` | `0 1px 2px rgba(42, 40, 32, 0.06)` |
-| `--shadow-md` | `0 2px 8px rgba(42, 40, 32, 0.08)` |
-| `--shadow-lg` | `0 6px 20px rgba(42, 40, 32, 0.10)` |
-| `--shadow-xl` | `0 16px 40px rgba(42, 40, 32, 0.14)` |
-| `--glow-primary` / `-secondary` / `-success` / `-warning` / `-error` | `0 4px 12–14px` accent at 22–28 % |
+| Token | Value | Use |
+|-------|-------|-----|
+| (level 0) | `none` | flat, hairline only |
+| `--elevation-1` | `0 1px 2px rgba(42, 40, 32, 0.06)` | cards, tiles |
+| `--elevation-2` | `0 6px 20px rgba(42, 40, 32, 0.10)` | dropdown, hover lift, banners, timer pill |
+| `--elevation-3` | `0 16px 40px rgba(42, 40, 32, 0.14)` | modals (over a scrim) |
+
+They replace `--shadow-sm` / `-md` (both → 1), `--shadow-lg` (→ 2) and
+`--shadow-xl` (→ 3), and the neutral literal drop shadows. Coloured glows stay
+what they are — `--glow-primary` is the primary button's hover, the sage halo
+marks the correct answer — and so do focus rings and inset borders.
 
 ### Z-index
 
-| Token | Value |
-|-------|-------|
-| `--z-control-bar` | 100 |
-| `--z-modal` | 1000 |
-| `--z-overlay` | 1100 |
+| Token | Value | Use |
+|-------|-------|-----|
+| `--z-sticky` | 10 | sticky phone header, the host's bottom bar on the result page |
+| `--z-control-bar` | 100 | host control bar, TV reconnect pill |
+| `--z-toast` | 900 | toasts, floating reactions, the iOS install hint |
+| `--z-modal` | 1000 | modals and their scrim, image zoom, the status-bar mask |
+| `--z-overlay` | 1100 | system: frozen overlay, round sweep, power-up banners |
 
-Literal z-indexes up to 9999 still exist (toasts); the baseline holds them.
+Toasts sit under modals now (they were at 9999). Left as literals: the
+in-component layers (`-1`, `1`, `2`) and three TV layers whose order matters
+among themselves (reactions 30, power-up banners 45, pause overlay 50).
 
 ## Motion
 
@@ -393,6 +410,15 @@ transitions; the baseline holds them.
 - **Tints cycle the four accents by theme** (coral / sage / sky / sun; `mixed`/`worldcup` use clay/sun). Flat — **no gradients**.
 - **Where applied (P1):** welcome hero category tiles, detail-view pack cards (`#category-chips .pack-card-icon`), and theme filter tabs. i18n label strings hold **text only** — the icon is rendered separately, never embedded in the translated string.
 
+## Components (#1178 step 10)
+
+| Component | Class | Where | Notes |
+|-----------|-------|-------|-------|
+| Toast | `.qz-toast` + `.qz-toast--error` (02-shared.css) | host error toast (`admin.js` `showErrorToast`), phone toast (`player-utils.js` `showToast`) | Both used to be the same JS style string with `#D65858`, white text and z-index 9999. The scripts now set only text, `top` and `opacity`. Ink on `--color-error-fill`, no shadow (as before), `--z-toast`. The phone's bonus toast (`.reaction-bonus-toast`) keeps its own pill look. |
+| Modal | `.qz-modal` wrapper, `.qz-modal-backdrop`, `.qz-modal-card` (06-admin.css) | host `.modal` sheets, phone guest-reset, QR, invite and power-up pickers | Position, scrim, hairline, `--radius-lg` and the fade-in live once. The family classes keep their ground (host sheets surface 2, phone pickers white), padding and width. |
+| Rank row | `.qz-rank-row` (07-player.css) | phone reveal standings (`.mstand-row`), phone end scoreboard (`.sb-row`) | The two phone builds share one card row. The TV row (`.dashboard-leaderboard .leaderboard-row`) and the host's list row (`.leaderboard-row`) are still their own builds: making them look alike is a design decision, not a merge. |
+| Button | `button, .btn` (02-shared.css) | everywhere | The base already carries size, radius, font and transitions; `.btn-primary` / `-secondary` / `-danger` are the variants. About twenty other button families (`.resbtn`, `.control-btn`, `.admin-header-btn`, `.powerup-btn` …) still restate their own look; folding them in changes how they look and needs a decision per family. |
+
 ## Accessibility
 
 Contrast is WCAG 2.x relative luminance, computed from the token values
@@ -436,7 +462,8 @@ The text tokens that replace the failing pairs (#1178 step 4):
 | Muted `#6E6A5C` on surface 2 (was text-light, 3.0) | 4.7 : 1 | AA |
 | `--on-accent` (ink) on coral / sage / sky / sun | 5.9 / 5.6 / 5.8 / 8.9 : 1 | AA |
 | `--on-accent` on moss `#9DB38A` / rosé `#C7A3A0` / mauve / terracotta | 6.5 / 6.5 / 5.5 / 6.4 : 1 | AA |
-| `--on-accent` on error `#D66A6A` (error toast, `.btn-danger`) | 4.3 : 1 | **short of AA** for text; fine for the ✓ / × badges (icons, 3 : 1) |
+| `--on-accent` on error `#D66A6A` (the "wrong" verdict disc) | 4.3 : 1 | glyph only, so 3 : 1 applies |
+| `--on-accent` on `--color-error-fill` `#D97070` (error toast, `.btn-danger`) | 4.57 : 1 | AA (#1178 step 10) |
 
 Rules that follow from this:
 
@@ -444,8 +471,13 @@ Rules that follow from this:
   never the accent itself.
 - Text on an accent surface is `--on-accent` (ink; decided 2026-11-02). The
   phone did this first, for the answer letters; admin and TV now match it.
-- Error surfaces are the one open pair: ink on `#D66A6A` is 4.3 : 1. A fix
-  needs a decision (a darker error fill, or white on `--error-ink`, 5.7 : 1).
+- Error surfaces that carry text use `--color-error-fill` `#D97070` with ink
+  (4.57 : 1; decided 2026-11-03, option "error fill under ink" rather than
+  white on a dark red). A darker red would lower the contrast with ink, so the
+  fill is a touch lighter than `--color-error`; it is still the same warm
+  brick. `.btn-danger` lifts on hover instead of darkening, because ink on
+  `--color-error-dark` is 3.2 : 1. `--color-error` stays for borders, dots and
+  the verdict disc.
 - Focus states: 2 px coral outline, offset 2 px. Never `outline: none` without a replacement.
 - Motion respects `prefers-reduced-motion: reduce` — durations and the motion delay tokens collapse to 0; `.a11y` does the same.
 - Minimum tap target on mobile: 44 × 44 px.
@@ -531,3 +563,4 @@ config.
 | 2026-09-05 | Display face drops to DM Sans; all faces bundled (#737, #738) | Cabinet Grotesk's licence forbids redistributing the files, and fetching it leaked every guest's IP. |
 | 2026-11-02 | Motion spec finished: round 1 (#1171) and round 2 (#1172) | Every duration and delay is a `--dur-*` token so reduced motion and `.a11y` can zero them together. |
 | 2026-11-02 | Design-system review (UX review 8) accepted; migration plan #1178 | One token source (`design/tokens.json`) with a generator and a ratchet lint; this file back in the repo under `docs/`, not shipped. Decisions: text on accent surfaces is ink (5.9 : 1 on coral), coral stays; dark mode removed from the spec, not built; host card keeps the HA theme; three radii (12 → 14, nothing above 14); player colours 7 and 8 are moss `#9DB38A` and rosé `#C7A3A0`. Contrast values recomputed — coral on cream is 2.3 : 1 and white on coral 2.5 : 1, not 3.1 and 3.4. |
+| 2026-11-03 | Error surfaces with text: lighter fill under ink (#1178 step 10) | `--color-error-fill` `#D97070`, ink 4.57 : 1, for the error toast and `.btn-danger`. A darker red under ink would have lowered the contrast; white on `--error-ink` was the alternative. |

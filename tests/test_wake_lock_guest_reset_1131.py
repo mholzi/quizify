@@ -247,10 +247,11 @@ def test_the_guest_dialog_mirrors_the_host_one() -> None:
     tag = html[html.rindex("<div", 0, start) : html.index(">", start) + 1]
     block = html[start : html.index("<!-- QR Modal", start)]
 
-    assert 'class="modal hidden"' in tag
+    # #1178 step 10: the shared modal base (.qz-modal) sits next to .modal.
+    assert 'class="modal qz-modal hidden"' in tag
     assert 'role="dialog"' in tag and 'aria-modal="true"' in tag
     assert 'aria-labelledby="guest-reset-modal-title"' in tag
-    assert 'class="modal-backdrop"' in block
+    assert 'class="modal-backdrop qz-modal-backdrop"' in block
     assert 'data-i18n="admin.resetGameConfirm"' in block
     assert 'data-i18n="game.resetGuestWarning"' in block
     assert (

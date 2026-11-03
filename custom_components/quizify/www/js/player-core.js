@@ -2340,7 +2340,7 @@
                 ? t('connection.retryConnection')
                 : t('join.joinButton');
         }
-        if (els.nameInput) els.nameInput.style.borderColor = '#D65858';
+        if (els.nameInput) els.nameInput.style.borderColor = 'var(--color-error)';
         // The input's aria-describedby target: persistent and announced to
         // screen readers, cleared on the next keystroke (setupJoinForm).
         var vmsg = document.getElementById('name-validation-msg');

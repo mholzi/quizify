@@ -90,7 +90,7 @@
     color: var(--sage-ink);
     font-weight: 600;
     margin-top: var(--space-sm);
-    text-shadow: 0 0 10px var(--color-success-neon);
+    text-shadow: 0 0 10px var(--color-success);
 }
 
 .admin-actions {
@@ -99,7 +99,7 @@
     padding: var(--space-md);
     margin: 0 calc(-1 * var(--space-md));
     background: linear-gradient(transparent, var(--color-bg-primary) 25%);
-    z-index: 100;
+    z-index: var(--z-control-bar);
 }
 
 .admin-actions .btn {
@@ -157,7 +157,7 @@
     background: var(--color-bg-surface);
     color: var(--error-ink);
     border: 1.5px solid var(--color-error);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--elevation-1);
 }
 
 .admin-actions #end-game-btn:hover:not(:disabled) {
@@ -175,7 +175,7 @@
     max-width: 100%;
     margin: 0 auto var(--space-sm);
     padding: 6px 14px 6px 6px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     color: var(--color-text-secondary);
@@ -185,7 +185,7 @@
 .admin-paused-indicator .qz-icon {
     width: 26px;
     height: 26px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
 }
 
 .timer-text.is-paused {
@@ -251,14 +251,14 @@
 .qz-team {
     margin: var(--space-lg) 0;
     padding: var(--space-md);
-    background: var(--color-surface-dark);
+    background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
 }
 
 .qz-team-askTitle {
     margin: 0 0 var(--space-xs);
-    font-size: 1rem;
+    font-size: var(--fs-3);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
     text-align: center;
@@ -267,7 +267,7 @@
 .qz-team-askHint,
 .qz-team-nameHint {
     margin: 0 0 var(--space-md);
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     line-height: 1.35;
     color: var(--color-text-muted);
     text-align: center;
@@ -293,7 +293,7 @@
 
 .qz-team-pickTitle {
     margin: 0 0 var(--space-sm);
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     font-weight: var(--font-weight-semibold);
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -319,7 +319,7 @@
     border-radius: var(--radius-md);
     color: var(--color-text-primary);
     font-family: var(--font-system);
-    font-size: 0.9375rem;
+    font-size: var(--fs-3);
     text-align: left;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
@@ -342,20 +342,20 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
 }
 
 .qz-team-itemJoin {
     flex: 0 0 auto;
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     font-weight: var(--font-weight-semibold);
     color: var(--coral-ink);
 }
 
 .qz-team-empty {
     margin: 0 0 var(--space-sm);
-    font-size: 0.875rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     text-align: center;
 }
@@ -380,12 +380,12 @@
     min-width: 0;
     min-height: 44px;   /* #1183: was 39 */
     padding: var(--space-sm) var(--space-md);
-    background: var(--color-surface-dark);
+    background: var(--color-bg-surface);
     border: 1px solid var(--color-border-medium);
     border-radius: var(--radius-md);
     color: var(--color-text-primary);
     font-family: var(--font-system);
-    font-size: 1rem;
+    font-size: var(--fs-3);
 }
 
 .qz-team-nameBtn {
@@ -416,7 +416,7 @@
 }
 
 .qz-team-mineName {
-    font-size: 1rem;
+    font-size: var(--fs-3);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
     overflow: hidden;
@@ -425,7 +425,7 @@
 }
 
 .qz-team-mineMembers {
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -440,13 +440,13 @@
     border-radius: var(--radius-md);
     color: var(--color-text-muted);
     font-family: var(--font-system);
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     cursor: pointer;
 }
 
 .qz-team-note {
     margin: var(--space-sm) 0 0;
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     text-align: center;
 }

@@ -3523,7 +3523,7 @@
                 correctLevel: QRCode.CorrectLevel.M,
             });
         } else {
-            container.innerHTML = '<div style="padding:20px;word-break:break-all;font-size:12px;">' + url + '</div>';
+            container.innerHTML = '<div style="padding:20px;word-break:break-all;font-size:var(--fs-1);">' + url + '</div>';
         }
     }
 
@@ -3564,7 +3564,7 @@
         var name = els.adminNameInput ? els.adminNameInput.value.trim() : '';
         if (!name) {
             if (els.adminNameInput) {
-                els.adminNameInput.style.border = '2px solid #D65858';
+                els.adminNameInput.style.border = '2px solid var(--color-error)';
                 setTimeout(function() { els.adminNameInput.style.border = ''; }, 1500);
             }
             return null;
@@ -4871,10 +4871,8 @@
     }
 
     // ---- Error toast ----
-    var ERROR_TOAST_STYLE = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);' +
-        'width:max-content;max-width:calc(100vw - 32px);box-sizing:border-box;text-align:center;' +
-        'background:#D65858;color:white;padding:10px 20px;border-radius:10px;' +
-        'font-size:0.85rem;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;';
+    // The look lives in CSS (.qz-toast, 02-shared.css, #1178); this only sets
+    // the class, the text and the opacity that shows it.
     var _errorToastTimer = null;
 
     function showErrorToast(message) {
@@ -4886,9 +4884,10 @@
         }
         // #1154: admin.html ships the element with `hidden` and no styling, so
         // setting opacity alone never showed it (`.hidden` is display:none
-        // !important). Take the class off and style it every time.
+        // !important). Take the class off and set the toast classes every time.
         toast.classList.remove('hidden');
-        toast.style.cssText = ERROR_TOAST_STYLE;
+        toast.classList.add('qz-toast');
+        toast.classList.add('qz-toast--error');
         toast.textContent = message;
         toast.style.opacity = '1';
         if (_errorToastTimer) clearTimeout(_errorToastTimer);
@@ -5181,32 +5180,32 @@ async function showPackNews(getLanguage) {
         banner.id = 'pack-news-banner';
         // Soft Parlor: white surface + coral left-accent + warm ink text on cream-ground page
         banner.style.cssText = [
-            'background:#FFFFFF',
-            'border:1px solid #E5DFCF',
-            'border-left:3px solid #E88A7F',
-            'border-radius:10px',
+            'background:var(--color-bg-surface)',
+            'border:1px solid var(--color-border-light)',
+            'border-left:3px solid var(--color-accent-primary)',
+            'border-radius:var(--radius-md)',
             'padding:12px 16px',
             'margin:12px 0',
             'display:flex',
             'align-items:flex-start',
             'gap:10px',
-            'font-size:0.9rem',
-            'color:#2A2820',
-            'box-shadow:0 2px 8px rgba(42, 40, 32, 0.08)',
+            'font-size:var(--fs-2)',
+            'color:var(--color-text-primary)',
+            'box-shadow:var(--elevation-1)',
             'position:relative',
         ].join(';');
 
         // data-i18n on the two static strings so a language switch re-runs
         // initPageTranslations over them like every other element on the page.
         banner.innerHTML =
-            '<span style="font-size:1.2rem;flex-shrink:0">🎁</span>' +
+            '<span style="font-size:var(--fs-4);flex-shrink:0">🎁</span>' +
             '<div style="flex:1">' +
                 '<strong data-i18n="admin.packNewsTitle" style="color:var(--coral-ink);font-family:\'DM Sans\',sans-serif;font-weight:700">' + window.QuizifyUtils.escapeHtml(tt('admin.packNewsTitle')) + '</strong>' +
                 '<div class="pack-news-names"></div>' +
                 '<div class="pack-news-yours-list"></div>' +
             '</div>' +
             '<button type="button" id="pack-news-dismiss" ' +
-                'style="background:none;border:none;color:#6E6A5C;cursor:pointer;font-size:1rem;padding:0;flex-shrink:0" ' +
+                'style="background:none;border:none;color:var(--color-text-muted);cursor:pointer;font-size:var(--fs-3);padding:0;flex-shrink:0" ' +
                 'data-i18n-title="common.close" title="' + window.QuizifyUtils.escapeHtml(tt('common.close')) + '">✕</button>';
 
         // Dismissing is persisted server-side: the packs stay announced across

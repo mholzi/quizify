@@ -841,7 +841,7 @@
                      room. Broadcast to admins AND dashboards since #613, and
                      drawn on the dashboard only. -->
                 <div id="admin-lobby-h2h"
-                     style="font-size:0.9rem;opacity:0.75;text-align:center;margin-top:0.5rem;display:none;"></div>
+                     style="font-size:var(--fs-2);opacity:0.75;text-align:center;margin-top:0.5rem;display:none;"></div>
 
                 <div class="lobby-e-actions">
                     <button type="button" id="start-gameplay-btn" class="btn btn-primary btn-lg btn-block hidden">
@@ -864,12 +864,12 @@
                     <span class="section-icon" aria-hidden="true">&#x2753;</span>
                     <span id="admin-round" class="round-indicator"></span>
                 </h2>
-                <div id="admin-question" class="question-text" style="font-size:1.1rem;"></div>
+                <div id="admin-question" class="question-text" style="font-size:var(--fs-3);"></div>
                 <!-- The detour's second line (#832): how many have bid, what the
                      chair cost, how the stake settled. Kept apart from
                      #admin-correct, which is the green "Correct: …" slot — a
                      lost stake printed in success green would read as a win. -->
-                <div id="admin-detour-note" style="font-size:0.9rem;opacity:0.75;margin-top:0.25rem;display:none;"></div>
+                <div id="admin-detour-note" style="font-size:var(--fs-2);opacity:0.75;margin-top:0.25rem;display:none;"></div>
                 <!-- Correct answer is only shown after reveal, not during active question -->
                 <div id="admin-correct" class="admin-correct-answer" style="display:none;"></div>
             </section>
@@ -892,7 +892,7 @@
                  waiting for. Styled like #admin-detour-note: a quiet second
                  line, not a heading. -->
             <div id="admin-answer-progress" role="status" aria-live="polite"
-                 style="font-size:0.9rem;opacity:0.75;margin-top:0.25rem;display:none;"></div>
+                 style="font-size:var(--fs-2);opacity:0.75;margin-top:0.25rem;display:none;"></div>
 
             <!-- Live leaderboard -->
             <section class="card-section mt-md">
@@ -953,9 +953,9 @@
                      sitting's tally (#612) — which arrives only once the
                      finished game is recorded, so it starts hidden. -->
                 <div id="admin-finale-h2h" class="mt-md"
-                     style="font-size:0.9rem;opacity:0.75;display:none;"></div>
+                     style="font-size:var(--fs-2);opacity:0.75;display:none;"></div>
                 <div id="admin-evening-tally"
-                     style="font-size:0.9rem;opacity:0.75;margin-top:0.25rem;display:none;"></div>
+                     style="font-size:var(--fs-2);opacity:0.75;margin-top:0.25rem;display:none;"></div>
             </section>
 
             <!-- #1185 P11: the install offer, with a reason, once after the
@@ -999,7 +999,7 @@
             <section id="admin-lightning-question-section" class="card-section">
                 <h2 class="section-header">⚡ <span data-i18n="lightning.title">Lightning round</span></h2>
                 <div id="admin-lightning-progress" class="round-indicator"></div>
-                <div id="admin-lightning-question" class="question-text" style="font-size:1.1rem;"></div>
+                <div id="admin-lightning-question" class="question-text" style="font-size:var(--fs-3);"></div>
                 <div id="admin-lightning-timer" class="timer-text mt-md"></div>
             </section>
             <!-- #1030: End Game's slot while the round runs. Empty in the
@@ -1032,9 +1032,9 @@
     </main>
 
     <!-- Admin join modal -->
-    <div id="admin-join-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="admin-join-modal-title">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
+    <div id="admin-join-modal" class="modal qz-modal hidden" role="dialog" aria-modal="true" aria-labelledby="admin-join-modal-title">
+        <div class="modal-backdrop qz-modal-backdrop"></div>
+        <div class="modal-content qz-modal-card">
             <h2 id="admin-join-modal-title" data-i18n="admin.joinModalTitleStart">Start game</h2>
             <p id="admin-join-modal-subtitle" data-i18n="admin.joinModalSubtitleStart">What's your name? You'll play along and host the game.</p>
             <div class="form-group">
@@ -1055,9 +1055,9 @@
     </div>
 
     <!-- End Game confirmation modal -->
-    <div id="end-game-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="end-game-modal-title">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
+    <div id="end-game-modal" class="modal qz-modal hidden" role="dialog" aria-modal="true" aria-labelledby="end-game-modal-title">
+        <div class="modal-backdrop qz-modal-backdrop"></div>
+        <div class="modal-content qz-modal-card">
             <h2 id="end-game-modal-title" data-i18n="admin.endGameConfirm">End game?</h2>
             <p data-i18n="admin.endGameWarning">The game ends here. Everyone jumps straight to the final results, and any remaining questions are skipped.</p>
             <div class="modal-actions">
@@ -1068,9 +1068,9 @@
     </div>
 
     <!-- Reset Game confirmation modal -->
-    <div id="reset-game-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="reset-game-modal-title">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
+    <div id="reset-game-modal" class="modal qz-modal hidden" role="dialog" aria-modal="true" aria-labelledby="reset-game-modal-title">
+        <div class="modal-backdrop qz-modal-backdrop"></div>
+        <div class="modal-content qz-modal-card">
             <h2 id="reset-game-modal-title" data-i18n="admin.resetGameConfirm">Reset game?</h2>
             <p data-i18n="admin.resetGameWarning">The current round and all players will be cleared. You'll return to the setup screen.</p>
             <div class="modal-actions">
@@ -1081,9 +1081,9 @@
     </div>
 
     <!-- Kick player confirmation modal (#480) -->
-    <div id="kick-player-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="kick-player-modal-title">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
+    <div id="kick-player-modal" class="modal qz-modal hidden" role="dialog" aria-modal="true" aria-labelledby="kick-player-modal-title">
+        <div class="modal-backdrop qz-modal-backdrop"></div>
+        <div class="modal-content qz-modal-card">
             <h2 id="kick-player-modal-title" data-i18n="admin.kickModalTitle">Remove player?</h2>
             <p id="kick-player-modal-text" data-i18n="admin.kickConfirm">Remove this player from the lobby?</p>
             <div class="modal-actions">
@@ -1099,9 +1099,9 @@
          further down. Embedded WebViews render or suppress those dialogs
          inconsistently, and the Android Companion has already produced two
          such surprises (#348, #377). -->
-    <div id="save-preset-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="save-preset-modal-title">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
+    <div id="save-preset-modal" class="modal qz-modal hidden" role="dialog" aria-modal="true" aria-labelledby="save-preset-modal-title">
+        <div class="modal-backdrop qz-modal-backdrop"></div>
+        <div class="modal-content qz-modal-card">
             <h2 id="save-preset-modal-title" data-i18n="setup.savePresetTitle">Save preset</h2>
             <p data-i18n="setup.savePresetBody">Rounds, difficulty, timer and pack selection are stored under this name.</p>
             <div class="form-group">
@@ -1121,9 +1121,9 @@
         </div>
     </div>
 
-    <div id="delete-preset-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="delete-preset-modal-title">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
+    <div id="delete-preset-modal" class="modal qz-modal hidden" role="dialog" aria-modal="true" aria-labelledby="delete-preset-modal-title">
+        <div class="modal-backdrop qz-modal-backdrop"></div>
+        <div class="modal-content qz-modal-card">
             <h2 id="delete-preset-modal-title" data-i18n="setup.deletePresetTitle">Delete preset?</h2>
             <p id="delete-preset-modal-text" data-i18n="setup.deletePresetBody">This preset will be removed for good.</p>
             <div class="modal-actions">
@@ -1138,9 +1138,9 @@
          promise; this sheet answers the question the button raises, namely how
          the address is supposed to reach the television. The direct open stays
          for a host who IS on the TV device. -->
-    <div id="cast-tv-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="cast-tv-modal-title">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
+    <div id="cast-tv-modal" class="modal qz-modal hidden" role="dialog" aria-modal="true" aria-labelledby="cast-tv-modal-title">
+        <div class="modal-backdrop qz-modal-backdrop"></div>
+        <div class="modal-content qz-modal-card">
             <h2 id="cast-tv-modal-title" data-i18n="dashboard.castModalTitle">Get Quizify onto the TV</h2>
             <p data-i18n="dashboard.castModalBody">Open this address in the browser on your TV.</p>
             <div id="cast-tv-url" class="cast-tv-url"></div>
@@ -1158,7 +1158,7 @@
     <div id="reaction-layer" class="reaction-layer-board" aria-hidden="true"></div>
 
     <!-- Error toast -->
-    <div id="error-toast" class="toast hidden" role="alert" aria-live="assertive"></div>
+    <div id="error-toast" class="toast qz-toast qz-toast--error hidden" role="alert" aria-live="assertive"></div>
 
     <!-- Version badge -->
     <div class="version-badge" id="version-badge">v{{VERSION}}</div>
