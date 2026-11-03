@@ -94,6 +94,18 @@
             <button id="kicked-rejoin-btn" class="btn btn-primary btn-glow" data-i18n="errors.removedRejoin">Back to join screen</button>
         </div>
 
+        <!-- #1193: this tab's seat went to another tab ("Play here"), or
+             the stored seat is from a game that is over ("Continue as
+             <name>?"). Title and primary button are set by
+             showSessionChoice() in player-core. -->
+        <div id="session-view" class="view hidden">
+            <div class="connection-lost-container" role="status">
+                <h1 id="session-title" data-i18n="session.movedTitle">You're now playing in another tab</h1>
+                <button id="session-primary-btn" class="btn btn-primary btn-glow" data-i18n="session.playHere">Play here</button>
+                <button id="session-other-btn" class="btn btn-secondary" data-i18n="session.someoneElse">I'm someone else</button>
+            </div>
+        </div>
+
         <!-- Join form -->
         <div id="join-view" class="view hidden">
             <div class="join-form">

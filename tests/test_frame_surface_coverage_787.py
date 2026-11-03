@@ -208,6 +208,29 @@ COVERAGE: dict[str, Coverage] = {
             ),
         },
     ),
+    # #1193: both go to a phone that holds (or held) a player seat.
+    "reconnect_stale": _c(
+        "unicast",
+        "phone",
+        ignored={
+            "tv": _NOT_A_PLAYER_TV,
+            "host": (
+                "the host page never sends last_game_id; only a freshly "
+                "loaded phone asks whether its stored game is over"
+            ),
+        },
+    ),
+    "session_moved": _c(
+        "unicast",
+        "phone",
+        ignored={
+            "tv": _NOT_A_PLAYER_TV,
+            "host": (
+                "the server skips admin sockets: the host page hands its "
+                "seat to /quizify/player on purpose"
+            ),
+        },
+    ),
     "scoring_status": _c(
         "unicast",
         "host",

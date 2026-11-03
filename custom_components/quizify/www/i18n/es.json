@@ -774,5 +774,12 @@
     "seatAnswering": "Silla caliente: responde {name}",
     "meta": "Pregunta {current} de {total} · {count, plural, one{1 jugador} other{# jugadores}}",
     "noToken": "Abre Quizify una vez para enlazar este panel"
+  },
+  "session": {
+    "movedTitle": "Ahora juegas en otra pestaña",
+    "playHere": "Jugar aquí",
+    "continueAs": "¿Seguir como {name}?",
+    "continue": "Seguir",
+    "someoneElse": "Soy otra persona"
   }
 }

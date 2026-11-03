@@ -774,5 +774,12 @@
     "seatAnswering": "Heißer Stuhl: {name} antwortet",
     "meta": "Frage {current} von {total} · {count, plural, one{1 Spieler} other{# Spieler}}",
     "noToken": "Öffne Quizify einmal, um dieses Dashboard zu verbinden"
+  },
+  "session": {
+    "movedTitle": "Du spielst jetzt in einem anderen Tab",
+    "playHere": "Hier spielen",
+    "continueAs": "Weiter als {name}?",
+    "continue": "Weiter",
+    "someoneElse": "Ich bin jemand anderes"
   }
 }

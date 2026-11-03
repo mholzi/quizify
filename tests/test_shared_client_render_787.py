@@ -652,10 +652,11 @@ console.log(JSON.stringify({
     }
     # #1183: the session survives the tab (localStorage), not only a reload.
     assert out["tabWritten"] == 0
-    assert out["read"] == {"token": "tok-1", "name": "Anna"}
-    assert out["stale"] == {"token": None, "name": None}
-    assert out["legacy"] == {"token": "old", "name": "Ben"}
-    assert out["after"] == {"token": None, "name": None}
+    # ``game`` (#1193) is null until a snapshot names the game the seat is in.
+    assert out["read"] == {"token": "tok-1", "name": "Anna", "game": None}
+    assert out["stale"] == {"token": None, "name": None, "game": None}
+    assert out["legacy"] == {"token": "old", "name": "Ben", "game": None}
+    assert out["after"] == {"token": None, "name": None, "game": None}
 
 
 def test_storage_that_throws_is_survivable(tmp_path: Path) -> None:
@@ -675,4 +676,4 @@ console.log(JSON.stringify({ read: read }));
 """,
         tmp_path,
     )
-    assert out["read"] == {"token": None, "name": None}
+    assert out["read"] == {"token": None, "name": None, "game": None}

@@ -38,6 +38,11 @@
     var SESSION_TOKEN_KEY = 'quizify_session_token';
     var SESSION_NAME_KEY = 'quizify_player_name';
     var SESSION_SAVED_KEY = 'quizify_session_saved_at';
+    // #1193: the game this seat last sat in ('' = the lobby before any game
+    // started). A reload into the same game rejoins silently; a stored seat
+    // whose game is over asks first. Absent on a session saved before the
+    // key existed, which keeps the old silent behaviour.
+    var SESSION_GAME_KEY = 'quizify_session_game';
 
     // #1183: localStorage, not sessionStorage. A guest who came by QR camera
     // has a tab without history; Android's back button closes it, and a
@@ -63,9 +68,23 @@
         var store = _durable() || _tab();
         if (!store) return;
         try {
+            // A different seat does not inherit the last one's game (#1193).
+            if (store.getItem(SESSION_NAME_KEY) !== name) store.removeItem(SESSION_GAME_KEY);
             store.setItem(SESSION_TOKEN_KEY, token);
             store.setItem(SESSION_NAME_KEY, name);
             store.setItem(SESSION_SAVED_KEY, String(Date.now()));
+        } catch (e) { /* storage unavailable */ }
+    }
+
+    // #1193: written from every snapshot that carries `game_id` while this
+    // phone holds a seat, so it follows the seat from the lobby into the
+    // game and on into the next one after "Play again".
+    function saveSessionGame(gameId) {
+        var store = _durable() || _tab();
+        if (!store) return;
+        try {
+            if (!store.getItem(SESSION_TOKEN_KEY)) return;
+            store.setItem(SESSION_GAME_KEY, gameId ? String(gameId) : '');
         } catch (e) { /* storage unavailable */ }
     }
 
@@ -77,7 +96,7 @@
             var savedAt = Number(store.getItem(SESSION_SAVED_KEY));
             if (!savedAt || Date.now() - savedAt > SESSION_MAX_AGE_MS) return null;
         }
-        return { token: token, name: name };
+        return { token: token, name: name, game: store.getItem(SESSION_GAME_KEY) };
     }
 
     function getSession() {
@@ -88,9 +107,9 @@
             // in sessionStorage; it may finish the evening on it.
             var tab = _tab();
             if (!found && tab && tab !== durable) found = _read(tab, false);
-            return found || { token: null, name: null };
+            return found || { token: null, name: null, game: null };
         } catch (e) {
-            return { token: null, name: null };
+            return { token: null, name: null, game: null };
         }
     }
 
@@ -101,6 +120,7 @@
                 store.removeItem(SESSION_TOKEN_KEY);
                 store.removeItem(SESSION_NAME_KEY);
                 store.removeItem(SESSION_SAVED_KEY);
+                store.removeItem(SESSION_GAME_KEY);
             } catch (e) { /* storage unavailable */ }
         });
     }
@@ -373,6 +393,7 @@
     // caller a page ever needs.
     window.QuizifyClientCore = {
         saveSession: saveSession,
+        saveSessionGame: saveSessionGame,
         getSession: getSession,
         clearSession: clearSession,
         backoffDelay: backoffDelay,
