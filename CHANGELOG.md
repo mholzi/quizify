@@ -3,6 +3,38 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.26.0-RC5] — 2026-11-03
+
+**Moving Screens, Safer Taps, Video Games, and a Steadier Host Seat**
+
+Since 1.25.0 the screens move, host buttons are harder to hit by mistake, and there is a new pack.
+
+### ✨ Screens that move
+
+The leaderboard, answer count, estimates, wagers, streaks and hot seat now animate, and the phone timer shows when time is up.
+
+### 👆 Safer taps
+
+Ending, resetting or starting a new game asks first on every screen.
+
+### 🎮 Video games
+
+A new pack in German, English and Spanish, with 160 questions each.
+
+### 🚪 When a guest leaves
+
+The host can take a guest who left out of the scoring.
+
+### 🎛️ A steadier host page
+
+A lobby reload keeps the host's seat, failed loads say so, and Next question no longer stalls after a fast question.
+
+### 🔒 Tighter connections
+
+Pack submit and request calls need the admin token.
+
+Also: one wording across admin, phone and TV.
+
 ## [1.26.0-RC4] — 2026-11-03
 
 **Moving Screens, Safer Taps, Video Games, and a Steadier Host Seat**
