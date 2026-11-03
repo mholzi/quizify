@@ -637,17 +637,40 @@
     var HOST_STEP_MAX_MS = 8000;
     var HOST_STEP_POLL_MS = 250;
 
+    // #1192: the lock keys on the state the tap left, not on the phase name
+    // alone. A question that ends inside the 1.5 s floor goes question ->
+    // reveal and lands on the phase the tap recorded; keyed on the name the
+    // lock never saw a change and held 8 s over a perfectly live button.
+    // phaseSeq counts every phase change (setPhase), so round 2's reveal,
+    // reached through its question, differs from round 1's.
+    function setPhase(phase) {
+        // A repeated push of the phase we are in is not a new state.
+        if (phase !== state.currentPhase) state.phaseSeq = (state.phaseSeq || 0) + 1;
+        state.currentPhase = phase;
+    }
+
+    function lockMoved(lock) {
+        return state.currentPhase !== lock.phase || (state.phaseSeq || 0) !== lock.seq;
+    }
+
     function hostStep(btn, sendFn, type, payload) {
-        if (btn && btn._qzHostLock) return false;
+        if (btn && btn._qzHostLock) {
+            var held = btn._qzHostLock;
+            // A lock and an enabled button must never disagree: once the
+            // floor has passed and the game has moved on, an enabled button
+            // is a live button, whatever the release poll has not yet done.
+            if (btn.disabled || !lockMoved(held) || Date.now() - held.t0 < HOST_STEP_MIN_MS) return false;
+            btn._qzHostLock = null;
+        }
         if (!sendFn(type, payload || {})) return false;
         if (!btn) return true;
-        var lock = { phase: state.currentPhase, t0: Date.now() };
+        var lock = { phase: state.currentPhase, seq: state.phaseSeq || 0, t0: Date.now() };
         btn._qzHostLock = lock;
         btn.disabled = true;
         function release() {
             if (btn._qzHostLock !== lock) return;
             var waited = Date.now() - lock.t0;
-            if (state.currentPhase === lock.phase && waited < HOST_STEP_MAX_MS) {
+            if (!lockMoved(lock) && waited < HOST_STEP_MAX_MS) {
                 setTimeout(release, HOST_STEP_POLL_MS);
                 return;
             }
@@ -781,6 +804,7 @@
         myEntrant: myEntrant,
         entrantKey: entrantKey,
         hostStep: hostStep,
+        setPhase: setPhase,
         submitHaptic: submitHaptic,
         HOST_STEP_MIN_MS: HOST_STEP_MIN_MS
     };

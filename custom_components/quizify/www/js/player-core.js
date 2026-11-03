@@ -691,7 +691,7 @@
     // ============================================
 
     function handleGameState(msg) {
-        state.currentPhase = msg.phase;
+        pu.setPhase(msg.phase);
 
         // Teams ride along on every snapshot (#365), so a phone that
         // reconnects mid-game gets its team indicator back instead of
@@ -1135,7 +1135,7 @@
      * that begins with the question_started that follows.
      */
     function handleWagerWindow(msg) {
-        state.currentPhase = 'WAGER_ACTIVE';
+        pu.setPhase('WAGER_ACTIVE');
         pu.showView('game-view');
         game.resetSubmissionState();
         game.stopFrozenOverlay();
@@ -1183,7 +1183,7 @@
      *     snapshot's timer_duration is already what is left, so it omits this
      */
     function handleQuestionStarted(msg, receivedAt) {
-        state.currentPhase = 'QUESTION_ACTIVE';
+        pu.setPhase('QUESTION_ACTIVE');
         currentQuestion = msg;
 
         pu.showView('game-view');
@@ -1275,7 +1275,7 @@
     // ============================================
 
     function handleRoundSummary(msg) {
-        state.currentPhase = 'ANSWER_REVEAL';
+        pu.setPhase('ANSWER_REVEAL');
         game.stopCountdown();
         // #322: reveal ends the answering window — drop the freeze overlay
         // (and its timer) so it can never bleed onto the result screen.
@@ -1379,7 +1379,7 @@
     // ============================================
 
     function handleFinale(msg) {
-        state.currentPhase = 'FINALE';
+        pu.setPhase('FINALE');
         // #782: updatePageTitle has always known the FINALE case, but the two
         // paths that reach the end screen — the live `finale` event and a
         // FINALE game_state — both routed straight here, so nothing ever
