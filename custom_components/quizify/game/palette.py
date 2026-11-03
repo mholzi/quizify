@@ -7,7 +7,7 @@ edit by hand. Change the colours there and run
 
 from __future__ import annotations
 
-# Soft Parlor player colours (#1178): 1-6 from DESIGN.md, 7-8 moss and rose. Past eight players the server repeats them.
+# Soft Parlor player colours (#1178); past eight players they repeat
 PLAYER_COLORS = [
     "#E88A7F",  # coral
     "#7FA897",  # sage

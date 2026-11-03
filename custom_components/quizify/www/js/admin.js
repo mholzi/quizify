@@ -3164,8 +3164,11 @@
     // Fallback for a roster entry without a server colour. The palette is
     // generated from design/tokens.json, the same list as PLAYER_COLORS in
     // game/palette.py (#1178), so the dot in the lobby card matches the dot
-    // the player sees on their phone.
-    var _LOBBY_COLORS = window.QuizifyTokens.players;
+    // the player sees on their phone. Read on use (tokens.js leads
+    // common.bundle.js, but the module should not depend on load order).
+    function _lobbyPalette() {
+        return (window.QuizifyTokens && window.QuizifyTokens.players) || ['var(--color-text-light)'];
+    }
 
     // Minimum players required before "ready" — keep in sync with
     // const.MIN_PLAYERS on the server (currently 1: solo play allowed).
@@ -3282,7 +3285,8 @@
             var card = function (p, idx) {
                     var name = typeof p === 'string' ? p : (p.name || p);
                     var isAdmin = typeof p === 'object' && p && p.is_admin;
-                    var fallbackColor = _LOBBY_COLORS[idx % _LOBBY_COLORS.length];
+                    var palette = _lobbyPalette();
+                    var fallbackColor = palette[idx % palette.length];
                     // #312 defense-in-depth: p.color is server-provided and is
                     // injected into a style="background:..." attribute. Accept
                     // only a strict #rrggbb hex; otherwise fall back to the

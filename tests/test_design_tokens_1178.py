@@ -122,7 +122,7 @@ def test_tokens_js_leads_the_common_bundle() -> None:
 def test_no_script_keeps_its_own_player_palette(script: str) -> None:
     """The host lobby and the phone standings used to carry their own lists."""
     text = (build_tokens.PKG / "www" / "js" / script).read_text("utf-8")
-    assert "QuizifyTokens.players" in text
+    assert "window.QuizifyTokens.players" in text
     for old in ("#FF6B6B", "#4ECDC4", "#6E9685", "#6A9AB6"):
         assert old not in text, f"{script} still spells out {old}"
 
