@@ -1651,10 +1651,11 @@
     _initRoomMatrix();
 
     // Tell the server which language the lobby is being run in (#776). No-op
-    // if the socket isn't open yet — ws.onopen re-sends after admin_connect,
-    // the same contract _pushTtsConfig / _pushHouseConfig work under.
+    // until the server has confirmed this socket as the host; the
+    // confirmation replays it (#1201), the same contract _pushTtsConfig /
+    // _pushHouseConfig work under.
     function _pushLanguage() {
-        send('set_language', { language: selectedLanguage }, { quiet: true });
+        _sendLobbyPush('set_language', { language: selectedLanguage });
     }
 
     // The same for the difficulty (#851). `GameState.difficulty` is written by
@@ -1665,7 +1666,7 @@
     // language, for the same reason and with the same no-op-if-closed
     // contract.
     function _pushDifficulty() {
-        send('set_difficulty', { difficulty: selectedDifficulty }, { quiet: true });
+        _sendLobbyPush('set_difficulty', { difficulty: selectedDifficulty });
     }
 
     // #889: everything a language pick has to do, in one callable place.
@@ -1780,21 +1781,12 @@
                 // (bootstrap path), so skipping admin_auth here is safe.
                 if (savedToken) send('admin_auth', { token: savedToken });
                 send('admin_connect', {});
-                // Configure narration up-front so pre-game lobby joins narrate (#281).
-                _pushTtsConfig();
-                // Same for the house effects (#494) — lobby-time, so they work
-                // before start_game.
-                _pushHouseConfig();
-                // And the language (#776): the game keeps its own `language`, and
-                // until start_game lands it is the constructor default "de". Every
-                // phone joining an English lobby was handed a German frame. Push
-                // the pick now so the lobby the players see matches the one the
-                // host is looking at.
-                _pushLanguage();
-                // And the difficulty (#851), which sat at the previous game's
-                // value for the same reason and reached the phones the same
-                // way — only at start_game.
-                _pushDifficulty();
+                // The lobby settings (TTS #281, house #494, language #776,
+                // difficulty #851) are NOT pushed here any more (#1201). This
+                // socket does not know yet whether it is the host; a page that
+                // is not got four refusals and the server four WARNING lines
+                // per load. They go out from routeMessage once the server's
+                // admin_connect reply confirms the host (_onHostConfirmed).
             },
             // Any frame may move currentPhase; the wake lock follows it
             // here, in one place, after the frame is handled (#1131).
@@ -1909,6 +1901,48 @@
         showView('setup');
     }
 
+    // ---- Lobby pushes wait for the host confirmation (#1201) ----
+    //
+    // configure_tts, configure_house, set_language and set_difficulty are
+    // host commands. onOpen used to send them right behind admin_connect,
+    // before the page knew whether this socket is the host, so every non-host
+    // load drew four refusals (and four WARNING lines in the HA log). The
+    // server's answer to admin_connect is the confirmation: a game_state that
+    // carries admin_session_token, which it sends to the host's socket and to
+    // nobody else. Until that frame has arrived on the CURRENT socket the four
+    // pushes are held back; the frame then replays all four from the live UI
+    // state, so a pick made in between is not lost, and every new socket
+    // (reconnect, HA restart) has to be confirmed again.
+    var _hostConfirmedSock = null;
+
+    function _sendLobbyPush(type, payload) {
+        if (!ws || _hostConfirmedSock !== ws) return false;
+        // quiet: a push that finds the socket closing is replayed on the next
+        // confirmation; it is not a failed host action (#1154).
+        return send(type, payload, { quiet: true });
+    }
+
+    function _isHostConfirmation(msg) {
+        return (msg.type || msg.event) === 'game_state' && !!msg.admin_session_token;
+    }
+
+    function _onHostConfirmed() {
+        if (!ws || _hostConfirmedSock === ws) return;
+        _hostConfirmedSock = ws;
+        // Configure narration up-front so pre-game lobby joins narrate (#281).
+        _pushTtsConfig();
+        // Same for the house effects (#494) — lobby-time, so they work
+        // before start_game.
+        _pushHouseConfig();
+        // And the language (#776): the game keeps its own `language`, and
+        // until start_game lands it is the constructor default "de". Every
+        // phone joining an English lobby was handed a German frame.
+        _pushLanguage();
+        // And the difficulty (#851), which sat at the previous game's value
+        // for the same reason.
+        _pushDifficulty();
+    }
+
     // Everything the socket delivers passes through here first.
     function routeMessage(msg) {
         if (isHostRefusal(msg)) {
@@ -1926,6 +1960,9 @@
             leaveNotHost();
         }
         handleMessage(msg);
+        // After the frame is handled, so the TTS / house pickers it fills
+        // are read with the host's saved selection restored (#1201).
+        if (_isHostConfirmation(msg)) _onHostConfirmed();
     }
 
     // ---- Message router ----
@@ -3620,10 +3657,10 @@
         _syncTtsChildState();
     }
 
-    // Send the current TTS config to the server (no-op if the socket isn't
-    // open yet — onopen re-sends after admin_connect).
+    // Send the current TTS config to the server (no-op until the server has
+    // confirmed this socket as the host — the confirmation replays it, #1201).
     function _pushTtsConfig(cfg) {
-        send('configure_tts', cfg || _readTtsConfig(), { quiet: true });
+        _sendLobbyPush('configure_tts', cfg || _readTtsConfig());
     }
 
     // Variant B (#281): dim + disable the child event toggles when the master
@@ -3845,10 +3882,10 @@
         _syncHouseChildState();
     }
 
-    // Send the current house config to the server (no-op if the socket isn't
-    // open yet — onopen re-sends after admin_connect).
+    // Send the current house config to the server (no-op until the server has
+    // confirmed this socket as the host — the confirmation replays it, #1201).
     function _pushHouseConfig(cfg) {
-        send('configure_house', cfg || _readHouseConfig(), { quiet: true });
+        _sendLobbyPush('configure_house', cfg || _readHouseConfig());
     }
 
     // Dim + disable everything below the master switch when it is off (same

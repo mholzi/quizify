@@ -133,34 +133,41 @@ class _Room:
         """Do what ``connect()`` in admin.js does when the socket opens.
 
         Same frames, same order: ``admin_auth`` when the browser has a token,
-        ``admin_connect``, then the four settings the page pushes up front.
-        Returns every frame the server answered with, and the socket when
-        ``keep`` is set (a host that stays in the room).
+        ``admin_connect``, and (#1201) the four lobby settings only once the
+        server's answer has confirmed the host. Returns every frame the server
+        answered with, and the socket when ``keep`` is set (a host that stays
+        in the room).
         """
         assert self.client is not None
         ws = await self.client.ws_connect(WS_PATH + "?role=admin")
         if saved_token:
             await ws.send_json({"type": "admin_auth", "token": saved_token})
         await ws.send_json({"type": "admin_connect"})
-        await ws.send_json({"type": "configure_tts", "enabled": False})
-        await ws.send_json({"type": "configure_house", "enabled": False})
-        await ws.send_json({"type": "set_language", "language": "es"})
-        await ws.send_json({"type": "set_difficulty", "difficulty": "hard"})
+        frames = await self._read_to_marker(ws)
+        if _token_in(frames):
+            await ws.send_json({"type": "configure_tts", "enabled": False})
+            await ws.send_json({"type": "configure_house", "enabled": False})
+            await ws.send_json({"type": "set_language", "language": "es"})
+            await ws.send_json({"type": "set_difficulty", "difficulty": "hard"})
+            frames += await self._read_to_marker(ws)
+        if keep:
+            return frames, ws
+        await ws.close()
+        return frames, None
+
+    @staticmethod
+    async def _read_to_marker(ws) -> list[dict]:  # noqa: ANN001
         # A marker the server answers in order, so we know we have read
-        # everything the frames above produced.
+        # everything the frames before it produced.
         await ws.send_json({"type": "__end_of_test_script__"})
         frames: list[dict] = []
         for _ in range(200):
             frame = await asyncio.wait_for(ws.receive_json(), timeout=5)
             if frame.get("message") == "Unknown message type":
-                break
+                return frames
             frames.append(frame)
-        else:  # pragma: no cover - a hang guard, not a path
-            raise AssertionError("the server never answered the end marker")
-        if keep:
-            return frames, ws
-        await ws.close()
-        return frames, None
+        # pragma: no cover - a hang guard, not a path
+        raise AssertionError("the server never answered the end marker")
 
 
 def _token_in(frames: list[dict]) -> str | None:
@@ -243,6 +250,10 @@ window.QuizifyI18n = { t: function (key) { return key; } };
 var HANDLED = [];
 function handleGameState(msg) { HANDLED.push(msg); }
 function handleScoringStatus() {}
+// What the four lobby pushes read (#1201); their values do not matter here.
+var selectedLanguage = 'en', selectedDifficulty = 'medium';
+function _readTtsConfig() { return {}; }
+function _readHouseConfig() { return {}; }
 
 %(admin)s
 
@@ -275,12 +286,21 @@ def _run_page(steps: list[dict]) -> list[dict]:
     """
     source = _ADMIN_JS.read_text("utf-8")
     flag = re.search(r"^\s*var _notHost = false;$", source, re.M)
+    hconf = re.search(r"^\s*var _hostConfirmedSock = null;$", source, re.M)
     parts = [
         flag.group(0) if flag else "",
         _block(source, "var NOT_HOST_SENDABLE = {"),
         _block(source, "function isHostRefusal(msg) {"),
         _block(source, "function enterNotHost() {"),
         _block(source, "function leaveNotHost() {"),
+        hconf.group(0) if hconf else "",
+        _block(source, "function _sendLobbyPush(type, payload) {"),
+        _block(source, "function _isHostConfirmation(msg) {"),
+        _block(source, "function _onHostConfirmed() {"),
+        _block(source, "function _pushLanguage() {"),
+        _block(source, "function _pushDifficulty() {"),
+        _block(source, "function _pushTtsConfig(cfg) {"),
+        _block(source, "function _pushHouseConfig(cfg) {"),
         _block(source, "function routeMessage(msg) {"),
         _block(source, "function showView(name) {"),
         _block(source, "function send(type, payload, opts) {"),

@@ -436,10 +436,11 @@ def test_the_admin_pushes_the_difficulty_on_connect() -> None:
     """What makes the FIRST phone to join correct — a host who never touches
     the chip is a host serving the previous game's setting."""
     source = _without_comments(_ADMIN.read_text("utf-8"))
-    onopen = source.split("onOpen: function ()", 1)[1].split("onMessage:", 1)[0]
+    # #1201: pushed from the host-confirmation handler, not from onOpen.
+    confirmed = source.split("function _onHostConfirmed() {", 1)[1][:900]
 
-    assert "_pushDifficulty()" in onopen
-    assert "send('set_difficulty'" in source
+    assert "_pushDifficulty()" in confirmed
+    assert "_sendLobbyPush('set_difficulty'" in source
 
 
 def test_the_admin_pushes_the_difficulty_when_the_chip_changes() -> None:

@@ -250,13 +250,13 @@ def test_the_admin_pushes_the_language_on_connect() -> None:
     push only on chip-change would leave a host who never touches the chip
     (because HA is already English) serving a German lobby."""
     source = _without_comments((_JS / "admin.js").read_text("utf-8"))
-    # #787: the socket is opened through QuizifyClientCore now, so the
-    # on-open work is an `onOpen:` callback in its options object rather
-    # than an `ws.onopen =` assignment. Same handler, same slice.
-    onopen = source.split("onOpen: function ()", 1)[1].split("onMessage:", 1)[0]
+    # #1201: the on-connect push moved from `onOpen` to the handler of the
+    # server's host confirmation, which runs on every (re)connect of a host.
+    # tests/test_admin_lobby_push_after_host_1201.py runs it for real.
+    confirmed = source.split("function _onHostConfirmed() {", 1)[1][:900]
 
-    assert "_pushLanguage()" in onopen
-    assert "send('set_language'" in source
+    assert "_pushLanguage()" in confirmed
+    assert "_sendLobbyPush('set_language'" in source
 
 
 def test_the_admin_pushes_the_language_when_the_chip_changes() -> None:
