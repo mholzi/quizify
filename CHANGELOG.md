@@ -9,6 +9,38 @@ All notable changes to Quizify are documented here. This project follows
 
 If you have an automation on `quizify_streak_milestone`, it now runs when the answer is revealed, not when the player taps. The payload (`player_name`, `streak`, `bonus`) is the same. It fires right after `quizify_answer_revealed`. Before, the event (and the voice, lights and chime that follow it) told the room an answer was right while the others were still answering.
 
+## [1.26.0-RC6] — 2026-11-03
+
+**Moving Screens, Smarter Alerts, Video Games, and a Steadier Host Seat**
+
+Since 1.25.0 the screens move, host taps are safer, and there is a new pack.
+
+### ✨ Screens that move
+
+The leaderboard, estimates, wagers and hot seat now animate.
+
+### 👆 Safer taps
+
+Ending, resetting or starting a game asks first, and Next question no longer stalls after a fast question.
+
+### 🎮 Video games
+
+A new pack in three languages, 160 questions each.
+
+### 🔔 Calmer alerts
+
+Streaks show at the reveal, each speaker has one voice, off means off, and evenings can be quiet.
+
+### ⚠️ Breaking
+
+Automations on `quizify_streak_milestone` now run at the reveal, not on the tap.
+
+### 🎛️ A steadier host page
+
+A lobby reload keeps the host's seat, a finished game asks before rejoining, and a stalled Lightning round finishes.
+
+Also: guests can leave the scoring, and pack calls need the admin token.
+
 ## [1.26.0-RC5] — 2026-11-03
 
 **Moving Screens, Safer Taps, Video Games, and a Steadier Host Seat**
