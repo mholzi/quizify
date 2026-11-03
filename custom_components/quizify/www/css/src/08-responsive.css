@@ -195,7 +195,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--on-accent);
   border-radius: 50%;
   font-weight: 800;
   width: 32px;
@@ -535,7 +535,7 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
 .pl-result-bar-btn--ghost:hover { background: rgba(42, 40, 32, 0.06); }
 .pl-result-bar-btn--primary {
   background: var(--color-accent-primary);
-  color: #fff;
+  color: var(--on-accent);
   box-shadow: var(--glow-primary);
 }
 .pl-result-bar-btn--primary:hover { background: var(--color-accent-brand-hover); }
@@ -726,10 +726,10 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
     font-size: 0.82rem;
     font-family: var(--font-mono);
 }
-.pack-step.done .pack-step-n { background: var(--color-success); color: #fff; }
+.pack-step.done .pack-step-n { background: var(--color-success); color: var(--on-accent); }
 .pack-step.active .pack-step-n {
     background: var(--color-accent-primary);
-    color: #fff;
+    color: var(--on-accent);
     box-shadow: 0 0 0 4px var(--color-error-light);
 }
 .pack-step.todo .pack-step-n { background: var(--color-bg-card-alt); color: var(--color-text-muted); }
@@ -795,7 +795,7 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
     place-items: center;
     font-size: 0.75rem;
     flex: none;
-    color: #fff;
+    color: var(--on-accent);
 }
 .pack-vg-head.ok { background: var(--color-success-light); }
 .pack-vg-head.ok .pack-vg-ic { background: var(--color-success); }
@@ -953,7 +953,7 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
     justify-content: center;
     font-size: 0.7rem;
     font-weight: 800;
-    color: #fff;
+    color: var(--on-accent);
     margin-top: 1px;
 }
 .lr-recap-row.ok .lr-recap-badge { background: var(--color-success); }

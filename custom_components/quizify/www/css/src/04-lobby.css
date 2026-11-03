@@ -126,7 +126,7 @@
    secondary, so the only filled button in a paused bar is the way back in. */
 .btn-resume {
     background: var(--color-accent-secondary);
-    color: #FFFFFF;
+    color: var(--on-accent);
     font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: 0.02em;

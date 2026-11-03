@@ -757,7 +757,7 @@ body.dashboard-body {
 }
 .dnl-truth-flag {
     position: absolute; top: -62px; transform: translateX(-50%);
-    background: var(--color-accent-primary, #E88A7F); color: #fff;
+    background: var(--color-accent-primary, #E88A7F); color: var(--on-accent);
     font-family: var(--font-mono, monospace); font-weight: 700;
     /* #735: the true value sitting on the line, next to the guesses it
        is being compared against — the same step as the guesses. */
@@ -2025,20 +2025,20 @@ body.dashboard-body {
 .podium-bar.first {
     height: 150px;
     border-top: 3px solid var(--dash-accent-primary);
-    color: var(--dash-accent-primary);
+    color: var(--coral-ink);
     box-shadow: 0 -20px 40px var(--dash-success-glow);
 }
 
 .podium-bar.second {
     height: 122px;
     border-top: 3px solid var(--dash-silver);
-    color: var(--dash-silver);
+    color: var(--silver-ink);
 }
 
 .podium-bar.third {
     height: 102px;
     border-top: 3px solid var(--dash-bronze);
-    color: var(--dash-bronze);
+    color: var(--bronze-ink);
 }
 
 /* Awards / Superlatives */

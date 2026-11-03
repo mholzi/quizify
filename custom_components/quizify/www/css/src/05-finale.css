@@ -377,7 +377,7 @@
 .podium-bar.first {
     height: 200px;
     border-top: 3px solid var(--color-gold, #E8C47F);
-    color: var(--color-accent-primary, #E88A7F);
+    color: var(--coral-ink);
     font-size: 3.5rem;
 }
 .podium-bar.first::before {

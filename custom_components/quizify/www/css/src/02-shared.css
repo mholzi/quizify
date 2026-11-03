@@ -28,7 +28,7 @@ button, .btn {
 
 .btn-primary {
     background: var(--color-accent-primary);
-    color: #FFFFFF;                              /* white on coral for max contrast */
+    color: var(--on-accent);                      /* ink on coral, 5.9 : 1 (#1178) */
     font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: 0.02em;
@@ -484,7 +484,7 @@ a[href]:not(.btn):active {
    outline buttons keep their tinted discs. (Markus 2026-06-10 live QA.) */
 .btn-primary .qz-icon {
     background: transparent;
-    color: #fff;
+    color: var(--on-accent);
 }
 
 /* Theme filter tabs: small duotone icon + text label, side by side. */
@@ -605,7 +605,7 @@ a[href]:not(.btn):active {
     background: #E88A7F;
     border-radius: 14px;
     padding: 14px 16px 12px;
-    color: #FFFFFF;
+    color: var(--on-accent);
     margin-bottom: var(--space-md);
     overflow: hidden;
     box-shadow: 0 4px 14px rgba(232, 138, 127, 0.22);

@@ -299,7 +299,7 @@
 
 .answer-btn.selected .answer-label {
     background: var(--color-accent-primary);
-    color: var(--color-bg-primary);
+    color: var(--on-accent);
 }
 
 .answer-btn.correct {
@@ -310,7 +310,7 @@
 
 .answer-btn.correct .answer-label {
     background: var(--color-success);
-    color: var(--color-bg-primary);
+    color: var(--on-accent);
 }
 
 @keyframes glow-correct {
