@@ -247,17 +247,9 @@
 
 /* ---- Gesamtwertung scoreboard with score bars ---- */
 .end-scoreboard-section { margin-top: 2px; }
-/* Rank row base (#1178 step 10): the end scoreboard (.sb-row) and the
-   reveal standings (.mstand-row) are one card row; each keeps only its
-   padding and alignment. */
-.qz-rank-row {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    background: var(--color-bg-surface);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-lg);
-}
+/* The rank row base (.qz-rank-row) lives in 05-finale.css since #1204, so
+   the host's and the television's rows share it; .sb-row and .mstand-row
+   keep only their padding and alignment. */
 .sb-row {
     align-items: flex-start;
     padding: 11px 13px;
@@ -359,9 +351,7 @@
 
 /* Shared results-screen action buttons (Buttons A). */
 .resbtn {
-    border: 0;
-    border-radius: var(--radius-lg);
-    font: 700 14px/1.1 system-ui, -apple-system, sans-serif;
+    line-height: 1.1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -370,9 +360,8 @@
     cursor: pointer;
 }
 
+/* Look: .btn-primary / .btn-secondary (02-shared.css, #1204). */
 .resbtn--primary {
-    background: var(--color-accent-primary);
-    color: var(--on-accent);
     height: 48px;
     width: 100%;
     font-size: var(--fs-3);
@@ -387,9 +376,6 @@
 .resbtn--secondary {
     height: 44px;
     flex: 1;
-    background: #fff;
-    color: #2A2820;
-    border: 1px solid #ECE4D2;
 }
 
 .resbtn:disabled {
@@ -2177,22 +2163,10 @@
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    background: var(--color-bg-surface);
-    color: var(--color-text-muted);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-full);
-    font-family: var(--font-system, inherit);
+    border-radius: var(--radius-full);           /* look: .btn-secondary (#1204) */
     font-size: var(--fs-2);
-    font-weight: 600;
     cursor: pointer;
-    transition: all 0.14s ease;
     margin-bottom: 4px;
-}
-.lobby-back-btn:hover,
-.lobby-back-btn:focus {
-    color: var(--color-text-primary);
-    border-color: var(--color-border-medium);
-    background: var(--color-bg-card-alt);
 }
 
 .lobby-marquee {
@@ -3035,21 +3009,12 @@ body.is-admin .reaction-bar {
     align-items: center;
     justify-content: center;
     padding: var(--space-xs) var(--space-sm);
-    background: rgba(232, 138, 127, 0.1);
-    border: 1px solid rgba(232, 138, 127, 0.3);
-    border-radius: var(--radius-sm);
-    color: var(--sage-ink);
+    border-radius: var(--radius-sm);             /* look: .btn-secondary (#1204) */
     font-size: var(--fs-2);
     cursor: pointer;
-    transition: all var(--transition-fast);
-    font-family: var(--font-system);
     white-space: nowrap;
     min-width: auto;
     min-height: auto;
-}
-
-.invite-copy-btn:hover {
-    background: rgba(232, 138, 127, 0.2);
 }
 
 .invite-copy-icon {

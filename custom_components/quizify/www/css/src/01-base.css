@@ -143,10 +143,8 @@ body {
 /* Icon-only button used in the admin header (e.g. reset-game-btn). Subtle
  * by default so it doesn't compete with the wordmark, lights up on hover. */
 .admin-header-btn {
-    background: transparent;
-    border: 1px solid var(--color-border-light);
+    /* look: .btn-ghost (02-shared.css, #1204) */
     border-radius: var(--radius-md);
-    color: var(--color-text-muted);
     cursor: pointer;
     font-size: var(--fs-3);
     line-height: 1;
@@ -155,9 +153,7 @@ body {
 }
 .admin-header-btn:hover,
 .admin-header-btn:focus-visible {
-    color: var(--coral-ink);
     border-color: var(--color-accent-primary);
-    background: var(--color-bg-surface);
 }
 
 /* PWA Install Button — same admin-header-btn frame but coral-leaning
@@ -207,12 +203,7 @@ body {
     position: absolute;
     top: 8px;
     right: 12px;
-    background: transparent;
-    border: 0;
-    color: var(--color-text-muted);
-    font-size: var(--fs-4);
-    line-height: 1;
-    padding: 4px 8px;
+    font-size: var(--fs-4);                      /* look: .btn-icon-only (#1204) */
     cursor: pointer;
 }
 @keyframes pwa-fade-in {

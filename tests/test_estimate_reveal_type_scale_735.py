@@ -28,10 +28,18 @@ import pytest
 
 from tests.conftest import dashboard_css
 
-# The steps #707 settled, quoted verbatim. Nothing here invents a size.
-ROW_STEP = "clamp(16px, 1.6vw, 24px)"
-EYEBROW_STEP = "clamp(14px, 1.2vw, 20px)"
-HEADLINE_STEP = "clamp(18px, 1.8vw, 28px)"
+
+def _step(token: str) -> str:
+    """A step of the television scale, as the sheet's ``:root`` defines it."""
+    return re.search(token + r":\s*([^;]+);", dashboard_css()).group(1).strip()
+
+
+# The steps #707 settled. Since #1204 they are tokens of the television scale
+# (design/tokens.json): the row step --tv-fs-6, the eyebrow step --tv-fs-3 and
+# the headline step --tv-fs-9. Nothing here invents a size.
+ROW_STEP = _step("--tv-fs-6")
+EYEBROW_STEP = _step("--tv-fs-3")
+HEADLINE_STEP = _step("--tv-fs-9")
 
 # selector → the #707 step its role earns
 ESTIMATE_RULES = {

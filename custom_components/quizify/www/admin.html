@@ -33,13 +33,13 @@
                  beforeinstallprompt fires (Android Chrome/Edge) or when
                  iOS Safari is detected (where the prompt API doesn't
                  exist — the iOS hint modal takes over). -->
-            <button type="button" id="pwa-install-btn" class="admin-header-btn pwa-install-btn hidden"
+            <button type="button" id="pwa-install-btn" class="admin-header-btn btn-ghost pwa-install-btn hidden"
                     data-i18n-aria-label="pwa.installApp"
                     data-i18n-title="pwa.installApp"
                     aria-label="Install Quizify App" title="Install Quizify App">
                 <span aria-hidden="true">📲</span>
             </button>
-            <button type="button" id="reset-game-btn" class="admin-header-btn hidden"
+            <button type="button" id="reset-game-btn" class="admin-header-btn btn-ghost hidden"
                     data-i18n-aria-label="admin.resetGame"
                     data-i18n-title="admin.resetGame"
                     aria-label="Reset game" title="Reset game">
@@ -63,7 +63,7 @@
          the Share → Add to Home Screen flow that Apple requires. -->
     <div class="pwa-ios-hint hidden" id="pwa-ios-hint" role="dialog" aria-modal="true" aria-labelledby="pwa-ios-hint-title">
         <div class="pwa-ios-hint-content">
-            <button type="button" class="pwa-ios-hint-close" id="pwa-ios-hint-close" data-i18n-aria-label="common.close" aria-label="Close">&times;</button>
+            <button type="button" class="pwa-ios-hint-close btn-icon-only" id="pwa-ios-hint-close" data-i18n-aria-label="common.close" aria-label="Close">&times;</button>
             <p id="pwa-ios-hint-title"><strong data-i18n="pwa.iosHintTitle">Install Quizify</strong></p>
             <p data-i18n="pwa.iosHintBody">Tap <span aria-hidden="true">⬆️</span> Share, then <strong>"Add to Home Screen"</strong></p>
         </div>
@@ -778,7 +778,7 @@
                 <!-- Back to setup. Returns the host to the preset/custom
                      chooser without resetting WS state — the QR + joined
                      players survive a quick settings-tweak round-trip. -->
-                <button type="button" id="lobby-back-btn" class="lobby-back-btn"
+                <button type="button" id="lobby-back-btn" class="lobby-back-btn btn-secondary"
                         data-i18n-aria-label="lobby.backToSetup" aria-label="Back to settings">
                     <span aria-hidden="true">←</span>
                     <span data-i18n="lobby.backToSetup">Settings</span>
@@ -979,7 +979,7 @@
                      device, until dismissed (_updateStarHint in admin.js). -->
                 <p id="admin-star-hint" class="admin-star-hint" hidden>
                     <a href="https://github.com/mholzi/quizify" target="_blank" rel="noopener" data-i18n="admin.starHint">Enjoying Quizify? A ⭐ on GitHub helps others find it.</a>
-                    <button type="button" id="admin-star-hint-dismiss" class="admin-star-hint-dismiss"
+                    <button type="button" id="admin-star-hint-dismiss" class="admin-star-hint-dismiss btn-icon-only"
                             aria-label="Dismiss hint" data-i18n-aria-label="admin.starHintDismiss">×</button>
                 </p>
             </div>

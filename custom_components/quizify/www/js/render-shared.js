@@ -150,7 +150,7 @@
         return '<div class="scoring-note">' +
             '<span class="scoring-off">' + _esc(_scoringText(flag)) + '</span>' +
             (flag.can_take_out
-                ? '<button type="button" class="scoring-btn" data-scoring-out="' + _esc(_entrantOf(row)) + '">' +
+                ? '<button type="button" class="scoring-btn btn-secondary" data-scoring-out="' + _esc(_entrantOf(row)) + '">' +
                     _esc(_t('admin.scoringOut', 'Out of scoring')) + '</button>'
                 : '') +
             (flag.on_podium
@@ -171,7 +171,7 @@
                     '<span class="scoring-out-rank" aria-hidden="true">\u2013</span>' +
                     '<span class="scoring-out-name">' + _esc(row.name) + '</span>' +
                     '<span class="scoring-out-score">' + _esc(row.score) + '</span>' +
-                    '<button type="button" class="scoring-btn" data-scoring-back="' + _esc(_entrantOf(row)) + '">' +
+                    '<button type="button" class="scoring-btn btn-secondary" data-scoring-back="' + _esc(_entrantOf(row)) + '">' +
                         _esc(_t('admin.scoringBack', 'Bring back')) + '</button>' +
                     '</div>';
             }).join('');

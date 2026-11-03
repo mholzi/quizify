@@ -329,13 +329,7 @@ footer {
     flex: none;
     width: 28px;
     height: 28px;
-    padding: 0;
-    border: 0;
-    border-radius: var(--radius-full);
-    background: transparent;
-    color: var(--color-text-muted);
-    font-size: var(--fs-3);
-    line-height: 1;
+    font-size: var(--fs-3);                      /* look: .btn-icon-only (#1204) */
     cursor: pointer;
 }
 

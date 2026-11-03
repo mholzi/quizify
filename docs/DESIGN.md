@@ -38,9 +38,8 @@ Migration status: #1178 steps 1–11 are in (this file, the generator, the
 lint, accent text tokens, ink on accent surfaces, one player palette, the
 television and the launcher without token copies, the type scale, radii /
 elevation / z-index, the shared toast, modal and rank-row bases, and the
-alias clean-up). Two parts are deliberately open and marked below: the
-television's type scale (it keeps its `clamp()` sizes) and the visual
-merge of the remaining button families and leaderboard builds.
+alias clean-up). The follow-up #1204 added the television's type scale,
+one rank row for every ranking and five button variants.
 
 ## Product Context
 
@@ -123,12 +122,39 @@ rule used for the migration: below 12.4 px → `--fs-1`, below 14.8 → `--fs-2`
 below 18 → `--fs-3`, up to 24 → `--fs-4`, below 34 → `--fs-5`, up to 44 →
 `--fs-6`.
 
-**Television: not migrated (open).** The plan puts the TV on the same six steps
-through a larger root (`html { font-size: clamp(16px, 1.25vw, 26px) }` in
-`10-tv.css`). At 1920 px that matches today's sizes within a few pixels, but at
-1280 px the root is 16 px and the TV would shrink to phone sizes (answers 22 →
-14 px, the question 54 → 40 px). The TV keeps its `clamp()` sizes until that
-is decided; the lint baseline holds them.
+### Television scale (#1204)
+
+The TV keeps the 16 px root and has steps of its own. The plan's larger root
+(`html { font-size: clamp(16px, 1.25vw, 26px) }`) was not used: at 1280 px it
+is 16 px and would shrink the TV to phone sizes (answers 22 → 14 px, question
+54 → 40 px), and it would also grow every rem size the shared modules give the
+TV. Each step is a `clamp()` whose floor is the 1280 px size and whose ceiling
+is the 1920 px size, so at 1280 × 720 nothing is smaller than before and at
+1920 × 1080 every size is within 1 px (`tests/test_design_followup_1204.py`).
+
+| Token | 1280 px | 1920 px | For |
+|-------|---------|---------|-----|
+| `--tv-fs-1` | 15 | 16 | join hints |
+| `--tv-fs-2` | 18 | 18 | answer count, end head-to-head, tight finale ranks |
+| `--tv-fs-3` | 18 | 20 | labels, kickers, round, category, chips, podium list, dense finale rows |
+| `--tv-fs-4` | 20.5 | 22 | join URL, waiting line, percent, leaderboard rank, award detail |
+| `--tv-fs-5` | 22 | 22 | answers, head-to-head line |
+| `--tv-fs-6` | 20.5 | 24 | leaderboard rows, number-line labels, lightning recap |
+| `--tv-fs-7` | 24 | 24 | pause hints, lightning rules |
+| `--tv-fs-8` | 23 | 26 | fun fact, scores |
+| `--tv-fs-9` | 23 | 28 | podium names, award winners, estimate hint |
+| `--tv-fs-10` | 46 | 48 | podium title |
+| `--tv-fs-11` | 54 | 56 | question, pause title |
+| `--tv-fs-12` | 64 | 64 | lightning title, waiting wordmark |
+
+The answer letter uses `--fs-5` (28 px on the TV's 16 px root), the streak
+badge and the finale card header `--fs-1` (11 → 12 px). Left literal: `em`
+sizes, glyph and emoji sizes (power-up icon, floating reactions, pause icon,
+podium avatar and numerals, award icon, missing-image glyph), the wordmark,
+the power-up banner, the estimate's true value (56 px), the milestone badge
+(10 px; `--fs-1` would be +2 px at 1920) and the short-screen question rule
+(`clamp(28px, 4.4vh, 44px)` under `max-height: 850px`, which is what a
+1280 × 720 screen shows).
 
 ### Fonts blacklist (never use)
 
@@ -302,7 +328,11 @@ marks the correct answer — and so do focus rings and inset borders.
 | `--z-modal` | 1000 | modals and their scrim, image zoom, the status-bar mask |
 | `--z-overlay` | 1100 | system: frozen overlay, round sweep, power-up banners |
 
-Toasts sit under modals now (they were at 9999). Left as literals: the
+Toasts sit under modals now (they were at 9999). **#1204 kept it so:** a
+toast fired while a confirm sheet is open shows under the scrim. The table has
+no step between modal and overlay, and `--z-overlay` belongs to system
+overlays; a toast-over-modal case would need a sixth step or a toast that
+borrows the system layer, and both break the table's order. Left as literals: the
 in-component layers (`-1`, `1`, `2`) and three TV layers whose order matters
 among themselves (reactions 30, power-up banners 45, pause overlay 50).
 
@@ -416,8 +446,28 @@ transitions; the baseline holds them.
 |-----------|-------|-------|-------|
 | Toast | `.qz-toast` + `.qz-toast--error` (02-shared.css) | host error toast (`admin.js` `showErrorToast`), phone toast (`player-utils.js` `showToast`) | Both used to be the same JS style string with `#D65858`, white text and z-index 9999. The scripts now set only text, `top` and `opacity`. Ink on `--color-error-fill`, no shadow (as before), `--z-toast`. The phone's bonus toast (`.reaction-bonus-toast`) keeps its own pill look. |
 | Modal | `.qz-modal` wrapper, `.qz-modal-backdrop`, `.qz-modal-card` (06-admin.css) | host `.modal` sheets, phone guest-reset, QR, invite and power-up pickers | Position, scrim, hairline, `--radius-lg` and the fade-in live once. The family classes keep their ground (host sheets surface 2, phone pickers white), padding and width. |
-| Rank row | `.qz-rank-row` (07-player.css) | phone reveal standings (`.mstand-row`), phone end scoreboard (`.sb-row`) | The two phone builds share one card row. The TV row (`.dashboard-leaderboard .leaderboard-row`) and the host's list row (`.leaderboard-row`) are still their own builds: making them look alike is a design decision, not a merge. |
-| Button | `button, .btn` (02-shared.css) | everywhere | The base already carries size, radius, font and transitions; `.btn-primary` / `-secondary` / `-danger` are the variants. About twenty other button families (`.resbtn`, `.control-btn`, `.admin-header-btn`, `.powerup-btn` …) still restate their own look; folding them in changes how they look and needs a decision per family. |
+| Rank row | `.qz-rank-row, .leaderboard-row` (05-finale.css) | phone reveal standings (`.mstand-row`), phone end scoreboard (`.sb-row`), host list and TV board (`.leaderboard-row`, from `QuizifyRenderShared.leaderboardRowsHtml`) | One card row: surface, hairline, `--radius-lg` (#1204). The host list was a borderless list with a violet hover; the TV row had `--radius-md`. Each surface keeps its padding, gap and type size. |
+| Button | `button, .btn` + variants (02-shared.css) | everywhere | The base carries size, radius, font and transitions. Five variants carry the look: `.btn-primary` (coral, ink), `.btn-secondary` (surface, hairline), `.btn-ghost` (transparent, medium border), `.btn-danger` (ink on `--color-error-fill`), `.btn-icon-only` (round, one glyph). A family class keeps only size and place. Mapping and the families left on their own look: below. |
+
+**Button mapping (#1204).** `.resbtn--primary` → primary; `.resbtn--secondary`
+→ secondary; `.pl-result-bar-btn--primary` → primary; `.pl-result-bar-btn--ghost`
+→ ghost; `.btn-ghost` (pack submit) → ghost, now in 02-shared; `.admin-header-btn`
+→ ghost (the install button keeps its coral); `.qz-team-leaveBtn` → ghost;
+`.scoring-btn` → secondary; `.lobby-back-btn` → secondary (keeps its pill);
+`.invite-copy-btn` → secondary; `.pwa-ios-hint-close`, `.admin-star-hint-dismiss`
+→ icon. The red confirm button gets the primary's weight (700).
+
+Left on their own look on purpose: the phone answer cards (`.answer-btn`), the
+host's "Next question" bar (already `.btn-primary .btn-lg`), `.btn-resume` (sage
+fill: resume is the success colour), `.powerup-btn` (animated attention pill),
+`.spotlight-play-btn` (white pill on a tinted card), `.reaction-btn` (emoji
+palette), `.sound-toggle-btn` (state toggle), `.control-btn` (toolbar item with
+label), `.flag-question-btn` (its red hover would lose to the icon hover),
+`.image-zoom-close` (white on the dark zoom scrim), the QR and invite close
+buttons (text buttons placed in the corner), `.pack-mode-btn` (segmented control)
+and the text-link buttons (`.setup-back-btn`, `.setup-house-adv-btn`,
+`.setup-tweak-link`, `.setup-matrix-setup`, `.setup-audio-volume-reset`). Chips,
+theme tabs and preset cards are toggles, not buttons.
 
 ## Accessibility
 
@@ -564,3 +614,4 @@ config.
 | 2026-11-02 | Motion spec finished: round 1 (#1171) and round 2 (#1172) | Every duration and delay is a `--dur-*` token so reduced motion and `.a11y` can zero them together. |
 | 2026-11-02 | Design-system review (UX review 8) accepted; migration plan #1178 | One token source (`design/tokens.json`) with a generator and a ratchet lint; this file back in the repo under `docs/`, not shipped. Decisions: text on accent surfaces is ink (5.9 : 1 on coral), coral stays; dark mode removed from the spec, not built; host card keeps the HA theme; three radii (12 → 14, nothing above 14); player colours 7 and 8 are moss `#9DB38A` and rosé `#C7A3A0`. Contrast values recomputed — coral on cream is 2.3 : 1 and white on coral 2.5 : 1, not 3.1 and 3.4. |
 | 2026-11-03 | Error surfaces with text: lighter fill under ink (#1178 step 10) | `--color-error-fill` `#D97070`, ink 4.57 : 1, for the error toast and `.btn-danger`. A darker red under ink would have lowered the contrast; white on `--error-ink` was the alternative. |
+| 2026-11-03 | TV type scale, one rank row, five button variants (#1204) | The TV keeps its 16 px root and gets `--tv-fs-1…12` (floor = the 1280 px size, ceiling = the 1920 px size) instead of the plan's larger root, which shrank 1280 px screens to phone sizes. Host and TV rankings take the phone's card row. Button families take primary / secondary / ghost / danger / icon; prominent controls with a meaning of their own keep their look. A toast stays under an open modal (z-index table). |
