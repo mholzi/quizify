@@ -348,6 +348,16 @@ footer {
     text-align: center;
 }
 
+/* #1213: the same notice on the setup screen while the lobby is still open,
+   with its way back beside the line (wraps under it on a phone). */
+.setup-lobby-open {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+}
+
 /* #1182 L6/L7: load failures in the setup screen. A line and a retry in the
    place of the content, never the "none found" / hidden look of an empty
    answer. */

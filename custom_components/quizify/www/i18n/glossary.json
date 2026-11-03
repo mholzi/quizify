@@ -86,7 +86,7 @@
       "wager.submit", "hotSeat.bidSubmit", "estimate.submit", "share.button",
       "common.retry", "connection.retryConnection", "teams.openTeam", "teams.leaveTeam",
       "lightning.splashStart", "lightning.continueGame", "setup.savePresetBtn",
-      "setup.deletePresetBtn", "setup.apply", "notHost.join"
+      "setup.deletePresetBtn", "setup.apply", "setup.backToLobby", "notHost.join"
     ]},
     "pill": {"max": 18, "keys": [
       "connection.connected", "connection.reconnecting", "connection.disconnected",

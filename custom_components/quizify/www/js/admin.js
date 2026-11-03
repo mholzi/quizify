@@ -234,6 +234,10 @@
         starHint: document.getElementById('admin-star-hint'),
         starHintDismiss: document.getElementById('admin-star-hint-dismiss'),
         lobbyBackBtn: document.getElementById('lobby-back-btn'),
+        // #1213: the setup screen's "lobby still open" line and its way back.
+        setupLobbyOpen: document.getElementById('setup-lobby-open'),
+        setupLobbyOpenText: document.getElementById('setup-lobby-open-text'),
+        setupLobbyReturnBtn: document.getElementById('setup-lobby-return-btn'),
         // Lightning Round (issue #42 mechanics, #285 auto-trigger). The manual
         // start / start-questions / end / again controls were retired; only
         // the display elements + the recap "Continue" button remain.
@@ -3312,6 +3316,9 @@
         // showing a stale joined-confirmation chip.
         _adminJoinedAs = null;
         _redirecting = false;
+        // #1213: the reset emptied the lobby too; no "still open" line on
+        // the setup screen it lands on.
+        renderLobbyPlayers([]);
         showView('setup');
         setLiveControls(currentPhase);
     }
@@ -3359,6 +3366,22 @@
     function setLobbyTeams(teams) {
         _lobbyTeams = Array.isArray(teams) ? teams : [];
         renderLobbyPlayers(_lastLobbyPlayers);
+    }
+
+    // #1213: "Settings" in the lobby keeps the server lobby (the players, the
+    // phones, the TV) and only switches this page to setup. While that lobby
+    // has players, the setup screen says so and offers the way back. Driven by
+    // the roster, so a reload on setup with an open lobby (the back button
+    // forgets the lobby view, not the lobby) shows it from the first frame.
+    function _renderSetupLobbyOpen() {
+        var open = currentPhase === 'LOBBY' && playerCount > 0;
+        els.setupLobbyOpen.classList.toggle('hidden', !open);
+        if (els.setupLobbyOpenText) {
+            // The params ride on the element so a language switch re-renders it.
+            var params = { count: playerCount };
+            els.setupLobbyOpenText.setAttribute('data-i18n-params', JSON.stringify(params));
+            els.setupLobbyOpenText.textContent = _t('setup.lobbyStillOpen', params);
+        }
     }
 
     function renderLobbyPlayers(players) {
@@ -3430,6 +3453,7 @@
                     '<span>' + QuizifyUtils.escapeHtml(_t('admin.joinedAs', { name: _adminJoinedAs })) + '</span>';
             }
         }
+        if (els.setupLobbyOpen) _renderSetupLobbyOpen();
         if (els.lobbyPlayersEmpty) {
             els.lobbyPlayersEmpty.classList.toggle('hidden', playerCount > 0);
         }
@@ -4710,6 +4734,16 @@
     on(els.lobbyBackBtn, 'click', function () {
         showView('setup');
         _forgetLobbyReload();
+    });
+
+    // #1213: setup → back to the lobby that is still open. The same switch
+    // as "Open lobby": the server lobby and its players never went away, so
+    // nothing is sent; the settings changed on setup reach the game with
+    // Start in the lobby (start_game carries them).
+    on(els.setupLobbyReturnBtn, 'click', function () {
+        showView('lobby');
+        initJoinUrl();
+        _rememberLobby();
     });
 
     // Lobby: "Spiel starten" — starts the game with players already in
