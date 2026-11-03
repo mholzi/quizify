@@ -253,7 +253,7 @@ def test_the_admin_pushes_the_language_on_connect() -> None:
     # #1201: the on-connect push moved from `onOpen` to the handler of the
     # server's host confirmation, which runs on every (re)connect of a host.
     # tests/test_admin_lobby_push_after_host_1201.py runs it for real.
-    confirmed = source.split("function _onHostConfirmed() {", 1)[1][:900]
+    confirmed = source.split("function _onHostConfirmed(msg) {", 1)[1][:900]
 
     assert "_pushLanguage()" in confirmed
     assert "_sendLobbyPush('set_language'" in source

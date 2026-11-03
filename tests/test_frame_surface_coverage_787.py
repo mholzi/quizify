@@ -187,26 +187,19 @@ COVERAGE: dict[str, Coverage] = {
         "phone",
         ignored={"tv": _NOT_A_PLAYER_TV},
     ),
+    # #1209: the host page takes its own seat back over a new socket (a
+    # lobby reload, a blip) and keeps the rotated token, or drops a dead one.
     "reconnected": _c(
         "unicast",
         "phone",
-        ignored={
-            "tv": _NOT_A_PLAYER_TV,
-            "host": (
-                "the host's own socket resumes with admin_auth, not a"
-                " player session token"
-            ),
-        },
+        "host",
+        ignored={"tv": _NOT_A_PLAYER_TV},
     ),
     "reconnect_failed": _c(
         "unicast",
         "phone",
-        ignored={
-            "tv": _NOT_A_PLAYER_TV,
-            "host": (
-                "no player session to fail; the admin socket re-authenticates instead"
-            ),
-        },
+        "host",
+        ignored={"tv": _NOT_A_PLAYER_TV},
     ),
     # #1193: both go to a phone that holds (or held) a player seat.
     "reconnect_stale": _c(

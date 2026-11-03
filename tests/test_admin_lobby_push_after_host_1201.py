@@ -75,6 +75,8 @@ global.QuizifyUtils = window.QuizifyUtils;
 
 var ws = null, reconnectAttempts = 0, MAX_RECONNECT_DELAY_MS = 30000;
 var _lightningLive = false, currentPhase = 'LOBBY';
+// #1209: no seat joined from this page.
+var _adminJoinedAs = null;
 function updateConnectionStatus() {}
 function _syncWakeLock() {}
 function showErrorToast() {}
@@ -110,6 +112,9 @@ def _run(steps: str, token: str | None = "saved") -> dict:
             r"^\s*var _notHost = false;$",
             r"^\s*var _hostConfirmedSock = null;$",
             r"^\s*var _reconnectTimer = null;$",
+            r"^\s*var LOBBY_RELOAD_KEY = .*;$",
+            r"^\s*var ADMIN_SEAT_TOKEN_KEY = .*;$",
+            r"^\s*var _lobbyReloadDone = false;$",
         )
         if (m := re.search(pat, source, re.M))
     ]
@@ -122,8 +127,14 @@ def _run(steps: str, token: str | None = "saved") -> dict:
             "function leaveNotHost() {",
             "function _sendLobbyPush(type, payload) {",
             "function _isHostConfirmation(msg) {",
-            "function _onHostConfirmed() {",
+            "function _onHostConfirmed(msg) {",
             "function routeMessage(msg) {",
+            "function _afterLobbyFrame(msg) {",
+            "function _resumeLobbyAfterReload(msg) {",
+            "function _storeGet(key) {",
+            "function _storeSet(key, value) {",
+            "function _forgetLobbyReload() {",
+            "function _rosterHasName(players, name) {",
             "function send(type, payload, opts) {",
             "function _LOG_UNDELIVERED(type) {",
             "function _pushLanguage() {",

@@ -437,7 +437,7 @@ def test_the_admin_pushes_the_difficulty_on_connect() -> None:
     the chip is a host serving the previous game's setting."""
     source = _without_comments(_ADMIN.read_text("utf-8"))
     # #1201: pushed from the host-confirmation handler, not from onOpen.
-    confirmed = source.split("function _onHostConfirmed() {", 1)[1][:900]
+    confirmed = source.split("function _onHostConfirmed(msg) {", 1)[1][:900]
 
     assert "_pushDifficulty()" in confirmed
     assert "_sendLobbyPush('set_difficulty'" in source

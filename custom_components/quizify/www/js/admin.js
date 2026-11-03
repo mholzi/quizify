@@ -271,6 +271,102 @@
         window.location.href = url.toString();
     }
 
+    // ---- Lobby reload (#1209) ----
+    //
+    // The setup → lobby step is a client-side view switch, and a reload
+    // starts the page on setup again: the host lost the lobby (QR, roster,
+    // Start) and the settings behind it. The host's own seat, joined over
+    // this page's socket, was bound to the socket the reload closed, and the
+    // new socket never took it back, so the server dropped it after the
+    // lobby grace (LOBBY_DISCONNECT_GRACE_PERIOD, 5 s).
+    //
+    // Both are kept in sessionStorage, which belongs to this tab and survives
+    // its reload: other tabs and phones in the same browser share
+    // localStorage, and the player session there may be someone else's by
+    // now. A new tab, a reset or a started game finds neither
+    // (_afterLobbyFrame). The start button writes the lobby, the back button
+    // and everything that leaves the lobby forget it.
+    var LOBBY_RELOAD_KEY = 'quizify_admin_lobby';
+    var ADMIN_SEAT_TOKEN_KEY = 'quizify_admin_seat_token';
+    var _lobbyReloadDone = false;
+
+    function _storeGet(key) {
+        try { return sessionStorage.getItem(key); } catch (e) { return null; }
+    }
+
+    function _storeSet(key, value) {
+        try {
+            if (value == null) sessionStorage.removeItem(key);
+            else sessionStorage.setItem(key, value);
+        } catch (e) { /* storage unavailable: this tab only */ }
+    }
+
+    // The lobby is on screen: remember it, and the settings Start will send
+    // (the preset shape, so _applyCustomPreset can put them back).
+    function _rememberLobby() {
+        _storeSet(LOBBY_RELOAD_KEY, JSON.stringify({
+            rounds: selectedRounds,
+            difficulty: selectedDifficulty,
+            timer: selectedTimer,
+            lightning: selectedLightning,
+            hot_seat: selectedHotSeat,
+            powerups: selectedPowerups,
+            wager: selectedWager,
+            language: selectedLanguage,
+            packs: (selectedCategories || []).slice()
+        }));
+    }
+
+    function _forgetLobbyReload() {
+        _storeSet(LOBBY_RELOAD_KEY, null);
+    }
+
+    // Every frame, after handleMessage (routeMessage): the lobby is over once
+    // the page has left it, by a start from any surface or a reset. The seat
+    // token goes too: a started game hands the seat to /quizify/player, a
+    // reset removes it.
+    function _afterLobbyFrame(msg) {
+        var type = msg.type || msg.event;
+        if (type === 'game_reset' || currentPhase !== 'LOBBY') {
+            _forgetLobbyReload();
+            _storeSet(ADMIN_SEAT_TOKEN_KEY, null);
+        }
+    }
+
+    // The server's answer to admin_connect (the host confirmation) in the
+    // lobby, from _onHostConfirmed: after handleGameState has drawn the
+    // frame (and put _adminJoinedAs back, #1156), before the lobby settings
+    // are pushed, so the pushes carry what is restored here (#1201).
+    function _resumeLobbyAfterReload(msg) {
+        // The seat: the roster still lists it inside the grace, and the
+        // token this tab was given proves it is ours. Any new admin socket
+        // has to take it back, a blip as much as a reload. The server
+        // checks the token as for any phone (handle_reconnect).
+        var seatName = _adminJoinedAs || _storeGet('quizify_admin_name');
+        var seatToken = _storeGet(ADMIN_SEAT_TOKEN_KEY);
+        if (seatName && seatToken && msg.players && _rosterHasName(msg.players, seatName)) {
+            send('reconnect', { session_token: seatToken, name: seatName });
+        } else if (seatToken) {
+            // Not ours any more (gone after the grace, or never seated).
+            _storeSet(ADMIN_SEAT_TOKEN_KEY, null);
+        }
+        // The view, once per page load: a reconnect without a reload is
+        // still on the view it had.
+        if (_lobbyReloadDone) return;
+        _lobbyReloadDone = true;
+        var raw = _storeGet(LOBBY_RELOAD_KEY);
+        if (!raw) return;
+        var saved = null;
+        try { saved = JSON.parse(raw); } catch (e) { saved = null; }
+        if (!saved || typeof saved !== 'object') {
+            _forgetLobbyReload();
+            return;
+        }
+        _applyCustomPreset(saved);
+        showView('lobby');
+        initJoinUrl();
+    }
+
     // ---- View management ----
     function showView(name) {
         if (_redirecting) return;
@@ -1926,9 +2022,12 @@
         return (msg.type || msg.event) === 'game_state' && !!msg.admin_session_token;
     }
 
-    function _onHostConfirmed() {
+    function _onHostConfirmed(msg) {
         if (!ws || _hostConfirmedSock === ws) return;
         _hostConfirmedSock = ws;
+        // #1209: the host's seat and, after a reload, the lobby come back
+        // first, so the pushes below send the restored settings.
+        if (msg && msg.phase === 'LOBBY') _resumeLobbyAfterReload(msg);
         // Configure narration up-front so pre-game lobby joins narrate (#281).
         _pushTtsConfig();
         // Same for the house effects (#494) — lobby-time, so they work
@@ -1960,9 +2059,10 @@
             leaveNotHost();
         }
         handleMessage(msg);
+        _afterLobbyFrame(msg);
         // After the frame is handled, so the TTS / house pickers it fills
         // are read with the host's saved selection restored (#1201).
-        if (_isHostConfirmation(msg)) _onHostConfirmed();
+        if (_isHostConfirmation(msg)) _onHostConfirmed(msg);
     }
 
     // ---- Message router ----
@@ -1981,7 +2081,25 @@
                 // would have broken this redirect with nothing to catch it.
                 if (msg.session_token && _adminJoinedAs) {
                     window.QuizifyClientCore.saveSession(msg.session_token, _adminJoinedAs);
+                    // #1209: and in this tab's own store, which no other tab
+                    // of the browser writes to, for the lobby reload.
+                    _storeSet(ADMIN_SEAT_TOKEN_KEY, msg.session_token);
                 }
+                break;
+            case 'reconnected':
+                // #1209: the seat is back on this socket (_resumeLobbyAfterReload).
+                // The server rotated the token; the old one is dead, so both
+                // stores take the new one, the shared one for the redirect
+                // at Start.
+                if (msg.session_token && _adminJoinedAs) {
+                    _storeSet(ADMIN_SEAT_TOKEN_KEY, msg.session_token);
+                    window.QuizifyClientCore.saveSession(msg.session_token, _adminJoinedAs);
+                }
+                break;
+            case 'reconnect_failed':
+                // The token no longer holds the seat (a reset, or the seat
+                // has moved on with a newer token). Nothing to take back.
+                _storeSet(ADMIN_SEAT_TOKEN_KEY, null);
                 break;
             case 'game_state':
                 handleGameState(msg);
@@ -4566,6 +4684,8 @@
     on(els.startGameBtn, 'click', function () {
         showView('lobby');
         initJoinUrl();
+        // #1209: a reload brings the host back here, with these settings.
+        _rememberLobby();
     });
 
     // Featured pack spotlight (hero) → SELECT/DESELECT the World Cup pack, the
@@ -4587,6 +4707,7 @@
     // re-applying settings re-emits them on submit.
     on(els.lobbyBackBtn, 'click', function () {
         showView('setup');
+        _forgetLobbyReload();
     });
 
     // Lobby: "Spiel starten" — starts the game with players already in
