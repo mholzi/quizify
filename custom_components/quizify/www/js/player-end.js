@@ -372,7 +372,7 @@
 
             // #1169: `data-place` puts the row on the podium's 3 → 2 → 1
             // clock (07-player.css), the same one the television runs.
-            return '<div class="sb-row' + (isYou ? ' sb-row--me' : '') +
+            return '<div class="qz-rank-row sb-row' + (isYou ? ' sb-row--me' : '') +
                     (entry.connected === false ? ' sb-row--away' : '') +
                     '" data-place="' + rank + '">' +
                 '<div class="sb-rank ' + discClass + '">' + rank + '</div>' +

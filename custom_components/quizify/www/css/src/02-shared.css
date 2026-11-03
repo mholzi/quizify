@@ -6,7 +6,7 @@ button, .btn {
     min-width: 44px;
     min-height: 44px;
     padding: var(--space-sm) var(--space-lg);
-    font-size: var(--font-size-md);
+    font-size: var(--fs-3);
     font-weight: var(--font-weight-medium);
     border: none;
     border-radius: var(--radius-md);
@@ -50,7 +50,7 @@ button, .btn {
     border-radius: var(--radius-md);
     font-family: var(--font-body);
     font-weight: 600;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--elevation-1);
 }
 
 .btn-secondary:hover:not(:disabled) {
@@ -60,12 +60,15 @@ button, .btn {
 }
 
 .btn-danger {
-    background: var(--color-error);
-    color: var(--color-text-white);
+    background: var(--color-error-fill);
+    color: var(--on-accent);                      /* ink on the error fill, 4.57 : 1 (#1178) */
 }
 
+/* Hover lifts like the other buttons instead of darkening: a darker red under
+   ink falls below AA (ink on --color-error-dark is 3.2 : 1). */
 .btn-danger:hover:not(:disabled) {
-    background: var(--color-error-dark);
+    background: var(--color-error-fill);
+    transform: translateY(-1px);
 }
 
 .btn-block {
@@ -74,7 +77,7 @@ button, .btn {
 
 .btn-lg {
     min-height: 56px;
-    font-size: var(--font-size-xl);
+    font-size: var(--fs-4);
     padding: var(--space-md) var(--space-xl);
 }
 
@@ -124,12 +127,12 @@ a[href]:not(.btn):active {
 .input, .name-input {
     width: 100%;
     padding: 14px var(--space-md);
-    background: var(--color-dark-surface);
-    border: 2px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 2px solid var(--color-border-light);
     border-radius: var(--radius-md);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     font-family: var(--font-system);
-    font-size: var(--font-size-lg);
+    font-size: var(--fs-4);
     min-height: 48px;
     outline: none;
     transition: border-color var(--transition-fast);
@@ -141,12 +144,12 @@ a[href]:not(.btn):active {
 }
 
 .input::placeholder, .name-input::placeholder {
-    color: var(--color-text-neon-muted);
+    color: var(--color-text-muted);
 }
 
 .validation-msg {
     margin-top: var(--space-sm);
-    font-size: var(--font-size-base);
+    font-size: var(--fs-2);
     color: var(--error-ink);
     text-align: left;
 }
@@ -156,39 +159,39 @@ a[href]:not(.btn):active {
    ========================================== */
 
 .card {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
-    box-shadow: 0 4px 20px rgba(42, 40, 32, 0.10);
+    box-shadow: var(--elevation-2);
 }
 
 .card-header {
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-text-neon-muted);
+    color: var(--color-text-muted);
     margin-bottom: var(--space-md);
 }
 
 /* Card section (Beatify pattern) */
 .card-section {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     padding: var(--space-sm) var(--space-md);
     margin-bottom: var(--space-md);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card-section:hover {
-    box-shadow: 0 4px 20px rgba(42, 40, 32, 0.10);
+    box-shadow: var(--elevation-2);
 }
 
 .card-section .section-header {
@@ -196,13 +199,13 @@ a[href]:not(.btn):active {
     align-items: center;
     gap: var(--space-sm);
     margin-bottom: var(--space-sm);
-    font-size: var(--font-size-md);
+    font-size: var(--fs-3);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
 }
 
 .card-section .section-icon {
-    font-size: 1.25rem;
+    font-size: var(--fs-4);
 }
 
 /* ==========================================
@@ -210,8 +213,8 @@ a[href]:not(.btn):active {
    ========================================== */
 
 .section-collapsible {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-md);
     margin-bottom: var(--space-md);
     overflow: hidden;
@@ -223,11 +226,10 @@ a[href]:not(.btn):active {
     gap: var(--space-sm);
     width: 100%;
     padding: 14px var(--space-md);
-    background: rgba(255, 255, 255, 0.03);
     border: none;
     border-radius: 0;
-    color: var(--color-text-white);
-    font-size: 0.9rem;
+    color: var(--color-text-primary);
+    font-size: var(--fs-2);
     font-weight: 600;
     font-family: var(--font-display), var(--font-body);
     cursor: pointer;
@@ -235,17 +237,13 @@ a[href]:not(.btn):active {
     transition: background 0.15s ease;
 }
 
-.section-header-collapsible:hover {
-    background: rgba(255, 255, 255, 0.06);
-}
-
 .section-header-collapsible .section-icon {
-    font-size: 1rem;
+    font-size: var(--fs-3);
 }
 
 .section-summary {
     margin-left: auto;
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     font-weight: 400;
     color: var(--sage-ink);
     background: rgba(232, 138, 127, 0.1);
@@ -255,8 +253,8 @@ a[href]:not(.btn):active {
 
 .section-toggle {
     margin-left: var(--space-sm);
-    font-size: 0.625rem;
-    color: var(--color-text-neon-muted);
+    font-size: var(--fs-1);
+    color: var(--color-text-muted);
     transition: transform 0.2s ease;
 }
 
@@ -293,7 +291,7 @@ a[href]:not(.btn):active {
     justify-content: center;
     min-height: 44px;
     padding: 10px 14px;
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     font-weight: 500;
     background: #F3EEDF;
     border: 1px solid #E5DFCF;
@@ -319,7 +317,7 @@ a[href]:not(.btn):active {
 /* Category chips - checkmark */
 #category-chips .chip.active::before {
     content: '\2713 ';
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
 }
 
 /* Flag-only language chips (#335, Selector B). The chip shows just the
@@ -328,12 +326,12 @@ a[href]:not(.btn):active {
    text-pill padding. Sized to stay finger-friendly and never clip on a
    390 px phone — flags wrap to a second row via the parent flex-wrap. */
 .chip-group--flags {
-    gap: 8px;
+    gap: var(--space-sm);
 }
 
 .chip-group--flags .chip {
     padding: 6px 12px;
-    font-size: 1.5rem;
+    font-size: var(--fs-4);
     line-height: 1;
     min-width: 48px;
     min-height: 44px;   /* #1183: was 40 */
@@ -354,7 +352,7 @@ a[href]:not(.btn):active {
    ✓ pseudo since the card layout draws its own check corner. */
 #category-chips:not(.chip-group--cards) .chip[data-icon]:not(.active)::before {
     content: attr(data-icon) ' ';
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     margin-right: 2px;
 }
 
@@ -394,10 +392,10 @@ a[href]:not(.btn):active {
 #category-chips.chip-group--cards .chip {
     /* Reset the pill defaults */
     padding: 12px 14px;
-    font-size: 1rem;
+    font-size: var(--fs-3);
     background: var(--color-bg-surface);
     border: 1.5px solid var(--color-border-light);
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     color: var(--color-text-primary);
     /* Card layout */
     display: flex;
@@ -412,7 +410,7 @@ a[href]:not(.btn):active {
 #category-chips.chip-group--cards .chip:hover {
     border-color: var(--color-border-medium);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(42, 40, 32, 0.08);
+    box-shadow: var(--elevation-2);
 }
 #category-chips.chip-group--cards .chip.active {
     background: var(--color-accent-brand-bg);
@@ -431,10 +429,10 @@ a[href]:not(.btn):active {
     right: 10px;
     color: var(--coral-ink);
     font-weight: 700;
-    font-size: 1rem;
+    font-size: var(--fs-3);
 }
 #category-chips.chip-group--cards .pack-card-icon {
-    font-size: 1.55rem;
+    font-size: var(--fs-5);
     line-height: 1;
 }
 /* P1 of #212: pack-card icons become shared SVG line icons (Option 2
@@ -458,7 +456,7 @@ a[href]:not(.btn):active {
     justify-content: center;
     width: 32px;
     height: 32px;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     flex: 0 0 auto;
 }
 .qz-icon svg {
@@ -491,7 +489,7 @@ a[href]:not(.btn):active {
 .theme-tab .qz-icon {
     width: 22px;
     height: 22px;
-    border-radius: 7px;
+    border-radius: var(--radius-sm);
     margin-right: 5px;
     vertical-align: middle;
 }
@@ -508,7 +506,7 @@ a[href]:not(.btn):active {
 .control-icon.qz-icon {
     width: 24px;
     height: 24px;
-    border-radius: 7px;
+    border-radius: var(--radius-sm);
 }
 /* Hero/full-screen states: larger duotone disc so the glyph still reads
    as a focal point (these spans previously rendered as a 3rem emoji). */
@@ -517,19 +515,19 @@ a[href]:not(.btn):active {
 .connection-lost-icon.qz-icon {
     width: 64px;
     height: 64px;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     margin-bottom: var(--space-sm);
 }
 /* Lightning splash bolt: bold focal disc on the intro splash. */
 .lr-splash-bolt .qz-icon {
     width: 72px;
     height: 72px;
-    border-radius: 22px;
+    border-radius: var(--radius-lg);
 }
 #category-chips.chip-group--cards .pack-card-name {
     font-family: var(--font-display, var(--font-system, inherit));
     font-weight: 700;
-    font-size: 0.98rem;
+    font-size: var(--fs-3);
     line-height: 1.18;
     /* Wrap long names like "Essen & Trinken" / "Tiere & Natur" inside the
        fixed-width grid track instead of forcing the card wider. */
@@ -538,7 +536,7 @@ a[href]:not(.btn):active {
 }
 #category-chips.chip-group--cards .pack-card-count {
     font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.7rem;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
     letter-spacing: 0.04em;
 }
@@ -553,11 +551,11 @@ a[href]:not(.btn):active {
     align-self: flex-start;
     max-width: 100%;
     padding: 2px 8px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: var(--color-accent-brand-bg);
     color: var(--coral-ink);
     font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.66rem;
+    font-size: var(--fs-1);
     font-weight: 700;
     line-height: 1.3;
     letter-spacing: 0.02em;
@@ -575,7 +573,7 @@ a[href]:not(.btn):active {
 .question-count-summary {
     margin-top: 10px;
     font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
     letter-spacing: 0.04em;
 }
@@ -603,7 +601,7 @@ a[href]:not(.btn):active {
     -webkit-appearance: none;
     position: relative;
     background: #E88A7F;
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     padding: 14px 16px 12px;
     color: var(--on-accent);
     margin-bottom: var(--space-md);
@@ -628,20 +626,20 @@ a[href]:not(.btn):active {
 }
 .featured-spotlight .spotlight-label {
     font-family: var(--font-system, inherit);
-    font-size: 0.65rem;
+    font-size: var(--fs-1);
     text-transform: uppercase;
     letter-spacing: 0.12em;
     opacity: 0.92;
-    margin-bottom: 4px;
+    margin-bottom: var(--space-xs);
 }
 .featured-spotlight .spotlight-title {
     font-weight: 700;
-    font-size: 1.15rem;
+    font-size: var(--fs-4);
     line-height: 1.15;
     margin-bottom: 2px;
 }
 .featured-spotlight .spotlight-meta {
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     opacity: 0.9;
     margin-bottom: 10px;
 }
@@ -652,10 +650,10 @@ a[href]:not(.btn):active {
     background: rgba(255, 255, 255, 0.95);
     color: #2A2820;
     border: 0;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     padding: 7px 16px;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     cursor: pointer;
     min-width: 0;
     min-height: 0;
@@ -686,7 +684,7 @@ a[href]:not(.btn):active {
     -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
     mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
     /* Padding so the active-tab outline isn't clipped by the mask edge. */
-    padding-right: 4px;
+    padding-right: var(--space-xs);
 }
 .theme-tabs::-webkit-scrollbar {
     display: none;
@@ -706,19 +704,19 @@ a[href]:not(.btn):active {
     align-items: center;
     background: var(--color-bg-surface);
     border: 1.5px solid var(--color-border-light);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     /* v1.1.42: tighter padding + slightly smaller text so more tabs fit
        per viewport before the user has to scroll. Was 6/12 + 0.78 rem.
        #212: a touch less left padding to make room for the icon disc. */
     padding: 5px 11px 5px 6px;
     min-width: 0;
     min-height: 0;
-    font-size: 0.72rem;
+    font-size: var(--fs-1);
     font-weight: 600;
     color: var(--color-text-muted);
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.12s ease;
+    transition: all var(--transition-fast);
     font-family: inherit;
 }
 /* Transparent ::before extends the tap target to >=44px tall (the pill
@@ -781,7 +779,7 @@ a[href]:not(.btn):active {
     /* #490: inset box-shadow instead of border so box-sizing:border-box
        doesn't shrink the padding box + off-center the ::after knob. */
     box-shadow: inset 0 0 0 1px rgba(42, 40, 32, 0.18);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     position: relative;
     transition: background 0.2s ease;
 }
@@ -798,7 +796,7 @@ a[href]:not(.btn):active {
     left: 2px;
     width: 16px;
     height: 16px;
-    background: var(--color-text-neon-muted);
+    background: var(--color-text-muted);
     border-radius: 50%;
     transition: all 0.2s ease;
 }
@@ -812,3 +810,37 @@ a[href]:not(.btn):active {
     background: var(--color-accent-secondary);
 }
 
+
+/* ==========================================
+   Toast (#1178 step 10)
+   ==========================================
+   One class for the host's error toast (admin.js showErrorToast) and the
+   phone's toast (player-utils.js showToast). Both used to spell the same
+   style out as a JS string, with the off-palette #D65858, white text
+   (3.9 : 1) and z-index 9999. The scripts now only set the text, `top` (the
+   phone keeps it clear of its header) and `opacity`, which is what shows or
+   hides it; 0.3 s matches TOAST_FADE_MS in player-utils.js.
+   Ink on --color-error-fill is 4.57 : 1 (decided 2026-11-03: a lighter
+   error fill under ink, rather than white on a dark red). */
+.qz-toast {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: var(--fs-2);
+    z-index: var(--z-toast);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.qz-toast--error {
+    background: var(--color-error-fill);
+    color: var(--on-accent);
+}

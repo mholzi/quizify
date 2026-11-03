@@ -16,8 +16,8 @@
 }
 
 .end-subtitle {
-    font-size: 0.9rem;
-    color: var(--color-text-neon-muted);
+    font-size: var(--fs-2);
+    color: var(--color-text-muted);
 }
 
 /* ==========================================
@@ -46,14 +46,14 @@
 
 .end-title-d {
     font-family: var(--font-display);
-    font-size: 1.85rem;
+    font-size: var(--fs-5);
     font-weight: 900;
     letter-spacing: -0.02em;
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
 }
 
 .end-subtitle-d {
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     margin-top: 2px;
 }
@@ -62,8 +62,8 @@
 .end-hero {
     background: linear-gradient(135deg, #FCEFE8 0%, #FFF9F0 100%);
     border: 1px solid rgba(232, 138, 127, 0.30);
-    border-radius: 16px;
-    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--elevation-2);
     padding: 18px 16px;
     text-align: center;
     margin-bottom: 20px;
@@ -72,15 +72,15 @@
 }
 .end-hero-conf {
     position: absolute;
-    font-size: 13px;
+    font-size: var(--fs-2);
     opacity: 0.8;
 }
 .end-hero-conf--l { top: 8px; left: 20px; }
 .end-hero-conf--r { top: 12px; right: 24px; }
-.end-hero-crown { font-size: 30px; line-height: 1; }
+.end-hero-crown { font-size: var(--fs-5); line-height: 1; }
 .end-hero-label {
     /* 12px floor so the label clears WCAG AA min-size on small phones (#382). */
-    font-size: max(0.66rem, 12px);
+    font-size: var(--fs-1);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -89,7 +89,7 @@
 }
 .end-hero-name {
     font-family: var(--font-display);
-    font-size: 1.55rem;
+    font-size: var(--fs-5);
     font-weight: 900;
     margin-top: 2px;
     letter-spacing: -0.02em;
@@ -99,7 +99,7 @@
 .end-hero-score {
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     color: var(--color-text-muted);
     margin-top: 2px;
 }
@@ -158,9 +158,9 @@
 .end-section-label {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 0.78rem;
+    font-size: var(--fs-2);
     letter-spacing: -0.01em;
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     margin: 0 2px 9px;
 }
 
@@ -194,8 +194,8 @@
     scroll-snap-align: start;
     background: #fff;
     border: 1px solid #E5DFCF;
-    border-radius: 12px;
-    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--elevation-1);
     padding: 9px 11px;
     display: flex;
     align-items: center;
@@ -209,7 +209,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     flex-shrink: 0;
 }
 .rchip-disc.disc-sun   { background: rgba(232, 196, 127, 0.22); color: var(--sun-ink); }
@@ -219,7 +219,7 @@
 .rchip-main { min-width: 0; }
 .rchip-title {
     /* 12px floor + AA-contrast muted token (#382). */
-    font-size: max(0.66rem, 12px);
+    font-size: var(--fs-1);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -229,14 +229,14 @@
 .rchip-val {
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 0.82rem;
-    color: var(--color-text-white);
+    font-size: var(--fs-2);
+    color: var(--color-text-primary);
     margin-top: 2px;
     line-height: 1.1;
 }
 .rchip-who {
     /* 12px floor; drop opacity trick so the muted token keeps its AA contrast (#382). */
-    font-size: max(0.64rem, 12px);
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
     margin-top: 1px;
     overflow: hidden;
@@ -247,13 +247,19 @@
 
 /* ---- Gesamtwertung scoreboard with score bars ---- */
 .end-scoreboard-section { margin-top: 2px; }
-.sb-row {
+/* Rank row base (#1178 step 10): the end scoreboard (.sb-row) and the
+   reveal standings (.mstand-row) are one card row; each keeps only its
+   padding and alignment. */
+.qz-rank-row {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 11px;
-    background: #fff;
-    border: 1px solid #ECE4D2;
-    border-radius: 14px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+}
+.sb-row {
+    align-items: flex-start;
     padding: 11px 13px;
 }
 .sb-row + .sb-row { margin-top: 9px; }
@@ -271,7 +277,7 @@
     align-items: center;
     justify-content: center;
     font-weight: 800;
-    font-size: 13px;
+    font-size: var(--fs-2);
     color: var(--on-accent);
     background: #EFE8D6;
     margin-top: 1px;
@@ -289,28 +295,28 @@
 }
 .sb-name {
     font-weight: 700;
-    font-size: 14px;
-    color: var(--color-text-white);
+    font-size: var(--fs-2);
+    color: var(--color-text-primary);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 60%;
 }
 .sb-away {
-    font-size: 0.7rem;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
     opacity: 0.7;
 }
-.sb-badge { font-size: 0.82rem; line-height: 1; }
+.sb-badge { font-size: var(--fs-2); line-height: 1; }
 .sb-you {
     flex-shrink: 0;
     /* 12px floor so the "YOU" badge label clears WCAG AA min-size (#382). */
-    font-size: 12px;
+    font-size: var(--fs-1);
     font-weight: 800;
     letter-spacing: 0.04em;
     color: var(--on-accent);
     background: var(--color-accent-primary);
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     padding: 2px 5px;
     line-height: 1;
 }
@@ -318,12 +324,12 @@
     margin-top: 7px;
     height: 9px;
     background: #F0EADC;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     overflow: hidden;
 }
 .sb-bar {
     height: 100%;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     transition: width 0.5s ease-out;
 }
 .sb-bar.bar-gold  { background: linear-gradient(90deg, #E8C47F, #D9A441); }
@@ -333,8 +339,8 @@
     flex-shrink: 0;
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 1rem;
-    color: var(--color-text-white);
+    font-size: var(--fs-3);
+    color: var(--color-text-primary);
     font-variant-numeric: tabular-nums;
     align-self: flex-start;
     margin-top: 5px;
@@ -354,7 +360,7 @@
 /* Shared results-screen action buttons (Buttons A). */
 .resbtn {
     border: 0;
-    border-radius: 13px;
+    border-radius: var(--radius-lg);
     font: 700 14px/1.1 system-ui, -apple-system, sans-serif;
     display: inline-flex;
     align-items: center;
@@ -369,7 +375,7 @@
     color: var(--on-accent);
     height: 48px;
     width: 100%;
-    font-size: 15px;
+    font-size: var(--fs-3);
 }
 
 .resbtn-row {
@@ -400,12 +406,6 @@
    #lightning-recap-leaderboard containers.
    ========================================== */
 .mstand-row {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    background: #fff;
-    border: 1px solid #ECE4D2;
-    border-radius: 13px;
     padding: 9px 13px;
 }
 .mstand-row + .mstand-row {
@@ -425,7 +425,7 @@
     align-items: center;
     justify-content: center;
     font-weight: 800;
-    font-size: 13px;
+    font-size: var(--fs-2);
     color: var(--on-accent);
     background: #EFE8D6;        /* rank 4+ neutral disc... */
 }
@@ -440,7 +440,7 @@
     flex: 1;
     min-width: 0;
     font-weight: 600;
-    font-size: 14px;
+    font-size: var(--fs-2);
     color: #2A2820;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -452,12 +452,12 @@
 
 .mstand-you {
     flex-shrink: 0;
-    font-size: 10px;
+    font-size: var(--fs-1);
     font-weight: 800;
     letter-spacing: 0.04em;
     color: var(--on-accent);
     background: var(--color-accent-primary);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     padding: 2px 6px;
     line-height: 1;
 }
@@ -465,15 +465,15 @@
 .mstand-score {
     flex-shrink: 0;
     font-weight: 800;
-    font-size: 15px;
+    font-size: var(--fs-3);
     color: #2A2820;
     font-variant-numeric: tabular-nums;
 }
 
 .end-player-message {
     text-align: center;
-    color: var(--color-text-neon-muted);
-    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-size: var(--fs-2);
     padding: var(--space-md) 0;
 }
 
@@ -481,7 +481,7 @@
     text-align: center;
     /* AA-contrast muted token, no opacity trick; 12px floor (#382). */
     color: var(--color-text-muted);
-    font-size: max(0.75rem, 12px);
+    font-size: var(--fs-1);
 }
 
 /* `.new-game-btn` and its hover lived here and matched nothing: the name is an
@@ -509,7 +509,7 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--space-sm) 0;
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
 }
 
 .game-header-left {
@@ -519,7 +519,7 @@
 }
 
 .round-indicator-text {
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     font-weight: 600;
     color: var(--sage-ink);
     text-transform: uppercase;
@@ -535,7 +535,7 @@
     border: 1px solid rgba(232, 138, 127, 0.3);
     border-radius: var(--radius-full);
     color: var(--coral-ink);
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -548,8 +548,8 @@
 }
 
 .question-card {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
     text-align: center;
@@ -560,8 +560,8 @@
     align-items: center;
     justify-content: center;
     padding: var(--space-lg);
-    color: var(--color-text-neon-muted);
-    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-size: var(--fs-2);
 }
 
 /* Timer */
@@ -574,11 +574,11 @@
 }
 
 .timer {
-    font-size: 1.5rem;
+    font-size: var(--fs-4);
     font-weight: var(--font-weight-bold);
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     text-align: center;
 }
 
@@ -588,7 +588,7 @@
 
 .timer--critical {
     color: var(--error-ink);
-    text-shadow: 0 0 15px var(--color-error-neon);
+    text-shadow: 0 0 15px var(--color-error);
 }
 
 /* One pulse per digit, restarted by the same tick that writes the number
@@ -648,7 +648,7 @@
 }
 
 .answer-btn-b {
-    border-left: 3px solid rgba(168, 85, 247, 0.4);
+    border-left: 3px solid rgba(183, 143, 199, 0.4);
 }
 
 .answer-btn-c {
@@ -663,9 +663,8 @@
     width: 28px;
     height: 28px;
     border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.08);
     font-weight: var(--font-weight-bold);
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     color: var(--sage-ink);
     flex-shrink: 0;
 }
@@ -680,7 +679,7 @@
 
 .is-selected .answer-letter {
     background: var(--color-accent-primary);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
 }
 
 .answer-btn.is-correct,
@@ -692,7 +691,7 @@
 
 .is-correct .answer-letter {
     background: var(--color-success);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
 }
 
 .answer-btn.is-wrong,
@@ -704,7 +703,7 @@
 
 .is-wrong .answer-letter {
     background: var(--color-error);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
 }
 
 .answer-btn.is-eliminated,
@@ -757,7 +756,7 @@
     to { stroke-dashoffset: 0; }
 }
 .lock-in-status:not(.hidden) {
-    color: var(--color-text-neon-muted);
+    color: var(--color-text-muted);
     font-weight: 500;
     animation: lock-in-status-in var(--dur-status) var(--ease-out) backwards;
     animation-delay: var(--dur-status-delay);
@@ -787,19 +786,19 @@
    only one that looks the same at every text length — the five explanations
    range from "+5 more seconds" to a full sentence about round scores. */
 .powerup-explainer {
-    font-size: 0.72rem;
+    font-size: var(--fs-1);
     line-height: 1.3;
-    color: var(--color-text-neon-muted);
+    color: var(--color-text-muted);
     text-align: center;
     max-width: 17rem;
 }
 
 .powerup-icon {
-    font-size: 1rem;
+    font-size: var(--fs-3);
 }
 
 .powerup-label {
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     font-weight: 600;
 }
 
@@ -811,7 +810,7 @@
     gap: var(--space-sm);
     padding: var(--space-md);
     color: var(--sage-ink);
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     font-weight: 600;
 }
 
@@ -822,16 +821,16 @@
     width: 24px;
     height: 24px;
     border-radius: var(--radius-full);
-    background: rgba(16, 185, 129, 0.15);
+    background: var(--color-success-light);
     color: var(--sage-ink);
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
 }
 
 /* Submission tracker */
 .submission-tracker {
     text-align: center;
-    font-size: 0.75rem;
-    color: var(--color-text-neon-muted);
+    font-size: var(--fs-1);
+    color: var(--color-text-muted);
     padding: var(--space-xs) 0;
 }
 
@@ -840,8 +839,8 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--space-xs);
-    color: var(--color-text-neon-muted);
-    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-size: var(--fs-1);
 }
 
 /* Leaderboard section (in-game) */
@@ -859,8 +858,7 @@
     align-items: center;
     gap: var(--space-md);
     padding: var(--space-sm) var(--space-md);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
 }
 
 .leaderboard-entry:last-child {
@@ -869,7 +867,7 @@
 
 .leaderboard-separator {
     height: 1px;
-    background: var(--color-border-neon);
+    background: var(--color-border-light);
     margin: var(--space-xs) 0;
 }
 
@@ -895,7 +893,7 @@
     width: 24px;
     height: 24px;
     border-radius: var(--radius-full);
-    background: var(--color-text-neon-muted);
+    background: var(--color-text-muted);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -903,7 +901,7 @@
 }
 
 .player-indicator .player-initials {
-    font-size: 0.65rem;
+    font-size: var(--fs-1);
     font-weight: 600;
     line-height: 1;
     /* #477: warm ink instead of #fff. White on the sage success avatar
@@ -913,9 +911,9 @@
 }
 
 .player-indicator .player-name {
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     line-height: 1.2;
-    color: var(--color-text-neon-muted);
+    color: var(--color-text-muted);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -923,8 +921,8 @@
 }
 
 .player-indicator.is-submitted .player-avatar {
-    background: var(--color-success-neon);
-    box-shadow: 0 0 6px var(--color-success-neon);
+    background: var(--color-success);
+    box-shadow: 0 0 6px var(--color-success);
 }
 
 /* #619: `renderSubmissionTracker` has always toggled `all-submitted` on the
@@ -937,7 +935,7 @@
 }
 
 .submission-tracker.all-submitted .player-indicator {
-    border-color: var(--color-success-neon);
+    border-color: var(--color-success);
     background: rgba(127, 168, 151, 0.14);
 }
 
@@ -966,7 +964,7 @@
 .player-indicator--disconnected {
     opacity: 0.45;
     border-style: dashed;
-    border-color: var(--color-text-neon-muted);
+    border-color: var(--color-text-muted);
 }
 
 /* ==========================================
@@ -1000,8 +998,8 @@
 }
 
 .stat-badge--difficulty {
-    background: rgba(168, 85, 247, 0.12);
-    border-color: rgba(168, 85, 247, 0.3);
+    background: rgba(183, 143, 199, 0.12);
+    border-color: rgba(183, 143, 199, 0.3);
     color: var(--mauve-ink);
 }
 
@@ -1015,7 +1013,7 @@
 
 .btn-large {
     min-height: 56px;
-    font-size: var(--font-size-lg);
+    font-size: var(--fs-4);
     padding: var(--space-md) var(--space-xl);
     font-weight: var(--font-weight-semibold);
 }
@@ -1051,13 +1049,13 @@
     font-size: clamp(1.4rem, 5vw, 2.2rem);
     line-height: 1.15;
     margin: 0;
-    color: var(--color-text-heading);
+    color: var(--color-text-primary);
 }
 .setup-hero-headline .accent { color: var(--coral-ink); }
 
 .setup-hero-summary {
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     margin: 0;
     max-width: 90%;
@@ -1069,7 +1067,7 @@
    sits just below the mono settings summary. */
 .setup-hero-topics {
     font-family: var(--font-body);
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     font-weight: 600;
     color: var(--coral-ink);
     margin: 6px 0 0;
@@ -1081,7 +1079,7 @@
     width: 100%;
     max-width: 360px;
     padding: 16px;
-    font-size: 1.05rem;
+    font-size: var(--fs-3);
 }
 
 .setup-tweak-link {
@@ -1089,7 +1087,7 @@
     border: 0;
     color: var(--color-text-muted);
     font-family: var(--font-body);
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     padding: 8px;
     cursor: pointer;
     text-decoration: underline dotted var(--color-text-light);
@@ -1109,7 +1107,7 @@
 }
 .not-host-lead {
     font-family: var(--font-body);
-    font-size: 1rem;
+    font-size: var(--fs-3);
     line-height: 1.5;
     color: var(--color-text-muted);
     margin: 0;
@@ -1127,13 +1125,13 @@
 }
 .not-host-card-title {
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     font-weight: 700;
-    color: var(--color-text-heading);
+    color: var(--color-text-primary);
     margin: 0 0 4px;
 }
 .not-host-card-body {
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     line-height: 1.5;
     color: var(--color-text-muted);
     margin: 0;
@@ -1152,7 +1150,7 @@
 
 .setup-links-sep {
     color: var(--color-text-muted);
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
 }
 
 /* Featured pack spotlight on the hero — one-tap launch of a highlighted
@@ -1167,9 +1165,9 @@
     width: 100%;
     max-width: 360px;
     text-align: left;
-    background: var(--color-bg-card);
+    background: var(--color-bg-surface);
     border: 1.5px solid var(--color-accent-primary);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
     padding: 14px;
     box-shadow: 0 6px 16px rgba(232, 138, 127, 0.14);
     cursor: pointer;
@@ -1185,7 +1183,7 @@
     flex: none;
     width: 46px;
     height: 46px;
-    border-radius: 13px;
+    border-radius: var(--radius-lg);
     background: rgba(232, 196, 127, 0.24);
     display: flex;
     align-items: center;
@@ -1203,7 +1201,7 @@
 .hero-feature-body { display: flex; flex-direction: column; min-width: 0; }
 .hero-feature-eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: var(--fs-1);
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -1212,13 +1210,13 @@
 .hero-feature-title {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--color-text-heading);
+    font-size: var(--fs-3);
+    color: var(--color-text-primary);
     margin-top: 1px;
 }
 .hero-feature-desc {
     font-family: var(--font-body);
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     margin-top: 2px;
     line-height: 1.35;
@@ -1234,7 +1232,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     font-weight: 700;
     color: var(--coral-ink);
     transition: background 0.12s ease, color 0.12s ease;
@@ -1256,7 +1254,7 @@
 }
 .hero-packs-label {
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: var(--fs-1);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-text-muted);
@@ -1275,9 +1273,9 @@
     align-items: flex-start;
     gap: 6px;
     text-align: left;
-    background: var(--color-bg-card);
+    background: var(--color-bg-surface);
     border: 1.5px solid var(--color-border-light);
-    border-radius: 13px;
+    border-radius: var(--radius-lg);
     padding: 11px;
     cursor: pointer;
     transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
@@ -1285,7 +1283,7 @@
 .hero-cat-tile:hover {
     border-color: var(--color-border-medium);
     transform: translateY(-1px);
-    box-shadow: 0 5px 13px rgba(42, 40, 32, 0.08);
+    box-shadow: var(--elevation-2);
 }
 .hero-cat-tile.active {
     border-color: var(--color-accent-primary);
@@ -1299,12 +1297,12 @@
     right: 10px;
     color: var(--coral-ink);
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
 }
 .hct-icon {
     width: 32px;
     height: 32px;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1322,13 +1320,13 @@
 .hct-name {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     line-height: 1.12;
-    color: var(--color-text-heading);
+    color: var(--color-text-primary);
 }
 .hct-count {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
     letter-spacing: 0.02em;
 }
@@ -1350,7 +1348,7 @@
     text-align: left;
     background: rgba(232, 138, 127, 0.08);
     border: 1.5px dashed var(--color-accent-primary);
-    border-radius: 13px;
+    border-radius: var(--radius-lg);
     padding: 11px;
     cursor: pointer;
     font: inherit;
@@ -1363,7 +1361,7 @@
 .hero-wish-tile .hct-icon {
     background: rgba(232, 138, 127, 0.16);
     color: var(--coral-ink);
-    font-size: 1.1rem;
+    font-size: var(--fs-3);
     font-weight: 700;
 }
 /* Darker coral for text: the accent itself is too light to read on cream. */
@@ -1397,7 +1395,7 @@
     border: 0;
     color: var(--color-text-muted);
     font-family: var(--font-body);
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
     padding: 6px 10px 6px 0;
     cursor: pointer;
     display: inline-flex;
@@ -1409,7 +1407,7 @@
 .setup-detail-title {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: var(--fs-3);
     color: var(--color-text-muted);
     margin: 0;
 }
@@ -1428,7 +1426,7 @@
     padding: 14px;
     background: var(--color-bg-card-alt);
     border: 1px solid var(--color-border-light);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     cursor: pointer;
     text-align: left;
     font-family: var(--font-body);
@@ -1441,17 +1439,17 @@
     background: var(--color-accent-brand-bg);
 }
 
-.preset-icon { font-size: 1.4rem; line-height: 1; }
+.preset-icon { font-size: var(--fs-4); line-height: 1; }
 .preset-body { display: flex; flex-direction: column; gap: 2px; }
-.preset-name { font-weight: 700; font-size: 0.95rem; }
+.preset-name { font-weight: 700; font-size: var(--fs-3); }
 .preset-meta {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
 }
 .preset-duration {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
     align-self: center;
 }
@@ -1483,7 +1481,7 @@
 .vF-team-note {
     margin: 0;
     padding-left: 2px;
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     line-height: 1.35;
     color: var(--color-text-secondary);
 }
@@ -1491,7 +1489,7 @@
 .vF-q {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1rem;
+    font-size: var(--fs-3);
     color: var(--color-text-primary);
     display: flex;
     align-items: center;
@@ -1509,7 +1507,7 @@
     color: var(--on-accent);
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     flex-shrink: 0;
 }
 
@@ -1526,7 +1524,7 @@
     padding-left: 30px;   /* gap now inherited from .toggle-compact (#526) */
 }
 .setup-lightning-toggle .toggle-label {
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
     color: var(--color-text-secondary);
 }
 
@@ -1547,7 +1545,7 @@
 
 /* Small label over a control in the room step (#525, #1185 P10). */
 .setup-audio-select-label {
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
 }
 /* #1185 P10: the room — moment × channel. One table, one row per moment,
@@ -1563,7 +1561,7 @@
 .setup-matrix {
     width: 100%;
     border-collapse: collapse;
-    font-size: var(--font-size-sm);
+    font-size: var(--fs-1);
 }
 .setup-matrix th,
 .setup-matrix td {
@@ -1573,7 +1571,7 @@
     border-bottom: 1px solid var(--color-border-light);
 }
 .setup-matrix thead th {
-    font-size: var(--font-size-xs);
+    font-size: var(--fs-1);
     font-weight: var(--font-weight-bold);
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -1606,7 +1604,7 @@
     height: 22px;
     border: 2px solid var(--color-border-medium);
     border-radius: var(--radius-sm);
-    background: var(--color-bg-card);
+    background: var(--color-bg-surface);
     transition: background var(--transition-fast), border-color var(--transition-fast);
 }
 .setup-matrix-cell input:checked + .setup-matrix-mark {
@@ -1619,14 +1617,14 @@
 }
 .setup-matrix-none {
     color: var(--color-text-muted);
-    font-size: var(--font-size-xs);
+    font-size: var(--fs-1);
 }
 .setup-matrix-setup {
     display: none;
     min-height: 44px;
     padding: 0;
     font: inherit;
-    font-size: var(--font-size-xs);
+    font-size: var(--fs-1);
     color: var(--coral-ink);
     text-transform: none;
     background: none;
@@ -1681,7 +1679,7 @@
     min-height: 44px;
     padding: 0;
     font: inherit;
-    font-size: var(--font-size-sm);
+    font-size: var(--fs-1);
     color: var(--coral-ink);
     background: none;
     border: 0;
@@ -1695,7 +1693,7 @@
     min-height: 44px;
     padding: var(--space-xs) var(--space-md);
     font: inherit;
-    font-size: var(--font-size-sm);
+    font-size: var(--fs-1);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
     background: var(--color-bg-card-alt);
@@ -1709,9 +1707,9 @@
     width: 100%;
     min-height: 44px;   /* #1183: was 34 */
     padding: 8px 10px;
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
     color: var(--color-text-primary);
-    background: var(--color-bg-card);
+    background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-md);
     appearance: none;
@@ -1738,13 +1736,13 @@
    picker. Soft Parlor tokens only — no new colours. */
 /* gap now inherited from .toggle-compact (#526) */
 .setup-house-toggle .toggle-label {
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
     color: var(--color-text-secondary);
 }
 .setup-house-hint {
     padding-left: 30px;
     margin-top: 2px;
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
 }
 
@@ -1764,7 +1762,7 @@
     min-width: 0;
     padding: 8px 4px;
     font-family: inherit;
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     font-weight: 600;
     line-height: 1.2;
     text-align: center;
@@ -1777,7 +1775,7 @@
 }
 .setup-house-preset.is-active {
     color: var(--color-text-primary);
-    background: var(--color-bg-card);
+    background: var(--color-bg-surface);
     box-shadow: inset 0 0 0 1px var(--color-accent-primary);
 }
 .setup-house-preset:focus-visible {
@@ -1785,7 +1783,7 @@
     outline-offset: 1px;
 }
 .setup-house-preset-hint {
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
 }
 
@@ -1793,11 +1791,11 @@
 .setup-house-autohint {
     margin: 10px 0;
     padding: 8px 12px;
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     line-height: 1.4;
     color: var(--color-text-primary);
     background: color-mix(in srgb, var(--color-accent-secondary) 14%, transparent);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
 }
 .setup-house-autohint a {
     color: var(--coral-ink);
@@ -1817,7 +1815,7 @@
     align-self: flex-start;
     padding: 4px 0;
     font-family: inherit;
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     font-weight: 600;
     color: var(--color-text-muted);
     background: none;
@@ -1858,7 +1856,7 @@
     min-width: 0;
 }
 .setup-house-select-label {
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
 }
 .setup-house-fieldset {
@@ -1882,7 +1880,7 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     padding: 8px 10px;
-    background: var(--color-bg-card);
+    background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-md);
 }
@@ -1901,7 +1899,7 @@
     white-space: nowrap;
 }
 .setup-house-empty {
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
 }
 
@@ -1939,7 +1937,7 @@
     justify-content: center;
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 2.4rem;
+    font-size: var(--fs-6);
     color: var(--on-accent);
     background: var(--color-accent-primary);
     margin-bottom: 6px;
@@ -1949,8 +1947,8 @@
 .pl-megaName {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 1.6rem;
-    color: var(--color-text-heading);
+    font-size: var(--fs-5);
+    color: var(--color-text-primary);
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1960,19 +1958,19 @@
 .pl-tag {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--fs-1);
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--coral-ink);
     padding: 3px 10px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     border: 1px solid var(--color-accent-primary);
 }
 
 .pl-meta {
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     margin: 8px 0 0;
 }
@@ -1980,7 +1978,7 @@
 .pl-also {
     text-align: center;
     color: var(--color-text-muted);
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
     margin: 0;
 }
 
@@ -1992,7 +1990,7 @@
 .pl-allTime {
     text-align: center;
     color: var(--color-text-muted);
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     letter-spacing: 0.01em;
     opacity: 0.85;
     margin: 0 0 var(--space-xs, 0.5rem);
@@ -2032,14 +2030,14 @@
     justify-content: center;
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     line-height: 1;
     color: var(--color-bg-primary);
     flex-shrink: 0;
 }
 
 .pl-orbit-nm {
-    font-size: 0.78rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     max-width: 80px;
     overflow: hidden;
@@ -2053,7 +2051,7 @@
     position: absolute;
     top: -8px;
     right: -2px;
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     line-height: 1;
     filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.4));
 }
@@ -2075,7 +2073,7 @@
     margin: var(--space-md) auto 0;
 }
 .pl-invite-btn-icon {
-    font-size: 1rem;
+    font-size: var(--fs-3);
     line-height: 1;
 }
 
@@ -2083,15 +2081,15 @@
 .pl-rules {
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
 }
 
 .pl-rulesTitle {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1rem;
-    color: var(--color-text-heading);
+    font-size: var(--fs-3);
+    color: var(--color-text-primary);
     margin: 0 0 var(--space-sm);
     display: flex;
     align-items: center;
@@ -2112,7 +2110,7 @@
     counter-increment: r;
     padding-left: 32px;
     position: relative;
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
     line-height: 1.45;
     color: var(--color-text-primary);
 }
@@ -2126,7 +2124,7 @@
     color: var(--on-accent);
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 0.78rem;
+    font-size: var(--fs-2);
     display: flex; align-items: center; justify-content: center;
 }
 
@@ -2138,7 +2136,7 @@
     align-self: center;
     color: var(--color-text-muted);
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: var(--fs-2);
     padding: var(--space-sm) 0;
 }
 .pl-pulse {
@@ -2182,9 +2180,9 @@
     background: var(--color-bg-surface);
     color: var(--color-text-muted);
     border: 1px solid var(--color-border-light);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     font-family: var(--font-system, inherit);
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.14s ease;
@@ -2219,7 +2217,7 @@
     align-items: stretch;
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     padding: var(--space-md);
 }
 
@@ -2240,7 +2238,7 @@
 }
 
 .lobby-e-join-url {
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     font-weight: 600;
     color: var(--color-text-primary);
     word-break: break-all;
@@ -2248,8 +2246,8 @@
 }
 
 .lobby-e-join-hint {
-    font-size: 0.7rem;
-    color: var(--color-text-neon-muted);
+    font-size: var(--fs-1);
+    color: var(--color-text-muted);
     margin-top: 2px;
 }
 
@@ -2265,7 +2263,7 @@
 
 .lobby-e-qr {
     background: #fff;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     /* Padding removed + line-height:0 + flex centering: prior 8px CSS
        padding stacked on top of the QR library's own quiet zone and
        inline-element baseline gave a visibly larger top white border
@@ -2314,8 +2312,8 @@
     gap: 6px;
     padding: 10px;
     border: 1px dashed var(--color-border-light);
-    border-radius: 12px;
-    background: var(--color-bg-card, transparent);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-surface, transparent);
 }
 .lobby-e-team + .lobby-e-team,
 .lobby-e-team + .lobby-e-row-card {
@@ -2327,7 +2325,7 @@
     gap: 8px;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     color: var(--color-text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -2335,10 +2333,10 @@
 .lobby-e-team-size {
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     letter-spacing: 0;
     padding: 1px 7px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: var(--color-bg-card-alt);
     border: 1px solid var(--color-border-light);
 }
@@ -2353,9 +2351,9 @@
     padding: 14px 16px;
     background: var(--color-bg-card-alt);
     border: 1px solid var(--color-border-light);
-    border-radius: 10px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    font-size: 1.05rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--elevation-1);
+    font-size: var(--fs-3);
     color: var(--color-text-primary);
 }
 .lobby-e-row-card .dot {
@@ -2375,7 +2373,7 @@
     justify-content: center;
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 1.05rem;
+    font-size: var(--fs-3);
     line-height: 1;
     color: var(--on-accent);      /* ink initial on the player colour (#1178) */
 }
@@ -2384,7 +2382,7 @@
  * Subtle but distinct so the host can see at a glance which entry is them. */
 .lobby-e-row-card .host-badge {
     flex-shrink: 0;
-    font-size: 1rem;
+    font-size: var(--fs-3);
     line-height: 1;
     margin-left: var(--space-xs, 6px);
     filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.4));
@@ -2412,13 +2410,13 @@
     background: transparent;
     border: 0;
     color: var(--color-text-muted);
-    font-size: 1.1rem;
+    font-size: var(--fs-3);
     line-height: 1;
     padding: 4px 6px;
     cursor: pointer;
     opacity: 0;
     transition: opacity 120ms ease-out, color 120ms ease-out;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     flex-shrink: 0;
 }
 /* Transparent ::before extends the tap target to >=44px (WCAG 2.5.8)
@@ -2454,7 +2452,7 @@
 .lobby-e-row-empty {
     text-align: center;
     color: var(--color-text-muted);
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     padding: var(--space-md) 0;
 }
 
@@ -2466,9 +2464,9 @@
     align-self: center;
     color: var(--color-text-muted);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
     padding: 6px 12px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     transition: background 120ms ease-out;
 }
 .lobby-e-cast:hover { background: var(--color-bg-card-alt); }
@@ -2476,7 +2474,7 @@
 .lobby-e-countdown {
     text-align: center;
     font-family: var(--font-mono);
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     color: var(--color-text-muted);
     padding: var(--space-md) 0;
     border-top: 1px dashed var(--color-border-light);
@@ -2506,7 +2504,7 @@
 
 @media (min-width: 1280px) {
     .lobby-marquee { font-size: 3rem; }
-    .lobby-e-countdown { font-size: 1.1rem; }
+    .lobby-e-countdown { font-size: var(--fs-3); }
 }
 
 /* ==========================================
@@ -2559,7 +2557,7 @@ body:has(.admin-control-bar:not(.hidden)) #game-view {
     background: transparent;
     border: none;
     border-radius: var(--radius-md);
-    color: var(--color-text-neon-muted);
+    color: var(--color-text-muted);
     cursor: pointer;
     transition: all var(--transition-fast);
     font-family: var(--font-system);
@@ -2568,8 +2566,7 @@ body:has(.admin-control-bar:not(.hidden)) #game-view {
 }
 
 .control-btn:hover {
-    color: var(--color-text-white);
-    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-text-primary);
 }
 
 .control-btn:active {
@@ -2577,11 +2574,11 @@ body:has(.admin-control-bar:not(.hidden)) #game-view {
 }
 
 .control-icon {
-    font-size: 1.25rem;
+    font-size: var(--fs-4);
 }
 
 .control-label {
-    font-size: 0.6rem;
+    font-size: var(--fs-1);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -2593,7 +2590,7 @@ body:has(.admin-control-bar:not(.hidden)) #game-view {
 
 .control-btn--danger:hover {
     color: var(--error-ink);
-    background: rgba(239, 68, 68, 0.1);
+    background: var(--color-error-bg);
 }
 
 /* Reaction bar */
@@ -2625,9 +2622,9 @@ body.is-admin .reaction-bar {
     justify-content: center;
     width: 44px;
     height: 44px;
-    font-size: 1.5rem;
-    background: var(--color-dark-surface);
-    border: 1px solid var(--color-border-neon);
+    font-size: var(--fs-4);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: all var(--transition-fast);
@@ -2636,7 +2633,6 @@ body.is-admin .reaction-bar {
 
 .reaction-btn:hover {
     transform: scale(1.15);
-    background: rgba(255, 255, 255, 0.08);
 }
 
 .reaction-btn:active {
@@ -2660,13 +2656,13 @@ body.is-admin .reaction-bar {
     left: 0;
     right: 0;
     pointer-events: none;
-    z-index: 9997;
+    z-index: var(--z-toast);
     overflow: visible;
 }
 
 .floating-reaction {
     position: absolute;
-    font-size: 2rem;
+    font-size: var(--fs-5);
     animation: float-up 2s ease-out forwards;
     pointer-events: none;
 }
@@ -2717,8 +2713,8 @@ body.is-admin .reaction-bar {
 }
 
 .reconnect-status {
-    color: var(--color-text-neon-muted);
-    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-size: var(--fs-2);
 }
 
 /* Finale countdown overlay — a brief dramatic flourish + 3·2·1 shown on the
@@ -2923,48 +2919,19 @@ body.is-admin .reaction-bar {
 }
 
 .connection-lost-hint {
-    font-size: 0.8rem;
-    color: var(--color-text-neon-muted);
+    font-size: var(--fs-2);
+    color: var(--color-text-muted);
     max-width: 280px;
 }
 
 /* QR Modal */
-.qr-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: var(--z-modal);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.qr-modal.hidden {
-    display: none;
-}
-
-.qr-modal-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(31, 27, 20, 0.70);
-}
-
 .qr-modal-content {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--space-md);
     padding: var(--space-xl);
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-xl);
-    animation: modalFadeIn var(--transition-fast);
+    background: var(--color-bg-surface);
 }
 
 .qr-modal-code {
@@ -2981,8 +2948,8 @@ body.is-admin .reaction-bar {
 }
 
 .qr-modal-label {
-    color: var(--color-text-neon-muted);
-    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-size: var(--fs-2);
     text-align: center;
 }
 
@@ -2992,8 +2959,8 @@ body.is-admin .reaction-bar {
     right: var(--space-sm);
     background: transparent;
     border: none;
-    color: var(--color-text-neon-muted);
-    font-size: 1.5rem;
+    color: var(--color-text-muted);
+    font-size: var(--fs-4);
     cursor: pointer;
     padding: var(--space-xs);
     min-width: 36px;
@@ -3006,67 +2973,38 @@ body.is-admin .reaction-bar {
 }
 
 .qr-modal-close:hover {
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     background: rgba(255, 255, 255, 0.1);
 }
 
 /* Invite Modal */
-.invite-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: var(--z-modal);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.invite-modal.hidden {
-    display: none;
-}
-
-.invite-modal-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(31, 27, 20, 0.70);
-}
-
 .invite-modal-content {
-    position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
     padding: var(--space-xl);
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-xl);
+    background: var(--color-bg-surface);
     max-width: 400px;
     width: 90%;
-    animation: modalFadeIn var(--transition-fast);
 }
 
 .invite-modal-title {
     font-family: var(--font-display);
-    font-size: 1.25rem;
+    font-size: var(--fs-4);
     font-weight: 800;
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     text-align: center;
 }
 
 .invite-modal-hint {
-    color: var(--color-text-neon-muted);
-    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    font-size: var(--fs-2);
     text-align: center;
 }
 
 .invite-modal-code {
     font-family: var(--font-display);
-    font-size: 2rem;
+    font-size: var(--fs-5);
     font-weight: 900;
     color: var(--sage-ink);
     text-align: center;
@@ -3078,8 +3016,7 @@ body.is-admin .reaction-bar {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--color-border-neon);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-md);
     padding: var(--space-sm) var(--space-md);
 }
@@ -3087,7 +3024,7 @@ body.is-admin .reaction-bar {
 .invite-modal-url {
     flex: 1;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     color: var(--sage-ink);
     word-break: break-all;
     user-select: all;
@@ -3102,7 +3039,7 @@ body.is-admin .reaction-bar {
     border: 1px solid rgba(232, 138, 127, 0.3);
     border-radius: var(--radius-sm);
     color: var(--sage-ink);
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     cursor: pointer;
     transition: all var(--transition-fast);
     font-family: var(--font-system);
@@ -3116,11 +3053,11 @@ body.is-admin .reaction-bar {
 }
 
 .invite-copy-icon {
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
 }
 
 .invite-copy-feedback {
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     color: var(--sage-ink);
     text-align: center;
     min-height: 1.2em;
@@ -3132,8 +3069,8 @@ body.is-admin .reaction-bar {
     right: var(--space-sm);
     background: transparent;
     border: none;
-    color: var(--color-text-neon-muted);
-    font-size: 1.5rem;
+    color: var(--color-text-muted);
+    font-size: var(--fs-4);
     cursor: pointer;
     padding: var(--space-xs);
     min-width: 36px;
@@ -3146,34 +3083,22 @@ body.is-admin .reaction-bar {
 }
 
 .invite-modal-close:hover {
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     background: rgba(255, 255, 255, 0.1);
 }
 
 /* Power-up target picker — freeze / steal.
    Soft Parlor surface: cream content, coral accent on tap, no neon. */
 .powerup-target-modal {
-    position: fixed;
-    inset: 0;
-    z-index: var(--z-modal);
-    display: flex;
     align-items: flex-end;
-    justify-content: center;
     padding: var(--space-md);
 }
 
-.powerup-target-modal.hidden {
-    display: none;
-}
-
 .powerup-target-backdrop {
-    position: absolute;
-    inset: 0;
     background: rgba(42, 40, 32, 0.55);
 }
 
 .powerup-target-content {
-    position: relative;
     width: 100%;
     max-width: 420px;
     display: flex;
@@ -3181,10 +3106,7 @@ body.is-admin .reaction-bar {
     gap: var(--space-md);
     padding: var(--space-lg);
     background: var(--color-bg-surface);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-xl);
-    animation: modalFadeIn var(--transition-fast);
+    box-shadow: var(--elevation-3);
 }
 
 /* #1183 draft ③: "Leave the game?" is a sheet from the bottom, the look of
@@ -3199,7 +3121,7 @@ body.is-admin .reaction-bar {
 .modal--leave .modal-content {
     width: 100%;
     max-width: 420px;
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
 }
 
 .modal--leave .modal-actions {
@@ -3227,7 +3149,7 @@ body.is-admin .reaction-bar {
 .powerup-target-title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: var(--font-size-xl);
+    font-size: var(--fs-4);
     font-weight: var(--font-weight-bold);
     color: var(--color-text-primary);
     text-align: center;
@@ -3236,7 +3158,7 @@ body.is-admin .reaction-bar {
 .powerup-target-hint {
     margin: 0;
     font-family: var(--font-body);
-    font-size: var(--font-size-base);
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     text-align: center;
 }
@@ -3267,7 +3189,7 @@ body.is-admin .reaction-bar {
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     font-family: var(--font-body);
-    font-size: var(--font-size-md);
+    font-size: var(--fs-3);
     color: var(--color-text-primary);
     cursor: pointer;
     text-align: left;
@@ -3321,7 +3243,7 @@ body.is-admin .reaction-bar {
 .powerup-target-submitted {
     flex-shrink: 0;
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: var(--fs-1);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -3329,7 +3251,7 @@ body.is-admin .reaction-bar {
     background: rgba(127, 168, 151, 0.18);
     border: 1px solid rgba(127, 168, 151, 0.32);
     padding: 2px 8px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
 }
 
 .powerup-target-cancel {
@@ -3405,14 +3327,14 @@ body.is-admin .reaction-bar {
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--coral-ink);
-    font-size: 14px;
+    font-size: var(--fs-2);
     margin-bottom: 4px;
 }
 
 .lr-splash-title {
     font-family: var(--font-display);
     font-weight: var(--font-weight-extrabold);
-    font-size: 42px;
+    font-size: var(--fs-6);
     letter-spacing: -1px;
     color: var(--color-text-primary);
     line-height: 1.05;
@@ -3430,24 +3352,24 @@ body.is-admin .reaction-bar {
 .lr-splash-chip {
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
     padding: 12px 16px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--elevation-1);
 }
 
 .lr-splash-chip b {
     font-family: var(--font-display);
-    font-size: 22px;
+    font-size: var(--fs-4);
     color: var(--coral-ink);
     font-weight: var(--font-weight-extrabold);
 }
 
 .lr-splash-chip small {
-    font-size: 12px;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
     font-weight: var(--font-weight-semibold);
 }
@@ -3460,7 +3382,7 @@ body.is-admin .reaction-bar {
     bottom: 34px;
     text-align: center;
     color: var(--color-text-muted);
-    font-size: 14px;
+    font-size: var(--fs-2);
     font-weight: var(--font-weight-semibold);
 }
 
@@ -3484,23 +3406,23 @@ body.is-admin .reaction-bar {
 .feedback-icon.qz-icon {
     width: 18px;
     height: 18px;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     margin-right: 5px;
     vertical-align: -4px;
 }
 .feedback-icon.qz-icon svg { width: 72%; height: 72%; }
 /* Toasts (#error-toast + .reaction-bonus-toast) that carry an icon switch
    to a flex row so the disc + text line up centered. */
-#error-toast.toast--with-icon,
+.qz-toast.toast--with-icon,
 .reaction-bonus-toast.toast--with-icon {
     display: inline-flex;
     align-items: center;
     gap: 6px;
 }
 .toast--with-icon .feedback-icon.qz-icon { margin-right: 0; vertical-align: middle; }
-/* On the coral error-toast fill, the tinted disc washes out — drop the disc
-   and paint the glyph white to match the white toast text. */
-#error-toast.toast--with-icon .feedback-icon.qz-icon { background: transparent; color: #fff; }
+/* On the error-toast fill, the tinted disc washes out — drop the disc
+   and paint the glyph in ink, like the toast text. */
+.qz-toast--error.toast--with-icon .feedback-icon.qz-icon { background: transparent; color: var(--on-accent); }
 /* STEAL power-up hint: icon + text-only hint side by side. */
 .powerup-hint--with-icon {
     display: inline-flex;
@@ -3520,7 +3442,7 @@ body.is-admin .reaction-bar {
 .pl-result-hero--streak .pl-result-flame.qz-icon {
     width: 52px;
     height: 52px;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
 }
 /* ==========================================
    #299 Host-gone reset affordance
@@ -3548,7 +3470,7 @@ body.is-admin .reaction-bar {
 .frozen-overlay {
     position: absolute;
     inset: 0;
-    z-index: 1100;
+    z-index: var(--z-overlay);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -3583,11 +3505,11 @@ body.is-admin .reaction-bar {
     text-align: center;
     background: linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(238, 247, 251, 0.94));
     border: 2px solid rgba(127, 168, 196, 0.55);
-    border-radius: 22px;
-    box-shadow: var(--shadow-xl), 0 0 0 6px rgba(127, 168, 196, 0.10), 0 0 60px rgba(127, 168, 196, 0.25);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--elevation-3), 0 0 0 6px rgba(127, 168, 196, 0.10), 0 0 60px rgba(127, 168, 196, 0.25);
 }
 .frozen-overlay .ice-flake {
-    font-size: 40px;
+    font-size: var(--fs-6);
     line-height: 1;
     margin-bottom: 10px;
     filter: drop-shadow(0 0 14px rgba(127, 168, 196, 0.6));
@@ -3597,13 +3519,13 @@ body.is-admin .reaction-bar {
 .frozen-overlay .ice-title {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 27px;
+    font-size: var(--fs-5);
     letter-spacing: -0.01em;
     color: var(--color-text-primary);
     margin-bottom: 4px;
 }
 .frozen-overlay .ice-sub {
-    font-size: 13px;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     margin-bottom: 22px;
 }
@@ -3644,7 +3566,7 @@ body.is-admin .reaction-bar {
     font-variant-numeric: tabular-nums;
 }
 .frozen-overlay .ice-foot {
-    font-size: 12px;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
 }
 
@@ -3667,7 +3589,7 @@ body.is-admin .reaction-bar {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 0.78rem;
+    font-size: var(--fs-2);
     font-weight: 600;
     color: var(--color-text-muted);
     margin: 2px 0 18px;
@@ -3685,7 +3607,7 @@ body.is-admin .reaction-bar {
 }
 .estimate-value-label {
     display: block;
-    font-size: 0.72rem;
+    font-size: var(--fs-1);
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -3756,7 +3678,7 @@ body.is-admin .reaction-bar {
     height: 34px;
     margin-top: -10px;
     border-radius: 50%;
-    background: var(--color-bg-card);
+    background: var(--color-bg-surface);
     border: 3px solid var(--color-accent-primary);
     box-shadow: 0 4px 12px rgba(232, 138, 127, 0.30);
 }
@@ -3767,7 +3689,7 @@ body.is-admin .reaction-bar {
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background: var(--color-bg-card);
+    background: var(--color-bg-surface);
     border: 3px solid var(--color-accent-primary);
     box-shadow: 0 4px 12px rgba(232, 138, 127, 0.30);
 }
@@ -3784,12 +3706,12 @@ body.is-admin .reaction-bar {
     justify-content: space-between;
     margin-top: 12px;
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
 }
 
 .estimate-hint {
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     margin: 18px 0 16px;
 }
@@ -3812,7 +3734,7 @@ body.is-admin .reaction-bar {
     margin: 8px 0 6px;
 }
 .est-truth-label {
-    font-size: 0.72rem;
+    font-size: var(--fs-1);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--color-text-muted);
@@ -3821,7 +3743,7 @@ body.is-admin .reaction-bar {
 .est-truth-value {
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 2.4rem;
+    font-size: var(--fs-6);
     line-height: 1.1;
     color: var(--coral-ink);
     display: flex;
@@ -3832,7 +3754,7 @@ body.is-admin .reaction-bar {
 }
 .est-truth-unit {
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     font-weight: 600;
     letter-spacing: 0.01em;
     color: var(--color-text-muted);
@@ -3840,10 +3762,10 @@ body.is-admin .reaction-bar {
 }
 
 .numberline-card {
-    background: var(--color-bg-card);
+    background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--elevation-1);
     padding: 54px 20px 12px;
     margin: 12px 0 16px;
     position: relative;
@@ -3863,15 +3785,15 @@ body.is-admin .reaction-bar {
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    border: 2px solid var(--color-bg-card);
-    box-shadow: 0 1px 3px rgba(42, 40, 32, 0.25);
+    border: 2px solid var(--color-bg-surface);
+    box-shadow: var(--elevation-1);
 }
 .nl-lbl {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
-    font-size: 0.66rem;
+    font-size: var(--fs-1);
     font-weight: 600;
     color: var(--color-text-muted);
     font-family: var(--font-mono);
@@ -3899,7 +3821,7 @@ body.is-admin .reaction-bar {
     color: var(--on-accent);
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 0.7rem;
+    font-size: var(--fs-1);
     padding: 3px 8px;
     border-radius: var(--radius-full);
     white-space: nowrap;
@@ -3913,7 +3835,7 @@ body.is-admin .reaction-bar {
     justify-content: space-between;
     margin-top: 30px;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
 }
 
@@ -3923,27 +3845,27 @@ body.is-admin .reaction-bar {
     gap: 12px;
     background: rgba(127, 168, 151, 0.18);
     border: 2px solid var(--color-accent-secondary);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
     padding: 14px 16px;
     margin-bottom: 14px;
 }
-.est-winner-medal { font-size: 1.6rem; }
+.est-winner-medal { font-size: var(--fs-5); }
 .est-winner-text { flex: 1; min-width: 0; }
 .est-winner-name {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1.05rem;
+    font-size: var(--fs-3);
     color: var(--color-text-primary);
 }
 .est-winner-sub {
-    font-size: 0.78rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     margin-top: 1px;
 }
 .est-winner-pts {
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: var(--fs-3);
     color: var(--sage-ink);
     white-space: nowrap;
 }
@@ -3957,7 +3879,7 @@ body.is-admin .reaction-bar {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: var(--color-bg-card);
+    background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     padding: 9px 12px;
@@ -3974,7 +3896,7 @@ body.is-admin .reaction-bar {
 }
 .est-results .res-name {
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
     color: var(--color-text-primary);
     flex: 1;
     min-width: 0;
@@ -3983,7 +3905,7 @@ body.is-admin .reaction-bar {
     white-space: nowrap;
 }
 .est-results .res-you-tag {
-    font-size: 0.66rem;
+    font-size: var(--fs-1);
     font-weight: 700;
     color: var(--sky-ink);
     background: rgba(127, 168, 196, 0.15);
@@ -3995,12 +3917,12 @@ body.is-admin .reaction-bar {
 .est-results .res-guess {
     font-family: var(--font-mono);
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
     color: var(--color-text-primary);
 }
 .est-results .res-off {
     font-family: var(--font-mono);
-    font-size: 0.74rem;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
     min-width: 54px;
     text-align: right;
@@ -4008,14 +3930,14 @@ body.is-admin .reaction-bar {
 .est-results .res-pts {
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 0.82rem;
+    font-size: var(--fs-2);
     color: var(--sage-ink);
     min-width: 42px;
     text-align: right;
 }
 .est-noguess {
     text-align: center;
-    font-size: 0.76rem;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
     margin-top: 10px;
 }
@@ -4035,7 +3957,7 @@ body.is-admin .reaction-bar {
 }
 .my-presets-label {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: var(--fs-1);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-text-muted);
@@ -4061,11 +3983,11 @@ body.is-admin .reaction-bar {
     min-height: 44px;
     padding: 10px 14px;
     border: 1px solid var(--color-border-light);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: var(--color-bg-card-alt);
     color: var(--color-text-primary);
     font-family: var(--font-body);
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
     white-space: nowrap;
     cursor: pointer;
 }
@@ -4091,7 +4013,7 @@ body.is-admin .reaction-bar {
     background: none;
     color: inherit;
     opacity: 0.55;
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     cursor: pointer;
 }
 .preset-chip-remove:hover { opacity: 1; }
@@ -4144,7 +4066,7 @@ html.conn-back .view {
     from {
         background-color: rgba(127, 168, 151, 0.3);
         box-shadow: 0 0 0 6px rgba(127, 168, 151, 0.3);
-        border-radius: 999px;
+        border-radius: var(--radius-full);
     }
 }
 

@@ -307,7 +307,7 @@
         el = document.createElement('div');
         el.id = 'conn-status';
         el.style.cssText = 'position:fixed;bottom:12px;right:12px;display:flex;' +
-            'align-items:center;gap:6px;font-size:0.75rem;' +
+            'align-items:center;gap:6px;font-size:var(--fs-1);' +
             'color:var(--color-text-muted);z-index:100;';
         document.body.appendChild(el);
         return el;
@@ -363,7 +363,7 @@
             'display:inline-block;flex:none;background:' + tone.color +
             ';box-shadow:0 0 10px ' + tone.glow + ';"></span>';
         if (tone.glyph) {
-            html += '<span aria-hidden="true" style="font-size:0.85rem;' +
+            html += '<span aria-hidden="true" style="font-size:var(--fs-2);' +
                 'line-height:1;color:' + tone.color + ';">' + tone.glyph + '</span>';
         }
         var labelKey = retry ? tone.retryLabel : tone.label;

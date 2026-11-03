@@ -92,9 +92,6 @@
     /* Background — warm cream paper */
     --color-bg-primary: #FAF6EC;       /* cream paper */
     --color-bg-surface: #FFFFFF;       /* lifted surface (cards) */
-    --color-bg-light: #FAF6EC;
-    --color-bg-white: #FFFFFF;
-    --color-bg-card: #FFFFFF;
     --color-bg-card-alt: #F3EEDF;
 
     /* Primary accent: warm coral. Secondary accents: sage, sky, sun. */
@@ -102,25 +99,19 @@
        cohesive party-game palette, always at the same muted saturation. */
     --color-accent-primary: #E88A7F;           /* warm coral \u2014 primary CTAs, correct answers */
     --color-accent-secondary: #7FA897;         /* muted sage */
-    --color-accent-brand: #E88A7F;             /* legacy alias \u2192 coral */
     --color-accent-brand-hover: #D97568;
     --color-accent-blue: #7FA8C4;              /* muted sky */
-    --color-accent-blue-hover: #6A9AB6;
 
     /* Semantic */
     --color-success: #7FA897;                  /* sage for correct */
     --color-success-hover: #6E9685;
     --color-success-light: rgba(127, 168, 151, 0.18);
-    --color-success-alt: #7FA897;
-    --color-success-neon: #7FA897;
     --color-warning: #E8C47F;                  /* sun (warm yellow) */
-    --color-warning-dark: #D1AC65;
     --color-warning-light: rgba(232, 196, 127, 0.20);
-    --color-warning-alt: #E8C47F;
     --color-error: #D66A6A;                    /* muted brick \u2014 never fire-engine */
+    --color-error-fill: #D97070;               /* error surface under ink: toast, .btn-danger (ink 4.57 : 1, #1178) */
     --color-error-dark: #BB5353;
     --color-error-light: rgba(214, 106, 106, 0.15);
-    --color-error-neon: #D66A6A;
 
     /* Connection-dot halo (#983). The indicator's glow sits at .45 alpha,
        brighter than the --color-*-light fills above, which are backgrounds
@@ -134,7 +125,6 @@
 
     /* Player-dot / pill palette (muted mauve for variety) */
     --color-purple-primary: #B78FC7;
-    --color-neon-purple: #B78FC7;
 
     /* Badge backgrounds (soft tints of the accent colors) */
     --color-success-bg: rgba(127, 168, 151, 0.18);
@@ -146,23 +136,14 @@
     --color-text-secondary: #3C3930;
     --color-text-muted: #6E6A5C;               /* warm olive-gray */
     --color-text-light: #8F8A78;
-    --color-text-white: #2A2820;               /* on cream body, "text-white" = dark ink */
-    --color-text-dark: #2A2820;
-    --color-text-heading: #2A2820;
-    --color-text-neon-muted: #6E6A5C;
 
     /* Borders — subtle warm neutrals */
     --color-border-light: #E5DFCF;             /* hairline on cream */
     --color-border-medium: #D4CEBC;
     --color-border-dark: #BDB597;
-    --color-border-neon: #E5DFCF;              /* legacy alias \u2192 hairline */
 
     /* Surface colors (Soft Parlor is light-primary, so "dark surface"
        tokens are remapped to lifted-paper whites) */
-    --color-dark-surface: #FFFFFF;
-    --color-dark-surface-hover: #F3EEDF;
-    --color-dark-card: #FFFFFF;
-    --color-surface-dark: #FFFFFF;
 
     /* Medal colors */
     --color-gold: #E8C47F;                     /* sun */
@@ -204,15 +185,14 @@
     --font-system: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
-    --font-size-xs: 10px;
-    --font-size-sm: 12px;
-    --font-size-base: 14px;
-    --font-size-md: 16px;
-    --font-size-lg: 18px;
-    --font-size-xl: 20px;
-    --font-size-2xl: 24px;
-    --font-size-3xl: 28px;
-    --font-size-4xl: 32px;
+    /* Type scale (#1178 step 8): six steps in rem, so the .a11y root
+       percentage scales all of them. Nothing below --fs-1 (12 px). */
+    --fs-1: 0.75rem;        /* 12 px: eyebrows, meta, table heads (the floor) */
+    --fs-2: 0.875rem;       /* 14 px: hints, secondary text, chips */
+    --fs-3: 1rem;           /* 16 px: body, answer text, buttons */
+    --fs-4: 1.25rem;        /* 20 px: phone question, section titles */
+    --fs-5: 1.75rem;        /* 28 px: page titles, timer, big scores */
+    --fs-6: 2.5rem;         /* 40 px: TV question, champion, wordmark */
     --font-size-timer: 64px;
     --font-size-timer-up: clamp(1rem, 5.2vw, 1.5rem); /* #1174: phone clock text; es fits 320 px */
     --font-size-hero: 72px;
@@ -225,24 +205,16 @@
 
     /* Effect Tokens \u2014 soft shadows, no neon glow */
     --glow-primary: 0 4px 12px rgba(232, 138, 127, 0.22);
-    --glow-secondary: 0 4px 12px rgba(127, 168, 151, 0.22);
-    --glow-success: 0 4px 14px rgba(127, 168, 151, 0.28);
-    --glow-warning: 0 4px 12px rgba(232, 196, 127, 0.22);
-    --glow-error: 0 4px 12px rgba(214, 106, 106, 0.22);
-    --accent-glow: rgba(232, 138, 127, 0.22);
 
-    /* Shadow Tokens \u2014 soft drop shadows, layered depth */
-    --shadow-sm: 0 1px 2px rgba(42, 40, 32, 0.06);
-    --shadow-md: 0 2px 8px rgba(42, 40, 32, 0.08);
-    --shadow-lg: 0 6px 20px rgba(42, 40, 32, 0.10);
-    --shadow-xl: 0 16px 40px rgba(42, 40, 32, 0.14);
+    /* Elevation (#1178 step 9). Level 0 is flat: hairline only. */
+    --elevation-1: 0 1px 2px rgba(42, 40, 32, 0.06);         /* cards, tiles */
+    --elevation-2: 0 6px 20px rgba(42, 40, 32, 0.10);        /* toast, dropdown, timer pill */
+    --elevation-3: 0 16px 40px rgba(42, 40, 32, 0.14);       /* modal (with a scrim) */
 
     /* Border Radius Tokens \u2014 rounded, friendly, but never bubbly */
-    --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 12px;
-    --radius-xl: 14px;
-    --radius-2xl: 14px;
+    --radius-sm: 6px;       /* chips, badges */
+    --radius-md: 10px;      /* buttons, tiles, inputs */
+    --radius-lg: 14px;      /* cards, modals, panels; 12 px merged in (#1178) */
     --radius-full: 9999px;
 
     /* Transition Tokens */
@@ -310,9 +282,11 @@
     --dur-time-up: 260ms;         /* #1174: clock at zero, tiles dim */
 
     /* Z-Index Tokens */
-    --z-control-bar: 100;
-    --z-modal: 1000;
-    --z-overlay: 1100;
+    --z-sticky: 10;         /* sticky header, bottom bars */
+    --z-control-bar: 100;   /* host control bar */
+    --z-toast: 900;         /* toasts, floating reactions */
+    --z-modal: 1000;        /* modals and their scrim */
+    --z-overlay: 1100;      /* system: frozen, connection, round sweep */
 }
 
 /* Accessibility: visible focus ring for keyboard navigation. Browsers
@@ -323,7 +297,7 @@
 :focus-visible {
     outline: 2px solid var(--color-accent-primary);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
 }
 button:focus-visible,
 input:focus-visible,
@@ -413,7 +387,7 @@ a:focus-visible,
 .wager-panel {
     background: var(--color-bg-surface);
     border: 2px solid var(--color-accent-primary);
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     padding: var(--space-lg);
     margin: var(--space-md) 0;
     box-shadow: 0 4px 16px rgba(232, 138, 127, 0.18);
@@ -421,18 +395,18 @@ a:focus-visible,
 .wager-panel-title {
     margin: 0 0 var(--space-sm);
     font-family: var(--font-display);
-    font-size: 1.1rem;
-    color: var(--color-text-heading);
+    font-size: var(--fs-3);
+    color: var(--color-text-primary);
 }
 .wager-panel-hint {
     margin: 0 0 var(--space-md);
     color: var(--color-text-muted);
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
 }
 /* Timeout-keeps-stake clarification (#301): de-emphasised vs the main hint
    so it reads as a footnote rule, not a second instruction. */
 .wager-panel-timeout-note {
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     font-style: italic;
     opacity: 0.85;
 }
@@ -449,13 +423,13 @@ a:focus-visible,
 .wager-value {
     font-family: var(--font-mono);
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     min-width: 6.5em;
     text-align: right;
 }
 .wager-bank-line {
     margin: 0 0 var(--space-md);
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
 }
 .wager-bank {
@@ -476,7 +450,7 @@ a:focus-visible,
 }
 .wager-panel--collapsed .wager-panel-title {
     margin: 0;
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
 }
 .wager-panel--collapsed .wager-panel-hint,
 .wager-panel--collapsed .wager-slider-row,
@@ -497,11 +471,11 @@ a:focus-visible,
     background: var(--color-success-bg);
     color: var(--sage-ink);
     border: 1px solid var(--color-success);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     padding: 6px 14px;
-    font-size: 0.9rem;
+    font-size: var(--fs-2);
     font-weight: 600;
-    z-index: 9999;
+    z-index: var(--z-toast);
     pointer-events: none;
     animation: reaction-bonus-rise 1500ms ease-out forwards;
 }
@@ -521,7 +495,7 @@ a:focus-visible,
     margin-left: auto;
     border: 0;
     background: transparent;
-    font-size: 1.1rem;
+    font-size: var(--fs-3);
     line-height: 1;
     width: 36px;
     height: 36px;
@@ -570,7 +544,7 @@ html {
      * baseline — every rem-based font-size shrinks back ~17 % at once,
      * while per-element intent (e.g. the load-bearing "Richtige Antwort"
      * surface) is preserved via its own rem bump. */
-    font-size: 16px;
+    font-size: var(--fs-3);
     -webkit-text-size-adjust: 100%;
 }
 
@@ -604,7 +578,7 @@ body {
     right: 0;
     height: env(safe-area-inset-top, 0px);
     background: var(--color-bg-primary);
-    z-index: 1000;
+    z-index: var(--z-modal);
     pointer-events: none;
 }
 
@@ -663,12 +637,12 @@ body {
 }
 
 .header .wordmark {
-    font-size: 2rem;
+    font-size: var(--fs-5);
 }
 
 .subtitle {
-    color: var(--color-text-neon-muted);
-    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-size: var(--fs-2);
     margin-top: var(--space-xs);
 }
 
@@ -684,7 +658,7 @@ body {
 }
 
 .admin-header .wordmark {
-    font-size: 1.5rem;        /* 24px \u2014 broadcast register, not hero */
+    font-size: var(--fs-4);        /* 24px \u2014 broadcast register, not hero */
     margin: 0;
 }
 
@@ -699,10 +673,10 @@ body {
 .admin-header-btn {
     background: transparent;
     border: 1px solid var(--color-border-light);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     color: var(--color-text-muted);
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: var(--fs-3);
     line-height: 1;
     padding: 6px 10px;
     transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
@@ -735,14 +709,14 @@ body {
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    z-index: 200;
+    z-index: var(--z-toast);
     padding: var(--space-md);
     animation: pwa-fade-in 160ms ease-out;
 }
 .pwa-ios-hint.hidden { display: none; }
 .pwa-ios-hint-content {
-    background: var(--color-bg-card, #FFFFFF);
-    border-radius: 14px;
+    background: var(--color-bg-surface, #FFFFFF);
+    border-radius: var(--radius-lg);
     padding: var(--space-lg) var(--space-lg) calc(var(--space-lg) + env(safe-area-inset-bottom));
     max-width: 420px;
     width: 100%;
@@ -764,7 +738,7 @@ body {
     background: transparent;
     border: 0;
     color: var(--color-text-muted);
-    font-size: 1.5rem;
+    font-size: var(--fs-4);
     line-height: 1;
     padding: 4px 8px;
     cursor: pointer;
@@ -793,12 +767,12 @@ body {
        the iOS status bar. Works in a Safari tab regardless of env insets. */
     position: sticky;
     top: 0;
-    z-index: 50;
+    z-index: var(--z-sticky);
     background: var(--color-bg-primary);
 }
 
 .player-header .wordmark {
-    font-size: 1.55rem;
+    font-size: var(--fs-5);
     margin: 0;
 }
 
@@ -823,7 +797,7 @@ body {
     gap: 7px;
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 0.7rem;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -857,7 +831,7 @@ body {
     padding: 0;
     border: none;
     background: var(--color-bg-card-alt);
-    font-size: 1rem;
+    font-size: var(--fs-3);
     line-height: 1;
     cursor: pointer;
     border-radius: var(--radius-full);
@@ -890,7 +864,7 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--color-success-neon);
+    background: var(--color-success);
 }
 
 .connection-indicator--disconnected .connection-dot {
@@ -905,7 +879,7 @@ button, .btn {
     min-width: 44px;
     min-height: 44px;
     padding: var(--space-sm) var(--space-lg);
-    font-size: var(--font-size-md);
+    font-size: var(--fs-3);
     font-weight: var(--font-weight-medium);
     border: none;
     border-radius: var(--radius-md);
@@ -949,7 +923,7 @@ button, .btn {
     border-radius: var(--radius-md);
     font-family: var(--font-body);
     font-weight: 600;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--elevation-1);
 }
 
 .btn-secondary:hover:not(:disabled) {
@@ -959,12 +933,15 @@ button, .btn {
 }
 
 .btn-danger {
-    background: var(--color-error);
-    color: var(--color-text-white);
+    background: var(--color-error-fill);
+    color: var(--on-accent);                      /* ink on the error fill, 4.57 : 1 (#1178) */
 }
 
+/* Hover lifts like the other buttons instead of darkening: a darker red under
+   ink falls below AA (ink on --color-error-dark is 3.2 : 1). */
 .btn-danger:hover:not(:disabled) {
-    background: var(--color-error-dark);
+    background: var(--color-error-fill);
+    transform: translateY(-1px);
 }
 
 .btn-block {
@@ -973,7 +950,7 @@ button, .btn {
 
 .btn-lg {
     min-height: 56px;
-    font-size: var(--font-size-xl);
+    font-size: var(--fs-4);
     padding: var(--space-md) var(--space-xl);
 }
 
@@ -1023,12 +1000,12 @@ a[href]:not(.btn):active {
 .input, .name-input {
     width: 100%;
     padding: 14px var(--space-md);
-    background: var(--color-dark-surface);
-    border: 2px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 2px solid var(--color-border-light);
     border-radius: var(--radius-md);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     font-family: var(--font-system);
-    font-size: var(--font-size-lg);
+    font-size: var(--fs-4);
     min-height: 48px;
     outline: none;
     transition: border-color var(--transition-fast);
@@ -1040,12 +1017,12 @@ a[href]:not(.btn):active {
 }
 
 .input::placeholder, .name-input::placeholder {
-    color: var(--color-text-neon-muted);
+    color: var(--color-text-muted);
 }
 
 .validation-msg {
     margin-top: var(--space-sm);
-    font-size: var(--font-size-base);
+    font-size: var(--fs-2);
     color: var(--error-ink);
     text-align: left;
 }
@@ -1055,39 +1032,39 @@ a[href]:not(.btn):active {
    ========================================== */
 
 .card {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
-    box-shadow: 0 4px 20px rgba(42, 40, 32, 0.10);
+    box-shadow: var(--elevation-2);
 }
 
 .card-header {
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-text-neon-muted);
+    color: var(--color-text-muted);
     margin-bottom: var(--space-md);
 }
 
 /* Card section (Beatify pattern) */
 .card-section {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     padding: var(--space-sm) var(--space-md);
     margin-bottom: var(--space-md);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card-section:hover {
-    box-shadow: 0 4px 20px rgba(42, 40, 32, 0.10);
+    box-shadow: var(--elevation-2);
 }
 
 .card-section .section-header {
@@ -1095,13 +1072,13 @@ a[href]:not(.btn):active {
     align-items: center;
     gap: var(--space-sm);
     margin-bottom: var(--space-sm);
-    font-size: var(--font-size-md);
+    font-size: var(--fs-3);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
 }
 
 .card-section .section-icon {
-    font-size: 1.25rem;
+    font-size: var(--fs-4);
 }
 
 /* ==========================================
@@ -1109,8 +1086,8 @@ a[href]:not(.btn):active {
    ========================================== */
 
 .section-collapsible {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-md);
     margin-bottom: var(--space-md);
     overflow: hidden;
@@ -1122,11 +1099,10 @@ a[href]:not(.btn):active {
     gap: var(--space-sm);
     width: 100%;
     padding: 14px var(--space-md);
-    background: rgba(255, 255, 255, 0.03);
     border: none;
     border-radius: 0;
-    color: var(--color-text-white);
-    font-size: 0.9rem;
+    color: var(--color-text-primary);
+    font-size: var(--fs-2);
     font-weight: 600;
     font-family: var(--font-display), var(--font-body);
     cursor: pointer;
@@ -1134,17 +1110,13 @@ a[href]:not(.btn):active {
     transition: background 0.15s ease;
 }
 
-.section-header-collapsible:hover {
-    background: rgba(255, 255, 255, 0.06);
-}
-
 .section-header-collapsible .section-icon {
-    font-size: 1rem;
+    font-size: var(--fs-3);
 }
 
 .section-summary {
     margin-left: auto;
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     font-weight: 400;
     color: var(--sage-ink);
     background: rgba(232, 138, 127, 0.1);
@@ -1154,8 +1126,8 @@ a[href]:not(.btn):active {
 
 .section-toggle {
     margin-left: var(--space-sm);
-    font-size: 0.625rem;
-    color: var(--color-text-neon-muted);
+    font-size: var(--fs-1);
+    color: var(--color-text-muted);
     transition: transform 0.2s ease;
 }
 
@@ -1192,7 +1164,7 @@ a[href]:not(.btn):active {
     justify-content: center;
     min-height: 44px;
     padding: 10px 14px;
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     font-weight: 500;
     background: #F3EEDF;
     border: 1px solid #E5DFCF;
@@ -1218,7 +1190,7 @@ a[href]:not(.btn):active {
 /* Category chips - checkmark */
 #category-chips .chip.active::before {
     content: '\2713 ';
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
 }
 
 /* Flag-only language chips (#335, Selector B). The chip shows just the
@@ -1227,12 +1199,12 @@ a[href]:not(.btn):active {
    text-pill padding. Sized to stay finger-friendly and never clip on a
    390 px phone — flags wrap to a second row via the parent flex-wrap. */
 .chip-group--flags {
-    gap: 8px;
+    gap: var(--space-sm);
 }
 
 .chip-group--flags .chip {
     padding: 6px 12px;
-    font-size: 1.5rem;
+    font-size: var(--fs-4);
     line-height: 1;
     min-width: 48px;
     min-height: 44px;   /* #1183: was 40 */
@@ -1253,7 +1225,7 @@ a[href]:not(.btn):active {
    ✓ pseudo since the card layout draws its own check corner. */
 #category-chips:not(.chip-group--cards) .chip[data-icon]:not(.active)::before {
     content: attr(data-icon) ' ';
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     margin-right: 2px;
 }
 
@@ -1293,10 +1265,10 @@ a[href]:not(.btn):active {
 #category-chips.chip-group--cards .chip {
     /* Reset the pill defaults */
     padding: 12px 14px;
-    font-size: 1rem;
+    font-size: var(--fs-3);
     background: var(--color-bg-surface);
     border: 1.5px solid var(--color-border-light);
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     color: var(--color-text-primary);
     /* Card layout */
     display: flex;
@@ -1311,7 +1283,7 @@ a[href]:not(.btn):active {
 #category-chips.chip-group--cards .chip:hover {
     border-color: var(--color-border-medium);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(42, 40, 32, 0.08);
+    box-shadow: var(--elevation-2);
 }
 #category-chips.chip-group--cards .chip.active {
     background: var(--color-accent-brand-bg);
@@ -1330,10 +1302,10 @@ a[href]:not(.btn):active {
     right: 10px;
     color: var(--coral-ink);
     font-weight: 700;
-    font-size: 1rem;
+    font-size: var(--fs-3);
 }
 #category-chips.chip-group--cards .pack-card-icon {
-    font-size: 1.55rem;
+    font-size: var(--fs-5);
     line-height: 1;
 }
 /* P1 of #212: pack-card icons become shared SVG line icons (Option 2
@@ -1357,7 +1329,7 @@ a[href]:not(.btn):active {
     justify-content: center;
     width: 32px;
     height: 32px;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     flex: 0 0 auto;
 }
 .qz-icon svg {
@@ -1390,7 +1362,7 @@ a[href]:not(.btn):active {
 .theme-tab .qz-icon {
     width: 22px;
     height: 22px;
-    border-radius: 7px;
+    border-radius: var(--radius-sm);
     margin-right: 5px;
     vertical-align: middle;
 }
@@ -1407,7 +1379,7 @@ a[href]:not(.btn):active {
 .control-icon.qz-icon {
     width: 24px;
     height: 24px;
-    border-radius: 7px;
+    border-radius: var(--radius-sm);
 }
 /* Hero/full-screen states: larger duotone disc so the glyph still reads
    as a focal point (these spans previously rendered as a 3rem emoji). */
@@ -1416,19 +1388,19 @@ a[href]:not(.btn):active {
 .connection-lost-icon.qz-icon {
     width: 64px;
     height: 64px;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     margin-bottom: var(--space-sm);
 }
 /* Lightning splash bolt: bold focal disc on the intro splash. */
 .lr-splash-bolt .qz-icon {
     width: 72px;
     height: 72px;
-    border-radius: 22px;
+    border-radius: var(--radius-lg);
 }
 #category-chips.chip-group--cards .pack-card-name {
     font-family: var(--font-display, var(--font-system, inherit));
     font-weight: 700;
-    font-size: 0.98rem;
+    font-size: var(--fs-3);
     line-height: 1.18;
     /* Wrap long names like "Essen & Trinken" / "Tiere & Natur" inside the
        fixed-width grid track instead of forcing the card wider. */
@@ -1437,7 +1409,7 @@ a[href]:not(.btn):active {
 }
 #category-chips.chip-group--cards .pack-card-count {
     font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.7rem;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
     letter-spacing: 0.04em;
 }
@@ -1452,11 +1424,11 @@ a[href]:not(.btn):active {
     align-self: flex-start;
     max-width: 100%;
     padding: 2px 8px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: var(--color-accent-brand-bg);
     color: var(--coral-ink);
     font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.66rem;
+    font-size: var(--fs-1);
     font-weight: 700;
     line-height: 1.3;
     letter-spacing: 0.02em;
@@ -1474,7 +1446,7 @@ a[href]:not(.btn):active {
 .question-count-summary {
     margin-top: 10px;
     font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     color: var(--color-text-muted);
     letter-spacing: 0.04em;
 }
@@ -1502,7 +1474,7 @@ a[href]:not(.btn):active {
     -webkit-appearance: none;
     position: relative;
     background: #E88A7F;
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     padding: 14px 16px 12px;
     color: var(--on-accent);
     margin-bottom: var(--space-md);
@@ -1527,20 +1499,20 @@ a[href]:not(.btn):active {
 }
 .featured-spotlight .spotlight-label {
     font-family: var(--font-system, inherit);
-    font-size: 0.65rem;
+    font-size: var(--fs-1);
     text-transform: uppercase;
     letter-spacing: 0.12em;
     opacity: 0.92;
-    margin-bottom: 4px;
+    margin-bottom: var(--space-xs);
 }
 .featured-spotlight .spotlight-title {
     font-weight: 700;
-    font-size: 1.15rem;
+    font-size: var(--fs-4);
     line-height: 1.15;
     margin-bottom: 2px;
 }
 .featured-spotlight .spotlight-meta {
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     opacity: 0.9;
     margin-bottom: 10px;
 }
@@ -1551,10 +1523,10 @@ a[href]:not(.btn):active {
     background: rgba(255, 255, 255, 0.95);
     color: #2A2820;
     border: 0;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     padding: 7px 16px;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     cursor: pointer;
     min-width: 0;
     min-height: 0;
@@ -1585,7 +1557,7 @@ a[href]:not(.btn):active {
     -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
     mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
     /* Padding so the active-tab outline isn't clipped by the mask edge. */
-    padding-right: 4px;
+    padding-right: var(--space-xs);
 }
 .theme-tabs::-webkit-scrollbar {
     display: none;
@@ -1605,19 +1577,19 @@ a[href]:not(.btn):active {
     align-items: center;
     background: var(--color-bg-surface);
     border: 1.5px solid var(--color-border-light);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     /* v1.1.42: tighter padding + slightly smaller text so more tabs fit
        per viewport before the user has to scroll. Was 6/12 + 0.78 rem.
        #212: a touch less left padding to make room for the icon disc. */
     padding: 5px 11px 5px 6px;
     min-width: 0;
     min-height: 0;
-    font-size: 0.72rem;
+    font-size: var(--fs-1);
     font-weight: 600;
     color: var(--color-text-muted);
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.12s ease;
+    transition: all var(--transition-fast);
     font-family: inherit;
 }
 /* Transparent ::before extends the tap target to >=44px tall (the pill
@@ -1680,7 +1652,7 @@ a[href]:not(.btn):active {
     /* #490: inset box-shadow instead of border so box-sizing:border-box
        doesn't shrink the padding box + off-center the ::after knob. */
     box-shadow: inset 0 0 0 1px rgba(42, 40, 32, 0.18);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     position: relative;
     transition: background 0.2s ease;
 }
@@ -1697,7 +1669,7 @@ a[href]:not(.btn):active {
     left: 2px;
     width: 16px;
     height: 16px;
-    background: var(--color-text-neon-muted);
+    background: var(--color-text-muted);
     border-radius: 50%;
     transition: all 0.2s ease;
 }
@@ -1711,6 +1683,40 @@ a[href]:not(.btn):active {
     background: var(--color-accent-secondary);
 }
 
+
+/* ==========================================
+   Toast (#1178 step 10)
+   ==========================================
+   One class for the host's error toast (admin.js showErrorToast) and the
+   phone's toast (player-utils.js showToast). Both used to spell the same
+   style out as a JS string, with the off-palette #D65858, white text
+   (3.9 : 1) and z-index 9999. The scripts now only set the text, `top` (the
+   phone keeps it clear of its header) and `opacity`, which is what shows or
+   hides it; 0.3 s matches TOAST_FADE_MS in player-utils.js.
+   Ink on --color-error-fill is 4.57 : 1 (decided 2026-11-03: a lighter
+   error fill under ink, rather than white on a dark red). */
+.qz-toast {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: var(--fs-2);
+    z-index: var(--z-toast);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.qz-toast--error {
+    background: var(--color-error-fill);
+    color: var(--on-accent);
+}
 /* ==========================================
    Timer Bar (top of screen)
    ========================================== */
@@ -1749,9 +1755,9 @@ a[href]:not(.btn):active {
 
 .timer-text {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: var(--fs-4);
     font-weight: var(--font-weight-bold);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     font-variant-numeric: tabular-nums;
     margin-bottom: var(--space-sm);
 }
@@ -1775,7 +1781,7 @@ a[href]:not(.btn):active {
    ========================================== */
 
 .round-indicator {
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -1786,10 +1792,10 @@ a[href]:not(.btn):active {
 .question-text {
     /* -20 % per Markus' live test 2026-05-29: previous 1.35 rem felt too
        heavy on phones once 3-line questions started appearing. */
-    font-size: 1.08rem;
+    font-size: var(--fs-3);
     font-weight: var(--font-weight-bold);
     line-height: 1.4;
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     padding: 0 var(--space-sm);
 }
 
@@ -1805,8 +1811,8 @@ a[href]:not(.btn):active {
     margin: var(--space-sm) 0;
     border-radius: var(--radius-md, 12px);
     overflow: hidden;
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
 }
 .question-media[hidden] { display: none; }
 /* #1182 L10: picture states. While loading the fixed-height frame is a
@@ -1829,7 +1835,7 @@ a[href]:not(.btn):active {
     height: 100%;
     padding: var(--space-md);
     color: var(--color-text-muted);
-    font-size: var(--font-size-base);
+    font-size: var(--fs-2);
     line-height: 1.4;
     text-align: center;
 }
@@ -1875,9 +1881,9 @@ a[href]:not(.btn):active {
     background: rgba(255, 255, 255, 0.78);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
-    box-shadow: 0 1px 4px rgba(42, 40, 32, 0.18);
+    box-shadow: var(--elevation-1);
     color: var(--color-text-primary);
-    font-size: 15px;
+    font-size: var(--fs-3);
     line-height: 1;
     cursor: pointer;
     display: flex;
@@ -1897,7 +1903,7 @@ a[href]:not(.btn):active {
 .image-zoom-overlay {
     position: fixed;
     inset: 0;
-    z-index: 1000;
+    z-index: var(--z-modal);
     background: rgba(0, 0, 0, 0.92);
     display: flex;
     align-items: center;
@@ -1921,14 +1927,14 @@ a[href]:not(.btn):active {
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.15);
     color: #fff;
-    font-size: 18px;
+    font-size: var(--fs-4);
     line-height: 1;
     cursor: pointer;
 }
 
 .question-category {
     display: inline-block;
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     color: var(--sage-ink);
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -1953,12 +1959,12 @@ a[href]:not(.btn):active {
     width: 100%;
     min-height: 60px;
     padding: var(--space-md) var(--space-lg);
-    background: var(--color-dark-surface);
-    border: 2px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    border: 2px solid var(--color-border-light);
     border-radius: var(--radius-lg);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     font-family: var(--font-system);
-    font-size: 1rem;
+    font-size: var(--fs-3);
     font-weight: var(--font-weight-medium);
     text-align: left;
     cursor: pointer;
@@ -1992,9 +1998,8 @@ a[href]:not(.btn):active {
     width: 32px;
     height: 32px;
     border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.08);
     font-weight: var(--font-weight-bold);
-    font-size: 0.875rem;
+    font-size: var(--fs-2);
     color: var(--sage-ink);
     flex-shrink: 0;
 }
@@ -2040,7 +2045,7 @@ a[href]:not(.btn):active {
 
 .answer-btn.wrong .answer-label {
     background: var(--color-error);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
 }
 
 @keyframes shake {
@@ -2070,7 +2075,7 @@ a[href]:not(.btn):active {
     right: var(--space-md);
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1.1rem;
+    font-size: var(--fs-3);
     line-height: 1;
     pointer-events: none;
 }
@@ -2087,7 +2092,7 @@ a[href]:not(.btn):active {
        in DM Sans, so at a matched font-size it reads as a faint dust speck
        next to a solid ★ — verified on device at 390 px. This is the size that
        makes the two glyphs look equally weighted, not equally specified. */
-    font-size: 1.5rem;
+    font-size: var(--fs-4);
 }
 
 /* Keep the answer text clear of the glyph. Only while a state is showing,
@@ -2121,7 +2126,7 @@ a[href]:not(.btn):active {
     border-radius: var(--radius-full);
     color: var(--sage-ink);
     font-family: var(--font-system);
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     font-weight: 600;
     cursor: pointer;
     transition: all var(--transition-normal);
@@ -2156,7 +2161,7 @@ a[href]:not(.btn):active {
    ========================================== */
 
 .fun-fact-label {
-    font-size: 0.7rem;
+    font-size: var(--fs-1);
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -2165,9 +2170,9 @@ a[href]:not(.btn):active {
 }
 
 .fun-fact-text {
-    font-size: 0.95rem;
+    font-size: var(--fs-3);
     line-height: 1.6;
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
 }
 
 
@@ -2186,7 +2191,7 @@ a[href]:not(.btn):active {
     align-items: center;
     gap: var(--space-xs);
     margin-bottom: var(--space-sm);
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
 }
 
@@ -2230,7 +2235,7 @@ a[href]:not(.btn):active {
     height: 20px;
     border-radius: 50%;
     color: var(--on-accent);
-    font-size: 0.6875rem;
+    font-size: var(--fs-1);
     font-weight: var(--font-weight-semibold);
     line-height: 1;
     opacity: 0.55;
@@ -2239,7 +2244,7 @@ a[href]:not(.btn):active {
 /* Whoever set the answer that stands is the solid one. */
 .qz-team-dots .qz-team-dot.is-setter {
     opacity: 1;
-    box-shadow: 0 0 0 2px var(--color-surface-dark);
+    box-shadow: 0 0 0 2px var(--color-bg-surface);
 }
 
 .answer-btn.has-team-answer {
@@ -2404,7 +2409,7 @@ a[href]:not(.btn):active {
     color: var(--sage-ink);
     font-weight: 600;
     margin-top: var(--space-sm);
-    text-shadow: 0 0 10px var(--color-success-neon);
+    text-shadow: 0 0 10px var(--color-success);
 }
 
 .admin-actions {
@@ -2413,7 +2418,7 @@ a[href]:not(.btn):active {
     padding: var(--space-md);
     margin: 0 calc(-1 * var(--space-md));
     background: linear-gradient(transparent, var(--color-bg-primary) 25%);
-    z-index: 100;
+    z-index: var(--z-control-bar);
 }
 
 .admin-actions .btn {
@@ -2471,7 +2476,7 @@ a[href]:not(.btn):active {
     background: var(--color-bg-surface);
     color: var(--error-ink);
     border: 1.5px solid var(--color-error);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--elevation-1);
 }
 
 .admin-actions #end-game-btn:hover:not(:disabled) {
@@ -2489,7 +2494,7 @@ a[href]:not(.btn):active {
     max-width: 100%;
     margin: 0 auto var(--space-sm);
     padding: 6px 14px 6px 6px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     color: var(--color-text-secondary);
@@ -2499,7 +2504,7 @@ a[href]:not(.btn):active {
 .admin-paused-indicator .qz-icon {
     width: 26px;
     height: 26px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
 }
 
 .timer-text.is-paused {
@@ -2565,14 +2570,14 @@ a[href]:not(.btn):active {
 .qz-team {
     margin: var(--space-lg) 0;
     padding: var(--space-md);
-    background: var(--color-surface-dark);
+    background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
 }
 
 .qz-team-askTitle {
     margin: 0 0 var(--space-xs);
-    font-size: 1rem;
+    font-size: var(--fs-3);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
     text-align: center;
@@ -2581,7 +2586,7 @@ a[href]:not(.btn):active {
 .qz-team-askHint,
 .qz-team-nameHint {
     margin: 0 0 var(--space-md);
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     line-height: 1.35;
     color: var(--color-text-muted);
     text-align: center;
@@ -2607,7 +2612,7 @@ a[href]:not(.btn):active {
 
 .qz-team-pickTitle {
     margin: 0 0 var(--space-sm);
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     font-weight: var(--font-weight-semibold);
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -2633,7 +2638,7 @@ a[href]:not(.btn):active {
     border-radius: var(--radius-md);
     color: var(--color-text-primary);
     font-family: var(--font-system);
-    font-size: 0.9375rem;
+    font-size: var(--fs-3);
     text-align: left;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
@@ -2656,20 +2661,20 @@ a[href]:not(.btn):active {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
 }
 
 .qz-team-itemJoin {
     flex: 0 0 auto;
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     font-weight: var(--font-weight-semibold);
     color: var(--coral-ink);
 }
 
 .qz-team-empty {
     margin: 0 0 var(--space-sm);
-    font-size: 0.875rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     text-align: center;
 }
@@ -2694,12 +2699,12 @@ a[href]:not(.btn):active {
     min-width: 0;
     min-height: 44px;   /* #1183: was 39 */
     padding: var(--space-sm) var(--space-md);
-    background: var(--color-surface-dark);
+    background: var(--color-bg-surface);
     border: 1px solid var(--color-border-medium);
     border-radius: var(--radius-md);
     color: var(--color-text-primary);
     font-family: var(--font-system);
-    font-size: 1rem;
+    font-size: var(--fs-3);
 }
 
 .qz-team-nameBtn {
@@ -2730,7 +2735,7 @@ a[href]:not(.btn):active {
 }
 
 .qz-team-mineName {
-    font-size: 1rem;
+    font-size: var(--fs-3);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
     overflow: hidden;
@@ -2739,7 +2744,7 @@ a[href]:not(.btn):active {
 }
 
 .qz-team-mineMembers {
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2754,13 +2759,13 @@ a[href]:not(.btn):active {
     border-radius: var(--radius-md);
     color: var(--color-text-muted);
     font-family: var(--font-system);
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     cursor: pointer;
 }
 
 .qz-team-note {
     margin: var(--space-sm) 0 0;
-    font-size: 0.8125rem;
+    font-size: var(--fs-2);
     color: var(--color-text-muted);
     text-align: center;
 }
@@ -2777,7 +2782,7 @@ a[href]:not(.btn):active {
     align-items: center;
     gap: var(--space-md);
     padding: var(--space-md);
-    border-bottom: 1px solid var(--color-border-neon);
+    border-bottom: 1px solid var(--color-border-light);
     transition: background-color 0.2s ease;
 }
 
@@ -2796,10 +2801,9 @@ a[href]:not(.btn):active {
     align-items: center;
     justify-content: center;
     font-weight: var(--font-weight-bold);
-    font-size: 0.85rem;
+    font-size: var(--fs-2);
     border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--color-text-neon-muted);
+    color: var(--color-text-muted);
     flex-shrink: 0;
 }
 
@@ -2824,7 +2828,7 @@ a[href]:not(.btn):active {
 .leaderboard-name {
     flex: 1;
     font-weight: var(--font-weight-medium);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
 }
 
 .leaderboard-score {
@@ -2834,7 +2838,7 @@ a[href]:not(.btn):active {
 }
 
 .leaderboard-streak {
-    font-size: 0.75rem;
+    font-size: var(--fs-1);
     color: var(--sun-ink);
 }
 
@@ -2885,7 +2889,7 @@ a[href]:not(.btn):active {
     align-items: center;
     justify-content: space-between;
     gap: var(--space-sm);
-    font-size: 0.8rem;
+    font-size: var(--fs-2);
     line-height: 1.3;
     color: var(--color-text-muted);
 }
@@ -2972,8 +2976,8 @@ a[href]:not(.btn):active {
 
 .final-leaderboard-header {
     font-weight: var(--font-weight-bold);
-    font-size: 1.1rem;
-    color: var(--color-text-white);
+    font-size: var(--fs-3);
+    color: var(--color-text-primary);
     margin-bottom: var(--space-sm);
 }
 
@@ -3098,7 +3102,7 @@ a[href]:not(.btn):active {
 .podium-name {
     font-family: var(--font-display), sans-serif;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: var(--fs-3);
     color: inherit;
     max-width: 14ch;
     overflow: hidden;
@@ -3110,8 +3114,8 @@ a[href]:not(.btn):active {
 .podium-score {
     font-family: var(--font-mono, "JetBrains Mono"), ui-monospace, monospace;
     font-weight: 500;
-    font-size: 0.875rem;
-    color: var(--color-text-neon-muted);
+    font-size: var(--fs-2);
+    color: var(--color-text-muted);
     font-variant-numeric: tabular-nums;
     margin-bottom: var(--space-sm);
 }
@@ -3133,7 +3137,7 @@ a[href]:not(.btn):active {
     font-family: var(--font-mono, "JetBrains Mono"), ui-monospace, monospace;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
-    color: var(--color-text-neon-muted);
+    color: var(--color-text-muted);
     box-shadow: 0 2px 8px -2px rgba(42, 40, 32, 0.10);
     position: relative;
 }
@@ -3222,7 +3226,7 @@ a[href]:not(.btn):active {
 }
 
 .awards-title {
-    font-size: 1.3rem;
+    font-size: var(--fs-4);
     font-weight: var(--font-weight-bold);
     text-align: center;
     margin-bottom: var(--space-lg);
@@ -3244,7 +3248,7 @@ a[href]:not(.btn):active {
     padding: var(--space-md);
     min-width: 120px;
     max-width: 160px;
-    background: var(--color-dark-surface);
+    background: var(--color-bg-surface);
     border-radius: var(--radius-lg);
     border: 1px solid rgba(255, 255, 255, 0.1);
     opacity: 0;
@@ -3263,12 +3267,12 @@ a[href]:not(.btn):active {
 }
 
 .award-icon {
-    font-size: 2rem;
+    font-size: var(--fs-5);
     margin-bottom: var(--space-xs);
 }
 
 .award-name {
-    font-size: var(--font-size-xs);
+    font-size: var(--fs-1);
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -3278,16 +3282,16 @@ a[href]:not(.btn):active {
 }
 
 .award-winner {
-    font-size: var(--font-size-base);
+    font-size: var(--fs-2);
     font-weight: var(--font-weight-bold);
-    color: var(--color-text-white);
+    color: var(--color-text-primary);
     text-align: center;
     margin-bottom: var(--space-xs);
 }
 
 .award-detail {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-neon-muted);
+    font-size: var(--fs-1);
+    color: var(--color-text-muted);
     text-align: center;
 }
 
@@ -3306,9 +3310,9 @@ a[href]:not(.btn):active {
 }
 
 .end-share-slip {
-    background: var(--color-bg-card);
+    background: var(--color-bg-surface);
     border: 1px solid #E7DFCE;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     padding: 14px 16px;
     display: flex;
     flex-direction: column;
@@ -3320,7 +3324,7 @@ a[href]:not(.btn):active {
 .end-share-title {
     font-family: var(--font-display, inherit);
     font-weight: 700;
-    font-size: 17px;
+    font-size: var(--fs-3);
 }
 
 .end-share-facts {
@@ -3328,7 +3332,7 @@ a[href]:not(.btn):active {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 4px 12px;
-    font-size: 14px;
+    font-size: var(--fs-2);
 }
 
 .end-share-facts dt { color: var(--color-text-muted, #6E675E); }
@@ -3344,7 +3348,7 @@ a[href]:not(.btn):active {
     border-top: 1px dashed #E7DFCE;
     padding-top: 8px;
     text-align: center;
-    font-size: 17px;
+    font-size: var(--fs-3);
     letter-spacing: 2px;
     /* A long game overflows on a 390px phone — scroll the strip, never the
        page. Same rule the answer grid follows. */
@@ -3354,7 +3358,7 @@ a[href]:not(.btn):active {
 
 .end-share-status {
     text-align: center;
-    font-size: 14px;
+    font-size: var(--fs-2);
     color: var(--color-text-muted, #6E675E);
     min-height: 1.3em;
 }
@@ -3371,29 +3375,35 @@ a[href]:not(.btn):active {
    Modal (Beatify style)
    ========================================== */
 
-.modal {
+/* Modal base (#1178 step 10). Every dialog — the host's .modal sheets and
+   the phone's QR, invite and power-up pickers — is a .qz-modal wrapper, a
+   .qz-modal-backdrop scrim and a .qz-modal-card. The family classes below
+   (and in 07-player.css) keep only what differs: the card's ground, padding
+   and width. */
+.qz-modal {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     z-index: var(--z-modal);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.modal.hidden {
+.qz-modal.hidden {
     display: none;
 }
 
-.modal-backdrop {
+.qz-modal-backdrop {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: rgba(31, 27, 20, 0.70);
+}
+
+.qz-modal-card {
+    position: relative;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    animation: modalFadeIn var(--transition-fast);
 }
 
 /* #622: the dashboard address inside the "open on the TV" sheet. Big enough
@@ -3402,9 +3412,8 @@ a[href]:not(.btn):active {
 .cast-tv-url {
     margin: var(--space-sm) 0 var(--space-md);
     padding: var(--space-sm);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.06);
-    font-size: 0.95rem;
+    border-radius: var(--radius-md);
+    font-size: var(--fs-3);
     font-weight: 600;
     /* `break-all` split mid-token and left a single stranded character on its
        own line — bad for something a host reads out or types on a TV remote.
@@ -3417,16 +3426,12 @@ a[href]:not(.btn):active {
 }
 
 .modal-content {
-    position: relative;
-    background: var(--color-dark-surface-hover);     /* surface-2 navy \u2014 not cream */
-    border: 1px solid var(--color-border-neon);      /* hairline */
+    background: var(--color-bg-card-alt);            /* surface 2 */
     padding: var(--space-lg);
-    border-radius: var(--radius-lg);
     max-width: 400px;
     width: 90%;
-    color: var(--color-text-white);                   /* parchment \u2014 not navy */
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
-    animation: modalFadeIn var(--transition-fast);
+    color: var(--color-text-primary);
+    box-shadow: var(--elevation-3);
 }
 
 @keyframes modalFadeIn {
@@ -3438,14 +3443,14 @@ a[href]:not(.btn):active {
     font-family: var(--font-display);
     font-weight: 700;
     margin-bottom: var(--space-sm);
-    font-size: var(--font-size-xl);
-    color: var(--color-text-white);                   /* parchment */
+    font-size: var(--fs-4);
+    color: var(--color-text-primary);                   /* parchment */
     letter-spacing: -0.01em;
 }
 
 .modal-content p {
     margin-bottom: var(--space-md);
-    color: var(--color-text-neon-muted);              /* blue-gray muted */
+    color: var(--color-text-muted);              /* blue-gray muted */
 }
 
 .modal-actions {
@@ -3463,8 +3468,8 @@ a[href]:not(.btn):active {
 .modal-content .name-input,
 .modal-content input[type="text"] {
     background: var(--color-bg-primary);              /* studio navy */
-    color: var(--color-text-white);                   /* parchment */
-    border-color: var(--color-border-neon);           /* hairline */
+    color: var(--color-text-primary);                   /* parchment */
+    border-color: var(--color-border-light);           /* hairline */
 }
 
 .modal-content .input:focus,
@@ -3477,7 +3482,7 @@ a[href]:not(.btn):active {
 .modal-content .input::placeholder,
 .modal-content .name-input::placeholder,
 .modal-content input[type="text"]::placeholder {
-    color: var(--color-text-neon-muted);              /* muted blue-gray */
+    color: var(--color-text-muted);              /* muted blue-gray */
 }
 
 /* ==========================================
@@ -3495,10 +3500,9 @@ a[href]:not(.btn):active {
     align-items: center;
     gap: var(--space-xs);
     padding: var(--space-xs) var(--space-sm);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--color-border-neon);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-md);
-    font-size: 0.875rem;
+    font-size: var(--fs-2);
 }
 
 /* ==========================================
@@ -3525,8 +3529,8 @@ a[href]:not(.btn):active {
 footer {
     margin-top: var(--space-lg);
     text-align: center;
-    color: var(--color-text-neon-muted);
-    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    font-size: var(--fs-1);
 }
 
 /* Spinner */
@@ -3559,7 +3563,7 @@ footer {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1200;
+    z-index: var(--z-overlay);
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -3581,7 +3585,7 @@ footer {
     font-weight: 600;
     line-height: 1.25;
     text-align: center;
-    box-shadow: 0 6px 24px rgba(42, 40, 32, 0.22);
+    box-shadow: var(--elevation-2);
     animation: powerup-banner-in 260ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
 }
 
@@ -3623,7 +3627,7 @@ footer {
     font-size: 0.85em;
     font-weight: 700;
     padding: 2px 8px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-variant-numeric: tabular-nums;
 }
 
@@ -3642,7 +3646,7 @@ footer {
 .reaction-layer-board {
     position: fixed;
     inset: 0;
-    z-index: 1100;
+    z-index: var(--z-toast);
     pointer-events: none;
     overflow: hidden;
 }
@@ -3670,7 +3674,7 @@ footer {
     justify-content: center;
     gap: var(--space-xs);
     margin: 0;
-    font-size: 0.78rem;
+    font-size: var(--fs-2);
     line-height: 1.4;
     color: var(--color-text-muted);
     text-align: center;
@@ -3694,7 +3698,7 @@ footer {
     border-radius: var(--radius-full);
     background: transparent;
     color: var(--color-text-muted);
-    font-size: 1rem;
+    font-size: var(--fs-3);
     line-height: 1;
     cursor: pointer;
 }
@@ -3709,7 +3713,7 @@ footer {
     border-radius: var(--radius-md);
     background: var(--color-warning-light);
     color: var(--color-text-primary);
-    font-size: var(--font-size-base);
+    font-size: var(--fs-2);
     line-height: 1.4;
     text-align: center;
 }
@@ -3745,7 +3749,7 @@ footer {
     min-height: 44px;
     padding: var(--space-xs) var(--space-md);
     font: inherit;
-    font-size: var(--font-size-sm);
+    font-size: var(--fs-1);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
     background: var(--color-bg-card-alt);
@@ -3759,7 +3763,7 @@ footer {
 }
 .pack-news-yours {
     margin-top: var(--space-xs);
-    font-size: var(--font-size-sm);
+    font-size: var(--fs-1);
     color: var(--color-text-secondary);
 }
 
@@ -3773,7 +3777,7 @@ footer {
 }
 .admin-install-body {
     margin: var(--space-xs) 0 var(--space-md);
-    font-size: var(--font-size-sm);
+    font-size: var(--fs-1);
     color: var(--color-text-secondary);
 }
 .admin-install-actions {
@@ -4058,7 +4062,7 @@ body.dashboard-body {
     position: relative;
     height: 12px;
     background: var(--color-border-light);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     flex-shrink: 0;
     margin-bottom: clamp(20px, 2.4vw, 32px);
     overflow: hidden;
@@ -4165,7 +4169,7 @@ body.dashboard-body {
     height: 100%;
     background: var(--color-accent-primary);
     box-shadow: 0 0 12px var(--color-success-glow-soft);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     transition: width 0.8s linear;
     width: 100%;
 }
@@ -4193,12 +4197,12 @@ body.dashboard-body {
     position: fixed;
     top: 16px;
     right: 16px;
-    z-index: 100;
+    z-index: var(--z-control-bar);
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: rgba(214, 106, 106, 0.15);
     border: 1px solid var(--color-error);
     font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -4288,14 +4292,14 @@ body.dashboard-body {
     border-radius: var(--radius-md);
     background: color-mix(in srgb, var(--color-warning) 22%, transparent);
     color: var(--color-text-primary);
-    font-size: var(--font-size-xl);
+    font-size: var(--fs-4);
     line-height: 1.4;
     text-align: center;
 }
 
 .dashboard-qr-section canvas,
 .dashboard-qr-section img {
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     border: 1px solid var(--color-border-light);
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
 }
@@ -4459,7 +4463,7 @@ body.dashboard-body {
     padding: 8px 16px;
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #667: this chip carries a guest's name — the thing they look up
        at the television to check after scanning. At 12px uppercase it
@@ -4487,7 +4491,7 @@ body.dashboard-body {
     gap: 6px;
     padding: 10px 14px;
     border: 1px solid var(--color-border-light, #E5DFCF);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
 }
 
 .dashboard-team-name {
@@ -4619,20 +4623,20 @@ body.dashboard-body {
     font-size: 56px; line-height: 1.1; color: var(--coral-ink);
 }
 .dnl-card {
-    background: var(--color-bg-card, #fff);
+    background: var(--color-bg-surface, #fff);
     border: 1px solid var(--color-border-light, #E5DFCF);
-    border-radius: 16px; padding: 72px 32px 40px; margin: 12px 0;
+    border-radius: var(--radius-lg); padding: 72px 32px 40px; margin: 12px 0;
     position: relative;
 }
 .dnl-axis {
     position: relative; height: 5px;
-    background: var(--color-bg-card-alt, #F3EEDF); border-radius: 9999px;
+    background: var(--color-bg-card-alt, #F3EEDF); border-radius: var(--radius-full);
 }
 .dnl-tick { position: absolute; top: 50%; transform: translate(-50%, -50%); }
 .dnl-dot {
     width: 18px; height: 18px; border-radius: 50%;
-    border: 2px solid var(--color-bg-card, #fff);
-    box-shadow: 0 1px 4px rgba(42,40,32,0.25);
+    border: 2px solid var(--color-bg-surface, #fff);
+    box-shadow: var(--elevation-1);
 }
 .dnl-lbl {
     position: absolute; left: 50%; transform: translateX(-50%);
@@ -4661,7 +4665,7 @@ body.dashboard-body {
     /* #735: the true value sitting on the line, next to the guesses it
        is being compared against — the same step as the guesses. */
     font-size: clamp(16px, 1.6vw, 24px);
-    padding: 4px 12px; border-radius: 9999px; white-space: nowrap;
+    padding: 4px 12px; border-radius: var(--radius-full); white-space: nowrap;
 }
 .dnl-scale-ends {
     display: flex; justify-content: space-between;
@@ -4719,7 +4723,7 @@ body.dashboard-body {
     max-height: 62vh;
     width: auto;
     height: auto;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     border: 1px solid var(--color-border-light);
     object-fit: contain;
 }
@@ -4735,21 +4739,21 @@ body.dashboard-body {
    readable line in the same pane when it fails. */
 .dashboard-question-media.is-loading {
     min-height: 40vh;
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
     background: var(--color-bg-card-alt, #F3EEDF);
     animation: qz-skeleton var(--dur-skeleton) ease-in-out infinite;
 }
 .dashboard-question-media.is-loading .dashboard-question-image { opacity: 0; }
 .dashboard-question-media.is-missing {
     min-height: 40vh;
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
     border: 1px dashed var(--color-border-light);
 }
 .dashboard-question-media.is-missing .dashboard-question-image { display: none; }
 .dashboard-question-image-missing {
     padding: var(--space-lg);
     color: var(--color-text-muted);
-    font-size: var(--font-size-2xl);
+    font-size: 1.5rem;
     text-align: center;
 }
 .dashboard-question-image-missing[hidden] { display: none; }
@@ -4785,7 +4789,7 @@ body.dashboard-body {
     padding: clamp(16px, 1.8vw, 24px) clamp(18px, 2vw, 28px);
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(16px, 1.8vw, 22px);
     font-weight: 500;
@@ -4841,7 +4845,7 @@ body.dashboard-body {
     content: "★";
     order: 1;
     color: var(--sage-ink);
-    font-size: 16px;
+    font-size: var(--fs-3);
     line-height: 1;
     flex-shrink: 0;
 }
@@ -4902,14 +4906,14 @@ body.dashboard-body {
     min-width: clamp(56px, 5vw, 90px);
     height: clamp(10px, 1vw, 14px);
     background: #E5DFCF;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     overflow: hidden;
 }
 .dashboard-answer-bar-fill {
     height: 100%;
     width: 0%;
     background: rgba(127, 168, 151, 0.42);  /* sage muted for wrong */
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     /* #1169: the bar grows from the left edge with `scaleX`, not by
        transitioning `width` — a transform costs no layout, and the width is
        written once at reveal and then left alone. */
@@ -4970,7 +4974,7 @@ body.dashboard-body {
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     border-left: 3px solid var(--color-accent-primary);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     font-family: 'DM Sans', sans-serif;
     /* #376: scale for TV couch legibility (viewed from 2-3m) */
     font-size: clamp(18px, 1.8vw, 26px);
@@ -5039,7 +5043,7 @@ body.dashboard-body {
     align-items: center;
     gap: 14px;
     padding: 12px 16px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     font-family: 'DM Sans', sans-serif;
@@ -5123,7 +5127,7 @@ body.dashboard-body {
     color: var(--coral-ink);
     padding: 2px 8px;
     background: rgba(232, 138, 127, 0.10);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     letter-spacing: 0.04em;
 }
 
@@ -5136,7 +5140,7 @@ body.dashboard-body {
     background: var(--color-gold);
     color: var(--color-bg-primary);
     font-family: var(--font-mono);
-    font-size: var(--font-size-xs);
+    font-size: 10px;
     font-weight: var(--font-weight-semibold);
     white-space: nowrap;
 }
@@ -5149,7 +5153,7 @@ body.dashboard-body {
     font-size: clamp(14px, 1.3vw, 20px);
     font-weight: 700;
     padding: 2px 8px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-variant-numeric: tabular-nums;
 }
 .dashboard-leaderboard .leaderboard-delta.is-up {
@@ -5202,7 +5206,7 @@ body.dashboard-body {
     font-weight: 600;
     line-height: 1.2;
     text-align: center;
-    box-shadow: 0 6px 24px rgba(42, 40, 32, 0.22);
+    box-shadow: var(--elevation-2);
     animation: dashboard-powerup-in 260ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
 }
 
@@ -5406,7 +5410,7 @@ body.dashboard-body {
 }
 .dashboard-lightning-recap-row {
     padding: 12px 16px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
     font-family: 'DM Sans', sans-serif;
@@ -5844,7 +5848,7 @@ body.dashboard-body {
     padding: 8px 12px;
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-family: 'DM Sans', sans-serif;
     color: var(--color-text-primary);
 }
@@ -5956,7 +5960,7 @@ body.dashboard-body {
 
 .awards-title {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 12px;
+    font-size: var(--fs-1);
     font-weight: 500;
     color: var(--coral-ink);
     text-transform: uppercase;
@@ -5986,7 +5990,7 @@ body.dashboard-body {
     padding: 12px 18px;
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     min-width: 220px;
     text-align: left;
     opacity: 0;
@@ -6039,7 +6043,7 @@ body.dashboard-body {
     max-width: 640px;
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     overflow: hidden;
     position: relative;
     z-index: 1;
@@ -6078,7 +6082,7 @@ body.dashboard-body {
 /* ---- Responsive ---- */
 @media (max-width: 768px) {
     .dashboard-columns { flex-direction: column; gap: 20px; }
-    .dashboard-question { font-size: 28px; }
+    .dashboard-question { font-size: var(--fs-5); }
     .dashboard-answers { grid-template-columns: 1fr; }
     .dashboard-answer { font-size: 16px; padding: 14px 16px; min-height: 56px; }
     /* Narrow screens: stack the split layout (image above Q&A). */
