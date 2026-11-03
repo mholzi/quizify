@@ -641,6 +641,9 @@
     var HOST_STEP_MIN_MS = 1500;
     var HOST_STEP_MAX_MS = 8000;
     var HOST_STEP_POLL_MS = 250;
+    // #1192: a second tap this soon after the first is a double tap, even when
+    // the game has already moved on and the button is live again.
+    var HOST_STEP_DOUBLE_TAP_MS = 600;
 
     // #1192: the lock keys on the state the tap left, not on the phase name
     // alone. A question that ends inside the 1.5 s floor goes question ->
@@ -664,7 +667,14 @@
             // A lock and an enabled button must never disagree: once the
             // floor has passed and the game has moved on, an enabled button
             // is a live button, whatever the release poll has not yet done.
-            if (btn.disabled || !lockMoved(held) || Date.now() - held.t0 < HOST_STEP_MIN_MS) return false;
+            if (btn.disabled || !lockMoved(held)) return false;
+            // #1192: the 1.5 s floor guards a tap on an unchanged screen,
+            // and that is what the lock check above already does. Once the
+            // state has moved and the button is live, only a double tap (a
+            // second tap within moments of the first) is dropped; a question
+            // that ended fast puts a fresh reveal on screen inside 1.5 s and
+            // the host's tap on it is a decision.
+            if (Date.now() - held.t0 < HOST_STEP_DOUBLE_TAP_MS) return false;
             btn._qzHostLock = null;
         }
         if (!sendFn(type, payload || {})) return false;

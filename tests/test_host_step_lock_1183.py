@@ -206,3 +206,92 @@ def test_every_phase_entry_goes_through_set_phase_1192() -> None:
     assert not re.search(r"state\.currentPhase\s*=[^=]", core), (
         "use pu.setPhase so the lock sees every state"
     )
+
+
+_SCRIPT_1192_LIVE = """
+var now = 0;
+var timers = [];
+global.setTimeout = function (fn, ms) { timers.push({ at: now + ms, fn: fn }); return timers.length; };
+Date.now = function () { return now; };
+function advance(ms) {
+    var until = now + ms;
+    for (;;) {
+        timers.sort(function (a, b) { return a.at - b.at; });
+        var next = timers[0];
+        if (!next || next.at > until) break;
+        timers.shift();
+        now = next.at;
+        next.fn();
+    }
+    now = until;
+}
+
+require(%(stub)s);
+QZ.load(%(utils)s);
+var pu = window.QuizifyPlayerUtils;
+var sent = [];
+function send(type) { sent.push(type); return true; }
+var out = {};
+
+// Frames of the live run (2026-11-03): tap at 0, question_started at +22 ms,
+// round_summary at +881 ms, where the reveal render re-enables the button
+// while the lock still stands; the host's tap lands at +1171 ms.
+var btn = QZ.el('next-round-btn');
+pu.setPhase('ANSWER_REVEAL');
+out.first = pu.hostStep(btn, send, 'next_round');
+advance(22);
+pu.setPhase('QUESTION_ACTIVE');
+advance(859);
+pu.setPhase('ANSWER_REVEAL');
+btn.disabled = false;
+advance(290);
+out.lockStillHeld = !!btn._qzHostLock;
+out.tapOnFreshReveal = pu.hostStep(btn, send, 'next_round');
+// The second live run: tap at 0, reveal at +700, host taps at +926.
+var b3 = QZ.el('pause-game-btn');
+advance(5000);
+pu.setPhase('ANSWER_REVEAL');
+pu.hostStep(b3, send, 'next_round');
+advance(10);
+pu.setPhase('QUESTION_ACTIVE');
+advance(700);
+pu.setPhase('ANSWER_REVEAL');
+b3.disabled = false;
+advance(216);
+out.tapAt926 = pu.hostStep(b3, send, 'next_round');
+
+// A double tap stays guarded: the reveal appears 100 ms after the tap and the
+// second tap follows 100 ms later. (Live: a second tap 926 ms after the first,
+// 210 ms into the reveal, must go out.)
+var b2 = QZ.el('skip-question-btn');
+advance(5000);
+pu.setPhase('ANSWER_REVEAL');
+pu.hostStep(b2, send, 'next_round');
+advance(50);
+pu.setPhase('QUESTION_ACTIVE');
+advance(50);
+pu.setPhase('ANSWER_REVEAL');
+b2.disabled = false;
+advance(100);
+out.doubleTap = pu.hostStep(b2, send, 'next_round');
+
+out.sent = sent;
+console.log(JSON.stringify(out));
+"""
+
+
+@_NEEDS_NODE
+def test_a_tap_on_a_fresh_reveal_inside_the_floor_is_not_dropped_1192() -> None:
+    script = _SCRIPT_1192_LIVE % {
+        "stub": json.dumps(str(_STUB)),
+        "utils": json.dumps(str(_WWW / "js" / "player-utils.js")),
+    }
+    run = subprocess.run(["node", "-e", script], capture_output=True, text=True, check=True)
+    out = json.loads(run.stdout.strip().splitlines()[-1])
+
+    assert out["first"] is True
+    assert out["lockStillHeld"], "the render re-enabled the button under a live lock"
+    assert out["tapOnFreshReveal"] is True, "the host's tap on the new reveal must send"
+    assert out["tapAt926"] is True, "a tap 210 ms into the reveal must send"
+    assert out["doubleTap"] is False, "a double tap on a just-appeared reveal stays guarded"
+    assert out["sent"] == ["next_round"] * 5
