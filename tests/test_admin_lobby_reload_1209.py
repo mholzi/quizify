@@ -136,7 +136,8 @@ window.QuizifyRenderShared = {
 };
 var saved = [];
 window.QuizifyClientCore = {
-    saveSession: function (t, n) { saved.push([t, n]); }
+    // #1212: the host seat, in this tab; never the shared player session.
+    saveHostSeat: function (t, n) { saved.push([t, n]); }
 };
 
 // One tab's sessionStorage: it survives page() (the reload), nothing else does.
@@ -329,7 +330,8 @@ def test_a_reload_in_the_lobby_takes_the_seat_and_the_lobby_back() -> None:
     ], "Start after the reload sends what the host picked, not the defaults"
     assert r["joinedAs"] == "Host"
     # The rotated token replaces the dead one in both stores: this tab's and
-    # the shared one the redirect at Start reconnects by.
+    # the host seat the redirect at Start reconnects by (#1212: also this
+    # tab's own, never the shared player session).
     assert r["seatToken"] == "seat-2"
     assert r["saved"] == [["seat-2", "Host"]]
 

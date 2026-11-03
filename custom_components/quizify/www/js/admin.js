@@ -2070,17 +2070,19 @@
         switch (msg.type || msg.event) {
             case 'joined':
                 // Server confirmed the admin is registered as a player.
-                // Stash the session_token under the keys the /quizify/player
-                // page reads on load — when we later redirect (admin clicks
-                // Spiel starten), the player page reconnects via token
-                // instead of doing a fresh join (which would race against
-                // the admin WS still being marked connected and fail with
-                // "Name bereits vergeben").
-                // #787: through QuizifyClientCore, which owns the two key
-                // names. Spelled out here as literals, a rename on the phone
-                // would have broken this redirect with nothing to catch it.
+                // Stash the session_token where the host's /quizify/player
+                // page (?admin=true) reads it on load — when we later
+                // redirect (admin clicks Spiel starten), the player page
+                // reconnects via token instead of doing a fresh join (which
+                // would race against the admin WS still being marked
+                // connected and fail with "Name bereits vergeben").
+                // #787: through QuizifyClientCore, which owns the key names.
+                // #1212: as the host seat, in this tab's sessionStorage only.
+                // The shared player session in localStorage is what a
+                // /quizify/player tab opened later reconnects by, and it
+                // must never be the host's.
                 if (msg.session_token && _adminJoinedAs) {
-                    window.QuizifyClientCore.saveSession(msg.session_token, _adminJoinedAs);
+                    window.QuizifyClientCore.saveHostSeat(msg.session_token, _adminJoinedAs);
                     // #1209: and in this tab's own store, which no other tab
                     // of the browser writes to, for the lobby reload.
                     _storeSet(ADMIN_SEAT_TOKEN_KEY, msg.session_token);
@@ -2089,11 +2091,11 @@
             case 'reconnected':
                 // #1209: the seat is back on this socket (_resumeLobbyAfterReload).
                 // The server rotated the token; the old one is dead, so both
-                // stores take the new one, the shared one for the redirect
-                // at Start.
+                // stores take the new one, the host seat for the redirect at
+                // Start (#1212: this tab only, like the other).
                 if (msg.session_token && _adminJoinedAs) {
                     _storeSet(ADMIN_SEAT_TOKEN_KEY, msg.session_token);
-                    window.QuizifyClientCore.saveSession(msg.session_token, _adminJoinedAs);
+                    window.QuizifyClientCore.saveHostSeat(msg.session_token, _adminJoinedAs);
                 }
                 break;
             case 'reconnect_failed':
