@@ -83,7 +83,7 @@ QZ.load({i18njs});
 var shown = null;
 var state = {{ playerName: 'Anna', currentPhase: 'QUESTION_ACTIVE', isAdmin: false }};
 var game = {{ stopCountdown: function () {{}} }};
-var pu = {{ showView: function (v) {{ shown = v; }} }};
+var pu = {{ showView: function (v) {{ shown = v; }}, setPhase: function (p) {{ state.currentPhase = p; }} }};
 var end = {{ updateEndView: function () {{}}, setupNewGameButton: function () {{}} }};
 function _clearFinaleCountdown() {{}}
 function setResetStage() {{}}

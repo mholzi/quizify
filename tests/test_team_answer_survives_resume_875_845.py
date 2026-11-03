@@ -334,6 +334,7 @@ global.window = {
   addEventListener() {},
   QuizifyPlayerUtils: {
     state: S,
+    setPhase(p) { S.currentPhase = p; },
     escapeHtml: (s) => String(s == null ? '' : s),
     showToast() {},
     showView() {},
