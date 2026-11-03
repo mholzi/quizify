@@ -20,6 +20,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import math
+import time
 from typing import TYPE_CHECKING, Any
 
 from ..state import GamePhase
@@ -41,6 +42,9 @@ class LightningDriver:
     #: whole seconds, so ticks are emitted on the ceil() change, not per poll.
     POLL_INTERVAL = 0.25
 
+    #: How often the stall watchdog re-checks (upper bound).
+    WATCHDOG_INTERVAL = 1.0
+
     def __init__(
         self,
         broadcaster: LightningBroadcaster,
@@ -53,6 +57,11 @@ class LightningDriver:
         self._milestones = milestones
         self._splash_grace = splash_grace
         self._splash_hold = splash_hold
+        # Stall watchdog: when a question or tick last went out, and whether
+        # the watchdog has taken the round over (so the cancel it issues is
+        # not reported as a mystery cancellation).
+        self._last_progress = time.monotonic()
+        self._watchdog_fired = False
 
     async def run(
         self, game_state: QuizifyGameState, *, auto_dismiss_splash: bool = False
@@ -63,15 +72,77 @@ class LightningDriver:
         the intro splash for ``splash_hold`` seconds and dismisses it itself —
         there is no host "Start" tap any more.
         """
+        self._touch()
+        main = asyncio.current_task()
+        watchdog = (
+            asyncio.ensure_future(self._watchdog(game_state, main))
+            if main is not None
+            else None
+        )
         try:
             await self._run(game_state, auto_dismiss_splash=auto_dismiss_splash)
         except asyncio.CancelledError:
-            pass
+            lr = game_state.lightning
+            if game_state.phase == GamePhase.LIGHTNING and not self._watchdog_fired:
+                # An unexplained freeze (v1.26.0-RC5 live test) ended in a
+                # silent cancel with the phase still LIGHTNING: say so.
+                _LOGGER.warning(
+                    "Lightning loop cancelled while the round is still running "
+                    "(question index %s)",
+                    lr.index if lr is not None else None,
+                )
+            else:
+                _LOGGER.debug("Lightning loop cancelled")
         except Exception:  # noqa: BLE001
             # #307: an unexpected exception here used to kill the lightning
             # task silently, hanging the round on the current question with a
             # frozen clock. Log it so the failure surfaces.
             _LOGGER.exception("Lightning loop crashed")
+        finally:
+            # A watchdog that has taken over is mid-recap; let it finish.
+            if watchdog is not None and not self._watchdog_fired:
+                watchdog.cancel()
+
+    def _touch(self) -> None:
+        self._last_progress = time.monotonic()
+
+    async def _watchdog(
+        self, game_state: QuizifyGameState, main: asyncio.Task | None
+    ) -> None:
+        """Finish a round whose loop has gone quiet for 2 x the question window.
+
+        Ticks go out about once a second, so a gap this long means the loop is
+        stuck, not slow. Idempotent: only acts while the phase is LIGHTNING,
+        and finishing the round changes it.
+        """
+        try:
+            while game_state.phase == GamePhase.LIGHTNING:
+                lr = game_state.lightning
+                if lr is None:
+                    return
+                limit = 2 * lr.seconds_per_question
+                idle = time.monotonic() - self._last_progress
+                if idle > limit:
+                    _LOGGER.warning(
+                        "Lightning round stalled on question index %s for %.0f s "
+                        "(limit %.0f s); finishing it",
+                        lr.index,
+                        idle,
+                        limit,
+                    )
+                    self._watchdog_fired = True
+                    game_state.finish_lightning_round()
+                    if main is not None:
+                        main.cancel()
+                    await self._out.send_lightning_recap(game_state)
+                    return
+                await asyncio.sleep(
+                    min(self.WATCHDOG_INTERVAL, max(limit - idle, 0.01))
+                )
+        except asyncio.CancelledError:
+            raise
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("Lightning watchdog crashed")
 
     async def _run(
         self, game_state: QuizifyGameState, *, auto_dismiss_splash: bool
@@ -97,6 +168,7 @@ class LightningDriver:
             if lr is None:
                 return
             await self._out.send_lightning_question(game_state, lr)
+            self._touch()
             # Re-arm the question clock now (after the broadcast) so the
             # countdown the players see matches the server window.
             lr.restart_clock()
@@ -134,6 +206,7 @@ class LightningDriver:
             shown = math.ceil(lr.time_remaining())
             if shown != last_shown:
                 await self._out.send_lightning_tick(game_state, lr)
+                self._touch()
                 last_shown = shown
             connected = [p.name for p in game_state.get_players() if p.connected]
             if lr.all_connected_answered(connected):
