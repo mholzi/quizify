@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+import time
 from typing import TYPE_CHECKING
 
 from .game.state import GamePhase, QuizifyGameState
@@ -183,6 +184,14 @@ _ACCENT_STREAK: list[tuple[object, float]] = [
     (_BASELINE, 0.0),
 ]
 
+# Since #1185 the milestone fires with the reveal, a hair after the green or
+# amber flash. Started on its own it would cancel that flash before it showed,
+# so it queues behind it and starts this long after the reveal began: first
+# the verdict, then the streak.
+_STREAK_AFTER_REVEAL_S = 1.2
+# How long after a reveal a milestone still belongs to it.
+_REVEAL_MOMENT_S = 3.0
+
 # winner_decided: victory sweep in sun — 3-beat up/down/up/down/up, then settle
 # to a steady 90% sun. Settles to an explicit sun 90% rather than the phase
 # baseline because it fires alongside the FINALE transition, whose recipe is
@@ -260,6 +269,13 @@ class QuizifyPartyLights:
         # accent runs at a time — a new accent cancels the old).
         self._event_unsubs: list[Callable[[], None]] = []
         self._pulse_task: asyncio.Task | None = None
+        # The reveal moment (#1185): when the last reveal flash began, and
+        # whether a streak already pulsed in it — one streak accent per reveal,
+        # however many players hit a milestone.
+        self._reveal_at: float | None = None
+        self._reveal_streaked = False
+        # When the running accent started, so a streak can line up behind it.
+        self._pulse_started: float | None = None
 
         # --- "House Plays Along" runtime config (#494 Phase 4) ---------------
         # The master switch for the EVENT-DRIVEN ACCENTS lives on the shared
@@ -303,14 +319,15 @@ class QuizifyPartyLights:
         winner_scene: bool = True,
         light_entities: list[str] | None = None,
         winner_scene_entity: str | None = None,
+        lights_follow: bool = True,
     ) -> None:
         """Apply the admin panel's house-lights settings (#494 P4).
 
-        Gates only the EVENT-DRIVEN ACCENTS. The phase-driven ambient recipes
-        (``_PHASE_LIGHT_RECIPES``) are deliberately untouched: they are the
-        resting colour of the room, owned by the game phase, not by the accent
-        choreography — turning the accents off should calm the room, not leave
-        it dark mid-question.
+        The master gates the accents AND the phase-driven resting colour
+        (#1185: off means off); the resting colour has a switch of its own on
+        top, ``lights_follow`` ("lights follow the game"). The per-accent
+        toggles leave the resting colour alone — turning the accents off should
+        calm the room, not leave it dark mid-question.
 
         ``light_entities`` / ``winner_scene_entity`` are the panel's entity
         pickers. Non-empty → they win for this game; empty/``None`` → fall back
@@ -322,6 +339,7 @@ class QuizifyPartyLights:
         # The master is the one panel value shared with the SFX player and the
         # event emitter, so it is written to the shared settings (#789).
         self._settings.enabled_override = bool(enabled)
+        self._settings.lights_follow = bool(lights_follow)
         self._light_question = bool(light_question)
         self._light_countdown = bool(light_countdown)
         self._light_reveal = bool(light_reveal)
@@ -365,9 +383,9 @@ class QuizifyPartyLights:
 
     @property
     def is_configured(self) -> bool:
-        # Deliberately NOT gated on the master: it only silences the
-        # event-driven accents, while the ambient phase glow (which also checks
-        # is_configured) keeps following the game.
+        # Deliberately NOT gated on the master: the master is checked where
+        # the light is driven (accents, and the resting colour since #1185),
+        # so flipping it back on mid-game needs no re-attach.
         return self._hass is not None and bool(self._active_entity_ids)
 
     def attach(self) -> None:
@@ -422,8 +440,23 @@ class QuizifyPartyLights:
         self._event_unsubs = []
         self._cancel_pulse()
 
+    @property
+    def _base_colour_on(self) -> bool:
+        """Off means off (#1185): the resting colour follows the game only
+        while the house master is on AND "lights follow the game" is on.
+
+        It used to depend on nothing but configured lights, so "house off" and
+        "events only" still recoloured the room about thirty times a game.
+        """
+        return self._settings.master_enabled and self._settings.lights_follow
+
     def _on_state_changed(self) -> None:
         if not self.is_configured:
+            return
+        if not self._base_colour_on:
+            # Leave the lights as they are, and re-sync on the next change
+            # once the switch is back on.
+            self._last_phase = None
             return
         phase = self._game.phase
         if phase == self._last_phase:
@@ -457,6 +490,11 @@ class QuizifyPartyLights:
         self._call("light", "turn_on", data)
 
     def _call(self, domain: str, service: str, data: dict[str, object]) -> None:
+        ceiling = self._settings.max_brightness_pct
+        level = data.get("brightness_pct")
+        if ceiling is not None and isinstance(level, (int, float)):
+            # "Quiet evening" (#1185): no light above the ceiling.
+            data = {**data, "brightness_pct": min(level, ceiling)}
         fire_and_forget_service(
             self._hass,
             domain,
@@ -494,6 +532,8 @@ class QuizifyPartyLights:
         Guards ``total_players == 0`` (no div-by-zero) → treated as the minority
         case (amber). A strict majority (> half) flips it green.
         """
+        self._reveal_at = time.monotonic()
+        self._reveal_streaked = False
         if not (self._settings.master_enabled and self._light_reveal):
             return
         data = event.data or {}
@@ -504,10 +544,24 @@ class QuizifyPartyLights:
 
     @hass_callback
     def _on_streak_milestone(self, event: Event) -> None:  # noqa: ARG002
-        """Double-pulse bright coral to celebrate a hot streak."""
+        """Double-pulse bright coral to celebrate a hot streak.
+
+        Once per reveal, and queued behind the reveal flash (#1185): green or
+        amber first, the double pulse 1.2 s after the reveal began.
+        """
         if not (self._settings.master_enabled and self._light_streak):
             return
-        self._start_pulse(_ACCENT_STREAK)
+        in_reveal = (
+            self._reveal_at is not None
+            and time.monotonic() - self._reveal_at < _REVEAL_MOMENT_S
+        )
+        if not in_reveal:
+            self._start_pulse(_ACCENT_STREAK)
+            return
+        if self._reveal_streaked:
+            return
+        self._reveal_streaked = True
+        self._queue_pulse(_ACCENT_STREAK, _STREAK_AFTER_REVEAL_S)
 
     @hass_callback
     def _on_winner_decided(self, event: Event) -> None:  # noqa: ARG002
@@ -527,6 +581,17 @@ class QuizifyPartyLights:
         if self._light_winner:
             self._start_pulse(_ACCENT_WINNER)
         self._activate_finale_scene()
+
+    def probe_reveal(self) -> None:
+        """The setup's probe (#1185): the green reveal flash, then the
+        streak double pulse behind it — exactly a reveal with a streak."""
+        if not (self._settings.master_enabled and self._light_reveal):
+            return
+        self._reveal_at = time.monotonic()
+        self._reveal_streaked = True
+        self._start_pulse(_ACCENT_REVEAL_GREEN)
+        if self._light_streak:
+            self._queue_pulse(_ACCENT_STREAK, _STREAK_AFTER_REVEAL_S)
 
     def _activate_finale_scene(self) -> None:
         """Turn on the configured finale scene, if any (#280).
@@ -577,7 +642,34 @@ class QuizifyPartyLights:
         if hass is None:  # narrow for type-checkers; is_configured already guards
             return
         self._cancel_pulse()
+        self._pulse_started = time.monotonic()
         self._pulse_task = hass.async_create_task(self._run_pulse(steps))
+
+    def _queue_pulse(self, steps: list[tuple[object, float]], offset: float) -> None:
+        """Run ``steps`` once the running accent is done, ``offset`` seconds
+        after it started (#1185). With nothing running, start right away."""
+        if not self.is_configured:
+            return
+        hass = self._hass
+        if hass is None:
+            return
+        previous = self._pulse_task
+        if previous is None or previous.done():
+            self._start_pulse(steps)
+            return
+        started = self._pulse_started or time.monotonic()
+
+        async def _after() -> None:
+            try:
+                await previous
+            except asyncio.CancelledError:
+                return
+            wait = offset - (time.monotonic() - started)
+            if wait > 0:
+                await asyncio.sleep(wait)
+            await self._run_pulse(steps)
+
+        self._pulse_task = hass.async_create_task(_after())
 
     def _cancel_pulse(self) -> None:
         """Cancel any pending accent pulse (re-entrant, safe if none running)."""

@@ -24,6 +24,15 @@ from custom_components.quizify.lights import QuizifyPartyLights  # noqa: E402
 from custom_components.quizify.tts import QuizifyTTSAnnouncer, TTS_MIN_INTERVAL  # noqa: E402
 
 
+def _say_streak(t, game, name: str, streak: int) -> None:
+    """A reveal that only carries a streak (#1185: the streak is a clause of
+    the reveal sentence, not a line of its own)."""
+    from types import SimpleNamespace
+
+    summary = SimpleNamespace(correct_answer=None, results=[], leaderboard=[])
+    t.announce_reveal(game, summary, [(name, streak)])
+
+
 def _enable(announcer: QuizifyTTSAnnouncer) -> None:
     """Turn on TTS narration (master switch defaults OFF since #281)."""
     announcer.configure(
@@ -177,7 +186,7 @@ class TestTTSMilestoneAnnounce:
             game_state=game,
         )
         _enable(t)
-        t.announce_milestone("Alice", 5)
+        _say_streak(t, game, "Alice", 5)
         await asyncio.sleep(0)
         assert len(hass.calls) == 1
         domain, service, data = hass.calls[0]
@@ -185,12 +194,14 @@ class TestTTSMilestoneAnnounce:
         assert "Alice" in data["message"]
         # The game defaults to German, so the streak line is German too — it
         # used to be a hardcoded English f-string spoken into every game (#745).
-        assert data["message"] == "Alice hat 5 in Folge richtig!"
+        assert data["message"] == "Alice hat jetzt 5 in Folge."
         assert data["entity_id"] == "tts.cloud"
         assert data["media_player_entity_id"] == "media_player.kitchen"
 
     @pytest.mark.asyncio
-    async def test_throttle_blocks_rapid_announcements(self, game) -> None:
+    async def test_the_streak_rides_the_reveal_unthrottled(self, game) -> None:
+        """#1185: a streak is part of the reveal, which the room is waiting
+        for, so the throttle that drops incidental lines never drops it."""
         hass = _FakeHass()
         t = QuizifyTTSAnnouncer(
             hass=hass,
@@ -199,12 +210,11 @@ class TestTTSMilestoneAnnounce:
             game_state=game,
         )
         _enable(t)
-        t.announce_milestone("Alice", 3)
+        _say_streak(t, game, "Alice", 3)
         await asyncio.sleep(0)
-        t.announce_milestone("Bob", 5)
+        _say_streak(t, game, "Bob", 5)
         await asyncio.sleep(0)
-        # Within TTS_MIN_INTERVAL — second call should drop.
-        assert len(hass.calls) == 1
+        assert len(hass.calls) == 2
         # Sanity: the interval is meaningful enough to matter.
         assert TTS_MIN_INTERVAL >= 1.0
 
@@ -218,12 +228,12 @@ class TestTTSMilestoneAnnounce:
             game_state=game,
         )
         _enable(t)
-        t.announce_milestone("Alice", 3)
+        _say_streak(t, game, "Alice", 3)
         await asyncio.sleep(0)
         # Even after the throttle window, a repeated (player, streak) pair
         # shouldn't re-announce — protects against snapshot replays.
         t._last_spoken_at = None
-        t.announce_milestone("Alice", 3)
+        _say_streak(t, game, "Alice", 3)
         await asyncio.sleep(0)
         assert len(hass.calls) == 1
 
@@ -237,7 +247,7 @@ class TestTTSMilestoneAnnounce:
             game_state=game,
         )
         _enable(t)
-        t.announce_milestone("Alice", 10)
+        _say_streak(t, game, "Alice", 10)
         await asyncio.sleep(0)
         assert hass.calls == []
 

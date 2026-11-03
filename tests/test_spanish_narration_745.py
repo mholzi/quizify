@@ -96,6 +96,15 @@ def _announcer(hass, game) -> QuizifyTTSAnnouncer:
     )
 
 
+def _say_streak(t, game, name: str, streak: int) -> None:
+    """A reveal that only carries a streak (#1185: the streak is a clause of
+    the reveal sentence, not a line of its own)."""
+    from types import SimpleNamespace
+
+    summary = SimpleNamespace(correct_answer=None, results=[], leaderboard=[])
+    t.announce_reveal(game, summary, [(name, streak)])
+
+
 def _configure(t: QuizifyTTSAnnouncer, **overrides) -> None:
     cfg = {
         "enabled": True,
@@ -274,10 +283,10 @@ class TestMilestoneIsLocalizedAndToggleable:
         hass = _FakeHass()
         t = _announcer(hass, game)
         _configure(t)
-        t.announce_milestone("Anna", 3)
+        _say_streak(t, game, "Anna", 3)
         await asyncio.sleep(0)
         msg = _last_message(hass)
-        assert msg == "Anna hat 3 in Folge richtig!"
+        assert msg == "Anna hat jetzt 3 in Folge."
         assert "streak" not in msg
 
     @pytest.mark.asyncio
@@ -286,26 +295,26 @@ class TestMilestoneIsLocalizedAndToggleable:
         hass = _FakeHass()
         t = _announcer(hass, game)
         _configure(t)
-        t.announce_milestone("Lucía", 3)
+        _say_streak(t, game, "Lucía", 3)
         await asyncio.sleep(0)
-        assert _last_message(hass) == "¡Lucía lleva 3 seguidas!"
+        assert _last_message(hass) == "Lucía ya lleva 3 seguidas."
 
     @pytest.mark.asyncio
-    async def test_the_on_fire_variant_is_localized_too(self, game) -> None:
+    async def test_a_long_streak_is_localized_too(self, game) -> None:
         game.language = "es"
         hass = _FakeHass()
         t = _announcer(hass, game)
         _configure(t)
-        t.announce_milestone("Lucía", 12)
+        _say_streak(t, game, "Lucía", 12)
         await asyncio.sleep(0)
-        assert _last_message(hass) == "¡Lucía está imparable: 12 seguidas!"
+        assert _last_message(hass) == "Lucía ya lleva 12 seguidas."
 
     @pytest.mark.asyncio
     async def test_its_own_toggle_silences_it(self, game) -> None:
         hass = _FakeHass()
         t = _announcer(hass, game)
         _configure(t, announce_milestone=False)
-        t.announce_milestone("Anna", 3)
+        _say_streak(t, game, "Anna", 3)
         await asyncio.sleep(0)
         assert hass.calls == []
 
@@ -315,7 +324,7 @@ class TestMilestoneIsLocalizedAndToggleable:
         hass = _FakeHass()
         t = _announcer(hass, game)
         _configure(t, announce_reveal=False, announce_standings=False)
-        t.announce_milestone("Anna", 3)
+        _say_streak(t, game, "Anna", 3)
         await asyncio.sleep(0)
         assert len(hass.calls) == 1
 
@@ -407,9 +416,9 @@ class TestAdminPanelExposesTheToggle:
         html = (_WWW / "admin.html").read_text("utf-8")
         assert 'id="tts-announce-milestone"' in html
         assert 'data-i18n="setup.tts.milestone"' in html
-        # Nested under the master switch with its six siblings.
-        children = html.split('id="tts-children"', 1)[1]
-        assert 'id="tts-announce-milestone"' in children.split("</div>", 1)[0]
+        # #1185 P10: the voice column of the room matrix, row "Streak".
+        matrix = html.split('id="room-matrix"', 1)[1].split("</table>", 1)[0]
+        assert 'id="tts-announce-milestone"' in matrix
 
     def test_admin_js_reads_persists_and_pushes_it(self) -> None:
         js = (_WWW / "js" / "admin.js").read_text("utf-8")

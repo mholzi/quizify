@@ -18,8 +18,8 @@ by the caller. ``{names}`` may hold a single name or several joined by
 Keys: question-start, answer-options readout, reveal answer, who-got-it,
 standings/leader-change, player-joined, the time-running-out countdown, the
 game lifecycle lines (start / final round / game over + winner), the
-streak-milestone shout and the three detour openings (#708) — the chair being
-sold, the betting window and the lightning round.
+streak clause appended to the reveal (#1185) and the three detour openings
+(#708) — the chair being sold, the betting window and the lightning round.
 """
 
 from __future__ import annotations
@@ -51,6 +51,11 @@ _AND: dict[str, str] = {
 # says so; ``wager_open`` opens the final.
 _PHRASES: dict[str, dict[str, str]] = {
     "en": {
+        # The setup's probe button (#1185): one reveal, as a game says it.
+        "probe": (
+            "The correct answer is the European eel. "
+            "Lena got it right and now has 3 in a row."
+        ),
         "question": "Question {round} of {total}: {text}",
         "options": "Your options are: {options}.",
         "answer": "The correct answer is {answer}.",
@@ -67,8 +72,10 @@ _PHRASES: dict[str, dict[str, str]] = {
         "game_over_winner": (
             "Game over. The winner is {name} with {score} points!"
         ),
-        "milestone_streak": "{name} hit a {streak}-streak!",
-        "milestone_fire": "{name} is on fire — {streak} in a row!",
+        # Streaks ride the reveal sentence (#1185), so they read as its last
+        # clause rather than a shout of their own.
+        "streak_now_single": "{names} now has {streak} in a row.",
+        "streak_now_multi": "{names} now have {streak} in a row.",
         # The three detour modes (#708). One line each, at the moment the
         # mode opens — the rest of a detour is narrated by the ordinary
         # question / reveal lines above.
@@ -77,6 +84,11 @@ _PHRASES: dict[str, dict[str, str]] = {
         "lightning_started": "Lightning round! Speed decides now.",
     },
     "de": {
+        # The setup's probe button (#1185): one reveal, as a game says it.
+        "probe": (
+            "Die richtige Antwort ist Europäischer "
+            "Aal. Lena hatte recht und hat jetzt 3 in Folge."
+        ),
         "question": "Frage {round} von {total}: {text}",
         "options": "Die Antwortmöglichkeiten sind: {options}.",
         "answer": "Die richtige Antwort ist {answer}.",
@@ -93,13 +105,18 @@ _PHRASES: dict[str, dict[str, str]] = {
         "game_over_winner": (
             "Das Spiel ist vorbei. Gewonnen hat {name} mit {score} Punkten!"
         ),
-        "milestone_streak": "{name} hat {streak} in Folge richtig!",
-        "milestone_fire": "{name} ist nicht zu stoppen — {streak} in Folge!",
+        "streak_now_single": "{names} hat jetzt {streak} in Folge.",
+        "streak_now_multi": "{names} haben jetzt {streak} in Folge.",
         "hot_seat_started": "Der Stuhl geht an {name} für {points} Punkte.",
         "wager_open": "Finalrunde. Setzt eure Einsätze!",
         "lightning_started": "Blitzrunde! Jetzt zählt Tempo.",
     },
     "es": {
+        # The setup's probe button (#1185): one reveal, as a game says it.
+        "probe": (
+            "La respuesta correcta es la anguila "
+            "europea. Lena lo ha acertado y ya lleva 3 seguidas."
+        ),
         "question": "Pregunta {round} de {total}: {text}",
         "options": "Las opciones son: {options}.",
         "answer": "La respuesta correcta es {answer}.",
@@ -116,8 +133,8 @@ _PHRASES: dict[str, dict[str, str]] = {
         "game_over_winner": (
             "¡Se acabó la partida! Gana {name} con {score} puntos."
         ),
-        "milestone_streak": "¡{name} lleva {streak} seguidas!",
-        "milestone_fire": "¡{name} está imparable: {streak} seguidas!",
+        "streak_now_single": "{names} ya lleva {streak} seguidas.",
+        "streak_now_multi": "{names} ya llevan {streak} seguidas.",
         "hot_seat_started": "La silla es para {name} por {points} puntos.",
         "wager_open": "Ronda final. ¡Haced vuestras apuestas!",
         "lightning_started": "¡Ronda relámpago! Ahora manda la velocidad.",

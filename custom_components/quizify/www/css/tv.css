@@ -3714,6 +3714,57 @@ footer {
     background: var(--color-bg-card-alt);
     animation: qz-skeleton var(--dur-skeleton) ease-in-out infinite;
 }
+
+/* #1185 P7/P8: pack news. Each new pack is a chip that selects it; the
+   host's own submitted pack gets a line of its own, once. */
+.pack-news-names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+}
+.pack-news-chip {
+    min-height: 44px;
+    padding: var(--space-xs) var(--space-md);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    background: var(--color-bg-card-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+}
+.pack-news-chip:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+}
+.pack-news-yours {
+    margin-top: var(--space-xs);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+/* #1185 P11: the install offer on the host's end screen — once, with a
+   reason and a "Later". */
+.admin-install-card[hidden] { display: none; }
+.admin-install-title {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+.admin-install-body {
+    margin: var(--space-xs) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+.admin-install-actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+.admin-install-actions .btn {
+    min-height: 44px;
+}
 /* ==========================================
    Responsive
    ========================================== */
@@ -5081,6 +5132,20 @@ body.dashboard-body {
     background: rgba(232, 138, 127, 0.10);
     border-radius: 4px;
     letter-spacing: 0.04em;
+}
+
+/* #1185: the streak this reveal reached, beside the name. Only from the
+   reveal to the next question — never while a question is live. */
+.dashboard-leaderboard .leaderboard-milestone {
+    margin-left: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    background: var(--dash-gold);
+    color: var(--dash-bg-primary);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
 }
 
 /* #741: what a steal actually cost, on the two rows it moved. The

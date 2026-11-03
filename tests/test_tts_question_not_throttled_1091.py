@@ -153,6 +153,7 @@ async def test_incidental_lines_stay_throttled_behind_a_question(
 ) -> None:
     t, hass = announcer
     await _next_round(game, t)
-    t.announce_milestone("Anna", 3)
+    # A join is incidental; streaks ride the reveal since #1185.
+    t.announce_join("Anna")
     await asyncio.sleep(0)
     assert len(hass.calls) == 1

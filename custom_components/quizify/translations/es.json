@@ -45,7 +45,7 @@
                     "sfx_wrong_url": "URL opcional de un sonido breve que se reproduce cuando la mayoría falló la respuesta. Déjalo vacío para usar el predeterminado incluido (si está instalado).",
                     "sfx_streak_url": "URL opcional de un sonido breve que se reproduce cuando un jugador logra una racha de aciertos. Déjalo vacío para usar el predeterminado incluido (si está instalado).",
                     "sfx_winner_url": "URL opcional de un sonido breve que se reproduce cuando se decide el ganador. Déjalo vacío para usar el predeterminado incluido (si está instalado). Se reproduce en el altavoz TTS y se omite mientras hay un anuncio en curso.",
-                    "house_events_enabled": "Dispara eventos quizify_* en el bus de eventos de Home Assistant en los momentos clave de la partida (inicio de ronda, revelación, rachas, ganador) para que puedas crear tus propias automatizaciones. Desactivado por defecto.",
+                    "house_events_enabled": "La casa participa: efectos de luz, sonidos y los eventos quizify_* para tus propias automatizaciones. Desactivado por defecto. Si las luces cambian de color con la partida tiene su propio interruptor en la configuración.",
                     "finale_scene": "Escena opcional que se activa cuando se decide el ganador, junto con el barrido de luces de victoria, para lanzar una ambientación de celebración en toda la sala. Déjalo en blanco para no usar ninguna escena."
                 }
             }

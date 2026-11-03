@@ -82,7 +82,6 @@ class _Announcer(_Recorder):
         "announce_question",
         "announce_countdown",
         "announce_reveal",
-        "announce_milestone",
         "announce_join",
     )
 
@@ -127,17 +126,14 @@ _FANOUT: list[tuple[str, tuple, list[tuple[str, tuple]], list[tuple[str, tuple]]
         (_GAME_STATE,),
         # ``None``: read the game's own round summary. The Hot Seat passes its
         # chair's question here instead (#1092).
-        [("announce_reveal", (_GAME_STATE, None))],
+        # The third argument is the streaks this round reached (#1185) —
+        # none held here.
+        [("announce_reveal", (_GAME_STATE, None, []))],
         [("notify_answer_revealed", (_GAME_STATE, None))],
     ),
-    (
-        "_streak_milestone",
-        ("Anna", 5, 40),
-        # The announcer has no use for the bonus points; the bus event carries
-        # them because an automation might.
-        [("announce_milestone", ("Anna", 5))],
-        [("notify_streak_milestone", ("Anna", 5, 40))],
-    ),
+    # Held until the reveal (#1185): a milestone reaches nobody on the tap.
+    # tests/test_streak_at_reveal_1185.py follows it to the reveal.
+    ("_streak_milestone", ("Anna", 5, 40), [], []),
     # Narration only — there is no quizify_player_joined event.
     ("_player_joined", ("Anna", False), [("announce_join", ("Anna", False))], []),
     # Bus only — the finale has no spoken line of its own.
@@ -202,7 +198,6 @@ def test_one_broken_consumer_does_not_cost_the_other_its_beat(
 
         announce_countdown = announce_question
         announce_reveal = announce_question
-        announce_milestone = announce_question
         announce_join = announce_question
 
     emitter = _Emitter()

@@ -125,7 +125,8 @@ def _run(news: list[dict], steps: str) -> dict:
 
 
 def _names(text: str) -> list[str]:
-    return re.findall(r"([A-Z][\w' ]*?) \(\d+\)", text)
+    # #1185 P7: each name is a chip, "Halloween · 40 ›".
+    return re.findall(r"([A-Z][\w' ]*?) · \d+", text)
 
 
 @pytest.mark.parametrize(

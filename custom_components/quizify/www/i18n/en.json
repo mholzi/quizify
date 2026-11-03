@@ -155,7 +155,6 @@
     "settingsSummary": "{difficulty} · {questions, plural, one{1 question} other{# questions}} · {timer} s",
     "categoriesCount": "{count, plural, one{1 category} other{# categories}}",
     "packNewsTitle": "New in this update",
-    "packNewsBody": "Already installed — pick it from the category list to play it.",
     "starHint": "Enjoying Quizify? A ⭐ on GitHub helps others find it.",
     "starHintDismiss": "Dismiss hint",
     "scoringOut": "Out of scoring",
@@ -164,7 +163,9 @@
     "scoringMissed": "Disconnected for {count, plural, one{1 question} other{# questions}}",
     "scoringAllGone": "All disconnected",
     "scoringSomeGone": "{names} disconnected, {present} of {total} here",
-    "scoringPodium": "Otherwise on the podium"
+    "scoringPodium": "Otherwise on the podium",
+    "packNewsYoursAccepted": "Your pack “{name}” was accepted. Thank you!",
+    "packNewsYoursArrived": "Your pack “{name}” is in the game now."
   },
   "categories": {
     "mixed": "Mixed",
@@ -189,7 +190,6 @@
     "points": "Points",
     "pointsLabel": "{count, plural, one{1 point} other{# points}}",
     "questionsCount": "{count, plural, one{1 question} other{# questions}}",
-    "streak": "Streak",
     "finalRound": "Final round!",
     "finale": "Finale!",
     "submitted": "Submitted",
@@ -209,13 +209,6 @@
     "frozenFoot": "Back in a moment…",
     "frozenOverlayAria": "You are frozen and can't answer right now",
     "opponentUsedJoker": "{name} used Joker",
-    "streakToast3": "3 in a row!",
-    "streakToast5": "5 in a row!",
-    "streakToast7": "7 in a row! On fire!",
-    "streakToast10": "10 in a row! Unstoppable!",
-    "streakToast15": "15 in a row! Unreal!",
-    "streakToast20": "20 in a row! Legendary!",
-    "streakToast25": "25 in a row! Out of this world!",
     "timerRemainingAria": "Time remaining: {seconds} seconds",
     "timerUpAria": "Time is up!",
     "timerTenLeft": "10 seconds left",
@@ -365,9 +358,6 @@
       "wagerTeamNote": "With teams: the wager is the team's, placed on the team score."
     },
     "tts": {
-      "title": "Quizmaster voice?",
-      "enable": "Narrate the game out loud",
-      "hint": "Your HA speaker becomes the quizmaster.",
       "question": "Read out each question",
       "options": "Read out the answer options",
       "reveal": "Announce the answer",
@@ -380,31 +370,22 @@
       "noentities": "None found — configure in HA"
     },
     "house": {
-      "title": "Does the house play along?",
-      "enable": "The house reacts to the game",
-      "hint": "Your lights and speakers play along with the quiz.",
+      "hint": "Lights, sounds and events. Off means the lights stay as they are.",
       "presetsLabel": "Effect preset",
-      "presetCozy": "Cozy glow",
       "presetGameShow": "Game show",
       "presetEvents": "Events only",
-      "hintCozy": "Warm light on the big beats, no sound effects.",
       "hintGameShow": "The full show — lights and sound on every beat.",
-      "hintEvents": "No lights, no sound — only the Quizify events fire, for your own automations.",
+      "hintEvents": "No lights, no sound, the lamps stay as they are. Only the Quizify events fire, for your own automations.",
       "hintCustom": "Your own mix of effects.",
       "autoTitle": "Your own automations?",
       "autoText": "Quizify fires 11 events. Three ready-made blueprints are in the README.",
       "autoLink": "Open guide →",
-      "advanced": "Customise single effects",
-      "groupLights": "Lights",
-      "groupSound": "Sound",
       "lightQuestion": "Colour shift on each question",
       "lightCountdown": "Pulse in the final countdown",
-      "lightReveal": "Green or red flash on the reveal",
+      "lightReveal": "Green or amber flash on the reveal",
       "lightStreak": "Sparkle on an answer streak",
       "lightWinner": "Winner light show",
       "winnerScene": "Activate the winner scene",
-      "sfxCorrect": "Sound on a correct answer",
-      "sfxWrong": "Sound on a wrong answer",
       "sfxStreak": "Sound on an answer streak",
       "sfxWinner": "Fanfare for the winner",
       "lightsPicker": "Party lights",
@@ -414,11 +395,20 @@
       "noentities": "None found — configure in HA",
       "nolights": "No lights found — configure in HA",
       "speakerOverride": "Different speaker for the effects",
-      "speakerFollow": "Same as the game speaker"
+      "speakerFollow": "Same as the game speaker",
+      "lightsFollow": "Lights follow the game",
+      "eveningChip": "It's after 9 pm · Use Quiet evening?",
+      "presetQuiet": "Quiet evening",
+      "hintQuiet": "Voice for question and answer only, the fanfare as the one sound, soft light, volume 30 %.",
+      "presetOff": "Off",
+      "hintOff": "No voice, no light, no sound, no events. The lights stay as they are."
     },
     "audio": {
       "speaker": "Speaker",
-      "speakerHint": "Used for the narration and the sound effects."
+      "speakerHint": "Used for the narration and the sound effects.",
+      "volume": "Volume",
+      "volumeUntouched": "as the speaker is",
+      "volumeReset": "Leave the speaker as it is"
     },
     "myPresets": "My presets",
     "savePreset": "Save current",
@@ -430,7 +420,27 @@
     "deletePresetTitle": "Delete preset?",
     "deletePresetBody": "\"{name}\" will be removed for good.",
     "deletePresetBtn": "Delete",
-    "deletePreset": "Delete preset"
+    "deletePreset": "Delete preset",
+    "room": {
+      "title": "Does the room play along?",
+      "hint": "Voice, lights and sound in the living room.",
+      "moment": "Moment",
+      "voice": "Voice",
+      "light": "Light",
+      "sound": "Sound",
+      "setUp": "set up ›",
+      "rowQuestion": "Question",
+      "rowCountdown": "Countdown",
+      "rowReveal": "Reveal",
+      "rowStreak": "Streak",
+      "rowLead": "Lead",
+      "rowJoin": "New players",
+      "rowWinner": "Winner",
+      "phone": "Phone",
+      "sfxReveal": "Sound on the reveal",
+      "probe": "▶︎ Try it: play a reveal",
+      "devices": "Speaker · lights · scene"
+    }
   },
   "featured": {
     "tag": "New",
@@ -501,7 +511,9 @@
     "powerupFreeze": "{source} froze {target}",
     "powerupSteal": "{source} stole {points} points from {target}",
     "scoringLeft": "{name} is no longer playing",
-    "scoringBack": "{name} is back in"
+    "scoringBack": "{name} is back in",
+    "streakStrip": "{name}: {points} in a row",
+    "streakChip": "{count} in a row"
   },
   "connection": {
     "connected": "Connected",
@@ -601,7 +613,11 @@
   "pwa": {
     "installApp": "Install the Quizify app",
     "iosHintTitle": "Install Quizify",
-    "iosHintBody": "Tap ⬆️ Share, then \"Add to Home Screen\""
+    "iosHintBody": "Tap ⬆️ Share, then \"Add to Home Screen\"",
+    "offerTitle": "Quizify on your home screen?",
+    "offerBody": "Then you start the next game with one tap, without opening Home Assistant.",
+    "offerAdd": "Add",
+    "offerLater": "Later"
   },
   "theme": {
     "geography": "Geo",

@@ -65,7 +65,6 @@ DYNAMIC_PREFIXES = (
     "podium.",
     "highlights.awards.",
     "highlights.details.",
-    "game.streakToast",
 )
 
 _PLACEHOLDER_RE = re.compile(r"(?<![\w=#])\{\s*(\w+)\s*[,}]")

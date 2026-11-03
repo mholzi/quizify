@@ -1515,6 +1515,12 @@
     // NB: these constants must be assigned BEFORE _initTtsToggles() runs — the
     // init call executes here at top-level, ahead of the helper block below, so
     // a later `var TTS_DEFAULTS = …` would still read as undefined here (#281).
+    // #1185 P10: the room matrix's state. Which channels exist is learnt from
+    // the entity lists; a missing one greys its column.
+    var _roomChannels = { voice: true, light: true, sound: true };
+    var VOICE_CELLS = ['question', 'reveal', 'standings', 'join', 'countdown', 'milestone', 'options'];
+    var HOUSE_CELLS = ['light_question', 'light_countdown', 'light_reveal', 'light_streak',
+        'light_winner', 'sfx_correct', 'sfx_streak', 'sfx_winner'];
     var TTS_STORAGE_KEY = 'quizify_tts';
     var TTS_DEFAULTS = {
         enabled: false,
@@ -1523,7 +1529,9 @@
         announce_reveal: true,
         announce_standings: true,
         announce_join: true,
-        announce_countdown: true,
+        // #1185: off out of the box — the phones tick and the lights breathe
+        // in the last seconds already; a third countdown was one too many.
+        announce_countdown: false,
         announce_milestone: true,
         // Per-game entity overrides (#281). Empty string → fall back to the
         // integration-options default entities on the server.
@@ -1556,30 +1564,56 @@
         'light_question', 'light_countdown', 'light_reveal', 'light_streak',
         'light_winner', 'winner_scene',
         'sfx_correct', 'sfx_wrong', 'sfx_streak', 'sfx_winner',
+        // #1185: the resting colour has its own switch — "house off" and
+        // "events only" leave the lights exactly as they are.
+        'lights_follow',
     ];
     // preset → the exact effect-toggle set it writes. `events_only` turns every
     // effect off on purpose: the quizify_* HA events still fire, so the host can
     // drive their own automations.
+    // #1185 P10: "Cozy glow" made way for the quiet evening; a stored cozy
+    // setup simply reads as "custom" now. "Off" is handled on its own — it
+    // switches both masters off and writes no cell.
     var HOUSE_PRESETS = {
-        cozy_glow: {
-            light_question: true, light_countdown: false, light_reveal: true,
-            light_streak: false, light_winner: true, winner_scene: true,
-            sfx_correct: false, sfx_wrong: false, sfx_streak: false, sfx_winner: false,
-        },
         game_show: {
             light_question: true, light_countdown: true, light_reveal: true,
             light_streak: true, light_winner: true, winner_scene: true,
             sfx_correct: true, sfx_wrong: true, sfx_streak: true, sfx_winner: true,
+            lights_follow: true,
         },
         events_only: {
             light_question: false, light_countdown: false, light_reveal: false,
             light_streak: false, light_winner: false, winner_scene: false,
             sfx_correct: false, sfx_wrong: false, sfx_streak: false, sfx_winner: false,
+            lights_follow: false,
         },
     };
+    // #1185 P6: the quiet evening. Lights only for the resting colour and the
+    // winner run, the fanfare as the one sound; the voice says the question
+    // and the reveal and nothing else; volume 30 %, lights at most 60 %.
+    HOUSE_PRESETS.quiet_evening = {
+        light_question: false, light_countdown: false, light_reveal: false,
+        light_streak: false, light_winner: true, winner_scene: false,
+        sfx_correct: false, sfx_wrong: false, sfx_streak: false, sfx_winner: true,
+        lights_follow: true,
+    };
+    var QUIET_EVENING_TTS = {
+        question: true, options: false, reveal: true, standings: false,
+        join: false, countdown: false, milestone: false,
+    };
+    // The game show's voice: everything but the spoken countdown (#1185 P4).
+    var GAME_SHOW_TTS = {
+        question: true, options: true, reveal: true, standings: true,
+        join: true, countdown: false, milestone: true,
+    };
+    var QUIET_EVENING_VOLUME = 30;
+    var QUIET_EVENING_BRIGHTNESS = 60;
+    // From this hour on (host device clock) the setup suggests it.
+    var QUIET_EVENING_FROM_HOUR = 21;
     // preset id → the i18n key of the one-line hint under the segmented control.
     var HOUSE_PRESET_HINTS = {
-        cozy_glow: 'setup.house.hintCozy',
+        off: 'setup.house.hintOff',
+        quiet_evening: 'setup.house.hintQuiet',
         game_show: 'setup.house.hintGameShow',
         events_only: 'setup.house.hintEvents',
         custom: 'setup.house.hintCustom',
@@ -1590,6 +1624,12 @@
         light_question: true, light_countdown: true, light_reveal: true,
         light_streak: true, light_winner: true, winner_scene: true,
         sfx_correct: true, sfx_wrong: true, sfx_streak: true, sfx_winner: true,
+        lights_follow: true,
+        // #1185 P6: null until the host moves the slider — then Quizify sets
+        // the speaker to it before each line. The brightness ceiling is only
+        // set by the quiet evening.
+        volume: null,
+        light_max_brightness: null,
         // Per-game entity overrides. [] / '' → fall back to the config-entry
         // values on the server; never send a placeholder string.
         light_entities: [],
@@ -1608,6 +1648,7 @@
     var _houseLightsRendered = false;
     var _houseEntitiesLoaded = false;
     _initHouseToggles();
+    _initRoomMatrix();
 
     // Tell the server which language the lobby is being run in (#776). No-op
     // if the socket isn't open yet — ws.onopen re-sends after admin_connect,
@@ -2153,6 +2194,8 @@
         if ((msg.tts_entities || msg.media_players) && _ttsEls && _ttsEls.engine) {
             var _ttsCfg = _readTtsConfig();
             _populateEntitySelect(_ttsEls.engine, msg.tts_entities || [], _ttsCfg.tts_entity);
+            // #1185 P10: no engine anywhere → the voice column says "set up".
+            if (Array.isArray(msg.tts_entities)) _setRoomChannel('voice', msg.tts_entities.length > 0);
             _populateEntitySelect(_ttsEls.speaker, msg.media_players || [], _ttsCfg.media_player);
             _ttsEntitiesLoaded = true;
         } else if (msg.admin_session_token && !_ttsEntitiesLoaded && _ttsEls && _ttsEls.engine) {
@@ -3019,6 +3062,53 @@
         renderPodium(els.adminPodium, standings.podium);
         renderLeaderboard(els.adminFinaleLeaderboard, standings.leaderboard);
         _updateStarHint(msg && msg.game_id);
+        // #1185 P11: one card at a time — the install offer wins this once.
+        if (_updateInstallOffer(msg && msg.game_id) && els.starHint) els.starHint.hidden = true;
+    }
+
+    // ---- Install offer on the end screen (#1185 P11) ----
+    // { games, last, state }: state 'new' → shown after game 1; 'later' →
+    // shown again from game 3; 'done' → never again (added, or asked twice).
+    var INSTALL_OFFER_KEY = 'quizify_install_offer';
+    var INSTALL_OFFER_AGAIN_AT = 3;
+
+    function _readInstallOffer() {
+        try {
+            var saved = JSON.parse(localStorage.getItem(INSTALL_OFFER_KEY) || 'null');
+            if (saved && typeof saved === 'object') return saved;
+        } catch (e) { /* storage unavailable */ }
+        return { games: 0, last: null, state: 'new' };
+    }
+
+    function _writeInstallOffer(rec) {
+        try { localStorage.setItem(INSTALL_OFFER_KEY, JSON.stringify(rec)); } catch (e) { /* session only */ }
+    }
+
+    /** Count the finished game and show the card when its turn has come.
+     *  Returns whether the card is showing. */
+    function _updateInstallOffer(gameId) {
+        var card = document.getElementById('admin-install-card');
+        if (!card) return false;
+        var rec = _readInstallOffer();
+        if (gameId && gameId !== rec.last) {
+            rec.games = (Number(rec.games) || 0) + 1;
+            rec.last = gameId;
+            _writeInstallOffer(rec);
+        }
+        var due = (rec.state === 'new' && rec.games >= 1) ||
+            (rec.state === 'later' && rec.games >= INSTALL_OFFER_AGAIN_AT);
+        var show = !!(due && _pwaInstall && _pwaInstall.available());
+        card.hidden = !show;
+        return show;
+    }
+
+    function _answerInstallOffer(add) {
+        var card = document.getElementById('admin-install-card');
+        if (card) card.hidden = true;
+        var rec = _readInstallOffer();
+        rec.state = (add || rec.state === 'later') ? 'done' : 'later';
+        _writeInstallOffer(rec);
+        if (add && _pwaInstall) _pwaInstall.run();
     }
 
     // GitHub star hint under "Start New Game". Only from the third finished
@@ -3535,13 +3625,10 @@
 
     // Variant B (#281): dim + disable the child event toggles when the master
     // switch is off, so the master→child hierarchy is unmistakable.
+    // #1185 P10: the voice column dims while the voice is off, but its cells
+    // stay tappable — turning one on is how the host turns the voice back on.
     function _syncTtsChildState() {
-        var on = _ttsEls.enable ? !!_ttsEls.enable.checked : false;
-        var sub = document.getElementById('tts-children');
-        if (sub) sub.classList.toggle('is-disabled', !on);
-        ['question', 'options', 'reveal', 'standings', 'join', 'countdown'].forEach(function (k) {
-            if (_ttsEls[k]) _ttsEls[k].disabled = !on;
-        });
+        _syncRoomMatrix();
     }
 
     function _readTtsConfig() {
@@ -3690,6 +3777,8 @@
             light_entities: HOUSE_DEFAULTS.light_entities.slice(),
             media_player: HOUSE_DEFAULTS.media_player,
             winner_scene_entity: HOUSE_DEFAULTS.winner_scene_entity,
+            volume: HOUSE_DEFAULTS.volume,
+            light_max_brightness: HOUSE_DEFAULTS.light_max_brightness,
         };
         HOUSE_EFFECT_KEYS.forEach(function (k) { cfg[k] = HOUSE_DEFAULTS[k]; });
         try {
@@ -3718,6 +3807,10 @@
                     }
                     if (typeof saved.winner_scene_entity === 'string') {
                         cfg.winner_scene_entity = saved.winner_scene_entity;
+                    }
+                    if (typeof saved.volume === 'number') cfg.volume = saved.volume;
+                    if (typeof saved.light_max_brightness === 'number') {
+                        cfg.light_max_brightness = saved.light_max_brightness;
                     }
                 }
             }
@@ -3759,6 +3852,7 @@
     // .is-disabled pattern as _syncTtsChildState): presets, the advanced
     // section and the entity pickers.
     function _syncHouseChildState() {
+        _syncRoomMatrix();
         var on = _houseEls.enable ? !!_houseEls.enable.checked : false;
         var sub = _houseEls.children;
         if (sub) {
@@ -3772,6 +3866,8 @@
     // Which preset (if any) does this exact set of effect toggles match?
     // Returns 'custom' when it matches none.
     function _detectHousePreset(cfg) {
+        var voiceOn = _ttsEls && _ttsEls.enable ? !!_ttsEls.enable.checked : !!_loadTtsConfig().enabled;
+        if (!cfg.enabled && !voiceOn) return 'off';
         var names = Object.keys(HOUSE_PRESETS);
         for (var i = 0; i < names.length; i++) {
             var map = HOUSE_PRESETS[names[i]];
@@ -3795,6 +3891,7 @@
                 btn.setAttribute('aria-pressed', isOn ? 'true' : 'false');
             });
         }
+        _syncEveningChip();
         var hintKey = HOUSE_PRESET_HINTS[preset] || HOUSE_PRESET_HINTS.custom;
         if (_houseEls.presetHint) {
             _houseEls.presetHint.setAttribute('data-i18n', hintKey);
@@ -3805,11 +3902,28 @@
     // Tapping a preset writes the WHOLE effect-toggle set. The entity pickers
     // are untouched — a preset only ever decides which effects fire.
     function _applyHousePreset(preset) {
+        if (preset === 'off') {
+            // Off means off (#1185 P3): voice, lights, sound and events.
+            if (_ttsEls.enable) _ttsEls.enable.checked = false;
+            if (_houseEls.enable) _houseEls.enable.checked = false;
+            _saveTtsConfig();
+            _setHousePresetActive('off');
+            _saveHouseConfig();
+            return;
+        }
         var map = HOUSE_PRESETS[preset];
         if (!map) return;
         HOUSE_EFFECT_KEYS.forEach(function (k) {
             if (_houseEls[k]) _houseEls[k].checked = !!map[k];
         });
+        if (_houseEls.enable) _houseEls.enable.checked = true;
+        if (preset === 'quiet_evening') {
+            // The voice and the volume belong to the quiet evening too.
+            _applyPresetVoice(QUIET_EVENING_TTS);
+            _setHouseVolume(QUIET_EVENING_VOLUME);
+        } else if (preset === 'game_show') {
+            _applyPresetVoice(GAME_SHOW_TTS);
+        }
         _setHousePresetActive(preset);
         _saveHouseConfig();
     }
@@ -3905,7 +4019,125 @@
         HOUSE_EFFECT_KEYS.forEach(function (k) {
             cfg[k] = _houseEls[k] ? !!_houseEls[k].checked : !!HOUSE_DEFAULTS[k];
         });
+        cfg.volume = _houseVolume;
+        cfg.light_max_brightness = _housePreset === 'quiet_evening' ? QUIET_EVENING_BRIGHTNESS : null;
         return cfg;
+    }
+
+    // ---- Volume + quiet evening (#1185 P6) ----
+    // null = the host never moved the slider: the server leaves the speaker's
+    // volume alone. Any number = set before each line, restored after.
+    var _houseVolume = null;
+
+    function _renderHouseVolume() {
+        var el = _houseEls.volume;
+        var out = _houseEls.volumeValue;
+        if (el && _houseVolume !== null) el.value = String(_houseVolume);
+        if (out) {
+            if (_houseVolume === null) {
+                out.setAttribute('data-i18n', 'setup.audio.volumeUntouched');
+                out.textContent = _t('setup.audio.volumeUntouched');
+            } else {
+                out.removeAttribute('data-i18n');
+                out.textContent = _houseVolume + ' %';
+            }
+        }
+        if (_houseEls.volumeReset) _houseEls.volumeReset.hidden = _houseVolume === null;
+    }
+
+    function _setHouseVolume(value) {
+        _houseVolume = value === null ? null : Math.max(0, Math.min(100, Math.round(Number(value) || 0)));
+        _renderHouseVolume();
+    }
+
+    // The suggestion chip: after 21:00 on the host's own clock, while the
+    // quiet evening is not already chosen. It suggests; only a tap switches.
+    function _syncEveningChip() {
+        var chip = _houseEls.eveningChip;
+        if (!chip) return;
+        var hour = new Date().getHours();
+        var late = hour >= QUIET_EVENING_FROM_HOUR || hour < 5;
+        chip.hidden = !(late && _housePreset !== 'quiet_evening');
+    }
+
+    function _applyPresetVoice(map) {
+        Object.keys(map).forEach(function (k) {
+            if (_ttsEls[k]) _ttsEls[k].checked = map[k];
+        });
+        if (_ttsEls.enable) _ttsEls.enable.checked = true;
+        _saveTtsConfig();
+    }
+
+    // ---- The room matrix (#1185 P10) ----
+    // Moment × channel over the same keys as before (state declared up top,
+    // next to TTS_DEFAULTS, because the init calls run before this block).
+
+    function _syncRoomMatrix() {
+        var m = document.getElementById('room-matrix');
+        if (!m) return;
+        var voiceOn = _ttsEls.enable ? !!_ttsEls.enable.checked : false;
+        var houseOn = _houseEls && _houseEls.enable ? !!_houseEls.enable.checked : false;
+        m.classList.toggle('is-voice-off', !voiceOn);
+        m.classList.toggle('is-house-off', !houseOn);
+        m.classList.toggle('no-voice', !_roomChannels.voice);
+        m.classList.toggle('no-light', !_roomChannels.light);
+        m.classList.toggle('no-sound', !_roomChannels.sound);
+    }
+
+    function _setRoomChannel(col, available) {
+        _roomChannels[col] = !!available;
+        _syncRoomMatrix();
+    }
+
+    function _initRoomMatrix() {
+        // A cell turned on wakes its column: the voice master for the voice,
+        // the house master for light and sound. Attached after the save
+        // handlers of the two init functions, so it saves again with the
+        // master on.
+        VOICE_CELLS.forEach(function (k) {
+            if (!_ttsEls[k]) return;
+            on(_ttsEls[k], 'change', function () {
+                if (_ttsEls[k].checked && _ttsEls.enable && !_ttsEls.enable.checked) {
+                    _ttsEls.enable.checked = true;
+                    _saveTtsConfig();
+                }
+                _onHouseEffectChange();
+            });
+        });
+        HOUSE_CELLS.forEach(function (k) {
+            if (!_houseEls[k]) return;
+            on(_houseEls[k], 'change', function () {
+                if (k === 'sfx_correct' && _houseEls.sfx_wrong) {
+                    // One cell for both stings.
+                    _houseEls.sfx_wrong.checked = _houseEls.sfx_correct.checked;
+                }
+                if (_houseEls[k].checked && _houseEls.enable && !_houseEls.enable.checked) {
+                    _houseEls.enable.checked = true;
+                }
+                _onHouseEffectChange();
+            });
+        });
+        var m = document.getElementById('room-matrix');
+        if (m) {
+            m.querySelectorAll('.setup-matrix-setup').forEach(function (btn) {
+                on(btn, 'click', function () {
+                    _toggleHouseAdvanced(true);
+                    if (_houseEls.advanced && _houseEls.advanced.scrollIntoView) {
+                        _houseEls.advanced.scrollIntoView({ block: 'nearest' });
+                    }
+                });
+            });
+        }
+        var probe = document.getElementById('house-probe-btn');
+        if (probe) {
+            on(probe, 'click', function () {
+                // Plays one reveal with the settings above — voice, light and
+                // sound — without a game. The server never fires bus events
+                // for it, so no automation reacts to a probe.
+                send('house_probe', {}, { quiet: true });
+            });
+        }
+        _syncRoomMatrix();
     }
 
     function _readHouseLightEntities() {
@@ -3995,6 +4227,9 @@
     // fallback endpoint.
     function _populateHouseEntities(payload, cfg) {
         var data = payload || {};
+        // #1185 P10: a channel the house does not have greys its column.
+        if (Array.isArray(data.lights)) _setRoomChannel('light', data.lights.length > 0);
+        if (Array.isArray(data.media_players)) _setRoomChannel('sound', data.media_players.length > 0);
         _renderHouseLightList(data.lights || [], cfg.light_entities);
         _houseEntitiesLoaded = true;
         // #525: restore the raw override, never the resolved value.
@@ -4059,6 +4294,11 @@
             sfx_wrong: document.getElementById('house-sfx-wrong'),
             sfx_streak: document.getElementById('house-sfx-streak'),
             sfx_winner: document.getElementById('house-sfx-winner'),
+            lights_follow: document.getElementById('house-lights-follow'),
+            volume: document.getElementById('house-volume'),
+            volumeValue: document.getElementById('house-volume-value'),
+            volumeReset: document.getElementById('house-volume-reset'),
+            eveningChip: document.getElementById('house-evening-chip'),
         };
         if (!_houseEls.enable) return;  // panel not on this page
         var cfg = _loadHouseConfig();
@@ -4067,8 +4307,25 @@
         HOUSE_EFFECT_KEYS.forEach(function (k) {
             if (_houseEls[k]) _houseEls[k].checked = !!cfg[k];
         });
+        _houseVolume = typeof cfg.volume === 'number' ? cfg.volume : null;
+        _renderHouseVolume();
         // Restore the preset the stored toggles resolve to (else 'custom').
         _setHousePresetActive(cfg.preset);
+        if (_houseEls.volume) {
+            on(_houseEls.volume, 'input', function () { _setHouseVolume(_houseEls.volume.value); });
+            on(_houseEls.volume, 'change', _saveHouseConfig);
+        }
+        if (_houseEls.volumeReset) {
+            on(_houseEls.volumeReset, 'click', function () { _setHouseVolume(null); _saveHouseConfig(); });
+        }
+        if (_houseEls.eveningChip) {
+            on(_houseEls.eveningChip, 'click', function () {
+                // The tap is the consent: switch the house on and take it.
+                _houseEls.enable.checked = true;
+                _syncHouseChildState();
+                _applyHousePreset('quiet_evening');
+            });
+        }
 
         on(_houseEls.enable, 'change', _saveHouseConfig);
         HOUSE_EFFECT_KEYS.forEach(function (k) {
@@ -4718,6 +4975,12 @@
     // ---- Seasonal pack badges (#276) ----
     applySeasonalBadges();
 
+    // The install flow, for the end-screen offer (#1185 P11): available()
+    // and run(). Set by the block below.
+    var _pwaInstall = null;
+    on(document.getElementById('admin-install-add'), 'click', function () { _answerInstallOffer(true); });
+    on(document.getElementById('admin-install-later'), 'click', function () { _answerInstallOffer(false); });
+
     // ---- PWA install button ----
     // Android Chrome / Edge / Samsung Browser: fire beforeinstallprompt
     // when the page is install-eligible. We cache the prompt so the user
@@ -4748,7 +5011,10 @@
         // iOS detection — Safari on iPhone/iPad never fires
         // beforeinstallprompt, so surface the install button anyway
         // and let it open the manual hint modal.
-        var isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent)
+        // #1185 P11: iPadOS Safari introduces itself as a Mac; the touch
+        // points give it away. The iPad is a typical host device.
+        var isIOS = (/iPad|iPhone|iPod/.test(window.navigator.userAgent)
+            || (/Macintosh/.test(window.navigator.userAgent) && window.navigator.maxTouchPoints > 1))
             && !window.MSStream;
         var iosHint = document.getElementById('pwa-ios-hint');
         if (isIOS && iosHint) {
@@ -4766,6 +5032,11 @@
                 iosHint.classList.remove('hidden');
             }
         });
+
+        _pwaInstall = {
+            available: function () { return !!deferredPrompt || !!(isIOS && iosHint); },
+            run: function () { installBtn.click(); },
+        };
 
         var iosClose = document.getElementById('pwa-ios-hint-close');
         if (iosClose && iosHint) {
@@ -4825,11 +5096,33 @@ function packNewsForLanguage(packs, lang) {
 function renderPackNewsNames(lang) {
     if (!_packNews) return;
     var shown = packNewsForLanguage(_packNews.packs, lang);
+    // #1185 P7: each name is a chip that picks the pack and scrolls to its
+    // tile — the banner used to send the host off to look for it.
     _packNews.namesEl.innerHTML = shown.map(function (p) {
-        return window.QuizifyUtils.escapeHtml(p.name)
-            + ' (' + window.QuizifyUtils.escapeHtml(p.question_count) + ')';
-    }).join(', ');
-    _packNews.banner.style.display = shown.length ? 'flex' : 'none';
+        return '<button type="button" class="pack-news-chip" data-slug="' + window.QuizifyUtils.escapeHtml(p.slug) + '">' +
+            window.QuizifyUtils.escapeHtml(p.name) + ' · ' + window.QuizifyUtils.escapeHtml(p.question_count) + ' ›</button>';
+    }).join('');
+    // #1185 P8: the host's own packs, once each.
+    var tt = function (key, params) { return window.t ? window.t(key, params) : key; };
+    var yours = _packNews.yours || [];
+    if (_packNews.yoursEl) _packNews.yoursEl.innerHTML = yours.map(function (y) {
+        var key = y.state === 'arrived' ? 'admin.packNewsYoursArrived' : 'admin.packNewsYoursAccepted';
+        return '<div class="pack-news-yours">' + window.QuizifyUtils.escapeHtml(tt(key, { name: y.name })) + '</div>';
+    }).join('');
+    _packNews.banner.style.display = (shown.length || yours.length) ? 'flex' : 'none';
+}
+
+// #1185 P7: a pack-news chip selects its pack the way a tap on the tile
+// does (the tile proxies to the hidden category chip), then shows the tile.
+function selectPackFromNews(slug) {
+    if (!slug) return;
+    var sel = '[data-value="' + String(slug).replace(/["\\]/g, '') + '"]';
+    var tile = document.querySelector('.hero-cat-tile' + sel);
+    var chip = document.querySelector('#category-chips .chip' + sel);
+    var target = tile || chip;
+    if (!target) return;
+    if (!target.classList.contains('active')) target.click();
+    if (tile && tile.scrollIntoView) tile.scrollIntoView({ block: 'center', behavior: 'smooth' });
 }
 
 /**
@@ -4859,11 +5152,19 @@ async function showPackNews(getLanguage) {
             try { await window.QuizifyI18n.init(); } catch (_e) { /* fall through untranslated */ }
         }
 
-        const resp = await fetch('/api/quizify/packs/news');
+        // #1185 P8: with the admin token the answer also names the host's own
+        // submitted packs ("accepted", "it is in now").
+        const newsHeaders = {};
+        const newsTok = window.QuizifyUtils && window.QuizifyUtils.readAdminToken
+            ? window.QuizifyUtils.readAdminToken()
+            : null;
+        if (newsTok) newsHeaders['X-Quizify-Token'] = newsTok;
+        const resp = await fetch('/api/quizify/packs/news', { headers: newsHeaders });
         if (!resp.ok) return;
         const data = await resp.json();
         const packs = (data && data.new_packs) || [];
-        if (packs.length === 0) return;
+        const yours = (data && Array.isArray(data.your_packs)) ? data.your_packs : [];
+        if (packs.length === 0 && yours.length === 0) return;
 
         // showPackNews lives outside the admin IIFE, so the IIFE-local `_t`
         // is out of scope here — use the global window.t (i18n). Pack
@@ -4898,8 +5199,8 @@ async function showPackNews(getLanguage) {
             '<span style="font-size:1.2rem;flex-shrink:0">🎁</span>' +
             '<div style="flex:1">' +
                 '<strong data-i18n="admin.packNewsTitle" style="color:#E88A7F;font-family:\'DM Sans\',sans-serif;font-weight:700">' + window.QuizifyUtils.escapeHtml(tt('admin.packNewsTitle')) + '</strong>' +
-                '<div class="pack-news-names" style="margin-top:3px;color:#2A2820"></div>' +
-                '<div data-i18n="admin.packNewsBody" style="margin-top:5px;font-size:0.8rem;color:#6E6A5C">' + window.QuizifyUtils.escapeHtml(tt('admin.packNewsBody')) + '</div>' +
+                '<div class="pack-news-names"></div>' +
+                '<div class="pack-news-yours-list"></div>' +
             '</div>' +
             '<button type="button" id="pack-news-dismiss" ' +
                 'style="background:none;border:none;color:#6E6A5C;cursor:pointer;font-size:1rem;padding:0;flex-shrink:0" ' +
@@ -4919,7 +5220,12 @@ async function showPackNews(getLanguage) {
                     ? window.QuizifyUtils.readAdminToken()
                     : null;
                 if (tok) headers['X-Quizify-Token'] = tok;
-                fetch('/api/quizify/packs/news/dismiss', { method: 'POST', headers: headers })
+                headers['Content-Type'] = 'application/json';
+                fetch('/api/quizify/packs/news/dismiss', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({ your_packs: yours }),
+                })
                     .catch(function (e) { console.warn('[quizify] pack news dismiss failed:', e); });
             });
         }
@@ -4933,8 +5239,14 @@ async function showPackNews(getLanguage) {
         _packNews = {
             banner: banner,
             namesEl: banner.querySelector('.pack-news-names'),
+            yoursEl: banner.querySelector('.pack-news-yours-list'),
             packs: packs,
+            yours: yours,
         };
+        _packNews.namesEl.addEventListener('click', function (ev) {
+            var chip = ev.target && ev.target.closest ? ev.target.closest('.pack-news-chip') : null;
+            if (chip) selectPackFromNews(chip.getAttribute('data-slug'));
+        });
         renderPackNewsNames(typeof getLanguage === 'function' ? getLanguage() : '');
     } catch (e) {
         // Offline or HA not ready — log so a real error (e.g. a future

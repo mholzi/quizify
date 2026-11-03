@@ -555,6 +555,9 @@ class RoundMessageBuilder:
                 estimate=summary.estimate,
                 next_image_url=next_image_url,
             )
+            est_streaks = _streak_milestones(summary)
+            if est_streaks:
+                est_msg["streak_milestones"] = est_streaks
             game_state.store_round_summary_msg(cache_key, est_msg)
             return est_msg
 
@@ -732,5 +735,26 @@ class RoundMessageBuilder:
             next_image_url=next_image_url,
             entrant_of=entrant_of,
         )
+        streaks = _streak_milestones(summary)
+        if streaks:
+            msg["streak_milestones"] = streaks
         game_state.store_round_summary_msg(cache_key, msg)
         return msg
+
+
+def _streak_milestones(summary: Any) -> list[dict[str, Any]]:
+    """The streak levels this round reached, for the TV's chip (#1185).
+
+    The milestone is scored on the tap but shown only now, at the reveal:
+    ``[{"name": "Lena", "streak": 3}]``. Absent from the frame when nobody hit
+    one, like ``next_image_url``.
+    """
+    return [
+        {
+            "name": r.player_id,
+            "streak": r.milestone_streak,
+            "streak_active": is_streak_active(r.milestone_streak),
+        }
+        for r in getattr(summary, "results", None) or []
+        if getattr(r, "milestone_bonus", 0) and getattr(r, "milestone_streak", 0)
+    ]

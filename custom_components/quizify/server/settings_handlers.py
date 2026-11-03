@@ -99,7 +99,8 @@ def apply_tts_config(handler: QuizifyWebSocketHandler, tts: dict[str, Any]) -> N
             announce_reveal=bool(tts.get("announce_reveal", True)),
             announce_standings=bool(tts.get("announce_standings", True)),
             announce_join=bool(tts.get("announce_join", True)),
-            announce_countdown=bool(tts.get("announce_countdown", True)),
+            # #1185: off unless asked for — phones and lights count down too.
+            announce_countdown=bool(tts.get("announce_countdown", False)),
             announce_milestone=bool(tts.get("announce_milestone", True)),
             # Per-game entity overrides from the admin dropdowns (#281).
             # Empty/missing → the announcer falls back to the config-entry
@@ -147,7 +148,8 @@ def apply_house_config(handler: QuizifyWebSocketHandler, house: dict[str, Any]) 
 
     Fans out to all THREE consumers, because the panel presents one master
     switch over what are internally three independent subsystems:
-      * party lights  — the 5 accent cues + the winner scene;
+      * party lights  — the 5 accent cues + the winner scene, and the resting
+        colour (``lights_follow``, #1185);
       * sound effects — the 4 one-shot cues;
       * event emitter — the ``quizify_*`` bus events the other two ride on.
     The master ``enabled`` is a runtime override of the
@@ -194,6 +196,17 @@ def apply_house_config(handler: QuizifyWebSocketHandler, house: dict[str, Any]) 
         winner_scene_entity, "scene", "winner_scene_entity"
     )
 
+    # Quiet evening / volume (#1185). Written to the shared settings through
+    # whichever consumer is wired: ``volume`` is None until the host moved the
+    # slider, and only then does Quizify touch the speaker's volume.
+    volume = _pct_or_none(house.get("volume"))
+    max_brightness = _pct_or_none(house.get("light_max_brightness"))
+    for consumer in (handler._party_lights, handler._sound_effects):
+        settings = getattr(consumer, "_settings", None)
+        if settings is not None:
+            settings.volume_pct = volume
+            settings.max_brightness_pct = max_brightness
+
     lights = handler._party_lights
     if lights is not None:
         try:
@@ -207,6 +220,8 @@ def apply_house_config(handler: QuizifyWebSocketHandler, house: dict[str, Any]) 
                 winner_scene=_toggle("winner_scene"),
                 light_entities=light_entities,
                 winner_scene_entity=winner_scene_entity,
+                # #1185: the resting colour has its own switch.
+                lights_follow=_toggle("lights_follow"),
             )
         except Exception:  # noqa: BLE001
             _LOGGER.exception("House party-lights configure raised")
@@ -236,6 +251,44 @@ def apply_house_config(handler: QuizifyWebSocketHandler, house: dict[str, Any]) 
             emitter.configure(enabled=enabled)
         except Exception:  # noqa: BLE001
             _LOGGER.exception("House event-emitter configure raised")
+
+
+async def handle_house_probe(
+    handler: QuizifyWebSocketHandler,
+    ws: web.WebSocketResponse,
+    data: dict,
+    game_state: QuizifyGameState,
+) -> None:
+    """Play one reveal moment with the current settings (#1185, the probe).
+
+    The setup's "Try it" button: the voice says a sample reveal sentence, the
+    lights flash the reveal accent, and — only with the voice off, as in a real
+    reveal — the speaker plays the sting. No bus event fires: a probe must not
+    run anybody's automations. Each consumer is guarded on its own.
+    """
+    for consumer in (
+        handler._tts_announcer,
+        handler._party_lights,
+        handler._sound_effects,
+    ):
+        probe = getattr(consumer, "probe_reveal", None)
+        if probe is None:
+            continue
+        try:
+            probe()
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("House probe raised")
+
+
+def _pct_or_none(value: Any) -> int | None:
+    """A 0–100 percentage from client JSON, or ``None`` for "not set"."""
+    if value is None or isinstance(value, bool):
+        return None
+    try:
+        pct = int(round(float(value)))
+    except (TypeError, ValueError):
+        return None
+    return max(0, min(100, pct))
 
 
 async def handle_configure_house(

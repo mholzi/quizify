@@ -13,13 +13,12 @@ They used to live twice, and the two copies had drifted:
   one answer before it scored.
 
 Now the server says both things on the wire and the client only renders them:
-``milestone_streak`` on ``answer_result`` fires the toast, and ``streak_active``
+``milestone_streak`` on ``answer_result`` names the milestone, and ``streak_active``
 rides beside every ``streak`` a client paints.
 
-What this file deliberately does NOT decide, because the owner has not:
-whether 7 becomes a real milestone or ``game.streakToast7`` goes, and what the
-toasts for 10/15/20/25 say. A milestone without a string stays silent, exactly
-as before; the unused string for 7 stays in the locale files.
+Since #1185 the phone shows no milestone toast at all: ``answer_result``
+arrives while the question is live, and the toast gave the answer away. The
+streak is shown at the reveal, by the reveal card, the TV chip and the voice.
 
 The last section is the guard: it fails when the JS grows a streak threshold
 or a milestone list of its own again, which is how the drift started.
@@ -78,11 +77,6 @@ _NEEDS_NODE = pytest.mark.skipif(
 _STREAKS = sorted({0, 1, 2, 3, 4, 7, *STREAK_MILESTONES})
 
 _EN = json.loads((_I18N / "en.json").read_text("utf-8"))
-
-
-def _toast_string(level: int) -> str | None:
-    """The English toast for a streak level, if the locale has one."""
-    return _EN["game"].get(f"streakToast{level}")
 
 
 # ---------------------------------------------------------------------------
@@ -314,32 +308,13 @@ def toasts() -> dict:
 
 @_NEEDS_NODE
 @pytest.mark.parametrize("streak", sorted(STREAK_MILESTONES))
-def test_a_paid_milestone_shows_its_toast_when_it_has_a_string(
+def test_a_paid_milestone_shows_no_toast_on_the_answer(
     toasts: dict, streak: int
 ) -> None:
-    """A milestone without a string would stay silent — no raw key, no
-    borrowed text. Every milestone has one today, see below."""
-    assert toasts[str(streak)] == (_toast_string(streak) or "")
-
-
-@pytest.mark.parametrize("locale", ["de", "en", "es"])
-@pytest.mark.parametrize("streak", sorted(STREAK_MILESTONES))
-def test_every_paid_milestone_has_a_toast_in_every_locale(
-    streak: int, locale: str
-) -> None:
-    """A bonus without a word was half of #1066: +100 at streak 10, silently.
-    A new milestone in scoring.py fails here until its string is written."""
-    strings = json.loads((_I18N / f"{locale}.json").read_text("utf-8"))["game"]
-    assert str(streak) in strings.get(f"streakToast{streak}", "")
-
-
-@_NEEDS_NODE
-def test_the_milestones_that_have_strings_do_fire(toasts: dict) -> None:
-    """So the test above cannot go green on a toast that never shows at all."""
-    assert toasts["3"] == _EN["game"]["streakToast3"]
-    assert toasts["5"] == _EN["game"]["streakToast5"]
-    # 7 pays 75 since #1066, so its toast is asked for again.
-    assert toasts["7"] == _EN["game"]["streakToast7"]
+    """#1185: answer_result lands while the question is live. A "3 in a row"
+    there told everyone looking at the phone that the answer was right, so the
+    toast is gone and the reveal card shows the streak."""
+    assert toasts[str(streak)] == ""
 
 
 @_NEEDS_NODE
@@ -549,25 +524,24 @@ def test_every_allowed_finding_still_exists() -> None:
     assert present == set(_ALLOWED)
 
 
-def test_only_the_icon_table_names_a_toast_level() -> None:
-    """``game.streakToast<N>`` is assembled from the server's milestone. The
-    one place that may still spell a level out is the key → glyph table in
-    player-utils.js, which decides an icon and not whether a toast fires."""
+def test_no_front_end_file_names_a_streak_toast() -> None:
+    """#1185: the milestone toast is gone, and with it every
+    ``game.streakToast<N>`` key — including the old key → glyph table."""
     spelled = sorted(
         path.name
         for path in _front_end_sources()
         if "streakToast" in _without_comments(path.read_text("utf-8"))
     )
-    assert spelled == ["player-utils.js"]
+    assert spelled == []
 
 
-def test_the_toast_is_not_chosen_from_the_running_streak() -> None:
+def test_the_answer_frame_does_not_read_the_running_streak() -> None:
     """``new_streak`` says how long the streak is, not whether it paid; the
-    old code matched it against its own list. The handler reads the
-    milestone."""
+    old code matched it against its own list. Nothing on the answer reads it
+    now (#1185: nothing on the answer celebrates at all)."""
     body = _without_comments(_answer_result_case())
-    assert "milestone_streak" in body
     assert "new_streak" not in body
+    assert "milestone_streak" not in body
 
 
 @pytest.mark.parametrize(

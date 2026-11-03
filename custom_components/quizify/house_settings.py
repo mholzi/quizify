@@ -124,6 +124,25 @@ class HouseSettings:
     # who never opened the panel.
     enabled_override: bool | None = None
 
+    # --- runtime state the consumers share (#1185) ---------------------------
+    # Whether the quizmaster voice is live: narration switched on AND a TTS
+    # engine plus a speaker to say it on. Written by the announcer whenever it
+    # is configured; read by the room sounds, because voice and sound share one
+    # speaker and the voice owns it ("one speaker, one voice").
+    voice_active: bool = False
+
+    # Whether the lights change their resting colour with the game phase
+    # (#1185, "lights follow the game"). Its own switch in the setup since
+    # "house off" means off: the base colour used to keep running with the
+    # house master switched off.
+    lights_follow: bool = True
+
+    # Quizify's own volume for voice and sounds, 0–100, or ``None`` while the
+    # host has not moved the slider (#1185, P6) — then the speaker is never
+    # touched. And a brightness ceiling for the lights ("quiet evening").
+    volume_pct: int | None = None
+    max_brightness_pct: int | None = None
+
     # ------------------------------------------------------------------
     # Construction / refresh from the config entry
     # ------------------------------------------------------------------

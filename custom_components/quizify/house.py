@@ -22,6 +22,7 @@ from .house_settings import HouseSettings
 from .lights import QuizifyPartyLights
 from .lobby_music import QuizifyLobbyMusic
 from .sound_effects import QuizifySoundEffects
+from .speaker_volume import SpeakerVolume
 from .tts import QuizifyTTSAnnouncer
 
 if TYPE_CHECKING:
@@ -109,12 +110,13 @@ def build_house_consumers(
     ordering stays visible at the setup site.
     """
     settings = HouseSettings.from_options(options)
-    return HouseConsumers(
+    consumers = HouseConsumers(
         settings=settings,
         # The house-lights master defaults to CONF_HOUSE_EVENTS_ENABLED (off out
         # of the box) — the admin "House Plays Along" panel overrides it per game
-        # via configure() (#494 P4). Only the event-driven ACCENTS are gated by
-        # it; the phase-driven ambient glow always follows the game.
+        # via configure() (#494 P4). It gates the accents AND the resting
+        # colour (#1185: off means off); the resting colour also has its own
+        # "lights follow the game" switch.
         party_lights=QuizifyPartyLights(
             hass=hass, game_state=game_state, settings=settings
         ),
@@ -140,3 +142,9 @@ def build_house_consumers(
             hass=hass, game_state=game_state, settings=settings
         ),
     )
+    # One volume keeper for the shared speaker (#1185): voice and sounds both
+    # set the host's volume through it, and it restores once.
+    volume = SpeakerVolume(hass, settings)
+    consumers.tts_announcer.speaker_volume = volume
+    consumers.sound_effects.speaker_volume = volume
+    return consumers

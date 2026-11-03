@@ -254,6 +254,7 @@ def _configure_lights(pl, **overrides):
         winner_scene=cfg["winner_scene"],
         light_entities=cfg["light_entities"],
         winner_scene_entity=cfg["winner_scene_entity"],
+        lights_follow=cfg.get("lights_follow", True),
     )
 
 
@@ -280,10 +281,14 @@ def _fire_all_light_events(hass) -> None:
 
 
 def _fire_all_sfx_events(hass) -> None:
-    """Dispatch every event the four SFX cues listen for (correct + wrong)."""
+    """Dispatch every event the four SFX cues listen for (correct + wrong).
+
+    The streak goes first: since #1185 a milestone inside a reveal moment that
+    already made its sound stays silent (one sound per moment).
+    """
+    hass.bus.dispatch(EVENT_STREAK_MILESTONE, {"player_name": "Ann", "streak": 5})
     hass.bus.dispatch(EVENT_ANSWER_REVEALED, {"correct_count": 3, "total_players": 4})
     hass.bus.dispatch(EVENT_ANSWER_REVEALED, {"correct_count": 1, "total_players": 4})
-    hass.bus.dispatch(EVENT_STREAK_MILESTONE, {"player_name": "Ann", "streak": 5})
     hass.bus.dispatch(EVENT_WINNER_DECIDED, {"winner_name": "Ann", "score": 10})
 
 
@@ -350,14 +355,14 @@ def test_sfx_master_on_plays_every_cue(sfx_calls):
 
     _fire_all_sfx_events(hass)
 
-    assert _played_cues(sfx_calls) == ["correct", "wrong", "streak", "winner"]
+    assert _played_cues(sfx_calls) == ["streak", "correct", "wrong", "winner"]
 
 
-def test_master_off_leaves_ambient_phase_glow_alone(light_calls):
-    """The master gates ACCENTS only — the phase-driven ambient recipe still runs.
+def test_master_off_leaves_the_lights_as_they_are(light_calls):
+    """Off means off (#1185): with the master off the resting colour stops too.
 
-    Turning the accents off should calm the room, not leave it dark mid-question,
-    so ``_on_state_changed`` is deliberately NOT gated on the master.
+    It used to keep recolouring the room on every phase change with the house
+    "off" — about thirty times a game.
     """
     hass = _FakeHass()
     pl = _lights(hass)
@@ -369,7 +374,37 @@ def test_master_off_leaves_ambient_phase_glow_alone(light_calls):
     pl._game.game_id = "g1"
     pl._on_state_changed()
 
-    # The QUESTION_ACTIVE coral recipe was still applied.
+    assert _light_turn_ons(light_calls) == []
+
+
+def test_lights_follow_off_keeps_the_accents(light_calls):
+    """"Lights follow the game" off: no resting colour, accents still run."""
+    hass = _FakeHass()
+    pl = _lights(hass)
+    _configure_lights(pl, enabled=True, lights_follow=False)
+
+    pl._last_phase = None
+    pl._game.phase = GamePhase.QUESTION_ACTIVE
+    pl._game.round = 1
+    pl._game.game_id = "g1"
+    pl._on_state_changed()
+    assert _light_turn_ons(light_calls) == []
+
+    hass.bus.dispatch(EVENT_QUESTION_SHOWN, {"round": 1})
+    assert _light_turn_ons(light_calls)
+
+
+def test_master_on_paints_the_resting_colour(light_calls):
+    hass = _FakeHass()
+    pl = _lights(hass)
+    _configure_lights(pl, enabled=True)
+
+    pl._last_phase = None
+    pl._game.phase = GamePhase.QUESTION_ACTIVE
+    pl._game.round = 1
+    pl._game.game_id = "g1"
+    pl._on_state_changed()
+
     assert _light_turn_ons(light_calls) == [
         {
             "entity_id": ["light.party"],

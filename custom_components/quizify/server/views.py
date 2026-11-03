@@ -27,6 +27,7 @@ from .flag_store import FlagStore
 from .origin import check_unauthenticated_post
 from .pack_news import PackNewsStore
 from .pack_submission import (
+    PackSubmissionStore,
     request_pack_view,
     submissions_list_view,
     submit_config_view,
@@ -1154,7 +1155,18 @@ async def pack_news_view(request: web.Request) -> web.Response:
         if slug in installed
     ]
 
-    return web.json_response({"new_packs": new_packs})
+    body: dict[str, object] = {"new_packs": new_packs}
+    # #1185 P8: the host's own submitted packs — "accepted, thanks" and "it
+    # is in now". Only for the host (admin token): submission names are not
+    # the join link's business, and this endpoint is otherwise open.
+    if _is_admin_authenticated(request):
+        try:
+            body["your_packs"] = await PackSubmissionStore(ctx).your_pack_news(
+                new_packs
+            )
+        except Exception:  # noqa: BLE001 - the banner must not depend on it
+            _LOGGER.debug("Pack news: submissions unreadable", exc_info=True)
+    return web.json_response(body)
 
 
 async def pack_news_dismiss_view(request: web.Request) -> web.Response:
@@ -1166,6 +1178,14 @@ async def pack_news_dismiss_view(request: web.Request) -> web.Response:
     if not _is_admin_authenticated(request):
         return _unauthorized()
     await _pack_news_store(request).dismiss()
+    # #1185 P8: the "your pack" lines the banner showed are said now.
+    try:
+        payload = await request.json()
+    except Exception:  # noqa: BLE001 - an empty POST is the old client
+        payload = None
+    seen = payload.get("your_packs") if isinstance(payload, dict) else None
+    if isinstance(seen, list):
+        await PackSubmissionStore(_get_ctx(request)).mark_news_seen(seen)
     return web.json_response({"ok": True})
 
 

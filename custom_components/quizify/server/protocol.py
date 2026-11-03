@@ -252,14 +252,16 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         "last_round",
         "all_answers",
         "answer_distribution",
-        optional=("estimate", "next_image_url"),
+        optional=("estimate", "next_image_url", "streak_milestones"),
         note=(
             "Three index spaces meet here — see the docstring on "
             "``serialize_round_summary``. ``question_id`` is what the 🚩 flag "
             "button POSTs back. ``estimate`` only on estimate rounds (#275). "
             "``next_image_url`` (#736) is the next round's picture, sent only "
             "when there is something worth warming during the reveal — absent "
-            "rather than empty, so a client can test for the key."
+            "rather than empty, so a client can test for the key. "
+            "``streak_milestones`` (#1185) lists ``{name, streak}`` for every "
+            "streak level this round reached — absent when none did."
         ),
     ),
     "finale": _spec(
@@ -484,6 +486,9 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = OUT_OF_BAND_CLIENT_TYPES | frozenset({
     # both reach Home Assistant service calls with host-supplied entity ids.
     "configure_tts",
     "configure_house",
+    # #1185: play one reveal moment with the current house settings, without
+    # a game. Same WS-level admin bar — it reaches tts.speak and the lights.
+    "house_probe",
     # The host's language pick, pushed while the lobby is still open (#776).
     # Without it GameState.language stays "de" until start_game and every
     # phone that joins an English game is stamped German on arrival.

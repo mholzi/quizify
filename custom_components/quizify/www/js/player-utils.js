@@ -491,13 +491,6 @@
         'game.stoleFromOpponent':  { glyph: 'steal',      tint: 'sky'   },
         'game.frozen':             { glyph: 'freeze',     tint: 'sky'   },
         'game.opponentUsedJoker':  { glyph: 'joker',      tint: 'sun'   },
-        'game.streakToast3':       { glyph: 'flame',      tint: 'sun'   },
-        'game.streakToast5':       { glyph: 'flame',      tint: 'sun'   },
-        'game.streakToast7':       { glyph: 'flame',      tint: 'sun'   },
-        'game.streakToast10':      { glyph: 'flame',      tint: 'sun'   },
-        'game.streakToast15':      { glyph: 'flame',      tint: 'sun'   },
-        'game.streakToast20':      { glyph: 'flame',      tint: 'sun'   },
-        'game.streakToast25':      { glyph: 'flame',      tint: 'sun'   },
         'powerups.stealHint':      { glyph: 'bulb',       tint: 'sun'   },
         'leaderboard.thanksEmoji': { glyph: 'party',      tint: 'coral' },
         'wager.bonusFromReaction': { glyph: 'party',      tint: 'coral' }
@@ -553,54 +546,81 @@
         return top;
     }
 
-    function showToast(message, duration, iconKey) {
-        duration = duration || 3000;
+    // #1185: one toast at a time, the next one waits. Every caller used to
+    // write into the same element and a second toast inherited the first
+    // one's fade-out timer, so it vanished after a fraction of its time
+    // (a steal and a joker in one question were enough). Now each toast gets
+    // its whole duration, a repeat of the one on screen only restarts its
+    // clock, and the queue is short — an old toast is not worth a wait.
+    var TOAST_FADE_MS = 300;
+    var TOAST_QUEUE_MAX = 3;
+    var _toastQueue = [];
+    var _toastCurrent = null;
+    var _toastTimer = null;
+    var _toastFadeTimer = null;
+
+    function _toastEl() {
         var toast = document.getElementById('error-toast');
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'error-toast';
             // #1077: `width:max-content` + a viewport cap — shrink-to-fit
-            // under `left:50%` capped the toast at half the screen, so "10 in
-            // a row! Unstoppable!" wrapped to two lines at 390 px.
+            // under `left:50%` capped the toast at half the screen, so a long
+            // line wrapped to two lines at 390 px.
             toast.style.cssText = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);' +
                 'width:max-content;max-width:calc(100vw - 32px);box-sizing:border-box;text-align:center;' +
                 'background:#D65858;color:white;padding:10px 20px;border-radius:10px;' +
                 'font-size:0.85rem;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;';
             document.body.appendChild(toast);
         }
+        return toast;
+    }
+
+    function _paintToast(item) {
+        var toast = _toastEl();
         toast.style.top = _toastTop() + 'px';
-        var spec = iconKey && FEEDBACK_ICON[iconKey];
+        var spec = item.iconKey && FEEDBACK_ICON[item.iconKey];
         var iconHtml = spec ? feedbackIconHtml(spec.glyph, spec.tint) : '';
         if (iconHtml) {
             toast.classList.add('toast--with-icon');
-            toast.innerHTML = iconHtml + '<span class="toast-text">' + escapeHtml(message) + '</span>';
+            toast.innerHTML = iconHtml + '<span class="toast-text">' + escapeHtml(item.message) + '</span>';
         } else {
             toast.classList.remove('toast--with-icon');
-            toast.textContent = message;
+            toast.textContent = item.message;
         }
         toast.style.opacity = '1';
-        setTimeout(function () { toast.style.opacity = '0'; }, duration);
+        _toastCurrent = item;
+        _armToastTimer(item.duration);
     }
 
-    /**
-     * Celebrate a streak milestone the server just paid a bonus for (#1066).
-     *
-     * `milestone` is `milestone_streak` from the answer_result: the streak
-     * level this answer landed on, or 0. Which levels are milestones is the
-     * server's business (STREAK_MILESTONES in game/scoring.py) — this only
-     * looks for the matching string, `game.streakToast<N>`. A milestone with
-     * no string shows nothing rather than a raw key; `t` hands the key back
-     * when it has no translation, which is the test.
-     * @returns {boolean} whether a toast was shown
-     */
-    function showStreakMilestoneToast(milestone) {
-        var level = Number(milestone) || 0;
-        if (level <= 0) return false;
-        var key = 'game.streakToast' + level;
-        var text = _tt(key);
-        if (!text || text === key) return false;
-        showToast(text, 2500, key);
-        return true;
+    function _armToastTimer(duration) {
+        if (_toastTimer) clearTimeout(_toastTimer);
+        if (_toastFadeTimer) { clearTimeout(_toastFadeTimer); _toastFadeTimer = null; }
+        _toastTimer = setTimeout(function () {
+            _toastTimer = null;
+            var toast = document.getElementById('error-toast');
+            if (toast) toast.style.opacity = '0';
+            _toastFadeTimer = setTimeout(function () {
+                _toastFadeTimer = null;
+                _toastCurrent = null;
+                var next = _toastQueue.shift();
+                if (next) _paintToast(next);
+            }, TOAST_FADE_MS);
+        }, duration);
+    }
+
+    function showToast(message, duration, iconKey) {
+        var item = { message: String(message == null ? '' : message), duration: duration || 3000, iconKey: iconKey || '' };
+        if (_toastCurrent && _toastCurrent.message === item.message) {
+            // The same line again: keep it up, restart its clock.
+            if (!_toastTimer) { _paintToast(item); return; }
+            _armToastTimer(item.duration);
+            return;
+        }
+        if (_toastQueue.some(function (q) { return q.message === item.message; })) return;
+        if (!_toastCurrent) { _paintToast(item); return; }
+        _toastQueue.push(item);
+        if (_toastQueue.length > TOAST_QUEUE_MAX) _toastQueue.shift();
     }
 
     /**
@@ -608,11 +628,15 @@
      *
      * showToast only fades the element out; the node keeps the text, and the
      * node is fixed to the page rather than to a view, so a reset that fired
-     * inside a toast's own duration carried "3 in a row!" onto the join
+     * inside a toast's own duration carried the last toast onto the join
      * screen. Emptying it as well as hiding it also takes it out of the
      * accessibility tree, where a faded-out toast is still a readable line.
      */
     function clearToast() {
+        _toastQueue = [];
+        _toastCurrent = null;
+        if (_toastTimer) { clearTimeout(_toastTimer); _toastTimer = null; }
+        if (_toastFadeTimer) { clearTimeout(_toastFadeTimer); _toastFadeTimer = null; }
         var toast = document.getElementById('error-toast');
         if (!toast) return;
         toast.style.opacity = '0';
@@ -804,7 +828,6 @@
         feedbackLabel: feedbackLabel,
         generateQR: generateQR,
         showToast: showToast,
-        showStreakMilestoneToast: showStreakMilestoneToast,
         clearToast: clearToast,
         saveSession: saveSession,
         getSession: getSession,

@@ -7,6 +7,7 @@ Usage:
     python scripts/dev_server.py
     python scripts/dev_server.py --host 0.0.0.0 --port 8080
     python scripts/dev_server.py --data-dir /tmp/quizify
+    python scripts/dev_server.py --signals   # signal lab, see signal_lab.py
 
 Then open http://localhost:8080/quizify/launcher in a browser.
 
@@ -35,6 +36,7 @@ from aiohttp import web  # noqa: E402
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
 import dev_hooks  # noqa: E402
+import signal_lab  # noqa: E402
 
 from custom_components.quizify.analytics import QuizifyAnalytics  # noqa: E402
 from custom_components.quizify.game.state import QuizifyGameState  # noqa: E402
@@ -91,6 +93,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     # #1182: dev-only state hooks (fault injection, socket drops, simulated
     # restart, seeded rooms). All off unless asked for; see dev_hooks.py.
     dev_hooks.add_arguments(parser)
+    # #1185: the signal lab — house consumers against a recording fake HA.
+    signal_lab.add_arguments(parser)
     return parser.parse_args(argv)
 
 
@@ -198,6 +202,7 @@ def main(argv: list[str] | None = None) -> int:
     app.on_startup.append(_load_state)
     # After _load_state, so a seeded room is built on loaded state.
     dev_hooks.install(app, args)
+    signal_lab.install(app, args, app[APP_CTX_KEY])
 
     web.run_app(app, host=args.host, port=args.port, print=lambda _msg: None)
     return 0
