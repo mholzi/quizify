@@ -82,6 +82,16 @@
         state.isAdmin = false;
     }
 
+    // The in-memory half alone (#1193). A tab whose seat moved to another
+    // tab must not clear the shared storage: the session there is the other
+    // tab's now.
+    function dropIdentity() {
+        state.sessionToken = null;
+        state.playerName = null;
+        state.playerId = null;
+        state.isAdmin = false;
+    }
+
     // ============================================
     // Connect WebSocket
     // ============================================
@@ -89,6 +99,9 @@
     var _wsOpenTimeout = null;
 
     function connect() {
+        // #1193: a tab whose seat moved stays put until the guest picks a
+        // button; the online/visibility handlers must not walk it back in.
+        if (state.sessionMoved) return;
         // Guard against reconnecting on top of a live socket — a stray
         // connect() while state.ws is OPEN/CONNECTING would orphan the
         // existing socket and double up message handlers.
@@ -122,13 +135,28 @@
                 // and reconnect instead of doing a fresh join (which would
                 // race against the still-open admin WS and fail with
                 // "Name bereits vergeben").
-                var session = pu.getSession();
+                //
+                // #1193: a tab that already holds a seat resumes THAT seat.
+                // The stored session is shared by every tab of the browser,
+                // and after a second tab joined it belongs to someone else.
+                var mine = (state.sessionToken && state.playerName)
+                    ? { token: state.sessionToken, name: state.playerName, game: null } : null;
+                var session = mine || (state.ignoreStoredSession
+                    ? { token: null, name: null, game: null } : pu.getSession());
                 var params = new URLSearchParams(location.search);
                 var isAdminSelfJoin = params.get('admin') === 'true';
                 var forceReconnect = params.get('reconnect') === '1';
                 var useReconnect = (!isAdminSelfJoin || forceReconnect) && session.token && session.name;
                 if (useReconnect) {
-                    send('reconnect', { session_token: session.token, name: session.name });
+                    var reconnectMsg = { session_token: session.token, name: session.name };
+                    // #1193: a seat read from storage on a fresh page says
+                    // which game it last sat in; if that game is over the
+                    // server answers reconnect_stale and we ask first.
+                    if (!mine && !forceReconnect && !state.staleConfirmed &&
+                            typeof session.game === 'string') {
+                        reconnectMsg.last_game_id = session.game;
+                    }
+                    send('reconnect', reconnectMsg);
                 } else if (state.playerName) {
                     var joinMsg = { name: state.playerName };
                     // Admin self-join: send `is_admin: true` in the join
@@ -257,7 +285,21 @@
     // ============================================
 
     function handleMessage(msg) {
+        // #1193: the seat went to another tab. Nothing that still arrives
+        // here is for this tab.
+        if (state.sessionMoved) return;
         switch (msg.type || msg.event) {
+            case 'session_moved':
+                handleSessionMoved();
+                break;
+
+            case 'reconnect_stale':
+                // #1193: the stored seat is from a game that is over. A
+                // shared phone handed to the next guest must not walk them
+                // in under the last guest's name.
+                showSessionChoice('stale', (pu.getSession() || {}).name || '');
+                break;
+
             case 'game_state':
                 handleGameState(msg);
                 break;
@@ -324,6 +366,9 @@
                     pu.saveSession(msg.session_token, state.playerName);
                 }
                 if (msg.is_admin) state.isAdmin = true;
+                // #1193: seated; from here on the tab's own token leads.
+                state.ignoreStoredSession = false;
+                state.staleConfirmed = false;
                 // #1183: from here on back is caught (see handleBack).
                 armBackGuard();
                 // #1150: the host had taken them out, and coming back undid it.
@@ -691,6 +736,12 @@
 
     function handleGameState(msg) {
         pu.setPhase(msg.phase);
+
+        // #1193: remember which game this seat is in, so a reload knows
+        // whether it is coming back to the same one.
+        if (state.playerId && msg.game_id !== undefined && pu.saveSessionGame) {
+            pu.saveSessionGame(msg.game_id);
+        }
 
         // Teams ride along on every snapshot (#365), so a phone that
         // reconnects mid-game gets its team indicator back instead of
@@ -2153,6 +2204,116 @@
         if (hint) hint.classList.add('hidden');
     }
 
+    // ============================================
+    // Seat elsewhere (#1193)
+    // ============================================
+
+    // A newer tab of this browser took the seat (the server rebinds a player
+    // to the newest socket). This tab used to keep the broadcasts but not
+    // its own question, and sat on an empty skeleton.
+    function handleSessionMoved() {
+        endJoinPending();
+        state.movedName = state.playerName;
+        dropIdentity();
+        state.sessionMoved = true;
+        if (state.reconnectTimer) { clearTimeout(state.reconnectTimer); state.reconnectTimer = null; }
+        _releaseWakeLock();
+        if (game && game.stopFrozenOverlay) game.stopFrozenOverlay();
+        if (pu.hideReconnectingOverlay) pu.hideReconnectingOverlay();
+        clearGameChrome();
+        pu.updateConnectionIndicator('disconnected', { noRetry: true });
+        if (state.ws) {
+            state.intentionalLeave = true;
+            try { state.ws.close(); } catch (e) { /* already gone */ }
+        }
+        showSessionChoice('moved', '');
+    }
+
+    var SESSION_CHOICES = {
+        moved: { title: 'session.movedTitle', primary: 'session.playHere' },
+        stale: { title: 'session.continueAs', primary: 'session.continue' }
+    };
+    var _sessionChoice = null;
+
+    function showSessionChoice(kind, name) {
+        var keys = SESSION_CHOICES[kind];
+        var t = _t();
+        var params = kind === 'stale' ? { name: name } : null;
+        _sessionChoice = kind;
+        var title = document.getElementById('session-title');
+        if (title) {
+            title.setAttribute('data-i18n', keys.title);
+            if (params) title.setAttribute('data-i18n-params', JSON.stringify(params));
+            else title.removeAttribute('data-i18n-params');
+            title.textContent = t(keys.title, params || undefined);
+        }
+        var primary = document.getElementById('session-primary-btn');
+        if (primary) {
+            primary.setAttribute('data-i18n', keys.primary);
+            primary.textContent = t(keys.primary);
+        }
+        pu.showView('session-view');
+    }
+
+    function _sessionPrimary() {
+        var stored = pu.getSession();
+        if (_sessionChoice === 'moved') {
+            // Take the seat back: a fresh page reconnects by the stored
+            // token, and the other tab is told in turn. Only while the
+            // stored seat is still the one this tab had.
+            if (stored.token && stored.name === state.movedName) {
+                location.reload();
+            } else {
+                _sessionSomeoneElse();
+            }
+            return;
+        }
+        // 'stale': the guest is who the phone remembers.
+        _sessionChoice = null;
+        state.staleConfirmed = true;
+        if (!stored.token) { _showEmptyJoin(); return; }
+        pu.showView('loading-view');
+        if (state.ws && state.ws.readyState === WebSocket.OPEN) {
+            send('reconnect', { session_token: stored.token, name: stored.name });
+        } else {
+            connect();
+        }
+    }
+
+    function _sessionSomeoneElse() {
+        if (_sessionChoice === 'moved') {
+            // The stored seat is the other tab's; leave it alone and stop
+            // this tab from reading it on its next connect.
+            state.sessionMoved = false;
+            state.ignoreStoredSession = true;
+            pu.updateConnectionIndicator('connecting');
+        } else {
+            pu.clearSession();
+            dropIdentity();
+        }
+        _sessionChoice = null;
+        _showEmptyJoin();
+        connect();
+    }
+
+    function _showEmptyJoin() {
+        hideJoinHint();
+        if (els.nameInput) els.nameInput.value = '';
+        if (els.joinBtn) {
+            els.joinBtn.textContent = _t()('join.joinButton');
+            els.joinBtn.disabled = true;
+        }
+        pu.showView('join-view');
+        if (els.nameInput && typeof els.nameInput.focus === 'function') els.nameInput.focus();
+    }
+
+    function setupSessionChoice() {
+        var primary = document.getElementById('session-primary-btn');
+        var other = document.getElementById('session-other-btn');
+        if (primary) primary.addEventListener('click', _sessionPrimary);
+        if (other) other.addEventListener('click', _sessionSomeoneElse);
+    }
+
     // Put the join form back in a usable state AND leave the reason on
     // screen. The toast alone fades after three seconds and takes the reason
     // with it (#426); the button alone says nothing at all (#729).
@@ -2758,6 +2919,8 @@
         // button on a re-shown form would have nothing to send on. The query
         // string is dropped on purpose: a leftover ?name=/?reconnect=1 would
         // aim the fresh page straight back at the identity we just discarded.
+        setupSessionChoice();
+
         var kickedRejoinBtn = document.getElementById('kicked-rejoin-btn');
         if (kickedRejoinBtn) {
             kickedRejoinBtn.addEventListener('click', function () {

@@ -86,6 +86,9 @@
         // lightning views below — omit it here and showView('kicked-view')
         // hides everything and reveals nothing.
         'kicked-view',
+        // #1193: "playing in another tab" / "Continue as <name>?". Shown
+        // with no seat held, so it is not a GAME_VIEW_ID either.
+        'session-view',
         // Lightning Round (#42) views. These MUST be registered here or
         // showView() can never reveal them: a view is shown by ADDING the
         // 'active' class (`.view.active { display:flex }`), and showView only
@@ -744,6 +747,10 @@
         return window.QuizifyClientCore.getSession();
     }
 
+    function saveSessionGame(gameId) {
+        window.QuizifyClientCore.saveSessionGame(gameId);
+    }
+
     function clearSession() {
         window.QuizifyClientCore.clearSession();
     }
@@ -831,6 +838,7 @@
         clearToast: clearToast,
         saveSession: saveSession,
         getSession: getSession,
+        saveSessionGame: saveSessionGame,
         clearSession: clearSession,
         validateName: validateName,
         renderMedalStandings: renderMedalStandings,

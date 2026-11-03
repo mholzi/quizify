@@ -774,5 +774,12 @@
     "seatAnswering": "Hot seat: {name} is answering",
     "meta": "Question {current} of {total} · {count, plural, one{1 player} other{# players}}",
     "noToken": "Open Quizify once to link this dashboard"
+  },
+  "session": {
+    "movedTitle": "You're now playing in another tab",
+    "playHere": "Play here",
+    "continueAs": "Continue as {name}?",
+    "continue": "Continue",
+    "someoneElse": "I'm someone else"
   }
 }

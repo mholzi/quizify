@@ -272,6 +272,17 @@ async def handle_reconnect(
         )
         return
 
+    # #1193: a page that has just loaded sends the game it last sat in. The
+    # token outlives the tab for 12 h (#1183), so on a shared phone it can
+    # belong to the guest before, from a game that has since ended or been
+    # followed by another. Seat nobody yet: the phone asks "Continue as
+    # <name>?" and resends without the field. A reconnect from a socket
+    # blip never carries it, and neither does a reload into the same
+    # running game, so both stay silent.
+    if "last_game_id" in data and _seat_is_stale(game_state, data["last_game_id"]):
+        await handler._conn.send(ws, {"type": "reconnect_stale"})
+        return
+
     # #1150: asked before the bind below puts them back in. The phone thanks
     # them for coming back with their points; everyone else just reconnected.
     was_out = game_state.is_out_of_scoring(name)
@@ -279,9 +290,17 @@ async def handle_reconnect(
     # Restore player connection. The id → socket map stays in the
     # connection manager (#882); the game model only learns the new
     # opaque handle.
+    previous_connection = player.connection_id
     game_state.bind_player_connection(player, handler._conn.connection_id(ws))
     player.connected = True
     handler._conn.cancel_pending_removal(name)
+
+    # #1193: the socket this seat is taken from is told so, instead of
+    # sitting on an empty question it will never get. The frame carries
+    # nothing but its type: no name, no token. The old socket can no longer
+    # act for the player anyway — every player lookup goes by the bound
+    # connection id, which is now this one.
+    await _tell_superseded_socket(handler, previous_connection, ws)
 
     # If this is the admin returning from the intentional
     # /quizify/admin → /quizify/player redirect after Start,
@@ -349,6 +368,40 @@ async def handle_reconnect(
 
     # Broadcast updated player list — coalesced (#453).
     handler._mark_roster_dirty("player_joined")
+
+
+def _seat_is_stale(game_state: QuizifyGameState, last_game_id: object) -> bool:
+    """True when a stored seat belongs to a game that is over (#1193).
+
+    Over means: this game has ended (``FINALE`` is the last phase a game
+    reaches and stays in until "Play again" or a reset), or the phone last
+    sat in a different one (``play_again`` keeps the roster and the tokens,
+    so a token from the previous game still resolves). ``None`` and ``""``
+    both mean "the lobby before any game started".
+    """
+    if game_state.phase == GamePhase.FINALE:
+        return True
+    stored = last_game_id if isinstance(last_game_id, str) and last_game_id else None
+    return stored != game_state.game_id
+
+
+async def _tell_superseded_socket(
+    handler: QuizifyWebSocketHandler,
+    previous_connection: str | None,
+    ws: web.WebSocketResponse,
+) -> None:
+    """Send ``session_moved`` to the socket a reconnect took the seat from."""
+    current = handler._conn.connection_id(ws)
+    if not previous_connection or previous_connection == current:
+        return
+    old_ws = handler._conn.socket_for(previous_connection)
+    if old_ws is None or old_ws.closed:
+        return
+    # The host page's own socket hands its seat to /quizify/player on
+    # purpose (the join-as-player redirect); it is not a phone to warn.
+    if handler._conn.is_admin_connection(old_ws):
+        return
+    await handler._conn.send(old_ws, {"type": "session_moved"})
 
 
 async def handle_create_team(

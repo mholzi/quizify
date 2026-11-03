@@ -113,6 +113,20 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
             "happened instead of blaming itself."
         ),
     ),
+    "reconnect_stale": _spec(
+        note=(
+            "#1193: the token is good but the game it was last used in is "
+            "over (ended, or followed by another). Only sent when the "
+            "reconnect carried ``last_game_id``; nothing is bound, and the "
+            "phone asks before resending without it."
+        ),
+    ),
+    "session_moved": _spec(
+        note=(
+            "#1193: unicast to the socket a reconnect just took the seat "
+            "from. Deliberately empty: no name, no token."
+        ),
+    ),
     # --- lobby roster -----------------------------------------------------
     "player_joined": _spec(
         "players",
