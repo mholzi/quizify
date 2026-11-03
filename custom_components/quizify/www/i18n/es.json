@@ -325,6 +325,8 @@
     "tweak": "Ajustar configuración…",
     "stats": "Estadísticas",
     "back": "Atrás",
+    "lobbyStillOpen": "La sala sigue abierta · {count, plural, one{1 jugador} other{# jugadores}}",
+    "backToLobby": "Volver a la sala",
     "pickMode": "Elige un modo",
     "apply": "Aplicar",
     "preset": {

@@ -325,6 +325,8 @@
     "tweak": "Adjust settings…",
     "stats": "Stats",
     "back": "Back",
+    "lobbyStillOpen": "Lobby still open · {count, plural, one{1 player} other{# players}}",
+    "backToLobby": "Back to lobby",
     "pickMode": "Pick a mode",
     "apply": "Apply",
     "preset": {

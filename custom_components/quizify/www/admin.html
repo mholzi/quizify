@@ -79,6 +79,18 @@
              chip controls below for manual tuning. -->
         <div id="setup-screen" class="view active" data-mode="hero">
 
+            <!-- #1213: "Settings" in the lobby only switches this page to
+                 setup; the server lobby, its players, the phones and the TV
+                 stay. While that lobby has players, say so and offer the way
+                 back to it (same players, no new game). Shown above both
+                 setup modes (hero and detail). admin.js renderLobbyPlayers. -->
+            <div id="setup-lobby-open" class="lobby-e-notice setup-lobby-open hidden" role="status">
+                <span id="setup-lobby-open-text" data-i18n="setup.lobbyStillOpen"
+                      data-i18n-params='{"count":0}'>Lobby still open · 0 players</span>
+                <button type="button" id="setup-lobby-return-btn" class="btn btn-secondary"
+                        data-i18n="setup.backToLobby">Back to lobby</button>
+            </div>
+
             <!-- HERO (variant A) -->
             <div id="setup-hero" class="setup-hero">
                 <h1 class="setup-hero-headline" data-i18n-lines="setup.hero"><span>Ready for a</span><br><span class="accent">round of Quizify?</span></h1>
