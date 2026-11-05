@@ -599,6 +599,10 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 
 The complete history is in [`CHANGELOG.md`](CHANGELOG.md); longer prose notes for each release are on the [GitHub releases page](https://github.com/mholzi/quizify/releases).
 
+### v1.26.0 — Screens That Move, and a Steadier Host Seat ✨
+- **Video Games packs in German, English and Spanish**, 160 questions each, and the leaderboard, estimates, wagers and hot seat now animate (#1167, #1171, #1172, #1175)
+- Dark text on coloured buttons with one type scale for phone and TV, a reload keeps the host's seat and the open lobby, and ending, resetting or starting a game asks first (#1202, #1207, #1210, #1213, #1190)
+
 ### v1.25.0 — Art on the Shelf, and a Screen That Stays On 🎨
 - **Art & Literature packs in German, English and Spanish**, 160 questions each, and the pack picker ends with an "Ask for a pack" tile that works without setup (#1125, #1127)
 - The host page and the TV keep the screen on during a game, a guest's reset asks first, and three automation blueprints are ready to import (#1131, #1128)
