@@ -276,6 +276,9 @@ class QuizifyPartyLights:
         self._reveal_streaked = False
         # When the running accent started, so a streak can line up behind it.
         self._pulse_started: float | None = None
+        # Pre-accent state of each light, kept while no phase baseline applies
+        # (#1220) so the settle step can put the room back as the host had it.
+        self._restore_snapshot: dict[str, dict[str, object]] | None = None
 
         # --- "House Plays Along" runtime config (#494 Phase 4) ---------------
         # The master switch for the EVENT-DRIVEN ACCENTS lives on the shared
@@ -439,6 +442,7 @@ class QuizifyPartyLights:
                 unsub()
         self._event_unsubs = []
         self._cancel_pulse()
+        self._restore_snapshot = None
 
     @property
     def _base_colour_on(self) -> bool:
@@ -621,13 +625,66 @@ class QuizifyPartyLights:
         """
         phase = self._last_phase
         if phase is None:
+            # No phase baseline (master on, "lights follow" off, #1220): put
+            # each light back the way it was before the accent.
+            self._restore_snapshot_state()
             return
+        self._restore_snapshot = None
         recipe = _PHASE_LIGHT_RECIPES.get(phase)
         if recipe is None:
             return
         self._call(
             "light", "turn_on", {"entity_id": self._active_entity_ids, **recipe}
         )
+
+    def _take_snapshot(self) -> None:
+        """Remember each light's state before the first accent step (#1220).
+
+        Only while no phase baseline applies, and only once per accent run: a
+        cancelled accent leaves its snapshot in place so the next one does not
+        record the flash as the "original" state.
+        """
+        if self._last_phase is not None or self._restore_snapshot is not None:
+            return
+        hass = self._hass
+        if hass is None:
+            return
+        snapshot: dict[str, dict[str, object]] = {}
+        for entity_id in self._active_entity_ids:
+            state = hass.states.get(entity_id)
+            if state is None or state.state in ("unavailable", "unknown"):
+                continue
+            attrs: dict[str, object] = dict(state.attributes or {})
+            entry: dict[str, object] = {"on": state.state == "on"}
+            brightness = attrs.get("brightness")
+            if isinstance(brightness, (int, float)):
+                entry["brightness_pct"] = max(1, round(brightness * 100 / 255))
+            rgb = attrs.get("rgb_color")
+            kelvin = attrs.get("color_temp_kelvin")
+            mode = attrs.get("color_mode")
+            if mode in ("color_temp",) and isinstance(kelvin, (int, float)):
+                entry["color_temp_kelvin"] = int(kelvin)
+            elif isinstance(rgb, (list, tuple)) and len(rgb) == 3:
+                entry["rgb_color"] = [int(c) for c in rgb]
+            elif isinstance(kelvin, (int, float)):
+                entry["color_temp_kelvin"] = int(kelvin)
+            snapshot[entity_id] = entry
+        self._restore_snapshot = snapshot
+
+    def _restore_snapshot_state(self) -> None:
+        """Put the lights back as snapshotted (#1220); the ceiling still caps."""
+        snapshot, self._restore_snapshot = self._restore_snapshot, None
+        if not snapshot:
+            return
+        for entity_id, entry in snapshot.items():
+            if not entry.get("on"):
+                self._call_for(entity_id, "turn_off", {"transition": 0.4})
+                continue
+            data = {k: v for k, v in entry.items() if k != "on"}
+            self._call_for(entity_id, "turn_on", {**data, "transition": 0.4})
+
+    def _call_for(self, entity_id: str, service: str, data: dict[str, object]) -> None:
+        self._call("light", service, {"entity_id": [entity_id], **data})
 
     def _start_pulse(self, steps: list[tuple[object, float]]) -> None:
         """Kick off a multi-step accent as a cancel-safe background task.
@@ -686,6 +743,7 @@ class QuizifyPartyLights:
         ``CancelledError`` is swallowed so it never leaks onto the loop.
         """
         try:
+            self._take_snapshot()
             for command, hold in steps:
                 if command == _BASELINE:
                     self._apply_phase_baseline()
