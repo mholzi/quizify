@@ -34,6 +34,9 @@ _FILENAME = "game_running.json"
 #: Phases in which no game is in progress: nothing to lose on a restart.
 _IDLE_PHASES = frozenset({"LOBBY", "FINALE"})
 
+#: Longest an unload waits for a marker write before cancelling it.
+_DRAIN_TIMEOUT = 5.0
+
 
 class InterruptedGameMarker:
     """Persisted "a game is running" bit plus the notice it leaves behind."""
@@ -153,5 +156,11 @@ class InterruptedGameMarker:
 
     async def drain(self) -> None:
         """Wait for pending marker writes (integration unload, #1223)."""
-        while self._tasks:
-            await asyncio.gather(*list(self._tasks), return_exceptions=True)
+        # Filter on ``done()``: the discard callback runs a loop turn after a
+        # task finishes, and gathering finished tasks never yields.
+        while pending := [t for t in self._tasks if not t.done()]:
+            await asyncio.wait(pending, timeout=_DRAIN_TIMEOUT)
+            if any(not t.done() for t in pending):
+                for t in pending:
+                    t.cancel()
+                break
