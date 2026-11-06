@@ -567,6 +567,8 @@
     "ROUND_EXPIRED": "Too late — time was already up. You're back in on the next question.",
     "NOT_IN_GAME": "You're not in this game right now. Reload the page to join again.",
     "INVALID_ACTION": "That didn't work just now. Wait a moment for the next question.",
+    "FROZEN": "Frozen — wait for the freeze to end",
+    "TEAM_LOCKED": "The team answer just changed — wait a moment",
     "TEAM_CLOSED": "Teams are set for this game — you play on your own.",
     "GAME_ENDED": "This game has finished. Ask the host to start a new one.",
     "NO_QUESTIONS_REMAINING": "There are no questions for these settings. Pick other topics, another difficulty or another language.",
