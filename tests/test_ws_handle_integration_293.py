@@ -246,8 +246,9 @@ class TestReconnectHappyPath:
         reconnected = next(m for m in sent if m.get("type") == "reconnected")
         assert reconnected["player_id"] == "Dora"
         assert reconnected["session_token"] != token
-        # Old token revoked, new token resolves to the player.
+        # New token resolves to the player. The old one stays a short-lived
+        # alias of the same seat (#1222) until the new one is used.
+        new_token = reconnected["session_token"]
+        assert handler._conn.get_player_for_token(new_token) == "Dora"
+        handler._conn.rotate_session_token(new_token, "Dora")
         assert handler._conn.get_player_for_token(token) is None
-        assert (
-            handler._conn.get_player_for_token(reconnected["session_token"]) == "Dora"
-        )
