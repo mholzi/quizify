@@ -53,6 +53,15 @@ RECONNECT_REASONS = frozenset(
 )
 _RETIRED_TOKEN_CAP = 500
 
+#: How long a rotated-out session token keeps resuming its seat (#1222).
+#: ``handle_reconnect`` rotates the token and only then sends the new one in
+#: the ``reconnected`` frame. A phone whose socket drops before it reads that
+#: frame still holds the old token; without a grace window its next reconnect
+#: found neither a live nor a retired token and was told "Home Assistant was
+#: restarted". The old token stays an alias for the same player until this
+#: window ends or the new token is used, whichever comes first.
+ROTATED_TOKEN_GRACE = 60.0
+
 
 # A small callable that returns the active game state. Indirection so the
 # connection manager doesn't need to import the game module directly and
@@ -100,6 +109,12 @@ class ConnectionManager:
         # this process never issued at all can only come from before a
         # restart, since session tokens live in memory.
         self._retired_tokens: dict[str, tuple[str, float]] = {}
+        # Old token → (current_token, player_name, rotated_at_monotonic) for
+        # tokens rotated out by a reconnect (#1222). An alias resolves only
+        # to its own player, only while ``current_token`` is still live for
+        # that same player, and only for ROTATED_TOKEN_GRACE seconds after
+        # the first rotation: it never seats anyone the old token could not.
+        self._rotated_tokens: dict[str, tuple[str, str, float]] = {}
         self._admin_session_token: str | None = None
         self._admin_disconnect_task: asyncio.Task | None = None
         self._pending_removals: dict[str, asyncio.Task] = {}
@@ -416,6 +431,48 @@ class ConnectionManager:
         ]
         for t in stale:
             self._retired_tokens.pop(t, None)
+        lapsed = [
+            t
+            for t, (_c, _n, rotated_at) in self._rotated_tokens.items()
+            if now - rotated_at > ROTATED_TOKEN_GRACE
+        ]
+        for t in lapsed:
+            self._drop_alias(t, RECONNECT_EXPIRED)
+
+    def _drop_alias(self, token: str, reason: str) -> None:
+        """Forget the rotation alias *token* and remember why (#1222)."""
+        if self._rotated_tokens.pop(token, None) is not None:
+            self._retire(token, reason)
+
+    def _drop_aliases_where(self, reason: str, *, current: str | None = None,
+                            name: str | None = None) -> None:
+        """Drop every alias pointing at *current* or owned by *name*."""
+        doomed = [
+            t
+            for t, (cur, owner, _at) in self._rotated_tokens.items()
+            if (current is not None and cur == current)
+            or (name is not None and owner == name)
+        ]
+        for t in doomed:
+            self._drop_alias(t, reason)
+
+    def _resolve_alias(self, token: str) -> str | None:
+        """Player name for a rotated-out *token* still inside its grace."""
+        alias = self._rotated_tokens.get(token)
+        if alias is None:
+            return None
+        current, name, rotated_at = alias
+        live = self._session_tokens.get(current)
+        if (
+            time.monotonic() - rotated_at > ROTATED_TOKEN_GRACE
+            or live is None
+            or live[0] != name
+        ):
+            # Lapsed, or the token it stands in for was revoked. Either way
+            # the phone gets the general "expired" wording, never "restart".
+            self._drop_alias(token, RECONNECT_EXPIRED)
+            return None
+        return name
 
     def _retire(self, token: str, reason: str) -> None:
         """Remember that *token* died for *reason* (#1182)."""
@@ -443,20 +500,59 @@ class ConnectionManager:
         return token
 
     def rotate_session_token(self, old_token: str, player_name: str) -> str:
-        """Revoke *old_token* and issue a fresh one for *player_name*."""
-        self._session_tokens.pop(old_token, None)
-        return self.create_session_token(player_name)
+        """Retire *old_token* and issue a fresh one for *player_name*.
+
+        #1222: the new token reaches the phone only in the ``reconnected``
+        frame that follows, which a dropping socket can lose. *old_token*
+        therefore stays an alias of the new token for ROTATED_TOKEN_GRACE
+        seconds (see ``_resolve_alias``), bound to the same player.
+        """
+        alias = self._rotated_tokens.pop(old_token, None)
+        if alias is not None and alias[1] == player_name:
+            # The phone came back on the alias: it never got the token the
+            # last rotation issued. That token is withdrawn so only one
+            # credential stays live, and the alias now points at the fresh
+            # one — but keeps its ORIGINAL rotation time, so the window is
+            # never stretched by reconnecting on the old token.
+            undelivered, _owner, rotated_at = alias
+            if self._session_tokens.pop(undelivered, None) is not None:
+                self._retire(undelivered, RECONNECT_EXPIRED)
+            new_token = self.create_session_token(player_name)
+            self._rotated_tokens[old_token] = (new_token, player_name, rotated_at)
+            return new_token
+        if alias is not None:
+            self._retire(old_token, RECONNECT_EXPIRED)
+        # *old_token* was the live one, so the phone demonstrably got it:
+        # any alias still pointing at it has served its purpose.
+        self._drop_aliases_where(RECONNECT_EXPIRED, current=old_token)
+        entry = self._session_tokens.pop(old_token, None)
+        new_token = self.create_session_token(player_name)
+        if entry is not None and entry[0] == player_name:
+            self._rotated_tokens[old_token] = (
+                new_token,
+                player_name,
+                time.monotonic(),
+            )
+        elif entry is not None:
+            self._retire(old_token, RECONNECT_EXPIRED)
+        return new_token
 
     def revoke_token(self, token: str, reason: str = RECONNECT_REMOVED) -> None:
-        """Revoke a single session *token* (no-op if unknown)."""
+        """Revoke a single session *token* (no-op if unknown).
+
+        Also kills a rotation alias by that name and every alias that stands
+        in for it (#1222).
+        """
         if self._session_tokens.pop(token, None) is not None:
             self._retire(token, reason)
+        self._drop_alias(token, reason)
+        self._drop_aliases_where(reason, current=token)
 
     def get_player_for_token(self, token: str) -> str | None:
         """Return the player name associated with *token*, or None."""
         entry = self._session_tokens.get(token)
         if not entry:
-            return None
+            return self._resolve_alias(token)
         name, issued_at = entry
         if time.monotonic() - issued_at > _PLAYER_TOKEN_TTL:
             self._session_tokens.pop(token, None)
@@ -472,6 +568,7 @@ class ConnectionManager:
         for t in stale:
             self._session_tokens.pop(t, None)
             self._retire(t, reason)
+        self._drop_aliases_where(reason, name=player_name)
 
     def clear_all_player_tokens(self, reason: str = RECONNECT_RESET) -> None:
         """Wipe every player token. Called on game reset to prevent
@@ -479,6 +576,8 @@ class ConnectionManager:
         for t in list(self._session_tokens):
             self._retire(t, reason)
         self._session_tokens.clear()
+        for t in list(self._rotated_tokens):
+            self._drop_alias(t, reason)
 
     # ------------------------------------------------------------------
     # Pending-removal registry
