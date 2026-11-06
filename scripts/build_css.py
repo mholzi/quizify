@@ -51,6 +51,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from asset_gzip import write_gzip_sibling  # noqa: E402
 from build_tokens import build as build_tokens  # noqa: E402
+from strip_comments import strip_css  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
 CSS_DIR = REPO / "custom_components" / "quizify" / "www" / "css"
@@ -168,9 +169,12 @@ def module_text(name: str, sheet: str) -> str:
 
 
 def build_sheet(sheet: str) -> Path:
+    # Comments are stripped from the served sheet only (#1224): the design
+    # rationale stays in www/css/src/, it just no longer ships to every phone
+    # and TV. The @surface markers are consumed by module_text() first.
     parts: list[str] = [HEADER]
     for name in SURFACES[sheet]:
-        parts.append(module_text(name, sheet))
+        parts.append(strip_css(module_text(name, sheet)))
     text = "".join(parts)
     out = CSS_DIR / sheet
     out.write_text(text, "utf-8")
