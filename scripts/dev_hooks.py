@@ -156,7 +156,7 @@ async def _restart(request: web.Request) -> web.Response:
     handler = ctx.ws_handler
     game = ctx.game
     marker = handler.interrupted_game
-    was_running = marker._running_on_disk
+    was_running = marker._on_disk
     # Detach the marker first: a dying process does not get to tidy up its
     # file, and the reset below would otherwise note LOBBY and remove it.
     marker._file = None
@@ -171,7 +171,7 @@ async def _restart(request: web.Request) -> web.Response:
     game.clear_all_players()
     game.reset_to_lobby()
     # The marker file is what survives; read it back like a fresh start-up.
-    marker._running_on_disk = False
+    marker._on_disk = False
     await marker.load()
     _LOGGER.warning("dev: simulated restart (game was running: %s)", was_running)
     return web.json_response({"was_running": was_running,

@@ -41,9 +41,11 @@ class InterruptedGameMarker:
     def __init__(self, runtime: Runtime) -> None:
         self._runtime = runtime
         self._file: JsonFile | None = None
-        self._running_on_disk = False
+        self._wanted = False
+        self._on_disk = False
+        self._lock = asyncio.Lock()
         self._notice: dict[str, Any] | None = None
-        self._task: asyncio.Future | None = None
+        self._tasks: set[asyncio.Task] = set()
 
     @property
     def notice(self) -> dict[str, Any] | None:
@@ -87,41 +89,69 @@ class InterruptedGameMarker:
             lambda: self.note_phase(game_state.phase)
         )
 
+    def _note(self, phase: Any) -> bool:
+        """Record the latest phase; True when the wanted marker state changed.
+
+        The one place the edge is computed (#1223). ``_wanted`` is what the
+        disk must say once the writer has caught up; it always follows the
+        last phase noted, never an earlier one.
+        """
+        if self._file is None or phase is None:
+            return False
+        running = str(getattr(phase, "value", phase)) not in _IDLE_PHASES
+        if running:
+            self._notice = None
+        if running == self._wanted:
+            return False
+        self._wanted = running
+        return True
+
     def note_phase(self, phase: Any) -> None:
         """Called with every snapshot: schedule a write on an edge only.
 
         Synchronous so the snapshot builder can call it; the disk I/O runs as
-        a task. A no-op until :meth:`load` has run, or without a loop.
+        a tracked task. A no-op until :meth:`load` has run, or without a loop.
         """
         if self._file is None or phase is None:
-            return
-        running = str(getattr(phase, "value", phase)) not in _IDLE_PHASES
-        if running:
-            self._notice = None
-        if running == self._running_on_disk:
             return
         try:
             loop = asyncio.get_running_loop()
         except RuntimeError:
             return
-        self._task = loop.create_task(self.sync(phase))
+        if not self._note(phase):
+            return
+        task = loop.create_task(self._flush())
+        self._tasks.add(task)
+        task.add_done_callback(self._tasks.discard)
 
     async def sync(self, phase: str | None) -> None:
-        """Write or remove the marker on the edge of a game starting or ending."""
-        if self._file is None or phase is None:
+        """Note *phase* and wait until the disk matches the last noted phase."""
+        self._note(phase)
+        await self._flush()
+
+    async def _flush(self) -> None:
+        """Write until the disk matches ``_wanted``; writes never interleave."""
+        if self._file is None:
             return
-        running = str(getattr(phase, "value", phase)) not in _IDLE_PHASES
-        if running:
-            self._notice = None
-        if running == self._running_on_disk:
-            return
-        self._running_on_disk = running
-        try:
-            if running:
-                await self._file.save(
-                    {"running": True, "started_at": int(time.time())}
-                )
-            else:
-                await self._file.remove()
-        except Exception:  # noqa: BLE001 - bookkeeping must not break a round
-            _LOGGER.warning("Could not update the running-game marker", exc_info=True)
+        async with self._lock:
+            while self._on_disk != self._wanted:
+                target = self._wanted
+                try:
+                    if target:
+                        await self._file.save(
+                            {"running": True, "started_at": int(time.time())}
+                        )
+                    else:
+                        await self._file.remove()
+                except asyncio.CancelledError:
+                    raise
+                except Exception:  # noqa: BLE001 - bookkeeping must not break a round
+                    _LOGGER.warning(
+                        "Could not update the running-game marker", exc_info=True
+                    )
+                self._on_disk = target
+
+    async def drain(self) -> None:
+        """Wait for pending marker writes (integration unload, #1223)."""
+        while self._tasks:
+            await asyncio.gather(*list(self._tasks), return_exceptions=True)

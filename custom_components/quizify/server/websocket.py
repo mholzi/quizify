@@ -1987,6 +1987,9 @@ class QuizifyWebSocketHandler:
         disconnect path, which must find no game to act on.
         """
         self._retired = True
+        # Let a pending marker write land first: cancelling it could leave
+        # the file out of step with the last phase (#1223).
+        await self.interrupted_game.drain()
         await self.cleanup_game_tasks()
         await self._conn.close_all_connections()
 
