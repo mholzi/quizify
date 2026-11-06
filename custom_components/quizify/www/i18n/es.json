@@ -567,6 +567,8 @@
     "ROUND_EXPIRED": "Demasiado tarde: el tiempo ya se había acabado. En la siguiente pregunta vuelves a jugar.",
     "NOT_IN_GAME": "Ahora mismo no estás en la partida. Recarga la página para volver a unirte.",
     "INVALID_ACTION": "Eso no ha funcionado ahora. Espera un momento a la siguiente pregunta.",
+    "FROZEN": "Congelado: espera a que termine",
+    "TEAM_LOCKED": "La respuesta del equipo acaba de cambiar: espera un momento",
     "TEAM_CLOSED": "Los equipos ya están fijados — juegas por tu cuenta.",
     "GAME_ENDED": "Esta partida ha terminado. Pide al anfitrión que empiece una nueva.",
     "NO_QUESTIONS_REMAINING": "No hay preguntas para esta configuración. Elige otros temas, otra dificultad u otro idioma.",

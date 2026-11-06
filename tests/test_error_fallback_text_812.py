@@ -103,8 +103,8 @@ def test_the_map_names_no_code_that_does_not_exist() -> None:
 def test_the_wording_agrees_with_the_english_bundle() -> None:
     """The drift the issue is about: "Time is up" vs en.json's "Time expired".
 
-    Only codes the bundle actually carries are compared — ``FROZEN`` and
-    ``TEAM_LOCKED`` have no ``errors.*`` key of their own.
+    Only codes the bundle actually carries are compared (since #1221 that is
+    every code; ``test_error_keys_1221`` enforces the coverage).
     """
     bundle = json.loads(_EN_JSON.read_text(encoding="utf-8")).get("errors", {})
     drift = {
