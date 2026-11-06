@@ -172,9 +172,12 @@ def test_the_join_minute_gets_meaningfully_cheaper() -> None:
     plain = sum((WWW / rel).stat().st_size for rel in player_assets)
     wire = sum(ag.gzip_path(WWW / rel).stat().st_size for rel in player_assets)
 
-    assert plain > 600_000, "baseline sanity: the player page is a big download"
-    assert wire < plain / 3, (
-        f"{wire:,} B on the wire against {plain:,} B uncompressed — under a 3x "
+    # Since #1224 the bundles ship without comments, so the plain size dropped
+    # and the ratio is lower (comments compress better than code). The siblings
+    # still have to pay for the drift risk they add.
+    assert plain > 400_000, "baseline sanity: the player page is a big download"
+    assert wire < plain / 2.5, (
+        f"{wire:,} B on the wire against {plain:,} B uncompressed — under a 2.5x "
         "reduction the siblings are not paying for the drift risk they add"
     )
 

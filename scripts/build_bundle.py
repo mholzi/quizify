@@ -30,6 +30,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from asset_gzip import write_gzip_sibling  # noqa: E402
+from strip_comments import strip_js  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
 JS_DIR = REPO / "custom_components" / "quizify" / "www" / "js"
@@ -80,7 +81,9 @@ def _concat(modules: list[str]) -> str:
         if not path.exists():
             print(f"  skip (missing): {name}", file=sys.stderr)
             continue
-        src = path.read_text("utf-8")
+        # Comments are stripped from the served bundle only (#1224); the
+        # sources keep them. /*! legal comments survive.
+        src = strip_js(path.read_text("utf-8"))
         out_lines.append(f"\n/* ============ {name} ============ */\n")
         out_lines.append(src)
 

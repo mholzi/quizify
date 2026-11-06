@@ -58,7 +58,7 @@ def test_player_bundle_in_sync() -> None:
         src_path = bb.JS_DIR / module_name
         assert src_path.exists(), f"missing player module: {module_name}"
         out_lines.append(f"\n/* ============ {module_name} ============ */\n")
-        out_lines.append(src_path.read_text("utf-8"))
+        out_lines.append(bb.strip_js(src_path.read_text("utf-8")))  # #1224
     expected = "\n".join(out_lines)
 
     committed = bb.BUNDLE.read_text("utf-8")
@@ -75,7 +75,7 @@ def test_styles_css_in_sync() -> None:
     for module_name in bc.CSS_MODULES:
         src_path = bc.SRC_DIR / module_name
         assert src_path.exists(), f"missing css module: {module_name}"
-        parts.append(src_path.read_text("utf-8"))
+        parts.append(bc.strip_css(src_path.read_text("utf-8")))  # #1224
     expected = "".join(parts)
 
     committed = bc.OUT.read_text("utf-8")

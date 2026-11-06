@@ -3,29 +3,15 @@
 
 /* ============ player-utils.js ============ */
 
-/**
- * Quizify Player - Utility Module
- * Shared state, view management, DOM helpers, connection indicator, QR, toast, collapsibles
- */
-
 (function () {
     'use strict';
 
     var utils = window.QuizifyUtils || {};
 
-    // ============================================
-    // Shared Mutable State (used by all player modules)
-    // ============================================
-
     var state = {
         ws: null,
         playerName: null,
         playerId: null,
-        // #729: true from the moment a join is sent (or queued behind a
-        // pending connect) until the server answers `joined` / `error`.
-        // The join-error reset used to key on `!playerName`, which
-        // handleJoinClick had already filled in — so the guard was dead for
-        // every refusal and the button sat on "Joining…" forever.
         joinPending: false,
         sessionToken: null,
         isAdmin: false,
@@ -33,39 +19,16 @@
         currentPhase: 'LOBBY',
         reconnectAttempts: 0,
         isReconnecting: false,
-        // #1182: when the socket was first lost (0 while connected) and the
-        // pending backoff timer, so "Connect now" can cut it short.
         disconnectedSince: 0,
         reconnectTimer: null,
         intentionalLeave: false,
-        playerColor: '',  // assigned by server on join
+        playerColor: '',
     };
 
-    // ============================================
-    // Constants
-    // ============================================
-
-    // #1182 L11: no attempt cap any more. Ten attempts were about three
-    // minutes (1+2+4+8+16+5x30 s) and an HA restart takes one to five, so the
-    // phone often gave up just before Home Assistant came back, while the TV
-    // kept trying forever. Now the phone keeps going while the page is
-    // visible (a hidden page waits for visibilitychange/online), and from
-    // the 30-second mark it says so honestly with a "Connect now" button.
     var MAX_RECONNECT_DELAY_MS = 30000;
     var LONG_OUTAGE_MS = 30000;
-    // Name limit lives in utils.js (QuizifyUtils.MAX_NAME_LENGTH) so the
-    // player flow and the admin modal share one rule. Mirror it locally
-    // for any legacy reference; validateName() delegates to the shared one.
     var MAX_NAME_LENGTH = (window.QuizifyUtils && window.QuizifyUtils.MAX_NAME_LENGTH) || 20;
-    // The two session-storage key names live in QuizifyClientCore since #787
-    // — the host page writes them too, and one owner is the point.
 
-    // ============================================
-    // HTML Escaping
-    // ============================================
-
-    // One place for the "translate or fall back to the key" shape this file
-    // uses; three copies of the same line invite the fourth to be forgotten.
     function _tt(key) {
         var fn = window.QuizifyI18n && window.QuizifyI18n.t;
         return fn ? fn(key) : key;
@@ -75,45 +38,15 @@
         return utils.escapeHtml(text);
     }
 
-    // ============================================
-    // View Management
-    // ============================================
-
     var viewIds = [
-        // #1182 L12: not-found-view, ended-view and in-progress-view were
-        // designed and translated but no code path ever showed them; the
-        // join form's own hints (join.refused.GAME_ENDED, resetHint, …) do
-        // that job. Deleted rather than kept for every text pass to maintain.
         'loading-view',
         'join-view', 'lobby-view', 'game-view', 'reveal-view',
         'paused-view', 'end-view', 'connection-lost-view',
-        // #750: the host-removed screen. Same registration rule as the
-        // lightning views below — omit it here and showView('kicked-view')
-        // hides everything and reveals nothing.
         'kicked-view',
-        // #1193: "playing in another tab" / "Continue as <name>?". Shown
-        // with no seat held, so it is not a GAME_VIEW_ID either.
         'session-view',
-        // Lightning Round (#42) views. These MUST be registered here or
-        // showView() can never reveal them: a view is shown by ADDING the
-        // 'active' class (`.view.active { display:flex }`), and showView only
-        // touches IDs in this list. Without them, showView('lightning-view')
-        // hides every other view but never un-hides the lightning one, so on
-        // a reconnect into a live LIGHTNING round both #lightning-view and
-        // #lightning-splash-view stay `class="view hidden"` → blank screen
-        // (#239, cousin of #221's data-path fix).
         'lightning-splash-view', 'lightning-view', 'lightning-recap-view'
     ];
 
-    // #1153: the screens a broadcast frame (round summary, game state,
-    // finale, lightning, pause) switches to. A phone that has not joined has
-    // no business on any of them: it receives every frame from socket open,
-    // and used to be pulled off the join form mid-typing with no way back.
-    // `state.playerName` is set the moment Join is tapped (and a restoring
-    // session sets it on the `reconnected` ack, which precedes the first
-    // snapshot), so a pending join and a returning player both pass.
-    // kicked-view is deliberately absent: it is shown AFTER the name is
-    // cleared.
     var GAME_VIEW_IDS = [
         'lobby-view', 'game-view', 'reveal-view', 'paused-view', 'end-view',
         'lightning-splash-view', 'lightning-view', 'lightning-recap-view'
@@ -139,25 +72,16 @@
         }
         state.currentView = viewId;
 
-        // Round indicator next to the wordmark — only visible on the
-        // reveal view. Text itself is populated by renderFinaleReveal.
         var headerRound = document.getElementById('player-header-round');
         if (headerRound) {
             if (viewId === 'reveal-view') headerRound.removeAttribute('hidden');
             else headerRound.setAttribute('hidden', '');
         }
 
-        // Re-run i18n on the view we just revealed. The page-wide
-        // initPageTranslations runs once on load, but buttons inside views
-        // that start hidden (#next-round-btn in #reveal-view, etc.) skip
-        // translation if our translator looks at offsetParent — and even
-        // when it doesn't, swapping languages later won't reach them until
-        // we re-translate. Cheap to do per view-show.
         if (revealedEl && window.QuizifyI18n && window.QuizifyI18n.isReady()) {
             window.QuizifyI18n.initPageTranslations(revealedEl);
         }
 
-        // Auto-focus name input on join view
         if (viewId === 'join-view') {
             setTimeout(function () {
                 var nameInput = document.getElementById('name-input');
@@ -165,10 +89,6 @@
             }, 100);
         }
     }
-
-    // ============================================
-    // Formatting
-    // ============================================
 
     function formatPoints(n) {
         return utils.formatPoints(n);
@@ -178,16 +98,6 @@
         return utils.formatTime(seconds);
     }
 
-    // ============================================
-    // WebSocket Factory
-    // ============================================
-
-    // The URL rule, the parse-and-dispatch and the close-on-error are the
-    // television's and the host page's too, so they come from
-    // QuizifyClientCore since #787. What stays here is everything the phone
-    // does *about* a dropped socket — the overlay, the indicator, the
-    // intentional-leave escape and the connection-lost view — because none of
-    // that exists on the other two surfaces.
     function createWebSocket(path, handlers) {
         var ws = window.QuizifyClientCore.createSocket(path, {
             logPrefix: '[Quizify]',
@@ -213,8 +123,6 @@
                     if (!state.disconnectedSince) state.disconnectedSince = Date.now();
                     updateConnectionIndicator('reconnecting');
                     if (pageHidden()) {
-                        // Paused, not given up: player-core's
-                        // visibilitychange/online handlers reconnect at once.
                         showReconnectingOverlay();
                     } else {
                         state.reconnectAttempts++;
@@ -243,9 +151,6 @@
         return typeof document !== 'undefined' && document.visibilityState === 'hidden';
     }
 
-    // The long-outage screen (#1182, draft 4): the first 30 s stay as they
-    // are (overlay, desaturation, pill from #1170/#1172); after that the
-    // phone says what is going on and when it tries next.
     var _countdown = null;
     function showLongOutage(delay) {
         hideReconnectingOverlay();
@@ -276,30 +181,12 @@
         );
     }
 
-    // ============================================
-    // Connection Indicator
-    // ============================================
-
-    // The dot itself lives in QuizifyClientCore since #983 — it was written
-    // twice, here and on the host page, and the copies had drifted (this one
-    // had the #424 accessibility work, the host's the #290 retry). What stays
-    // here is the phone's own retry action, which player-core registers
-    // because only it owns the socket and the join view.
-
     var _connRetry = null;
 
-    /** Register what the tappable disconnected dot should do (#983). */
     function setConnectionRetry(fn) {
         _connRetry = fn;
     }
 
-    /**
-     * `opts.noRetry` suppresses the affordance for a disconnect there is
-     * nothing to retry about — being removed by the host (#750) closes the
-     * socket exactly like a lost network does, and offering "Retry
-     * connection" there would walk the guest back into a lobby they were
-     * just thrown out of.
-     */
     function updateConnectionIndicator(status, opts) {
         window.QuizifyClientCore.updateConnectionIndicator(status, {
             retryHandler: (opts && opts.noRetry) ? null : _connRetry
@@ -307,16 +194,12 @@
         connectionMotion(status, !(opts && opts.noRetry));
     }
 
-    // #1170: once the socket has been up, losing it drains the phone's colour
-    // and slides the pill in; coming back turns the pill sage while the
-    // colour returns. CSS in 07-player.css; the first connect animates nothing.
     var _connWasUp = false;
     var _connDown = false;
     function connectionMotion(status, canRetry) {
         var root = document.documentElement;
-        // Read, not built: the dot itself is QuizifyClientCore's (#983).
         var pill = null;
-        try { pill = document.querySelector('#conn-status'); } catch (_e) { /* no DOM */ }
+        try { pill = document.querySelector('#conn-status'); } catch (_e) { }
         if (!root || !root.classList || !root.classList.remove) return;
         if (status === 'connected') {
             _connWasUp = true;
@@ -341,10 +224,6 @@
         }
     }
 
-    // ============================================
-    // Reconnecting Overlay
-    // ============================================
-
     function showReconnectingOverlay() {
         var overlay = document.getElementById('reconnecting-overlay');
         if (overlay) overlay.classList.remove('hidden');
@@ -355,34 +234,15 @@
         if (overlay) overlay.classList.add('hidden');
     }
 
-    // ============================================
-    // Entrant identity (#759, #728, #1015)
-    // ============================================
-
-    /**
-     * The leaderboard row that is mine: my team's when I'm in one, my own
-     * otherwise. Two teams may carry the same name, so matching rows by the
-     * printed name lit up the "you" badge on both of them and collapsed them
-     * into one entry in a rank-delta memo (#759). In team mode no row carries
-     * my player name at all, so a name match highlights nothing (#1015).
-     *
-     * Shared by the in-game leaderboard, the lightning recap and the reveal
-     * standings — it used to be copied into each of them.
-     */
     function myEntrant() {
         var team = window.QuizifyPlayerTeam;
         var mine = team && team.myTeam && team.myTeam();
         return (mine && (mine.team_id || mine.name)) || state.playerName;
     }
 
-    /** The stable key of one leaderboard row; falls back to the name. */
     function entrantKey(entry) {
         return (entry && (entry.entrant_id || entry.name)) || '';
     }
-
-    // ============================================
-    // Leaderboard Rendering
-    // ============================================
 
     function renderLeaderboard(containerId, players, myName) {
         var container = typeof containerId === 'string'
@@ -390,10 +250,6 @@
             : containerId;
         if (!container) return;
 
-        // Same row on all three surfaces (#787); the "(you)" badge is the only
-        // thing the phone hangs off it.
-        // #625: the audit named only player-game.js, but the same literal sat
-        // twice more in this file. `lobby.you` exists in all three bundles.
         container.innerHTML = window.QuizifyRenderShared.leaderboardRowsHtml(players, {
             nameSuffix: function (p) {
                 return (myName && p.name === myName)
@@ -403,15 +259,10 @@
         });
     }
 
-    // ============================================
-    // Collapsibles
-    // ============================================
-
     function setupCollapsibles() {
         var headers = document.querySelectorAll('.section-header-collapsible');
         for (var i = 0; i < headers.length; i++) {
             (function (header) {
-                // Skip if already wired
                 if (header.dataset.collapsibleInit) return;
                 header.dataset.collapsibleInit = '1';
 
@@ -432,13 +283,6 @@
         }
     }
 
-    // Paint the static UI emoji-icon spans with the shared Rounded Duotone
-    // SVG set (#225 P4). Any element carrying both `.qz-icon` and a
-    // `data-ui-icon="<name>"` gets its emoji glyph swapped for the matching
-    // window.QuizifyIcons.uiIcon() <svg>. The existing layout class
-    // (.section-icon / .control-icon / .btn-icon / .paused-icon / etc.) and
-    // the qz-icon--<tint> class stay put — we only replace innerHTML. Safe to
-    // call more than once; already-painted spans just get re-filled.
     function paintUiIcons(root) {
         var Icons = window.QuizifyIcons;
         if (!Icons || !Icons.uiIcon) return;
@@ -450,10 +294,6 @@
             if (svg) slots[i].innerHTML = svg;
         }
     }
-
-    // ============================================
-    // QR Code Generation
-    // ============================================
 
     function generateQR(containerId, url) {
         var container = typeof containerId === 'string'
@@ -477,16 +317,6 @@
         }
     }
 
-    // ============================================
-    // Feedback Icons (#220 P3)
-    // ============================================
-
-    // Maps a reveal-feedback / toast i18n key to its SVG glyph + tint. The
-    // emoji that used to live INSIDE the translated string (✅ Richtig, 🔥
-    // {count}er-Serie!, …) is pulled out into a text-only string, and the
-    // consuming JS renders the mapped glyph beside the text as a small
-    // inline .qz-icon. Tints follow the approved meaning→tint pairing
-    // (check=sage, cross/heartbreak=coral, bolt/flame/joker=sun, …).
     var FEEDBACK_ICON = {
         'reveal.correct':          { glyph: 'check',      tint: 'sage'  },
         'reveal.wrong':            { glyph: 'cross',      tint: 'coral' },
@@ -504,10 +334,6 @@
         'wager.bonusFromReaction': { glyph: 'party',      tint: 'coral' }
     };
 
-    // Returns the inline <span class="qz-icon feedback-icon qz-icon--TINT">
-    // <svg>…</svg></span> markup for a feedback glyph name, or '' if the
-    // shared icon set / glyph is unavailable (so a missing glyph paints
-    // nothing rather than breaking the surrounding markup).
     function feedbackIconHtml(glyph, tint) {
         var Icons = window.QuizifyIcons;
         if (!Icons || !Icons.uiIcon) return '';
@@ -516,10 +342,6 @@
         return '<span class="qz-icon feedback-icon qz-icon--' + (tint || 'mix') + '" aria-hidden="true">' + svg + '</span>';
     }
 
-    // Renders the icon mapped to an i18n key, prepended to an already-built
-    // (escaped) label string. Used by the reveal chips so each feedback row
-    // shows its glyph beside the text. If the key has no mapped glyph the
-    // label is returned unchanged.
     function feedbackLabel(key, escapedLabel) {
         var spec = FEEDBACK_ICON[key];
         if (!spec) return escapedLabel;
@@ -527,22 +349,8 @@
         return iconHtml ? (iconHtml + escapedLabel) : escapedLabel;
     }
 
-    // ============================================
-    // Toast Notification
-    // ============================================
-
-    // showToast(message, duration[, iconKey]) — when iconKey maps to a
-    // feedback glyph (#220 P3), the toast renders that SVG icon before the
-    // text (innerHTML); otherwise it stays a plain text-only toast.
-    /**
-     * Where the toast sits (#1077): below whatever header is on screen — the
-     * page header (logo, mute/zoom buttons) and the visible view's round row
-     * — instead of on top of them. Measured at show time, so a scrolled page
-     * (headers off screen) keeps the old 16 px.
-     */
     function _toastTop() {
         var top = 16;
-        // A header inside a hidden view measures 0 high, so it is skipped.
         ['.player-header', '.game-header-compact'].forEach(function (sel) {
             var anchors;
             try { anchors = document.querySelectorAll(sel); } catch (e) { return; }
@@ -554,12 +362,6 @@
         return top;
     }
 
-    // #1185: one toast at a time, the next one waits. Every caller used to
-    // write into the same element and a second toast inherited the first
-    // one's fade-out timer, so it vanished after a fraction of its time
-    // (a steal and a joker in one question were enough). Now each toast gets
-    // its whole duration, a repeat of the one on screen only restarts its
-    // clock, and the queue is short — an old toast is not worth a wait.
     var TOAST_FADE_MS = 300;
     var TOAST_QUEUE_MAX = 3;
     var _toastQueue = [];
@@ -572,8 +374,6 @@
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'error-toast';
-            // The look lives in CSS (.qz-toast, 02-shared.css, #1178), including
-            // #1077's `width:max-content` + viewport cap.
             toast.className = 'qz-toast qz-toast--error';
             document.body.appendChild(toast);
         }
@@ -616,7 +416,6 @@
     function showToast(message, duration, iconKey) {
         var item = { message: String(message == null ? '' : message), duration: duration || 3000, iconKey: iconKey || '' };
         if (_toastCurrent && _toastCurrent.message === item.message) {
-            // The same line again: keep it up, restart its clock.
             if (!_toastTimer) { _paintToast(item); return; }
             _armToastTimer(item.duration);
             return;
@@ -627,15 +426,6 @@
         if (_toastQueue.length > TOAST_QUEUE_MAX) _toastQueue.shift();
     }
 
-    /**
-     * Drop the toast on the floor (#838).
-     *
-     * showToast only fades the element out; the node keeps the text, and the
-     * node is fixed to the page rather than to a view, so a reset that fired
-     * inside a toast's own duration carried the last toast onto the join
-     * screen. Emptying it as well as hiding it also takes it out of the
-     * accessibility tree, where a faded-out toast is still a readable line.
-     */
     function clearToast() {
         _toastQueue = [];
         _toastCurrent = null;
@@ -648,34 +438,12 @@
         toast.textContent = '';
     }
 
-    // ============================================
-    // Host steps (#1183)
-    // ============================================
-
-    // Next, Skip, Pause and Resume advance the game for everyone. A second
-    // tap — a double tap, or a tap again because the screen has not changed
-    // yet — lands on whatever the button means next: "Next" becomes "Skip"
-    // of the question it just started, and the server scores that question
-    // at once. So the button locks the moment the step leaves: at least
-    // HOST_STEP_MIN_MS, and until the phase has moved on. HOST_STEP_MAX_MS
-    // frees it if the server refused and nothing moves, so a host is never
-    // left without a button. The console and the Lovelace card hold the same
-    // lock.
     var HOST_STEP_MIN_MS = 1500;
     var HOST_STEP_MAX_MS = 8000;
     var HOST_STEP_POLL_MS = 250;
-    // #1192: a second tap this soon after the first is a double tap, even when
-    // the game has already moved on and the button is live again.
     var HOST_STEP_DOUBLE_TAP_MS = 600;
 
-    // #1192: the lock keys on the state the tap left, not on the phase name
-    // alone. A question that ends inside the 1.5 s floor goes question ->
-    // reveal and lands on the phase the tap recorded; keyed on the name the
-    // lock never saw a change and held 8 s over a perfectly live button.
-    // phaseSeq counts every phase change (setPhase), so round 2's reveal,
-    // reached through its question, differs from round 1's.
     function setPhase(phase) {
-        // A repeated push of the phase we are in is not a new state.
         if (phase !== state.currentPhase) state.phaseSeq = (state.phaseSeq || 0) + 1;
         state.currentPhase = phase;
     }
@@ -687,16 +455,7 @@
     function hostStep(btn, sendFn, type, payload) {
         if (btn && btn._qzHostLock) {
             var held = btn._qzHostLock;
-            // A lock and an enabled button must never disagree: once the
-            // floor has passed and the game has moved on, an enabled button
-            // is a live button, whatever the release poll has not yet done.
             if (btn.disabled || !lockMoved(held)) return false;
-            // #1192: the 1.5 s floor guards a tap on an unchanged screen,
-            // and that is what the lock check above already does. Once the
-            // state has moved and the button is live, only a double tap (a
-            // second tap within moments of the first) is dropped; a question
-            // that ended fast puts a fresh reveal on screen inside 1.5 s and
-            // the host's tap on it is a decision.
             if (Date.now() - held.t0 < HOST_STEP_DOUBLE_TAP_MS) return false;
             btn._qzHostLock = null;
         }
@@ -719,27 +478,12 @@
         return true;
     }
 
-    // ============================================
-    // Haptics (#1183)
-    // ============================================
-
-    // A 10 ms tick when this phone's own answer, wager, bid, bet or power-up
-    // leaves. Android only, by feature detection: iOS Safari has no
-    // navigator.vibrate, and nothing here tries to fake one.
     function submitHaptic() {
         var nav = window.navigator;
         if (!nav || typeof nav.vibrate !== 'function') return false;
         try { return nav.vibrate(10) !== false; } catch (e) { return false; }
     }
 
-    // ============================================
-    // Session Storage Helpers
-    // ============================================
-
-    // #787: the host page writes the same two keys when it joins as a player,
-    // so the redirect to /quizify/player resumes instead of racing a fresh
-    // join. One owner for the key names — QuizifyClientCore — or the two
-    // spellings drift and the redirect silently starts over.
     function saveSession(token, name) {
         window.QuizifyClientCore.saveSession(token, name);
     }
@@ -756,15 +500,7 @@
         window.QuizifyClientCore.clearSession();
     }
 
-    // ============================================
-    // Name Validation
-    // ============================================
-
     function validateName(name) {
-        // Delegate to the shared, i18n-aware validator (utils.js). Kept as
-        // a thin wrapper so player-core's pu.validateName() calls are
-        // unchanged. Falls back to a local check only if utils.js somehow
-        // didn't load (it's a hard dependency, loaded before this bundle).
         if (utils && utils.validateName) {
             return utils.validateName(name);
         }
@@ -778,17 +514,6 @@
         return { valid: true, name: trimmed };
     }
 
-    // ============================================
-    // Shared standings rows — medal cards (Standings A, approved 2026-06-10).
-    // One rounded row card per player: a 30px round medal disc with the rank
-    // number (top-3 tinted gold/silver/bronze, rank 4+ neutral), the name, a
-    // small coral "DU"/"YOU" tag for the current player, and a right-aligned
-    // score. Reused by the lightning recap "Totals" (#246) and the end-screen
-    // "Gesamtwertung" standings (#248) so both screens read identically.
-    //
-    // rows: [{ rank, name, score, isYou }] — already sorted by score desc.
-    // opts: { youLabel } — localized "DU"/"YOU" tag text.
-    // ============================================
     function renderMedalStandings(target, rows, opts) {
         var container = (typeof target === 'string')
             ? document.getElementById(target) : target;
@@ -811,10 +536,6 @@
         }).join('');
     }
 
-    // ============================================
-    // Export
-    // ============================================
-
     window.QuizifyPlayerUtils = {
         state: state,
         escapeHtml: escapeHtml,
@@ -824,10 +545,6 @@
         createWebSocket: createWebSocket,
         updateConnectionIndicator: updateConnectionIndicator,
         setConnectionRetry: setConnectionRetry,
-        // #750: the kicked screen has to take the reconnect overlay down
-        // itself — nothing else will, since we never reconnect. #729: a join
-        // refused mid-reconnect needs the same, or the reason lands on a
-        // screen nobody can see.
         hideReconnectingOverlay: hideReconnectingOverlay,
         renderLeaderboard: renderLeaderboard,
         setupCollapsibles: setupCollapsibles,
@@ -856,34 +573,13 @@
 
 /* ============ player-sound.js ============ */
 
-/**
- * Quizify Player - Sound Module
- *
- * Short audio cues played on the player's own phone:
- *   - correct answer  → rising two-note chime
- *   - wrong answer     → low buzzer
- *   - last-5s ticking  → soft single tick per second
- *
- * All cues are synthesised with the Web Audio API (oscillators +
- * gain envelopes) so the integration ships no audio assets and the
- * page weight is unchanged.
- *
- * Mobile browsers require the AudioContext to be created/resumed from
- * a user gesture. We lazily create it and resume it on the first tap
- * anywhere (the player always taps to join / answer), so by the time a
- * cue fires the context is unlocked. If the user never interacts (or
- * the browser has no Web Audio support) every call is a silent no-op.
- *
- * A mute preference is persisted in localStorage and toggled via the
- * speaker button in the player header.
- */
 (function () {
     'use strict';
 
     var MUTE_KEY = 'quizify_sound_muted';
 
-    var ctx = null;          // lazily-created AudioContext
-    var muted = false;       // user preference
+    var ctx = null;
+    var muted = false;
     var _lastTickSecond = null;
 
     try {
@@ -907,30 +603,18 @@
                 return null;
             }
         }
-        // Autoplay policy: context may start/become suspended; resume is
-        // a no-op if already running and safe to call repeatedly.
         if (ctx.state === 'suspended' && typeof ctx.resume === 'function') {
-            ctx.resume().catch(function () { /* ignore */ });
+            ctx.resume().catch(function () { });
         }
         return ctx;
     }
 
-    // Unlock audio on the first user gesture so later programmatic cues
-    // are allowed to play on mobile.
     function unlock() {
         ensureCtx();
     }
     document.addEventListener('pointerdown', unlock, { once: false, passive: true });
     document.addEventListener('keydown', unlock, { once: false, passive: true });
 
-    /**
-     * Play a single tone with a short attack/decay envelope.
-     * @param {number} freq   - frequency in Hz
-     * @param {number} start  - delay before the tone starts (seconds)
-     * @param {number} dur    - tone duration (seconds)
-     * @param {string} type   - oscillator type
-     * @param {number} peak   - peak gain (0..1)
-     */
     function tone(freq, start, dur, type, peak) {
         var ac = ensureCtx();
         if (!ac) return;
@@ -939,7 +623,6 @@
         var gain = ac.createGain();
         osc.type = type || 'sine';
         osc.frequency.value = freq;
-        // Click-free envelope.
         gain.gain.setValueAtTime(0.0001, t0);
         gain.gain.exponentialRampToValueAtTime(peak || 0.18, t0 + 0.012);
         gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
@@ -949,32 +632,23 @@
         osc.stop(t0 + dur + 0.02);
     }
 
-    /** Rising two-note "correct" chime. */
     function playCorrect() {
         if (muted) return;
-        tone(660, 0, 0.14, 'sine', 0.18);   // E5
-        tone(990, 0.11, 0.20, 'sine', 0.18); // B5
+        tone(660, 0, 0.14, 'sine', 0.18);
+        tone(990, 0.11, 0.20, 'sine', 0.18);
     }
 
-    /** Low "wrong" buzzer. */
     function playWrong() {
         if (muted) return;
-        tone(196, 0, 0.26, 'sawtooth', 0.12); // G3
-        tone(146, 0.05, 0.26, 'sawtooth', 0.10); // D3
+        tone(196, 0, 0.26, 'sawtooth', 0.12);
+        tone(146, 0.05, 0.26, 'sawtooth', 0.10);
     }
 
-    /** Soft tick for the time-running-out countdown (last 5 seconds). */
     function playTick() {
         if (muted) return;
         tone(880, 0, 0.05, 'square', 0.06);
     }
 
-    /**
-     * Drive the last-5s ticking from a remaining-seconds value. Plays at
-     * most one tick per whole second and only inside the 1..5s window.
-     * Reset must be called when a new question starts.
-     * @param {number} remaining - seconds left
-     */
     function tickFromRemaining(remaining) {
         if (muted) return;
         var sec = Math.ceil(remaining);
@@ -984,7 +658,6 @@
         playTick();
     }
 
-    /** Clear the per-question tick guard so the next round can tick again. */
     function resetTick() {
         _lastTickSecond = null;
     }
@@ -997,8 +670,8 @@
         muted = !!value;
         try {
             window.localStorage.setItem(MUTE_KEY, muted ? '1' : '0');
-        } catch (e) { /* ignore */ }
-        if (!muted) ensureCtx(); // warm up on un-mute (still a gesture)
+        } catch (e) { }
+        if (!muted) ensureCtx();
         return muted;
     }
 
@@ -1021,26 +694,6 @@
 
 /* ============ player-a11y.js ============ */
 
-/**
- * Quizify Player - Accessibility Mode (#372)
- *
- * One opt-in comfort mode for the player's own phone: larger text and
- * motion held still. Persisted in localStorage and toggled from the button
- * next to the sound speaker in the player header — same idiom as
- * player-sound.js, deliberately, so the header has one row of small
- * personal switches rather than two unrelated affordances.
- *
- * The state lives as the class `a11y` on <html>. The CSS that reacts to it
- * is www/css/src/09-a11y.css.
- *
- * NOTE: the storage key is duplicated in a two-line inline script in
- * player.html's <head>. That is intentional and the duplication is the
- * point: this bundle loads at the end of <body>, so if the class were only
- * applied from here the page would paint once at normal size and then jump.
- * If you rename A11Y_KEY, rename it there too — the test
- * tests/test_accessibility_mode_372.py pins the two together so a one-sided
- * rename fails CI rather than silently reintroducing the flash.
- */
 (function () {
     'use strict';
 
@@ -1050,17 +703,12 @@
     try {
         enabled = window.localStorage.getItem(A11Y_KEY) === '1';
     } catch (e) {
-        // Private mode / storage disabled: the mode still works for this
-        // page view, it just does not survive a reload.
         enabled = false;
     }
 
     function apply() {
         var root = document.documentElement;
         if (!root) return;
-        // No classList.toggle(name, force) — that second argument is absent
-        // on older WebKit, which is exactly the vintage of phone likely to
-        // be handed to a guest.
         if (enabled) root.classList.add('a11y');
         else root.classList.remove('a11y');
     }
@@ -1073,14 +721,11 @@
         enabled = !enabled;
         try {
             window.localStorage.setItem(A11Y_KEY, enabled ? '1' : '0');
-        } catch (e) { /* ignore — see above */ }
+        } catch (e) { }
         apply();
         return enabled;
     }
 
-    // Re-assert on load: the head script already set the class, but a
-    // reload that races storage (or a browser that blocked it there) would
-    // otherwise leave the class and the preference out of step.
     apply();
 
     window.QuizifyA11y = {
@@ -1093,33 +738,19 @@
 
 /* ============ player-lobby.js ============ */
 
-/**
- * Quizify Player - Lobby Module
- * Lobby rendering, player list, QR code, admin controls, "How to Play" section
- */
-
 (function () {
     'use strict';
 
     var pu = window.QuizifyPlayerUtils;
     var state = pu.state;
 
-    // ============================================
-    // Player List Rendering
-    // ============================================
-
-    // Variant B+D layout. Paints the hero (mega avatar + name + "DU BIST DRIN")
-    // for this player, and the orbit chips for the OTHER players. The
-    // count line reads "+ N weitere" or "Du wartest noch allein…". Pure
-    // DOM writes — no state of its own; relies on state.playerName as
-    // the source of truth for "who am I".
     function _renderHeroAndOrbits(players, data) {
         var hero = document.getElementById('pl-mega-avatar');
         var nameEl = document.getElementById('pl-mega-name');
         var alsoEl = document.getElementById('pl-also');
         var orbits = document.getElementById('player-list');
         var metaEl = document.getElementById('pl-meta');
-        if (!orbits) return;  // legacy markup — nothing to paint
+        if (!orbits) return;
 
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
         var myName = state.playerName || '';
@@ -1131,7 +762,6 @@
             else others.push(p);
         }
 
-        // Hero — only meaningful once we know our color from the server.
         if (hero && nameEl) {
             var initial = (myName || '?').charAt(0).toUpperCase();
             var color = (me && me.color) || state.playerColor || 'var(--color-accent-primary)';
@@ -1141,16 +771,6 @@
             nameEl.textContent = myName || '…';
         }
 
-        // Meta line under the hero: difficulty + round count if known.
-        //
-        // #809: built out of data-i18n spans, not one composed string. The
-        // first game_state after `joined` runs the async setLanguage and then,
-        // synchronously, repaints this line — so a textContent write froze it
-        // in the bundle that was still loaded, and the later
-        // initPageTranslations() sweep found no attribute to re-render. The
-        // words each live in their own span with their own key; only the round
-        // NUMBER is written as text, because a number is the same in every
-        // language. Same shape as the renderAllTime fix below (#776).
         if (metaEl) {
             var bits = [];
             var diffIcons = { 'easy': '🌱', 'medium': '🎯', 'hard': '🔥' };
@@ -1160,8 +780,6 @@
             }
             var total = data && (data.total_rounds || data.num_rounds);
             if (total) {
-                // #1177: one key with a plural; the count rides along as
-                // params so the sweep re-renders it in a new language.
                 bits.push(_i18nSpan('game.questionsCount', t, { count: Number(total) }));
             }
             metaEl.innerHTML = bits.length
@@ -1169,9 +787,6 @@
                 : _i18nSpan('lobby.gameLobby', t);
         }
 
-        // Companion line — #809, same cause, one string. This one takes a
-        // {count}, so the params ride along as JSON the way #776 taught the
-        // sweep to read them.
         if (alsoEl) {
             var alsoKey = 'lobby.aloneWaiting';
             var alsoParams = null;
@@ -1188,9 +803,6 @@
             alsoEl.textContent = t(alsoKey, alsoParams);
         }
 
-        // Orbit chips — one per OTHER player. Uses the same color the
-        // server assigned so chips match what each player sees on their
-        // own phone.
         orbits.innerHTML = others.map(function (p) {
             var initial = (p.name || '?').charAt(0).toUpperCase();
             var bg = p.color || '#A89E89';
@@ -1205,25 +817,10 @@
         }).join('');
     }
 
-    /**
-     * Render this player's own all-time standing (#371, variant A).
-     *
-     * Called from player-core on `joined` / `reconnected`. The payload is
-     * per-player and arrives once — there is no roster path that could
-     * refresh it mid-lobby, and none is wanted: the numbers only change
-     * when a game ends.
-     *
-     * @param {Object|null} standing - {rank, total_players, wins, games_played}
-     *                                 or null for a player with no history.
-     */
-    // #624: `elementId` lets the same line render on the end screen too. It
-    // defaults to the lobby element, so every existing caller is unchanged.
     function renderAllTime(standing, elementId) {
         var el = document.getElementById(elementId || 'pl-alltime');
-        if (!el) return;  // legacy markup
+        if (!el) return;
         if (!standing || !standing.total_players) {
-            // First-timer, or analytics not wired: show nothing at all
-            // rather than "1st of 1", which would be a hollow brag.
             el.textContent = '';
             el.removeAttribute('data-i18n');
             el.removeAttribute('data-i18n-params');
@@ -1238,36 +835,16 @@
             wins: standing.wins || 0,
             games: standing.games_played || 0
         };
-        // #776: this line is written on `joined`, which lands BEFORE the first
-        // game_state frame — i.e. before the phone learns the game language.
-        // Without a data-i18n attribute the later initPageTranslations() sweep
-        // walks straight past it and the standing stays in the join-screen
-        // language while everything around it switches. Same shape as #648;
-        // the params ride along as JSON so the sweep can re-interpolate them.
         el.setAttribute('data-i18n', key);
         el.setAttribute('data-i18n-params', JSON.stringify(params));
         el.textContent = t(key, params);
         el.classList.remove('hidden');
     }
 
-    /**
-     * The all-time sentence (#776, #1177).
-     *
-     * One key since #1177: the bundle's plural rule picks "no win yet" for
-     * zero wins ("0 wins" reads like a taunt on the screen you just joined),
-     * and singular/plural for wins and games — it used to be five flat keys.
-     */
     function _allTimeKey() {
         return 'lobby.allTime';
     }
 
-    /**
-     * One translated word, wrapped so the sweep can find it again (#809).
-     *
-     * initPageTranslations() re-renders every element carrying `data-i18n`, so
-     * a line assembled from these spans survives a language change that lands
-     * after it was painted — which a single textContent write does not.
-     */
     function _i18nSpan(key, t, params) {
         var attr = params
             ? ' data-i18n-params="' + _escape(JSON.stringify(params)) + '"'
@@ -1276,14 +853,12 @@
             + _escape(t(key, params)) + '</span>';
     }
 
-    // Tiny helpers — keep scope tight.
     function _escape(s) {
         return String(s == null ? '' : s)
             .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
     function _hexWithAlpha(hex, alpha) {
-        // Accepts #RRGGBB or already-rgba/var() — fallback to original.
         if (typeof hex !== 'string' || !hex.startsWith('#') || hex.length !== 7) return hex;
         var r = parseInt(hex.slice(1, 3), 16);
         var g = parseInt(hex.slice(3, 5), 16);
@@ -1291,33 +866,13 @@
         return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
     }
 
-    /**
-     * Render the full lobby view from game state
-     * @param {Object} data - game_state message
-     */
     function renderLobby(data) {
         var players = data.players || [];
-        // Resolved here rather than off the `window.t` global the rest of this
-        // function used, so the lobby renders the same way every other block
-        // in this file does — and so it still renders when i18n has not
-        // published that global yet.
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
 
-        // Player count badge
         var countBadgeEl = document.getElementById('player-count-badge');
         if (countBadgeEl) countBadgeEl.textContent = players.length;
 
-        // Difficulty badge — was rendering as an empty pill because no
-        // code wrote into it. Map server difficulty value to a localised
-        // label via i18n + a small icon.
-        //
-        // #851: built out of a data-i18n span, not one composed string, for
-        // the reason #776/#809 keep proving — a textContent write freezes the
-        // word in whichever bundle happened to be loaded when the frame
-        // arrived, and leaves the initPageTranslations sweep nothing to find.
-        // The phone follows the room's language, so the badge in a German
-        // lobby read the English "Medium". Only the icon is written as text:
-        // an emoji is the same in every language.
         var diffBadgeEl = document.getElementById('lobby-difficulty-badge');
         if (diffBadgeEl) {
             var diffIcons = { 'easy': '🌱', 'medium': '🎯', 'hard': '🔥' };
@@ -1327,39 +882,25 @@
                     + _i18nSpan('difficulties.' + diff, t);
                 diffBadgeEl.classList.remove('hidden');
             } else {
-                // No difficulty info yet — hide the empty pill instead of
-                // rendering a hollow placeholder.
                 diffBadgeEl.classList.add('hidden');
                 diffBadgeEl.textContent = '';
             }
         }
 
-        // Players summary count
         var playersSummaryEl = document.getElementById('players-summary');
         if (playersSummaryEl) playersSummaryEl.textContent = players.length;
 
-        // Empty state
         var playersEmptyEl = document.getElementById('players-empty');
         if (playersEmptyEl) playersEmptyEl.classList.toggle('hidden', players.length > 0);
 
-        // Variant B+D layout: paint the hero (mega avatar + name + tag),
-        // then render OTHER players as orbit chips. Falls back gracefully
-        // on legacy markup — if the hero nodes aren't present, the orbit
-        // call still writes into #player-list as before.
         _renderHeroAndOrbits(players, data);
 
-        // Admin controls
         updateAdminControls(players);
 
-        // QR code / invite section
         if (data.join_url) {
             setupInviteSection(data.join_url);
         }
     }
-
-    // ============================================
-    // Player Joined / Left Handlers
-    // ============================================
 
     function handlePlayerJoined(data) {
         var players = data.players || [];
@@ -1393,26 +934,19 @@
         updateAdminControls(players);
     }
 
-    // ============================================
-    // Invite Section (QR + Dashboard Link)
-    // ============================================
-
     var currentJoinUrl = null;
 
     function setupInviteSection(joinUrl) {
         if (!joinUrl) return;
         currentJoinUrl = joinUrl;
 
-        // Render QR code
         pu.generateQR('player-qr-code', joinUrl);
 
-        // Set dashboard link
         var dashLink = document.getElementById('player-dashboard-url');
         if (dashLink) {
             dashLink.href = window.location.origin + '/quizify/dashboard';
         }
 
-        // Make QR clickable to open modal
         var qrContainer = document.getElementById('player-qr-code');
         if (qrContainer) {
             qrContainer.onclick = openQRModal;
@@ -1424,10 +958,6 @@
             };
         }
     }
-
-    // ============================================
-    // QR Modal
-    // ============================================
 
     function openQRModal() {
         if (!currentJoinUrl) return;
@@ -1477,10 +1007,6 @@
             }
         });
     }
-
-    // ============================================
-    // Invite Modal (in-game sharing)
-    // ============================================
 
     function openInviteModal() {
         if (!currentJoinUrl) return;
@@ -1571,10 +1097,6 @@
         });
     }
 
-    // ============================================
-    // Admin Controls
-    // ============================================
-
     function updateAdminControls(players) {
         var adminControls = document.getElementById('admin-controls');
         var lobbyStatus = document.getElementById('lobby-status');
@@ -1590,24 +1112,18 @@
             }
         }
 
-        // Only trust this roster's is_admin flag when our OWN entry is in it
-        // (issue #257). A broadcast that transiently omits us must not clobber
-        // state.isAdmin to false — otherwise the host loses admin controls on
-        // any roster snapshot that races their own (re)join. When our entry is
-        // absent we keep the prior state.isAdmin and hide the panel for now.
         var playerIsAdmin;
         if (currentPlayer) {
             playerIsAdmin = currentPlayer.is_admin === true;
             state.isAdmin = playerIsAdmin;
         } else {
-            playerIsAdmin = false; // can't show controls without our entry
+            playerIsAdmin = false;
         }
 
         if (playerIsAdmin) {
             adminControls.classList.remove('hidden');
             if (lobbyStatus) lobbyStatus.classList.add('hidden');
 
-            // Show start button when at least 1 player
             var startBtn = document.getElementById('start-game-btn');
             if (startBtn) {
                 startBtn.disabled = players.length < 1;
@@ -1622,13 +1138,8 @@
         var startBtn = document.getElementById('start-game-btn');
         if (startBtn) {
             startBtn.addEventListener('click', function () {
-                // #625: was a hardcoded "Starting...". `admin.starting` exists
-                // in all three bundles. Local `t` per this file's convention.
                 var t = (window.QuizifyI18n && window.QuizifyI18n.t)
                     || function (k) { return k; };
-                // #621: this guard used to `return` in silence, so the host
-                // tapping Start during a reconnect saw the button do nothing
-                // at all — indistinguishable from a broken button.
                 if (!state.ws || state.ws.readyState !== WebSocket.OPEN) {
                     var pu = window.QuizifyPlayerUtils;
                     if (pu && pu.showToast) {
@@ -1646,20 +1157,12 @@
         }
     }
 
-    // ============================================
-    // Init (called by core)
-    // ============================================
-
     function init(sendFn) {
         setupQRModal();
         setupInviteModal();
         setupAdminControls(sendFn);
         pu.setupCollapsibles();
     }
-
-    // ============================================
-    // Export
-    // ============================================
 
     window.QuizifyPlayerLobby = {
         init: init,
@@ -1676,25 +1179,6 @@
 
 
 /* ============ player-team.js ============ */
-
-/**
- * Quizify Player - Teams (#365)
- *
- * Three screens, all of them quiet by design:
- *
- *  1. The lobby (route C). One question first — alone, or with someone? Only
- *     a player who says "with someone" ever sees a team list, and the name is
- *     a suggestion rather than a field to fill in. Two cases the lobby answers
- *     itself, or the host gets asked: a latecomer after the start (teams are
- *     fixed, play alone) and the last member leaving (team dissolved, you play
- *     for yourself).
- *  2. The question screen. The standing answer shows as small member dots on
- *     the answer it sits on — no banner. Disagreement therefore shows as dots
- *     on two different rows. Known cost, accepted: someone mid-tap notices a
- *     change only if they look.
- *  3. The reveal and the finale need nothing here — they are the existing
- *     screens fed with teams instead of players.
- */
 
 (function () {
     'use strict';
@@ -1715,7 +1199,6 @@
             .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
-    // Soft Parlor palette, keyed by the colour names the server hands out.
     var TEAM_COLORS = {
         coral: '#E88A7F', sage: '#8FA98A', sky: '#7FA8C9',
         sun: '#E2B65C', mauve: '#A98FA9', brick: '#B4705C'
@@ -1725,14 +1208,10 @@
         return (team && TEAM_COLORS[team.color]) || '#A89E89';
     }
 
-    // ---- module state ------------------------------------------------
-    // `teams` is the whole room's teams; `myTeamId` is ours. Both come from
-    // the server — nothing here is inferred, because a wrong guess about who
-    // is in which team is invisible until the scores come out wrong.
     var teams = [];
     var myTeamId = null;
     var send = null;
-    var pickOpen = false;   // did this player say "with someone"?
+    var pickOpen = false;
     var lockTimer = null;
 
     function myTeam() {
@@ -1746,10 +1225,6 @@
         return !!myTeamId;
     }
 
-    // ==================================================================
-    // Lobby (route C)
-    // ==================================================================
-
     function renderLobby() {
         var section = $('team-section');
         if (!section) return;
@@ -1759,8 +1234,6 @@
         var pick = $('team-pick');
         var mineEl = $('team-mine');
 
-        // In a team: the list and the question step away entirely. What is
-        // left is the one thing that still matters — who is in it.
         if (mine) {
             if (ask) ask.classList.add('hidden');
             if (pick) pick.classList.add('hidden');
@@ -1827,8 +1300,6 @@
         var aloneBtn = $('team-alone-btn');
         if (aloneBtn) {
             aloneBtn.addEventListener('click', function () {
-                // Answering "alone" is a real answer: the whole team block
-                // disappears rather than sitting there asking again.
                 pickOpen = false;
                 var section = $('team-section');
                 if (section) section.classList.add('hidden');
@@ -1853,7 +1324,6 @@
         if (confirmBtn) {
             confirmBtn.addEventListener('click', function () {
                 var input = $('team-name-input');
-                // Empty is allowed on purpose — the server names the team.
                 send('create_team', { name: input ? input.value.trim() : '' });
                 openNameRow(false);
             });
@@ -1884,15 +1354,8 @@
         }
     }
 
-    // ==================================================================
-    // Server messages
-    // ==================================================================
-
     function handleTeamsUpdate(msg) {
         teams = msg.teams || [];
-        // Our own membership can change without us doing anything — the last
-        // member leaving dissolves the team we were in. Re-derive it from the
-        // roster rather than trusting the id we remember.
         var found = null;
         for (var i = 0; i < teams.length; i++) {
             if ((teams[i].members || []).indexOf(state.playerName) !== -1) {
@@ -1913,11 +1376,6 @@
     function handleTeamJoined(msg) {
         var team = msg.team || {};
         myTeamId = team.team_id || null;
-        // Fold the confirmed team into the roster right away. The broadcast
-        // that carries it to everyone else is a separate message, and waiting
-        // for it would leave the founder looking at an unchanged lobby for a
-        // round-trip — the one moment she is watching for a sign that it
-        // worked.
         var known = false;
         for (var i = 0; i < teams.length; i++) {
             if (teams[i].team_id === myTeamId) { teams[i] = team; known = true; break; }
@@ -1936,19 +1394,11 @@
         renderChip();
     }
 
-    /**
-     * A refused team action. The lobby answers the two awkward cases itself
-     * instead of leaving the player to ask the host.
-     */
     function handleTeamError() {
         showNote(t('teams.closedAfterStart'));
         pickOpen = false;
         renderLobby();
     }
-
-    // ==================================================================
-    // Question screen — dots on the answer row
-    // ==================================================================
 
     function renderChip(setBy) {
         var chip = $('team-chip');
@@ -1978,13 +1428,6 @@
         }
     }
 
-    /**
-     * Paint the standing team answer.
-     *
-     * ``msg.answer_index`` is already expressed in THIS phone's answer order —
-     * the server remaps it per member, because every player sees the answers
-     * shuffled differently (#253). Doing that mapping here would be guesswork.
-     */
     function handleTeamAnswer(msg) {
         clearDots();
         var buttons = document.querySelectorAll('#answer-buttons .answer-btn');
@@ -2008,11 +1451,6 @@
         applyLock(msg.lock_seconds || 0);
     }
 
-    /**
-     * The brake. It belongs to the team, so every member's buttons go quiet
-     * for the same short moment — that is what stops two people flipping the
-     * answer back and forth, rather than slowing one of them down.
-     */
     function applyLock(seconds) {
         var buttons = document.querySelectorAll('#answer-buttons .answer-btn');
         if (lockTimer) { clearTimeout(lockTimer); lockTimer = null; }
@@ -2032,16 +1470,11 @@
         }, seconds * 1000);
     }
 
-    /** Called at the start of every round — the answer does not carry over. */
     function resetRound() {
         if (lockTimer) { clearTimeout(lockTimer); lockTimer = null; }
         clearDots();
         renderChip();
     }
-
-    // ==================================================================
-    // Export
-    // ==================================================================
 
     window.QuizifyPlayerTeam = {
         setupLobby: setupLobby,
@@ -2061,11 +1494,6 @@
 
 /* ============ player-reveal.js ============ */
 
-/**
- * Quizify Player - Reveal Module
- * Reveal phase: fun fact, estimate reveal, result hero, answer strip, standings
- */
-
 (function () {
     'use strict';
 
@@ -2073,62 +1501,35 @@
     var game = window.QuizifyPlayerGame;
     var state = pu.state;
 
-    // Translation helper — falls back to the key if i18n hasn't loaded yet.
-    // window.t is wired in i18n.js. The QuizifyUtils.t reference used to live
-    // here didn't exist (QuizifyUtils only has escapeHtml), which is why
-    // every "Final Results" / "Next Round" stayed in English on a German
-    // game even though the keys existed in de.json.
     function t(key, params) {
         if (typeof window.t === 'function') return window.t(key, params);
         return key;
     }
 
-    // Track the current question id so the 🚩 flag button knows what to send.
     var _currentQuestionId = '';
     var _flaggedThisRound = false;
 
-    // ============================================
-    // Reveal View Update
-    // ============================================
-
-    /**
-     * Update reveal view with round results
-     * @param {Object} data - State data from server
-     */
-    // Memo of the previous round's leaderboard so we can compute rank deltas
-    // ("↑1", "↓1", "—") without server help. Keyed by entrant id (#1015).
     var _prevRanks = null;
-    // The ranks the deltas on screen are measured against, kept apart from
-    // `_prevRanks` so a repaint for the host's buttons (#1150) does not turn
-    // every arrow into a dash.
     var _deltaBase = null;
     var _lastStandings = null;
     var _scoringStatus = null;
 
-    // Clear the rank-delta memo on game_reset (issue #257) — otherwise the
-    // first reveal of the next game computes deltas against the previous
-    // game's final ranks.
     function resetRankMemo() {
         _prevRanks = null;
         _deltaBase = null;
         _shownScores = {};
     }
 
-    // #1169: the total each standings row was last shown with — the digit
-    // roll runs only on a number that moved.
     var _shownScores = {};
 
     function updateRevealView(data) {
         var players = data.players || [];
         var allAnswers = data.all_answers || [];
 
-        // Remember the question id and reset per-round flag state so the
-        // 🚩 button knows what to POST and can be clicked again next round.
         _currentQuestionId = data.question_id || '';
         _flaggedThisRound = false;
         _resetFlagButton();
 
-        // Find current player's entry in all_answers
         var myAnswerEntry = null;
         for (var i = 0; i < allAnswers.length; i++) {
             if (allAnswers[i].player_name === state.playerName) {
@@ -2137,7 +1538,6 @@
             }
         }
 
-        // Find current player in the leaderboard (has is_admin)
         var currentPlayer = null;
         for (var j = 0; j < players.length; j++) {
             if (players[j].name === state.playerName) {
@@ -2146,29 +1546,19 @@
             }
         }
 
-        // Round indicator — now lives inline next to the wordmark in
-        // .player-header (moved from .pl-result-crown 2026-05-27).
-        // Visibility is toggled by showView() in player-utils.js.
         var roundEl = document.getElementById('header-round-num');
         var totalEl = document.getElementById('header-round-total');
         if (roundEl) roundEl.textContent = data.round || 1;
         if (totalEl) totalEl.textContent = data.total_rounds || 10;
 
-        // Fun fact
         renderFunFact(data.fun_fact);
 
-        // #275: estimate rounds render a number-line reveal instead of the
-        // answer-tile flash + distribution + answer strip. Build it and skip
-        // the MC reveal body below.
         var estimateEl = document.getElementById('reveal-estimate');
         var answerStripEl = document.getElementById('reveal-answer-strip');
         if (data.question_type === 'estimate' && data.estimate) {
             if (estimateEl) estimateEl.classList.remove('hidden');
             if (answerStripEl) answerStripEl.classList.add('hidden');
             renderEstimateReveal(data);
-            // #951: an estimate round ships no all_answers — the guess lives
-            // in data.estimate.guesses. Without this the hero read the
-            // players row, which never has an answer, and said "Time's up".
             var estimateEntry = _estimateResultFor(data) || currentPlayer;
             renderResultHero(estimateEntry, data);
             renderStandings(data.leaderboard || players);
@@ -2179,32 +1569,18 @@
         if (estimateEl) estimateEl.classList.add('hidden');
         if (answerStripEl) answerStripEl.classList.remove('hidden');
 
-        // Flash answer buttons correct/wrong. Per-player shuffle means the
-        // server's `correct_answer_index` is in the CANONICAL shuffle and
-        // doesn't match this player's button positions. flashAnswerButtons
-        // prefers the per-player `correct_button_index` the server now ships
-        // in this player's all_answers entry (#308 follow-up), falling back to
-        // a local index/text heuristic — correct even with duplicate answer
-        // texts (#308).
         flashAnswerButtons(data.correct_answer, myAnswerEntry);
 
-        // New result page: hero + answer strip + standings (with medals)
         var resultPlayer = myAnswerEntry || currentPlayer;
         renderResultHero(resultPlayer, data);
         renderAnswerStrip(myAnswerEntry, data.correct_answer);
         renderStandings(data.leaderboard || players);
 
-        // Audio cue on the player's own device: a chime when they got it
-        // right, a buzzer when wrong. Skipped for players who joined late /
-        // missed the round (no per-player result). Honours the mute toggle.
         playResultCue(resultPlayer);
 
-        // Admin controls — sticky bottom bar
         _renderRevealAdminControls(data, currentPlayer);
     }
 
-    // Sticky admin bar (Next Round / Final Results). Extracted so both the MC
-    // and the #275 estimate reveal paths share it.
     function _renderRevealAdminControls(data, currentPlayer) {
         var adminControls = document.getElementById('reveal-admin-controls');
         var nextRoundBtn = document.getElementById('next-round-btn');
@@ -2233,28 +1609,11 @@
         }
     }
 
-    // ============================================
-    // Estimate number-line reveal (#275)
-    // ============================================
-
-    /**
-     * Whether a guess row is this phone's own entry (#962). In team mode the
-     * row is the team's — named after the team, carrying its ``members`` — so
-     * the name alone cannot say it: two teams may share one (#759).
-     */
     function _isMyEstimateRow(g, me) {
         if (g.members && g.members.length) return g.members.indexOf(me) !== -1;
         return g.player_name === me;
     }
 
-    /**
-     * This phone's result on an estimate round, in the shape the result hero
-     * reads (#951). In team mode the row is the team's (#962); an older
-     * server sent one row per member with the team's guess carried by one of
-     * them (#602), so a teammate's scored row still stands in for mine.
-     * Every ranked guess earns points, so a guess is never the "wrong" state.
-     * Returns null when this phone has no row at all (joined late).
-     */
     function _estimateResultFor(data) {
         var guesses = (data.estimate && data.estimate.guesses) || [];
         var me = state.playerName;
@@ -2281,22 +1640,17 @@
             player_name: me,
             guess: row.guess,
             correct: true,
-            // No base/speed/streak split on closeness scoring — the estimate
-            // card below carries the distance. Without this the hero's
-            // breakdown invents "Base score 10".
             base_score: 0,
             points_earned: row.points || 0
         };
     }
 
-    /** No answer and no estimate guess this round (#951). */
     function _gaveNoAnswer(player) {
         return player.missed_round === true || player.no_answer === true ||
             ((player.answer_index === null || player.answer_index === undefined) &&
              (player.guess === null || player.guess === undefined));
     }
 
-    /** "A & B", "A, B & C" — the co-winners of a tied estimate (#966). */
     function _joinNames(names) {
         if (names.length < 2) return names.join('');
         return names.slice(0, -1).join(', ') + ' & ' + names[names.length - 1];
@@ -2305,7 +1659,6 @@
     function _fmtEstimate(val, unit) {
         if (val === null || val === undefined) return '—';
         var n = Math.round(val * 1000) / 1000;
-        // #1177: digits in the game language ("384.400", "3,5").
         var I = window.QuizifyI18n;
         var text = (I && I.formatNumber)
             ? I.formatNumber(n)
@@ -2313,13 +1666,6 @@
         return unit ? (text + ' ' + unit) : text;
     }
 
-    /**
-     * Render the horizontal number line from data.estimate: every connected
-     * player's guess as a labelled marker positioned along the visual range,
-     * the current player tagged "Du", the true value marked with a coral pin,
-     * the winner highlighted, and a ranked result list (guess · ±distance ·
-     * points). Mirrors /tmp/qz275-reveal.html.
-     */
     function renderEstimateReveal(data) {
         var container = document.getElementById('reveal-estimate');
         if (!container) return;
@@ -2329,14 +1675,6 @@
         var guesses = (est.guesses || []).filter(function (g) { return !g.no_guess && g.guess !== null && g.guess !== undefined; });
         var noGuessCount = (est.guesses || []).length - guesses.length;
 
-        // Visual range: zoom to the span of the actual data (all guesses +
-        // the true answer) rather than the full question min/max, so clustered
-        // guesses spread out across the axis instead of bunching in the middle
-        // (mirrors the mockup, which zoomed 100..260 around guesses of 150..240).
-        // Clamp the zoomed window to the question range so we never imply a
-        // value outside [min, max] is possible.
-        // #967: the ends snap to a round tick and stay inside [min, max];
-        // the arithmetic lives in render-shared so the TV prints the same.
         var dataVals = guesses.map(function (g) { return Number(g.guess); }).concat([answer]);
         var range = window.QuizifyRenderShared.numberLineRange(dataVals, est.min, est.max, est.step);
         var lo = range.lo;
@@ -2347,16 +1685,11 @@
             return Math.max(0, Math.min(100, ((v - lo) / span) * 100));
         }
 
-        // Winners = every rank-1 guesser. A tie shares rank 1 (and the
-        // points), so the banner has to name all of them, not the first (#966).
         var winners = guesses.filter(function (g) { return g.rank === 1; });
         var winner = winners.length ? winners[0] : null;
 
         var me = state.playerName;
 
-        // Build markers. Sort by guess position first, then alternate label
-        // above/below in that order so adjacent markers never share a side
-        // (reduces label overlap when guesses cluster).
         var sortedForMarkers = guesses.slice().sort(function (a, b) {
             return Number(a.guess) - Number(b.guess);
         });
@@ -2387,7 +1720,6 @@
             '<div class="nl-truth-flag" style="left:' + truthLeft.toFixed(1) + '%;">' +
                 pu.escapeHtml(_fmtEstimate(answer, '')) + ' ✓</div>';
 
-        // Ranked result list, sorted by rank then distance.
         var ranked = guesses.slice().sort(function (a, b) {
             if (a.rank !== b.rank) return a.rank - b.rank;
             return a.distance - b.distance;
@@ -2417,9 +1749,6 @@
             } else {
                 winnerName = t('estimate.playerWon', { name: winner.player_name });
             }
-            // Tied entrants can sit on either side of the answer (100 and 460
-            // around 280): one "Guess X" would be wrong for the other, so the
-            // sub-line only shows when every winner guessed the same number.
             var sameGuess = winners.every(function (g) { return Number(g.guess) === Number(winner.guess); });
             var winnerSub = sameGuess
                 ? '<div class="est-winner-sub">' + pu.escapeHtml(t('estimate.guessOff', { guess: _fmtEstimate(Number(winner.guess), ''), off: _fmtEstimate(winner.distance, '') })) + '</div>'
@@ -2459,14 +1788,6 @@
             noGuessNote;
     }
 
-    // ============================================
-    // Fun Fact
-    // ============================================
-
-    /**
-     * Render fun fact slide-in card
-     * @param {string|null} text - Fun fact text
-     */
     function renderFunFact(text) {
         var container = document.getElementById('fun-fact-container');
         var funFactEl = document.getElementById('fun-fact');
@@ -2481,24 +1802,6 @@
         }
     }
 
-    // ============================================
-    // Result Hero — picks 1 of 4 states (Soft Parlor redesign, 2026-05-24):
-    //   X = streak hero (this round correct + the server says the streak scores)
-    //   Y = big +N points (correct, no scoring streak yet)
-    //   Z = wrong  (soft brick verdict + the round's points, 0 or a lost wager)
-    //   W = missed (muted clock + Zeit abgelaufen + the round's points)
-    // ============================================
-
-    // #1066: which of X and Y it is comes from the server (`streak_active` on
-    // the row, set from the same constant the multiplier uses). The threshold
-    // used to live here as a constant of its own and had drifted one below
-    // the multiplier, so the headline announced a streak that did not score.
-
-    /**
-     * Fire the correct/wrong audio cue for this player's round result.
-     * Mirrors the verdict logic in renderResultHero (missed → no cue).
-     * @param {Object} player - this player's result entry
-     */
     function playResultCue(player) {
         var snd = window.QuizifyPlayerSound;
         if (!snd || !player) return;
@@ -2507,13 +1810,6 @@
         else snd.playWrong();
     }
 
-    /**
-     * The round's points as the wrong / missed states print them (#1031).
-     * Usually 0, but a lost final-round wager books a negative round score
-     * (a wrong answer and, since #653, no answer both cost the stake), and a
-     * steal (#472) can fold points into a round that was otherwise lost. A
-     * literal 0 there contradicted the standings on the same screen.
-     */
     function _signedPoints(points) {
         var n = Number(points) || 0;
         if (n < 0) return '\u2212' + Math.abs(n);
@@ -2521,9 +1817,6 @@
         return '0';
     }
 
-    // #1173: the bank is not on screen at the reveal (the wager panel is a
-    // one-line badge), so the stake's outcome plays in the hero's own number:
-    // a win rolls up in sage, a loss fades in. Once per bet, never on a repaint.
     function _wagerReveal(hero, score) {
         var game = window.QuizifyPlayerGame;
         var stake = game && game.takeWagerStake ? game.takeWagerStake() : 0;
@@ -2558,7 +1851,6 @@
         hero.className = 'pl-result-hero';
         hero.innerHTML = '';
 
-        // Joined late: server returns no per-player entry. Show a friendly note.
         if (!player) {
             hero.classList.add('pl-result-hero--missed');
             hero.innerHTML =
@@ -2574,16 +1866,10 @@
         var roundScore = player.round_score || player.points_earned || 0;
         var correctAnswer = (data && data.correct_answer) || '';
 
-        // Score breakdown (used by states X and Y)
         var BASE_POINTS = 10;
         var baseScore = (typeof player.base_score === 'number') ? player.base_score : (correct ? BASE_POINTS : 0);
         var speedBonus = player.speed_bonus || 0;
         var streakBonus = player.streak_bonus || 0;
-        // #1005: the difficulty uplift and the Double power-up arrive as their
-        // own points. They used to sit inside streak_bonus, so a first correct
-        // answer read "1-streak bonus! +9" (mostly the 1.5x) and a doubled
-        // round showed its doubling nowhere. Each part is the points that
-        // factor added, and base + all parts is the round score.
         var difficultyBonus = player.difficulty_bonus || 0;
         var doubleBonus = player.double_bonus || 0;
         var breakdownBits = [];
@@ -2597,7 +1883,6 @@
             : '';
 
         if (missed) {
-            // State W — muted clock + Zeit abgelaufen
             hero.classList.add('pl-result-hero--missed');
             hero.innerHTML =
                 '<span class="pl-result-verdict-circle pl-result-verdict-circle--missed" aria-hidden="true">⏱</span>' +
@@ -2608,7 +1893,6 @@
         }
 
         if (!correct) {
-            // State Z — wrong. Show "Serie verloren" only if a streak was active.
             var prevStreak = player.previous_streak || 0;
             hero.classList.add('pl-result-hero--wrong');
             hero.innerHTML =
@@ -2620,9 +1904,7 @@
             return;
         }
 
-        // Correct: pick X (streak) or Y (big)
         if (player.streak_active) {
-            // State X — flame headline
             hero.classList.add('pl-result-hero--streak');
             hero.innerHTML =
                 '<div class="pl-result-flame qz-icon qz-icon--sun" aria-hidden="true">' + (window.QuizifyIcons && window.QuizifyIcons.uiIcon ? window.QuizifyIcons.uiIcon('flame') : '🔥') + '</div>' +
@@ -2632,11 +1914,6 @@
             return;
         }
 
-        // State Y — big +N. Skip the green ✓ circle on correct answers:
-        // the "+N PUNKTE" already reads as the positive verdict, and the
-        // extra tick competes for attention with the points number.
-        // Wrong answers (state Z) keep their ✗ so the negative outcome
-        // is still unmistakable.
         hero.classList.add('pl-result-hero--big');
         hero.innerHTML =
             '<div class="pl-result-big-points">+' + roundScore + '</div>' +
@@ -2644,10 +1921,6 @@
             breakdownHtml;
     }
 
-    // ============================================
-    // Answer strip — single line under the hero showing the correct answer
-    // and a ✓/✗/— mark relative to what the player picked.
-    // ============================================
     function renderAnswerStrip(myAnswer, correctAnswer) {
         var strip = document.getElementById('reveal-answer-strip');
         if (!strip) return;
@@ -2673,7 +1946,6 @@
             return;
         }
 
-        // Wrong — show YOUR answer + the correct one in the sub area (already in hero), strip says "Deine Antwort"
         strip.classList.add('pl-result-answer-strip--wrong');
         var myText = myAnswer.answer_text || myAnswer.answer || '';
         strip.innerHTML =
@@ -2681,25 +1953,13 @@
             '<span class="pl-result-answer-mark">✗</span>';
     }
 
-    // ============================================
-    // Standings — top 3 with medal tints, "me" row with coral left border,
-    // rank-delta arrows computed from the previous round's snapshot.
-    // ============================================
-    // Fallback when a standings row carries no server colour: the generated
-    // palette, the same list the server assigns from (#1178). Read on use, so
-    // the module does not depend on tokens.js having run first.
     function _colorFor(name, idx) {
         var palette = (window.QuizifyTokens && window.QuizifyTokens.players) || ['var(--color-text-light)'];
-        // Stable color per name: hash first char, fall back to position.
         if (!name) return palette[idx % palette.length];
         var c = name.charCodeAt(0) || 0;
         return palette[(c + idx) % palette.length];
     }
 
-    /**
-     * The host's `scoring_status` (#1150). Only a host who plays along ever
-     * gets one, so for every other phone the standings stay the room's.
-     */
     function updateScoringStatus(msg) {
         _scoringStatus = msg;
         if (_lastStandings) renderStandings(_lastStandings, true);
@@ -2713,11 +1973,6 @@
         var shared = window.QuizifyRenderShared;
         leaderboard = shared.scoringHostRows(leaderboard, _scoringStatus);
 
-        // Normalize: leaderboard may be an array of player objects with
-        // {name, score} or {player_name, total_score}. The server sends the
-        // leaderboard already sorted with a competition `rank` (#308); the
-        // local sort only orders the `players` fallback, and is stable so a
-        // server-sorted list keeps its order.
         var rows = (Array.isArray(leaderboard) ? leaderboard : []).map(function(p, idx) {
             var name = p.name || p.player_name || '';
             var score = (typeof p.score === 'number') ? p.score
@@ -2726,9 +1981,6 @@
             var color = p.color || null;
             return {
                 source: p,
-                // Keyed by entrant, not by the printed name (#1015, as #759
-                // did for the in-game leaderboard): rows are teams in team
-                // mode, and two teams may share a name.
                 key: pu.entrantKey({ entrant_id: p.entrant_id, name: name }),
                 name: name, score: score, color: color,
                 rank: (typeof p.rank === 'number') ? p.rank : null,
@@ -2737,25 +1989,20 @@
         });
         rows.sort(function(a, b) { return (b.score - a.score) || (a.idx - b.idx); });
 
-        // The printed place is the server's tied rank — the same "1, 1, 3"
-        // every other leaderboard shows. Without one (the `players`
-        // fallback), rank the same way: equal scores share a place.
         rows.forEach(function(r, i) {
             if (r.rank !== null) return;
             r.rank = (i > 0 && rows[i - 1].score === r.score) ? rows[i - 1].rank : i + 1;
         });
 
-        // Build new rank map for next round's delta computation.
         var newRanks = {};
         rows.forEach(function(r) { newRanks[r.key] = r.rank; });
 
-        // Compute delta vs. previous round's snapshot (if any).
         function deltaFor(key) {
             if (!_deltaBase) return null;
             var prev = _deltaBase[key];
             var now = newRanks[key];
             if (typeof prev !== 'number' || typeof now !== 'number') return null;
-            return prev - now;  // positive = moved up
+            return prev - now;
         }
 
         var medalClass = { 1: 'pl-result-srow--gold', 2: 'pl-result-srow--silver', 3: 'pl-result-srow--bronze' };
@@ -2801,19 +2048,12 @@
             });
         }
 
-        // Store snapshot for the NEXT round's delta computation.
         _prevRanks = newRanks;
     }
-
-    // ============================================
-    // Answer Button Flash
-    // ============================================
 
     function flashAnswerButtons(correctAnswerText, myEntry) {
         var answerButtons = document.getElementById('answer-buttons');
         if (!answerButtons) return;
-        // #1169: the lock-in's 40 % dim is for the wait; the reveal's own
-        // marks decide what stands out from here.
         if (answerButtons.classList) answerButtons.classList.remove('is-locked');
 
         var buttons = answerButtons.querySelectorAll('.answer-btn');
@@ -2821,34 +2061,6 @@
 
         var mySubmittedIndex = game && game.getLastSubmittedIndex ? game.getLastSubmittedIndex() : -1;
 
-        // Highlight the correct answer by INDEX, not by text (#308).
-        //
-        // The old code matched the button whose *text* equalled
-        // correct_answer — but a question with two identical answer texts
-        // would highlight the wrong (first-matching) button. We resolve a
-        // single correct *button index* instead.
-        //
-        // Per-player shuffle subtlety: answer buttons are in THIS player's
-        // own shuffled order. The server's `correct_answer_index` is in the
-        // CANONICAL shuffle (not this player's), and `all_answers[].answer_index`
-        // is the ORIGINAL question index — neither maps to a button position
-        // on the client. We resolve the correct button index in priority order:
-        //
-        //   0. PREFERRED — `myEntry.correct_button_index`: the server now
-        //      computes the correct answer's position in THIS player's own
-        //      shuffled order (#308 follow-up) and ships it in the player's
-        //      `all_answers` entry on both the live reveal broadcast and the
-        //      reconnect snapshot. This is exact even when the player answered
-        //      wrong / didn't answer AND two answers share the same text.
-        //      Absent (older server) → fall through to the local heuristic.
-        //   1. If this player answered CORRECTLY, their own submitted button
-        //      position IS the correct button — exact, immune to duplicate
-        //      texts. (`mySubmittedIndex` is the button position the player
-        //      tapped; `myEntry.correct` confirms it was right.)
-        //   2. Otherwise we fall back to text, but skip the player's own
-        //      wrong button when it shares the correct text (the common
-        //      duplicate-text collision), and on a remaining tie pick the
-        //      first match.
         function _buttonAnswerText(btn) {
             var span = btn.querySelector('.answer-btn-text, .answer-text, span');
             return (span ? span.textContent : btn.textContent || '').trim();
@@ -2859,15 +2071,10 @@
         var serverBtnIdx = (myEntry && typeof myEntry.correct_button_index === 'number')
             ? myEntry.correct_button_index : -1;
         if (serverBtnIdx >= 0 && serverBtnIdx < buttons.length) {
-            // (0) Server told us the exact correct button in our own order.
             correctIndex = serverBtnIdx;
         } else if (myEntry && myEntry.correct && mySubmittedIndex >= 0 && mySubmittedIndex < buttons.length) {
-            // (1) We answered right → our tapped button is the correct one.
             correctIndex = mySubmittedIndex;
         } else if (correctText) {
-            // (2) Resolve by text, preferring a match that isn't our own
-            //     known-wrong button (resolves the duplicate-text trap for
-            //     the wrong-answerer case); else first match.
             var firstMatch = -1;
             for (var bi = 0; bi < buttons.length; bi++) {
                 if (_buttonAnswerText(buttons[bi]) === correctText) {
@@ -2895,14 +2102,6 @@
             if (wrongBtn) { wrongBtn.classList.remove('dimmed', 'correct'); wrongBtn.classList.add('wrong'); }
         }
     }
-
-    // ============================================
-    // Flag question (🚩)
-    // ============================================
-    //
-    // POSTs the current question's id to /api/quizify/flag-question so the
-    // pack maintainer can triage ambiguous or wrong answers later. Reset
-    // each round so a player can't spam-flag.
 
     function _resetFlagButton() {
         var btn = document.getElementById('flag-question-btn');
@@ -2936,23 +2135,17 @@
                 pu.showToast(t('reveal.flagThanks'), 1800);
             }).catch(function (err) {
                 console.warn('[Quizify] flag error', err);
-                // Re-enable so the user can retry.
                 _flaggedThisRound = false;
                 _resetFlagButton();
             });
         });
     }
 
-    // Wire once the module loads — the button lives in player.html.
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', _wireFlagButton);
     } else {
         _wireFlagButton();
     }
-
-    // ============================================
-    // Export
-    // ============================================
 
     window.QuizifyPlayerReveal = {
         updateRevealView: updateRevealView,
@@ -2965,14 +2158,6 @@
 
 
 /* ============ player-end.js ============ */
-
-/**
- * Quizify Player - End Module
- * End screen — Variant D "Hybrid" (#338): winner hero banner, horizontal
- * highlight chip row, ranked scoreboard with score bars + inline badges,
- * play-again / new-game controls. Renders entirely from the live finale
- * payload (leaderboard + superlatives) — no hard-coded sample data.
- */
 
 (function () {
     'use strict';
@@ -2988,87 +2173,43 @@
         return key;
     }
 
-    // _tf — translate with an English/literal fallback when the key is
-    // missing (i18n.t returns the key unchanged on a miss).
     function _tf(key, fallback, params) {
         var v = _t(key, params);
         return (v === key) ? fallback : v;
     }
 
-    // ============================================
-    // End View
-    // ============================================
-
-    /**
-     * Update end view with final standings and stats
-     * @param {Object} data - State data with leaderboard and superlatives
-     */
     function updateEndView(data) {
         window.scrollTo(0, 0);
         var leaderboard = (data.leaderboard || []).slice();
 
-        // Match on the entrant id, not the printed name (#759): two teams may
-        // carry the same name, and by name the "(du)" badge lit up on both of
-        // them. The name is still what the row prints.
         var team = window.QuizifyPlayerTeam;
         var mine = team && team.myTeam && team.myTeam();
         var me = (mine && (mine.team_id || mine.name)) || state.playerName;
         leaderboard.forEach(function (entry) {
             entry.is_current = ((entry.entrant_id || entry.name) === me);
         });
-        // Defensive: ensure rank order (server sends sorted, but be safe).
         leaderboard.sort(function (a, b) {
             return (a.rank || 0) - (b.rank || 0);
         });
 
         var superlatives = data.superlatives || [];
 
-        // #1169: the 3 → 2 → 1 reveal, once per finished game. The end view
-        // is repainted by later frames (a snapshot, the share card arriving),
-        // and replaying a 2.5 s reveal on each of them would hide the winner
-        // again every time.
         playEndReveal(leaderboard);
 
-        // 1. Header meta line: "N Runden · M Spieler"
         renderEndHeader(leaderboard, data);
 
-        // 2. Winner hero banner
         renderWinnerHero(leaderboard);
 
-        // Build the highlight set once — shared by the chip row (3) and the
-        // inline scoreboard badges (4), keyed by winner name.
         var highlights = buildHighlights(leaderboard, superlatives);
 
-        // 3. Highlights chip row
         renderHighlightChips(highlights);
 
-        // 4. Gesamtwertung scoreboard with bars + inline badges
         renderScoreboard(leaderboard, highlights);
 
-        // 5. Shareable result card (#369) — the player's own run, ready to
-        // send into a chat. Renders only for the viewer's own entry.
         renderShareCard(data.share, state.playerName);
 
-        // Admin / player controls.
-        //
-        // Source-of-truth: trust ``state.isAdmin`` for gating the
-        // host-only "Start New Game" button. Earlier versions only
-        // looked at ``currentPlayer.is_admin`` from the leaderboard,
-        // which created a chronic lockout: when a player joined while
-        // the server was already in FINALE, the snapshot's leaderboard
-        // (built by ``state.get_leaderboard()``) didn't include
-        // ``is_admin`` per row, so the admin's button stayed hidden.
-        // ``state.isAdmin`` is set from the URL ``?admin=true`` flag
-        // and confirmed by the server's ``joined`` reply. v1.1.4 also
-        // restores ``is_admin`` to the snapshot leaderboard, so either
-        // signal is now sufficient — but local state is authoritative.
         var adminControls = document.getElementById('end-admin-controls');
         var playerMessage = document.getElementById('end-player-message');
-        // #546: the second signal used to read a free ``currentPlayer``, which
-        // only exists as a local inside player-reveal.js / player-lobby.js —
-        // each module is its own IIFE, so this threw a ReferenceError and took
-        // the rest of this function with it, leaving BOTH blocks hidden. The
-        // viewer's own row is already marked ``is_current`` above; use that.
         var me = leaderboard.find(function (p) { return p.is_current; });
         var amAdmin = !!state.isAdmin || !!(me && me.is_admin);
 
@@ -3080,9 +2221,6 @@
             if (playerMessage) playerMessage.classList.remove('hidden');
         }
 
-        // Broadcast Living Room: no confetti on finale.
-        // The restraint is the differentiation. A single spotlight and tabular score-tick IS the effect.
-        // See DESIGN.md — "The dramatic pause IS the effect. Restraint crowns louder than chaos."
     }
 
     var _endRevealKey = null;
@@ -3096,42 +2234,26 @@
         if (key === _endRevealKey) return;
         _endRevealKey = key;
         view.classList.remove('is-revealing');
-        // Restart the CSS animations: without a reflow between remove and
-        // add, the browser coalesces the two and nothing replays.
         void view.offsetWidth;
         view.classList.add('is-revealing');
     }
 
-    // ============================================
-    // Header meta line
-    // ============================================
-
-    /**
-     * Fill the "N Runden · M Spieler" meta line under the title.
-     * Rounds come from total_rounds (or the max rounds_played fallback);
-     * players from the people behind the rows (a team row counts its members).
-     */
     function renderEndHeader(leaderboard, data) {
         var metaEl = document.getElementById('end-meta-line');
         if (!metaEl) return;
 
         var rounds = (data && data.total_rounds) || 0;
         if (!rounds) {
-            // Fallback: the highest rounds_played across players.
             leaderboard.forEach(function (p) {
                 if ((p.rounds_played || 0) > rounds) rounds = p.rounds_played;
             });
         }
-        // Count people, not rows (#969): in team mode a row is a team, and
-        // "2 players" for two teams of two undercounts the room by half.
         var players = 0;
         leaderboard.forEach(function (p) {
             players += Array.isArray(p.members) ? p.members.length : 1;
         });
         if (!players) players = leaderboard.length;
 
-        // #976 / #1177: the singular comes from the bundle's plural rule
-        // ({count, plural, one{…} other{…}}), not from a second `…One` key.
         var parts = [];
         if (rounds) {
             parts.push(_tf('game.questionsCount', rounds + ' questions', { count: rounds }));
@@ -3140,19 +2262,12 @@
         metaEl.textContent = parts.join(' · ');
     }
 
-    // ============================================
-    // Winner hero banner (SIEGER)
-    // ============================================
-
     function renderWinnerHero(leaderboard) {
         var nameEl = document.getElementById('end-hero-name');
         var scoreEl = document.getElementById('end-hero-score');
         var winner = leaderboard.find(function (p) { return p.rank === 1; }) || leaderboard[0];
-        // #1078: a tie at the top crowns everyone on it ("Anna & Bert"),
-        // not whoever the sort happened to put first.
         var shared = window.QuizifyRenderShared && window.QuizifyRenderShared.winnerNames;
         var names = winner ? (shared ? shared(leaderboard) : winner.name) : '';
-        // textContent escapes already — no escapeHtml (would double-encode).
         if (nameEl) nameEl.textContent = names || '---';
         if (scoreEl) {
             scoreEl.textContent = winner
@@ -3161,17 +2276,10 @@
         }
     }
 
-    // ============================================
-    // Highlights — shared model
-    // ============================================
-
-    // award_key → chip disc tint class. Keeps the chip palette stable per
-    // highlight type (sun = top/score, coral = streak, sage = best round,
-    // sky = fastest) — mirrors the approved Variant-D mockup.
     var CHIP_TINT = {
-        'topScore': 'disc-sun',          // overall winner / highest total
+        'topScore': 'disc-sun',
         'highlights.awards.hotStreak': 'disc-coral',
-        'highlights.awards.bestRound': 'disc-sage',    // best single round (#860)
+        'highlights.awards.bestRound': 'disc-sage',
         'highlights.awards.fastestFinger': 'disc-sky',
         'highlights.awards.comebackKing': 'disc-sage',
         'highlights.awards.mostAccurate': 'disc-sage',
@@ -3179,7 +2287,6 @@
         'highlights.awards.knowledgeExpert': 'disc-sun'
     };
 
-    // award_key → emoji glyph for the chip disc + inline scoreboard badge.
     var CHIP_EMOJI = {
         'topScore': '🏅',
         'highlights.awards.hotStreak': '🔥',
@@ -3191,20 +2298,10 @@
         'highlights.awards.knowledgeExpert': '🧠'
     };
 
-    /**
-     * Build the highlight list rendered by the chip row + inline badges.
-     * Source of truth is the server-computed ``superlatives`` payload (already
-     * i18n-keyed), prepended with a derived "Höchste Punktzahl" chip for the
-     * overall winner. Renders ONLY the highlights the payload provides — a
-     * missing superlative simply omits its chip.
-     *
-     * @returns {Array<{key,emoji,tint,title,value,player,badge}>}
-     */
     function buildHighlights(leaderboard, superlatives) {
         var out = [];
         var seenPlayerBadge = {};
 
-        // Derived: overall highest total score (the winner).
         var winner = leaderboard.find(function (p) { return p.rank === 1; }) || leaderboard[0];
         if (winner && winner.score > 0) {
             out.push({
@@ -3218,8 +2315,6 @@
             });
         }
 
-        // Server-computed superlatives (fastest finger, hot streak, best round,
-        // comeback, etc.). Each carries award_key/detail_key + winner.
         (superlatives || []).forEach(function (award) {
             var key = award.award_key || '';
             var emoji = CHIP_EMOJI[key] || award.icon || '🏆';
@@ -3244,8 +2339,6 @@
             });
         });
 
-        // Resolve inline scoreboard badges: each player gets the emoji of every
-        // highlight they own (dedup per player+emoji).
         out.forEach(function (h) {
             if (!h.player) return;
             var k = h.player + '|' + h.badge;
@@ -3255,10 +2348,6 @@
 
         return out;
     }
-
-    // ============================================
-    // Highlights chip row (horizontal scroll)
-    // ============================================
 
     function renderHighlightChips(highlights) {
         var section = document.getElementById('end-highlights-section');
@@ -3285,10 +2374,6 @@
         section.classList.remove('hidden');
     }
 
-    // ============================================
-    // Gesamtwertung scoreboard (bars + inline badges)
-    // ============================================
-
     function renderScoreboard(leaderboard, highlights) {
         var board = document.getElementById('end-scoreboard');
         if (!board) return;
@@ -3296,14 +2381,10 @@
         var youLabel = _tf('lobby.you', 'Du');
         var awayText = _tf('lobby.away', 'away');
 
-        // Map player name → ordered list of badge emojis they own. The "🏅"
-        // overall-winner badge is implicit (rank 1 row is gold) so skip it on
-        // the rows to avoid clutter; keep the earned superlative badges
-        // (⚡ fastest, 🔥 streak, 🎯 best round, etc.).
         var badgesByPlayer = {};
         (highlights || []).forEach(function (h) {
             if (!h.player || h._dupBadge) return;
-            if (h.key === 'topScore') return; // implicit on the gold row
+            if (h.key === 'topScore') return;
             (badgesByPlayer[h.player] = badgesByPlayer[h.player] || []).push({
                 emoji: h.badge,
                 title: h.title
@@ -3319,7 +2400,6 @@
             var isWinner = (rank === 1);
             var pct = topScore > 0 ? Math.max(4, Math.round((entry.score / topScore) * 100)) : 0;
 
-            // Rank disc: gold for #1, silver for #2, neutral otherwise.
             var discClass = 'r-neutral';
             if (rank === 1) discClass = 'r-gold';
             else if (rank === 2) discClass = 'r-silver';
@@ -3338,8 +2418,6 @@
             var away = (entry.connected === false)
                 ? '<span class="sb-away">(' + pu.escapeHtml(awayText) + ')</span>' : '';
 
-            // #1169: `data-place` puts the row on the podium's 3 → 2 → 1
-            // clock (07-player.css), the same one the television runs.
             return '<div class="qz-rank-row sb-row' + (isYou ? ' sb-row--me' : '') +
                     (entry.connected === false ? ' sb-row--away' : '') +
                     '" data-place="' + rank + '">' +
@@ -3359,64 +2437,27 @@
         board.innerHTML = html;
     }
 
-    // ============================================
-    // Admin Actions
-    // ============================================
-
-    // Rematch button removed in v1.1.3. Hosts always start a fresh
-    // game from the admin URL (which also resets player session
-    // tokens). Keeping a single primary CTA on the finale screen
-    // simplifies the host's mental model — there's exactly one
-    // post-game action.
-
-    /**
-     * Wire up the finale CTAs.
-     *
-     * Two buttons:
-     *   - Wieder spielen (same settings): single-tap rematch. Server keeps
-     *     players + scores zeroed, reuses the cached settings. The admin
-     *     stays on /quizify/player and just waits for the next round.
-     *   - Neues Spiel: full reset — back to /quizify/admin setup screen.
-     */
     function setupNewGameButton() {
         var playAgainBtn = document.getElementById('play-again-same-btn');
         var newGameBtn = document.getElementById('new-game-btn');
 
         if (playAgainBtn) {
-            // #877: re-arm the button on every finale, not only the first.
-            // The tap disables it and swaps its label for an hourglass so it
-            // cannot double-fire, and nothing ever put either back — but a
-            // rematch keeps the phone on this same page, so the second finale
-            // showed the first game's spent hourglass. A third game could then
-            // only be started through "New game", which throws everyone back
-            // to the admin setup screen. The label is re-read from i18n so it
-            // comes back in the language the room is playing in.
             playAgainBtn.disabled = false;
             playAgainBtn.textContent = _tf('admin.playAgainSame', 'Play again');
 
             playAgainBtn.onclick = function () {
                 var ws = state.ws;
                 if (!ws || ws.readyState !== WebSocket.OPEN) {
-                    // Fall back to full reset if our WS is gone.
                     if (newGameBtn) newGameBtn.click();
                     return;
                 }
                 playAgainBtn.disabled = true;
                 playAgainBtn.innerHTML = '<span>⏳</span>';
-                try { ws.send(JSON.stringify({ type: 'play_again' })); } catch (e) { /* ignore */ }
-                // Server will broadcast game_state QUESTION_ACTIVE → the
-                // phase router in player-core picks it up and switches
-                // views. No navigation needed.
+                try { ws.send(JSON.stringify({ type: 'play_again' })); } catch (e) { }
             };
         }
 
-        // The manual Lightning Round finale trigger (issue #42) was retired in
-        // #285 — the Lightning Round is now an automatic mid-game event.
-
         if (newGameBtn) {
-            // #1183: New game throws every guest out of the end screen while
-            // they are still sharing it, so it asks first — the sheet and the
-            // words the console uses for its own reset.
             newGameBtn.onclick = function () {
                 var confirmThen = window.QuizifyPlayer && window.QuizifyPlayer.confirmThen;
                 if (confirmThen) confirmThen(newGameBtn, 'newGame', _startNewGame);
@@ -3425,42 +2466,21 @@
     }
 
     function _startNewGame() {
-        // #894: the player session belongs to QuizifyClientCore —
-        // spelling the two keys out here was a second owner waiting
-        // to drift. `quizify_is_admin` went with it: nothing in the
-        // repo has ever set that key.
-        //
-        // #981: and the in-memory half of the identity belongs to
-        // player-core's forgetIdentity(), the same call the kick, the
-        // reset and a refused join make. Resolved at click time
-        // because player-core.js loads after this module.
         var forgetIdentity = window.QuizifyPlayer && window.QuizifyPlayer.forgetIdentity;
         if (forgetIdentity) forgetIdentity(); else pu.clearSession();
         try {
             sessionStorage.removeItem('quizify_admin_name');
-        } catch (e) { /* ignore */ }
+        } catch (e) { }
 
         var ws = state.ws;
         if (ws && ws.readyState === WebSocket.OPEN) {
-            try { ws.send(JSON.stringify({ type: 'reset_game' })); } catch (e) { /* ignore */ }
+            try { ws.send(JSON.stringify({ type: 'reset_game' })); } catch (e) { }
         }
         window.location.href = '/quizify/admin';
     }
 
-    // ============================================
-    // Shareable result card (#369)
-    // ============================================
-
-    // One glyph per round. ``timeout`` gets its own mark instead of being
-    // folded into ❌ — "I ran out of time" and "I answered wrong" are
-    // different stories, and the server already tells them apart.
     var RESULT_GLYPH = { correct: '✅', wrong: '❌', timeout: '⬜' };
 
-    /**
-     * Build the text that actually leaves the phone.
-     * Kept separate from rendering so it can be unit-tested and so the
-     * clipboard fallback and navigator.share send byte-identical text.
-     */
     function buildShareText(entry, packs) {
         if (!entry) { return ''; }
         var lines = [];
@@ -3500,8 +2520,6 @@
         var section = document.getElementById('end-share-section');
         if (!section) { return; }
         var entry = findShareEntry(share, playerName);
-        // No entry means this viewer is a pure dashboard/spectator socket, or
-        // the player never played a round. Nothing honest to share.
         if (!entry || !entry.rounds) {
             section.classList.add('hidden');
             return;
@@ -3556,16 +2574,10 @@
             function done(msgKey, fallback) {
                 if (status) { status.textContent = _tf(msgKey, fallback); }
             }
-            // navigator.share is the good path: it opens the OS sheet, which
-            // is where "send to the family chat" actually lives. It needs a
-            // user gesture and HTTPS, so the clipboard is the fallback, not
-            // an afterthought — plenty of HA installs run over plain HTTP.
             if (navigator.share) {
                 navigator.share({ text: text }).then(function () {
                     done('share.shared', 'Shared');
                 }).catch(function (err) {
-                    // AbortError = the user closed the sheet. Saying
-                    // "copied" there would be a lie.
                     if (err && err.name === 'AbortError') { return; }
                     copyToClipboard(text, done);
                 });
@@ -3588,8 +2600,6 @@
     }
 
     function legacyCopy(text, done) {
-        // execCommand is deprecated but still the only path on older
-        // in-app browsers, which is exactly where party guests land.
         try {
             var ta = document.createElement('textarea');
             ta.value = text;
@@ -3607,10 +2617,6 @@
         }
     }
 
-    // ============================================
-    // Export
-    // ============================================
-
     window.QuizifyPlayerEnd = {
         updateEndView: updateEndView,
         buildShareText: buildShareText,
@@ -3627,18 +2633,6 @@
 
 /* ============ player-lightning.js ============ */
 
-/**
- * Quizify Player - Lightning Round Module (issue #42)
- *
- * Renders the fast lightning question view + the end recap grid. The mode
- * has NO reveal between questions, fixed points per correct answer, and
- * power-ups disabled — so this module is intentionally light: show the
- * question, let the player tap once, lock the buttons, wait for the next
- * one to be pushed by the server.
- *
- * Core (player-core.js) injects its `send` function via setSend() so we
- * don't need our own WebSocket handle.
- */
 (function () {
     'use strict';
 
@@ -3653,12 +2647,8 @@
         return fn(key, vars);
     }
 
-    var _answeredIndex = -1; // shuffled button index we've answered
-    var _questionIndex = -1; // #405: server question index of the live question
-
-    // ------------------------------------------------------------------
-    // Intro splash (issue #201 — "Bolt Burst")
-    // ------------------------------------------------------------------
+    var _answeredIndex = -1;
+    var _questionIndex = -1;
 
     function handleLightningSplash(msg) {
         msg = msg || {};
@@ -3673,15 +2663,9 @@
             secEl.textContent = Math.round(msg.seconds_per_question) + 's';
         }
 
-        // #285: the splash auto-advances — no host Start bar. Everyone sees
-        // the "Starting…" hint while the round arms itself.
         var waitHint = document.getElementById('lightning-splash-waithint');
         if (waitHint) waitHint.classList.remove('hidden');
     }
-
-    // ------------------------------------------------------------------
-    // Question render
-    // ------------------------------------------------------------------
 
     function handleLightningQuestion(msg) {
         pu.showView('lightning-view');
@@ -3696,14 +2680,9 @@
 
         var img = document.getElementById('lightning-image');
         if (img) {
-            // Same guard as player-game.js renderQuestion (issue #257),
-            // now shared via QuizifyUtils.safeImageUrl (#540) — rejects
-            // javascript:/data: and other schemes before they reach
-            // img.src, while allowing the local static mount (#536).
             var safeImg = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
                 ? window.QuizifyUtils.safeImageUrl(msg.image_url) : '';
             if (safeImg) {
-                // #467: localized generic alt for the lightning image question.
                 var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
                 img.src = safeImg;
                 img.alt = t('game.questionImageAlt');
@@ -3720,8 +2699,6 @@
             var span = document.getElementById('lightning-answer-text-' + i);
             var btn = document.querySelector('[data-lightning-answer="' + i + '"]');
             if (span) {
-                // #283/#312: answers may be objects ({text, ...}) or strings —
-                // normalize before rendering.
                 var a = answers[i];
                 span.textContent = ((a && typeof a === 'object') ? a.text : a) || '';
             }
@@ -3739,24 +2716,14 @@
         var timer = document.getElementById('lightning-timer');
         if (timer) timer.textContent = Math.ceil(msg.seconds || 15);
 
-        // #1169: the question entrance at half length — Lightning questions
-        // come every few seconds. The clock above is already set.
         var shared = window.QuizifyRenderShared;
         if (shared && shared.playEntrance) {
             shared.playEntrance(qtext,
                 document.querySelectorAll('[data-lightning-answer]'), { fast: true });
         }
 
-        // #285: no host "end now" control during the auto round.
-
         _answeredIndex = -1;
 
-        // #895b: a snapshot rebuild, not a fresh question. The server tells
-        // this phone whether its entrant has already answered the question it
-        // is being handed back — a reload otherwise came back to three live
-        // buttons, and the second tap is dropped without a reply
-        // (``record_answer`` refuses it, the handler stays silent), so the
-        // screen offered an answer the room would never receive.
         if (msg.you_answered) {
             lockAnswered(
                 (typeof msg.you_answer_index === 'number') ? msg.you_answer_index : -1
@@ -3764,15 +2731,6 @@
         }
     }
 
-    /**
-     * Grey the three buttons and mark the one that stands (#895b).
-     *
-     * The same end state ``submitAnswer`` leaves behind, so a phone that
-     * reloaded mid-question and one that never did read identically.
-     * ``index`` is this phone's own button order; -1 means "answered, but the
-     * button is unresolvable" (a shuffle the server could not map), which
-     * still has to lock — the answer is in either way.
-     */
     function lockAnswered(index) {
         _answeredIndex = index;
         var btns = document.querySelectorAll('[data-lightning-answer]');
@@ -3798,11 +2756,6 @@
     }
 
     function submitAnswer(shuffledIndex) {
-        // Team mode (#552): the tap sets the TEAM's answer, which any member
-        // may still change until the clock stops. So it neither locks this
-        // phone nor counts as this player's final say — the server answers
-        // with `lightning_team_answer`, which marks what stands and applies
-        // the shared lock.
         if (inTeam()) {
             _send('lightning_answer', {
                 answer_index: shuffledIndex, index: _questionIndex
@@ -3810,16 +2763,10 @@
             return;
         }
 
-        // One answer per question; ignore re-taps.
         if (_answeredIndex !== -1) return;
         _answeredIndex = shuffledIndex;
-        // #405: stamp the tap with the live question index so the server can
-        // drop it if the lightning loop has already advanced to the next Q.
         _send('lightning_answer', { answer_index: shuffledIndex, index: _questionIndex });
 
-        // Lock buttons + mark the chosen one. No correctness shown until
-        // the recap (no reveal between questions) — except the lightweight
-        // ack flips a subtle state via handleLightningAnswerResult.
         var btns = document.querySelectorAll('[data-lightning-answer]');
         for (var i = 0; i < btns.length; i++) {
             btns[i].disabled = true;
@@ -3833,14 +2780,6 @@
 
     var _lightningLockTimer = null;
 
-    /**
-     * The team's standing lightning answer (#552).
-     *
-     * ``msg.answer_index`` is already expressed in THIS phone's answer order —
-     * the server remaps it per member, because every player sees the answers
-     * shuffled differently. The lock belongs to the team, so all buttons go
-     * quiet together for the same short moment.
-     */
     function handleLightningTeamAnswer(msg) {
         if (typeof msg.index === 'number' && msg.index !== _questionIndex) return;
         var btns = document.querySelectorAll('[data-lightning-answer]');
@@ -3869,15 +2808,9 @@
     }
 
     function handleLightningAnswerResult(msg) {
-        // Optional subtle feedback on the player's own button (still no
-        // "the right answer was X" — that's reserved for the recap).
         var scoreEl = document.getElementById('lightning-score');
         if (scoreEl && typeof msg.score === 'number') scoreEl.textContent = msg.score;
     }
-
-    // ------------------------------------------------------------------
-    // Recap render
-    // ------------------------------------------------------------------
 
     function handleLightningRecap(msg) {
         pu.showView('lightning-recap-view');
@@ -3889,31 +2822,11 @@
         if (adminCtl) adminCtl.classList.toggle('hidden', !state.isAdmin);
         if (playerMsg) playerMsg.classList.toggle('hidden', !!state.isAdmin);
 
-        // #877: re-arm Continue on every recap, not only the first one.
-        // The tap disables the button so it cannot double-fire, and nothing
-        // ever undid that — but a rematch keeps the phone on this same page
-        // (play_again broadcasts a game_state, nobody navigates) and the
-        // server clears _lightning_fired, so game two has a lightning round
-        // of its own. Its recap used to arrive with game one's dead button,
-        // and since the host is a player by default, the one person who has
-        // to move the game on was the one sitting in front of it.
         var continueBtn = document.getElementById('lightning-recap-continue-btn');
         if (continueBtn) continueBtn.disabled = false;
     }
 
-    /**
-     * Whose row is "mine" in the recap (#552).
-     *
-     * In team mode the round scored the TEAM, so the recap is keyed by the
-     * team — looking myself up by player name finds nothing and every
-     * question silently renders as a miss, no matter how the team did.
-     *
-     * The key is the team ID since #728: two teams may carry the same name,
-     * and by name they shared one recap row and one score. The name is still
-     * what gets drawn — it arrives in `recap.names` and in each leaderboard
-     * row — but it is no longer what anything is looked up by.
-     */
-    var myEntrant = pu.myEntrant;  // mine.team_id, else my name (player-utils)
+    var myEntrant = pu.myEntrant;
 
     function renderRecap(recap) {
         var lb = recap.leaderboard || [];
@@ -3927,18 +2840,12 @@
                     rank: p.rank,
                     name: p.name,
                     score: p.score,
-                    // Match on the entrant key, not the printed name — two
-                    // teams may share a name (#728), and only one of them
-                    // is mine.
                     isYou: pu.entrantKey(p) === meRow
                 };
             });
             pu.renderMedalStandings(lbEl, rows, { youLabel: youLabel });
         }
 
-        // Per-question recap rows (Variant C refined): one row per question,
-        // focused on THIS player. Always shows the correct answer (green);
-        // when the player answered wrong, also shows their own wrong pick.
         var grid = document.getElementById('lightning-recap-grid');
         if (grid) {
             var me = myEntrant();
@@ -3947,7 +2854,7 @@
                 var result = (q.results || {})[me] || 'miss';
                 var ok = result === 'correct';
                 var rowCls = ok ? 'lr-recap-row ok' : 'lr-recap-row no';
-                var badge = ok ? '✓' : '✗'; // ✓ / ✗
+                var badge = ok ? '✓' : '✗';
 
                 var html = '<div class="' + rowCls + '">' +
                     '<span class="lr-recap-badge">' + badge + '</span>' +
@@ -3962,7 +2869,6 @@
                             pu.escapeHtml(q.correct_answer) +
                         '</div>';
 
-                // Player answered wrong → surface their pick.
                 if (!ok && result === 'wrong') {
                     var chosen = (q.chosen || {})[me];
                     if (chosen) {
@@ -3980,10 +2886,6 @@
         }
     }
 
-    // ------------------------------------------------------------------
-    // Wiring
-    // ------------------------------------------------------------------
-
     function init() {
         var btns = document.querySelectorAll('[data-lightning-answer]');
         for (var i = 0; i < btns.length; i++) {
@@ -3993,14 +2895,9 @@
                 });
             })(i);
         }
-        // #285: the splash auto-advances and the round auto-ends — no host
-        // start/end controls. The recap's only action resumes the paused main
-        // game via the normal next_question advance.
         var continueBtn = document.getElementById('lightning-recap-continue-btn');
         if (continueBtn) {
             continueBtn.addEventListener('click', function () {
-                // #1183: the shared host-step lock (≥ 1.5 s and until the
-                // phase moves on) instead of a one-shot disable.
                 window.QuizifyPlayerUtils.hostStep(continueBtn, _send, 'next_question');
             });
         }
@@ -4022,20 +2919,6 @@
 
 /* ============ player-hotseat.js ============ */
 
-/**
- * Quizify Player — Hot Seat auction (#616)
- *
- * Three states share one panel, because they are one continuous moment for
- * the player: bid for the chair, then either answer it alone or stake on
- * whoever won it.
- *
- * The bid is a PERCENT of your own score, never a number of points. In points
- * the auction would always go to whoever is already ahead, which is the
- * opposite of what this mode is for — see game/hot_seat.py for the full
- * reasoning. The slider therefore shows both numbers: the percentage you are
- * committing and what it costs you right now.
- */
-
 (function () {
     'use strict';
 
@@ -4044,7 +2927,7 @@
         bidPlaced: false,
         seated: false,
         betPlaced: false,
-        betSide: null,      // #1183: chosen, not yet placed
+        betSide: null,
         score: 0,
         winner: null
     };
@@ -4063,22 +2946,9 @@
         return document.getElementById(id);
     }
 
-    /**
-     * Paint (or clear) the shared question banner (#802).
-     *
-     * The detour borrows ``#question-media`` from the normal round, and only
-     * ``question_started`` ever wrote to it — so the seat holder answered
-     * "Which animal is this?" under the PREVIOUS round's picture, or under
-     * nothing at all, while the television showed the right one. An empty URL
-     * hides the banner, which is what the auction wants: bidding is a bet on
-     * yourself, not on a picture you have already seen.
-     */
     function paintQuestionImage(imgUrl) {
         var fn = window.QuizifyPlayerGame
             && window.QuizifyPlayerGame.renderQuestionImageBanner;
-        // No reveal style and no duration: the hot seat has no progressive
-        // reveal, and passing the answer clock would blur a picture nobody
-        // asked to have blurred.
         if (fn) fn(imgUrl || '', null, 0);
     }
 
@@ -4086,19 +2956,6 @@
         return el('hotseat-panel');
     }
 
-    /**
-     * Clear the last round's question off the game view (#1033).
-     *
-     * The auction opens straight from that round's reveal, and #802/#940
-     * only took its picture and its reveal marks away: the category, the
-     * question text, the answered row and the whole answer grid (power-up
-     * button included) stayed standing under the bid card. On the winner's
-     * phone the grid survived the award too, so a quick tap in that gap
-     * landed on a question that was already over. The chair's own question
-     * puts the grid back (``renderSeatAnswers``) and the next round's
-     * ``renderQuestion`` restores all of it, the same way it does after the
-     * final round's wager window, which clears the same furniture.
-     */
     function clearPreviousQuestion() {
         var category = el('question-category');
         if (category) category.textContent = '';
@@ -4116,21 +2973,6 @@
         if (node) node.classList.toggle('hidden', !show);
     }
 
-    /**
-     * Write the panel's headline (#864).
-     *
-     * ``#hotseat-title`` carries ``data-i18n="hotSeat.auctionTitle"`` in the
-     * markup, because the auction is the state the panel opens in. Every
-     * later state wrote ``textContent`` and left that key sitting on the
-     * element — so the next ``initPageTranslations()`` sweep (a language
-     * switch, a ``game_state`` carrying the room's language) put *"The chair
-     * goes to the highest bid"* back over the award, the bet window and the
-     * settlement, and the card announced an auction while showing its result.
-     *
-     * The key travels with the line instead, params and all — the #776
-     * pattern — so a sweep re-renders whichever sentence is actually on
-     * screen rather than the one the page shipped with.
-     */
     function setTitle(key, params) {
         var title = el('hotseat-title');
         if (!title) return;
@@ -4140,14 +2982,6 @@
         title.textContent = t(key, params);
     }
 
-    /**
-     * Whose row is "mine" (#804/#728).
-     *
-     * The settlement is keyed by ENTRANT, not by player: in team mode the
-     * chair is bought out of the team's purse and the deltas land on the team
-     * id. Looking myself up by name there finds nothing, which on a phone
-     * reads as "the biggest swing of the night did not touch you".
-     */
     function myEntrant() {
         var team = window.QuizifyPlayerTeam;
         var mine = (team && team.myTeam) ? team.myTeam() : null;
@@ -4167,15 +3001,6 @@
         _state.bidding = false;
     }
 
-    /**
-     * Put the whole detour away.
-     *
-     * The one teardown for the panel, and since #864 it is driven from
-     * ``player-core.js`` rather than only from the next auction: the Hot Seat
-     * fires once per game, so "the next auction clears it" meant "nothing
-     * clears it". ``GAME_VIEW_PANELS`` names this function as the panel's
-     * teardown and runs it on the frame that opens the next screen.
-     */
     function reset() {
         _state.bidding = false;
         _state.bidPlaced = false;
@@ -4184,15 +3009,9 @@
         _state.betSide = null;
         _state.seatAnswering = false;
         _state.winner = null;
-        // #859: the settlement of the LAST chair must not be standing under
-        // the next auction's slider.
         stage('hotseat-result-stage', false);
         hide();
     }
-
-    // ------------------------------------------------------------------
-    // Bidding
-    // ------------------------------------------------------------------
 
     function handleAuctionYou(msg) {
         var p = panel();
@@ -4204,20 +3023,9 @@
         _state.betSide = null;
         _state.score = msg.score || 0;
 
-        // #802: the auction opens over whatever the last round left behind.
-        // Clearing it here is the same move the wager window makes for the
-        // same reason — the picture on screen belongs to a question that is
-        // over, and here it would also be a free hint about a chair that is
-        // still being bid on.
         paintQuestionImage('');
-        // #940: the same leftover one section down. The reveal painted the
-        // grid with correct/wrong/dimmed (★ and ×), and the only code that
-        // strips them runs when the next round or wager window opens — so
-        // the seat holder answered the chair's question with the last
-        // round's marks still on its buttons.
         var game = window.QuizifyPlayerGame;
         if (game && game.resetSubmissionState) game.resetSubmissionState();
-        // #1033: and the rest of that question — text, answered row, grid.
         clearPreviousQuestion();
 
         p.classList.remove('hidden');
@@ -4227,7 +3035,6 @@
         var betStage = el('hotseat-bet-stage');
         if (bidStage) bidStage.classList.remove('hidden');
         if (betStage) betStage.classList.add('hidden');
-        // #859: a new chair opens over the previous one's settlement.
         stage('hotseat-result-stage', false);
 
         var hint = el('hotseat-hint');
@@ -4259,8 +3066,6 @@
         var out = el('hotseat-value');
         if (!slider || !out) return;
         var pct = parseInt(slider.value, 10);
-        // Show the points too: a percentage on its own tells you nothing
-        // about what you are risking.
         var pts = Math.floor(_state.score * pct / 100);
         out.textContent = t('wager.valueFmt', { pct: pct, pts: pts });
     }
@@ -4286,16 +3091,10 @@
     }
 
     function handleBidCount(msg) {
-        // Only the count, never the amounts — the auction is sealed.
         var count = el('hotseat-bid-count');
         if (!count || !_state.bidding) return;
-        // #787: the same sentence the television and the host page print.
         count.textContent = window.QuizifyRenderShared.hotSeatBidCountText(msg);
     }
-
-    // ------------------------------------------------------------------
-    // Award
-    // ------------------------------------------------------------------
 
     function handleAwarded(msg) {
         var utils = window.QuizifyPlayerUtils;
@@ -4311,8 +3110,6 @@
             setTitle('hotSeat.won', { pct: msg.pct, pts: msg.stake });
             if (hint) hint.textContent = t('hotSeat.seatedHint');
         } else {
-            // #804/#787: the payer, not the person in the chair — read in
-            // render-shared.js so all three screens name the same row.
             setTitle('hotSeat.lost', window.QuizifyRenderShared.hotSeatAward(msg).vars);
             if (hint) hint.textContent = '';
         }
@@ -4324,48 +3121,20 @@
         reset();
     }
 
-    // ------------------------------------------------------------------
-    // The question
-    // ------------------------------------------------------------------
-
     function handleQuestion(msg) {
         var p = panel();
         if (!p) return;
         p.classList.remove('hidden');
 
-        // #698: the detour used to play out under the *previous* round's
-        // question and its green/red reveal colouring, because the snapshot
-        // that opens the view clears neither and this handler never rendered
-        // msg.question — which the server sends to every phone, seated or not.
         var qText = el('question-text');
         if (qText && msg.question) qText.textContent = msg.question;
         var qCat = el('question-category');
         if (qCat) qCat.textContent = '';
-        // #802: the same hole one field over. The server sends image_url to
-        // every phone — seated or betting — and nothing here read it, so a
-        // picture question in the chair was answered blind while the previous
-        // round's photo sat above it.
         paintQuestionImage(msg.image_url);
-        // #847: the third leftover of the same family as #698 and #802, and
-        // the expensive one. ``renderQuestion`` swaps the two input sections
-        // per round type (#275): an estimate round hides #answers-container
-        // and shows the slider. The auction fires between rounds and
-        // ``hot_seat.py`` only keeps estimates out of the CHAIR's question,
-        // not out of the rounds it interrupts — so the detour regularly opens
-        // on top of a slider, and nothing here ever swapped the sections back.
-        // On the live test the seat holder read the chair's question above the
-        // previous round's slider, still showing their own submitted guess,
-        // with no answers anywhere; the clock ran out and the settlement took
-        // 60 points off them for a question they were never shown the answers
-        // to. The slider belongs to a round that is over for everyone in the
-        // room, seated or betting, so it goes away for everyone.
         var estimateSection = el('estimate-container');
         if (estimateSection) estimateSection.classList.add('hidden');
 
         if (msg.you_are_seated) {
-            // The seat holder answers through the normal answer grid, so the
-            // panel steps out of the way and only keeps the reminder that a
-            // silent clock costs the same as a wrong tap.
             var bidStage = el('hotseat-bid-stage');
             var betStage = el('hotseat-bet-stage');
             if (bidStage) bidStage.classList.add('hidden');
@@ -4376,19 +3145,11 @@
             return;
         }
 
-        // #940: everyone else stakes on the chair and answers nothing. The
-        // grid on their phone is the last round's, reveal marks and all;
-        // renderQuestion shows it again when the next round opens, the same
-        // way it does after the wager window hides it.
         var spectatorAnswers = el('answers-container');
         if (spectatorAnswers) spectatorAnswers.classList.add('hidden');
 
         _state.score = typeof msg.score === 'number' ? msg.score : _state.score;
 
-        // #804: a teammate of the seat holder is neither seated nor a
-        // spectator. They stake the purse the chair already staked, so the
-        // server refuses their bet — showing them the slider anyway would be
-        // a control that silently does nothing.
         if (msg.you_are_seat_team) {
             var betStage = el('hotseat-bet-stage');
             if (betStage) betStage.classList.add('hidden');
@@ -4402,21 +3163,11 @@
     }
 
     function renderSeatAnswers(answers) {
-        // #847: the grid has to be back on screen before it is worth
-        // filling. See ``handleQuestion`` for what hid it.
         var answersSection = el('answers-container');
         if (answersSection) answersSection.classList.remove('hidden');
 
-        // #696: this used to replace the container's innerHTML with bare
-        // buttons. The markup it destroyed is the markup renderQuestion fills
-        // — that function reuses the existing .answer-btn elements and only
-        // writes their .answer-text child, so once they were gone the seat
-        // winner saw the hot seat's answers under every question for the rest
-        // of the game and could not answer any of them. The grid is filled the
-        // same way here, and left intact.
         var host = el('answer-buttons');
         if (!host) return;
-        // #1169: no leftover lock-in from the round the detour interrupted.
         if (host.classList) host.classList.remove('is-locked');
         var oldChecks = host.querySelectorAll('.lock-in-check');
         for (var c = 0; c < oldChecks.length; c++) {
@@ -4428,8 +3179,6 @@
             var text = answers[i];
             btn.dataset.index = String(i);
             btn.disabled = false;
-            // #940: 'correct'/'wrong'/'dimmed' are the reveal's marks. A
-            // reload lands here without the auction that clears them.
             btn.classList.remove(
                 'is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'hidden',
                 'correct', 'wrong', 'dimmed'
@@ -4442,22 +3191,12 @@
             if (i >= answers.length) btn.classList.add('hidden');
         }
         _state.seatAnswering = true;
-        // #1169: the question entrance, at half length in the chair.
         var shared = window.QuizifyRenderShared;
         if (shared && shared.playEntrance) {
             shared.playEntrance(el('question-text'), buttons, { fast: true });
         }
     }
 
-    /**
-     * Route a tap on the shared answer grid (#696).
-     *
-     * The delegated handler in player-core owns every click on
-     * ``#answer-buttons``. While the seat holder is answering, the tap means
-     * ``hot_seat_answer`` and not ``submit_answer``; an inline onclick used to
-     * do this, and it shadowed the delegated handler badly enough that the
-     * normal path stopped working afterwards.
-     */
     function handleSeatAnswerClick(index) {
         if (!_state.seatAnswering) return false;
         var host = el('answer-buttons');
@@ -4505,7 +3244,6 @@
         });
     }
 
-    // #1183: a side button only chooses; "Place bet" sends (draft ④).
     function wireBet(id, side) {
         var btn = el(id);
         if (!btn) return;
@@ -4538,37 +3276,6 @@
         lockBetUi({ pct: pct, side: side });
     }
 
-    // ------------------------------------------------------------------
-    // Result
-    // ------------------------------------------------------------------
-
-    /**
-     * The settlement (#859).
-     *
-     * This used to be ``reset()`` and a one-line comment saying "the reveal
-     * screen owns the outcome". No reveal follows: ``hot_seat_result`` is the
-     * only frame the server sends for the settlement, the room stays in
-     * HOT_SEAT_REVEAL until the host taps Next Question, and no
-     * ``round_summary`` ever arrives. So the frame that carries the answer,
-     * every delta and — since #833 — the post-settlement leaderboard was
-     * received and dropped on the floor, and four phones sat on the seat
-     * question with a stopped clock and the standings the chair had just
-     * overturned while the host page and the television both read
-     * "Ben answered it — +80 points".
-     *
-     * The panel narrates the whole detour already (auction → award →
-     * question), so it narrates the end of it too. What it does NOT do is
-     * outlive it: #864 is the other half of this change, where the settlement
-     * that #862 made permanent sat over every remaining question of the game.
-     * The card belongs to the settled chair and to nothing after it, and the
-     * frame that ends it is the one that opens the next screen — see
-     * ``GAME_VIEW_PANELS`` in player-core.js. The three lines are the
-     * ones the room actually asks: who took the chair and what it cost or
-     * paid, what the answer was, and — the part only a phone can give — what
-     * it did to MY points, spectator bet included.
-     *
-     * Unchanged since the mode landed in #654; not a regression from RC3.
-     */
     function handleResult(msg, restored) {
         msg = msg || {};
         var p = panel();
@@ -4586,16 +3293,9 @@
         stage('hotseat-bet-stage', false);
         stage('hotseat-result-stage', true);
 
-        // The tri-state ``answered`` and the #804 delta lookup are shared
-        // since #787 — "ran out of time" against "got it wrong" is the whole
-        // distinction these three keys make, and the room has to be told one
-        // story on all three screens.
         var settlement = window.QuizifyRenderShared.hotSeatSettlement(msg);
         setTitle(settlement.key, settlement.vars);
 
-        // The answer itself. ``correct_index`` is a CANONICAL index and the
-        // seat holder was shown a shuffle, so the spelled-out string (#833) is
-        // the only one a phone can use.
         var answerEl = el('hotseat-result-answer');
         if (answerEl) {
             answerEl.textContent = msg.correct_answer
@@ -4609,33 +3309,19 @@
 
         var hint = el('hotseat-hint');
         if (hint) {
-            // The host has Next Question on their own bar; everyone else is
-            // waiting for them to press it.
             hint.textContent = t(isAdmin()
                 ? 'hotSeat.hostSettled' : 'lightning.recapWaitHint');
         }
 
-        // The chair is closed. A tap on a grid the seat holder never got to
-        // use would send `hot_seat_answer` into a settled question.
         var host = el('answer-buttons');
         if (host && host.querySelectorAll) {
             var buttons = host.querySelectorAll('.answer-btn');
             for (var i = 0; i < buttons.length; i++) buttons[i].disabled = true;
         }
-        // #839/#852: the clock stopped with the settlement, and the polite
-        // region was still holding the chair's last "5 seconds left".
         var g = window.QuizifyPlayerGame;
         if (g && g.clearTimeAnnouncement) g.clearTimeAnnouncement();
     }
 
-    /**
-     * What the chair did to MY points — the line no other screen can show.
-     *
-     * ``deltas`` is keyed by entrant and carries both halves of the
-     * settlement: the seat entrant's stake and every spectator's bet. A
-     * spectator who staked on the outcome is otherwise never told whether
-     * their bet came in.
-     */
     function renderOwnSettlement(msg, restored) {
         var row = el('hotseat-result-you');
         if (!row) return;
@@ -4643,25 +3329,18 @@
         var me = myEntrant();
         var has = me != null
             && Object.prototype.hasOwnProperty.call(deltas, me);
-        // Nothing moved on my row — no line, rather than a decorative "0".
         row.classList.toggle('hidden', !has);
         if (!has) return;
         var mine = deltas[me] || 0;
         var label = el('hotseat-result-you-label');
         var value = el('hotseat-result-you-delta');
         if (label) label.textContent = t('lobby.you');
-        // U+2212 for the minus, matching the settlement strings the server
-        // bundles already use.
         if (value) {
-            // #1177: one key for sign, number and unit, not a unit glued on.
             value.textContent = t('reveal.pointsDelta', {
                 sign: mine < 0 ? '\u2212' : '+',
                 points: Math.abs(mine)
             });
         }
-        // #1170: a win rises into place, a loss fades where it stands (the
-        // bank and the bet slider are already gone by now; the standings
-        // below roll their scores). A restore from a snapshot just shows it.
         row.classList.remove('hs-settle--win', 'hs-settle--lose');
         if (!restored && mine !== 0) {
             void row.offsetWidth;
@@ -4669,15 +3348,6 @@
         }
     }
 
-    /**
-     * The board the settlement produced (#833).
-     *
-     * The frame carries the post-settlement standing in the ordinary row
-     * shape; the phone's own leaderboard is a collapsed summary that was
-     * still showing the pre-settlement order underneath. Drawn with the same
-     * medal rows the lightning recap uses, so it is a shape the room has been
-     * reading all evening rather than a new kind of list.
-     */
     function renderResultStandings(leaderboard) {
         var box = el('hotseat-result-standings');
         if (!box) return;
@@ -4695,13 +3365,9 @@
                 rank: p.rank,
                 name: p.name,
                 score: p.score,
-                // #728: two teams may share a name; only one of them is mine.
                 isYou: (p.entrant_id || p.name) === me
             };
         }), { youLabel: youLabel });
-        // The phone's own collapsed board sits further down the same screen
-        // and was the stale one the live test read. Repaint it from the same
-        // frame so the two never disagree.
         var game = window.QuizifyPlayerGame;
         if (game && game.updateLeaderboard) {
             game.updateLeaderboard({ leaderboard: rows }, 'leaderboard-list');
@@ -4713,16 +3379,6 @@
         if (fn) fn(msg.remaining);
     }
 
-    /**
-     * Rebuild the panel from a state snapshot (#664).
-     *
-     * The live flow is driven entirely by one-shot events, which a reload
-     * misses for good — they are never re-sent. This maps the snapshot's
-     * hot_seat block onto the same handlers the live events call, so a phone
-     * that reconnects mid-detour lands where it left off instead of on the
-     * lobby. It matters most for the seat holder: they cannot answer a
-     * question they cannot see, and an unanswered question costs the stake.
-     */
     function restoreFromSnapshot(hs, snapshot) {
         if (!hs) return;
         var stage = hs.stage;
@@ -4731,23 +3387,12 @@
             handleAuctionYou({ score: hs.own_bank });
             handleBidCount({ count: hs.bid_count, total: hs.bidder_count });
             if (hs.you_bid != null) {
-                // Already bid before the reload. The server rejects a second
-                // bid anyway, so a live-looking slider would only invite a tap
-                // that silently does nothing.
                 lockBidUi(hs.you_bid);
             }
             return;
         }
 
         if (stage === 'result') {
-            // #859, and the same rule #858 is about: a snapshot and the live
-            // frame must leave this phone in the same state. The serializer
-            // has put the whole settlement in ``hot_seat.summary`` since #664
-            // — every field ``hot_seat_result`` spreads — and the snapshot
-            // carries the post-settlement leaderboard at the top level. Before
-            // this, a phone that reloaded on the settled chair was told who
-            // had bought it and never what happened next, which is the same
-            // hole the live path had.
             var settled = {};
             var summary = hs.summary || {};
             for (var key in summary) {
@@ -4761,8 +3406,6 @@
         }
 
         if (stage === 'awarded') {
-            // #1033: a reload between award and question skips the auction
-            // that clears the grid; the chair's question is still to come.
             clearPreviousQuestion();
             handleAwarded({
                 winner: hs.winner,
@@ -4785,40 +3428,17 @@
         }
     }
 
-    /**
-     * A snapshot's ``hot_seat`` block, in the shape ``hot_seat_question`` has
-     * (#730).
-     *
-     * The hand-written list this replaces forgot the question itself. The
-     * snapshot has carried ``hot_seat.question.text`` since #664 and the live
-     * handler has rendered it since #698 — but the restore path named four
-     * fields and ``question`` was not one of them, so the seat holder whose
-     * phone locked came back to three answer buttons under a blank question
-     * (fresh page) or the previous round's (in-tab reconnect), with the clock
-     * running and an unanswered question costing the whole stake (#653).
-     *
-     * Forwarding the frame is what stops that happening a third time: every
-     * key the server puts in the question block rides along, and only the
-     * fields that live outside it, or that a restore must recompute, are named
-     * here. See tests/test_snapshot_restore_parity_730_731.py.
-     */
     function questionMessageFromSnapshot(hs) {
         var q = hs.question || {};
         var msg = {};
         for (var k in q) {
             if (Object.prototype.hasOwnProperty.call(q, k)) msg[k] = q[k];
         }
-        // The live event's name for the same string — and the field #730 is
-        // about.
         msg.question = q.text;
         msg.answers = q.answers || [];
-        // Block-level, not question-level.
         msg.winner = hs.winner;
         msg.you_are_seated = !!hs.you_are_seated;
-        // The live payload sends the full answer window; a phone rejoining
-        // mid-window gets what the room has left of it, never a fresh one.
         msg.seconds = hs.time_remaining;
-        // The bank the bets are percentages of, as of the auction.
         msg.score = hs.own_bank;
         return msg;
     }
@@ -4838,15 +3458,6 @@
         }
     }
 
-    /**
-     * The bet this phone already placed, after a reload (#895e).
-     *
-     * ``_state.betPlaced`` alone stops the send, so nothing could be bet
-     * twice — but the slider and both buttons stayed live, so the screen
-     * offered a second bet and swallowed it. Same end state as the tap path
-     * in ``wireBet``: slider and buttons disabled, the side named in the
-     * room's language rather than as the wire's 'will' / 'wont'.
-     */
     function lockBetUi(bet) {
         _state.betPlaced = true;
         var slider = el('hotseat-bet-slider');
@@ -4882,11 +3493,6 @@
 
 /* ============ player-game.js ============ */
 
-/**
- * Quizify Player - Game Module
- * Playing phase: question display, answer submission, timer, power-ups, leaderboard
- */
-
 (function () {
     'use strict';
 
@@ -4894,31 +3500,12 @@
     var utils = window.QuizifyUtils || {};
     var state = pu.state;
 
-    // ============================================
-    // Countdown Timer
-    // ============================================
-
     var countdownInterval = null;
 
-    // Screen-reader countdown announcements (#380). The visible #timer is
-    // aria-live="off" so VoiceOver no longer reads every tick; instead we push
-    // a single terse announcement into the separate #timer-sr-announce polite
-    // region at meaningful moments (10s / 5s left). `lastAnnouncedSecond`
-    // dedupes repeated ticks at the same whole second (server sends decimals →
-    // ceil can repeat a value) and resets whenever we're back above 10s, i.e.
-    // at the start of each new question, without any extra lifecycle wiring.
     var lastAnnouncedSecond = null;
 
     function announceTimeLeft(seconds) {
         if (seconds > 10) {
-            // #852: above ten seconds there is nothing true to say, so the
-            // region must be empty rather than merely un-rewritten. Resetting
-            // only the dedupe left the previous clock's last sentence
-            // standing for every path that keeps ticking without going
-            // through stopCountdown — the Hot Seat's seat question is one
-            // (the auction's countdown had just crossed ten seconds, and the
-            // chair's question opened under "10 seconds left" with 24 on the
-            // visible clock).
             clearTimeAnnouncement();
             return;
         }
@@ -4929,26 +3516,10 @@
         if (!region) return;
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
         var key = seconds === 10 ? 'game.timerTenLeft' : 'game.timerFiveLeft';
-        // #839: carry the key, not only the rendered sentence. The phone
-        // follows the room's language (#809 / _syncServerLanguage), and every
-        // other translated node is re-rendered by the initPageTranslations
-        // sweep because it has a data-i18n attribute to be found by. Without
-        // one this region kept the language it was written in — a German game
-        // whose players had just finished an English one was reading
-        // "5 seconds left" into VoiceOver.
         region.setAttribute('data-i18n', key);
         region.textContent = t(key);
     }
 
-    /**
-     * Empty the polite region (#839).
-     *
-     * It is a sentence, not a counter: nothing overwrites it until the timer
-     * next crosses 10s or 5s, so between questions it kept telling anyone who
-     * came back to the page that five seconds were left while the visible
-     * clock read 43. Removing the attribute as well as the text stops the
-     * next language sweep from writing the sentence back.
-     */
     function clearTimeAnnouncement() {
         lastAnnouncedSecond = null;
         var region = document.getElementById('timer-sr-announce');
@@ -4957,29 +3528,12 @@
         region.textContent = '';
     }
 
-    /**
-     * Restart the timer's one-shot pulse so it begins with the digit (#650).
-     *
-     * The animation used to be `infinite` in CSS, which left it free-running
-     * at its own rate and phase while the number changed once a second — two
-     * clocks that could never agree. Retriggering it here binds the pulse to
-     * the tick that writes the digit, so they start together every second and
-     * cannot drift apart.
-     *
-     * The reflow between remove and add is required, not defensive: without
-     * it the browser coalesces both class changes into no change at all and
-     * the running animation simply continues.
-     */
     function pulseTimer(el) {
         el.classList.remove('timer--tick');
         void el.offsetWidth;
         el.classList.add('timer--tick');
     }
 
-    /**
-     * Start countdown timer
-     * @param {number} deadline - Server deadline timestamp in milliseconds
-     */
     function startCountdown(deadline) {
         stopCountdown();
         if (window.QuizifyPlayerSound) window.QuizifyPlayerSound.resetTick();
@@ -4996,8 +3550,6 @@
             timerElement.textContent = remaining;
             announceTimeLeft(remaining);
 
-            // Soft tick in the last 5 seconds (one per whole second), only
-            // while this phone still has to answer (#1185).
             _tick(remaining);
 
             if (remaining <= 5) {
@@ -5025,38 +3577,23 @@
         countdownInterval = setInterval(updateCountdown, 1000);
     }
 
-    /**
-     * Stop countdown timer
-     */
     function stopCountdown() {
         if (countdownInterval) {
             clearInterval(countdownInterval);
             countdownInterval = null;
         }
-        // #839: this is every end of a question — the reveal, the finale, the
-        // clock reaching zero — and it is also startCountdown's own first
-        // statement, so a question STARTING clears the previous question's
-        // announcement through here too. One place, four exits.
         clearTimeAnnouncement();
         _setTimeUp(false);
     }
 
-    // #1174: clock at zero, no reveal yet. An unanswered phone gets a neutral
-    // timer and dimmed tiles that refuse taps (the server answers late ones
-    // with ERR_ROUND_EXPIRED). Cleared through stopCountdown.
     var _timeUp = false;
 
-    // Has this phone (or its team) already answered the live question? The
-    // time-up dimming and the countdown tick both ask (#1174, #1185).
     function _hasAnswered() {
         var grid = document.getElementById('answer-buttons');
         return !!(hasSubmitted || _guessPending ||
             (grid && grid.querySelector && grid.querySelector('.has-team-answer')));
     }
 
-    // #1185: the last-five-seconds tick only on phones that still have to
-    // answer. It ran on every phone, each on its own clock — up to 30 offset
-    // ticks in five seconds at people who could no longer do anything.
     function _tick(remaining) {
         if (!window.QuizifyPlayerSound || _hasAnswered()) return;
         window.QuizifyPlayerSound.tickFromRemaining(remaining);
@@ -5069,7 +3606,6 @@
         var dim = _timeUp && !answered;
         var timerEl = document.getElementById('timer');
         if (timerEl && timerEl.classList) timerEl.classList.toggle('timer--up', dim);
-        // Variant B: the clock says game.timerUpAria (a missing bundle keeps "0").
         if (timerEl && _timeUp) {
             var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
             var upText = t('game.timerUpAria');
@@ -5082,39 +3618,16 @@
         if (pwr && pwr.classList) pwr.classList.toggle('is-time-up', dim);
     }
 
-    // ============================================
-    // Freeze lockout "Ice Card" overlay (#322, Variant A)
-    // ============================================
-
-    // Ring geometry: r=54 -> circumference 2*pi*54 ~= 339.29 (matches the
-    // stroke-dasharray in 07-player.css). The progress stroke depletes by
-    // raising stroke-dashoffset toward the full circumference as time runs.
     var FROZEN_RING_CIRC = 2 * Math.PI * 54;
     var frozenInterval = null;
 
-    /**
-     * Show the frozen overlay and run a per-second countdown ring for
-     * `seconds` seconds. While shown, answer taps are blocked both visually
-     * (full-scrim overlay) and interactively (handleAnswerClick early-returns
-     * when the overlay is active; server also rejects via ERR_FROZEN). The
-     * overlay auto-removes when the countdown hits 0, or when stopFrozenOverlay
-     * is called (question advances / reveal / reset). Idempotent: a fresh call
-     * tears down any in-flight timer first so we never leak intervals or stack
-     * two countdowns.
-     *
-     * @param {number} seconds - lockout duration from effect.freeze_duration
-     */
     function startFrozenOverlay(seconds) {
         var overlay = document.getElementById('frozen-overlay');
         if (!overlay) return;
 
-        // Defensive: a non-positive/garbage duration shouldn't strand the
-        // player behind a permanent overlay — just don't show it.
         var total = Math.max(0, Math.floor(Number(seconds) || 0));
         if (total <= 0) { stopFrozenOverlay(); return; }
 
-        // Clear any previous run (e.g. a second freeze before the first
-        // elapsed) so timers don't stack.
         if (frozenInterval) {
             clearInterval(frozenInterval);
             frozenInterval = null;
@@ -5130,13 +3643,11 @@
         function paint() {
             if (numEl) numEl.textContent = remaining;
             if (progEl) {
-                // fraction elapsed -> how much of the ring is "used up"
                 var elapsedFrac = (total - remaining) / total;
                 progEl.style.strokeDashoffset = (FROZEN_RING_CIRC * elapsedFrac).toFixed(2);
             }
         }
 
-        // Initial frame: full ring, full number.
         paint();
 
         frozenInterval = setInterval(function () {
@@ -5151,13 +3662,6 @@
         }, 1000);
     }
 
-    /**
-     * Hide the frozen overlay and clear its countdown timer. Safe to call
-     * unconditionally (no-op if not shown) — used both by the countdown
-     * itself reaching 0 and by lifecycle teardown (new question / reveal /
-     * reset) to guarantee no stuck overlay if the question changes before
-     * the timer elapses.
-     */
     function stopFrozenOverlay() {
         if (frozenInterval) {
             clearInterval(frozenInterval);
@@ -5167,27 +3671,16 @@
         if (overlay) overlay.classList.add('hidden');
     }
 
-    /**
-     * @returns {boolean} true while the frozen overlay is on screen, so the
-     * answer-tap handler can hard-block submits even if a tap somehow lands.
-     */
     function isFrozen() {
         var overlay = document.getElementById('frozen-overlay');
         return !!(overlay && !overlay.classList.contains('hidden'));
     }
 
-    /**
-     * Update timer from server tick
-     * @param {number} remaining - Remaining seconds
-     */
     function updateTimer(remaining) {
         var timerElement = document.getElementById('timer');
         if (!timerElement) return;
 
-        // Server sends decimals (e.g. 19.5) for smoother bar animations;
-        // display as a whole-second integer so the count text reads cleanly.
         var displaySeconds = Math.ceil(remaining);
-        // #1174: a late zero tick keeps "Time is up!"; a tick with time left wins.
         if (_timeUp) {
             if (displaySeconds <= 0) return;
             _setTimeUp(false);
@@ -5195,11 +3688,8 @@
         timerElement.textContent = displaySeconds;
         announceTimeLeft(displaySeconds);
 
-        // Soft tick in the last 5 seconds (one per whole second), only while
-        // this phone still has to answer (#1185).
         _tick(remaining);
 
-        // #434: same clock, same sharpening as the board.
         setRevealBlur(remaining);
 
         if (remaining <= 5) {
@@ -5216,37 +3706,11 @@
         timerElement.setAttribute('aria-label', t('game.timerRemainingAria', { seconds: displaySeconds }));
     }
 
-    // ============================================
-    // Question Rendering
-    // ============================================
-
-    /**
-     * Render question text and answer buttons
-     * @param {Object} data - Question data with text, answers, category
-     */
-    // Wager state (gameplay idea #3, reworked by #656). The bet used to be
-    // placed on the question screen, with the answer buttons disabled until it
-    // was in — which meant the answer clock was already draining while the
-    // table argued about the stake, and the question could be read before
-    // betting. Betting is its own phase now (``wager_window``), so nothing
-    // here gates the answer buttons; this only remembers what was locked in,
-    // so the question screen can show it back.
     var _wagerState = { active: false, submitted: false, pct: 0, round: 0 };
 
-    // #434: progressive reveal on the player's banner. The dashboard blurs
-    // the picture as the timer drains; the phone has to do the same, or a
-    // player simply reads the sharp copy in their hand and the mechanic on the
-    // TV is decoration.
-    // Shared with the television since #787: the arithmetic and the CSS custom
-    // property are identical on both, only the canvas size and the element
-    // list differ, so both come from
-    // QuizifyRenderShared.createProgressiveReveal and the phone passes its own.
-    var REVEAL_MAX_BLUR_PX = 14;   // smaller canvas than the TV, same feel
+    var REVEAL_MAX_BLUR_PX = 14;
 
     function _revealTargets() {
-        // The zoom overlay renders a SECOND <img> from the same src, so it has
-        // to carry the blur too — otherwise one tap on the magnifier defeats
-        // the whole round.
         return [
             document.getElementById('question-image'),
             document.getElementById('image-zoom-img'),
@@ -5266,22 +3730,12 @@
         _reveal.clear();
     }
 
-    // Issue #183: render the question image banner + wire tap-to-zoom.
     function renderQuestionImageBanner(imgUrl, revealStyle, duration) {
         var media = document.getElementById('question-media');
         var img = document.getElementById('question-image');
         if (!media || !img) return;
-        // Allowed forms live in QuizifyUtils.safeImageUrl, mirroring the
-        // server's sanitizer — absolute http(s) or the integration's own
-        // static mount (#536/#540).
         var safeImg = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
             ? window.QuizifyUtils.safeImageUrl(imgUrl) : '';
-        // #1182 L10: the frame keeps its height while the picture loads (a
-        // skeleton, not an empty box with the clock running) and says so
-        // when it fails. It used to collapse to text-only, which turned
-        // "Who is in this picture?" into an unanswerable question that still
-        // counted. The question still counts (decision 2a); the TV may have
-        // the picture.
         var missing = document.getElementById('question-image-missing');
         media.classList.remove('is-loading', 'is-missing');
         if (missing) missing.hidden = true;
@@ -5292,12 +3746,8 @@
             media.classList.add('is-missing');
             if (missing) missing.hidden = false;
         };
-        // Reset first — the banner element is reused every round, so a blur
-        // left over from the last question must not bleed into this one.
         clearRevealBlur();
         if (safeImg) {
-            // #467: populate a localized generic alt so the image question
-            // isn't announced as an unlabelled graphic.
             var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
             media.classList.add('is-loading');
             img.src = safeImg;
@@ -5313,27 +3763,10 @@
         }
     }
 
-    // Issue #736: warm the NEXT round's picture while the reveal is on screen.
-    //
-    // Without this the first byte of the image is requested by
-    // renderQuestionImageBanner above, i.e. after `question_started` — and
-    // player-core stamps the countdown deadline from `timer_duration` in the
-    // same message, so the clock is already draining while up to twenty-one
-    // clients pull the same ~99 KB (worst case 331 KB) file off Home Assistant
-    // at once. The reveal is dead air on the network, and the hint rides
-    // `round_summary`, so the fetch moves there.
-    //
-    // The reference is kept on purpose: a detached Image with no live
-    // reference is collectable, and some browsers abandon its request.
-    // Shared with the television since #787: the sanitizer, the detached
-    // `new Image()` and the reason it must never be `#question-image` are the
-    // same argument on both surfaces.
     function preloadNextImage(imgUrl) {
         window.QuizifyRenderShared.preloadNextImage(imgUrl);
     }
 
-    // Wire the fullscreen zoom overlay once. The overlay shows the current
-    // banner image at full size; closing returns to the game view.
     function _initImageZoom() {
         var zoomBtn = document.getElementById('question-image-zoom');
         var overlay = document.getElementById('image-zoom-overlay');
@@ -5369,20 +3802,8 @@
         _initImageZoom();
     }
 
-    // Tracks whether the current round is an estimate question (#275) so the
-    // shared reset/submit paths know which input is live.
     var _isEstimateRound = false;
 
-    /**
-     * The purple pill next to "Round 1 of 10" (#1006).
-     *
-     * ``#game-difficulty-badge`` shipped with the player.html port and nothing
-     * ever wrote into it, so every question showed an empty capsule. It now
-     * carries the question's own difficulty — the same icon + word the lobby
-     * badge uses, built from a data-i18n span so a later language change
-     * re-renders it (#809/#851). Anything we have no label for hides the pill
-     * instead of drawing it hollow.
-     */
     var DIFFICULTY_ICONS = { 'easy': '🌱', 'medium': '🎯', 'hard': '🔥' };
 
     function paintDifficultyBadge(difficulty) {
@@ -5410,32 +3831,14 @@
         if (questionCategory) questionCategory.textContent = data.category || '';
         paintDifficultyBadge(data.difficulty);
 
-        // Issue #25 + #183 (Variant 1): question image as a fixed-height
-        // banner preview with tap-to-zoom. Only absolute http(s) URLs are
-        // shown (server already sanitises; this is defence-in-depth).
-        // Absent/invalid/load-error → the banner is hidden so the answer
-        // pills stay reachable above the fold (graceful text-only fallback).
-        // #731: the blur is a fraction of the round, not of what is left of
-        // it. On the live path the two are the same number, so timer_duration
-        // was fine; on a restore it is the remaining seconds, which would draw
-        // full blur at the moment the phone comes back and then sharpen twice
-        // as fast. reveal_duration is the full round, set by the restore path.
         renderQuestionImageBanner(
             data.image_url, data.reveal_style,
             data.reveal_duration || data.timer_duration
         );
-        // Paint the blur at the position the round is actually at, rather than
-        // waiting up to a second for the first timer tick to correct it — on a
-        // restore that first frame would otherwise be the wrong picture. Guarded
-        // because renderQuestion is reached from paths that carry no clock, and
-        // a non-number here would compute a NaN blur radius.
         if (typeof data.timer_duration === 'number') {
             setRevealBlur(data.timer_duration);
         }
 
-        // #275: branch on the question type. Estimate questions swap the 3-
-        // answer grid for a slider (Variant B). Toggle the two sections and
-        // render the right one. The estimate path has no wager UI.
         _isEstimateRound = (data.question_type === 'estimate');
         var estimateContainer = document.getElementById('estimate-container');
         var answersContainer = document.getElementById('answers-container');
@@ -5450,10 +3853,6 @@
         if (estimateContainer) estimateContainer.classList.add('hidden');
         if (answersContainer) answersContainer.classList.remove('hidden');
 
-        // #656: the bet was placed and closed before this message existed, so
-        // the panel is only a reminder here. Deliberately no button gating —
-        // gating on "has wagered" would lock a player who let the window lapse
-        // out of answering at all.
         _showWagerBadge(!!data.is_final_round);
 
         if (answerButtons) {
@@ -5466,13 +3865,10 @@
 
                 var textEl = btn.querySelector('.answer-text');
                 if (textEl) {
-                    // #283/#312: answers may arrive as objects ({text, ...})
-                    // or plain strings — normalize before rendering.
                     var a = answers[i];
                     textEl.textContent = ((a && typeof a === 'object') ? a.text : a) || '';
                 }
 
-                // Re-apply selected state if player already submitted
                 if (hasSubmitted && lastSubmittedIndex === i) {
                     btn.disabled = true;
                     btn.classList.add('is-selected');
@@ -5487,7 +3883,6 @@
             }
         }
 
-        // Show/hide submitted confirmation
         var confirmation = document.getElementById('submitted-confirmation');
         if (confirmation) confirmation.classList.toggle('hidden', !hasSubmitted);
 
@@ -5495,23 +3890,10 @@
             answerButtons ? answerButtons.querySelectorAll('.answer-btn') : []);
     }
 
-    // #1169: the question entrance — the headline, then the answer tiles
-    // 50 ms apart. Decoration over a question that is already live: the
-    // countdown is started by the caller and does not wait for it.
     function _playQuestionEntrance(head, tiles, fast) {
         var shared = window.QuizifyRenderShared;
         if (shared && shared.playEntrance) shared.playEntrance(head, tiles, { fast: !!fast });
     }
-
-    // ============================================
-    // Lock-in (#1169)
-    // ============================================
-    //
-    // The picked tile presses in, the others step back, a check draws itself
-    // in the picked tile, and the confirmation line under the grid says
-    // "Sent" — "Sent · waiting for N more" while the room is still answering.
-    // Styling in 07-player.css. Solo answers only: a team answer stays open
-    // to change until the clock stops (#365), so it is never "sent".
 
     var LOCK_CHECK_PATH = 'M5 12.5l4.5 4.5L19 7.5';
 
@@ -5528,8 +3910,6 @@
         return svg;
     }
 
-    // #1173: the estimate's lock-in. `est-locked` dims the track and shrinks
-    // the thumb; `animate` (a live ack, never a restore) also draws the check.
     function _estimateLockIn(on, animate) {
         var box = document.getElementById('estimate-container');
         var conf = document.getElementById('estimate-submitted-confirmation');
@@ -5574,8 +3954,6 @@
         _paintSentLine();
     }
 
-    // How many entrants the room is still waiting on, not counting this
-    // phone's own (its answer is in, even if the tracker has not caught up).
     function _stillAnswering() {
         var mine = myEntrant();
         return _latestPlayers.filter(function (p) {
@@ -5594,22 +3972,13 @@
         } else {
             text = t ? t('game.sent') : '';
         }
-        // A missing bundle hands the key back; keep whatever the page shows.
         if (text && text.indexOf('game.') !== 0) line.textContent = text;
     }
 
-    // ============================================
-    // Estimate question (#275, Variant B — slider)
-    // ============================================
-
-    // Current estimate range/step/unit, cached so the live value display and
-    // submit can read them without re-parsing the message.
     var _estimate = { min: 0, max: 100, step: 1, unit: '' };
 
     function _formatEstimateValue(val) {
-        // Drop a trailing .0 so integer guesses read cleanly; keep the unit.
         var n = (Math.round(val * 1000) / 1000);
-        // #1177: digits in the game language ("384.400", "3,5").
         var I = window.QuizifyI18n;
         var text = (I && I.formatNumber)
             ? I.formatNumber(n)
@@ -5644,8 +4013,6 @@
             slider.min = String(min);
             slider.max = String(max);
             slider.step = String(step);
-            // Default to the midpoint (snapped to step) so the thumb starts
-            // centred rather than at an extreme.
             var startVal = Math.round((mid - min) / step) * step + min;
             slider.value = String(startVal);
             slider.setAttribute('aria-valuemin', String(min));
@@ -5660,9 +4027,6 @@
             slider.oninput = syncValue;
             syncValue();
 
-            // Re-apply locked state on a reconnect mid-round. `_guessPending`
-            // rides along (#750) so a re-render while a guess is in flight
-            // can't hand the slider back mid-ack.
             slider.disabled = hasSubmitted || _guessPending;
         }
 
@@ -5678,15 +4042,8 @@
         _estimateLockIn(hasSubmitted, false);
     }
 
-    // #750: a guess is in flight — sent, not yet acknowledged. The estimate
-    // round is the one path with no per-answer ``answer_result``, so the
-    // server's ``guess_accepted`` is the only confirmation that exists.
     var _guessPending = false;
 
-    // Codes where handing the slider back makes sense: the guess bounced for
-    // a reason a second attempt can clear. ALREADY_SUBMITTED / ROUND_EXPIRED /
-    // NOT_IN_GAME are final for this round — unlocking there would only buy
-    // the player a second refusal.
     var GUESS_RETRYABLE_CODES = { INVALID_ACTION: true, FROZEN: true };
 
     function _setEstimateLocked(locked) {
@@ -5701,18 +4058,6 @@
         if (confirmation) confirmation.classList.toggle('hidden', !show);
     }
 
-    /**
-     * Submit the current slider value as a numeric guess (#275). Clamps to the
-     * range, greys the slider + button so a second tap can't double-submit,
-     * and sends the same ``submit_answer`` message the MC path uses, carrying
-     * ``guess``.
-     *
-     * What it deliberately does NOT do any more (#750) is claim success. The
-     * "Submitted!" tick and the real ``hasSubmitted`` lock wait for the
-     * server's ``guess_accepted``; before that the round could still be over,
-     * the player frozen, or the socket dead — and the old optimistic version
-     * showed a confirmed tick in every one of those cases.
-     */
     function handleEstimateSubmit(sendFn) {
         if (hasSubmitted || _guessPending || _timeUp) return;
         if (isFrozen()) return;
@@ -5720,25 +4065,17 @@
         if (!slider) return;
         var guess = Number(slider.value);
         if (!isFinite(guess)) return;
-        // Clamp defensively (the slider already constrains this).
         guess = Math.max(_estimate.min, Math.min(_estimate.max, guess));
 
         _guessPending = true;
         _setEstimateLocked(true);
 
-        // sendFn returns false when the socket is down (#621) — it already
-        // toasts. Give the slider straight back rather than waiting for an
-        // ack that was never asked for.
         if (sendFn('submit_answer', { guess: guess }) === false) {
             _guessPending = false;
             _setEstimateLocked(false);
         }
     }
 
-    /**
-     * The server took the guess (``guess_accepted``, #750). Now — and only
-     * now — the round is spent for this player.
-     */
     function confirmGuess() {
         if (!_guessPending) return;
         _guessPending = false;
@@ -5748,11 +4085,6 @@
         _estimateLockIn(true, true);
     }
 
-    /**
-     * The server refused the guess. Unlock only for the codes a retry can
-     * survive; everything else stays locked with the error toast as the
-     * explanation.
-     */
     function releaseGuess(code) {
         if (!_guessPending) return;
         if (!GUESS_RETRYABLE_CODES[code]) return;
@@ -5762,17 +4094,6 @@
         _estimateLockIn(false);
     }
 
-    /**
-     * Render the final round's betting window (#656).
-     *
-     * The screen deliberately has no question on it: category, bank, slider.
-     * Betting on a question you can already read is not betting, and the
-     * countdown here is the *window's*, not the answer clock — that one does
-     * not start until this screen goes away.
-     *
-     * @param {Object} data - wager_window payload (category, player_score,
-     *                        window_duration, round_num)
-     */
     function renderWagerWindow(data) {
         var panel = document.getElementById('wager-panel');
         if (!panel) return;
@@ -5780,14 +4101,9 @@
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
         var round = data.round_num || 0;
 
-        // A reconnect snapshot can arrive right behind the live message.
-        // Re-rendering then would snap the slider back to 25% under the
-        // player's thumb, or re-open a bet they had already locked in.
         if (_wagerState.active && _wagerState.round === round) return;
         _wagerState = { active: true, submitted: false, pct: 0, round: round };
 
-        // Clear the question furniture: no text, no image, no answers. The
-        // category is the only clue the bet is placed on.
         var categoryEl = document.getElementById('question-category');
         var questionText = document.getElementById('question-text');
         var media = document.getElementById('question-media');
@@ -5803,36 +4119,22 @@
         if (tracker) tracker.classList.add('hidden');
         if (confirmation) confirmation.classList.add('hidden');
 
-        // The window's own countdown. Reuses the round timer element, which is
-        // free: no answer clock is running yet, which is the entire point.
         var seconds = data.window_duration || 0;
         if (seconds > 0) startCountdown(Date.now() + seconds * 1000);
 
         panel.classList.remove('hidden', 'wager-panel--collapsed');
         _paintWagerPanel(data.player_score || 0);
 
-        // #876: this phone has already bet — a reload, not a fresh window.
-        // Painting stops at a live 25% slider, which invites a second submit
-        // that silently overwrites the first, and leaves `submitted` false so
-        // `_showWagerBadge` hides the badge the phone that stayed connected
-        // keeps. Same shape as the Hot Seat's `lockBidUi` on a reconnect.
         if (data.you_wagered != null) _lockWagerUi(data.you_wagered);
     }
 
-    /**
-     * Put the game screen back together after the window closes (#656).
-     * Called from renderQuestion, which then fills in the real question.
-     */
     function _showWagerBadge(isFinal) {
         var panel = document.getElementById('wager-panel');
         var tracker = document.getElementById('submission-tracker');
         if (tracker) tracker.classList.remove('hidden');
         _wagerState.active = false;
         if (!panel) return;
-        // A bet from an earlier game (rematch keeps this module alive) must
-        // not surface as a badge on an ordinary round.
         if (!isFinal || !_wagerState.submitted) {
-            // No bet placed — nothing to remind anybody of.
             panel.classList.add('hidden');
             return;
         }
@@ -5843,14 +4145,6 @@
         if (titleEl) titleEl.textContent = t('wager.locked', { pct: _wagerState.pct });
     }
 
-    /**
-     * Collapse the betting panel onto a placed bet (#876).
-     *
-     * The one place the "you have bet, and this is what it was" state is
-     * built, so the phone that tapped Submit and the phone that reloaded onto
-     * its own standing bet end up identical — the drift #858 is about, on the
-     * one screen where the two halves disagreeing costs points.
-     */
     function _lockWagerUi(pct, live) {
         _wagerState.submitted = true;
         _wagerState.pct = pct;
@@ -5868,9 +4162,6 @@
             slider.disabled = true;
         }
         if (submitBtn) submitBtn.disabled = true;
-        // Collapse into a "wager: 25%" badge. The player now waits for the
-        // rest of the room — the question arrives on its own once the window
-        // closes, so there is nothing else to do here.
         var st = _wagerState;
         var stake = Math.floor((st.score || 0) * pct / 100);
         var RS = window.QuizifyRenderShared;
@@ -5878,8 +4169,6 @@
         function collapse() {
             if (panel && st === _wagerState && st.submitted) panel.classList.add('wager-panel--collapsed');
         }
-        // #1173: a fresh bet (not a restore) shows the stake leave the bank
-        // before the panel collapses; the reveal rolls it back (takeWagerStake).
         if (live && stake > 0 && bankEl && bankEl.parentNode && RS && RS.rollDigits &&
             !RS.prefersReducedMotion()) {
             st.stake = stake;
@@ -5900,7 +4189,6 @@
         if (timeoutNoteEl) timeoutNoteEl.textContent = '';
     }
 
-    // #1173: the stake of the bet placed on this phone, once, for the reveal.
     function takeWagerStake() {
         var n = _wagerState.stake || 0;
         _wagerState.stake = 0;
@@ -5923,14 +4211,11 @@
 
         if (titleEl) titleEl.textContent = t('wager.title');
         if (hintEl) hintEl.textContent = t('wager.hint');
-        // Say plainly that silence costs the same as a wrong answer (#653).
-        // This line used to promise the opposite (#301) — a stale reassurance
-        // is worse than none, because the player acts on it.
         if (timeoutNoteEl) timeoutNoteEl.textContent = t('wager.timeoutNote');
         if (bankEl) bankEl.textContent = currentScore;
         _wagerState.score = currentScore;
         if (slider) {
-            slider.value = '25';  // sensible default — quarter of bank
+            slider.value = '25';
             slider.disabled = false;
         }
 
@@ -5951,38 +4236,19 @@
                 if (_wagerState.submitted) return;
                 var pct = parseInt(slider.value, 10);
                 _lockWagerUi(pct, true);
-                // Send via the player-core send() function.
                 var send = window.QuizifyPlayer && window.QuizifyPlayer.send;
                 if (send) send('submit_wager', { wager: pct });
             };
         }
     }
 
-    // ============================================
-    // Answer Submission
-    // ============================================
-
     var hasSubmitted = false;
     var lastSubmittedIndex = -1;
 
-    /**
-     * Handle answer button click
-     * @param {number} selectedIndex - Index of selected answer (0, 1, 2)
-     * @param {Function} sendFn - Function to send WS messages
-     */
     function handleAnswerClick(selectedIndex, sendFn) {
         if (hasSubmitted || _timeUp) return;
-        // #322: while the freeze-lockout overlay is up, hard-block submits.
-        // The full-scrim overlay already swallows taps, and the server
-        // rejects with ERR_FROZEN regardless — this is belt-and-suspenders
-        // so a stray programmatic call can't sneak an answer through.
         if (isFrozen()) return;
 
-        // Team mode (#365): a tap sets the TEAM's answer, it does not spend
-        // this player's round. Any member may change it until the clock stops,
-        // so nothing is locked and no confirmation is shown here — the server
-        // answers with `team_answer`, which paints the member dots and starts
-        // the shared lock on every member's phone at once.
         var teamMod = window.QuizifyPlayerTeam;
         if (teamMod && teamMod.isTeamMode()) {
             lastSubmittedIndex = selectedIndex;
@@ -6011,31 +4277,12 @@
         sendFn('submit_answer', { answer_index: selectedIndex });
     }
 
-    /**
-     * Reset submission state for new round
-     */
     function getLastSubmittedIndex() {
         return lastSubmittedIndex;
     }
 
-    /**
-     * Lock the UI into the "already submitted" state.
-     * Used when reconnecting mid-round (#14 in logical review): server says
-     * we've already submitted, so disable all answer buttons and show the
-     * confirmation.
-     *
-     * #875: the caller may pass the index this phone picked — the server says
-     * THAT we answered and never WHICH one, so the only copy of that number is
-     * the one the client remembered. Given it, the pick is re-marked; without
-     * it (or with -1, from a snapshot belonging to a later round) the buttons
-     * are only disabled, as before. It matters because a resume snapshot goes
-     * through renderQuestion first and resetSubmissionState right after, so
-     * the mark renderQuestion re-applies is wiped a line later.
-     */
     function lockSubmitted(selectedIndex) {
         hasSubmitted = true;
-        // #750: whatever was in flight is moot — the server has just told us
-        // where we stand.
         _guessPending = false;
         var marked = (typeof selectedIndex === 'number' && selectedIndex >= 0)
             ? selectedIndex : -1;
@@ -6055,7 +4302,6 @@
         if (confirmation) confirmation.classList.remove('hidden');
         if (!_isEstimateRound) _applyLockIn(marked);
 
-        // #275: lock the estimate slider too on a reconnect.
         var slider = document.getElementById('estimate-slider');
         if (slider) slider.disabled = true;
         var estSubmitBtn = document.getElementById('estimate-submit-btn');
@@ -6063,16 +4309,12 @@
         var estConfirm = document.getElementById('estimate-submitted-confirmation');
         if (estConfirm) estConfirm.classList.remove('hidden');
         _estimateLockIn(true, false);
-        // #1174: answered phones see no time's-up dim.
         if (_timeUp) _setTimeUp(true);
     }
 
     function resetSubmissionState() {
         hasSubmitted = false;
         lastSubmittedIndex = -1;
-        // #750: a new round, so no guess is outstanding. Without this a guess
-        // sent just before the round flipped would leave the next round's
-        // slider believing it was still waiting on an ack.
         _guessPending = false;
 
         var answerButtons = document.getElementById('answer-buttons');
@@ -6088,7 +4330,6 @@
         if (confirmation) confirmation.classList.add('hidden');
         _clearLockIn();
 
-        // #275: reset the estimate input for the new round.
         var slider = document.getElementById('estimate-slider');
         if (slider) slider.disabled = false;
         var estSubmitBtn = document.getElementById('estimate-submit-btn');
@@ -6097,12 +4338,6 @@
         if (estConfirm) estConfirm.classList.add('hidden');
         _estimateLockIn(false);
 
-        // #953: nobody has answered a question that just opened. The tracker
-        // is only redrawn by `answer_progress`, and none is sent at question
-        // start — so the row kept the last frame's marks (after a Lightning
-        // Round: everyone "answered") until the first tap of the new round.
-        // Same rows, marks cleared; a snapshot restore repaints the truth
-        // right after this.
         if (_latestPlayers.length) {
             renderSubmissionTracker(_latestPlayers.map(function (p) {
                 return Object.assign({}, p, { submitted: false });
@@ -6110,15 +4345,6 @@
         }
     }
 
-    // ============================================
-    // Submission Tracker
-    // ============================================
-
-    /**
-     * Get initials from player name
-     * @param {string} name - Player name
-     * @returns {string} Initials (1-2 characters)
-     */
     function getInitials(name) {
         if (!name) return '?';
         var trimmed = name.trim();
@@ -6131,12 +4357,6 @@
         return trimmed.slice(0, Math.min(2, trimmed.length)).toUpperCase();
     }
 
-    /**
-     * Render submission tracker showing who has submitted
-     * @param {Array} players - Array of player objects
-     */
-    // Latest player list from the server, cached so the freeze/steal target
-    // picker can render opponents without re-requesting state.
     var _latestPlayers = [];
 
     function renderSubmissionTracker(players) {
@@ -6155,15 +4375,8 @@
 
         var allSubmitted = submittedCount === totalCount && totalCount > 0;
         tracker.classList.toggle('all-submitted', allSubmitted);
-        // #1169: "Sent · waiting for N more" follows the room.
         _paintSentLine();
 
-        // #845: the row that is mine, by entrant rather than by name. #835
-        // made these rows teams in team mode, and a player's name never equals
-        // a team name — so the "this one is you" mark went out of every team
-        // game. myEntrant()/entrantKey() are the same pair the leaderboard has
-        // used since #759, which keeps solo games matching on the name exactly
-        // as before.
         var mine = myEntrant();
         container.innerHTML = playerList.map(function (player) {
             var initials = getInitials(player.name);
@@ -6185,41 +4398,21 @@
         }).join('');
     }
 
-    // #1032: forget the room. `_latestPlayers` outlives the game it was drawn
-    // from — resetSubmissionState repaints it when a question opens (#953) —
-    // so after a reset the first question of the next game showed the last
-    // game's entrants (a dissolved team included) until the first tap.
     function resetSubmissionRoster() {
         renderSubmissionTracker([]);
     }
 
-    // ============================================
-    // Leaderboard
-    // ============================================
+    var _prevLeaderboardRanks = {};
 
-    /**
-     * Update leaderboard display
-     * @param {Object} data - State data containing leaderboard
-     * @param {string} targetListId - ID of list container
-     */
-    var _prevLeaderboardRanks = {}; // entrant id -> rank
-
-    // Which row is mine, and the stable key of a row (#759): shared with the
-    // lightning recap and the reveal standings, so they live in player-utils.
     var myEntrant = pu.myEntrant;
     var entrantKey = pu.entrantKey;
 
-    // Clear the rank-delta memo (issue #257). Without this a game_reset
-    // leaves stale ranks behind, so the first leaderboard of the *next*
-    // game shows phantom ▲/▼ deltas against the previous game's standings.
     function resetRankMemo() {
         _prevLeaderboardRanks = {};
         _shownScores = {};
         _shownStreaks = {};
     }
 
-    // #1169: the score each row was last shown with, so the digit roll only
-    // runs on a number that changed.
     var _shownScores = {};
     var _shownStreaks = {};
 
@@ -6231,10 +4424,9 @@
         var me = myEntrant();
         leaderboard.forEach(function (entry) {
             entry.is_current = (entrantKey(entry) === me);
-            // Calculate rank delta vs previous
             var prevRank = _prevLeaderboardRanks[entrantKey(entry)];
             if (prevRank !== undefined && prevRank !== entry.rank) {
-                entry.rank_delta = prevRank - entry.rank; // positive = moved up
+                entry.rank_delta = prevRank - entry.rank;
             } else {
                 entry.rank_delta = 0;
             }
@@ -6242,10 +4434,7 @@
 
         var displayList = compressLeaderboard(leaderboard, me);
 
-        // FLIP animation: record old positions before DOM update
         var oldPositions = {};
-        // Keyed by the entrant id, not the name (#759): two same-named teams
-        // shared one slot here and the FLIP animation flung them at each other.
         listEl.querySelectorAll('.leaderboard-entry[data-entrant]').forEach(function(el) {
             oldPositions[el.dataset.entrant] = el.getBoundingClientRect().top;
         });
@@ -6255,7 +4444,6 @@
             html += renderLeaderboardEntry(entry);
         });
 
-        // #1173: a guest taken out of the scoring stays as a ghost row.
         var RS = window.QuizifyRenderShared;
         var ghosts = (RS && RS.captureRemoved)
             ? RS.captureRemoved(listEl, '.leaderboard-entry[data-entrant]',
@@ -6263,7 +4451,6 @@
             : [];
         listEl.innerHTML = html;
 
-        // #1169: roll the scores that moved since this list last showed them.
         var shared = window.QuizifyRenderShared;
         if (shared && shared.rollScores && listEl.querySelectorAll) {
             var rows = displayList.filter(function (e) { return !e.separator; });
@@ -6281,7 +4468,6 @@
             );
         }
 
-        // FLIP: animate from old positions to new
         var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (!prefersReduced && Object.keys(oldPositions).length > 0) {
             listEl.querySelectorAll('.leaderboard-entry[data-entrant]').forEach(function(el) {
@@ -6304,7 +4490,6 @@
 
         if (ghosts.length) RS.slideRemoved(listEl, ghosts);
 
-        // Store current ranks for next update
         leaderboard.forEach(function(entry) {
             _prevLeaderboardRanks[entrantKey(entry)] = entry.rank;
         });
@@ -6316,9 +4501,6 @@
         updateLeaderboardSummary(leaderboard);
     }
 
-    /**
-     * Compress leaderboard for display when >10 players
-     */
     function compressLeaderboard(players, currentEntrant) {
         if (players.length <= 10) return players;
 
@@ -6346,9 +4528,6 @@
         );
     }
 
-    /**
-     * Render a single leaderboard entry
-     */
     function renderLeaderboardEntry(entry) {
         if (entry.separator) {
             return '<div class="leaderboard-separator">...</div>';
@@ -6358,23 +4537,11 @@
         var rankClass = rank <= 3 ? ' rank-' + rank : '';
         var currentClass = entry.is_current ? ' is-current' : '';
         var disconnectedClass = entry.connected === false ? ' is-disconnected' : '';
-        // #625: `lobby.you` ships in all three bundles; this spot rendered a
-        // literal English "(you)" on every phone for the whole game. Same
-        // local-`t` shape the rest of this file uses — there is no module-wide
-        // helper here, so a bare `_t` would be a ReferenceError that takes the
-        // whole leaderboard render down with it.
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-        // #1055: the word sits in its own data-i18n span. A row painted from
-        // the first game_state after a page load is painted in the browser's
-        // language (see updateLeaderboardSummary below), and only an element
-        // carrying the key is repainted when the game language lands.
         var youBadge = entry.is_current
             ? '<span class="you-badge">(<span data-i18n="lobby.you">'
                 + pu.escapeHtml(t('lobby.you')) + '</span>)</span>'
             : '';
-        // #1066: `streak_active` is the server's verdict that the streak is
-        // long enough to score. This used to be a local `> 1`, one short of
-        // the multiplier, so the badge announced a streak that paid nothing.
         var streakBadge = entry.streak_active
             ? '<span class="leaderboard-streak">' + entry.streak + 'x</span>'
             : '';
@@ -6399,9 +4566,6 @@
         '</div>';
     }
 
-    /**
-     * Scroll leaderboard to show current player
-     */
     function scrollToCurrentPlayer(listEl) {
         var currentEntry = listEl.querySelector('.leaderboard-entry.is-current');
         if (currentEntry) {
@@ -6409,26 +4573,6 @@
         }
     }
 
-    /**
-     * Update leaderboard summary badge.
-     *
-     * Shows the leader plus a "+N more" hint so a player below 1st place
-     * knows the list expands. Without the hint, the collapsed summary
-     * just reads "Alice: 19" and players 2-N have no signal that the
-     * full board exists. Singular vs plural matters in German ("1
-     * weiterer" / "2 weitere").
-     *
-     * #1055: the hint is its own data-i18n span, not part of one composed
-     * string. handleGameState paints the board BEFORE _syncServerLanguage has
-     * loaded the game's bundle, so on a freshly loaded page (the host's tab
-     * right after the redirect from the admin page, a phone reloading or
-     * reconnecting mid-game) this line is written in the browser's language.
-     * A plain textContent write left the sweep that follows the switch
-     * nothing to find, and "+ 1 weiterer" stood in an English game until the
-     * next round repainted it. Name and score are the same in every language
-     * and stay plain text; the count rides along as data-i18n-params. Same
-     * shape as #776 / #809 in player-lobby.js.
-     */
     function updateLeaderboardSummary(leaderboard) {
         var summaryIds = ['leaderboard-summary', 'reveal-leaderboard-summary'];
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
@@ -6452,23 +4596,11 @@
             more.setAttribute('data-i18n', key);
             if (params) more.setAttribute('data-i18n-params', JSON.stringify(params));
             more.textContent = t(key, params);
-            // Setting textContent first drops the previous hint span with it.
             summaryEl.textContent = summary + '  ';
             summaryEl.appendChild(more);
         });
     }
 
-    // ============================================
-    // Power-up
-    // ============================================
-
-    /**
-     * Handle power-up button visibility
-     * @param {string|null} powerupType - Power-up type or null
-     */
-    // Emoji only (#623). The words used to live here too — hardcoded English,
-    // shown to every player in every language, while `powerups.joker` and its
-    // four siblings sat translated in all three bundles and unused.
     var POWERUP_ICONS = {
         joker: '🃏',
         double_points: '✨',
@@ -6477,12 +4609,6 @@
         steal: '🥷',
     };
 
-    // What each one actually does, keyed to the i18n hints (#623).
-    //
-    // The wording was taken from the game code, not from the issue: `steal`
-    // takes half of the target's ROUND score (state.py), not half their total.
-    // "Half their points" is the plausible phrasing and it is wrong — and a
-    // wrong explanation is worse than none, because a player acts on it.
     var POWERUP_HINTS = {
         joker: 'powerups.jokerHint',
         double_points: 'powerups.doublePointsHint',
@@ -6503,17 +4629,10 @@
             var icon = POWERUP_ICONS[powerupType] || '';
             var name = t('powerups.' + powerupType);
             label.textContent = icon ? icon + ' ' + name : name;
-            // #961: the label ships with data-i18n="game.powerup" as its
-            // placeholder, and showView() re-runs the i18n sweep on the view
-            // it reveals — a millisecond after powerup_assigned rendered the
-            // name, the sweep wrote "Power-Up" back over it. Once the phone
-            // holds a power-up the text is ours, so the sweep loses its key.
             if (label !== powerupBtn) label.removeAttribute('data-i18n');
 
             if (hintEl) {
                 var hintKey = POWERUP_HINTS[powerupType];
-                // An unknown type keeps the button and drops the line rather
-                // than printing a raw i18n key under it.
                 hintEl.textContent = hintKey ? t(hintKey) : '';
                 hintEl.classList.toggle('hidden', !hintKey);
             }
@@ -6523,20 +4642,12 @@
         }
     }
 
-    /**
-     * Returns true for power-up types whose effect lands on another player
-     * (and therefore need a target picker).
-     */
     function _answeredBadgeHtml() {
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
         return '<span class="powerup-target-submitted">' +
             pu.escapeHtml(t('powerups.targetAnswered')) + '</span>';
     }
 
-    // #1076: the server only lets Steal take from someone who has already
-    // answered (use_powerup), so a target without the "answered" badge is
-    // disabled. When an opponent answers while the picker is open, their
-    // option comes alive with the badge instead of staying greyed out.
     function _setStealOptionEnabled(btn, enabled) {
         btn.disabled = !enabled;
         if (enabled) {
@@ -6567,15 +4678,6 @@
         return powerupType === 'freeze' || powerupType === 'steal';
     }
 
-    /**
-     * Open the target-picker modal so the player can choose who to freeze
-     * or steal from. Calls onConfirm(targetPlayerName) on selection.
-     *
-     * #952: `roster` is the per-player list from the last roster frame. The
-     * tracker's `_latestPlayers` is the wrong source twice over: it is empty
-     * until the round's first `answer_progress`, and in team mode its rows are
-     * teams (#835), whose names are not players the server can freeze.
-     */
     function openTargetPicker(powerupType, onConfirm, roster) {
         var modal = document.getElementById('powerup-target-modal');
         var titleEl = document.getElementById('powerup-target-title');
@@ -6584,9 +4686,6 @@
         var cancelBtn = document.getElementById('powerup-target-cancel');
         if (!modal || !listEl) return;
 
-        // If a previous picker is still open (double-open / re-entrant call),
-        // tear down its listeners first — otherwise the old onBackdrop/onKey
-        // handlers leak because _teardown is about to be overwritten below.
         if (typeof modal._teardown === 'function') {
             modal._teardown();
             modal._teardown = null;
@@ -6594,13 +4693,10 @@
 
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
 
-        // Active opponents = connected, not the local player, not a teammate.
         var me = pu.state.playerName;
         var teamApi = window.QuizifyPlayerTeam;
         var myTeam = teamApi && teamApi.myTeam && teamApi.myTeam();
         var teammates = (myTeam && myTeam.members) || [];
-        // Who has answered comes from the tracker (the steal badge); outside
-        // team mode its rows are players, so a name lookup is exact.
         var submittedByName = {};
         (_latestPlayers || []).forEach(function (p) {
             if (p && p.name && p.submitted) submittedByName[p.name] = true;
@@ -6626,16 +4722,8 @@
         if (opponents.length === 0) {
             if (hintEl) hintEl.textContent = t('powerups.noOpponents');
         } else {
-            // STEAL is most effective after the target has locked in their
-            // answer (target.round_score is non-zero, so half is non-zero).
-            // Surface that as a hint + per-opponent "answered" badge so
-            // players don't burn the power-up on someone who hasn't yet
-            // earned anything to steal. FREEZE keeps the generic pickHint
-            // (server v1.1.25 rejects submitted targets for FREEZE anyway).
             if (hintEl) {
                 if (powerupType === 'steal') {
-                    // #220 P3: bulb icon pulled out of the i18n string, rendered
-                    // as an SVG beside the (now text-only) hint.
                     var hintIcon = pu.feedbackIconHtml ? pu.feedbackIconHtml('bulb', 'sun') : '';
                     if (hintIcon) {
                         hintEl.classList.add('powerup-hint--with-icon');
@@ -6666,8 +4754,6 @@
                 btn.innerHTML = colorDot +
                     '<span class="powerup-target-name">' + pu.escapeHtml(opp.name) + '</span>' +
                     submittedBadge;
-                // #1076: nothing to steal from someone who has not answered —
-                // the server refuses it with a bare "Invalid action".
                 if (powerupType === 'steal') _setStealOptionEnabled(btn, opp.submitted);
                 btn.addEventListener('click', function () {
                     if (btn.disabled) return;
@@ -6681,7 +4767,6 @@
 
         modal.classList.remove('hidden');
 
-        // One-shot listeners; closeTargetPicker tears them down.
         function onCancel() { closeTargetPicker(); }
         function onBackdrop(e) {
             if (e.target && e.target.classList.contains('powerup-target-backdrop')) {
@@ -6711,10 +4796,6 @@
         }
     }
 
-    /**
-     * Handle joker power-up applied - eliminate one wrong answer
-     * @param {number} removeIndex - Index of answer to eliminate
-     */
     function applyJoker(removeIndex) {
         var answerButtons = document.getElementById('answer-buttons');
         if (!answerButtons) return;
@@ -6729,37 +4810,19 @@
         }
     }
 
-    // ============================================
-    // Answer Result Storage
-    // ============================================
-
     var lastAnswerResult = null;
 
-    /**
-     * Store answer result for reveal phase
-     * @param {Object} data - Answer result data
-     */
     function handleAnswerResult(data) {
         lastAnswerResult = data;
     }
 
-    /**
-     * Get stored answer result
-     */
     function getLastAnswerResult() {
         return lastAnswerResult;
     }
 
-    /**
-     * Clear stored answer result
-     */
     function clearLastAnswerResult() {
         lastAnswerResult = null;
     }
-
-    // ============================================
-    // Export
-    // ============================================
 
     window.QuizifyPlayerGame = {
         startCountdown: startCountdown,
@@ -6771,10 +4834,6 @@
         isFrozen: isFrozen,
         updateTimer: updateTimer,
         renderQuestion: renderQuestion,
-        // #802: the Hot Seat panel paints its own question into the shared
-        // game view and needs the same banner. Exported rather than copied so
-        // the sanitizer, the alt text and the progressive-reveal reset stay in
-        // one place.
         renderQuestionImageBanner: renderQuestionImageBanner,
         renderWagerWindow: renderWagerWindow,
         takeWagerStake: takeWagerStake,
@@ -6807,11 +4866,6 @@
 
 /* ============ player-core.js ============ */
 
-/**
- * Quizify Player - Core Module (Entry Point)
- * WebSocket connection, session management, state routing, reconnect logic
- */
-
 (function () {
     'use strict';
 
@@ -6825,37 +4879,18 @@
     var team = window.QuizifyPlayerTeam;
     var state = pu.state;
 
-    // ============================================
-    // DOM Refs
-    // ============================================
-
     var els = {
         nameInput: document.getElementById('name-input'),
         joinBtn: document.getElementById('join-btn')
     };
 
-    // ============================================
-    // Local State
-    // ============================================
-
     var currentQuestion = null;
     var myPowerUp = null;
 
-    // ============================================
-    // Send Helper
-    // ============================================
-
-    // Returns whether the message actually went out (#621).
-    //
-    // The phone had the same silent drop as the admin page, and here it is
-    // worse: a guest taps an answer while the socket is down, the tile lights
-    // up, and the round closes without them. Nothing on screen ever said so.
     function send(type, payload) {
         var SUBMIT_TYPES = /^(submit_answer|submit_wager|hot_seat_bid|hot_seat_bet|hot_seat_answer|lightning_answer|use_powerup)$/;
         if (state.ws && state.ws.readyState === WebSocket.OPEN) {
             state.ws.send(JSON.stringify(Object.assign({ type: type }, payload || {})));
-            // #1183: the messages that submit this phone's own move get the
-            // Android haptic tick; a send that never left gets none.
             if (SUBMIT_TYPES.test(type) && pu.submitHaptic) pu.submitHaptic();
             return true;
         }
@@ -6867,22 +4902,6 @@
         return false;
     }
 
-    // ============================================
-    // Identity
-    // ============================================
-
-    // One spelling of "this phone is nobody any more" (#981).
-    //
-    // Dropping the name is not bookkeeping. `createWebSocket`'s onclose in
-    // player-utils.js arms the reconnect ladder on `state.playerName`, and
-    // connect()'s onOpen above then re-sends `join` under it — with
-    // `is_admin: true` if this tab was the host's. So the four fields go
-    // together or not at all: a path that clears the token but keeps the
-    // name has not left the game, it has only forgotten how to prove who it
-    // was, and the next socket close walks it back in.
-    //
-    // Before #981 this was hand-spelled at five call sites and one of them
-    // (`reconnect_failed`) spelled it short.
     function forgetIdentity() {
         pu.clearSession();
         state.sessionToken = null;
@@ -6891,9 +4910,6 @@
         state.isAdmin = false;
     }
 
-    // The in-memory half alone (#1193). A tab whose seat moved to another
-    // tab must not clear the shared storage: the session there is the other
-    // tab's now.
     function dropIdentity() {
         state.sessionToken = null;
         state.playerName = null;
@@ -6901,31 +4917,18 @@
         state.isAdmin = false;
     }
 
-    // ============================================
-    // Connect WebSocket
-    // ============================================
-
     var _wsOpenTimeout = null;
 
     function connect() {
-        // #1193: a tab whose seat moved stays put until the guest picks a
-        // button; the online/visibility handlers must not walk it back in.
         if (state.sessionMoved) return;
-        // Guard against reconnecting on top of a live socket — a stray
-        // connect() while state.ws is OPEN/CONNECTING would orphan the
-        // existing socket and double up message handlers.
         if (state.ws && (state.ws.readyState === WebSocket.OPEN ||
                          state.ws.readyState === WebSocket.CONNECTING)) {
             return;
         }
         state.ws = pu.createWebSocket('/api/quizify/ws', {
             onOpen: function () {
-                // Clear the connection timeout
                 if (_wsOpenTimeout) { clearTimeout(_wsOpenTimeout); _wsOpenTimeout = null; }
 
-                // Re-enable join button once WS is open. Compare via i18n
-                // so a German player whose button reads "Erneut verbinden"
-                // also gets flipped back to "Beitreten".
                 if (els.joinBtn && !state.playerName) {
                     var tConn = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
                     var nameVal = els.nameInput ? els.nameInput.value.trim() : '';
@@ -6935,19 +4938,6 @@
                     }
                 }
 
-                // Try session-based reconnect first — but skip for admin
-                // self-join (?admin=true) to avoid a stale session token
-                // from a prior game blocking the fresh join. The exception
-                // is `?reconnect=1`, which the admin lobby sets when it
-                // redirects after joining-as-player on the admin WS: the
-                // token in sessionStorage was JUST written, so we trust it
-                // and reconnect instead of doing a fresh join (which would
-                // race against the still-open admin WS and fail with
-                // "Name bereits vergeben").
-                //
-                // #1193: a tab that already holds a seat resumes THAT seat.
-                // The stored session is shared by every tab of the browser,
-                // and after a second tab joined it belongs to someone else.
                 var mine = (state.sessionToken && state.playerName)
                     ? { token: state.sessionToken, name: state.playerName, game: null } : null;
                 var session = mine || (state.ignoreStoredSession
@@ -6958,9 +4948,6 @@
                 var useReconnect = (!isAdminSelfJoin || forceReconnect) && session.token && session.name;
                 if (useReconnect) {
                     var reconnectMsg = { session_token: session.token, name: session.name };
-                    // #1193: a seat read from storage on a fresh page says
-                    // which game it last sat in; if that game is over the
-                    // server answers reconnect_stale and we ask first.
                     if (!mine && !forceReconnect && !state.staleConfirmed &&
                             typeof session.game === 'string') {
                         reconnectMsg.last_game_id = session.game;
@@ -6968,32 +4955,17 @@
                     send('reconnect', reconnectMsg);
                 } else if (state.playerName) {
                     var joinMsg = { name: state.playerName };
-                    // Admin self-join: send `is_admin: true` in the join
-                    // message. Server trusts the flag (Beatify pattern).
-                    // No more cryptographic token threading through join
-                    // — the persisted admin token is only validated for
-                    // the pure admin-dashboard WS connect, not for player
-                    // joins. See DESIGN.md for the trust model.
                     if (isAdminSelfJoin) {
                         state.isAdmin = true;
                     }
                     if (state.isAdmin) {
                         joinMsg.is_admin = true;
-                        // #358: attach the admin session token (if this tab
-                        // holds one) so the server can authorise a crown
-                        // transfer from a stale admin slot. Optional + fail-soft
-                        // — a missing token just means no auto-crown, never a
-                        // rejected join, so the DESIGN.md trust model stands.
                         var _at = QuizifyUtils.readAdminToken();
                         if (_at) joinMsg.admin_token = _at;
                     }
-                    // #729: arm the answer timeout for this auto-join too —
-                    // a refusal here (a stale name taken mid-game) has to
-                    // reach the guest, not vanish into the reconnect loop.
                     beginJoinPending();
                     send('join', joinMsg);
                 }
-                // else: waiting for auto-join interval or user to click join
             },
             onMessage: handleMessage,
             onReconnect: connect,
@@ -7003,50 +4975,27 @@
         });
     }
 
-    // ============================================
-    // Document title — reflects current phase so users with multiple
-    // tabs open can tell which one is active. Was previously stuck on
-    // "Quizify - Join Game" forever.
-    // ============================================
-
-    // Snapshot of the most-recent phase/msg so updatePageTitle can fire
-    // again once i18n finishes loading. Without this, an admin-self-join
-    // redirect that lands while game_state is already QUESTION_ACTIVE
-    // would lose its title-update call (i18n.isReady() was still false
-    // at that moment) and the tab title stuck on "Quizify — Beitreten"
-    // for the entire round.
     var _lastTitlePhase = null;
     var _lastTitleMsg = null;
 
-    // ============================================
-    // Screen Wake Lock
-    // Phones lock the screen mid-question if the player isn't tapping —
-    // by the time they look up the next question is on. Hold a wake
-    // lock during QUESTION_ACTIVE only (don't drain battery in lobby
-    // or reveal). The lock auto-releases when the tab goes hidden;
-    // we re-acquire on visibilitychange below.
-    // ============================================
     var _wakeLock = null;
 
     async function _acquireWakeLock() {
-        if (!('wakeLock' in navigator)) return;  // unsupported browser
-        if (_wakeLock) return;  // already held
+        if (!('wakeLock' in navigator)) return;
+        if (_wakeLock) return;
         try {
             _wakeLock = await navigator.wakeLock.request('screen');
             _wakeLock.addEventListener('release', function () {
-                // OS released it (tab hidden, low battery, etc.) —
-                // clear so visibilitychange handler will re-acquire.
                 _wakeLock = null;
             });
         } catch (e) {
-            // NotAllowedError on iframes/permissions — silent.
             _wakeLock = null;
         }
     }
 
     function _releaseWakeLock() {
         if (_wakeLock) {
-            try { _wakeLock.release(); } catch (e) { /* ignore */ }
+            try { _wakeLock.release(); } catch (e) { }
             _wakeLock = null;
         }
     }
@@ -7062,8 +5011,6 @@
                 title = state.playerName ? t('page.titleLobby') : t('page.titleJoin');
                 break;
             case 'WAGER_ACTIVE':
-                // #656: without this the betting window fell to the default
-                // and the tab said "Join" mid-game.
                 title = t('page.titleWager');
                 break;
             case 'QUESTION_ACTIVE':
@@ -7084,18 +5031,11 @@
         if (title && title !== document.title) document.title = title;
     }
 
-    // Re-fire any pending title update once i18n has finished loading.
     function _flushPendingTitle() {
         if (_lastTitlePhase) updatePageTitle(_lastTitlePhase, _lastTitleMsg);
     }
 
-    // ============================================
-    // Message Router
-    // ============================================
-
     function handleMessage(msg) {
-        // #1193: the seat went to another tab. Nothing that still arrives
-        // here is for this tab.
         if (state.sessionMoved) return;
         switch (msg.type || msg.event) {
             case 'session_moved':
@@ -7103,9 +5043,6 @@
                 break;
 
             case 'reconnect_stale':
-                // #1193: the stored seat is from a game that is over. A
-                // shared phone handed to the next guest must not walk them
-                // in under the last guest's name.
                 showSessionChoice('stale', (pu.getSession() || {}).name || '');
                 break;
 
@@ -7114,52 +5051,21 @@
                 break;
 
             case 'game_reset':
-                // Admin wiped the whole session (issue #207). Drop our
-                // identity + session token so the now-stale token can't
-                // resurrect us, and return to the join screen explicitly.
-                // The server also closes our socket right after this, but
-                // handling the broadcast directly makes the return to the
-                // join screen deterministic instead of relying on the
-                // close + reconnect_failed race.
                 endJoinPending();
-                // #1018: read the name before it is forgotten, so the form
-                // can hand it back.
                 var resetName = lastPlayerName();
                 forgetIdentity();
-                // Clear rank-delta memos (issue #257) so the next game's
-                // first leaderboard/reveal doesn't show phantom ▲/▼ deltas
-                // computed against the wiped game's standings.
                 if (game && game.resetRankMemo) game.resetRankMemo();
                 if (reveal && reveal.resetRankMemo) reveal.resetRankMemo();
-                // #322: kill any in-flight freeze countdown so its interval
-                // doesn't leak past a full session wipe.
                 if (game && game.stopFrozenOverlay) game.stopFrozenOverlay();
-                // #838: the join screen is not a game screen. Everything the
-                // game hung outside the view stack goes with the game.
                 clearGameChrome();
                 returnToJoin('join.resetHint', resetName);
                 break;
 
             case 'kicked':
-                // #750: the host removed us from the lobby. The server sends
-                // this and then closes the socket, so the ONLY difference
-                // between being removed and losing wifi is this message —
-                // without handling it the phone just went quiet.
-                //
-                // Clearing playerName first also disarms the reconnect ladder
-                // in createWebSocket's onclose (it only retries while a name
-                // is set), so we don't spend five backoff rounds climbing
-                // back into a lobby we were just thrown out of.
                 forgetIdentity();
                 if (game && game.stopFrozenOverlay) game.stopFrozenOverlay();
                 if (pu.hideReconnectingOverlay) pu.hideReconnectingOverlay();
-                // No retry affordance on the dot: the socket is not what
-                // failed, and re-opening it would re-join a lobby we were
-                // just removed from (#983).
                 pu.updateConnectionIndicator('disconnected', { noRetry: true });
-                // #838: same leftovers, same screen furniture — the reaction
-                // bar and the last toast are fixed to the page, not to the
-                // view we are leaving.
                 clearGameChrome();
                 pu.showView('kicked-view');
                 break;
@@ -7175,66 +5081,29 @@
                     pu.saveSession(msg.session_token, state.playerName);
                 }
                 if (msg.is_admin) state.isAdmin = true;
-                // #1193: seated; from here on the tab's own token leads.
                 state.ignoreStoredSession = false;
                 state.staleConfirmed = false;
-                // #1183: from here on back is caught (see handleBack).
                 armBackGuard();
-                // #1150: the host had taken them out, and coming back undid it.
                 if (typeof msg.welcome_back_score === 'number') {
                     pu.showToast(t('game.welcomeBackScore', {
                         name: state.playerName,
                         score: msg.welcome_back_score
                     }), 4000);
                 }
-                // #288: restore the assigned power-up on (re)join. The server
-                // sends the current power-up in `msg.powerup`; without this a
-                // reconnecting player whose power-up was assigned earlier never
-                // sees the button (it was wiped at the previous reveal).
                 if (msg.powerup !== undefined) {
                     myPowerUp = msg.powerup;
                     if (game && game.renderPowerUp) game.renderPowerUp(myPowerUp);
                 }
-                // #371 variant A: own all-time standing, sent once on
-                // join/reconnect. `undefined` (older server) leaves whatever
-                // is on screen; `null` (first-timer) clears the line.
                 if (msg.all_time !== undefined && lobby && lobby.renderAllTime) {
                     lobby.renderAllTime(msg.all_time);
                 }
                 if (msg.color) {
                     state.playerColor = msg.color;
-                    // Apply as CSS custom property on root for global use
                     document.documentElement.style.setProperty('--my-player-color', msg.color);
                 }
-                // No get_state needed: the server already pushes a per-player
-                // PROJECTED game_state snapshot immediately after joined /
-                // reconnected (own shuffled answer order, own timer, flat
-                // reveal — #253). A redundant get_state would just re-deliver
-                // the same projected snapshot (#286). The handleGameState case
-                // below switches us to the correct view from that push.
                 break;
 
             case 'reconnect_failed':
-                // The stored session token no longer maps to a joinable game
-                // (game ended/reset, or token expired). Drop the identity
-                // and route back to the join screen — without this the client
-                // is left with every view hidden → blank screen (issue #227,
-                // same family as #207/#221). Mirror the deterministic return
-                // used by game_reset above.
-                //
-                // #981: this case used to clear the token alone, which left
-                // the name behind — and the name is what arms the reconnect
-                // ladder. A guest whose token had expired was therefore sent
-                // to the join screen and, on the next socket close, silently
-                // re-joined under the old name (as the host, if this tab was
-                // the host's). The server has just said this identity is not
-                // joinable; retrying it is the one thing not to do.
-                //
-                // #1182: the server says why. A phone that slept through a
-                // reset (display off, the normal case) never saw game_reset
-                // and read "we could not bring you back", as if its own phone
-                // were at fault; after an HA restart nobody said the game was
-                // gone. Expired and removed keep the general hint.
                 var failedName = lastPlayerName();
                 forgetIdentity();
                 var failedHint = msg.reason === 'reset' ? 'join.resetHint'
@@ -7244,11 +5113,6 @@
                 break;
 
             case 'host_presence':
-                // #842: the frame that exists so this phone does not have to
-                // guess. An admin-only host arriving or leaving produces
-                // nothing else — no roster row, no pause, no phase change —
-                // and guessing from the roster is what armed the escape hatch
-                // under a host who was sitting right there (#834).
                 _rememberHostFlag(msg);
                 refreshStageReset();
                 break;
@@ -7261,18 +5125,10 @@
 
             case 'player_left':
                 lobby.handlePlayerLeft(msg);
-                // #803: this is the frame that says the host's phone just
-                // died. Nothing else follows it while the room waits on a
-                // results screen — no game_state, no tick — so re-deciding
-                // the escape hatch here is what catches a host who drops
-                // DURING a waiting stage rather than before it.
                 _rememberRoster(msg);
                 refreshStageReset();
                 break;
 
-            // Teams (#365). `teams_update` is the room's view and arrives on
-            // every formation change; `team_joined` / `team_left` are the
-            // confirmations to the player who acted.
             case 'teams_update':
                 if (team) team.handleTeamsUpdate(msg);
                 break;
@@ -7290,20 +5146,10 @@
                 break;
 
             case 'wager_window':
-                // #656: the final round's betting window. Arrives BEFORE the
-                // question — that is the whole fix — so there is no flourish
-                // to play here; the 3·2·1 still runs on question_started.
                 handleWagerWindow(msg);
                 break;
 
             case 'question_started':
-                // On the final round, play a brief dramatic flourish + 3·2·1
-                // countdown on the big screen BEFORE revealing the question.
-                // Pure tension/UX — works regardless of finale type. If timing
-                // data is missing or anything goes wrong, we reveal instantly.
-                // #941: the server's clock starts when it sends this frame,
-                // not when the flourish ends 2.5 s later. Stamped here so the
-                // countdown and the server's timer_tick agree on the digit.
                 var questionReceivedAt = Date.now();
                 if (isFinalRound(msg)) {
                     playFinaleCountdown(function () {
@@ -7318,14 +5164,6 @@
                 game.updateTimer(msg.remaining);
                 break;
 
-            // #619: who the room is still waiting for. renderSubmissionTracker
-            // has existed since the tracker markup landed; its only caller was
-            // a view updater nothing ever invoked, so the row stayed empty for
-            // every game ever played. That updater went with #894; the
-            // `answer_progress` case below is the tracker's only caller now.
-            // #624: the season standing, sent once the finished game has
-            // actually been written to analytics — which happens after the
-            // finale, not with it.
             case 'all_time_update':
                 if (msg.all_time !== undefined && lobby && lobby.renderAllTime) {
                     lobby.renderAllTime(msg.all_time, 'end-alltime');
@@ -7338,18 +5176,10 @@
 
             case 'answer_result':
                 game.handleAnswerResult(msg);
-                // #1185: no streak toast here. This frame lands while the
-                // question is still live, and "3 in a row" on a raised phone
-                // told the room the answer was right. The reveal card shows
-                // the streak, at the reveal.
                 break;
 
             case 'round_summary':
                 handleRoundSummary(msg);
-                // #736: the reveal is the one stretch of the round with an idle
-                // network, and the server has told us which picture comes next.
-                // Warm it here so `question_started` finds it in cache instead
-                // of starting a 21-client burst with the countdown running.
                 if (msg.next_image_url && window.QuizifyPlayerGame
                     && QuizifyPlayerGame.preloadNextImage) {
                     QuizifyPlayerGame.preloadNextImage(msg.next_image_url);
@@ -7361,11 +5191,6 @@
                 break;
 
             case 'powerup_assigned':
-                // #288: render immediately. powerup_assigned arrives AFTER
-                // question_started, so handleQuestionStarted's renderPowerUp
-                // ran while myPowerUp was still null — only the final round
-                // (its flourish delays the render) ever showed the button.
-                // Set + render here so the button appears in every round.
                 myPowerUp = msg.powerup_type;
                 game.renderPowerUp(myPowerUp);
                 break;
@@ -7374,47 +5199,27 @@
                 handlePowerUpApplied(msg);
                 break;
 
-            // #1150: reaches this phone only if it is the host playing along.
             case 'scoring_status':
                 reveal.updateScoringStatus(msg);
                 break;
 
-            // (Removed dead 'rematch_started' case: the server's
-            // _handle_play_again broadcasts a 'game_state' message, never
-            // 'rematch_started', so this branch was unreachable. The rematch
-            // flow is driven entirely by the game_state phase transition.)
-
             case 'reactions':
-                // #896: one frame per 150 ms flush window carrying every
-                // distinct (player, emoji) of that window.
                 (msg.reactions || []).forEach(function (r) {
                     showFloatingReaction(r.emoji, r.player_name);
                 });
                 break;
 
             case 'reaction':
-                // Kept for one release: a phone still holding the bundle from
-                // before #896 talks to a server that has stopped sending this,
-                // and a phone that has this bundle may still be talking to a
-                // server that has not been restarted yet.
                 showFloatingReaction(msg.emoji, msg.player_name);
                 break;
 
             case 'reaction_bonus':
-                // Server awarded +1 to one or more correct answerers
-                // (gameplay idea #11). If I'm one of the recipients,
-                // flash a "+1 from X 🎉" toast. Either way the
-                // leaderboard payload updates scores.
                 handleReactionBonus(msg);
                 break;
 
             case 'wager_accepted':
-                // Server confirmed our final-round wager. Nothing to
-                // do — the local UI already collapsed the panel on
-                // submit. Useful as a hook for analytics later.
                 break;
 
-            // ---- Hot Seat auction (issue #616) ----
             case 'hot_seat_auction_you':
                 if (hotSeat) hotSeat.handleAuctionYou(msg);
                 break;
@@ -7426,8 +5231,6 @@
             case 'hot_seat_bid_accepted':
             case 'hot_seat_bet_accepted':
             case 'hot_seat_answer_accepted':
-                // Server confirmed. The panel already locked itself on tap —
-                // this is the acknowledgement, not the state change.
                 break;
 
             case 'hot_seat_awarded':
@@ -7439,14 +5242,6 @@
                 break;
 
             case 'hot_seat_question':
-                // #852: a question starting empties the timer's polite region,
-                // and this is the one question that never goes through
-                // startCountdown — the chair's clock arrives as
-                // `hot_seat_tick`. Without this the auction's last sentence
-                // ("10 seconds left") is still standing when the seat question
-                // opens with a full clock. Cleared here rather than inside the
-                // Hot Seat module because it is the timer's region, and every
-                // other question clears it from the same layer.
                 if (game && game.clearTimeAnnouncement) game.clearTimeAnnouncement();
                 if (hotSeat) hotSeat.handleQuestion(msg);
                 break;
@@ -7457,14 +5252,8 @@
 
             case 'hot_seat_result':
                 if (hotSeat) hotSeat.handleResult(msg);
-                // #803: the settlement leaves the room on HOT_SEAT_REVEAL,
-                // which only a host tap leaves. If the host was the seat
-                // holder and their phone died, the clock settles the stake
-                // (#653) and stops here — with no way out for anyone. The
-                // hatch is armed by STAGE_ENTERED_BY, not from here (#858).
                 break;
 
-            // ---- Lightning Round (issue #42) ----
             case 'lightning_splash':
                 if (lightning) lightning.handleLightningSplash(msg);
                 break;
@@ -7479,24 +5268,13 @@
                 if (lightning) lightning.handleLightningAnswerResult(msg);
                 break;
             case 'lightning_team_answer':
-                // The team's standing lightning answer (#552) — same idea as
-                // `team_answer` in a normal round.
                 if (lightning) lightning.handleLightningTeamAnswer(msg);
                 break;
             case 'lightning_recap':
                 if (lightning) lightning.handleLightningRecap(msg);
-                // #803: the recap waits for the host's "Continue game" and
-                // nothing else. Same dead-end as the reveal, same hatch —
-                // armed by STAGE_ENTERED_BY, not from here (#858).
                 break;
 
             case 'guess_accepted':
-                // #275/#750: an estimate round has no per-answer
-                // answer_result, so this ack is the only word the server ever
-                // says about the guess. The slider greys out on tap to stop a
-                // double submit, but the "Submitted!" tick waits for this —
-                // otherwise a rejected guess left a confirmed-looking screen
-                // over a round the player was never in.
                 if (game && game.confirmGuess) game.confirmGuess();
                 break;
 
@@ -7505,14 +5283,7 @@
                 break;
         }
 
-        // #858: the live half of the same decision the snapshot makes one
-        // line below `_rememberRoster` in handleGameState. Deliberately here
-        // rather than inside three `case` blocks — the bug this closes was a
-        // fourth case that nobody wrote.
         enterStageFor(msg);
-        // #864: and its counterpart. Same reason for living here rather than
-        // in a `case`: the teardown that was forgotten was the one nobody
-        // thought to write.
         clearStalePanels(msg);
     }
 
@@ -7533,81 +5304,45 @@
             document.body.appendChild(toast);
             setTimeout(function () { toast.remove(); }, 1600);
         }
-        // If the server included an updated leaderboard, refresh it.
         if (msg.leaderboard && game && game.updateLeaderboard) {
             game.updateLeaderboard({ leaderboard: msg.leaderboard }, 'reveal-leaderboard-list');
         }
     }
 
-    // ============================================
-    // Game State Handler
-    // ============================================
-
     function handleGameState(msg) {
         pu.setPhase(msg.phase);
 
-        // #1193: remember which game this seat is in, so a reload knows
-        // whether it is coming back to the same one.
         if (state.playerId && msg.game_id !== undefined && pu.saveSessionGame) {
             pu.saveSessionGame(msg.game_id);
         }
 
-        // Teams ride along on every snapshot (#365), so a phone that
-        // reconnects mid-game gets its team indicator back instead of
-        // believing it is playing alone.
         if (team && msg.teams) team.handleTeamsUpdate(msg);
 
-        // Keep the in-game leaderboard panel current from ANY game_state that
-        // carries a leaderboard (the round-start refresh and the ANSWER_REVEAL
-        // broadcast both do). Without this the panel was never fed during a
-        // live question — only the reveal's own `reveal-leaderboard-list` was —
-        // so #leaderboard-list/#leaderboard-summary sat at "--" mid-round (#235).
         if (msg.leaderboard && game && game.updateLeaderboard) {
             game.updateLeaderboard({ leaderboard: msg.leaderboard }, 'leaderboard-list');
         }
 
-        // Wake lock: only hold during active question. Cheap battery,
-        // doesn't fight the OS on lobby/reveal/finale screens where
-        // a sleeping screen costs nothing.
         if (msg.phase === 'QUESTION_ACTIVE' || msg.phase === 'PLAYING') {
             _acquireWakeLock();
         } else {
             _releaseWakeLock();
-            // Drop any in-flight finale flourish when leaving an active round
-            // (pause / reveal / reset / reconnect into a non-question phase).
             _clearFinaleCountdown();
         }
 
-        // Sync UI language with the server-side game language so a German game
-        // shows German labels even if the player's browser is English — unless
-        // this player picked a language themselves (#492). See
-        // _syncServerLanguage; it returns false when it did not take over, in
-        // which case the title still needs updating here.
         if (!_syncServerLanguage(msg)) {
             updatePageTitle(msg.phase, msg);
         }
 
         if (msg.players) lobby.handlePlayerJoined(msg);
 
-        // #299/#803: the host-gone reset escape hatch. A snapshot always
-        // carries the roster, so this is the authoritative reading; leaving a
-        // waiting stage drops the hatch (e.g. the host came back and resumed),
-        // and entering one re-arms it if the host is still missing.
         if (msg.phase !== 'PAUSED') disarmResetAffordance('paused-reset-btn');
-        // #842: a snapshot is what a phone gets on join, on reconnect and on
-        // get_state, so it is where one that was not listening when the host
-        // arrived or left catches up.
         _rememberHostFlag(msg);
         _rememberRoster(msg);
         setResetStage(STAGE_RESET_AFFORDANCES[msg.phase] ? msg.phase : null);
-        // #864: and the panels the phase no longer owns.
         clearStalePanelsForPhase(msg.phase);
 
         switch (msg.phase) {
             case 'LOBBY':
-                // #1032: a lobby has no answered row yet. The next game's
-                // entrants arrive with its first answer_progress; until then
-                // the last game's roster must not be repainted.
                 if (game && game.resetSubmissionRoster) game.resetSubmissionRoster();
                 if (!state.playerName) {
                     pu.showView('join-view');
@@ -7618,13 +5353,6 @@
                 break;
 
             case 'WAGER_ACTIVE':
-                // #656: reconnect (or first snapshot) landing in the betting
-                // window. The snapshot carries category and the room's
-                // remaining seconds — never the question text, so a phone that
-                // drops mid-window cannot come back knowing what it is
-                // betting on. #876: the bank and this phone's own standing bet
-                // ride along too, so the window comes back as the player left
-                // it rather than as a fresh slider over a bank of zero.
                 if (msg.wager) {
                     handleWagerWindow(wagerWindowFromSnapshot(msg));
                 } else {
@@ -7635,48 +5363,22 @@
             case 'QUESTION_ACTIVE':
             case 'PLAYING':
                 if (msg.question) {
-                    // #875: read before handleQuestionStarted, which replaces
-                    // currentQuestion and resets the submission state. On a
-                    // snapshot for the round we are already in, this phone is
-                    // the only place the answer it picked still exists — the
-                    // server tells us THAT we answered, never WHICH one.
                     var priorRound = currentQuestion && currentQuestion.round_num;
                     var priorIndex = game.getLastSubmittedIndex();
 
                     handleQuestionStarted(questionStartedFromSnapshot(msg));
 
-                    // #875: the standing team answer is a one-shot frame, so
-                    // handleQuestionStarted's resetRound above would leave the
-                    // whole team looking at an unanswered question after any
-                    // pause/resume. Repaint it from the snapshot instead.
                     if (team && msg.team_answer) {
                         team.handleTeamAnswer(msg.team_answer);
                     }
 
-                    // #870: the roster row, which only ever arrived on a live
-                    // `answer_progress` frame. A phone that reloads mid-
-                    // question misses those for good — the next one is not
-                    // sent until somebody else answers, and if everyone
-                    // already has, none is — so it played the rest of the
-                    // question with no way to tell whether the room was
-                    // waiting for it. The snapshot has carried name, colour,
-                    // connected and submitted for every player all along.
                     game.renderSubmissionTracker(msg.players || []);
 
-                    // #14: if we're reconnecting mid-round and server thinks
-                    // we've already submitted, lock the UI accordingly so we
-                    // don't get ERR_ALREADY_SUBMITTED toasts on re-tap.
                     if (msg.leaderboard && state.playerName) {
                         var me = msg.leaderboard.find(function (p) {
                             return p && p.name === state.playerName;
                         });
                         if (me && me.submitted) {
-                            // #875 (solo half): hand the index back so the
-                            // lock re-marks the answer instead of only greying
-                            // the row out — a resumed phone that shows three
-                            // dead buttons and no pick reads as a bug. Only
-                            // for the round it was picked in; a snapshot from
-                            // a later round knows nothing about this pick.
                             var sameRound = (priorRound !== null &&
                                 priorRound !== undefined &&
                                 priorRound === msg.round);
@@ -7690,11 +5392,9 @@
 
             case 'ANSWER_REVEAL':
             case 'REVEAL':
-                game.stopCountdown();  // #1174: as handleRoundSummary does
+                game.stopCountdown();
                 pu.showView('reveal-view');
                 reveal.updateRevealView(msg);
-                // The hatch itself is armed by setResetStage above, which
-                // reads this same phase off the snapshot.
                 disarmResetAffordance('paused-reset-btn');
                 break;
 
@@ -7704,12 +5404,7 @@
                 break;
 
             case 'LIGHTNING':
-                // Reconnect / fresh snapshot landing into a live lightning
-                // round. Server pushes per-question lightning_question events
-                // for the live flow; this just gets us onto the right view
-                // with the current question if present.
                 if (lightning && msg.lightning && msg.lightning.splash_pending) {
-                    // Round armed but the intro splash (#201) is still up.
                     lightning.handleLightningSplash({
                         num_questions: msg.lightning.num_questions,
                         seconds_per_question: msg.lightning.seconds_per_question
@@ -7724,11 +5419,6 @@
                         seconds: msg.lightning.time_remaining,
                         category: lq ? lq.category : '',
                         image_url: lq ? lq.image_url : '',
-                        // #895b: a reload during a lightning question used to
-                        // come back with three live buttons for a question
-                        // this phone had already answered. The server refuses
-                        // the second tap without a word, so the screen said
-                        // "you may answer" and the room said otherwise.
                         you_answered: !!msg.lightning.you_answered,
                         you_answer_index: msg.lightning.you_answer_index
                     });
@@ -7744,24 +5434,8 @@
             case 'HOT_SEAT_AUCTION':
             case 'HOT_SEAT':
             case 'HOT_SEAT_REVEAL':
-                // #664: the detour is driven by one-shot events, so a reload
-                // used to fall through to the default case and land on the
-                // lobby with the auction still running. For the seat holder
-                // that was expensive: an unanswered question forfeits the
-                // stake (#653), and they could not answer what they could not
-                // see.
                 pu.showView('game-view');
-                // #859: the snapshot is handed over whole — the settled chair's
-                // post-settlement leaderboard lives at the top level of it, not
-                // inside the hot_seat block.
                 if (hotSeat && msg.hot_seat) hotSeat.restoreFromSnapshot(msg.hot_seat, msg);
-                // #697: the detour is entered from ANSWER_REVEAL, which hides
-                // the control bar, and nothing here brought it back. A host
-                // who plays along — the default, since the admin tab redirects
-                // to this page on start — had no Next, no Skip and no End for
-                // the rest of the game: HOT_SEAT_REVEAL is left only by an
-                // explicit next_round. End and Skip stay; Pause does not,
-                // because the detour owns its own clock.
                 var adminBarHS = document.getElementById('admin-control-bar');
                 if (adminBarHS) adminBarHS.classList.toggle('hidden', !state.isAdmin);
                 var nextRoundHS = document.getElementById('next-round-admin-btn');
@@ -7776,21 +5450,9 @@
                 break;
 
             case 'PAUSED':
-                // #895a: the phone's own clock is a local setInterval seeded
-                // at question start; the pause happens on the server and no
-                // frame ever stopped it here. So behind the pause screen the
-                // countdown kept running: the soft ticks kept playing, the
-                // 10s/5s VoiceOver announcements kept firing, and the timer a
-                // resumed round shows was rebuilt from a clock that had gone
-                // on counting down a round nobody was allowed to answer.
-                // ``startCountdown`` is called again with the server's
-                // remaining seconds when the round resumes, so stopping it is
-                // all this needs to do.
                 game.stopCountdown();
                 pu.showView('paused-view');
                 updatePausedView(msg);
-                // Admin's control bar stays visible during pause so they
-                // can resume / end. Swap Pause ↔ Resume.
                 var adminBarP = document.getElementById('admin-control-bar');
                 if (adminBarP) adminBarP.classList.toggle('hidden', !state.isAdmin);
                 var pauseBtnP = document.getElementById('pause-game-btn');
@@ -7800,28 +5462,13 @@
                 break;
 
             default:
-                // Safety net (issue #227, same reasoning as #221): an unknown
-                // or unmapped phase must never leave the player with zero
-                // visible views (blank screen). Fall back to the lobby if we
-                // already have an identity, otherwise the join screen.
                 pu.showView(state.playerName ? 'lobby-view' : 'join-view');
                 break;
         }
     }
 
-    // ============================================
-    // Question Started
-    // ============================================
-
-    // ============================================
-    // Finale Countdown (dramatic flourish before the final question)
-    // ============================================
-
     var _finaleCountdownTimers = [];
 
-    // True when this question_started marks the last round. Prefer the
-    // explicit server flag; fall back to round_num >= total_rounds so the
-    // countdown still fires even if is_final_round is ever absent.
     function isFinalRound(msg) {
         if (!msg) return false;
         if (msg.is_final_round === true) return true;
@@ -7842,22 +5489,18 @@
         }
     }
 
-    // Show "Finale!" then 3 · 2 · 1 (~2.4s total), then run `done`. The reveal
-    // is always invoked exactly once, even if something throws — the final
-    // question must never be swallowed by this purely cosmetic flourish.
     function playFinaleCountdown(done) {
         var fired = false;
         function finish() {
             if (fired) return;
             fired = true;
             _clearFinaleCountdown();
-            try { done(); } catch (e) { /* reveal already in progress */ }
+            try { done(); } catch (e) { }
         }
 
         var overlay = document.getElementById('finale-countdown-overlay');
         var numberEl = document.getElementById('finale-countdown-number');
         if (!overlay || !numberEl) {
-            // No overlay element (older cached HTML) — skip straight to reveal.
             finish();
             return;
         }
@@ -7868,34 +5511,23 @@
             overlay.classList.remove('hidden');
             overlay.setAttribute('aria-hidden', 'false');
 
-            // Flourish shows alone for ~0.7s, then 3 · 2 · 1 at 0.6s each.
             var digits = [3, 2, 1];
             digits.forEach(function (d, idx) {
                 _finaleCountdownTimers.push(setTimeout(function () {
                     numberEl.textContent = String(d);
-                    // Re-trigger the pop animation by toggling the class.
                     numberEl.classList.remove('tick');
-                    // Force reflow so the animation restarts on each digit.
                     void numberEl.offsetWidth;
                     numberEl.classList.add('tick');
                 }, 700 + idx * 600));
             });
 
-            // After the last digit finishes, reveal the question.
             _finaleCountdownTimers.push(setTimeout(finish, 700 + digits.length * 600));
         } catch (e) {
             finish();
         }
     }
 
-    /**
-     * This player's score out of a game_state snapshot's leaderboard (#656).
-     * The wager slider bets against it, so a reconnect that guessed wrong
-     * would show the player a bank they do not have.
-     */
     function _myScore(msg) {
-        // Both lists: a guest back from "out of scoring" has no leaderboard row
-        // until the next reveal, but is on the roster with their points (#1150).
         var boards = [msg.leaderboard || [], msg.players || []];
         for (var b = 0; b < boards.length; b++) {
             for (var i = 0; i < boards[b].length; i++) {
@@ -7907,72 +5539,21 @@
         return 0;
     }
 
-    /**
-     * A snapshot's ``question`` block, in the shape ``question_started`` has
-     * (#730/#731).
-     *
-     * This used to be an object literal that re-listed, by hand, every field
-     * worth forwarding — so every field added to the live payload had to be
-     * remembered a second time here, and twice it was not. #275 caught
-     * question_type / estimate / image_url only after estimate rounds had been
-     * rendering as an A/B/C grid, and reveal_style (#434) was never carried at
-     * all: a phone that reloaded during a progressive-reveal question got the
-     * picture sharp and could read the answer off it (#731).
-     *
-     * So it forwards the frame instead of re-listing it. Every key the server
-     * puts in ``snapshot.question`` rides along untouched, and only the fields
-     * that genuinely differ between "the round just started" and "the round is
-     * half over and this phone just came back" are named below. Adding a field
-     * to the live path now carries it here for free — and
-     * tests/test_snapshot_restore_parity_730_731.py fails if the snapshot ever
-     * stops carrying one of them.
-     */
     function questionStartedFromSnapshot(msg) {
         var q = msg.question || {};
         var live = {};
         for (var k in q) {
             if (Object.prototype.hasOwnProperty.call(q, k)) live[k] = q[k];
         }
-        // The live event's name for the same string.
         live.question_text = q.text;
-        // The clock is the one thing a restore must NOT copy: the round is
-        // already running, so the countdown gets what is left of it rather
-        // than a fresh full round. time_limit is the fallback for a snapshot
-        // taken before the phase controller has a deadline.
         live.timer_duration = q.time_remaining || q.time_limit;
-        // ...but the progressive blur is a fraction of the WHOLE round
-        // (remaining / duration). Handed time_remaining it would compute 1.0
-        // and restart the blur at maximum instead of resuming it two thirds
-        // of the way through — which is a different bug, not a fix (#731).
         live.reveal_duration = q.time_limit || q.time_remaining;
-        // Not in the question block: the snapshot carries these one level up.
         live.round_num = msg.round;
         live.total_rounds = msg.total_rounds;
         live.player_score = _myScore(msg);
         return live;
     }
 
-    /**
-     * A snapshot's ``wager`` block, in the shape ``wager_window`` has (#876).
-     *
-     * The betting window is the one screen a reload used to land on wrong in
-     * two ways at once, and both are numbers the block now carries:
-     *
-     * * ``own_bank`` — the bank the slider prices the bet against. This used
-     *   to be ``_myScore(msg)``, a lookup of the player's NAME in the
-     *   snapshot's leaderboard; in team mode those rows are teams, so a member
-     *   matched nothing, read 0, and was shown "50% of 0" on the round that
-     *   pays double. Kept as the fallback for a server too old to send the
-     *   field, where a solo game gets the same answer either way.
-     * * ``you_wagered`` — the bet this phone has already placed, or null.
-     *   Without it the window comes back as a live 25% slider over a stake
-     *   the server is already holding: a second submit overwrites the first
-     *   silently, and the "Wager: 50%" badge never appears once the question
-     *   starts, because the phone believes it never bet.
-     *
-     * The window's own countdown is the room's remaining seconds, never a
-     * fresh one — a reconnect must not buy extra thinking time (#656).
-     */
     function wagerWindowFromSnapshot(msg) {
         var w = msg.wager || {};
         return {
@@ -7986,13 +5567,6 @@
         };
     }
 
-    /**
-     * The final round's betting window (#656).
-     *
-     * Same view as the question, minus the question: category, bank, slider,
-     * and the window's own countdown. Nothing here starts the answer clock —
-     * that begins with the question_started that follows.
-     */
     function handleWagerWindow(msg) {
         pu.setPhase('WAGER_ACTIVE');
         pu.showView('game-view');
@@ -8008,10 +5582,6 @@
         var banner = document.getElementById('last-round-banner');
         if (banner) banner.classList.remove('hidden');
 
-        // Admin control bar: End + Skip, no Pause. Pausing a window that has
-        // no timer does nothing (the backend refuses it), and Skip is the one
-        // useful host action here — it closes the window and asks the
-        // question instead of waiting the deadline out.
         var adminBar = document.getElementById('admin-control-bar');
         if (adminBar) adminBar.classList.toggle('hidden', !state.isAdmin);
         var nextRoundAdminBtn = document.getElementById('next-round-admin-btn');
@@ -8020,8 +5590,6 @@
         var resumeBtn = document.getElementById('resume-game-btn');
         if (nextRoundAdminBtn) nextRoundAdminBtn.classList.add('hidden');
         if (skipBtn) skipBtn.classList.toggle('hidden', !state.isAdmin);
-        // #1177: the skip button names what admin_skip does here, in the
-        // words the host page and the Lovelace card use.
         var skipLabel = document.getElementById('skip-question-label');
         if (skipLabel && window.QuizifyI18n) {
             skipLabel.setAttribute('data-i18n', 'admin.closeBets');
@@ -8036,69 +5604,36 @@
         game.renderWagerWindow(msg);
     }
 
-    /**
-     * @param {Object} msg - question_started, or one rebuilt from a snapshot
-     * @param {number} [receivedAt] - when the live frame arrived (#941); a
-     *     snapshot's timer_duration is already what is left, so it omits this
-     */
     function handleQuestionStarted(msg, receivedAt) {
         pu.setPhase('QUESTION_ACTIVE');
         currentQuestion = msg;
 
         pu.showView('game-view');
 
-        // Render question and answers
         game.renderQuestion(msg);
         game.resetSubmissionState();
-        // The standing team answer does not carry over into the next round.
         if (team) team.resetRound();
 
-        // #322: a new question always clears any lingering freeze overlay.
-        // Guards the edge case where the lockout outlives the round (admin
-        // skip / fast round) — without this the player could land on the next
-        // question still behind the Ice Card. stopFrozenOverlay is a no-op if
-        // it isn't showing, and it clears the countdown interval (no leak).
         game.stopFrozenOverlay();
 
-        // Round indicator
         var currentRound = document.getElementById('current-round');
         var totalRounds = document.getElementById('total-rounds');
         if (currentRound) currentRound.textContent = msg.round_num || 1;
         if (totalRounds) totalRounds.textContent = msg.total_rounds || 10;
 
-        // #706: the wager window raises the "Final Round!" pill and the only
-        // line that lowered it again lived in a view updater nothing had
-        // called since #619 (deleted in #894). Play again keeps the phones on
-        // this page, so round 1 of game 2 — and every round after it — wore
-        // the pill until somebody reloaded.
-        //
-        // #870: a toggle, not a one-way hide. Raising it used to belong to the
-        // wager window alone — a frame a reconnecting phone never receives —
-        // so a guest who reloaded on the final round came back to a screen
-        // that no longer said it was the final round, next to neighbours whose
-        // phones still did. The snapshot carries round and total_rounds, which
-        // is what isFinalRound reads, so the restore path can now raise it for
-        // itself; a game played without the wager gets the pill too, which is
-        // the same fact stated by the same element.
         var lastRoundBanner = document.getElementById('last-round-banner');
         if (lastRoundBanner) {
             lastRoundBanner.classList.toggle('hidden', !isFinalRound(msg));
         }
 
-        // Timer
         if (msg.timer_duration) {
-            // #941: from the frame's arrival, not from now. On the final round
-            // now is 2.5 s later, and updateTimer (server ticks) and this
-            // countdown wrote two different digits into #timer every second.
             var startedAt = (typeof receivedAt === 'number') ? receivedAt : Date.now();
             var deadline = startedAt + (msg.timer_duration * 1000);
             game.startCountdown(deadline);
         }
 
-        // Power-up
         game.renderPowerUp(myPowerUp);
 
-        // Admin control bar during QUESTION_ACTIVE: End + Pause (no Next)
         var adminBar = document.getElementById('admin-control-bar');
         if (adminBar) {
             adminBar.classList.toggle('hidden', !state.isAdmin);
@@ -8108,54 +5643,33 @@
         var pauseBtn = document.getElementById('pause-game-btn');
         var resumeBtn = document.getElementById('resume-game-btn');
         if (nextRoundAdminBtn) nextRoundAdminBtn.classList.add('hidden');
-        // QUESTION_ACTIVE → the admin (admin-as-player) can skip a live or
-        // broken question. The backend (#318) now evaluates the round on
-        // admin_skip during QUESTION_ACTIVE, so this path is reachable.
-        // Stays hidden for non-admins and outside an active question.
         if (skipBtn) skipBtn.classList.toggle('hidden', !state.isAdmin);
-        // #1177: the skip button names what admin_skip does here, in the
-        // words the host page and the Lovelace card use.
         var skipLabel = document.getElementById('skip-question-label');
         if (skipLabel && window.QuizifyI18n) {
             skipLabel.setAttribute('data-i18n', 'admin.reveal');
             skipLabel.textContent = window.QuizifyI18n.t('admin.reveal');
         }
-        // QUESTION_ACTIVE → Pause is the relevant CTA, Resume hidden.
         if (pauseBtn) pauseBtn.classList.remove('hidden');
         if (resumeBtn) resumeBtn.classList.add('hidden');
 
-        // Hide reaction bar during game
         var reactionBar = document.getElementById('reaction-bar');
         if (reactionBar) reactionBar.classList.add('hidden');
     }
 
-    // ============================================
-    // Round Summary
-    // ============================================
-
     function handleRoundSummary(msg) {
         pu.setPhase('ANSWER_REVEAL');
         game.stopCountdown();
-        // #322: reveal ends the answering window — drop the freeze overlay
-        // (and its timer) so it can never bleed onto the result screen.
         game.stopFrozenOverlay();
         _clearFinaleCountdown();
-        // #434: the round is over, so the picture stops hiding. The reveal
-        // view reuses the banner element, so leaving the blur on would show
-        // the correct answer next to an image nobody can read.
         if (game.clearRevealBlur) game.clearRevealBlur();
         pu.showView('reveal-view');
-        // #952: the power-up picker is a page-level modal showView() does not
-        // hide; left open, it sat on top of the reveal.
         if (game.closeTargetPicker) game.closeTargetPicker();
 
-        // Pass question context to reveal
         if (currentQuestion) {
             msg.question_text = currentQuestion.question_text;
             msg.question = { text: currentQuestion.question_text };
         }
 
-        // Enrich all_answers with last answer result (speed/streak breakdown) for current player
         var lastResult = game.getLastAnswerResult ? game.getLastAnswerResult() : null;
         if (lastResult && msg.all_answers) {
             msg.all_answers = msg.all_answers.map(function(a) {
@@ -8166,10 +5680,6 @@
                         difficulty_multiplier: lastResult.difficulty_multiplier || 1.0,
                         difficulty_bonus: lastResult.difficulty_bonus || 0,
                         double_bonus: lastResult.double_bonus || 0,
-                        // #1118: the server's row already holds the settled
-                        // round score (Steal included); the submit-time
-                        // answer_result predates it. Only fall back to that
-                        // frame when the row carries no score of its own.
                         round_score: (typeof a.points_earned === 'number')
                             ? a.points_earned
                             : (lastResult.points_earned || 0),
@@ -8186,14 +5696,9 @@
         game.clearLastAnswerResult();
         myPowerUp = null;
 
-        // Show reaction bar during reveal
         var reactionBar = document.getElementById('reaction-bar');
         if (reactionBar) reactionBar.classList.remove('hidden');
 
-        // Hide the global admin-control-bar (Pause + Ende) on ANSWER_REVEAL.
-        // The redesigned result page owns its own sticky bar with Ende +
-        // Nächste Runde — Pause makes no sense between rounds, and having
-        // two stacked sticky bars covered the standings.
         var adminBar = document.getElementById('admin-control-bar');
         if (adminBar) adminBar.classList.add('hidden');
         var nextRoundAdminBtn2 = document.getElementById('next-round-admin-btn');
@@ -8202,19 +5707,6 @@
         if (skipBtn2) skipBtn2.classList.add('hidden');
     }
 
-    // ============================================
-    // Leaving the game view for good (#838)
-    // ============================================
-
-    // The reaction bar, the admin bar and the toast are fixed to the page and
-    // sit OUTSIDE the view stack, so showView() cannot take them with it. A
-    // reset therefore returned the phone to the join screen with five live
-    // reaction buttons under the Join button, the last in-game toast ("3 in a
-    // row!", "Time expired") still on screen, and — invisible but read aloud —
-    // the timer's polite region still holding "5 seconds left" (#839).
-    //
-    // handleFinale has always torn the first two down by hand; this is that
-    // teardown in one place, for every exit that is not the finale.
     function clearGameChrome() {
         var reactionBar = document.getElementById('reaction-bar');
         if (reactionBar) reactionBar.classList.add('hidden');
@@ -8222,53 +5714,30 @@
         if (adminBar) adminBar.classList.add('hidden');
         if (pu.clearToast) pu.clearToast();
         if (game && game.clearTimeAnnouncement) game.clearTimeAnnouncement();
-        // The game is over for this phone: a hatch armed on the screen we just
-        // left must not fire a minute later on the join screen, and the roster
-        // it was judged against belongs to a game that no longer exists.
         setResetStage(null);
         _lastRoster = [];
-        // #1032: the answered row belongs to that game too.
         if (game && game.resetSubmissionRoster) game.resetSubmissionRoster();
         _hostSeenInRoster = false;
         _hostConnectedFlag = null;
     }
 
-    // ============================================
-    // Finale
-    // ============================================
-
     function handleFinale(msg) {
         pu.setPhase('FINALE');
-        // #782: updatePageTitle has always known the FINALE case, but the two
-        // paths that reach the end screen — the live `finale` event and a
-        // FINALE game_state — both routed straight here, so nothing ever
-        // called it. The tab kept "Quizify — Question 5" while the screen said
-        // Game Over, which is the one place the phone still claimed a game was
-        // running: it is what a player reads in the tab strip and in the app
-        // switcher.
         updatePageTitle('FINALE', msg);
         game.stopCountdown();
         _clearFinaleCountdown();
-        if (game.closeTargetPicker) game.closeTargetPicker();  // #952
-        // #803: the game is over — the end screen has its own New game button,
-        // and a hatch armed on the stage we just left must not surface here a
-        // minute later.
+        if (game.closeTargetPicker) game.closeTargetPicker();
         setResetStage(null);
         pu.showView('end-view');
 
         end.updateEndView(msg);
         end.setupNewGameButton();
 
-        // Hide bars
         var reactionBar = document.getElementById('reaction-bar');
         if (reactionBar) reactionBar.classList.add('hidden');
         var adminBar = document.getElementById('admin-control-bar');
         if (adminBar) adminBar.classList.add('hidden');
     }
-
-    // ============================================
-    // Paused View
-    // ============================================
 
     function updatePausedView(data) {
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
@@ -8280,12 +5749,6 @@
         if (titleEl) titleEl.textContent = t(titleKey);
         if (messageEl) messageEl.textContent = t(hintKey);
 
-        // #299: host-permanently-gone escape hatch. When the admin device
-        // dies for good, the server lets ANY client reset after 60s (#207),
-        // but until now no non-admin view exposed a button → the game was a
-        // dead-end. Arm a 60s timer on an admin_disconnected pause that
-        // reveals the reset button; a non-admin then has a way out. Admins
-        // already have their own resume/end bar, so skip it for them.
         if (isDisconnect && !state.isAdmin) {
             armResetAffordance('paused-reset-btn');
         } else {
@@ -8293,21 +5756,10 @@
         }
     }
 
-    // ============================================
-    // Host-permanently-gone reset affordance (#299)
-    // ============================================
-
-    // ~60s — mirrors the server's #207 grace window before it authorizes a
-    // reset_game from any client.
     var RESET_AFFORDANCE_DELAY_MS = 60000;
     var _resetAffordanceTimers = {};
 
-    // wrapperId (optional) is an extra container revealed alongside the
-    // button — used by the reveal view so its bordered slot stays hidden
-    // until the timer actually fires.
     function armResetAffordance(btnId, wrapperId) {
-        // Already armed/shown for this view — don't restart the clock (a
-        // repeated PAUSED/REVEAL push shouldn't reset the wait).
         if (_resetAffordanceTimers[btnId]) return;
         var btn = document.getElementById(btnId);
         if (btn && !btn.classList.contains('hidden')) return;
@@ -8336,30 +5788,11 @@
             var w = document.getElementById(wrapperId);
             if (w) w.classList.add('hidden');
         }
-        // A confirm dialog opened from this button must not outlive it: the
-        // host came back or the stage moved on, so there is nothing left to
-        // confirm (#1131).
         if (_guestResetTrigger && _guestResetTrigger.id === btnId) {
             closeGuestResetModal();
         }
     }
 
-    // ------------------------------------------------------------------
-    // Between-round stages that wait for a host tap (#299, #803)
-    // ------------------------------------------------------------------
-    //
-    // Each of these phases ends only when the host advances it: the reveal and
-    // the two detour results are all left by `next_question`. If the host's
-    // phone dies while one is on screen, nothing on the wire will ever move
-    // again — the server's grace pause refuses every phase but QUESTION_ACTIVE
-    // — so every one of them needs the #207 escape hatch.
-    //
-    // #299 gave it to the reveal only. The lightning recap and the Hot Seat
-    // result arrived later and inherited the hole: the server would have
-    // accepted `reset_game` from any of the guests sitting there, but no view
-    // offered it, so a whole room sat on a results screen forever. Listing the
-    // stages in one table is what stops the next between-round phase
-    // inheriting it a third time.
     var STAGE_RESET_AFFORDANCES = {
         'ANSWER_REVEAL': ['reveal-reset-btn', 'reveal-reset-controls'],
         'REVEAL': ['reveal-reset-btn', 'reveal-reset-controls'],
@@ -8367,74 +5800,17 @@
         'HOT_SEAT_REVEAL': ['hotseat-reset-btn', 'hotseat-reset-controls']
     };
 
-    // Which LIVE frame opens which waiting stage (#858).
-    //
-    // The snapshot half of this decision is one line in handleGameState:
-    // `setResetStage(STAGE_RESET_AFFORDANCES[msg.phase] ? msg.phase : null)`.
-    // A phone only ever receives a snapshot when it joins, reconnects or asks
-    // for one — so a guest who reaches a stage by LIVING THROUGH the round
-    // gets there with `_resetStage` still null, `refreshStageReset` returns at
-    // its first line, and a perfectly correct `host_connected:false` has
-    // nothing to arm.
-    //
-    // #803 patched that per case, and got two of the three: `lightning_recap`
-    // and `hot_seat_result` each said their own stage out loud, `round_summary`
-    // said nothing, and the reveal — the screen every single round ends on, and
-    // the one a host-less room waits on most — was the one left with no way
-    // out (#858, found on real hardware after 137 seconds of four phones
-    // showing `reveal-reset-controls: none`).
-    //
-    // So the live half is a table too, applied once at the bottom of
-    // handleMessage. A between-round stage is now added by writing two rows —
-    // its controls below, its opening frame here — and forgetting the second
-    // is a failing test rather than a stranded room
-    // (tests/test_stage_entry_parity_858.py).
     var STAGE_ENTERED_BY = {
         'round_summary': 'ANSWER_REVEAL',
         'lightning_recap': 'LIGHTNING_RECAP',
         'hot_seat_result': 'HOT_SEAT_REVEAL'
     };
 
-    // Enter the stage this frame opens, if it opens one. Reads `type || event`
-    // for the same reason the dispatcher does.
     function enterStageFor(msg) {
         var stage = msg && STAGE_ENTERED_BY[msg.type || msg.event];
         if (stage) setResetStage(stage);
     }
 
-    // ------------------------------------------------------------------
-    // …and the teardown half (#864)
-    // ------------------------------------------------------------------
-    //
-    // The table above says which frame RAISES a between-round screen. Nothing
-    // said which frame takes one down, and #862 is what that asymmetry costs:
-    // it gave `hot_seat_result` a render where RC3 had a `reset()`, and the
-    // only two functions that hide `#hotseat-panel` — `hotSeat.reset()` and
-    // the next auction's bid stage — are called by the NEXT auction. The Hot
-    // Seat fires once per game (`_hot_seat_fired`), so the next auction never
-    // comes. From the settlement to the podium, every remaining question was
-    // played behind the previous chair's result card.
-    //
-    // It is not a cosmetic leftover, because of WHERE these panels sit: each
-    // one is a direct child of `.game-container` ABOVE `#answers-container`,
-    // so a visible one does not overlap the answer grid, it pushes the grid
-    // down the page. On the 390x844 phone the live test measured, the grid
-    // starts at 545 with none of them up — 91 px of slack — and at 1017 with
-    // the Hot Seat panel up, which is 173 px below the fold. A guest who does
-    // not think to scroll past a card about the last round has no visible way
-    // to answer this one.
-    //
-    // One row per panel:
-    //   raisedBy — the frames that can put it on screen
-    //   phases   — the snapshot phases that OWN it (the reconnect half)
-    //   clear    — the teardown this table runs when the game moves on
-    //   owner    — the module that already owns the teardown, when it is not
-    //              this table's job. Exactly one of `clear` / `owner` is set.
-    //
-    // A panel with neither, and a panel the page grows that has no row here at
-    // all, both fail tests/test_panel_teardown_parity_864.py — which is the
-    // guard tests/test_stage_entry_parity_858.py does not have, and the reason
-    // #864 walked straight past it.
     var GAME_VIEW_PANELS = {
         'last-round-banner': {
             raisedBy: ['wager_window'],
@@ -8472,12 +5848,6 @@
         }
     };
 
-    // The frames that put the phone back on a playable `#game-view` screen —
-    // the moments at which "the game has moved on" is true.
-    //
-    // `round_summary` and `finale` are deliberately absent: they switch to
-    // another view, so nothing here is on screen, and tearing down from there
-    // would only move the bug to whichever frame brings `#game-view` back.
     var MOVED_PAST_DETOUR = [
         'question_started',
         'wager_window',
@@ -8492,8 +5862,6 @@
         });
     }
 
-    // Live half: a frame that opens the next screen leaves no detour panel
-    // standing — except the one it is itself raising.
     function clearStalePanels(msg) {
         var type = msg && (msg.type || msg.event);
         if (MOVED_PAST_DETOUR.indexOf(type) === -1) return;
@@ -8502,55 +5870,20 @@
         });
     }
 
-    // Snapshot half, and the same parity #858 is about: a phone that
-    // reconnects into a phase no longer owning a panel must find it gone,
-    // exactly as a phone that lived through the frames does. `restoreFromSnapshot`
-    // returns at its first line when the snapshot has no `hot_seat` block, so
-    // without this a reload did not clear the card either.
     function clearStalePanelsForPhase(phase) {
         _clearPanels(function (row) {
             return (row.phases || []).indexOf(phase) !== -1;
         });
     }
 
-    // The roster from the most recent frame that carried one.
-    //
-    // "Is a host still connected" is the whole decision, and the events that
-    // OPEN two of these stages — `lightning_recap`, `hot_seat_result` — carry
-    // no player list at all, while the frame that says the host just vanished
-    // (`player_left`) carries nothing else. Remembering the last roster lets
-    // both kinds of frame ask the same question.
     var _lastRoster = [];
 
-    // What the SERVER says about the host (#842), or null when it has not
-    // said anything: an older integration that does not send the flag, or a
-    // phone that has not received a frame carrying it yet. The roster reading
-    // below is the fallback for exactly that case, so a phone from this
-    // version and a server from the last one still behave the way they did.
-    //
-    // When it IS present it wins outright, because it is the only reading that
-    // can see a host at /quizify/admin who never joined as a player — the
-    // room's most common shape, and the one the roster is blind to.
     var _hostConnectedFlag = null;
 
-    // Whether any roster this game has ever named the host (#834). A host who
-    // runs the evening from /quizify/admin without ever taking a player slot
-    // is in no roster at all, so their absence from one proves nothing; a host
-    // who WAS a player and has since been dropped by the disconnect grace
-    // period is absent from the same roster and proves everything. This flag
-    // is the only thing that tells the two apart. Cleared with the game.
     var _hostSeenInRoster = false;
 
-    // Which stage the phone is sitting on, or null. Deliberately not
-    // state.currentPhase: the two detour results are announced by one-shot
-    // events that must not be allowed to rewrite the phase everything else
-    // reads.
     var _resetStage = null;
 
-    // Any frame may carry the flag; only a frame that actually does may
-    // change it. The leaderboard-refresh `game_state` (#221) is built by a
-    // different builder and carries no host key at all, so testing for the
-    // key rather than its truthiness is what stops it wiping the answer.
     function _rememberHostFlag(msg) {
         if (msg && typeof msg.host_connected === 'boolean') {
             _hostConnectedFlag = msg.host_connected;
@@ -8565,18 +5898,6 @@
         }
     }
 
-    // Three answers, not two (#834). "No connected host in this roster" and
-    // "the host is gone" are different statements, and reading the first as
-    // the second is what put a red Reset button on every guest phone during
-    // the lightning recap while the host sat looking at that same recap: the
-    // host was hosting from /quizify/admin without joining as a player, so no
-    // roster all evening carried an `is_admin` row and the hatch read the
-    // silence as a death. It is the same blind spot #726 closed on the server,
-    // where a live `?role=admin` socket now refuses a guest `reset_game` —
-    // the phone has no equivalent signal on the wire, so the honest answer
-    // here is 'unknown', and 'unknown' never arms anything.
-    //
-    // Returns 'connected' | 'gone' | 'unknown'.
     function _hostPresence() {
         if (_hostConnectedFlag !== null) {
             return _hostConnectedFlag ? 'connected' : 'gone';
@@ -8588,65 +5909,30 @@
             named = true;
             if (p.connected !== false) return 'connected';
         }
-        // A host row that has vanished from the roster entirely is the removal
-        // that follows the disconnect grace period, not a host who never was a
-        // player — so a host we have seen once stays "gone" rather than
-        // decaying into "unknown" and taking the armed hatch with it.
         return (named || _hostSeenInRoster) ? 'gone' : 'unknown';
     }
 
-    // Enter (or leave) a waiting stage. Leaving takes the escape hatch with
-    // it — a hatch left armed across a phase change would pop up 60s later on
-    // a screen where it means nothing.
     function setResetStage(stage) {
         _resetStage = stage || null;
         var mine = _resetStage ? STAGE_RESET_AFFORDANCES[_resetStage][0] : null;
         Object.keys(STAGE_RESET_AFFORDANCES).forEach(function (key) {
             var ids = STAGE_RESET_AFFORDANCES[key];
-            // ANSWER_REVEAL and REVEAL are two names for one control, so
-            // compare the button, not the phase — otherwise the alias would
-            // disarm the stage we are standing on.
             if (ids[0] === mine) return;
             disarmResetAffordance(ids[0], ids[1]);
         });
         refreshStageReset();
     }
 
-    // Re-decide the current stage's hatch against the latest roster. Called
-    // again on every roster frame, so a host who dies *during* the stage is
-    // caught, not just one who was already gone when it opened.
     function refreshStageReset() {
         var ids = _resetStage && STAGE_RESET_AFFORDANCES[_resetStage];
         if (!ids) return;
-        // The admin has their own bar with Next Round on every one of these
-        // screens; a reset button next to it is an invitation to a misfire.
-        // Everything else needs POSITIVE evidence that the host is gone
-        // (#834) — an unknown host is treated exactly like a present one.
         if (state.isAdmin || _hostPresence() !== 'gone') {
             disarmResetAffordance(ids[0], ids[1]);
         } else {
-            // The wrapper is kept hidden until the timer fires — see
-            // armResetAffordance's wrapperId reveal — so a host-gone stage
-            // doesn't show an empty bordered slot for 60s.
             armResetAffordance(ids[0], ids[1]);
         }
     }
 
-    // ------------------------------------------------------------------
-    // Guest reset confirmation (#1131)
-    // ------------------------------------------------------------------
-    //
-    // `reset_game` from a guest wipes every player, score and socket, and the
-    // buttons that send it sit right where a guest is already tapping. The
-    // host's own reset has always gone through #reset-game-modal; a guest
-    // tap now goes through the same kind of dialog (#guest-reset-modal), and
-    // only its confirm button sends anything.
-    //
-    // #1183: the same sheet now asks before every message that cannot be
-    // taken back — the host's End (bar and reveal), New game on the end
-    // screen, and a guest's reset. One dialog, its texts swapped per kind,
-    // all of them the admin console's own words, so the phone has one rule
-    // for the one kind of action instead of three.
     var CONFIRM_KINDS = {
         reset: { title: 'admin.resetGameConfirm', text: 'game.resetGuestWarning',
             confirm: 'admin.resetGame', cancel: 'common.cancel' },
@@ -8654,16 +5940,12 @@
             confirm: 'admin.endGame', cancel: 'common.cancel' },
         newGame: { title: 'admin.resetGameConfirm', text: 'admin.resetGameWarning',
             confirm: 'admin.resetGame', cancel: 'common.cancel' },
-        // #1183 draft ③: the back gesture mid-game. Staying is the safe and
-        // the likely answer, so it is the primary button and comes first.
         leave: { title: 'game.leaveConfirm', text: 'game.leaveWarning',
             confirm: 'game.leave', cancel: 'game.keepPlaying',
             confirmClass: 'btn-secondary', cancelClass: 'btn-primary', sheet: 'modal--leave' }
     };
     var _guestResetTrigger = null;
     var _guestResetKeyHandler = null;
-    // { kind, run } for the open sheet; run is null for the guest reset,
-    // whose send lives on the confirm button itself.
     var _confirmPending = null;
 
     function _focus(el) {
@@ -8692,8 +5974,6 @@
         if (modal && modal.classList) modal.classList.toggle('modal--leave', keys.sheet === 'modal--leave');
     }
 
-    // Open the sheet for `kind`; `run` fires only from its confirm button,
-    // `onCancel` on every other way out (Cancel, backdrop, Esc, back).
     function confirmThen(triggerBtn, kind, run, onCancel) {
         var modal = document.getElementById('guest-reset-modal');
         if (!modal) return false;
@@ -8726,7 +6006,6 @@
                 return;
             }
             if (e.key !== 'Tab') return;
-            // Two buttons, so the trap is the pair itself.
             var first = document.getElementById('guest-reset-confirm-btn');
             var last = cancelBtn;
             if (!first || !last) return;
@@ -8782,15 +6061,10 @@
         var confirmBtn = document.getElementById('guest-reset-confirm-btn');
         if (confirmBtn) {
             confirmBtn.addEventListener('click', function () {
-                // Only a trigger that is still on screen may fire: the
-                // dialog closes with its button, but a tap can race that.
                 var trigger = _guestResetTrigger;
                 var pending = _confirmPending;
                 if (pending && pending.run) {
-                    // A host action (#1183). End is valid in every phase, so
-                    // a bar that hid behind the sheet (the round closed
-                    // meanwhile) does not swallow the host's answer.
-                    _confirmPending = null;   // confirmed: no onCancel
+                    _confirmPending = null;
                     closeGuestResetModal();
                     pending.run();
                     return;
@@ -8811,17 +6085,10 @@
         if (backdrop) backdrop.addEventListener('click', closeGuestResetModal);
     }
 
-    // ============================================
-    // Power-ups
-    // ============================================
-
     function handlePowerUpApplied(msg) {
         if (msg.powerup_type === 'joker' && msg.joker_remove_index != null) {
-            // Private send to source with the removed-answer index.
             game.applyJoker(msg.joker_remove_index);
         } else if (msg.powerup_type === 'joker' && msg.source_player !== state.playerName) {
-            // Public broadcast — surface opponent's joker use to other
-            // players (no removed-index since shuffle is per-player).
             var tJk = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
             pu.showToast(tJk('game.opponentUsedJoker', { name: msg.source_player }), 2000, 'game.opponentUsedJoker');
         } else if (msg.powerup_type === 'steal') {
@@ -8833,19 +6100,9 @@
                 pu.showToast(tPwr('game.stoleFromYou', { name: msg.source_player || tPwr('lobby.you'), points: pts }), 2500, 'game.stoleFromYou');
             }
         } else if (msg.powerup_type === 'freeze' && msg.target_player === state.playerName) {
-            // #322: full blocking "Ice Card" overlay + live countdown instead
-            // of the old 2s toast. The server carries freeze_duration only to
-            // the target (effect_data in websocket.py ~L1045). Fall back to a
-            // sane default if it's somehow missing so the overlay still tears
-            // itself down rather than hanging forever.
             var freezeSecs = Number(msg.freeze_duration) || 5;
             game.startFrozenOverlay(freezeSecs);
         }
-        // Only the source's local power-up button needs clearing. Previously
-        // this was unconditional — for STEAL/FREEZE that meant a third party
-        // who happened to hold a power-up would lose their UI state when an
-        // unrelated event broadcasted. Now the only player whose myPowerUp
-        // gets reset is the one who just used theirs.
         if (msg.source_player === state.playerName) {
             myPowerUp = null;
             var powerupBtn = document.getElementById('powerup-btn');
@@ -8854,10 +6111,6 @@
             }
         }
     }
-
-    // ============================================
-    // Reactions
-    // ============================================
 
     function showFloatingReaction(emoji, playerName) {
         var container = document.getElementById('reaction-container');
@@ -8874,29 +6127,11 @@
         }, 2000);
     }
 
-    // ============================================
-    // Error Handler
-    // ============================================
-
     function handleError(msg) {
         console.warn('[Quizify] Error:', msg.code, msg.message);
-        // Translate via i18n so the player's chosen locale wins. Previous
-        // inline map was German-only \u2014 English-speaking players saw "Aktion
-        // nicht erlaubt" regardless of language setting. Lookup pattern:
-        //   t('errors.<CODE>') returns the localized string OR the key
-        //   itself if missing. We treat key-as-result as "no translation"
-        //   and fall back to server message, then to errors.UNKNOWN.
         var t = _t();
         var code = msg.code || 'UNKNOWN';
 
-        // #729: a join is in flight — the error is a refusal, and the join
-        // form owns it. This used to be gated on `!state.playerName`, which
-        // handleJoinClick sets BEFORE the join goes out, so the branch was
-        // dead for every single refusal: the guest was left with a disabled
-        // button reading "Joining…", no reason and no way back.
-        // The old `!state.playerName` condition is kept as a second trigger —
-        // it still catches an error that lands on the join form outside a
-        // tracked join — but `joinPending` is the one that actually fires.
         if (state.joinPending || (!state.playerName && els.joinBtn)) {
             pu.showToast(showJoinRefusal(code, msg.message));
             return;
@@ -8914,36 +6149,14 @@
         }
         pu.showToast(userMsg);
 
-        // #750: an estimate guess that was refused must give the slider back.
-        // Only for the codes where a second try can actually succeed —
-        // ALREADY_SUBMITTED / ROUND_EXPIRED / NOT_IN_GAME mean the round is
-        // gone for us, and re-enabling there would just invite a second
-        // refusal.
         if (game && game.releaseGuess) game.releaseGuess(msg.code);
 
-        // A refused team action is not a generic failure — the lobby has an
-        // answer for it (teams are set / that team dissolved), and showing it
-        // there is what keeps the player from asking the host (#365).
         if (msg.code === 'TEAM_CLOSED' && team) team.handleTeamError();
     }
 
-    // ============================================
-    // Join Refusals (#729)
-    // ============================================
-
-    // How long a join may sit unanswered before we tell the guest something
-    // is wrong. A refusal comes back in milliseconds; this only fires when
-    // nothing comes back at all — the per-IP connection cap answers the
-    // upgrade with a plain HTTP 429 (server/websocket.py), so the socket
-    // never opens and no `error` frame is ever sent. Before #729 that left
-    // the button on "Joining…" with nothing else on screen.
     var JOIN_ANSWER_TIMEOUT_MS = 10000;
     var _joinTimeout = null;
 
-    // Refusals that invalidate the name we hold. Without clearing it, the
-    // reconnect loop in player-utils keeps firing (it is gated on
-    // state.playerName) and re-sends the very name the server just refused,
-    // so the guest watches a silent retry storm instead of a join form.
     var JOIN_REFUSALS_CLEARING_NAME = [
         'NAME_TAKEN', 'NAME_INVALID', 'GAME_FULL', 'GAME_ENDED', 'ALREADY_JOINED'
     ];
@@ -8952,9 +6165,6 @@
         return (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
     }
 
-    // Prefer the join-specific wording (`join.refused.<CODE>`), which tells
-    // the guest what to DO. `errors.<CODE>` is the terse label used for
-    // in-game toasts ("Name already taken") and is only a fallback here.
     function joinRefusalText(code, serverMessage) {
         var t = _t();
         var candidates = ['join.refused.' + code, 'errors.' + code];
@@ -8980,10 +6190,6 @@
         if (_joinTimeout) { clearTimeout(_joinTimeout); _joinTimeout = null; }
     }
 
-    // #1018: the phone was put out of a game it did not leave — the host
-    // reset it, or the server would not take the stored session back. The
-    // bare form looked like a fresh page, so every guest had to be told out
-    // loud to type their name again. Say why, and hand the name back.
     function lastPlayerName() {
         var stored = pu.getSession ? pu.getSession() : null;
         return state.playerName || (stored && stored.name) || '';
@@ -8993,14 +6199,12 @@
         var t = _t();
         var hint = document.getElementById('join-hint');
         if (hint) {
-            // data-i18n so a language switch on the form re-translates it.
             hint.setAttribute('data-i18n', reasonKey);
             hint.textContent = t(reasonKey);
             hint.classList.remove('hidden');
         }
         if (lastName && els.nameInput) els.nameInput.value = lastName;
         if (els.joinBtn) {
-            // The button still reads "Joining…" from the last join.
             els.joinBtn.textContent = t('join.joinButton');
             els.joinBtn.disabled = !(els.nameInput &&
                 pu.validateName(els.nameInput.value).valid);
@@ -9013,13 +6217,6 @@
         if (hint) hint.classList.add('hidden');
     }
 
-    // ============================================
-    // Seat elsewhere (#1193)
-    // ============================================
-
-    // A newer tab of this browser took the seat (the server rebinds a player
-    // to the newest socket). This tab used to keep the broadcasts but not
-    // its own question, and sat on an empty skeleton.
     function handleSessionMoved() {
         endJoinPending();
         state.movedName = state.playerName;
@@ -9033,7 +6230,7 @@
         pu.updateConnectionIndicator('disconnected', { noRetry: true });
         if (state.ws) {
             state.intentionalLeave = true;
-            try { state.ws.close(); } catch (e) { /* already gone */ }
+            try { state.ws.close(); } catch (e) { }
         }
         showSessionChoice('moved', '');
     }
@@ -9067,9 +6264,6 @@
     function _sessionPrimary() {
         var stored = pu.getSession();
         if (_sessionChoice === 'moved') {
-            // Take the seat back: a fresh page reconnects by the stored
-            // token, and the other tab is told in turn. Only while the
-            // stored seat is still the one this tab had.
             if (stored.token && stored.name === state.movedName) {
                 location.reload();
             } else {
@@ -9077,7 +6271,6 @@
             }
             return;
         }
-        // 'stale': the guest is who the phone remembers.
         _sessionChoice = null;
         state.staleConfirmed = true;
         if (!stored.token) { _showEmptyJoin(); return; }
@@ -9091,8 +6284,6 @@
 
     function _sessionSomeoneElse() {
         if (_sessionChoice === 'moved') {
-            // The stored seat is the other tab's; leave it alone and stop
-            // this tab from reading it on its next connect.
             state.sessionMoved = false;
             state.ignoreStoredSession = true;
             pu.updateConnectionIndicator('connecting');
@@ -9123,10 +6314,6 @@
         if (other) other.addEventListener('click', _sessionSomeoneElse);
     }
 
-    // Put the join form back in a usable state AND leave the reason on
-    // screen. The toast alone fades after three seconds and takes the reason
-    // with it (#426); the button alone says nothing at all (#729).
-    // Returns the text shown so the caller can reuse it for the toast.
     function showJoinRefusal(code, serverMessage) {
         endJoinPending();
         var t = _t();
@@ -9134,9 +6321,6 @@
 
         if (JOIN_REFUSALS_CLEARING_NAME.indexOf(code) !== -1) {
             forgetIdentity();
-            // A refusal can arrive on an auto-rejoin, with the guest sitting
-            // behind the reconnecting overlay or on the lobby. Put them back
-            // on the form the message belongs to.
             if (pu.hideReconnectingOverlay) pu.hideReconnectingOverlay();
             state.isReconnecting = false;
             state.reconnectAttempts = 0;
@@ -9150,8 +6334,6 @@
                 : t('join.joinButton');
         }
         if (els.nameInput) els.nameInput.style.borderColor = 'var(--color-error)';
-        // The input's aria-describedby target: persistent and announced to
-        // screen readers, cleared on the next keystroke (setupJoinForm).
         var vmsg = document.getElementById('name-validation-msg');
         if (vmsg) {
             vmsg.textContent = text;
@@ -9160,18 +6342,12 @@
         return text;
     }
 
-    // ============================================
-    // Join Form
-    // ============================================
-
     function setupJoinForm() {
         if (!els.nameInput || !els.joinBtn) return;
 
         els.nameInput.addEventListener('input', function () {
             var result = pu.validateName(this.value);
             els.joinBtn.disabled = !result.valid;
-            // Clear a stale join-error reason (#426) once the user edits the
-            // name again, and drop the red border set by handleError.
             var vmsg = document.getElementById('name-validation-msg');
             if (vmsg && vmsg.textContent) {
                 vmsg.textContent = '';
@@ -9193,12 +6369,6 @@
         var result = pu.validateName(els.nameInput.value);
         if (!result.valid) return;
 
-        // Setting the name here is load-bearing: the onOpen handler below
-        // auto-sends the join off state.playerName when the socket wasn't
-        // open at click time, and player-utils gates its whole reconnect
-        // loop on it. So the ordering stays; what changes (#729) is that the
-        // refusal path no longer *infers* "we are joining" from the absence
-        // of a name — beginJoinPending() says so outright.
         beginJoinPending();
         state.playerName = result.name;
         els.joinBtn.disabled = true;
@@ -9206,38 +6376,22 @@
 
         if (state.ws && state.ws.readyState === WebSocket.OPEN) {
             var joinMsg = { name: result.name };
-            // Admin self-join: server trusts `is_admin: true` in the
-            // join message (Beatify pattern). No token validation in
-            // this path — see player-core.js connect() for rationale.
             var isAdminSelfJoin = new URLSearchParams(location.search).get('admin') === 'true';
             if (isAdminSelfJoin) {
                 state.isAdmin = true;
             }
             if (state.isAdmin) {
                 joinMsg.is_admin = true;
-                // #358: attach the admin session token (fail-soft) so a crown
-                // transfer from a stale admin slot can be authorised.
                 var _at = QuizifyUtils.readAdminToken();
                 if (_at) joinMsg.admin_token = _at;
             }
             send('join', joinMsg);
         } else {
-            // WS not open at click time (initial connect still pending, or
-            // dropped) — kick off a (re)connect. state.playerName is now
-            // set, so the onOpen handler auto-sends the join. Without this
-            // the join button would hang on "Joining…" forever.
             connect();
         }
     }
 
-    // ============================================
-    // Retry Connection
-    // ============================================
-
     function retryConnection() {
-        // #1182: "Connect now" cuts the pending backoff short. The screen
-        // stays where it is: the snapshot that follows a successful
-        // reconnect routes to the right view by itself.
         if (state.reconnectTimer) {
             clearTimeout(state.reconnectTimer);
             state.reconnectTimer = null;
@@ -9251,26 +6405,9 @@
         if (retryBtn) {
             retryBtn.addEventListener('click', retryConnection);
         }
-        // #983: the connection dot offers the same action the host's has had
-        // since #290. Same function, so the two entry points cannot drift.
         pu.setConnectionRetry(retryConnection);
     }
 
-    // ============================================
-    // Admin Controls Wiring
-    // ============================================
-
-    // ============================================
-    // Back gesture (#1183)
-    // ============================================
-    //
-    // Android's back button (or the edge swipe) left the page — open sheets
-    // and all — and for a guest who came by QR camera it closed the tab: the
-    // game was gone. Now one history entry stands in front of the page while
-    // this phone is in a game. Back closes the topmost sheet first; mid-game
-    // it asks "Leave the game?" (the session stays, so a new scan brings the
-    // guest back by token); in the lobby or on the end screen it leaves as
-    // before.
     var BACK_SHEETS = ['guest-reset-modal', 'powerup-target-modal', 'image-zoom-overlay',
         'invite-modal', 'qr-modal'];
     var MID_GAME_PHASES = {
@@ -9279,8 +6416,6 @@
         HOT_SEAT: true, HOT_SEAT_REVEAL: true
     };
     var _backGuard = false;
-    // Set by "Leave": from then on back belongs to the browser, so the next
-    // press closes a QR tab that has no page behind this one.
     var _leaving = false;
 
     function armBackGuard() {
@@ -9289,7 +6424,7 @@
         try {
             window.history.pushState({ quizifyBack: true }, '');
             _backGuard = true;
-        } catch (e) { /* a sandboxed frame: back stays the browser's */ }
+        } catch (e) { }
     }
 
     function _openBackSheet() {
@@ -9301,9 +6436,8 @@
     }
 
     function handleBack() {
-        _backGuard = false;   // the browser just took the guard entry away
+        _backGuard = false;
         if (_openBackSheet()) {
-            // Every sheet already closes on Esc; back is the same request.
             document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
             armBackGuard();
             return;
@@ -9315,7 +6449,6 @@
             }, armBackGuard);
             if (asked) return;
         }
-        // Lobby, end screen, or no game: back means back.
         window.history.back();
     }
 
@@ -9324,7 +6457,6 @@
     }
 
     function setupAdminControls() {
-        // Skip question
         var skipBtn = document.getElementById('skip-question-btn');
         if (skipBtn) {
             skipBtn.addEventListener('click', function () {
@@ -9332,7 +6464,6 @@
             });
         }
 
-        // Next round (from admin bar)
         var nextRoundAdminBtn = document.getElementById('next-round-admin-btn');
         if (nextRoundAdminBtn) {
             nextRoundAdminBtn.addEventListener('click', function () {
@@ -9340,9 +6471,6 @@
             });
         }
 
-        // End game
-        // #1183: End reaches every guest and nothing brings the game back,
-        // so it asks first, in the console's words.
         var endGameBtn = document.getElementById('end-game-btn');
         if (endGameBtn) {
             endGameBtn.addEventListener('click', function () {
@@ -9350,7 +6478,6 @@
             });
         }
 
-        // Pause / resume — toggled by handleGameState based on phase.
         var pauseBtn = document.getElementById('pause-game-btn');
         if (pauseBtn) {
             pauseBtn.addEventListener('click', function () { pu.hostStep(pauseBtn, send, 'pause_game'); });
@@ -9360,7 +6487,6 @@
             resumeBtn.addEventListener('click', function () { pu.hostStep(resumeBtn, send, 'resume_game'); });
         }
 
-        // Next round (from reveal view)
         var nextRoundBtn = document.getElementById('next-round-btn');
         if (nextRoundBtn) {
             nextRoundBtn.addEventListener('click', function () {
@@ -9368,9 +6494,6 @@
             });
         }
 
-        // End game from the reveal page's sticky admin bar. Same server
-        // semantics as end-game-btn — added because the redesign moved
-        // the admin actions to a bottom-sticky bar on the reveal page.
         var endFromReveal = document.getElementById('end-game-from-reveal-btn');
         if (endFromReveal) {
             endFromReveal.addEventListener('click', function () {
@@ -9378,10 +6501,6 @@
             });
         }
     }
-
-    // ============================================
-    // Reaction Bar Wiring
-    // ============================================
 
     function setupReactionBar() {
         var reactionBtns = document.querySelectorAll('.reaction-btn');
@@ -9399,31 +6518,9 @@
         });
     }
 
-    // ============================================
-    // Initialization
-    // ============================================
-
-    // ============================================
-    // Sound Toggle (header speaker button)
-    // ============================================
-
-    // Header toggles paint their own aria-label from JS, so they are invisible
-    // to initPageTranslations() (which only walks data-i18n* attributes). i18n
-    // loads asynchronously and init() runs first, so at first paint both
-    // buttons announce the raw key — a screen reader literally says
-    // "game dot sound mute". These refs let _flushToggleLabels() repaint them
-    // once translations land, the same way _flushPendingTitle() repairs the
-    // page title. (#372)
     var _renderSoundToggle = null;
     var _renderA11yToggle = null;
 
-    // ============================================
-    // Per-player UI language (#492)
-    // ============================================
-
-    // Set only when the player taps a flag chip. Its presence — not its value
-    // — is what marks the language as *chosen* rather than *detected*, and
-    // that distinction is the whole feature: see _syncServerLanguage below.
     var PLAYER_LANG_KEY = 'quizify-player-lang';
 
     function _storedPlayerLang() {
@@ -9444,13 +6541,6 @@
         });
     }
 
-    // Apply the server's game language to this phone — unless the player has
-    // picked one. Before #492 this was unconditional, with the reasoning that
-    // "a German game shows German labels even if the player's browser is
-    // English". That is still the right default, but it also meant every
-    // incoming game_state would stamp over a deliberate choice within
-    // milliseconds, so a picker without this guard would look broken rather
-    // than absent.
     function _syncServerLanguage(msg) {
         if (!msg.language || !window.QuizifyI18n) return false;
         if (_storedPlayerLang()) return false;
@@ -9458,11 +6548,6 @@
         QuizifyI18n.setLanguage(msg.language).then(function () {
             QuizifyI18n.initPageTranslations();
             _markActiveLangChip();
-            // #1055: the two header toggles paint their own aria-label and
-            // title, out of the sweep's reach. The picker below has always
-            // repainted them; the game language arriving did not, so a
-            // German browser in an English game kept announcing
-            // "Soundeffekte stummschalten" for the whole evening.
             _flushToggleLabels();
             updatePageTitle(msg.phase, msg);
         });
@@ -9472,9 +6557,6 @@
     function setupLanguagePicker() {
         var group = document.getElementById('player-lang-chips');
         if (!group) return;
-        // An unsubstituted token means the page was served by something that
-        // doesn't know about {{UI_LANGUAGE_CHIPS}}; hide the row rather than
-        // showing the raw braces.
         if (group.textContent.indexOf('{{') !== -1) {
             group.classList.add('hidden');
             return;
@@ -9491,7 +6573,7 @@
             if (code === QuizifyI18n.getLanguage()) return;
             try {
                 window.localStorage.setItem(PLAYER_LANG_KEY, code);
-            } catch (_e) { /* private mode: choice holds for this page view */ }
+            } catch (_e) { }
             QuizifyI18n.setLanguage(code).then(function () {
                 QuizifyI18n.initPageTranslations();
                 _markActiveLangChip();
@@ -9530,8 +6612,6 @@
         render();
     }
 
-    // Accessibility mode (#372). Mirrors setupSoundToggle above: same header
-    // furniture, same aria-pressed contract, preference owned by the module.
     function setupA11yToggle() {
         var btn = document.getElementById('a11y-toggle-btn');
         var a11y = window.QuizifyA11y;
@@ -9572,7 +6652,6 @@
         pu.setupCollapsibles();
         if (lightning) { lightning.setSend(send); lightning.init(); }
 
-        // Answer button clicks
         var answerButtons = document.getElementById('answer-buttons');
         if (answerButtons) {
             answerButtons.addEventListener('click', function (e) {
@@ -9580,10 +6659,6 @@
                 if (!btn || btn.disabled) return;
                 var index = parseInt(btn.dataset.index, 10);
                 if (isNaN(index)) return;
-                // #696: while the seat holder is answering, the same grid
-                // means hot_seat_answer. This used to be an inline onclick on
-                // replacement buttons, which shadowed this handler and left
-                // the grid unusable for every later round.
                 if (hotSeat && hotSeat.handleSeatAnswerClick &&
                     hotSeat.handleSeatAnswerClick(index)) {
                     return;
@@ -9592,13 +6667,10 @@
             });
         }
 
-        // Power-up button — freeze/steal open a target picker; the rest fire
-        // immediately. Server still falls back to a random opponent if
-        // target_player_id is null, so even older clients keep working.
         var powerupBtn = document.getElementById('powerup-btn');
         if (powerupBtn) {
             powerupBtn.addEventListener('click', function () {
-                if (!myPowerUp || (game && game.isTimeUp && game.isTimeUp())) return;  // #1174
+                if (!myPowerUp || (game && game.isTimeUp && game.isTimeUp())) return;
                 if (game && game.powerupNeedsTarget && game.powerupNeedsTarget(myPowerUp)) {
                     game.openTargetPicker(myPowerUp, function (targetName) {
                         send('use_powerup', { target_player_id: targetName });
@@ -9609,63 +6681,38 @@
             });
         }
 
-        // Auto-fill name from URL param ?name=... (admin self-join)
         var urlParams = new URLSearchParams(location.search);
         var prefilledName = urlParams.get('name');
         if (prefilledName && els.nameInput) {
             els.nameInput.value = prefilledName;
             els.joinBtn.disabled = false;
-            // Set state.playerName so the auto-join path fires on WS open
-            // (otherwise the user has to click the button manually).
             state.playerName = prefilledName;
         }
 
-        // Check if admin via URL param
         if (urlParams.get('admin') === 'true') {
             state.isAdmin = true;
-            // #1212: the host's seat stays in this tab, never in the
-            // session every tab of the browser shares.
             if (window.QuizifyClientCore && window.QuizifyClientCore.useHostSeat) {
                 window.QuizifyClientCore.useHostSeat();
             }
         }
 
-        // i18n init. A stored per-player choice (#492) wins over browser
-        // detection — init() falls back to detectBrowserLanguage() when given
-        // nothing, which is what every player without a choice still gets.
         if (window.QuizifyI18n) {
             QuizifyI18n.init(_storedPlayerLang() || undefined).then(function () {
                 QuizifyI18n.initPageTranslations();
                 _markActiveLangChip();
-                // game_state may have already arrived before i18n loaded;
-                // re-fire the title update so we don't sit on the stale
-                // "— Beitreten" forever (see updatePageTitle for the why).
                 _flushPendingTitle();
-                // Same race for the header toggles, whose accessible names are
-                // set from JS rather than data-i18n attributes (#372).
                 _flushToggleLabels();
             });
         }
 
-        // Always show join-view immediately — don't wait for WS.
-        // For pre-filled names (admin self-join), the form is visible but
-        // auto-submit fires once WS opens. Prevents a blank screen on slow
-        // connections such as Nabu Casa remote access.
         pu.showView('join-view');
         if (els.joinBtn) els.joinBtn.disabled = true;
 
-        // Connect WebSocket. #1182 L9: 'connecting', not 'reconnecting' —
-        // nothing can be re-established before the first connection.
         pu.updateConnectionIndicator('connecting');
         connect();
 
-        // Fallback: if WS hasn't opened after 10s, re-enable join button with error hint
         _wsOpenTimeout = setTimeout(function () {
             if (!state.ws || state.ws.readyState !== WebSocket.OPEN) {
-                // #729: say WHY, persistently. The per-IP connection cap
-                // refuses the upgrade with an HTTP 429 the WebSocket API
-                // never surfaces, so a relabelled button was the guest's
-                // only clue that anything had gone wrong.
                 var vmsgConn = document.getElementById('name-validation-msg');
                 if (vmsgConn) {
                     vmsgConn.textContent = joinRefusalText('NO_CONNECTION', null);
@@ -9687,7 +6734,6 @@
             }
         }, 10000);
 
-        // Auto-join if name was pre-filled
         if (prefilledName) {
             var autoJoinInterval = setInterval(function () {
                 if (state.ws && state.ws.readyState === WebSocket.OPEN) {
@@ -9698,9 +6744,6 @@
             setTimeout(function () { clearInterval(autoJoinInterval); }, 5000);
         }
 
-        // #1182 L11: the network coming back is as good a moment as the page
-        // coming back. Without this the phone sat out up to 30 s of backoff
-        // after the wifi had already returned.
         window.addEventListener('online', function () {
             if (document.visibilityState === 'hidden') return;
             var ws = state.ws;
@@ -9710,7 +6753,6 @@
             }
         });
 
-        // iOS Safari reconnect on foreground
         document.addEventListener('visibilitychange', function () {
             if (document.visibilityState === 'visible') {
                 var ws = state.ws;
@@ -9720,19 +6762,12 @@
                         retryConnection();
                     }
                 }
-                // The OS releases wake locks when the tab hides \u2014 re-acquire
-                // when the player tabs back in mid-question.
                 if (state.currentPhase === 'QUESTION_ACTIVE' || state.currentPhase === 'PLAYING') {
                     _acquireWakeLock();
                 }
             }
         });
 
-        // #750: back to a usable join screen after a kick. A full reload, not
-        // showView('join-view') — the server closed our socket, so the join
-        // button on a re-shown form would have nothing to send on. The query
-        // string is dropped on purpose: a leftover ?name=/?reconnect=1 would
-        // aim the fresh page straight back at the identity we just discarded.
         setupSessionChoice();
 
         var kickedRejoinBtn = document.getElementById('kicked-rejoin-btn');
@@ -9742,15 +6777,6 @@
             });
         }
 
-        // Safety watchdog against a blank screen. Several edges can leave the
-        // player with no visible view: a dead-reconnect URL
-        // (?name=X&admin=true&reconnect=1) whose join yields no game_state
-        // (neither reconnect_failed #227 nor the game_state default #228 fire),
-        // OR a reconnect into a live LIGHTNING round where the lightning view
-        // is never shown (game_state phase is set but every .view stays
-        // hidden). A few seconds after boot, if NO real view has rendered
-        // (still on loading or nothing) — regardless of phase — fall back to
-        // the join screen so there's always a way forward instead of blank.
         setTimeout(function () {
             var visible = [].slice.call(document.querySelectorAll('.view'))
                 .find(function (e) { return e.offsetParent !== null; });
@@ -9761,36 +6787,19 @@
         }, 4000);
     }
 
-    // ============================================
-    // Boot
-    // ============================================
-
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
         init();
     }
 
-    // ============================================
-    // Export
-    // ============================================
-
     window.QuizifyPlayer = {
         init: init,
         send: send,
-        // #981: player-end.js's "New game" is the fifth place that drops this
-        // phone's identity, and it lives in another module. Exported so there
-        // is still only one spelling of it.
         forgetIdentity: forgetIdentity,
-        // #1183: player-end.js's "New game" asks through the same sheet.
         confirmThen: confirmThen
     };
 
-    // #215: hook for sw-update.js — is the player screen idle enough that a
-    // service-worker-triggered reload won't interrupt anything? Idle = join,
-    // lobby, the per-round reveal, the lightning recap, and the finale end
-    // screen. NOT idle during a live question, a live lightning round, or a
-    // paused game (resuming reloads straight back into a question).
     window.quizifyIsIdleForReload = function () {
         switch (state.currentPhase) {
             case 'QUESTION_ACTIVE':
@@ -9801,8 +6810,6 @@
             case 'PAUSED':
                 return false;
             default:
-                // LOBBY, ANSWER_REVEAL/REVEAL, LIGHTNING_RECAP, FINALE/END,
-                // and the pre-join state.
                 return true;
         }
     };
