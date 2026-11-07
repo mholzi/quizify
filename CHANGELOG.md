@@ -5,6 +5,26 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.27.0-RC1] — 2026-11-07
+
+**Steadier Reconnects and Lighter Pages**
+
+A small round of fixes since 1.26.0, found in a full code review.
+
+### 📶 Steadier reconnects
+
+A phone that drops its connection while the server renews its session now keeps its seat instead of being sent back to the join screen.
+
+### 💡 Lights back as they were
+
+After a colour flash, lights that do not follow the game return to the state they were in.
+
+### ⚡ Lighter pages
+
+The player page and the stylesheet download at about half their previous size.
+
+Also: two error messages that showed a raw key are now translated, and an interrupted game is remembered at its latest phase.
+
 ## [1.26.0] — 2026-11-05
 
 **Screens That Move, and a Steadier Host Seat**
