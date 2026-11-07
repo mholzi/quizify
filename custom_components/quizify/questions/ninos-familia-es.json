@@ -1,0 +1,3323 @@
+{
+  "name": "Niños y familia",
+  "language": "es",
+  "version": "1.0",
+  "theme": "trivia",
+  "questions": [
+    {
+      "id": "ninos_es_001",
+      "question": "¿Qué mamífero pone huevos?",
+      "answers": [
+        {
+          "text": "El ornitorrinco",
+          "correct": true
+        },
+        {
+          "text": "El murciélago",
+          "correct": false
+        },
+        {
+          "text": "El canguro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El ornitorrinco tiene pico de pato, cola de castor y pone huevos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_002",
+      "question": "¿Qué órgano bombea la sangre por el cuerpo?",
+      "answers": [
+        {
+          "text": "El pulmón",
+          "correct": false
+        },
+        {
+          "text": "El estómago",
+          "correct": false
+        },
+        {
+          "text": "El corazón",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tu corazón late más de cien mil veces al día, sin que tú lo pienses.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_003",
+      "question": "¿Cuántos huesos tiene un adulto?",
+      "answers": [
+        {
+          "text": "206",
+          "correct": true
+        },
+        {
+          "text": "306",
+          "correct": false
+        },
+        {
+          "text": "106",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los bebés nacen con unos 300 huesos blanditos, que se van uniendo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_004",
+      "question": "¿Qué hace un barco de acero para flotar?",
+      "answers": [
+        {
+          "text": "Desplaza agua y flota",
+          "correct": true
+        },
+        {
+          "text": "Pesa muy poco",
+          "correct": false
+        },
+        {
+          "text": "Tiene aire pintado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Por eso un barco enorme flota aunque pese miles de toneladas.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_005",
+      "question": "¿Qué animal es el más alto del mundo?",
+      "answers": [
+        {
+          "text": "El elefante",
+          "correct": false
+        },
+        {
+          "text": "El avestruz",
+          "correct": false
+        },
+        {
+          "text": "La jirafa",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Una jirafa mide casi 6 metros. Su cuello tiene solo siete huesos, igual que el tuyo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_006",
+      "question": "¿Qué planeta gira como si estuviera tumbado de lado?",
+      "answers": [
+        {
+          "text": "Urano",
+          "correct": true
+        },
+        {
+          "text": "Saturno",
+          "correct": false
+        },
+        {
+          "text": "Neptuno",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Urano está muy inclinado y casi rueda alrededor del Sol.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_007",
+      "question": "¿Qué órgano usamos para pensar?",
+      "answers": [
+        {
+          "text": "El cerebro",
+          "correct": true
+        },
+        {
+          "text": "El estómago",
+          "correct": false
+        },
+        {
+          "text": "El corazón",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tu cerebro manda órdenes a todo el cuerpo, incluso mientras duermes.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_008",
+      "question": "¿Quién se duerme cien años en un cuento de hadas?",
+      "answers": [
+        {
+          "text": "Rapunzel",
+          "correct": false
+        },
+        {
+          "text": "La Bella Durmiente",
+          "correct": true
+        },
+        {
+          "text": "Cenicienta",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un beso del príncipe la despierta al final.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_009",
+      "question": "¿Qué entrega la Sirenita de Andersen a la bruja a cambio de piernas?",
+      "answers": [
+        {
+          "text": "Su voz",
+          "correct": true
+        },
+        {
+          "text": "Su corona",
+          "correct": false
+        },
+        {
+          "text": "Su collar",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En el cuento original, sin voz no puede hablar con el príncipe.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_010",
+      "question": "¿De qué país viene el judo?",
+      "answers": [
+        {
+          "text": "China",
+          "correct": false
+        },
+        {
+          "text": "Corea",
+          "correct": false
+        },
+        {
+          "text": "Japón",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Judo significa “camino suave” en japonés.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_011",
+      "question": "¿Cuál es el planeta más caliente del Sistema Solar?",
+      "answers": [
+        {
+          "text": "Mercurio",
+          "correct": false
+        },
+        {
+          "text": "Marte",
+          "correct": false
+        },
+        {
+          "text": "Venus",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Venus tiene una atmósfera muy gruesa que atrapa el calor, más que Mercurio.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_012",
+      "question": "¿Cuántos corazones tiene un pulpo?",
+      "type": "estimate",
+      "answer": 3,
+      "min": 0,
+      "max": 20,
+      "unit": "corazones",
+      "difficulty": "easy",
+      "fun_fact": "Tiene tres: dos mandan la sangre a las branquias y uno al resto del cuerpo. Su sangre es azulada.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_013",
+      "question": "¿Dónde se mete el balón en baloncesto?",
+      "answers": [
+        {
+          "text": "En un hoyo",
+          "correct": false
+        },
+        {
+          "text": "En la canasta",
+          "correct": true
+        },
+        {
+          "text": "En una portería",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La canasta está a 3 metros de altura sobre el suelo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_014",
+      "question": "¿Qué le pasa a tu corazón cuando haces deporte?",
+      "answers": [
+        {
+          "text": "Se hace más grande",
+          "correct": false
+        },
+        {
+          "text": "Se para un rato",
+          "correct": false
+        },
+        {
+          "text": "Late más rápido",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tu corazón bombea más sangre para dar energía a los músculos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_015",
+      "question": "¿Cuál de estos animales pone huevos?",
+      "answers": [
+        {
+          "text": "El perro",
+          "correct": false
+        },
+        {
+          "text": "El pingüino",
+          "correct": true
+        },
+        {
+          "text": "El conejo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En el pingüino emperador, el papá cuida el huevo sobre sus patas para darle calor.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_016",
+      "question": "¿Qué le pasa a Pinocho cuando dice mentiras?",
+      "answers": [
+        {
+          "text": "Se le caen las orejas",
+          "correct": false
+        },
+        {
+          "text": "Se pone verde",
+          "correct": false
+        },
+        {
+          "text": "Le crece la nariz",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pinocho era un muñeco de madera que soñaba con ser un niño de verdad.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_017",
+      "question": "¿Cómo se llama el aparato que mide el tiempo en las carreras?",
+      "answers": [
+        {
+          "text": "Termómetro",
+          "correct": false
+        },
+        {
+          "text": "Cronómetro",
+          "correct": true
+        },
+        {
+          "text": "Barómetro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un cronómetro mide hasta las centésimas de segundo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_018",
+      "question": "¿Cuánto tarda la luz del Sol en llegar a la Tierra?",
+      "answers": [
+        {
+          "text": "Unos 8 segundos",
+          "correct": false
+        },
+        {
+          "text": "Unos 8 minutos",
+          "correct": true
+        },
+        {
+          "text": "Unas 8 horas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Si el Sol se apagara, lo notaríamos recién ocho minutos después.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_019",
+      "question": "¿Cómo se llaman los hermanos que recogieron muchos cuentos populares?",
+      "answers": [
+        {
+          "text": "Hermanos Lumière",
+          "correct": false
+        },
+        {
+          "text": "Hermanos Grimm",
+          "correct": true
+        },
+        {
+          "text": "Hermanos Marx",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los hermanos Grimm recogieron “Hansel y Gretel”, “Rapunzel” y muchos más.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_020",
+      "question": "¿Para qué sirve un paracaídas?",
+      "answers": [
+        {
+          "text": "Para subir más alto",
+          "correct": false
+        },
+        {
+          "text": "Para nadar",
+          "correct": false
+        },
+        {
+          "text": "Para frenar la caída",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El paracaídas atrapa el aire y hace que bajes despacio.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_021",
+      "question": "¿Quién construyó el primer coche con motor de gasolina?",
+      "answers": [
+        {
+          "text": "Karl Benz",
+          "correct": true
+        },
+        {
+          "text": "Leonardo da Vinci",
+          "correct": false
+        },
+        {
+          "text": "Thomas Edison",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Karl Benz presentó su coche de tres ruedas en 1886.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_022",
+      "question": "¿Cuántos colores se cuentan en el arcoíris?",
+      "answers": [
+        {
+          "text": "9",
+          "correct": false
+        },
+        {
+          "text": "5",
+          "correct": false
+        },
+        {
+          "text": "7",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un arcoíris aparece cuando hay sol y gotitas de lluvia en el aire.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_023",
+      "question": "¿De qué color es la sangre que sale de una herida?",
+      "answers": [
+        {
+          "text": "Roja",
+          "correct": true
+        },
+        {
+          "text": "Verde",
+          "correct": false
+        },
+        {
+          "text": "Azul",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las venas se ven azuladas bajo la piel, pero la sangre siempre es roja.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_024",
+      "question": "¿Quién es el caballero famoso de “La Mancha”?",
+      "answers": [
+        {
+          "text": "El Zorro",
+          "correct": false
+        },
+        {
+          "text": "Don Quijote",
+          "correct": true
+        },
+        {
+          "text": "El Cid",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Don Quijote lucha contra unos molinos de viento que él cree gigantes.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_025",
+      "question": "¿Qué fruta crece en una palmera y tiene agua en su interior?",
+      "answers": [
+        {
+          "text": "El melón",
+          "correct": false
+        },
+        {
+          "text": "La piña",
+          "correct": false
+        },
+        {
+          "text": "El coco",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El agua de coco se puede beber directamente del fruto.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_026",
+      "question": "¿Cuál es el continente más grande?",
+      "answers": [
+        {
+          "text": "Asia",
+          "correct": true
+        },
+        {
+          "text": "América",
+          "correct": false
+        },
+        {
+          "text": "África",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En Asia vive más de la mitad de las personas del mundo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_027",
+      "question": "¿Qué gas producen las plantas que necesitamos para respirar?",
+      "answers": [
+        {
+          "text": "Oxígeno",
+          "correct": true
+        },
+        {
+          "text": "Humo",
+          "correct": false
+        },
+        {
+          "text": "Helio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los bosques y el mar producen gran parte del oxígeno que respiramos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_028",
+      "question": "¿Qué animal duerme colgado boca abajo?",
+      "answers": [
+        {
+          "text": "El mono",
+          "correct": false
+        },
+        {
+          "text": "El loro",
+          "correct": false
+        },
+        {
+          "text": "El murciélago",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los murciélagos se cuelgan de los pies en cuevas y árboles para descansar.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_029",
+      "question": "¿Por qué brilla la Luna?",
+      "answers": [
+        {
+          "text": "Es una estrella",
+          "correct": false
+        },
+        {
+          "text": "Tiene luz propia",
+          "correct": false
+        },
+        {
+          "text": "Refleja la luz del Sol",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Luna no tiene luz propia; es como un espejo gigante.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_030",
+      "question": "¿Cuál es el órgano más grande del cuerpo?",
+      "answers": [
+        {
+          "text": "La piel",
+          "correct": true
+        },
+        {
+          "text": "El hígado",
+          "correct": false
+        },
+        {
+          "text": "El cerebro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La piel te cubre entera y se renueva todo el tiempo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_031",
+      "question": "¿Qué planta atrapa insectos para comérselos?",
+      "answers": [
+        {
+          "text": "El cactus",
+          "correct": false
+        },
+        {
+          "text": "La atrapamoscas",
+          "correct": true
+        },
+        {
+          "text": "El girasol",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La atrapamoscas cierra sus hojas como una trampa cuando un bicho la toca.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_032",
+      "question": "¿Cada cuántos años se celebran los Juegos Olímpicos de verano?",
+      "answers": [
+        {
+          "text": "Cada 2 años",
+          "correct": false
+        },
+        {
+          "text": "Cada 4 años",
+          "correct": true
+        },
+        {
+          "text": "Cada 5 años",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los juegos de la Antigua Grecia ya se celebraban cada cuatro años.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_033",
+      "question": "¿Cuántas caras tiene un dado normal?",
+      "answers": [
+        {
+          "text": "8",
+          "correct": false
+        },
+        {
+          "text": "4",
+          "correct": false
+        },
+        {
+          "text": "6",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los números de caras opuestas siempre suman 7.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_034",
+      "question": "¿Qué se lanza en el juego del frisbi?",
+      "answers": [
+        {
+          "text": "Un aro",
+          "correct": false
+        },
+        {
+          "text": "Un bumerán",
+          "correct": false
+        },
+        {
+          "text": "Un disco volador",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un frisbi bien lanzado puede planear mucho tiempo en el aire.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_035",
+      "question": "¿Quién inventó el sistema de lectura con puntitos para ciegos?",
+      "answers": [
+        {
+          "text": "Louis Braille",
+          "correct": true
+        },
+        {
+          "text": "Louis Pasteur",
+          "correct": false
+        },
+        {
+          "text": "Marie Curie",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Braille lo inventó siendo casi un niño, con quince años.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_036",
+      "question": "¿Qué vehículo vuela y tiene hélices arriba?",
+      "answers": [
+        {
+          "text": "El avión",
+          "correct": false
+        },
+        {
+          "text": "El helicóptero",
+          "correct": true
+        },
+        {
+          "text": "El tren",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El helicóptero puede quedarse quieto en el aire.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_037",
+      "question": "¿En cuántos días da la vuelta al mundo el libro de Julio Verne?",
+      "answers": [
+        {
+          "text": "80",
+          "correct": true
+        },
+        {
+          "text": "60",
+          "correct": false
+        },
+        {
+          "text": "100",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Phileas Fogg apuesta que puede lograrlo con barcos, trenes y hasta un elefante.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_038",
+      "question": "¿Qué animal engaña a Caperucita Roja?",
+      "answers": [
+        {
+          "text": "El lobo",
+          "correct": true
+        },
+        {
+          "text": "El zorro",
+          "correct": false
+        },
+        {
+          "text": "El oso",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Caperucita lleva una cesta con comida para su abuelita.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_039",
+      "question": "¿Dónde navega un submarino?",
+      "answers": [
+        {
+          "text": "Por la nieve",
+          "correct": false
+        },
+        {
+          "text": "Por el aire",
+          "correct": false
+        },
+        {
+          "text": "Bajo el agua",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Algunos submarinos pueden quedarse sumergidos durante meses.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_040",
+      "question": "¿Quién escribió el libro “Pinocho”?",
+      "answers": [
+        {
+          "text": "Roald Dahl",
+          "correct": false
+        },
+        {
+          "text": "Gianni Rodari",
+          "correct": false
+        },
+        {
+          "text": "Carlo Collodi",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Collodi era italiano y publicó la historia por entregas en 1881.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_041",
+      "question": "¿Qué son de verdad las estrellas fugaces?",
+      "answers": [
+        {
+          "text": "Estrellas que se caen",
+          "correct": false
+        },
+        {
+          "text": "Trocitos de roca que se queman",
+          "correct": true
+        },
+        {
+          "text": "Aviones muy lejanos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Son piedrecitas del espacio que brillan al entrar en el aire de la Tierra.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_042",
+      "question": "¿Cuál es el hueso más largo del cuerpo?",
+      "answers": [
+        {
+          "text": "El húmero",
+          "correct": false
+        },
+        {
+          "text": "El fémur",
+          "correct": true
+        },
+        {
+          "text": "La costilla",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El fémur está en el muslo y es muy fuerte.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_043",
+      "question": "¿Cómo se llama el bebé de la vaca?",
+      "answers": [
+        {
+          "text": "Potro",
+          "correct": false
+        },
+        {
+          "text": "Cordero",
+          "correct": false
+        },
+        {
+          "text": "Ternero",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un ternero puede ponerse de pie pocas horas después de nacer.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_044",
+      "question": "¿Cuántos ojos tiene una abeja?",
+      "type": "estimate",
+      "answer": 5,
+      "min": 0,
+      "max": 20,
+      "unit": "ojos",
+      "difficulty": "easy",
+      "fun_fact": "Tiene 2 ojos grandes compuestos y 3 ojitos pequeños en lo alto de la cabeza.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_045",
+      "question": "¿En qué continente está Egipto?",
+      "answers": [
+        {
+          "text": "En Asia",
+          "correct": false
+        },
+        {
+          "text": "En África",
+          "correct": true
+        },
+        {
+          "text": "En Europa",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En Egipto están las pirámides, junto al río Nilo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_046",
+      "question": "¿En qué país está la Torre Eiffel?",
+      "answers": [
+        {
+          "text": "Inglaterra",
+          "correct": false
+        },
+        {
+          "text": "Italia",
+          "correct": false
+        },
+        {
+          "text": "Francia",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Torre Eiffel está en París y mide más de 300 metros.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_047",
+      "question": "¿Qué idioma se habla en Brasil?",
+      "answers": [
+        {
+          "text": "Inglés",
+          "correct": false
+        },
+        {
+          "text": "Portugués",
+          "correct": true
+        },
+        {
+          "text": "Español",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Brasil es el único país de Sudamérica donde se habla portugués como idioma oficial.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_048",
+      "question": "¿Cuántos planetas tiene el Sistema Solar?",
+      "answers": [
+        {
+          "text": "10",
+          "correct": false
+        },
+        {
+          "text": "9",
+          "correct": false
+        },
+        {
+          "text": "8",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Plutón antes se contaba, pero hoy es un planeta enano.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_049",
+      "question": "¿Qué mide el velocímetro de un coche?",
+      "answers": [
+        {
+          "text": "La velocidad",
+          "correct": true
+        },
+        {
+          "text": "La temperatura",
+          "correct": false
+        },
+        {
+          "text": "El combustible",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La velocidad se mide en kilómetros por hora.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_050",
+      "question": "¿Qué parte del ojo se hace más pequeña con mucha luz?",
+      "answers": [
+        {
+          "text": "El párpado",
+          "correct": false
+        },
+        {
+          "text": "La pestaña",
+          "correct": false
+        },
+        {
+          "text": "La pupila",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La pupila es el círculo negro. Con poca luz se agranda para dejar entrar más luz.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_051",
+      "question": "¿Cuál es el río más largo de Sudamérica?",
+      "answers": [
+        {
+          "text": "El Amazonas",
+          "correct": true
+        },
+        {
+          "text": "El Paraná",
+          "correct": false
+        },
+        {
+          "text": "El Orinoco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Amazonas es también el río con más agua del mundo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_052",
+      "question": "¿De qué país viene el sushi?",
+      "answers": [
+        {
+          "text": "Perú",
+          "correct": false
+        },
+        {
+          "text": "Japón",
+          "correct": true
+        },
+        {
+          "text": "China",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El sushi lleva arroz y a veces pescado, pero no siempre pescado crudo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_053",
+      "question": "¿Qué usan los astronautas para viajar al espacio?",
+      "answers": [
+        {
+          "text": "Un globo",
+          "correct": false
+        },
+        {
+          "text": "Un avión",
+          "correct": false
+        },
+        {
+          "text": "Un cohete",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un cohete necesita muchísima fuerza para salir de la atmósfera.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_054",
+      "question": "¿Cuántas casillas tiene el tablero del tres en raya?",
+      "answers": [
+        {
+          "text": "12",
+          "correct": false
+        },
+        {
+          "text": "6",
+          "correct": false
+        },
+        {
+          "text": "9",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Si juegas bien, el tres en raya casi siempre acaba en empate.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_055",
+      "question": "¿Cuántos anillos tiene la bandera olímpica?",
+      "answers": [
+        {
+          "text": "6",
+          "correct": false
+        },
+        {
+          "text": "4",
+          "correct": false
+        },
+        {
+          "text": "5",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los cinco anillos representan los continentes unidos por el deporte.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_056",
+      "question": "¿En qué país vive el canguro?",
+      "answers": [
+        {
+          "text": "Canadá",
+          "correct": false
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        },
+        {
+          "text": "Australia",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los canguros viven en libertad en Australia.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_057",
+      "question": "¿Cuántas patas tiene una araña?",
+      "answers": [
+        {
+          "text": "6",
+          "correct": false
+        },
+        {
+          "text": "8",
+          "correct": true
+        },
+        {
+          "text": "10",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los insectos tienen 6 patas. Por eso las arañas no son insectos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_058",
+      "question": "¿Qué usa un coche eléctrico en vez de gasolina?",
+      "answers": [
+        {
+          "text": "Una batería",
+          "correct": true
+        },
+        {
+          "text": "Agua",
+          "correct": false
+        },
+        {
+          "text": "Una vela",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un coche eléctrico casi no hace ruido.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_059",
+      "question": "¿Cuál es el planeta más grande del Sistema Solar?",
+      "answers": [
+        {
+          "text": "Saturno",
+          "correct": false
+        },
+        {
+          "text": "Júpiter",
+          "correct": true
+        },
+        {
+          "text": "Neptuno",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En Júpiter cabrían más de mil Tierras.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_060",
+      "question": "¿Qué hace que la masa del pan suba?",
+      "answers": [
+        {
+          "text": "La sal",
+          "correct": false
+        },
+        {
+          "text": "La levadura",
+          "correct": true
+        },
+        {
+          "text": "El aceite",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La levadura es un ser vivo diminuto que suelta burbujitas de aire.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_061",
+      "question": "¿Qué hay en mayor cantidad en tu cuerpo?",
+      "answers": [
+        {
+          "text": "Aire",
+          "correct": false
+        },
+        {
+          "text": "Agua",
+          "correct": true
+        },
+        {
+          "text": "Huesos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Más de la mitad de tu cuerpo es agua.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_062",
+      "question": "¿En qué país se inventó el papel?",
+      "answers": [
+        {
+          "text": "Grecia",
+          "correct": false
+        },
+        {
+          "text": "China",
+          "correct": true
+        },
+        {
+          "text": "Egipto",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se inventó hace unos 2000 años; los egipcios usaban papiro.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_063",
+      "question": "¿Qué materiales atrae un imán?",
+      "answers": [
+        {
+          "text": "Algunos metales como el hierro",
+          "correct": true
+        },
+        {
+          "text": "El plástico",
+          "correct": false
+        },
+        {
+          "text": "La madera",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Tierra entera es como un enorme imán.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_064",
+      "question": "¿Para qué sirve una brújula?",
+      "answers": [
+        {
+          "text": "Para ver de noche",
+          "correct": false
+        },
+        {
+          "text": "Para medir el tiempo",
+          "correct": false
+        },
+        {
+          "text": "Para señalar el norte",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La aguja de la brújula apunta al norte por el magnetismo de la Tierra.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_065",
+      "question": "¿Qué animal del mar tiene ocho brazos?",
+      "answers": [
+        {
+          "text": "El pulpo",
+          "correct": true
+        },
+        {
+          "text": "La medusa",
+          "correct": false
+        },
+        {
+          "text": "La estrella de mar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El pulpo puede cambiar de color para esconderse de sus enemigos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_066",
+      "question": "¿Quién escribió “El patito feo”?",
+      "answers": [
+        {
+          "text": "Los hermanos Grimm",
+          "correct": false
+        },
+        {
+          "text": "Hans Christian Andersen",
+          "correct": true
+        },
+        {
+          "text": "Esopo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El patito feo resulta ser un cisne muy hermoso.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_067",
+      "question": "¿Qué es en realidad el brócoli?",
+      "answers": [
+        {
+          "text": "Raíces",
+          "correct": false
+        },
+        {
+          "text": "Flores sin abrir",
+          "correct": true
+        },
+        {
+          "text": "Semillas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Si el brócoli sigue creciendo, se abren pequeñas flores amarillas.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_068",
+      "question": "¿Quién fue la primera persona en pisar la Luna?",
+      "answers": [
+        {
+          "text": "Yuri Gagarin",
+          "correct": false
+        },
+        {
+          "text": "Alan Shepard",
+          "correct": false
+        },
+        {
+          "text": "Neil Armstrong",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Neil Armstrong pisó la Luna en 1969 con la misión Apolo 11.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_069",
+      "question": "¿Qué pierde Cenicienta cuando huye del baile?",
+      "answers": [
+        {
+          "text": "Un anillo",
+          "correct": false
+        },
+        {
+          "text": "Su sombrero",
+          "correct": false
+        },
+        {
+          "text": "Una zapatilla de cristal",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El príncipe busca a su dueña probando la zapatilla a todas las chicas.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_070",
+      "question": "¿Cómo se llama el niño criado por lobos en “El libro de la selva”?",
+      "answers": [
+        {
+          "text": "Mowgli",
+          "correct": true
+        },
+        {
+          "text": "Tarzán",
+          "correct": false
+        },
+        {
+          "text": "Simba",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mowgli tiene amigos como el oso Baloo y la pantera Bagheera.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_071",
+      "question": "¿Por qué saltan las palomitas de maíz?",
+      "answers": [
+        {
+          "text": "Se llenan de aire frío",
+          "correct": false
+        },
+        {
+          "text": "El agua de dentro hierve",
+          "correct": true
+        },
+        {
+          "text": "Les da el sol",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El vapor hace presión hasta que el grano explota.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_072",
+      "question": "¿Cuál es el animal terrestre más grande?",
+      "answers": [
+        {
+          "text": "El elefante africano",
+          "correct": true
+        },
+        {
+          "text": "El rinoceronte",
+          "correct": false
+        },
+        {
+          "text": "El hipopótamo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un elefante africano grande pesa tanto como unos cuatro coches pequeños.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_073",
+      "question": "¿De qué planta se saca el chocolate?",
+      "answers": [
+        {
+          "text": "Del cacao",
+          "correct": true
+        },
+        {
+          "text": "Del café",
+          "correct": false
+        },
+        {
+          "text": "De la vainilla",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El chocolate se hace con las semillas del árbol del cacao.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_074",
+      "question": "¿Cuál es el árbol más alto del mundo?",
+      "answers": [
+        {
+          "text": "El roble",
+          "correct": false
+        },
+        {
+          "text": "El pino",
+          "correct": false
+        },
+        {
+          "text": "La secuoya",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Algunas secuoyas miden más de 100 metros, más que un edificio de 30 pisos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_075",
+      "question": "¿Cuántos dedos tienes en total en las dos manos?",
+      "answers": [
+        {
+          "text": "8",
+          "correct": false
+        },
+        {
+          "text": "12",
+          "correct": false
+        },
+        {
+          "text": "10",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Con los dedos de los pies tienes 20 en total.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_076",
+      "question": "¿Cuál es la capital de Australia?",
+      "answers": [
+        {
+          "text": "Sídney",
+          "correct": false
+        },
+        {
+          "text": "Canberra",
+          "correct": true
+        },
+        {
+          "text": "Melbourne",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se eligió Canberra porque Sídney y Melbourne no se ponían de acuerdo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_077",
+      "question": "¿Cuántas lunas tiene Marte?",
+      "type": "estimate",
+      "answer": 2,
+      "min": 0,
+      "max": 20,
+      "unit": "lunas",
+      "difficulty": "medium",
+      "fun_fact": "Se llaman Fobos y Deimos, y son pequeñas, con forma de patata.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_078",
+      "question": "¿Con qué órganos respiramos?",
+      "answers": [
+        {
+          "text": "Con los riñones",
+          "correct": false
+        },
+        {
+          "text": "Con los pulmones",
+          "correct": true
+        },
+        {
+          "text": "Con el hígado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Respiramos miles de veces al día sin darnos cuenta.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_079",
+      "question": "¿Qué mueve a un velero?",
+      "answers": [
+        {
+          "text": "Pedales",
+          "correct": false
+        },
+        {
+          "text": "El viento",
+          "correct": true
+        },
+        {
+          "text": "Un motor",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los veleros pueden navegar contra el viento si ajustan bien las velas.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_080",
+      "question": "¿Cuántas puntas suele tener un copo de nieve?",
+      "answers": [
+        {
+          "text": "4",
+          "correct": false
+        },
+        {
+          "text": "8",
+          "correct": false
+        },
+        {
+          "text": "6",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dicen que no hay dos copos de nieve exactamente iguales.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_081",
+      "question": "¿Qué lleva un barco para quedarse quieto en el puerto?",
+      "answers": [
+        {
+          "text": "Un volante",
+          "correct": false
+        },
+        {
+          "text": "Un ancla",
+          "correct": true
+        },
+        {
+          "text": "Una antena",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El ancla se agarra al fondo del mar.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_082",
+      "question": "¿Cómo se dice “gracias” en inglés?",
+      "answers": [
+        {
+          "text": "Sorry",
+          "correct": false
+        },
+        {
+          "text": "Thank you",
+          "correct": true
+        },
+        {
+          "text": "Please",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "“Please” significa “por favor” y “sorry”, “perdón”.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_083",
+      "question": "¿Qué fruta tiene las semillas por fuera?",
+      "answers": [
+        {
+          "text": "La fresa",
+          "correct": true
+        },
+        {
+          "text": "La manzana",
+          "correct": false
+        },
+        {
+          "text": "La uva",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cada fresa tiene unas 200 semillitas en la piel.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_084",
+      "question": "¿Cómo se llama la estrella que nos da luz y calor?",
+      "answers": [
+        {
+          "text": "El Sol",
+          "correct": true
+        },
+        {
+          "text": "Sirio",
+          "correct": false
+        },
+        {
+          "text": "La Luna",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Sol es una estrella gigante de gas muy caliente.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_085",
+      "question": "¿Qué se usa para guardar fríos los alimentos?",
+      "answers": [
+        {
+          "text": "El horno",
+          "correct": false
+        },
+        {
+          "text": "La lavadora",
+          "correct": false
+        },
+        {
+          "text": "La nevera",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La nevera se llama también frigorífico o refrigerador.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_086",
+      "question": "¿Cómo se llama el planeta donde vivimos?",
+      "answers": [
+        {
+          "text": "La Tierra",
+          "correct": true
+        },
+        {
+          "text": "Marte",
+          "correct": false
+        },
+        {
+          "text": "Venus",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Tierra es el único planeta que conocemos con agua líquida y vida.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_087",
+      "question": "¿Qué aparato usamos para ver las estrellas de cerca?",
+      "answers": [
+        {
+          "text": "El telescopio",
+          "correct": true
+        },
+        {
+          "text": "El paraguas",
+          "correct": false
+        },
+        {
+          "text": "El microscopio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Galileo apuntó un telescopio a la Luna en 1609.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_088",
+      "question": "¿Dónde guarda el agua un cactus?",
+      "answers": [
+        {
+          "text": "En las espinas",
+          "correct": false
+        },
+        {
+          "text": "En el tallo",
+          "correct": true
+        },
+        {
+          "text": "En las raíces",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El tallo grueso del cactus funciona como un depósito de agua.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_089",
+      "question": "¿Quién gana la carrera entre la liebre y la tortuga?",
+      "answers": [
+        {
+          "text": "La liebre",
+          "correct": false
+        },
+        {
+          "text": "La tortuga",
+          "correct": true
+        },
+        {
+          "text": "Empatan",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La liebre se confía y se echa a dormir. Es una fábula de Esopo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_090",
+      "question": "¿Cuántos kilómetros tiene una maratón?",
+      "answers": [
+        {
+          "text": "21",
+          "correct": false
+        },
+        {
+          "text": "42",
+          "correct": true
+        },
+        {
+          "text": "60",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Son 42 kilómetros y 195 metros.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_091",
+      "question": "¿Qué ave no puede volar y corre muy rápido?",
+      "answers": [
+        {
+          "text": "El búho",
+          "correct": false
+        },
+        {
+          "text": "El avestruz",
+          "correct": true
+        },
+        {
+          "text": "El loro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El avestruz es el ave más grande del mundo y corre más rápido que un caballo al trote.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_092",
+      "question": "¿De qué es la parte negra de un lápiz?",
+      "answers": [
+        {
+          "text": "De plomo",
+          "correct": false
+        },
+        {
+          "text": "De grafito",
+          "correct": true
+        },
+        {
+          "text": "De carbón de leña",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Aunque se diga “mina de plomo”, no lleva plomo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_093",
+      "question": "¿Cuántos cerditos hay en el cuento del lobo y las casitas?",
+      "answers": [
+        {
+          "text": "Cinco",
+          "correct": false
+        },
+        {
+          "text": "Dos",
+          "correct": false
+        },
+        {
+          "text": "Tres",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cada cerdito construye su casa con un material distinto.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_094",
+      "question": "¿Qué vehículo circula sobre raíles?",
+      "answers": [
+        {
+          "text": "El barco",
+          "correct": false
+        },
+        {
+          "text": "El autobús",
+          "correct": false
+        },
+        {
+          "text": "El tren",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los trenes más rápidos van por vías especiales.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_095",
+      "question": "¿De qué material se hace el papel?",
+      "answers": [
+        {
+          "text": "De piedra",
+          "correct": false
+        },
+        {
+          "text": "De madera",
+          "correct": true
+        },
+        {
+          "text": "De metal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "También se puede hacer papel con papel viejo reciclado.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_096",
+      "question": "¿Cuál es el país más pequeño del mundo?",
+      "answers": [
+        {
+          "text": "Mónaco",
+          "correct": false
+        },
+        {
+          "text": "Ciudad del Vaticano",
+          "correct": true
+        },
+        {
+          "text": "Malta",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cabe entero en un parque grande: tiene menos de medio kilómetro cuadrado.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_097",
+      "question": "¿Cómo se llama la galaxia en la que está la Tierra?",
+      "answers": [
+        {
+          "text": "Vía Láctea",
+          "correct": true
+        },
+        {
+          "text": "Orión",
+          "correct": false
+        },
+        {
+          "text": "Andrómeda",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nuestra galaxia tiene cientos de miles de millones de estrellas.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_098",
+      "question": "¿Qué percibes primero en una tormenta?",
+      "answers": [
+        {
+          "text": "El trueno",
+          "correct": false
+        },
+        {
+          "text": "Los dos a la vez",
+          "correct": false
+        },
+        {
+          "text": "El relámpago",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La luz viaja mucho más rápido que el sonido.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_099",
+      "question": "¿De qué país es el inventor del cubo de Rubik?",
+      "answers": [
+        {
+          "text": "Rusia",
+          "correct": false
+        },
+        {
+          "text": "Japón",
+          "correct": false
+        },
+        {
+          "text": "Hungría",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ernő Rubik lo inventó en 1974 para enseñar geometría a sus alumnos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_100",
+      "question": "¿Qué les pasa a las hojas de muchos árboles en otoño?",
+      "answers": [
+        {
+          "text": "Se hacen más grandes",
+          "correct": false
+        },
+        {
+          "text": "Se caen",
+          "correct": true
+        },
+        {
+          "text": "Se vuelven azules",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Antes de caer, las hojas se ponen amarillas, naranjas o rojas.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_101",
+      "question": "¿Cuánto tarda la Tierra en dar una vuelta al Sol?",
+      "answers": [
+        {
+          "text": "Un mes",
+          "correct": false
+        },
+        {
+          "text": "Un día",
+          "correct": false
+        },
+        {
+          "text": "Un año",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Por eso el año tiene 365 días y cada cuatro años hay un día extra.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_102",
+      "question": "¿Qué país tiene forma de bota?",
+      "answers": [
+        {
+          "text": "Grecia",
+          "correct": false
+        },
+        {
+          "text": "Italia",
+          "correct": true
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En el mapa, Sicilia parece una pelota a punto de ser pateada.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_103",
+      "question": "¿Qué tipo de nube trae las tormentas con truenos?",
+      "answers": [
+        {
+          "text": "Estrato",
+          "correct": false
+        },
+        {
+          "text": "Cirro",
+          "correct": false
+        },
+        {
+          "text": "Cumulonimbo",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El cumulonimbo es una nube enorme, que puede ser tan alta como una montaña.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_104",
+      "question": "¿Qué significa un semáforo en rojo?",
+      "answers": [
+        {
+          "text": "Ir más despacio",
+          "correct": false
+        },
+        {
+          "text": "Parar",
+          "correct": true
+        },
+        {
+          "text": "Pasar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los semáforos tienen tres luces para que todos crucen con seguridad.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_105",
+      "question": "¿Cuál es el océano más grande?",
+      "answers": [
+        {
+          "text": "El Pacífico",
+          "correct": true
+        },
+        {
+          "text": "El Atlántico",
+          "correct": false
+        },
+        {
+          "text": "El Índico",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El océano Pacífico es más grande que todos los continentes juntos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_106",
+      "question": "¿Cuántos dientes tiene un adulto con todas sus muelas?",
+      "answers": [
+        {
+          "text": "32",
+          "correct": true
+        },
+        {
+          "text": "36",
+          "correct": false
+        },
+        {
+          "text": "28",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los niños tienen 20 dientes de leche y los adultos 32 con las muelas del juicio.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_107",
+      "question": "¿Qué vitamina tienen muchas naranjas?",
+      "answers": [
+        {
+          "text": "Vitamina Z",
+          "correct": false
+        },
+        {
+          "text": "Vitamina C",
+          "correct": true
+        },
+        {
+          "text": "Vitamina Q",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La vitamina C ayuda al cuerpo a defenderse de los resfriados.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_108",
+      "question": "¿Qué come el oso panda casi todo el día?",
+      "answers": [
+        {
+          "text": "Bambú",
+          "correct": true
+        },
+        {
+          "text": "Pescado",
+          "correct": false
+        },
+        {
+          "text": "Manzanas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un panda pasa hasta 12 horas al día comiendo bambú.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_109",
+      "question": "¿Con qué se hace el pan?",
+      "answers": [
+        {
+          "text": "Arroz",
+          "correct": false
+        },
+        {
+          "text": "Harina",
+          "correct": true
+        },
+        {
+          "text": "Sal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El pan se hace con harina, agua y levadura.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_110",
+      "question": "¿Cuántas teclas tiene un piano normal?",
+      "type": "estimate",
+      "answer": 88,
+      "min": 20,
+      "max": 150,
+      "unit": "teclas",
+      "difficulty": "medium",
+      "fun_fact": "Tiene 52 teclas blancas y 36 negras.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_111",
+      "question": "¿Qué animal tiene una trompa larga?",
+      "answers": [
+        {
+          "text": "La jirafa",
+          "correct": false
+        },
+        {
+          "text": "El elefante",
+          "correct": true
+        },
+        {
+          "text": "El hipopótamo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Con la trompa el elefante huele, bebe y agarra cosas. ¡Es como una nariz y una mano a la vez!",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_112",
+      "question": "¿Cómo se llama el niño que no quiere crecer y vuela?",
+      "answers": [
+        {
+          "text": "Mowgli",
+          "correct": false
+        },
+        {
+          "text": "Peter Pan",
+          "correct": true
+        },
+        {
+          "text": "Pinocho",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Peter Pan vive en el País de Nunca Jamás con Campanilla.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_113",
+      "question": "¿De qué color es por dentro una sandía madura?",
+      "answers": [
+        {
+          "text": "Roja",
+          "correct": true
+        },
+        {
+          "text": "Azul",
+          "correct": false
+        },
+        {
+          "text": "Verde",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Casi toda la sandía es agua, por eso refresca tanto.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_114",
+      "question": "¿Qué aparato mide la temperatura?",
+      "answers": [
+        {
+          "text": "La balanza",
+          "correct": false
+        },
+        {
+          "text": "El termómetro",
+          "correct": true
+        },
+        {
+          "text": "El reloj",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un termómetro te dice si tienes fiebre.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_115",
+      "question": "¿Qué pasa en un eclipse de Sol?",
+      "answers": [
+        {
+          "text": "La Tierra tapa al Sol",
+          "correct": false
+        },
+        {
+          "text": "La Luna tapa al Sol",
+          "correct": true
+        },
+        {
+          "text": "El Sol se apaga",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nunca hay que mirar al Sol directamente, ni durante un eclipse, sin gafas especiales.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_116",
+      "question": "¿Cómo se dice “hola” en francés?",
+      "answers": [
+        {
+          "text": "Hallo",
+          "correct": false
+        },
+        {
+          "text": "Bonjour",
+          "correct": true
+        },
+        {
+          "text": "Ciao",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "“Ciao” es italiano y “hallo”, alemán.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_117",
+      "question": "¿Qué insecto produce la miel?",
+      "answers": [
+        {
+          "text": "La hormiga",
+          "correct": false
+        },
+        {
+          "text": "La avispa",
+          "correct": false
+        },
+        {
+          "text": "La abeja",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las abejas hacen la miel con el néctar de las flores.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_118",
+      "question": "¿Quiénes construyeron el primer avión que voló con motor?",
+      "answers": [
+        {
+          "text": "Los hermanos Grimm",
+          "correct": false
+        },
+        {
+          "text": "Los hermanos Marx",
+          "correct": false
+        },
+        {
+          "text": "Los hermanos Wright",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su primer vuelo, en 1903, duró solo doce segundos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_119",
+      "question": "¿Qué fruta es amarilla y alargada?",
+      "answers": [
+        {
+          "text": "El plátano",
+          "correct": true
+        },
+        {
+          "text": "La pera",
+          "correct": false
+        },
+        {
+          "text": "La naranja",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las bananas crecen en racimos y se llaman plátano o banano según el país.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_120",
+      "question": "¿Qué animal puede dormir de pie?",
+      "answers": [
+        {
+          "text": "El conejo",
+          "correct": false
+        },
+        {
+          "text": "El perro",
+          "correct": false
+        },
+        {
+          "text": "El caballo",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las patas del caballo tienen un truco que las mantiene firmes mientras duerme.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_121",
+      "question": "¿En qué país está la Gran Muralla?",
+      "answers": [
+        {
+          "text": "India",
+          "correct": false
+        },
+        {
+          "text": "Japón",
+          "correct": false
+        },
+        {
+          "text": "China",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Muralla se construyó en muchas partes durante siglos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_122",
+      "question": "¿Cuántos enanitos acompañan a Blancanieves?",
+      "answers": [
+        {
+          "text": "5",
+          "correct": false
+        },
+        {
+          "text": "9",
+          "correct": false
+        },
+        {
+          "text": "7",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En el cuento hay siete enanitos, cada uno con su nombre.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_123",
+      "question": "¿Cuántas ruedas tiene una bicicleta?",
+      "answers": [
+        {
+          "text": "2",
+          "correct": true
+        },
+        {
+          "text": "4",
+          "correct": false
+        },
+        {
+          "text": "3",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los niños pequeños suelen empezar con ruedines.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_124",
+      "question": "¿Qué verdura nos hace llorar al cortarla?",
+      "answers": [
+        {
+          "text": "La zanahoria",
+          "correct": false
+        },
+        {
+          "text": "La lechuga",
+          "correct": false
+        },
+        {
+          "text": "La cebolla",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La cebolla suelta un gas que irrita los ojos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_125",
+      "question": "¿Qué gira alrededor de la Tierra?",
+      "answers": [
+        {
+          "text": "Júpiter",
+          "correct": false
+        },
+        {
+          "text": "El Sol",
+          "correct": false
+        },
+        {
+          "text": "La Luna",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Luna tarda casi un mes en dar una vuelta a la Tierra.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_126",
+      "question": "¿En qué país nació la pizza?",
+      "answers": [
+        {
+          "text": "Italia",
+          "correct": true
+        },
+        {
+          "text": "Francia",
+          "correct": false
+        },
+        {
+          "text": "México",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La pizza más famosa lleva tomate, queso y albahaca.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_127",
+      "question": "¿Para qué sirve un microscopio?",
+      "answers": [
+        {
+          "text": "Para ver cosas muy pequeñas",
+          "correct": true
+        },
+        {
+          "text": "Para oír de lejos",
+          "correct": false
+        },
+        {
+          "text": "Para ver estrellas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Con un microscopio se ven bichitos y granitos que a simple vista son invisibles.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_128",
+      "question": "¿De qué están hechas las nubes?",
+      "answers": [
+        {
+          "text": "Humo",
+          "correct": false
+        },
+        {
+          "text": "Algodón",
+          "correct": false
+        },
+        {
+          "text": "Gotitas de agua",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las gotitas son tan pequeñas y ligeras que flotan en el aire.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_129",
+      "question": "¿Qué país es famoso por sus tulipanes y molinos?",
+      "answers": [
+        {
+          "text": "Dinamarca",
+          "correct": false
+        },
+        {
+          "text": "Países Bajos",
+          "correct": true
+        },
+        {
+          "text": "Suiza",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En Países Bajos también hay muchísimas bicicletas.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_130",
+      "question": "¿Qué parte de la planta absorbe el agua del suelo?",
+      "answers": [
+        {
+          "text": "Las raíces",
+          "correct": true
+        },
+        {
+          "text": "Las hojas",
+          "correct": false
+        },
+        {
+          "text": "Las flores",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las raíces también sujetan la planta a la tierra.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_131",
+      "question": "¿Qué planeta es conocido como el planeta rojo?",
+      "answers": [
+        {
+          "text": "Venus",
+          "correct": false
+        },
+        {
+          "text": "Júpiter",
+          "correct": false
+        },
+        {
+          "text": "Marte",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Marte parece rojo porque su suelo tiene mucho óxido, como el hierro oxidado.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_132",
+      "question": "¿Dónde está el hueso más pequeño del cuerpo?",
+      "answers": [
+        {
+          "text": "En el oído",
+          "correct": true
+        },
+        {
+          "text": "En el dedo",
+          "correct": false
+        },
+        {
+          "text": "En la nariz",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se llama estribo y mide solo unos 3 milímetros.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_133",
+      "question": "¿Qué animal cambia de color para esconderse?",
+      "answers": [
+        {
+          "text": "La rana",
+          "correct": false
+        },
+        {
+          "text": "El camaleón",
+          "correct": true
+        },
+        {
+          "text": "El cocodrilo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El camaleón también cambia de color según su estado de ánimo.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_134",
+      "question": "¿Cómo se llama el agua congelada que cae del cielo en invierno?",
+      "answers": [
+        {
+          "text": "Nieve",
+          "correct": true
+        },
+        {
+          "text": "Niebla",
+          "correct": false
+        },
+        {
+          "text": "Rocío",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los copos de nieve suelen tener seis puntas.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_135",
+      "question": "¿Cuál es el país más grande del mundo?",
+      "answers": [
+        {
+          "text": "Rusia",
+          "correct": true
+        },
+        {
+          "text": "Canadá",
+          "correct": false
+        },
+        {
+          "text": "China",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rusia ocupa partes de Europa y de Asia.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_136",
+      "question": "¿Cómo se dice “gracias” en alemán?",
+      "answers": [
+        {
+          "text": "Merci",
+          "correct": false
+        },
+        {
+          "text": "Danke",
+          "correct": true
+        },
+        {
+          "text": "Grazie",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "“Merci” es francés y “grazie”, italiano.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_137",
+      "question": "¿Qué inventó Gutenberg?",
+      "answers": [
+        {
+          "text": "El teléfono",
+          "correct": false
+        },
+        {
+          "text": "El telescopio",
+          "correct": false
+        },
+        {
+          "text": "La imprenta",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Con la imprenta se pudieron hacer muchos libros rápidamente.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_138",
+      "question": "¿Qué estación viene después del invierno?",
+      "answers": [
+        {
+          "text": "Verano",
+          "correct": false
+        },
+        {
+          "text": "Otoño",
+          "correct": false
+        },
+        {
+          "text": "Primavera",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En primavera florecen muchas plantas y vuelven los insectos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_139",
+      "question": "¿Con qué parte del cuerpo oímos?",
+      "answers": [
+        {
+          "text": "Con los oídos",
+          "correct": true
+        },
+        {
+          "text": "Con los ojos",
+          "correct": false
+        },
+        {
+          "text": "Con la nariz",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los sonidos hacen vibrar un pequeño tambor dentro del oído.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_140",
+      "question": "¿Qué animal gira la cabeza casi hasta mirar hacia atrás?",
+      "answers": [
+        {
+          "text": "El loro",
+          "correct": false
+        },
+        {
+          "text": "El águila",
+          "correct": false
+        },
+        {
+          "text": "El búho",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un búho puede girar la cabeza unos 270 grados, porque no puede mover los ojos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_141",
+      "question": "¿Cuántas piezas tiene cada jugador al empezar una partida de ajedrez?",
+      "answers": [
+        {
+          "text": "20",
+          "correct": false
+        },
+        {
+          "text": "16",
+          "correct": true
+        },
+        {
+          "text": "12",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cada jugador empieza con 8 peones y 8 piezas más.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_142",
+      "question": "¿Cómo se llaman los primeros dientes que se caen?",
+      "answers": [
+        {
+          "text": "Dientes de leche",
+          "correct": true
+        },
+        {
+          "text": "Colmillos",
+          "correct": false
+        },
+        {
+          "text": "Muelas del juicio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los niños tienen 20 dientes de leche. Después salen los definitivos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_143",
+      "question": "¿Cuántas casillas tiene un tablero de ajedrez?",
+      "type": "estimate",
+      "answer": 64,
+      "min": 10,
+      "max": 120,
+      "unit": "casillas",
+      "difficulty": "hard",
+      "fun_fact": "Son 8 filas por 8 columnas, la mitad blancas y la mitad negras.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_144",
+      "question": "¿Cómo se llama lo que hacen las hojas para fabricar su comida con luz?",
+      "answers": [
+        {
+          "text": "Hibernación",
+          "correct": false
+        },
+        {
+          "text": "Fotosíntesis",
+          "correct": true
+        },
+        {
+          "text": "Digestión",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La fotosíntesis también hace que las hojas sean verdes.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_145",
+      "question": "¿Qué animal NO es un insecto?",
+      "answers": [
+        {
+          "text": "La araña",
+          "correct": true
+        },
+        {
+          "text": "La mariposa",
+          "correct": false
+        },
+        {
+          "text": "El escarabajo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los insectos tienen seis patas y tres partes en el cuerpo. La araña tiene ocho patas.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_146",
+      "question": "¿Qué lanzan los jugadores de bádminton por encima de la red?",
+      "answers": [
+        {
+          "text": "Un volante",
+          "correct": true
+        },
+        {
+          "text": "Una pelota de goma",
+          "correct": false
+        },
+        {
+          "text": "Un disco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El volante tiene plumas o plástico y vuela muy distinto a una pelota.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_147",
+      "question": "¿Cuántos jugadores de un equipo hay en la cancha en voleibol?",
+      "answers": [
+        {
+          "text": "7",
+          "correct": false
+        },
+        {
+          "text": "5",
+          "correct": false
+        },
+        {
+          "text": "6",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En voleibol los jugadores van rotando de posición.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_148",
+      "question": "¿Cuántos sentidos principales tenemos?",
+      "answers": [
+        {
+          "text": "3",
+          "correct": false
+        },
+        {
+          "text": "7",
+          "correct": false
+        },
+        {
+          "text": "5",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Son la vista, el oído, el olfato, el gusto y el tacto.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_149",
+      "question": "¿Dónde lleva el canguro a su cría?",
+      "answers": [
+        {
+          "text": "En la boca",
+          "correct": false
+        },
+        {
+          "text": "En una bolsa",
+          "correct": true
+        },
+        {
+          "text": "En la espalda",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Al nacer, la cría de canguro mide solo un par de centímetros.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_150",
+      "question": "¿Qué necesitan las plantas para crecer?",
+      "answers": [
+        {
+          "text": "Mucho ruido",
+          "correct": false
+        },
+        {
+          "text": "Agua y luz",
+          "correct": true
+        },
+        {
+          "text": "Solo azúcar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las plantas fabrican su comida con la luz del Sol.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_151",
+      "question": "¿Qué usamos para ver mejor cuando no vemos bien?",
+      "answers": [
+        {
+          "text": "Guantes",
+          "correct": false
+        },
+        {
+          "text": "Gafas",
+          "correct": true
+        },
+        {
+          "text": "Una bufanda",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las primeras gafas se inventaron hace más de 700 años.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_152",
+      "question": "¿Cuál es el mamífero más grande del mundo?",
+      "answers": [
+        {
+          "text": "El tiburón ballena",
+          "correct": false
+        },
+        {
+          "text": "La ballena azul",
+          "correct": true
+        },
+        {
+          "text": "El elefante",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La ballena azul es más grande que cualquier dinosaurio que se conozca.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_153",
+      "question": "¿Quién escribió “Alicia en el país de las maravillas”?",
+      "answers": [
+        {
+          "text": "Hans Christian Andersen",
+          "correct": false
+        },
+        {
+          "text": "Lewis Carroll",
+          "correct": true
+        },
+        {
+          "text": "Charles Perrault",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Alicia sigue a un conejo blanco con reloj que la lleva al país de las maravillas.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_154",
+      "question": "¿Qué hueso protege el cerebro?",
+      "answers": [
+        {
+          "text": "La columna",
+          "correct": false
+        },
+        {
+          "text": "La costilla",
+          "correct": false
+        },
+        {
+          "text": "El cráneo",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El cráneo es como un casco natural que cuida tu cerebro.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_155",
+      "question": "¿Con qué material se fabrican las ventanas?",
+      "answers": [
+        {
+          "text": "Tela",
+          "correct": false
+        },
+        {
+          "text": "Papel",
+          "correct": false
+        },
+        {
+          "text": "Vidrio",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El vidrio se hace calentando arena a mucha temperatura.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_156",
+      "question": "¿Con qué parte del cuerpo prueban el sabor las mariposas?",
+      "answers": [
+        {
+          "text": "Con las alas",
+          "correct": false
+        },
+        {
+          "text": "Con la trompa",
+          "correct": false
+        },
+        {
+          "text": "Con las patas",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las mariposas tienen sensores de sabor en las patas y saben si una hoja sirve para sus huevos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_157",
+      "question": "¿Qué animal es el más rápido en tierra?",
+      "answers": [
+        {
+          "text": "El guepardo",
+          "correct": true
+        },
+        {
+          "text": "El león",
+          "correct": false
+        },
+        {
+          "text": "El caballo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El guepardo alcanza más de 100 km/h, pero solo aguanta unos segundos.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_158",
+      "question": "¿Cuántos jugadores de un equipo hay en el campo en un partido de fútbol?",
+      "answers": [
+        {
+          "text": "7",
+          "correct": false
+        },
+        {
+          "text": "11",
+          "correct": true
+        },
+        {
+          "text": "9",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hay once por equipo, incluido el portero.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_159",
+      "question": "¿Qué planeta tiene anillos grandes y brillantes?",
+      "answers": [
+        {
+          "text": "Marte",
+          "correct": false
+        },
+        {
+          "text": "Mercurio",
+          "correct": false
+        },
+        {
+          "text": "Saturno",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los anillos de Saturno están hechos de hielo y trocitos de roca.",
+      "category": "Niños y familia"
+    },
+    {
+      "id": "ninos_es_160",
+      "question": "¿Qué parte de la planta es una zanahoria?",
+      "answers": [
+        {
+          "text": "El tallo",
+          "correct": false
+        },
+        {
+          "text": "La flor",
+          "correct": false
+        },
+        {
+          "text": "La raíz",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La zanahoria crece bajo tierra y es la raíz de la planta.",
+      "category": "Niños y familia"
+    }
+  ]
+}

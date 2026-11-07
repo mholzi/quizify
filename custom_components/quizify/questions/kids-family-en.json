@@ -1,0 +1,3323 @@
+{
+  "name": "Kids & Family",
+  "language": "en",
+  "version": "1.0",
+  "theme": "trivia",
+  "questions": [
+    {
+      "id": "kids_en_001",
+      "question": "In which country is the Eiffel Tower?",
+      "answers": [
+        {
+          "text": "Italy",
+          "correct": false
+        },
+        {
+          "text": "France",
+          "correct": true
+        },
+        {
+          "text": "Spain",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It stands in Paris and was built for a big fair in 1889.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_002",
+      "question": "Which US president is the teddy bear named after?",
+      "answers": [
+        {
+          "text": "Abraham Lincoln",
+          "correct": false
+        },
+        {
+          "text": "Theodore Roosevelt",
+          "correct": true
+        },
+        {
+          "text": "George Washington",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "His nickname was Teddy. A toy shop made a bear toy after a famous story about him.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_003",
+      "question": "In which mountains does Heidi live?",
+      "answers": [
+        {
+          "text": "The Rocky Mountains",
+          "correct": false
+        },
+        {
+          "text": "The Andes",
+          "correct": false
+        },
+        {
+          "text": "The Alps",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Heidi lives with her grandfather high up on an Alp in Switzerland.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_004",
+      "question": "How long does Earth take to travel once around the Sun?",
+      "answers": [
+        {
+          "text": "One month",
+          "correct": false
+        },
+        {
+          "text": "One day",
+          "correct": false
+        },
+        {
+          "text": "One year",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "That trip is exactly why we have a year.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_005",
+      "question": "Who has more bones, a baby or an adult?",
+      "answers": [
+        {
+          "text": "A baby",
+          "correct": true
+        },
+        {
+          "text": "An adult",
+          "correct": false
+        },
+        {
+          "text": "Both the same",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Babies have around 300 bones. Many grow together, so adults end up with 206.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_006",
+      "question": "What are raisins?",
+      "answers": [
+        {
+          "text": "Dried plums",
+          "correct": false
+        },
+        {
+          "text": "Dried grapes",
+          "correct": true
+        },
+        {
+          "text": "Dried figs",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Take the water out of a grape and you get a raisin.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_007",
+      "question": "How often are the Summer Olympic Games held?",
+      "answers": [
+        {
+          "text": "Every four years",
+          "correct": true
+        },
+        {
+          "text": "Every year",
+          "correct": false
+        },
+        {
+          "text": "Every ten years",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Athletes train for years to take part.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_008",
+      "question": "What force pulls things down to the ground?",
+      "answers": [
+        {
+          "text": "Gravity",
+          "correct": true
+        },
+        {
+          "text": "Magnetism",
+          "correct": false
+        },
+        {
+          "text": "Friction",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Without gravity you would float away from the floor.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_009",
+      "question": "What is a group of flamingos called?",
+      "answers": [
+        {
+          "text": "A parade",
+          "correct": false
+        },
+        {
+          "text": "A pride",
+          "correct": false
+        },
+        {
+          "text": "A flamboyance",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fitting for pink birds! A group of flamingos can also be called a stand.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_010",
+      "question": "Which is the deepest place in the ocean?",
+      "answers": [
+        {
+          "text": "Great Barrier Reef",
+          "correct": false
+        },
+        {
+          "text": "Bermuda Triangle",
+          "correct": false
+        },
+        {
+          "text": "Mariana Trench",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It is so deep that Mount Everest would fit inside with room to spare.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_011",
+      "question": "Which color is NOT a color of the rainbow?",
+      "answers": [
+        {
+          "text": "Orange",
+          "correct": false
+        },
+        {
+          "text": "Brown",
+          "correct": true
+        },
+        {
+          "text": "Violet",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A rainbow has red, orange, yellow, green, blue, indigo and violet.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_012",
+      "question": "How many hearts does an octopus have?",
+      "type": "estimate",
+      "answer": 3,
+      "min": 0,
+      "max": 20,
+      "unit": "hearts",
+      "difficulty": "easy",
+      "fun_fact": "Two hearts pump blood through the gills and one pumps it to the rest of the body. Octopus blood is blue.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_013",
+      "question": "How many legs does a spider have?",
+      "answers": [
+        {
+          "text": "Six",
+          "correct": false
+        },
+        {
+          "text": "Eight",
+          "correct": true
+        },
+        {
+          "text": "Ten",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Insects have six legs, so spiders are not insects at all.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_014",
+      "question": "What does a thermometer measure?",
+      "answers": [
+        {
+          "text": "Weight",
+          "correct": false
+        },
+        {
+          "text": "Temperature",
+          "correct": true
+        },
+        {
+          "text": "Speed",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It tells you how hot or cold something is.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_015",
+      "question": "Which vitamin can your skin make from sunshine?",
+      "answers": [
+        {
+          "text": "Vitamin C",
+          "correct": false
+        },
+        {
+          "text": "Vitamin A",
+          "correct": false
+        },
+        {
+          "text": "Vitamin D",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Vitamin D helps keep your bones strong.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_016",
+      "question": "In which country is the Taj Mahal?",
+      "answers": [
+        {
+          "text": "Turkey",
+          "correct": false
+        },
+        {
+          "text": "India",
+          "correct": true
+        },
+        {
+          "text": "Egypt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It is a white palace-like tomb that took about 20 years to build.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_017",
+      "question": "What is the usual order of keyboard letters called?",
+      "answers": [
+        {
+          "text": "LMNOPQ",
+          "correct": false
+        },
+        {
+          "text": "QWERTY",
+          "correct": true
+        },
+        {
+          "text": "ABCDEF",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The top row of letters starts with Q, W, E, R, T, Y.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_018",
+      "question": "Which food can stay good for thousands of years?",
+      "answers": [
+        {
+          "text": "Honey",
+          "correct": true
+        },
+        {
+          "text": "Milk",
+          "correct": false
+        },
+        {
+          "text": "Bread",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Honey found in old Egyptian tombs was still safe to eat.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_019",
+      "question": "What does Rumpelstiltskin spin?",
+      "answers": [
+        {
+          "text": "Straw into gold",
+          "correct": true
+        },
+        {
+          "text": "Sand into glass",
+          "correct": false
+        },
+        {
+          "text": "Wool into silk",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He only gives up when somebody guesses his name.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_020",
+      "question": "What is the Japanese art of paper folding called?",
+      "answers": [
+        {
+          "text": "Bonsai",
+          "correct": false
+        },
+        {
+          "text": "Haiku",
+          "correct": false
+        },
+        {
+          "text": "Origami",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "With a single sheet of paper you can fold a crane or a frog.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_021",
+      "question": "How many planets does our solar system have?",
+      "answers": [
+        {
+          "text": "Eight",
+          "correct": true
+        },
+        {
+          "text": "Nine",
+          "correct": false
+        },
+        {
+          "text": "Seven",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pluto used to count as the ninth, but is now called a dwarf planet.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_022",
+      "question": "Where do potatoes grow?",
+      "answers": [
+        {
+          "text": "Underground",
+          "correct": true
+        },
+        {
+          "text": "On bushes",
+          "correct": false
+        },
+        {
+          "text": "On trees",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Potatoes are roots that swell under the soil. You dig them up.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_023",
+      "question": "What is the closest star to Earth?",
+      "answers": [
+        {
+          "text": "Sirius",
+          "correct": false
+        },
+        {
+          "text": "The Sun",
+          "correct": true
+        },
+        {
+          "text": "The North Star",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Sun is a star. The next closest one is so far away that its light takes over four years to reach us.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_024",
+      "question": "What happens to your pupils in the dark?",
+      "answers": [
+        {
+          "text": "They get smaller",
+          "correct": false
+        },
+        {
+          "text": "They get bigger",
+          "correct": true
+        },
+        {
+          "text": "They disappear",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bigger pupils let in more light, so you can see a little better in the dark.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_025",
+      "question": "Which sea animal has no brain?",
+      "answers": [
+        {
+          "text": "Octopus",
+          "correct": false
+        },
+        {
+          "text": "Jellyfish",
+          "correct": true
+        },
+        {
+          "text": "Dolphin",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A jellyfish has a simple net of nerves instead of a brain.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_026",
+      "question": "What does Cinderella lose at the ball?",
+      "answers": [
+        {
+          "text": "A necklace",
+          "correct": false
+        },
+        {
+          "text": "A glass slipper",
+          "correct": true
+        },
+        {
+          "text": "A crown",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The prince searches the whole kingdom for the foot that fits the slipper.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_027",
+      "question": "Which leaf is on the flag of Canada?",
+      "answers": [
+        {
+          "text": "Oak",
+          "correct": false
+        },
+        {
+          "text": "Maple",
+          "correct": true
+        },
+        {
+          "text": "Palm",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Maple syrup also comes from Canada.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_028",
+      "question": "What is the quiet middle of a hurricane called?",
+      "answers": [
+        {
+          "text": "The heart",
+          "correct": false
+        },
+        {
+          "text": "The core",
+          "correct": false
+        },
+        {
+          "text": "The eye",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It is calm in the eye, but the storm wall around it is very strong.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_029",
+      "question": "In basketball, what do you throw the ball into?",
+      "answers": [
+        {
+          "text": "A hole",
+          "correct": false
+        },
+        {
+          "text": "A goal",
+          "correct": false
+        },
+        {
+          "text": "A hoop",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The hoop hangs 3.05 meters above the floor.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_030",
+      "question": "Who is famous for making the light bulb useful?",
+      "answers": [
+        {
+          "text": "Isaac Newton",
+          "correct": false
+        },
+        {
+          "text": "Thomas Edison",
+          "correct": true
+        },
+        {
+          "text": "Albert Einstein",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He and his team tried thousands of materials for the glowing thread.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_031",
+      "question": "What color is the 'black box' on an airplane?",
+      "answers": [
+        {
+          "text": "Black",
+          "correct": false
+        },
+        {
+          "text": "Bright orange",
+          "correct": true
+        },
+        {
+          "text": "White",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The bright color makes it easy to find. It records data about the flight.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_032",
+      "question": "Which is the biggest moon in our solar system?",
+      "answers": [
+        {
+          "text": "Ganymede",
+          "correct": true
+        },
+        {
+          "text": "Our Moon",
+          "correct": false
+        },
+        {
+          "text": "Titan",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ganymede circles Jupiter and is even bigger than the planet Mercury.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_033",
+      "question": "What is Peter Pan's fairy friend called?",
+      "answers": [
+        {
+          "text": "Thumbelina",
+          "correct": false
+        },
+        {
+          "text": "Belle",
+          "correct": false
+        },
+        {
+          "text": "Tinker Bell",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tinker Bell is tiny and talks by ringing like a little bell.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_034",
+      "question": "What makes soda fizzy?",
+      "answers": [
+        {
+          "text": "Oxygen",
+          "correct": false
+        },
+        {
+          "text": "Helium",
+          "correct": false
+        },
+        {
+          "text": "Carbon dioxide gas",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Carbon dioxide is pressed into the drink. It bubbles out when you open the bottle.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_035",
+      "question": "How do you say 'goodbye' in Italian?",
+      "answers": [
+        {
+          "text": "Auf Wiedersehen",
+          "correct": false
+        },
+        {
+          "text": "Arrivederci",
+          "correct": true
+        },
+        {
+          "text": "Adios",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Italians also say 'ciao' for both hello and goodbye.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_036",
+      "question": "How many rings are on the Olympic flag?",
+      "answers": [
+        {
+          "text": "Seven",
+          "correct": false
+        },
+        {
+          "text": "Four",
+          "correct": false
+        },
+        {
+          "text": "Five",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The five rings stand for the five parts of the world that take part.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_037",
+      "question": "What is paper made from?",
+      "answers": [
+        {
+          "text": "Stone",
+          "correct": false
+        },
+        {
+          "text": "Wood",
+          "correct": true
+        },
+        {
+          "text": "Plastic",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Most paper is made from trees. Some is made from old paper.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_038",
+      "question": "Which way does a compass needle point?",
+      "answers": [
+        {
+          "text": "Up",
+          "correct": false
+        },
+        {
+          "text": "East",
+          "correct": false
+        },
+        {
+          "text": "North",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The needle is a tiny magnet that follows Earth's magnetic field.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_039",
+      "question": "Which is the longest bone in your body?",
+      "answers": [
+        {
+          "text": "Upper arm bone",
+          "correct": false
+        },
+        {
+          "text": "Thigh bone",
+          "correct": true
+        },
+        {
+          "text": "Shin bone",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The thigh bone is also one of the strongest bones you have.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_040",
+      "question": "Which plant snaps shut to catch flies?",
+      "answers": [
+        {
+          "text": "Venus flytrap",
+          "correct": true
+        },
+        {
+          "text": "Cactus",
+          "correct": false
+        },
+        {
+          "text": "Sunflower",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It closes in a split second when an insect touches its tiny hairs.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_041",
+      "question": "Which animal has the longest neck?",
+      "answers": [
+        {
+          "text": "Giraffe",
+          "correct": true
+        },
+        {
+          "text": "Horse",
+          "correct": false
+        },
+        {
+          "text": "Camel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A giraffe has the same number of neck bones as you: seven. Each one is just much longer.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_042",
+      "question": "Which is the biggest continent?",
+      "answers": [
+        {
+          "text": "Africa",
+          "correct": false
+        },
+        {
+          "text": "Asia",
+          "correct": true
+        },
+        {
+          "text": "Europe",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "More than half of all people live in Asia.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_043",
+      "question": "How many players of one soccer team are on the field?",
+      "answers": [
+        {
+          "text": "11",
+          "correct": true
+        },
+        {
+          "text": "9",
+          "correct": false
+        },
+        {
+          "text": "13",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Each team also has a goalkeeper, who is one of the eleven.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_044",
+      "question": "How many eyes does a honeybee have?",
+      "type": "estimate",
+      "answer": 5,
+      "min": 0,
+      "max": 20,
+      "unit": "eyes",
+      "difficulty": "easy",
+      "fun_fact": "A bee has two big eyes on the sides of its head and three small ones on top.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_045",
+      "question": "What do plants need to make their food?",
+      "answers": [
+        {
+          "text": "Music",
+          "correct": false
+        },
+        {
+          "text": "Sunlight",
+          "correct": true
+        },
+        {
+          "text": "Sand",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Plants use light, water and air to make sugar. This is called photosynthesis.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_046",
+      "question": "How many dwarfs live with Snow White?",
+      "answers": [
+        {
+          "text": "Nine",
+          "correct": false
+        },
+        {
+          "text": "Seven",
+          "correct": true
+        },
+        {
+          "text": "Five",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In the story of the Brothers Grimm they live in a little house in the woods.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_047",
+      "question": "What is the front of a ship called?",
+      "answers": [
+        {
+          "text": "The deck",
+          "correct": false
+        },
+        {
+          "text": "The bow",
+          "correct": true
+        },
+        {
+          "text": "The stern",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The back of the ship is called the stern.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_048",
+      "question": "What does a magnifying glass do?",
+      "answers": [
+        {
+          "text": "Makes things look bigger",
+          "correct": true
+        },
+        {
+          "text": "Makes things hot",
+          "correct": false
+        },
+        {
+          "text": "Makes things disappear",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Its curved glass bends the light so small things look large.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_049",
+      "question": "Which of these is a fruit and not a vegetable?",
+      "answers": [
+        {
+          "text": "Potato",
+          "correct": false
+        },
+        {
+          "text": "Tomato",
+          "correct": true
+        },
+        {
+          "text": "Carrot",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A fruit has seeds inside. Tomatoes do, so scientists call them fruit.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_050",
+      "question": "Which planet spins on its side?",
+      "answers": [
+        {
+          "text": "Jupiter",
+          "correct": false
+        },
+        {
+          "text": "Uranus",
+          "correct": true
+        },
+        {
+          "text": "Mars",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Uranus rolls around the Sun almost like a ball.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_051",
+      "question": "What color is a polar bear's skin under its fur?",
+      "answers": [
+        {
+          "text": "White",
+          "correct": false
+        },
+        {
+          "text": "Black",
+          "correct": true
+        },
+        {
+          "text": "Pink",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Black skin soaks up warmth from the sun. The fur only looks white.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_052",
+      "question": "How many senses do people usually count?",
+      "answers": [
+        {
+          "text": "Seven",
+          "correct": false
+        },
+        {
+          "text": "Three",
+          "correct": false
+        },
+        {
+          "text": "Five",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sight, hearing, smell, taste and touch.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_053",
+      "question": "Which of these fruits is a berry for scientists?",
+      "answers": [
+        {
+          "text": "Strawberry",
+          "correct": false
+        },
+        {
+          "text": "Raspberry",
+          "correct": false
+        },
+        {
+          "text": "Banana",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Strawberries and raspberries are not true berries. Bananas are.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_054",
+      "question": "Which animal sleeps hanging upside down?",
+      "answers": [
+        {
+          "text": "Bat",
+          "correct": true
+        },
+        {
+          "text": "Koala",
+          "correct": false
+        },
+        {
+          "text": "Monkey",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bats hang by their feet, so they can just let go and fly off.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_055",
+      "question": "What carries oxygen around in your blood?",
+      "answers": [
+        {
+          "text": "Platelets",
+          "correct": false
+        },
+        {
+          "text": "White blood cells",
+          "correct": false
+        },
+        {
+          "text": "Red blood cells",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Red blood cells are what make your blood red.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_056",
+      "question": "What do you add to dough to make bread rise?",
+      "answers": [
+        {
+          "text": "Sugar",
+          "correct": false
+        },
+        {
+          "text": "Salt",
+          "correct": false
+        },
+        {
+          "text": "Yeast",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Yeast makes tiny gas bubbles that puff up the dough.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_057",
+      "question": "Which writing uses raised dots that you feel with your fingers?",
+      "answers": [
+        {
+          "text": "Morse code",
+          "correct": false
+        },
+        {
+          "text": "Sign language",
+          "correct": false
+        },
+        {
+          "text": "Braille",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Blind people read by touching the dots.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_058",
+      "question": "What is the left side of a ship called?",
+      "answers": [
+        {
+          "text": "Port",
+          "correct": true
+        },
+        {
+          "text": "Stern",
+          "correct": false
+        },
+        {
+          "text": "Starboard",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The right side is called starboard.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_059",
+      "question": "Who wrote Peter Pan?",
+      "answers": [
+        {
+          "text": "Lewis Carroll",
+          "correct": false
+        },
+        {
+          "text": "Rudyard Kipling",
+          "correct": false
+        },
+        {
+          "text": "J. M. Barrie",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "He wrote it for the sons of a friend. He gave the story's rights to a children's hospital.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_060",
+      "question": "How long does sunlight take to reach Earth?",
+      "answers": [
+        {
+          "text": "About 8 hours",
+          "correct": false
+        },
+        {
+          "text": "About 8 seconds",
+          "correct": false
+        },
+        {
+          "text": "About 8 minutes",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "So the Sun you see in the sky is the Sun of 8 minutes ago.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_061",
+      "question": "In which board game do you climb ladders and slide down snakes?",
+      "answers": [
+        {
+          "text": "Snakes and Ladders",
+          "correct": true
+        },
+        {
+          "text": "Chess",
+          "correct": false
+        },
+        {
+          "text": "Checkers",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The game comes from India, where it taught children about good and bad deeds.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_062",
+      "question": "What is the highest mountain on Earth?",
+      "answers": [
+        {
+          "text": "Mount Everest",
+          "correct": true
+        },
+        {
+          "text": "Mount Fuji",
+          "correct": false
+        },
+        {
+          "text": "Mont Blanc",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Its top is almost nine kilometers above the sea.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_063",
+      "question": "How do you say 'thank you' in French?",
+      "answers": [
+        {
+          "text": "Danke",
+          "correct": false
+        },
+        {
+          "text": "Gracias",
+          "correct": false
+        },
+        {
+          "text": "Merci",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The French say 'merci beaucoup' for 'thank you very much'.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_064",
+      "question": "What is cheese made from?",
+      "answers": [
+        {
+          "text": "Flour",
+          "correct": false
+        },
+        {
+          "text": "Milk",
+          "correct": true
+        },
+        {
+          "text": "Eggs",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It takes about ten liters of milk to make one kilogram of cheese.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_065",
+      "question": "In which city does the Wizard of Oz live?",
+      "answers": [
+        {
+          "text": "Emerald City",
+          "correct": true
+        },
+        {
+          "text": "Golden City",
+          "correct": false
+        },
+        {
+          "text": "Crystal Castle",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The whole city shines green, and visitors even wear green glasses.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_066",
+      "question": "Butterflies can taste with their...?",
+      "answers": [
+        {
+          "text": "Eyes",
+          "correct": false
+        },
+        {
+          "text": "Wings",
+          "correct": false
+        },
+        {
+          "text": "Feet",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A butterfly lands on a leaf and tastes it with its feet to see if it is good for its eggs.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_067",
+      "question": "Who was the first person to walk on the Moon?",
+      "answers": [
+        {
+          "text": "Neil Armstrong",
+          "correct": true
+        },
+        {
+          "text": "Buzz Aldrin",
+          "correct": false
+        },
+        {
+          "text": "Yuri Gagarin",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He stepped onto the Moon in 1969. Buzz Aldrin followed him a few minutes later.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_068",
+      "question": "In which sport do you hit a puck?",
+      "answers": [
+        {
+          "text": "Golf",
+          "correct": false
+        },
+        {
+          "text": "Ice hockey",
+          "correct": true
+        },
+        {
+          "text": "Tennis",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Players glide across the ice on skates.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_069",
+      "question": "What makes leaves green?",
+      "answers": [
+        {
+          "text": "Chlorophyll",
+          "correct": true
+        },
+        {
+          "text": "Pollen",
+          "correct": false
+        },
+        {
+          "text": "Sap",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In autumn the green fades away, and the yellow and orange show through.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_070",
+      "question": "An 11-year-old is said to have invented which cold treat?",
+      "answers": [
+        {
+          "text": "The ice lolly",
+          "correct": true
+        },
+        {
+          "text": "The ice cream cone",
+          "correct": false
+        },
+        {
+          "text": "Frozen yogurt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A boy left a drink with a stirring stick outside on a freezing night.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_071",
+      "question": "What do ships drop to stay in one place?",
+      "answers": [
+        {
+          "text": "A sail",
+          "correct": false
+        },
+        {
+          "text": "An anchor",
+          "correct": true
+        },
+        {
+          "text": "A rope",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The heavy anchor digs into the sea floor.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_072",
+      "question": "Which is the biggest organ of your body?",
+      "answers": [
+        {
+          "text": "Brain",
+          "correct": false
+        },
+        {
+          "text": "Stomach",
+          "correct": false
+        },
+        {
+          "text": "Skin",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Your skin covers your whole body and keeps germs out.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_073",
+      "question": "Which planet is so light it could float in a giant bathtub?",
+      "answers": [
+        {
+          "text": "Jupiter",
+          "correct": false
+        },
+        {
+          "text": "Mercury",
+          "correct": false
+        },
+        {
+          "text": "Saturn",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Saturn is mostly gas. On average it is lighter than water.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_074",
+      "question": "What did Johannes Gutenberg invent in the 1400s?",
+      "answers": [
+        {
+          "text": "The printing press",
+          "correct": true
+        },
+        {
+          "text": "The clock",
+          "correct": false
+        },
+        {
+          "text": "The telescope",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Thanks to his press, books got cheaper and more people learned to read.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_075",
+      "question": "Which is the biggest ocean on Earth?",
+      "answers": [
+        {
+          "text": "Atlantic",
+          "correct": false
+        },
+        {
+          "text": "Indian",
+          "correct": false
+        },
+        {
+          "text": "Pacific",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Pacific Ocean is bigger than all the land on Earth put together.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_076",
+      "question": "Which animal is the fastest on land?",
+      "answers": [
+        {
+          "text": "Horse",
+          "correct": false
+        },
+        {
+          "text": "Cheetah",
+          "correct": true
+        },
+        {
+          "text": "Lion",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A cheetah can reach about 100 km/h in a short sprint, but it gets tired fast.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_077",
+      "question": "How many moons does Mars have?",
+      "type": "estimate",
+      "answer": 2,
+      "min": 0,
+      "max": 20,
+      "unit": "moons",
+      "difficulty": "medium",
+      "fun_fact": "They are called Phobos and Deimos, and they are small and shaped like potatoes.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_078",
+      "question": "Which organ do you think with?",
+      "answers": [
+        {
+          "text": "Brain",
+          "correct": true
+        },
+        {
+          "text": "Liver",
+          "correct": false
+        },
+        {
+          "text": "Heart",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Your brain uses about a fifth of all the energy your body makes.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_079",
+      "question": "What is the capital of Australia?",
+      "answers": [
+        {
+          "text": "Melbourne",
+          "correct": false
+        },
+        {
+          "text": "Canberra",
+          "correct": true
+        },
+        {
+          "text": "Sydney",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Many people guess Sydney, but Canberra was built just to be the capital.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_080",
+      "question": "How many players of one team are on the court in basketball?",
+      "answers": [
+        {
+          "text": "Five",
+          "correct": true
+        },
+        {
+          "text": "Seven",
+          "correct": false
+        },
+        {
+          "text": "Eleven",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Teams also have players waiting on the bench.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_081",
+      "question": "What do the wheels of a train roll on?",
+      "answers": [
+        {
+          "text": "Rails",
+          "correct": true
+        },
+        {
+          "text": "Wires",
+          "correct": false
+        },
+        {
+          "text": "Cables",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Two steel rails guide the train, so it does not need to be steered.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_082",
+      "question": "What does the pasta name 'vermicelli' mean in Italian?",
+      "answers": [
+        {
+          "text": "Small sticks",
+          "correct": false
+        },
+        {
+          "text": "Thin hair",
+          "correct": false
+        },
+        {
+          "text": "Little worms",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The long thin strings of pasta reminded people of little worms.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_083",
+      "question": "Who blows the houses down in The Three Little Pigs?",
+      "answers": [
+        {
+          "text": "The bear",
+          "correct": false
+        },
+        {
+          "text": "The fox",
+          "correct": false
+        },
+        {
+          "text": "The wolf",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The third little pig builds a house of bricks, and that one stays standing.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_084",
+      "question": "What is a baby frog called?",
+      "answers": [
+        {
+          "text": "Pup",
+          "correct": false
+        },
+        {
+          "text": "Tadpole",
+          "correct": true
+        },
+        {
+          "text": "Caterpillar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A tadpole breathes with gills and has a tail. Later it grows legs.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_085",
+      "question": "How many rooms (chambers) does a human heart have?",
+      "answers": [
+        {
+          "text": "Three",
+          "correct": false
+        },
+        {
+          "text": "Four",
+          "correct": true
+        },
+        {
+          "text": "Two",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Two small rooms on top and two big ones below.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_086",
+      "question": "Who is the boy raised by wolves in The Jungle Book?",
+      "answers": [
+        {
+          "text": "Tarzan",
+          "correct": false
+        },
+        {
+          "text": "Mowgli",
+          "correct": true
+        },
+        {
+          "text": "Peter",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "His friends in the jungle are Baloo the bear and Bagheera the panther.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_087",
+      "question": "Which two brothers built the first successful airplane?",
+      "answers": [
+        {
+          "text": "The Grimm brothers",
+          "correct": false
+        },
+        {
+          "text": "The Wright brothers",
+          "correct": true
+        },
+        {
+          "text": "The Marx brothers",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Their first flight in 1903 lasted only twelve seconds.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_088",
+      "question": "How many continents are there?",
+      "answers": [
+        {
+          "text": "Five",
+          "correct": false
+        },
+        {
+          "text": "Seven",
+          "correct": true
+        },
+        {
+          "text": "Nine",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "They are Africa, Antarctica, Asia, Australia, Europe, North America and South America.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_089",
+      "question": "Which vegetable can make you cry when you cut it?",
+      "answers": [
+        {
+          "text": "Potato",
+          "correct": false
+        },
+        {
+          "text": "Carrot",
+          "correct": false
+        },
+        {
+          "text": "Onion",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Onions release a gas that stings your eyes. A cold onion stings less.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_090",
+      "question": "How many sides does a normal die have?",
+      "answers": [
+        {
+          "text": "Eight",
+          "correct": false
+        },
+        {
+          "text": "Four",
+          "correct": false
+        },
+        {
+          "text": "Six",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dice with other numbers of sides are used in some board games.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_091",
+      "question": "Which bird lays the biggest egg?",
+      "answers": [
+        {
+          "text": "Swan",
+          "correct": false
+        },
+        {
+          "text": "Eagle",
+          "correct": false
+        },
+        {
+          "text": "Ostrich",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "One ostrich egg weighs as much as about 20 chicken eggs.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_092",
+      "question": "In which country was paper invented?",
+      "answers": [
+        {
+          "text": "China",
+          "correct": true
+        },
+        {
+          "text": "Egypt",
+          "correct": false
+        },
+        {
+          "text": "Greece",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "People in China made paper about 2,000 years ago.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_093",
+      "question": "Which planet has a day that is longer than its year?",
+      "answers": [
+        {
+          "text": "Neptune",
+          "correct": false
+        },
+        {
+          "text": "Venus",
+          "correct": true
+        },
+        {
+          "text": "Mars",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Venus turns so slowly that one spin takes longer than one trip around the Sun.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_094",
+      "question": "Which language do people in Brazil speak?",
+      "answers": [
+        {
+          "text": "Spanish",
+          "correct": false
+        },
+        {
+          "text": "English",
+          "correct": false
+        },
+        {
+          "text": "Portuguese",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brazil is the biggest country in South America.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_095",
+      "question": "Which bird cannot fly but is a great swimmer?",
+      "answers": [
+        {
+          "text": "Parrot",
+          "correct": false
+        },
+        {
+          "text": "Robin",
+          "correct": false
+        },
+        {
+          "text": "Penguin",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Penguins use their wings like flippers to zoom through the water.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_096",
+      "question": "What is the tallest type of tree in the world?",
+      "answers": [
+        {
+          "text": "Palm",
+          "correct": false
+        },
+        {
+          "text": "Redwood",
+          "correct": true
+        },
+        {
+          "text": "Oak",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Some redwoods grow taller than 100 meters.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_097",
+      "question": "How far is a marathon, about?",
+      "answers": [
+        {
+          "text": "26 kilometers",
+          "correct": false
+        },
+        {
+          "text": "100 kilometers",
+          "correct": false
+        },
+        {
+          "text": "42 kilometers",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The distance is exactly 42.195 km. In miles, it is about 26.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_098",
+      "question": "What is chocolate made from?",
+      "answers": [
+        {
+          "text": "Cocoa beans",
+          "correct": true
+        },
+        {
+          "text": "Peanuts",
+          "correct": false
+        },
+        {
+          "text": "Coffee beans",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cocoa beans grow inside big pods on cocoa trees.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_099",
+      "question": "Where is the smallest bone in your body?",
+      "answers": [
+        {
+          "text": "In the finger",
+          "correct": false
+        },
+        {
+          "text": "In the ear",
+          "correct": true
+        },
+        {
+          "text": "In the nose",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The stirrup bone is about as big as a grain of rice.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_100",
+      "question": "Which flying machine has blades that spin on top?",
+      "answers": [
+        {
+          "text": "Helicopter",
+          "correct": true
+        },
+        {
+          "text": "Balloon",
+          "correct": false
+        },
+        {
+          "text": "Jet",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The spinning blades lift it straight up. It can hover in one place.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_101",
+      "question": "What causes the tides in the oceans?",
+      "answers": [
+        {
+          "text": "Strong winds",
+          "correct": false
+        },
+        {
+          "text": "The Moon's pull",
+          "correct": true
+        },
+        {
+          "text": "Whales swimming",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Moon tugs on the water, so the sea rises and falls twice a day.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_102",
+      "question": "Which animal wins the race against the hare?",
+      "answers": [
+        {
+          "text": "The tortoise",
+          "correct": true
+        },
+        {
+          "text": "The frog",
+          "correct": false
+        },
+        {
+          "text": "The snail",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The hare naps in the middle of the race. Slow and steady wins.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_103",
+      "question": "Which tool do you use to see far-away stars better?",
+      "answers": [
+        {
+          "text": "A periscope",
+          "correct": false
+        },
+        {
+          "text": "A microscope",
+          "correct": false
+        },
+        {
+          "text": "A telescope",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Galileo used one to discover moons around Jupiter.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_104",
+      "question": "Which of these animals has rectangular pupils?",
+      "answers": [
+        {
+          "text": "Cat",
+          "correct": false
+        },
+        {
+          "text": "Owl",
+          "correct": false
+        },
+        {
+          "text": "Goat",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sideways pupils give goats a wide view, so they can spot danger from far away.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_105",
+      "question": "Who wrote The Little Mermaid and The Ugly Duckling?",
+      "answers": [
+        {
+          "text": "The Brothers Grimm",
+          "correct": false
+        },
+        {
+          "text": "Roald Dahl",
+          "correct": false
+        },
+        {
+          "text": "Hans Christian Andersen",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "He was born in Denmark and wrote more than 150 fairy tales.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_106",
+      "question": "Which planet is the biggest?",
+      "answers": [
+        {
+          "text": "Jupiter",
+          "correct": true
+        },
+        {
+          "text": "Saturn",
+          "correct": false
+        },
+        {
+          "text": "Earth",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "More than 1,000 Earths would fit inside Jupiter.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_107",
+      "question": "What do you call a person who does not eat meat?",
+      "answers": [
+        {
+          "text": "Chef",
+          "correct": false
+        },
+        {
+          "text": "Carnivore",
+          "correct": false
+        },
+        {
+          "text": "Vegetarian",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vegetarians still eat things like vegetables, fruit and cheese.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_108",
+      "question": "Which organ pumps blood around your body?",
+      "answers": [
+        {
+          "text": "Stomach",
+          "correct": false
+        },
+        {
+          "text": "Lungs",
+          "correct": false
+        },
+        {
+          "text": "Heart",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Your heart is about as big as your fist and beats all day and night.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_109",
+      "question": "Who flies an airplane?",
+      "answers": [
+        {
+          "text": "A pilot",
+          "correct": true
+        },
+        {
+          "text": "A conductor",
+          "correct": false
+        },
+        {
+          "text": "A driver",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Big airplanes usually have two pilots in the cockpit.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_110",
+      "question": "How many keys does a standard piano have?",
+      "type": "estimate",
+      "answer": 88,
+      "min": 20,
+      "max": 150,
+      "unit": "keys",
+      "difficulty": "medium",
+      "fun_fact": "52 of the keys are white and 36 are black.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_111",
+      "question": "What do the numbers on opposite sides of a die add up to?",
+      "answers": [
+        {
+          "text": "Seven",
+          "correct": true
+        },
+        {
+          "text": "Six",
+          "correct": false
+        },
+        {
+          "text": "Ten",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "One is opposite six, two is opposite five, and three is opposite four.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_112",
+      "question": "What does the short hand on a clock show?",
+      "answers": [
+        {
+          "text": "The hour",
+          "correct": true
+        },
+        {
+          "text": "The minute",
+          "correct": false
+        },
+        {
+          "text": "The second",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The long hand shows the minutes.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_113",
+      "question": "Which is the biggest desert in the world?",
+      "answers": [
+        {
+          "text": "Sahara",
+          "correct": false
+        },
+        {
+          "text": "Antarctica",
+          "correct": true
+        },
+        {
+          "text": "Gobi",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A desert is a place with very little rain. Antarctica is a cold desert.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_114",
+      "question": "Which country looks like a boot on the map?",
+      "answers": [
+        {
+          "text": "Spain",
+          "correct": false
+        },
+        {
+          "text": "Greece",
+          "correct": false
+        },
+        {
+          "text": "Italy",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It even seems to kick the island of Sicily.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_115",
+      "question": "Pizza comes from which country?",
+      "answers": [
+        {
+          "text": "France",
+          "correct": false
+        },
+        {
+          "text": "Spain",
+          "correct": false
+        },
+        {
+          "text": "Italy",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The first pizzas were baked in the Italian city of Naples.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_116",
+      "question": "How many milk teeth do children usually have?",
+      "answers": [
+        {
+          "text": "20",
+          "correct": true
+        },
+        {
+          "text": "10",
+          "correct": false
+        },
+        {
+          "text": "32",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Adults have 32 teeth. Milk teeth fall out to make room for the bigger ones.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_117",
+      "question": "Why does a hot air balloon rise?",
+      "answers": [
+        {
+          "text": "It has a motor",
+          "correct": false
+        },
+        {
+          "text": "It has wings",
+          "correct": false
+        },
+        {
+          "text": "Hot air is lighter",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The air inside is warmed by a burner, so it is lighter than the cool air outside.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_118",
+      "question": "Which country has a flag that is not a rectangle?",
+      "answers": [
+        {
+          "text": "Peru",
+          "correct": false
+        },
+        {
+          "text": "Chile",
+          "correct": false
+        },
+        {
+          "text": "Nepal",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Its flag is made of two stacked triangles.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_119",
+      "question": "Which plant can grow almost a meter in one day?",
+      "answers": [
+        {
+          "text": "Bamboo",
+          "correct": true
+        },
+        {
+          "text": "Rose",
+          "correct": false
+        },
+        {
+          "text": "Cactus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Some bamboo grows so fast that you could almost watch it get taller.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_120",
+      "question": "What is the name of our galaxy?",
+      "answers": [
+        {
+          "text": "Orion",
+          "correct": false
+        },
+        {
+          "text": "Milky Way",
+          "correct": true
+        },
+        {
+          "text": "Andromeda",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It holds hundreds of billions of stars, and our Sun is just one of them.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_121",
+      "question": "Which chess piece moves in an L shape?",
+      "answers": [
+        {
+          "text": "The bishop",
+          "correct": false
+        },
+        {
+          "text": "The rook",
+          "correct": false
+        },
+        {
+          "text": "The knight",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It is the only piece that can jump over others.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_122",
+      "question": "Which invention lets you talk to a friend far away?",
+      "answers": [
+        {
+          "text": "The telephone",
+          "correct": true
+        },
+        {
+          "text": "The typewriter",
+          "correct": false
+        },
+        {
+          "text": "The radio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Alexander Graham Bell made the first working one in 1876.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_123",
+      "question": "Which animal sleeps up to 20 hours a day?",
+      "answers": [
+        {
+          "text": "Koala",
+          "correct": true
+        },
+        {
+          "text": "Giraffe",
+          "correct": false
+        },
+        {
+          "text": "Horse",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eucalyptus leaves give little energy, so koalas rest a lot. Giraffes sleep only a few hours.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_124",
+      "question": "What did Jack get for his cow?",
+      "answers": [
+        {
+          "text": "Gold coins",
+          "correct": false
+        },
+        {
+          "text": "Magic beans",
+          "correct": true
+        },
+        {
+          "text": "A horse",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The beans grew into a giant beanstalk overnight.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_125",
+      "question": "Which planet is called the Red Planet?",
+      "answers": [
+        {
+          "text": "Mars",
+          "correct": true
+        },
+        {
+          "text": "Venus",
+          "correct": false
+        },
+        {
+          "text": "Mercury",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mars is covered in dust that contains rusty iron.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_126",
+      "question": "What is guacamole mainly made from?",
+      "answers": [
+        {
+          "text": "Lime",
+          "correct": false
+        },
+        {
+          "text": "Cucumber",
+          "correct": false
+        },
+        {
+          "text": "Avocado",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Guacamole comes from Mexico. It is great with tortilla chips.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_127",
+      "question": "How many arms does a typical snowflake have?",
+      "answers": [
+        {
+          "text": "Four",
+          "correct": false
+        },
+        {
+          "text": "Eight",
+          "correct": false
+        },
+        {
+          "text": "Six",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Snowflakes all have six sides, but no two look exactly the same.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_128",
+      "question": "Which country has the Pyramids of Giza?",
+      "answers": [
+        {
+          "text": "Egypt",
+          "correct": true
+        },
+        {
+          "text": "Greece",
+          "correct": false
+        },
+        {
+          "text": "Mexico",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The biggest one is more than 4,500 years old.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_129",
+      "question": "In which country were the first Olympic Games held?",
+      "answers": [
+        {
+          "text": "Egypt",
+          "correct": false
+        },
+        {
+          "text": "Italy",
+          "correct": false
+        },
+        {
+          "text": "Greece",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "They started more than 2,700 years ago in a place called Olympia.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_130",
+      "question": "What is the hardest part of your body?",
+      "answers": [
+        {
+          "text": "Tooth enamel",
+          "correct": true
+        },
+        {
+          "text": "Skull",
+          "correct": false
+        },
+        {
+          "text": "Fingernail",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Enamel is even harder than bone. That is why you must brush your teeth.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_131",
+      "question": "Where does a baby kangaroo grow up in its first months?",
+      "answers": [
+        {
+          "text": "In its mother's pouch",
+          "correct": true
+        },
+        {
+          "text": "In a nest",
+          "correct": false
+        },
+        {
+          "text": "In a burrow",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A newborn joey is tiny, about as big as a jelly bean. It crawls into the pouch by itself.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_132",
+      "question": "What was the very first computer mouse made of?",
+      "answers": [
+        {
+          "text": "Metal",
+          "correct": false
+        },
+        {
+          "text": "Rubber",
+          "correct": false
+        },
+        {
+          "text": "Wood",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Douglas Engelbart built it in the 1960s. It had two wheels and a wooden shell.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_133",
+      "question": "Who wrote Pippi Longstocking?",
+      "answers": [
+        {
+          "text": "Enid Blyton",
+          "correct": false
+        },
+        {
+          "text": "Astrid Lindgren",
+          "correct": true
+        },
+        {
+          "text": "Roald Dahl",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pippi is the strongest girl in the world and lives with a horse and a monkey.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_134",
+      "question": "What does a speedometer show?",
+      "answers": [
+        {
+          "text": "What time it is",
+          "correct": false
+        },
+        {
+          "text": "How fast you go",
+          "correct": true
+        },
+        {
+          "text": "How full the tank is",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Most cars show it with a needle or a number.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_135",
+      "question": "How do you say 'hello' in Spanish?",
+      "answers": [
+        {
+          "text": "Bonjour",
+          "correct": false
+        },
+        {
+          "text": "Ciao",
+          "correct": false
+        },
+        {
+          "text": "Hola",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Spanish is spoken in Spain and in most of Latin America.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_136",
+      "question": "Why can't you hear sounds in space?",
+      "answers": [
+        {
+          "text": "The stars are too far",
+          "correct": false
+        },
+        {
+          "text": "There is no air",
+          "correct": true
+        },
+        {
+          "text": "It is too hot",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sound needs air to travel through, and space is almost empty.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_137",
+      "question": "What does a periscope help you do?",
+      "answers": [
+        {
+          "text": "See above the water",
+          "correct": true
+        },
+        {
+          "text": "Hear far away",
+          "correct": false
+        },
+        {
+          "text": "Dive deeper",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Submarines use it to look around while they stay under water.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_138",
+      "question": "Which of these animals can sleep standing up?",
+      "answers": [
+        {
+          "text": "Crocodile",
+          "correct": false
+        },
+        {
+          "text": "Horse",
+          "correct": true
+        },
+        {
+          "text": "Frog",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Horses can lock their leg joints, so they can doze without falling over.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_139",
+      "question": "What makes popcorn pop?",
+      "answers": [
+        {
+          "text": "Cold air",
+          "correct": false
+        },
+        {
+          "text": "Butter",
+          "correct": false
+        },
+        {
+          "text": "Steam inside the kernel",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The tiny drop of water inside turns to steam until the kernel bursts.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_140",
+      "question": "Which tree do acorns grow on?",
+      "answers": [
+        {
+          "text": "Birch",
+          "correct": false
+        },
+        {
+          "text": "Pine",
+          "correct": false
+        },
+        {
+          "text": "Oak",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Squirrels bury acorns and forget some, so new oak trees sprout.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_141",
+      "question": "What color is your blood inside your veins?",
+      "answers": [
+        {
+          "text": "Blue",
+          "correct": false
+        },
+        {
+          "text": "Purple",
+          "correct": false
+        },
+        {
+          "text": "Red",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Veins only look blue through your skin. The blood in them is dark red.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_142",
+      "question": "Which boy can fly and never grows up?",
+      "answers": [
+        {
+          "text": "Pinocchio",
+          "correct": false
+        },
+        {
+          "text": "Peter Pan",
+          "correct": true
+        },
+        {
+          "text": "Tom Sawyer",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "He lives in Neverland with the Lost Boys.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_143",
+      "question": "How many squares are on a chessboard?",
+      "type": "estimate",
+      "answer": 64,
+      "min": 10,
+      "max": 120,
+      "unit": "squares",
+      "difficulty": "hard",
+      "fun_fact": "The board has eight rows of eight squares. Each player starts with 16 pieces on it.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_144",
+      "question": "What do we call animals that eat only plants?",
+      "answers": [
+        {
+          "text": "Predators",
+          "correct": false
+        },
+        {
+          "text": "Herbivores",
+          "correct": true
+        },
+        {
+          "text": "Carnivores",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cows, rabbits and elephants are all herbivores.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_145",
+      "question": "In Hansel and Gretel, what is the witch's house made of?",
+      "answers": [
+        {
+          "text": "Sweets and gingerbread",
+          "correct": true
+        },
+        {
+          "text": "Ice",
+          "correct": false
+        },
+        {
+          "text": "Straw",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The children nibble on the walls without asking.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_146",
+      "question": "Which planet is the hottest?",
+      "answers": [
+        {
+          "text": "Mercury",
+          "correct": false
+        },
+        {
+          "text": "Venus",
+          "correct": true
+        },
+        {
+          "text": "Mars",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Venus is wrapped in thick air that traps heat, so it is hotter than Mercury.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_147",
+      "question": "What does a magnet stick to?",
+      "answers": [
+        {
+          "text": "Wood",
+          "correct": false
+        },
+        {
+          "text": "Plastic",
+          "correct": false
+        },
+        {
+          "text": "Iron",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Steel is made from iron, so magnets stick to it.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_148",
+      "question": "What is a baby dog called?",
+      "answers": [
+        {
+          "text": "A puppy",
+          "correct": true
+        },
+        {
+          "text": "A kitten",
+          "correct": false
+        },
+        {
+          "text": "A cub",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Puppies are born with their eyes closed and open them after about two weeks.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_149",
+      "question": "Which desert is the biggest hot desert?",
+      "answers": [
+        {
+          "text": "Sahara",
+          "correct": true
+        },
+        {
+          "text": "Kalahari",
+          "correct": false
+        },
+        {
+          "text": "Gobi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Sahara is about as big as the whole United States.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_150",
+      "question": "Which is the only mammal that can really fly?",
+      "answers": [
+        {
+          "text": "Sugar glider",
+          "correct": false
+        },
+        {
+          "text": "Flying squirrel",
+          "correct": false
+        },
+        {
+          "text": "Bat",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Flying squirrels and gliders only glide. Bats flap their wings like birds.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_151",
+      "question": "What does Pinocchio's nose do when he lies?",
+      "answers": [
+        {
+          "text": "It turns red",
+          "correct": false
+        },
+        {
+          "text": "It grows longer",
+          "correct": true
+        },
+        {
+          "text": "It gets smaller",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pinocchio is a wooden puppet who wants to become a real boy.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_152",
+      "question": "Which is the smallest country in the world?",
+      "answers": [
+        {
+          "text": "Malta",
+          "correct": false
+        },
+        {
+          "text": "Monaco",
+          "correct": false
+        },
+        {
+          "text": "Vatican City",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "You could walk across it in a few minutes.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_153",
+      "question": "What does the Moon travel around?",
+      "answers": [
+        {
+          "text": "The Sun",
+          "correct": false
+        },
+        {
+          "text": "Earth",
+          "correct": true
+        },
+        {
+          "text": "Mars",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Moon needs about a month for one trip around Earth.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_154",
+      "question": "In what unit do ships measure their speed?",
+      "answers": [
+        {
+          "text": "Miles",
+          "correct": false
+        },
+        {
+          "text": "Knots",
+          "correct": true
+        },
+        {
+          "text": "Nodes",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "One knot is about 1.85 kilometers per hour.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_155",
+      "question": "Whom does Alice follow down the rabbit hole?",
+      "answers": [
+        {
+          "text": "The Cheshire Cat",
+          "correct": false
+        },
+        {
+          "text": "The White Rabbit",
+          "correct": true
+        },
+        {
+          "text": "The Mad Hatter",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The rabbit is always worried that he is late.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_156",
+      "question": "What is a shooting star really?",
+      "answers": [
+        {
+          "text": "A tiny star",
+          "correct": false
+        },
+        {
+          "text": "A far-away planet",
+          "correct": false
+        },
+        {
+          "text": "A bit of space rock",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It burns up when it zooms into our air. Most are no bigger than a pebble.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_157",
+      "question": "What is a baby cow called?",
+      "answers": [
+        {
+          "text": "Foal",
+          "correct": false
+        },
+        {
+          "text": "Lamb",
+          "correct": false
+        },
+        {
+          "text": "Calf",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A baby horse is a foal and a baby sheep is a lamb.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_158",
+      "question": "Which animal has fingerprints almost like ours?",
+      "answers": [
+        {
+          "text": "Koala",
+          "correct": true
+        },
+        {
+          "text": "Panda",
+          "correct": false
+        },
+        {
+          "text": "Sloth",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Koala fingerprints look so much like human ones that they are hard to tell apart.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_159",
+      "question": "What does the Ugly Duckling grow up to be?",
+      "answers": [
+        {
+          "text": "A heron",
+          "correct": false
+        },
+        {
+          "text": "A goose",
+          "correct": false
+        },
+        {
+          "text": "A swan",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "He was never ugly. He was just a swan among ducks.",
+      "category": "Kids & Family"
+    },
+    {
+      "id": "kids_en_160",
+      "question": "Which planet is famous for its big rings?",
+      "answers": [
+        {
+          "text": "Earth",
+          "correct": false
+        },
+        {
+          "text": "Saturn",
+          "correct": true
+        },
+        {
+          "text": "Mars",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The rings are made of countless chunks of ice and rock.",
+      "category": "Kids & Family"
+    }
+  ]
+}
