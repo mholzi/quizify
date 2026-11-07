@@ -72,6 +72,10 @@ ESTIMATE_SETS: tuple[EstimateSet, ...] = (
         theme="video-games",
         packs=("videospiele-de", "video-games-en", "videojuegos-es"),
     ),
+    EstimateSet(
+        theme="kids-family",
+        packs=("kinder-familie-de", "kids-family-en", "ninos-familia-es"),
+    ),
     # The holiday packs of #663. They carry no pictures, so they appear here
     # and not in the #554 registry — the slider questions are the only part of
     # the per-pack shape they took over, and they inherit the whole checklist

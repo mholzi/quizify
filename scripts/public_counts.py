@@ -56,6 +56,8 @@ THEMES: list[tuple[str, tuple[str, str, str]]] = [
      ("kunst-literatur-de", "art-literature-en", "arte-literatura-es")),
     ("Videospiele / Video Games",
      ("videospiele-de", "video-games-en", "videojuegos-es")),
+    ("Kinder & Familie / Kids & Family",
+     ("kinder-familie-de", "kids-family-en", "ninos-familia-es")),
     ("Weltmeisterschaft / World Cup",
      ("weltmeisterschaft", "world-cup", "copa-mundial-es")),
     ("Bilderrätsel / Picture Round",
