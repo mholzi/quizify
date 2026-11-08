@@ -80,6 +80,7 @@
         state.playerName = null;
         state.playerId = null;
         state.isAdmin = false;
+        state.restoringSession = false;
     }
 
     // The in-memory half alone (#1193). A tab whose seat moved to another
@@ -90,6 +91,7 @@
         state.playerName = null;
         state.playerId = null;
         state.isAdmin = false;
+        state.restoringSession = false;
     }
 
     // ============================================
@@ -147,6 +149,11 @@
                 var isAdminSelfJoin = params.get('admin') === 'true';
                 var forceReconnect = params.get('reconnect') === '1';
                 var useReconnect = (!isAdminSelfJoin || forceReconnect) && session.token && session.name;
+                // #1234: arm the reconnect ladder for this attempt, so a
+                // socket lost before the answer retries with the same stored
+                // token instead of leaving the guest on the join form. Set
+                // per open: once storage is empty there is nothing to retry.
+                state.restoringSession = !!useReconnect;
                 if (useReconnect) {
                     var reconnectMsg = { session_token: session.token, name: session.name };
                     // #1193: a seat read from storage on a fresh page says
@@ -297,6 +304,8 @@
                 // #1193: the stored seat is from a game that is over. A
                 // shared phone handed to the next guest must not walk them
                 // in under the last guest's name.
+                // #1234: the guest decides now; no automatic retry.
+                state.restoringSession = false;
                 showSessionChoice('stale', (pu.getSession() || {}).name || '');
                 break;
 
@@ -359,6 +368,7 @@
             case 'reconnected':
                 endJoinPending();
                 hideJoinHint();
+                state.restoringSession = false;
                 state.playerName = msg.player_id || state.playerName;
                 state.playerId = msg.player_id;
                 if (msg.session_token) {
@@ -2895,7 +2905,7 @@
         window.addEventListener('online', function () {
             if (document.visibilityState === 'hidden') return;
             var ws = state.ws;
-            if (state.playerName && (!ws || ws.readyState === WebSocket.CLOSING ||
+            if (pu.hasSeatToResume() && (!ws || ws.readyState === WebSocket.CLOSING ||
                     ws.readyState === WebSocket.CLOSED)) {
                 retryConnection();
             }
@@ -2906,7 +2916,7 @@
             if (document.visibilityState === 'visible') {
                 var ws = state.ws;
                 if (!ws || ws.readyState === WebSocket.CLOSING || ws.readyState === WebSocket.CLOSED) {
-                    if (state.playerName) {
+                    if (pu.hasSeatToResume()) {
                         console.log('[Quizify] Page visible, WS dead \u2014 reconnecting.');
                         retryConnection();
                     }

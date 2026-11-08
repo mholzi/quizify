@@ -13,6 +13,7 @@
         playerName: null,
         playerId: null,
         joinPending: false,
+        restoringSession: false,
         sessionToken: null,
         isAdmin: false,
         currentView: null,
@@ -118,7 +119,7 @@
                     state.intentionalLeave = false;
                     return;
                 }
-                if (state.playerName) {
+                if (hasSeatToResume()) {
                     state.isReconnecting = true;
                     if (!state.disconnectedSince) state.disconnectedSince = Date.now();
                     updateConnectionIndicator('reconnecting');
@@ -145,6 +146,10 @@
             }
         });
         return ws;
+    }
+
+    function hasSeatToResume() {
+        return !!(state.playerName || state.restoringSession);
     }
 
     function pageHidden() {
@@ -543,6 +548,7 @@
         formatPoints: formatPoints,
         formatTime: formatTime,
         createWebSocket: createWebSocket,
+        hasSeatToResume: hasSeatToResume,
         updateConnectionIndicator: updateConnectionIndicator,
         setConnectionRetry: setConnectionRetry,
         hideReconnectingOverlay: hideReconnectingOverlay,
@@ -4908,6 +4914,7 @@
         state.playerName = null;
         state.playerId = null;
         state.isAdmin = false;
+        state.restoringSession = false;
     }
 
     function dropIdentity() {
@@ -4915,6 +4922,7 @@
         state.playerName = null;
         state.playerId = null;
         state.isAdmin = false;
+        state.restoringSession = false;
     }
 
     var _wsOpenTimeout = null;
@@ -4946,6 +4954,7 @@
                 var isAdminSelfJoin = params.get('admin') === 'true';
                 var forceReconnect = params.get('reconnect') === '1';
                 var useReconnect = (!isAdminSelfJoin || forceReconnect) && session.token && session.name;
+                state.restoringSession = !!useReconnect;
                 if (useReconnect) {
                     var reconnectMsg = { session_token: session.token, name: session.name };
                     if (!mine && !forceReconnect && !state.staleConfirmed &&
@@ -5043,6 +5052,7 @@
                 break;
 
             case 'reconnect_stale':
+                state.restoringSession = false;
                 showSessionChoice('stale', (pu.getSession() || {}).name || '');
                 break;
 
@@ -5074,6 +5084,7 @@
             case 'reconnected':
                 endJoinPending();
                 hideJoinHint();
+                state.restoringSession = false;
                 state.playerName = msg.player_id || state.playerName;
                 state.playerId = msg.player_id;
                 if (msg.session_token) {
@@ -6747,7 +6758,7 @@
         window.addEventListener('online', function () {
             if (document.visibilityState === 'hidden') return;
             var ws = state.ws;
-            if (state.playerName && (!ws || ws.readyState === WebSocket.CLOSING ||
+            if (pu.hasSeatToResume() && (!ws || ws.readyState === WebSocket.CLOSING ||
                     ws.readyState === WebSocket.CLOSED)) {
                 retryConnection();
             }
@@ -6757,7 +6768,7 @@
             if (document.visibilityState === 'visible') {
                 var ws = state.ws;
                 if (!ws || ws.readyState === WebSocket.CLOSING || ws.readyState === WebSocket.CLOSED) {
-                    if (state.playerName) {
+                    if (pu.hasSeatToResume()) {
                         console.log('[Quizify] Page visible, WS dead \u2014 reconnecting.');
                         retryConnection();
                     }

@@ -22,6 +22,14 @@
         // handleJoinClick had already filled in — so the guard was dead for
         // every refusal and the button sat on "Joining…" forever.
         joinPending: false,
+        // #1234: true while a `reconnect` from the stored session is out and
+        // unanswered. On a fresh page `playerName` only arrives with the
+        // `reconnected` ack, so without this a socket lost in between never
+        // retried and the guest sat on the join form while the server still
+        // held their seat. Set per open by player-core's connect(), cleared
+        // by the answer (reconnected / reconnect_failed / reconnect_stale)
+        // and by forgetIdentity / dropIdentity.
+        restoringSession: false,
         sessionToken: null,
         isAdmin: false,
         currentView: null,
@@ -203,7 +211,7 @@
                     state.intentionalLeave = false;
                     return;
                 }
-                if (state.playerName) {
+                if (hasSeatToResume()) {
                     state.isReconnecting = true;
                     if (!state.disconnectedSince) state.disconnectedSince = Date.now();
                     updateConnectionIndicator('reconnecting');
@@ -232,6 +240,12 @@
             }
         });
         return ws;
+    }
+
+    // The reconnect ladder runs for a phone that holds a seat, and (#1234)
+    // for one whose stored seat is being restored and not yet answered.
+    function hasSeatToResume() {
+        return !!(state.playerName || state.restoringSession);
     }
 
     function pageHidden() {
@@ -817,6 +831,7 @@
         formatPoints: formatPoints,
         formatTime: formatTime,
         createWebSocket: createWebSocket,
+        hasSeatToResume: hasSeatToResume,
         updateConnectionIndicator: updateConnectionIndicator,
         setConnectionRetry: setConnectionRetry,
         // #750: the kicked screen has to take the reconnect overlay down
