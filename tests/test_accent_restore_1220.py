@@ -118,3 +118,25 @@ async def test_phase_baseline_unchanged_when_following() -> None:
     assert last.data["entity_id"] == ["light.a", "light.b"]
     assert last.data["rgb_color"] == [232, 138, 127]
     assert lights._restore_snapshot is None
+
+
+@pytest.mark.asyncio
+async def test_streak_double_pulse_ends_with_a_restore_1233(monkeypatch) -> None:
+    import custom_components.quizify.lights as mod
+
+    fast = [(c, 0.0) for c, _ in mod._ACCENT_STREAK]
+    hass = FakeHass()
+    hass.states.set("light.a", "on", brightness=128, color_mode="rgb",
+                    rgb_color=[10, 20, 30])
+    hass.states.set("light.b", "off")
+    lights = _lights(hass)
+    lights._start_pulse(fast)
+    await _run(lights)
+    await hass.settle()
+    # the very last call of the whole accent must be a restore, not a coral beat
+    last = hass.signals[-1]
+    assert last.data["entity_id"] in (["light.a"], ["light.b"])
+    assert last.data.get("rgb_color") != [255, 150, 120]
+    restores = [s for s in hass.signals if len(s.data.get("entity_id", [])) == 1]
+    assert len(restores) == 4  # two lights restored after each of two beats
+    assert lights._restore_snapshot is None

@@ -672,8 +672,13 @@ class QuizifyPartyLights:
         self._restore_snapshot = snapshot
 
     def _restore_snapshot_state(self) -> None:
-        """Put the lights back as snapshotted (#1220); the ceiling still caps."""
-        snapshot, self._restore_snapshot = self._restore_snapshot, None
+        """Put the lights back as snapshotted (#1220); the ceiling still caps.
+
+        The snapshot is kept: a multi-beat accent (streak double pulse) settles
+        more than once and every settle must restore (#1233). ``_run_pulse``
+        drops it once the accent finishes.
+        """
+        snapshot = self._restore_snapshot
         if not snapshot:
             return
         for entity_id, entry in snapshot.items():
@@ -755,6 +760,9 @@ class QuizifyPartyLights:
                     )
                 if hold:
                     await asyncio.sleep(hold)
+            # Accent finished: the room is back, forget the snapshot (#1233).
+            # A cancelled accent skips this so the next one keeps the original.
+            self._restore_snapshot = None
         except asyncio.CancelledError:
             # Normal path: a newer accent or detach cancelled us. Stay quiet.
             pass
