@@ -5,6 +5,30 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.27.0-RC2] — 2026-11-08
+
+**Kids & Family Packs, Steadier Reconnects**
+
+A new pack for family game nights, plus a round of fixes since 1.26.0.
+
+### 👨‍👩‍👧 Kids & Family packs
+
+Questions for game nights with children: Kids & Family in English, Kinder & Familie in German and Niños y familia in Spanish, 160 questions each, including a few estimate questions.
+
+### 📶 Steadier reconnects
+
+A phone that drops its connection while the server renews its session now keeps its seat instead of being sent back to the join screen.
+
+### 💡 Lights back as they were
+
+After a colour flash, lights that do not follow the game return to the state they were in.
+
+### ⚡ Lighter pages
+
+The player page and the stylesheet download at about half their previous size.
+
+Also: two error messages that showed a raw key are now translated, and an interrupted game is remembered at its latest phase.
+
 ## [1.27.0-RC1] — 2026-11-07
 
 **Steadier Reconnects and Lighter Pages**
