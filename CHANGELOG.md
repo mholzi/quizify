@@ -5,6 +5,26 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.27.0] — 2026-11-13
+
+**Kids & Family, and Phones That Keep Their Seat**
+
+Since 1.26.0 the library grew to 8,270 questions in 59 packs, and phones hold on to their seat more reliably.
+
+### 🧒 Kids & Family
+
+A new pack in German, English and Spanish, made for the younger players at the table.
+
+### 📱 Steadier phones
+
+A phone that reloads mid-game gets its seat back, even when the first reconnect is cut off. A freshly rotated session token stays valid for a minute, so a slow phone isn't thrown out.
+
+### 💡 Lights back where they were
+
+After colour accents and the streak double pulse, the room returns to its own lighting, also when the lights don't follow the game.
+
+Also: the errors for frozen answers and locked teams are translated, an interrupted game remembers the right phase, and the served CSS/JS bundles are smaller.
+
 ## [1.27.0-RC3] — 2026-11-09
 
 **Kids & Family Packs, Steadier Reconnects**
