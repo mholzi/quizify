@@ -600,6 +600,10 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 
 The complete history is in [`CHANGELOG.md`](CHANGELOG.md); longer prose notes for each release are on the [GitHub releases page](https://github.com/mholzi/quizify/releases).
 
+### v1.27.0 — Kids & Family, and Phones That Keep Their Seat 🧒
+- **Kids & Family packs in German, English and Spanish**, 160 questions each, made for game nights with children (#1231)
+- A phone that reloads mid-game gets its seat back even when the first reconnect is cut off, a rotated session token stays valid for a minute, and the lights return to the room's own state after colour accents and the streak double pulse (#1234, #1222, #1220, #1233)
+
 ### v1.26.0 — Screens That Move, and a Steadier Host Seat ✨
 - **Video Games packs in German, English and Spanish**, 160 questions each, and the leaderboard, estimates, wagers and hot seat now animate (#1167, #1171, #1172, #1175)
 - Dark text on coloured buttons with one type scale for phone and TV, a reload keeps the host's seat and the open lobby, and ending, resetting or starting a game asks first (#1202, #1207, #1210, #1213, #1190)
