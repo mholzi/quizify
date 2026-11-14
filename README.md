@@ -52,7 +52,7 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 **Works on Any Screen** — Dashboard mode for the TV. Players use their phones. Admin runs the show. No extra hardware needed.
 
-**Twenty-One Themes, Three Languages** — 8,270 questions across 59 themed packs (Geography, Pop Culture, Film & TV, Art & Literature, Video Games, Kids & Family, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation, Picture Round, Christmas, New Year's Eve, Halloween, Sankt Martin, Thanksgiving) in German, English and Spanish. Mix them, filter them, swap mid-session.
+**Twenty-One Themes, Three Languages** — 8,350 questions across 59 themed packs (Geography, Pop Culture, Film & TV, Art & Literature, Video Games, Kids & Family, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation, Picture Round, Christmas, New Year's Eve, Halloween, Sankt Martin, Thanksgiving) in German, English and Spanish. Mix them, filter them, swap mid-session.
 
 ---
 
@@ -339,7 +339,7 @@ Three ready-made blueprints, one click each:
 
 ## Question Packs
 
-Quizify ships with **8,270 questions across 59 themed packs in 21 themes**, in German, English and Spanish.
+Quizify ships with **8,350 questions across 59 themed packs in 21 themes**, in German, English and Spanish.
 
 | Theme | 🇩🇪 Deutsch | 🇬🇧 English | 🇪🇸 Español |
 |-------|-------------|-------------|-------------|
@@ -360,7 +360,7 @@ Quizify ships with **8,270 questions across 59 themed packs in 21 themes**, in G
 | 🎯 **Schätzfragen / Estimation / Estimación** | 40 | 40 | 40 |
 | 🖼️ **Bilderrätsel / Picture Round / Ronda de Imágenes** | 40 | 40 | 40 |
 | 🎄 **Weihnachten / Christmas / Navidad** | 160 | 160 | 160 |
-| 🎆 **Silvester / New Year's Eve / Nochevieja** | 130 | 130 | 140 |
+| 🎆 **Silvester / New Year's Eve / Nochevieja** | 160 | 160 | 160 |
 | 🎃 **Halloween** | 101 | 101 | 101 |
 | 🏮 **Sankt Martin** | 54 | – | – |
 | 🦃 **Thanksgiving** | – | 100 | – |

@@ -1,7 +1,7 @@
 {
   "name": "New Year's Eve",
   "language": "en",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "trivia",
   "season": {
     "start": "12-27",
@@ -2692,6 +2692,636 @@
       ],
       "difficulty": "hard",
       "fun_fact": "The Canadian poet is known for her engagement with classical antiquity.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_131",
+      "question": "Which New York building does the New Year's Eve ball drop from?",
+      "answers": [
+        {
+          "text": "One Times Square",
+          "correct": true
+        },
+        {
+          "text": "The Empire State Building",
+          "correct": false
+        },
+        {
+          "text": "Rockefeller Center",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The tower was built for The New York Times; the paper moved out in 1913 but the ball has kept dropping there.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_132",
+      "question": "Which TV host, nicknamed 'America's oldest teenager', created 'New Year's Rockin' Eve'?",
+      "answers": [
+        {
+          "text": "Dick Clark",
+          "correct": true
+        },
+        {
+          "text": "Johnny Carson",
+          "correct": false
+        },
+        {
+          "text": "Ed Sullivan",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The show first aired in 1972 as an alternative to the older big-band broadcasts from hotel ballrooms.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_133",
+      "question": "What is the name of the month-long challenge of giving up alcohol after the festive season?",
+      "answers": [
+        {
+          "text": "Dry January",
+          "correct": true
+        },
+        {
+          "text": "Veganuary",
+          "correct": false
+        },
+        {
+          "text": "Movember",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It became a popular post-holiday resolution in the UK in the 2010s; 'Veganuary' promotes vegan eating instead.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_134",
+      "question": "Which Prince song from 1982 became the party anthem of New Year's Eve 1999?",
+      "answers": [
+        {
+          "text": "'1999'",
+          "correct": true
+        },
+        {
+          "text": "'Purple Rain'",
+          "correct": false
+        },
+        {
+          "text": "'Kiss'",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The song was written long before the millennium, yet radio stations replayed it for months around the turn of the century.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_135",
+      "question": "Which band released the song 'New Year's Day' in 1983?",
+      "answers": [
+        {
+          "text": "U2",
+          "correct": true
+        },
+        {
+          "text": "Duran Duran",
+          "correct": false
+        },
+        {
+          "text": "The Police",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The song was inspired by the Polish Solidarity movement rather than a party, and is one of the band's first big international hits.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_136",
+      "question": "Which Scottish city hosts a famous Hogmanay street party with a torchlight procession?",
+      "answers": [
+        {
+          "text": "Edinburgh",
+          "correct": true
+        },
+        {
+          "text": "Glasgow",
+          "correct": false
+        },
+        {
+          "text": "Aberdeen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Thousands of people carry torches through the Old Town on the evening before the street party.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_137",
+      "question": "Which college football game follows the Rose Parade on 1 January?",
+      "answers": [
+        {
+          "text": "The Rose Bowl",
+          "correct": true
+        },
+        {
+          "text": "The Sugar Bowl",
+          "correct": false
+        },
+        {
+          "text": "The Orange Bowl",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Rose Bowl stadium sits in Pasadena, a short drive from the parade route.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_138",
+      "question": "Which London landmark is the backdrop for the city's New Year's Eve fireworks?",
+      "answers": [
+        {
+          "text": "The London Eye",
+          "correct": true
+        },
+        {
+          "text": "Tower Bridge",
+          "correct": false
+        },
+        {
+          "text": "St Paul's Cathedral",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The fireworks are launched from the wheel and nearby barges on the Thames and are timed to the chimes of Big Ben.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_139",
+      "question": "What colour are the envelopes in which Chinese families give New Year money?",
+      "answers": [
+        {
+          "text": "Red",
+          "correct": true
+        },
+        {
+          "text": "Gold",
+          "correct": false
+        },
+        {
+          "text": "White",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Red stands for luck and is meant to ward off evil; white is associated with funerals.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_140",
+      "question": "What do couples traditionally do at midnight on New Year's Eve in English-speaking countries?",
+      "answers": [
+        {
+          "text": "Kiss",
+          "correct": true
+        },
+        {
+          "text": "Exchange rings",
+          "correct": false
+        },
+        {
+          "text": "Clink glasses with a third person",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The custom is tied to the belief that the first moments of the year set the tone for what follows.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_141",
+      "question": "Which famous crystal maker supplies the panels covering the Times Square ball?",
+      "answers": [
+        {
+          "text": "Waterford",
+          "correct": true
+        },
+        {
+          "text": "Swarovski",
+          "correct": false
+        },
+        {
+          "text": "Baccarat",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Irish firm has supplied the crystal since the millennium ball of 1999-2000, with a new design each year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_142",
+      "question": "Which US city lowers a giant peach at midnight?",
+      "answers": [
+        {
+          "text": "Atlanta",
+          "correct": true
+        },
+        {
+          "text": "Savannah",
+          "correct": false
+        },
+        {
+          "text": "Charleston",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Georgia is the Peach State, and the drop has long been held at Underground Atlanta.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_143",
+      "question": "What does 'Auld Lang Syne' mean in plain English?",
+      "answers": [
+        {
+          "text": "Times gone by",
+          "correct": true
+        },
+        {
+          "text": "Old friends",
+          "correct": false
+        },
+        {
+          "text": "Goodnight to all",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Burns' text asks whether old acquaintances should be forgotten; the title is Scots for 'old long since'.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_144",
+      "question": "Which dark fruit cake wrapped in pastry is a traditional Hogmanay treat in Scotland?",
+      "answers": [
+        {
+          "text": "Black bun",
+          "correct": true
+        },
+        {
+          "text": "Dundee cake",
+          "correct": false
+        },
+        {
+          "text": "Christmas pudding",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was once eaten at Twelfth Night, but moved to Hogmanay and is often shared with first-footers.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_145",
+      "question": "Which dish of black-eyed peas and rice is traditionally eaten in the American South for luck on New Year's Day?",
+      "answers": [
+        {
+          "text": "Hoppin' John",
+          "correct": true
+        },
+        {
+          "text": "Jambalaya",
+          "correct": false
+        },
+        {
+          "text": "Gumbo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The peas are said to stand for coins, and the dish is often served with collard greens.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_146",
+      "question": "What do collard greens stand for on the Southern New Year's table?",
+      "answers": [
+        {
+          "text": "Money",
+          "correct": true
+        },
+        {
+          "text": "Health",
+          "correct": false
+        },
+        {
+          "text": "Friendship",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The green leaves are said to resemble folded banknotes, so eating them is believed to bring wealth.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_147",
+      "question": "Which parade of string bands and costumed clubs takes place in Philadelphia on 1 January?",
+      "answers": [
+        {
+          "text": "The Mummers Parade",
+          "correct": true
+        },
+        {
+          "text": "The Freedom Parade",
+          "correct": false
+        },
+        {
+          "text": "The Liberty Parade",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It counts among the oldest folk festivals in the United States and has been running since the 1900s.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_148",
+      "question": "What is published in the UK around 31 December and names people made OBE or knighted?",
+      "answers": [
+        {
+          "text": "The New Year Honours list",
+          "correct": true
+        },
+        {
+          "text": "The Royal Gazette of Merit",
+          "correct": false
+        },
+        {
+          "text": "The Kings' Birthday list",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Honours lists come out twice a year; the other one is in June.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_149",
+      "question": "Why did The New York Times introduce the ball drop in 1907?",
+      "answers": [
+        {
+          "text": "City restrictions stopped its firework displays",
+          "correct": true
+        },
+        {
+          "text": "It marked the opening of Times Square",
+          "correct": false
+        },
+        {
+          "text": "It celebrated the new subway",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The newspaper had held midnight fireworks since 1904, but the city banned launching them over the crowd.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_150",
+      "question": "In which 1989 film do the main characters meet again on New Year's Eve and ask what 'Auld Lang Syne' means?",
+      "answers": [
+        {
+          "text": "'When Harry Met Sally...'",
+          "correct": true
+        },
+        {
+          "text": "'Sleepless in Seattle'",
+          "correct": false
+        },
+        {
+          "text": "'Pretty Woman'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The final scene of Rob Reiner's film takes place at a New Year's Eve party where Harry declares his love.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_151",
+      "question": "On which night does the ship capsize in the 1972 film 'The Poseidon Adventure'?",
+      "answers": [
+        {
+          "text": "New Year's Eve",
+          "correct": true
+        },
+        {
+          "text": "Christmas Eve",
+          "correct": false
+        },
+        {
+          "text": "Valentine's night",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A huge wave hits during the New Year's Eve party and flips the liner upside down.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_152",
+      "question": "Which proclamation took effect on 1 January 1863?",
+      "answers": [
+        {
+          "text": "The Emancipation Proclamation",
+          "correct": true
+        },
+        {
+          "text": "The Homestead Act",
+          "correct": false
+        },
+        {
+          "text": "The Gettysburg Address",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Many Black congregations gathered on the eve of that day in watch-night services, a tradition that survives in some churches.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_153",
+      "question": "According to Chinese legend, which monster is scared away at New Year by loud noises and the colour red?",
+      "answers": [
+        {
+          "text": "Nian",
+          "correct": true
+        },
+        {
+          "text": "Jiangshi",
+          "correct": false
+        },
+        {
+          "text": "Pixiu",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The legend is often given as the origin of firecrackers and red decorations at New Year.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_154",
+      "question": "Which New York beach hosts the New Year's Day Polar Bear Plunge, held since 1903?",
+      "answers": [
+        {
+          "text": "Coney Island",
+          "correct": true
+        },
+        {
+          "text": "Rockaway Beach",
+          "correct": false
+        },
+        {
+          "text": "Jones Beach",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Coney Island Polar Bear Club swims all winter, with the big plunge on New Year's Day.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_155",
+      "question": "What was the very first Times Square ball made of?",
+      "answers": [
+        {
+          "text": "Iron and wood",
+          "correct": true
+        },
+        {
+          "text": "Glass and steel",
+          "correct": false
+        },
+        {
+          "text": "Aluminium and rubber",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "It weighed 700 pounds and was lit by 100 incandescent bulbs in 1907.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_156",
+      "question": "Why was the Times Square ball not dropped in 1942 and 1943?",
+      "answers": [
+        {
+          "text": "Wartime lighting restrictions",
+          "correct": true
+        },
+        {
+          "text": "A strike by electricians",
+          "correct": false
+        },
+        {
+          "text": "Lack of funds",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Instead the crowd observed a minute of silence, followed by church bells played from sound trucks.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_157",
+      "question": "How many days did Britain skip when it adopted the Gregorian calendar in 1752?",
+      "answers": [
+        {
+          "text": "Eleven",
+          "correct": true
+        },
+        {
+          "text": "Seven",
+          "correct": false
+        },
+        {
+          "text": "Fifteen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The day after 2 September 1752 was 14 September, and the legal start of the year also moved to 1 January.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_158",
+      "question": "What is the Irish 'Nollaig na mBan', celebrated on 6 January, also known as?",
+      "answers": [
+        {
+          "text": "Women's Christmas",
+          "correct": true
+        },
+        {
+          "text": "Little Christmas Eve",
+          "correct": false
+        },
+        {
+          "text": "Old Christmas Day",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Traditionally the women were relieved of housework on that day and men took over.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_159",
+      "question": "In Burghead, Scotland, what is burned in the 'Burning of the Clavie' on 11 January?",
+      "answers": [
+        {
+          "text": "A tar barrel",
+          "correct": true
+        },
+        {
+          "text": "A wooden boat",
+          "correct": false
+        },
+        {
+          "text": "A straw figure",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The date reflects the 'Old New Year' of the pre-1752 Julian calendar.",
+      "category": "New Year's Eve"
+    },
+    {
+      "id": "new_years_eve_en_160",
+      "question": "What do many Scots traditionally do to the house before midnight at Hogmanay?",
+      "answers": [
+        {
+          "text": "Clean it thoroughly",
+          "correct": true
+        },
+        {
+          "text": "Open every window",
+          "correct": false
+        },
+        {
+          "text": "Leave all lights off",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The idea is to start the new year with a clean slate; the old word for this is 'redding'.",
       "category": "New Year's Eve"
     }
   ]

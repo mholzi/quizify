@@ -1,7 +1,7 @@
 {
   "name": "Silvester",
   "language": "de",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "trivia",
   "season": {
     "start": "12-27",
@@ -2692,6 +2692,636 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Es nutzt einen Kubikkilometer antarktisches Eis, um Neutrinos aufzuspüren.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_131",
+      "question": "Welches Tier aus Marzipan verschenkt man in Deutschland zu Silvester als Glücksbringer?",
+      "answers": [
+        {
+          "text": "Das Schwein",
+          "correct": true
+        },
+        {
+          "text": "Den Hasen",
+          "correct": false
+        },
+        {
+          "text": "Die Eule",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Glücksschwein steht schon lange für Wohlstand: Wer ein Schwein hatte, kam gut durch den Winter.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_132",
+      "question": "Welcher Berufsstand gilt in Deutschland als Glücksbringer zum Jahreswechsel?",
+      "answers": [
+        {
+          "text": "Schornsteinfeger",
+          "correct": true
+        },
+        {
+          "text": "Bäcker",
+          "correct": false
+        },
+        {
+          "text": "Förster",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Schornsteinfeger sorgten früher dafür, dass Kamine nicht in Brand gerieten, und galten deshalb als Bewahrer vor Unglück.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_133",
+      "question": "Wie heißt der Butler in dem Sketch 'Dinner for One'?",
+      "answers": [
+        {
+          "text": "James",
+          "correct": true
+        },
+        {
+          "text": "Alfred",
+          "correct": false
+        },
+        {
+          "text": "Jeeves",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Auf seine Frage nach dem Ablauf antwortet Miss Sophie immer wieder mit 'The same procedure as every year, James'.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_134",
+      "question": "Wie heißt die gedachte Linie im Pazifik, an der ein neuer Kalendertag beginnt?",
+      "answers": [
+        {
+          "text": "Internationale Datumsgrenze",
+          "correct": true
+        },
+        {
+          "text": "Nullmeridian",
+          "correct": false
+        },
+        {
+          "text": "Wendekreis",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sie verläuft grob entlang des 180. Längengrades, macht aber Zickzack-Umwege, damit Inselgruppen nicht von zwei Daten zerschnitten werden.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_135",
+      "question": "Wie heißt die Aktion, bei der viele Menschen im Januar einen Monat lang auf Alkohol verzichten?",
+      "answers": [
+        {
+          "text": "Dry January",
+          "correct": true
+        },
+        {
+          "text": "Veganuary",
+          "correct": false
+        },
+        {
+          "text": "Movember",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Aktion ist als guter Vorsatz nach den Feiertagen beliebt geworden; 'Veganuary' wirbt dagegen für vegane Ernährung.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_136",
+      "question": "Welche Glocke in London läutet im Fernsehen häufig den Jahreswechsel ein?",
+      "answers": [
+        {
+          "text": "Big Ben",
+          "correct": true
+        },
+        {
+          "text": "Die Glocke von St Paul's",
+          "correct": false
+        },
+        {
+          "text": "Die Glocke des Tower",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eigentlich heißt nur die große Glocke so, nicht der Turm; der Turm wurde 2012 zu Ehren der Queen in Elizabeth Tower umbenannt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_137",
+      "question": "Was gilt in Deutschland als klassisches Katerfrühstück am Neujahrsmorgen?",
+      "answers": [
+        {
+          "text": "Rollmops",
+          "correct": true
+        },
+        {
+          "text": "Weißwurst",
+          "correct": false
+        },
+        {
+          "text": "Marzipanbrot",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der sauer eingelegte Hering mit Zwiebeln soll Salz und Mineralstoffe nach einer langen Nacht zurückbringen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_138",
+      "question": "Welches neue Bargeld wurde in Deutschland zum Jahreswechsel 2001/2002 eingeführt?",
+      "answers": [
+        {
+          "text": "Euro-Münzen und -Scheine",
+          "correct": true
+        },
+        {
+          "text": "Der Taler",
+          "correct": false
+        },
+        {
+          "text": "Die Europa-Mark",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Zwölf Länder führten den Euro am 1. Januar 2002 als Bargeld ein; die D-Mark wurde zunächst noch bis Ende Februar 2002 akzeptiert.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_139",
+      "question": "Was verschenkt man zum chinesischen Neujahrsfest traditionell in roten Umschlägen?",
+      "answers": [
+        {
+          "text": "Geld",
+          "correct": true
+        },
+        {
+          "text": "Tee",
+          "correct": false
+        },
+        {
+          "text": "Süßigkeiten",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rot gilt als Glücksfarbe, und die Umschläge geben Ältere an Kinder und Unverheiratete weiter, um Glück ins neue Jahr zu schicken.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_140",
+      "question": "Auf welches Datum fällt der Dreikönigstag?",
+      "answers": [
+        {
+          "text": "6. Januar",
+          "correct": true
+        },
+        {
+          "text": "2. Januar",
+          "correct": false
+        },
+        {
+          "text": "25. Januar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Er beschließt die Weihnachtszeit; in einigen Bundesländern ist er ein gesetzlicher Feiertag.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_141",
+      "question": "Wer spielte im Sketch 'Dinner for One' den Butler James?",
+      "answers": [
+        {
+          "text": "Freddie Frinton",
+          "correct": true
+        },
+        {
+          "text": "Peter Sellers",
+          "correct": false
+        },
+        {
+          "text": "John Cleese",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Brite Freddie Frinton war Komiker und Schauspieler; seine Partnerin May Warden spielte Miss Sophie.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_142",
+      "question": "In welcher brasilianischen Stadt findet seit 1925 jedes Jahr am 31. Dezember der Silvesterlauf 'São Silvestre' statt?",
+      "answers": [
+        {
+          "text": "São Paulo",
+          "correct": true
+        },
+        {
+          "text": "Rio de Janeiro",
+          "correct": false
+        },
+        {
+          "text": "Brasília",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Straßenlauf zählt zu den bekanntesten Silvesterläufen der Welt und führt durch die Innenstadt von São Paulo.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_143",
+      "question": "In welchem Saal findet das Neujahrskonzert der Wiener Philharmoniker statt?",
+      "answers": [
+        {
+          "text": "Im Goldenen Saal des Wiener Musikvereins",
+          "correct": true
+        },
+        {
+          "text": "In der Staatsoper",
+          "correct": false
+        },
+        {
+          "text": "In der Hofburg",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Saal ist für seine Akustik berühmt; Blumenschmuck aus San Remo gehört seit Jahrzehnten zum Konzert.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_144",
+      "question": "Wie viele Kalendertage wurden 1582 bei der Einführung des Gregorianischen Kalenders in katholischen Ländern übersprungen?",
+      "answers": [
+        {
+          "text": "Zehn",
+          "correct": true
+        },
+        {
+          "text": "Drei",
+          "correct": false
+        },
+        {
+          "text": "Vierzehn",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Auf den 4. Oktober 1582 folgte direkt der 15. Oktober; so wurde der Kalender wieder mit dem Sonnenjahr in Einklang gebracht.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_145",
+      "question": "Was schreiben Sternsinger rund um den 6. Januar mit Kreide an Haustüren?",
+      "answers": [
+        {
+          "text": "Die Jahreszahl und die Buchstaben C+M+B",
+          "correct": true
+        },
+        {
+          "text": "Die Hausnummer und ein Kreuz",
+          "correct": false
+        },
+        {
+          "text": "Die Namen der Bewohner",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Buchstaben werden meist als Anfangsbuchstaben der drei Könige gedeutet oder als lateinischer Segensspruch 'Christus mansionem benedicat'.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_146",
+      "question": "Von welchem Bauwerk aus wird in Auckland das Silvesterfeuerwerk gezündet?",
+      "answers": [
+        {
+          "text": "Vom Sky Tower",
+          "correct": true
+        },
+        {
+          "text": "Von der Hafenbrücke",
+          "correct": false
+        },
+        {
+          "text": "Vom Opernhaus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Fernsehturm ragt rund 328 Meter in die Höhe; Neuseeland erlebt den Jahreswechsel lange vor Europa.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_147",
+      "question": "Wer trat am 31. Dezember 1999 überraschend als russischer Präsident zurück?",
+      "answers": [
+        {
+          "text": "Boris Jelzin",
+          "correct": true
+        },
+        {
+          "text": "Michail Gorbatschow",
+          "correct": false
+        },
+        {
+          "text": "Wladimir Putin",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jelzin kündigte seinen Rücktritt im Fernsehen an; Wladimir Putin übernahm zunächst als amtierender Präsident.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_148",
+      "question": "Was bedeutet 'Auld Lang Syne' sinngemäß auf Deutsch?",
+      "answers": [
+        {
+          "text": "Längst vergangene Zeiten",
+          "correct": true
+        },
+        {
+          "text": "Alte Freunde",
+          "correct": false
+        },
+        {
+          "text": "Gute Nacht",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Titel stammt aus dem Schottischen; im Text fragt Burns, ob man alte Zeiten und alte Freunde vergessen solle.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_149",
+      "question": "Welches Tier gewann der Legende nach das Rennen, bei dem die Reihenfolge der chinesischen Tierkreiszeichen festgelegt wurde?",
+      "answers": [
+        {
+          "text": "Die Ratte",
+          "correct": true
+        },
+        {
+          "text": "Der Ochse",
+          "correct": false
+        },
+        {
+          "text": "Der Tiger",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Ratte soll sich auf dem Rücken des Ochsen mitnehmen lassen haben und sprang kurz vor dem Ziel ab, um als Erste anzukommen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_150",
+      "question": "Welche italienische Wurst isst man klassisch zusammen mit Linsen zum Jahreswechsel?",
+      "answers": [
+        {
+          "text": "Cotechino",
+          "correct": true
+        },
+        {
+          "text": "Mortadella",
+          "correct": false
+        },
+        {
+          "text": "Salami",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Linsen sollen Münzen und damit Wohlstand verkörpern, die fette Wurst steht für Fülle.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_151",
+      "question": "Welche Panne passierte 1986 bei der Neujahrsansprache von Bundeskanzler Helmut Kohl?",
+      "answers": [
+        {
+          "text": "Die ARD sendete versehentlich die Rede des Vorjahres",
+          "correct": true
+        },
+        {
+          "text": "Der Ton fiel aus",
+          "correct": false
+        },
+        {
+          "text": "Die Rede wurde zu früh gesendet",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die richtige Ansprache lief erst am 1. Januar 1987; der NDR sprach von einem Versehen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_152",
+      "question": "Wer hält in Deutschland am 31. Dezember im Fernsehen die Neujahrsansprache?",
+      "answers": [
+        {
+          "text": "Der Bundeskanzler",
+          "correct": true
+        },
+        {
+          "text": "Der Bundespräsident",
+          "correct": false
+        },
+        {
+          "text": "Der Bundestagspräsident",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Bundespräsident hält dagegen die Weihnachtsansprache; bis 1969 sprach er auch zu Neujahr.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_153",
+      "question": "Welches Fest beendet in China die Neujahrsfeierlichkeiten nach 15 Tagen?",
+      "answers": [
+        {
+          "text": "Das Laternenfest",
+          "correct": true
+        },
+        {
+          "text": "Das Drachenbootfest",
+          "correct": false
+        },
+        {
+          "text": "Das Mondfest",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Am 15. Tag des ersten Monats ziehen Menschen mit Laternen durch die Straßen und essen runde Klebreisbällchen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_154",
+      "question": "An welchem Londoner Riesenrad wird das Silvesterfeuerwerk gezündet?",
+      "answers": [
+        {
+          "text": "London Eye",
+          "correct": true
+        },
+        {
+          "text": "Wheel of Brighton",
+          "correct": false
+        },
+        {
+          "text": "Millennium Wheel in Greenwich",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Feuerwerk am Südufer der Themse beginnt, sobald Big Ben Mitternacht schlägt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_155",
+      "question": "Welche Suppe wird Miss Sophie im Sketch 'Dinner for One' als erster Gang serviert?",
+      "answers": [
+        {
+          "text": "Mulligatawny",
+          "correct": true
+        },
+        {
+          "text": "Gulaschsuppe",
+          "correct": false
+        },
+        {
+          "text": "Hühnerbrühe",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Danach folgen Seehecht, Huhn und Obst; zu jedem Gang trinkt der Butler stellvertretend für die Gäste.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_156",
+      "question": "Wann fand das erste Neujahrskonzert der Wiener Philharmoniker in dieser Form statt?",
+      "answers": [
+        {
+          "text": "Am 31. Dezember 1939",
+          "correct": true
+        },
+        {
+          "text": "Am 1. Januar 1950",
+          "correct": false
+        },
+        {
+          "text": "Am 6. Januar 1925",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Konzert hieß zunächst Silvesterkonzert; seit 1941 findet es am 1. Januar statt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_157",
+      "question": "Auf welches Datum fällt das 'Alte Neujahr', das in Teilen Russlands und Serbiens gefeiert wird?",
+      "answers": [
+        {
+          "text": "14. Januar",
+          "correct": true
+        },
+        {
+          "text": "7. Januar",
+          "correct": false
+        },
+        {
+          "text": "31. Januar",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Es folgt dem Julianischen Kalender, der dem Gregorianischen um 13 Tage hinterherhinkt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_158",
+      "question": "Welches Element sorgt vor allem für die grüne Farbe im Feuerwerk?",
+      "answers": [
+        {
+          "text": "Barium",
+          "correct": true
+        },
+        {
+          "text": "Natrium",
+          "correct": false
+        },
+        {
+          "text": "Strontium",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Natrium färbt gelb, Strontium rot; grüne Effekte beruhen meist auf Bariumverbindungen.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_159",
+      "question": "Welche chinesische Stadt gilt als Feuerwerkshauptstadt der Welt?",
+      "answers": [
+        {
+          "text": "Liuyang",
+          "correct": true
+        },
+        {
+          "text": "Peking",
+          "correct": false
+        },
+        {
+          "text": "Shanghai",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Liuyang in der Provinz Hunan stellt einen großen Teil der chinesischen Feuerwerkskörper her; dort findet auch ein eigenes Feuerwerksfestival statt.",
+      "category": "Silvester"
+    },
+    {
+      "id": "silvester_de_160",
+      "question": "In welchem nordischen Land ist das Zinngießen zum Jahreswechsel besonders beliebt und wird bis heute gepflegt?",
+      "answers": [
+        {
+          "text": "In Finnland",
+          "correct": true
+        },
+        {
+          "text": "In Norwegen",
+          "correct": false
+        },
+        {
+          "text": "In Island",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dort heißt der Brauch 'uudenvuodentina'; das geschmolzene Zinn wird in kaltes Wasser gegossen und die erstarrte Form gedeutet.",
       "category": "Silvester"
     }
   ]
