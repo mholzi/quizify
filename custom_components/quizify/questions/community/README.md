@@ -1,8 +1,8 @@
 # Community Question Packs
 
 > **⚠️ Do not drop your own packs in this folder.** It lives inside
-> `custom_components/quizify/`, which HACS **replaces wholesale on every
-> update** — anything you put here is deleted the next time Quizify updates.
+> `custom_components/quizify/`, which every update (Marketplace or HACS)
+> **replaces wholesale** — anything you put here is deleted the next time Quizify updates.
 > This folder now only carries `example-pack.json`, shipped with the
 > integration as a reference.
 

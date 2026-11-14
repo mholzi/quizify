@@ -62,9 +62,11 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 ### Step 1: Install
 
-**Via HACS (Recommended)** — Quizify is in the HACS default list. Open HACS, search for "Quizify", install it and restart Home Assistant. Or use the shortcut:
+**Via the Marketplace (Recommended)** — Since Home Assistant 2026.11, HACS is built into Home Assistant as the **Marketplace**. Quizify is in its default catalog, so there is nothing to add manually: Settings → Marketplace → search for "Quizify" → Download → restart Home Assistant. Or use the shortcut:
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mholzi&repository=quizify&category=integration)
+[![Open your Home Assistant instance and open the Quizify repository in the Marketplace.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mholzi&repository=quizify&category=integration)
+
+On Home Assistant older than 2026.11, the same steps work in HACS (HACS → search for "Quizify"). If you already installed Quizify through HACS, nothing changes: it stays installed and keeps getting updates through the Marketplace.
 
 **Manual**
 ```bash
@@ -380,7 +382,7 @@ All packs follow an "Unnützes Wissen" editorial line — surprising, counter-in
 
 Your own packs go in your **Home Assistant config directory**, at `<config>/quizify/packs/` — the same `<config>` that holds `configuration.yaml` (`/config/quizify/packs/` on Home Assistant OS). Quizify creates the folder on startup. Drop a JSON file in there and call the `quizify.reload_packs` action (Developer Tools → Actions → "Quizify: Reload question packs"), then reload the admin page — the pack appears in the picker. No restart needed; a restart works too.
 
-> **Why not `custom_components/quizify/questions/`?** HACS replaces that whole directory on every update, so a pack kept in there is deleted the next time Quizify updates. If you already have packs in `custom_components/quizify/questions/community/`, Quizify **moves them to `<config>/quizify/packs/` on the next start** so they survive from now on.
+> **Why not `custom_components/quizify/questions/`?** Every update replaces that whole directory, so a pack kept in there is deleted the next time Quizify updates. If you already have packs in `custom_components/quizify/questions/community/`, Quizify **moves them to `<config>/quizify/packs/` on the next start** so they survive from now on.
 
 ```json
 {
@@ -482,7 +484,7 @@ That's it. No mDNS, no broadcast, no additional ports.
 
 ### Requirements
 - **Home Assistant** 2024.12+
-- **HACS** (recommended) or manual installation
+- **Marketplace** (built in since Home Assistant 2026.11, formerly HACS; recommended) or manual installation
 - A device with a browser for the admin / TV view; phones for players
 
 ### How It Works
@@ -811,9 +813,9 @@ The complete history is in [`CHANGELOG.md`](CHANGELOG.md); longer prose notes fo
 - Verify the QR URL is reachable from the player's network.
 - Some legacy phone scanners need the URL hostname, not the IP — try opening `/quizify/admin` from the host on a hostname-based URL if your network resolves it.
 
-**Browser stuck on old version after HACS update?**
+**Browser stuck on old version after an update?**
 - Quizify cache-busts every static asset via a **content fingerprint** (`?v=<version>-<hash>`), so a normal page load already pulls the fresh version after an update — no manual cache clearing.
-- The integration's Python only reloads on a full **Home Assistant restart**, so after a HACS update do Settings → System → Restart (not just "reload integration"). A long-open tab can be reloaded once if it still looks stale.
+- The integration's Python only reloads on a full **Home Assistant restart**, so after an update do Settings → System → Restart (not just "reload integration"). A long-open tab can be reloaded once if it still looks stale.
 
 ---
 
