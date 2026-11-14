@@ -1,7 +1,7 @@
 {
   "name": "Nochevieja",
   "language": "es",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "trivia",
   "season": {
     "start": "12-27",
@@ -2902,6 +2902,426 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Cada regalo se interpreta de forma simbólica: realeza, divinidad y humanidad.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_141",
+      "question": "¿Qué se pide, según la costumbre, con cada una de las doce uvas?",
+      "answers": [
+        {
+          "text": "Un deseo",
+          "correct": true
+        },
+        {
+          "text": "Un regalo",
+          "correct": false
+        },
+        {
+          "text": "Una canción",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La idea es formular un deseo por cada mes del año que empieza.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_142",
+      "question": "¿Qué presentadora es famosa por sus vestidos de Nochevieja durante las campanadas de Antena 3?",
+      "answers": [
+        {
+          "text": "Cristina Pedroche",
+          "correct": true
+        },
+        {
+          "text": "Anne Igartiburu",
+          "correct": false
+        },
+        {
+          "text": "Susanna Griso",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sus atuendos llamativos se comentan cada año y se han convertido casi en parte del programa.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_143",
+      "question": "¿A qué moneda sustituyó el euro en España el 1 de enero de 2002?",
+      "answers": [
+        {
+          "text": "A la peseta",
+          "correct": true
+        },
+        {
+          "text": "Al escudo",
+          "correct": false
+        },
+        {
+          "text": "Al duro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La peseta dejó de ser moneda de curso legal el 28 de febrero de 2002, tras unas semanas de convivencia con el euro.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_144",
+      "question": "¿En qué estación del año se celebra la Nochevieja en Argentina o Chile?",
+      "answers": [
+        {
+          "text": "En verano",
+          "correct": true
+        },
+        {
+          "text": "En invierno",
+          "correct": false
+        },
+        {
+          "text": "En otoño",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Al estar en el hemisferio sur, muchos la celebran al aire libre y con calor.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_145",
+      "question": "¿Qué famosas campanadas de Londres retransmite la BBC en el cambio de año?",
+      "answers": [
+        {
+          "text": "Las del Big Ben",
+          "correct": true
+        },
+        {
+          "text": "Las de la catedral de San Pablo",
+          "correct": false
+        },
+        {
+          "text": "Las del Tower Bridge",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Big Ben es el nombre de la gran campana de la torre del Parlamento, no de la torre misma.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_146",
+      "question": "¿Qué color tienen los sobres con dinero que se regalan en el Año Nuevo chino?",
+      "answers": [
+        {
+          "text": "Rojo",
+          "correct": true
+        },
+        {
+          "text": "Verde",
+          "correct": false
+        },
+        {
+          "text": "Blanco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El rojo simboliza la suerte; el blanco, en cambio, se asocia con el luto.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_147",
+      "question": "¿Cuántos días tiene un año bisiesto?",
+      "answers": [
+        {
+          "text": "366",
+          "correct": true
+        },
+        {
+          "text": "365",
+          "correct": false
+        },
+        {
+          "text": "364",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El día extra es el 29 de febrero, que mantiene el calendario alineado con el año solar.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_148",
+      "question": "¿Cuántos toques de aviso, los llamados 'cuartos', suenan antes de las doce campanadas en la Puerta del Sol?",
+      "answers": [
+        {
+          "text": "Cuatro",
+          "correct": true
+        },
+        {
+          "text": "Dos",
+          "correct": false
+        },
+        {
+          "text": "Seis",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los cuartos sirven de aviso para que los presentes se preparen y tengan las uvas listas.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_149",
+      "question": "¿Qué edificio alberga el famoso reloj de la Puerta del Sol?",
+      "answers": [
+        {
+          "text": "La Real Casa de Correos",
+          "correct": true
+        },
+        {
+          "text": "El Palacio Real",
+          "correct": false
+        },
+        {
+          "text": "El Ayuntamiento de Madrid",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hoy es la sede del gobierno de la Comunidad de Madrid, y una placa en el suelo marca el kilómetro cero.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_150",
+      "question": "¿De qué región española procede la gran mayoría del cava?",
+      "answers": [
+        {
+          "text": "De Cataluña",
+          "correct": true
+        },
+        {
+          "text": "De La Rioja",
+          "correct": false
+        },
+        {
+          "text": "De Galicia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La mayor parte se elabora en la comarca del Penedès, en torno a Sant Sadurní d'Anoia.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_151",
+      "question": "¿Qué se mete en la copa de cava para atraer la suerte en la Nochevieja?",
+      "answers": [
+        {
+          "text": "Un anillo de oro",
+          "correct": true
+        },
+        {
+          "text": "Una moneda de plata",
+          "correct": false
+        },
+        {
+          "text": "Una hoja de laurel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La costumbre pide beber la copa entera y dejar el anillo al final, para que traiga prosperidad.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_152",
+      "question": "¿Por qué septiembre, que viene de 'séptimo', es el noveno mes del año?",
+      "answers": [
+        {
+          "text": "Porque el año romano empezaba en marzo",
+          "correct": true
+        },
+        {
+          "text": "Porque el calendario tenía diez meses",
+          "correct": false
+        },
+        {
+          "text": "Porque lo decidió César",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Enero pasó a ser el primer mes mucho después; los nombres de los últimos meses quedaron como fósiles del calendario antiguo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_153",
+      "question": "¿Qué animal, según la leyenda, quedó fuera del zodiaco chino por culpa de la rata?",
+      "answers": [
+        {
+          "text": "El gato",
+          "correct": true
+        },
+        {
+          "text": "El perro",
+          "correct": false
+        },
+        {
+          "text": "El conejo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En el relato, la rata no avisó al gato de la carrera y este llegó tarde, de modo que no obtuvo un signo propio.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_154",
+      "question": "¿Qué enorme obra pasó el 31 de diciembre de 1999 a manos de Panamá?",
+      "answers": [
+        {
+          "text": "El Canal de Panamá",
+          "correct": true
+        },
+        {
+          "text": "La carretera Panamericana",
+          "correct": false
+        },
+        {
+          "text": "El puerto de Colón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Estados Unidos entregó el control del canal a mediodía de ese último día de 1999.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_155",
+      "question": "¿Qué dulce de arroz se prepara golpeándolo con mazos en Japón antes de Año Nuevo?",
+      "answers": [
+        {
+          "text": "El mochi",
+          "correct": true
+        },
+        {
+          "text": "El tofu",
+          "correct": false
+        },
+        {
+          "text": "El sushi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La tarea se llama 'mochitsuki' y suele hacerse en familia; con él se forma el 'kagami mochi', una ofrenda de Año Nuevo.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_156",
+      "question": "¿Qué significa 'Auld Lang Syne', el título de la canción tradicional del cambio de año?",
+      "answers": [
+        {
+          "text": "Tiempos pasados",
+          "correct": true
+        },
+        {
+          "text": "Buenas noches",
+          "correct": false
+        },
+        {
+          "text": "Feliz Año",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El título viene del escocés y significa literalmente 'hace mucho tiempo'.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_157",
+      "question": "¿Quién construyó el reloj de la Puerta del Sol de Madrid?",
+      "answers": [
+        {
+          "text": "El relojero José Rodríguez Losada",
+          "correct": true
+        },
+        {
+          "text": "Un maestro suizo",
+          "correct": false
+        },
+        {
+          "text": "Un taller alemán",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Losada, nacido en León, trabajaba en Londres y donó la maquinaria; el reloj se inauguró en 1866.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_158",
+      "question": "¿Quiénes piden monedas en las calles de Ecuador el 31 de diciembre vestidos de luto?",
+      "answers": [
+        {
+          "text": "Hombres disfrazados de viudas",
+          "correct": true
+        },
+        {
+          "text": "Niños con máscaras",
+          "correct": false
+        },
+        {
+          "text": "Músicos callejeros",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las 'viudas' lloran la muerte del año viejo y piden dinero a los conductores y viandantes.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_159",
+      "question": "¿Qué día siguió al 4 de octubre de 1582 en España, al adoptarse el calendario gregoriano?",
+      "answers": [
+        {
+          "text": "El 15 de octubre",
+          "correct": true
+        },
+        {
+          "text": "El 5 de octubre",
+          "correct": false
+        },
+        {
+          "text": "El 11 de octubre",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se saltaron diez días para devolver el calendario a su sitio con respecto a las estaciones.",
+      "category": "Nochevieja"
+    },
+    {
+      "id": "nochevieja_es_160",
+      "question": "¿Cuándo celebran muchos rusos el 'Viejo Año Nuevo'?",
+      "answers": [
+        {
+          "text": "En la noche del 13 al 14 de enero",
+          "correct": true
+        },
+        {
+          "text": "En la noche del 6 al 7 de enero",
+          "correct": false
+        },
+        {
+          "text": "El 31 de enero",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La fecha sigue el calendario juliano, que va trece días por detrás del gregoriano.",
       "category": "Nochevieja"
     }
   ]
