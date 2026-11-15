@@ -5,6 +5,18 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.28.0-RC1] — 2026-11-15
+
+**A Fuller New Year's Eve**
+
+Since 1.27.0 the library grew to 8,350 questions in 59 packs, just in time for the turn of the year.
+
+### 🎆 New Year's Eve packs at 160
+
+The German, English and Spanish New Year's Eve packs each have 160 questions now: 80 new ones on customs, food, music, history and the calendar, each language written on its own. They step forward from 27 December, as before.
+
+Also: the README explains installing through the Home Assistant Marketplace, which replaced HACS in Home Assistant 2026.11.
+
 ## [1.27.0] — 2026-11-13
 
 **Kids & Family, and Phones That Keep Their Seat**
