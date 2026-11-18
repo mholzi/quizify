@@ -73,6 +73,10 @@
         lobbyJoinUrlEl: document.getElementById('lobby-join-url'),
         lobbyPlayers: document.getElementById('lobby-players'),
         roundIndicator: document.getElementById('round-indicator'),
+        // #1249: the reveal's auto-advance countdown, next to the indicator.
+        roundBlock: document.getElementById('round-block'),
+        autoAdvanceLabel: document.getElementById('auto-advance-label'),
+        autoAdvanceRing: document.getElementById('auto-advance-ring'),
         // #741: power-up strip stack + floating-reaction layer.
         powerupBanners: document.getElementById('powerup-banners'),
         reactionLayer: document.getElementById('reaction-layer'),
@@ -471,6 +475,34 @@
         });
     }
 
+    // ---- Auto-advance ring (#1249) ----
+    // The server counts; the TV only draws what the reveal frame or the
+    // snapshot says is left. Anything that leaves the reveal stops it.
+    var autoAdvanceRing = null;
+    function syncAutoAdvance(status) {
+        if (!els.autoAdvanceRing || !window.QuizifyRenderShared) return;
+        if (!autoAdvanceRing) {
+            autoAdvanceRing = window.QuizifyRenderShared.createCountdownRing(
+                els.autoAdvanceRing, {
+                    onShow: function (on) {
+                        if (els.roundBlock) els.roundBlock.classList.toggle('is-counting', on);
+                        if (els.autoAdvanceLabel) els.autoAdvanceLabel.hidden = !on;
+                    }
+                });
+        }
+        if (status && currentPhase === 'ANSWER_REVEAL') {
+            if (els.autoAdvanceLabel) {
+                // The last reveal counts down into the podium, not a question.
+                var key = status.final ? 'reveal.finalResults' : 'dashboard.nextQuestion';
+                els.autoAdvanceLabel.setAttribute('data-i18n', key);
+                els.autoAdvanceLabel.textContent = t(key, status.final ? 'Final results' : 'Next question');
+            }
+            autoAdvanceRing.start(status);
+        } else {
+            autoAdvanceRing.stop();
+        }
+    }
+
     // ---- Message handler ----
     function handleMessage(msg) {
         switch (msg.type || msg.event) {
@@ -529,6 +561,7 @@
                 break;
             case 'round_summary':
                 handleRoundSummary(msg);
+                syncAutoAdvance(msg.auto_advance);
                 // #736: same preload as the phones. The TV is the 21st
                 // client in the burst and the only one showing the picture
                 // full-screen, so it has the most to lose from a late one.
@@ -627,6 +660,10 @@
         if (roundChangePending) {
             roundChangePending = false;
             playRoundTransition();
+        }
+        // #1249: a ring left over from a reveal the room has moved past.
+        if (currentPhase !== 'ANSWER_REVEAL' && autoAdvanceRing && autoAdvanceRing.running()) {
+            autoAdvanceRing.stop();
         }
     }
 
@@ -971,6 +1008,10 @@
                 } else if (msg.round_summary && msg.round_summary.answers) {
                     renderRevealFromSnapshot(msg.round_summary, msg.round, msg.total_rounds);
                 }
+                // #1249: a TV that joins mid-pause draws the seconds still left.
+                // Only a full snapshot carries the key; a leaderboard refresh
+                // in the same phase leaves the running ring alone.
+                if ('auto_advance' in msg) syncAutoAdvance(msg.auto_advance);
                 break;
             case 'HOT_SEAT_AUCTION':
             case 'HOT_SEAT':

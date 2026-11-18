@@ -80,7 +80,8 @@ var currentPhase = 'LOBBY', playerCount = 0;
 var sent = [], joinUrl = 0, ws = {};
 var selectedRounds = 10, selectedDifficulty = 'medium', selectedTimer = 30,
     selectedLightning = true, selectedHotSeat = true, selectedPowerups = true,
-    selectedWager = true, selectedLanguage = 'en', selectedCategories = [];
+    selectedWager = true, selectedLanguage = 'en', selectedCategories = [],
+    selectedAutoAdvance = 0;
 function send(type, payload) {
     sent.push(Object.assign({ type: type }, payload));
     return true;

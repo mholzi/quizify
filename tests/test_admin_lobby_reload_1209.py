@@ -161,7 +161,7 @@ var _ttsEntitiesLoaded = true, _houseEntitiesLoaded = true;
 var _adminJoinedAs, _redirecting, currentPhase, sent, applied, joinUrl, ws;
 var selectedRounds, selectedDifficulty, selectedTimer, selectedLightning,
     selectedHotSeat, selectedPowerups, selectedWager, selectedLanguage,
-    selectedCategories;
+    selectedCategories, selectedAutoAdvance = 0;
 function send(type, payload) {
     sent.push(Object.assign({ type: type }, payload));
     return true;
@@ -324,6 +324,7 @@ def test_a_reload_in_the_lobby_takes_the_seat_and_the_lobby_back() -> None:
             "hot_seat": True,
             "powerups": True,
             "wager": False,
+            "auto_advance": 0,
             "language": "de",
             "packs": ["science-de"],
         }

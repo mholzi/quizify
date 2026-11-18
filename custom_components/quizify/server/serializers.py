@@ -625,6 +625,10 @@ def serialize_state_snapshot(game_state: QuizifyGameState) -> dict[str, Any]:
         # rebuilds the number line instead of an empty answer grid.
         if s.estimate is not None:
             snapshot["round_summary"]["estimate"] = s.estimate
+        # #1249: the reveal's auto-advance countdown, live, so a screen that
+        # (re)connects mid-pause draws the seconds that are actually left.
+        # ``None`` when the host left it Off or nothing is counting.
+        snapshot["auto_advance"] = game_state.auto_advance_status()
 
     if game_state.phase == GamePhase.FINALE:
         # The end screen is built by ``serialize_finale`` — the same function

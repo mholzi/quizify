@@ -142,6 +142,7 @@ _ROUND_TASK_ATTRS = [
     "_lightning_task",
     "_hot_seat_task",
     "_admin_pause_task",
+    "_auto_advance_task",
 ]
 
 

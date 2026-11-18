@@ -266,7 +266,12 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         "last_round",
         "all_answers",
         "answer_distribution",
-        optional=("estimate", "next_image_url", "streak_milestones"),
+        optional=(
+            "estimate",
+            "next_image_url",
+            "streak_milestones",
+            "auto_advance",
+        ),
         note=(
             "Three index spaces meet here — see the docstring on "
             "``serialize_round_summary``. ``question_id`` is what the 🚩 flag "
@@ -275,7 +280,9 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
             "when there is something worth warming during the reveal — absent "
             "rather than empty, so a client can test for the key. "
             "``streak_milestones`` (#1185) lists ``{name, streak}`` for every "
-            "streak level this round reached — absent when none did."
+            "streak level this round reached — absent when none did. "
+            "``auto_advance`` (#1249) is ``{seconds, remaining, final}`` while "
+            "the host's auto-advance pause runs — absent when it is Off."
         ),
     ),
     "finale": _spec(

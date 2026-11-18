@@ -182,6 +182,7 @@ let selectedCategories = ['geographie'];
 let selectedRounds = 5, selectedDifficulty = 'easy', selectedTimer = 30;
 let selectedLightning = true, selectedHotSeat = false;
 let selectedPowerups = true, selectedWager = true;
+let selectedAutoAdvance = 0;
 
 const CHIPS = [
     ['mixed', null],

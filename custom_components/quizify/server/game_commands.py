@@ -28,6 +28,7 @@ from custom_components.quizify.const import (
     ERR_GAME_ALREADY_STARTED,
     ERR_INVALID_ACTION,
     ERR_NO_QUESTIONS_REMAINING,
+    coerce_auto_advance,
 )
 from custom_components.quizify.game.state import GamePhase
 from custom_components.quizify.server.serializers import serialize_scoring_status
@@ -97,6 +98,8 @@ async def handle_start_game(
     # default. A host who wants a plain round can now have one.
     powerups_enabled = _coerce_toggle(data.get("powerups_enabled"), default=True)
     wager_enabled = _coerce_toggle(data.get("wager_enabled"), default=True)
+    # Auto-advance after the reveal (#1249): 30/60/90 s, anything else Off.
+    auto_advance = coerce_auto_advance(data.get("auto_advance"))
 
     # Validate num_rounds the same way as timer_duration (#303): the WS
     # value reaches start_game raw, and total_rounds drives
@@ -141,6 +144,7 @@ async def handle_start_game(
             hot_seat_enabled=hot_seat_enabled,
             powerups_enabled=powerups_enabled,
             wager_enabled=wager_enabled,
+            auto_advance=auto_advance,
         )
     except ValueError as err:
         # start_game raises two distinct ValueErrors: a wrong-phase

@@ -27,6 +27,7 @@ from ..const import (
     ERR_ROUND_EXPIRED,
     ERR_TEAM_LOCKED,
     WAGER_WINDOW_DURATION,
+    coerce_auto_advance,
 )
 from .calibration import GroupCalibrator
 from .estimate_controller import EstimateController
@@ -243,6 +244,14 @@ class QuizifyGameState:
         # Last-game settings snapshot for "Play again — same settings".
         # None until a game has been started at least once.
         self._last_settings: dict[str, Any] | None = None
+
+        # Auto-advance after the reveal (#1249). The setting, in seconds (0 =
+        # Off), and the pause that is running now: when it ends (monotonic
+        # clock) and which round's reveal it belongs to. The socket layer owns
+        # the task that acts on it; this is only what every client is told.
+        self._auto_advance_seconds: int = 0
+        self._auto_advance_deadline: float | None = None
+        self._auto_advance_round: int | None = None
 
         # Broadcast callback — set by websocket layer
         self._broadcast_callback: (
@@ -638,6 +647,7 @@ class QuizifyGameState:
         hot_seat_seed: int | None = None,
         powerups_enabled: bool = True,
         wager_enabled: bool = True,
+        auto_advance: int = 0,
     ) -> dict[str, Any]:
         """Start a new game session.
 
@@ -657,6 +667,10 @@ class QuizifyGameState:
         Hot Seat for the reason "losing points is the mechanic children like
         least", and Steal, Freeze and a stake that can wipe a child's score
         were still in the game.
+
+        ``auto_advance`` (#1249) is the pause after each reveal before the
+        next question starts on its own: 30, 60 or 90 seconds, or 0 for Off
+        (the default, and what any other value is read as).
 
         Returns dict with game info on success.
         Raises ValueError on invalid state.
@@ -689,6 +703,9 @@ class QuizifyGameState:
         # are read at the point of use every round.
         self._powerups_enabled = powerups_enabled
         self._wager_controller.enabled = wager_enabled
+        auto_advance = coerce_auto_advance(auto_advance)
+        self._auto_advance_seconds = auto_advance
+        self.clear_auto_advance()
 
         queue_difficulty = self._configure_difficulty_calibrator(difficulty)
 
@@ -705,6 +722,7 @@ class QuizifyGameState:
             hot_seat_enabled=hot_seat_enabled,
             powerups_enabled=powerups_enabled,
             wager_enabled=wager_enabled,
+            auto_advance=auto_advance,
         )
 
         # Load questions. The bank is preloaded off the event loop at
@@ -767,6 +785,8 @@ class QuizifyGameState:
 
         self.round += 1
         self._current_question = question
+        # #1249: the pause belonged to the reveal that just ended.
+        self.clear_auto_advance()
 
         # Record this question as shown for history tracking
         self._question_bank.record_shown(question.id)
@@ -848,6 +868,7 @@ class QuizifyGameState:
         hot_seat_enabled: bool,
         powerups_enabled: bool,
         wager_enabled: bool,
+        auto_advance: int = 0,
     ) -> dict[str, Any]:
         """Settings snapshot for the one-tap rematch (from start_game, #1124)."""
         return {
@@ -868,6 +889,9 @@ class QuizifyGameState:
             # window is the same bug in a third and fourth mechanic.
             "powerups_enabled": powerups_enabled,
             "wager_enabled": wager_enabled,
+            # #1249: a rematch keeps the pace the host chose, like every
+            # other rule above.
+            "auto_advance": auto_advance,
         }
 
     def _reset_roster_for_new_game(self) -> None:
@@ -1740,6 +1764,7 @@ class QuizifyGameState:
 
         self.phase = GamePhase.FINALE
         self._current_question = None
+        self.clear_auto_advance()
 
         # Cache podium and superlatives once so the state snapshot can reuse
         # them. In team mode the participants are the teams (#365) — the podium
@@ -1918,6 +1943,7 @@ class QuizifyGameState:
     def reset_to_lobby(self) -> None:
         """Reset the game back to lobby state for a new game."""
         self.phase = GamePhase.LOBBY
+        self.clear_auto_advance()
         self.game_id = None
         self.round = 0
         self._current_question = None
@@ -2429,6 +2455,69 @@ class QuizifyGameState:
     def _needs_wager_window(self, question: Question) -> bool:
         """Delegate: see :meth:`WagerController.needs_window`."""
         return self._wager_controller.needs_window(question)
+
+    # ------------------------------------------------------------------
+    # Auto-advance after the reveal (#1249)
+    # ------------------------------------------------------------------
+
+    @property
+    def auto_advance_seconds(self) -> int:
+        """The pause after each reveal, in seconds; 0 means Off (#1249)."""
+        return self._auto_advance_seconds
+
+    def arm_auto_advance(self) -> int:
+        """Start the pause for the reveal on screen now (#1249).
+
+        Returns the pause in seconds, or 0 when nothing was armed: the setting
+        is Off, or the game is not on a normal reveal. Only ANSWER_REVEAL
+        counts. The Lightning recap and the Hot Seat reveal keep waiting for
+        the host, as they did before.
+        """
+        if self._auto_advance_seconds <= 0 or self.phase != GamePhase.ANSWER_REVEAL:
+            self.clear_auto_advance()
+            return 0
+        self._auto_advance_deadline = time.monotonic() + self._auto_advance_seconds
+        self._auto_advance_round = self.round
+        return self._auto_advance_seconds
+
+    def clear_auto_advance(self) -> None:
+        """Forget the running pause (#1249). Safe when none is running."""
+        self._auto_advance_deadline = None
+        self._auto_advance_round = None
+
+    def auto_advance_status(self) -> dict[str, Any] | None:
+        """What the clients draw for the running pause, or None (#1249).
+
+        ``remaining`` is relative, like ``time_remaining`` on a question, so
+        a phone whose clock is off by a minute still counts the same seconds
+        as the television. ``final`` says the pause ends in the final results
+        rather than in another question.
+        """
+        if (
+            self._auto_advance_deadline is None
+            or self.phase != GamePhase.ANSWER_REVEAL
+            or self._auto_advance_round != self.round
+        ):
+            return None
+        remaining = max(0.0, self._auto_advance_deadline - time.monotonic())
+        return {
+            "seconds": self._auto_advance_seconds,
+            "remaining": round(remaining, 1),
+            "final": self.round >= self.total_rounds,
+        }
+
+    def auto_advance_due(self, round_num: int) -> bool:
+        """Whether the pause armed for ``round_num`` may advance now (#1249).
+
+        False once anything has moved on: the next question started, the game
+        ended or was reset, or a different reveal armed its own pause.
+        """
+        return (
+            self._auto_advance_deadline is not None
+            and self.phase == GamePhase.ANSWER_REVEAL
+            and self._auto_advance_round == round_num
+            and self.round == round_num
+        )
 
     @property
     def wager_enabled(self) -> bool:

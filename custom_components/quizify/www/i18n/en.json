@@ -303,7 +303,8 @@
     "wrongHeadline": "Just missed",
     "timeUp": "Time's up",
     "answerLabel": "Answer",
-    "noAnswerShort": "No answer submitted"
+    "noAnswerShort": "No answer submitted",
+    "autoAdvanceAria": "Next question in {seconds} seconds"
   },
   "a11y": {
     "qrCodeRegion": "QR code to join",
@@ -357,7 +358,9 @@
       "q9": "Wager on the last question?",
       "needsMultipleChoice": "These modes need multiple-choice questions.",
       "wagerHint": "Wager points on the last question",
-      "wagerTeamNote": "With teams: the wager is the team's, placed on the team score."
+      "wagerTeamNote": "With teams: the wager is the team's, placed on the team score.",
+      "qAdvance": "Continue on its own?",
+      "advanceHint": "After the answer, the next question starts by itself"
     },
     "tts": {
       "question": "Read out each question",
@@ -515,7 +518,8 @@
     "scoringLeft": "{name} is no longer playing",
     "scoringBack": "{name} is back in",
     "streakStrip": "{name}: {points} in a row",
-    "streakChip": "{count} in a row"
+    "streakChip": "{count} in a row",
+    "nextQuestion": "Next question"
   },
   "connection": {
     "connected": "Connected",

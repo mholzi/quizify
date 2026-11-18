@@ -303,7 +303,8 @@
     "wrongHeadline": "Por poco",
     "timeUp": "Se acabó el tiempo",
     "answerLabel": "Respuesta",
-    "noAnswerShort": "No se envió ninguna respuesta"
+    "noAnswerShort": "No se envió ninguna respuesta",
+    "autoAdvanceAria": "Siguiente pregunta en {seconds} segundos"
   },
   "a11y": {
     "qrCodeRegion": "Código QR para unirse",
@@ -357,7 +358,9 @@
       "q9": "¿Apuesta en la última pregunta?",
       "needsMultipleChoice": "Estos modos necesitan preguntas con opciones de respuesta.",
       "wagerHint": "Apostar puntos en la última pregunta",
-      "wagerTeamNote": "Con equipos: la apuesta es del equipo y se hace sobre su puntuación."
+      "wagerTeamNote": "Con equipos: la apuesta es del equipo y se hace sobre su puntuación.",
+      "qAdvance": "¿Seguir automáticamente?",
+      "advanceHint": "Tras la respuesta, la siguiente pregunta empieza sola"
     },
     "tts": {
       "question": "Leer cada pregunta",
@@ -515,7 +518,8 @@
     "scoringLeft": "{name} ya no juega",
     "scoringBack": "{name} ha vuelto",
     "streakStrip": "{name}: {points} seguidas",
-    "streakChip": "{count} seguidas"
+    "streakChip": "{count} seguidas",
+    "nextQuestion": "Siguiente pregunta"
   },
   "connection": {
     "connected": "Conectado",

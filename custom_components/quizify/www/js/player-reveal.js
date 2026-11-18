@@ -891,7 +891,64 @@
     // Export
     // ============================================
 
+    // ============================================
+    // Auto-advance countdown (#1249)
+    // ============================================
+    // The server starts the next question when the pause runs out and tells
+    // every phone how many seconds are left; the phone only draws them. Two
+    // rings: one in the header next to "Q 6/10", and for the host a mini one
+    // in the Next button in place of the arrow.
+    var _aaHeader = null;
+    var _aaButton = null;
+
+    function _aaRings() {
+        var shared = window.QuizifyRenderShared;
+        if (!shared) return [];
+        if (!_aaHeader) {
+            var headEl = document.getElementById('header-auto-advance');
+            if (headEl) {
+                _aaHeader = shared.createCountdownRing(headEl, {
+                    label: function (secs) {
+                        var key = 'reveal.autoAdvanceAria';
+                        var text = t(key, { seconds: secs });
+                        return text === key ? 'Next question in ' + secs + ' seconds' : text;
+                    }
+                });
+            }
+        }
+        if (!_aaButton) {
+            var btnEl = document.getElementById('next-round-ring');
+            if (btnEl) {
+                _aaButton = shared.createCountdownRing(btnEl, {
+                    onShow: function (on) {
+                        var arrow = document.getElementById('next-round-arrow');
+                        if (arrow) arrow.hidden = on;
+                    }
+                });
+            }
+        }
+        return [_aaHeader, _aaButton].filter(Boolean);
+    }
+
+    /** Draw ``status`` ({seconds, remaining}) or take the rings down. */
+    function syncAutoAdvance(status) {
+        _aaRings().forEach(function (ring) {
+            if (status) ring.start(status); else ring.stop();
+        });
+    }
+
+    /** Take the rings down once the reveal is no longer on screen. */
+    function stopAutoAdvanceUnlessRevealing() {
+        var view = document.getElementById('reveal-view');
+        if (view && !view.classList.contains('hidden')) return;
+        if ((_aaHeader && _aaHeader.running()) || (_aaButton && _aaButton.running())) {
+            syncAutoAdvance(null);
+        }
+    }
+
     window.QuizifyPlayerReveal = {
+        syncAutoAdvance: syncAutoAdvance,
+        stopAutoAdvanceUnlessRevealing: stopAutoAdvanceUnlessRevealing,
         updateRevealView: updateRevealView,
         updateScoringStatus: updateScoringStatus,
         resetRankMemo: resetRankMemo,

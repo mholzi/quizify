@@ -112,6 +112,37 @@ body.dashboard-body {
     flex-shrink: 0;
 }
 
+/* ---- Round block + auto-advance ring (#1249) ----
+   While the reveal counts down, the ring takes the underline's place: the
+   indicator turns into a muted label, "Next question" sits under it, and
+   the ring (about 80 px at 1280 px) stands to the right. The timer bar
+   below is not touched — it keeps meaning answer time only. Declared
+   before .dashboard-round on purpose: the counting override wins on
+   specificity, and the base rule stays the last one of its name. */
+.dashboard-round-block {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+.dashboard-round-text { text-align: right; }
+.dashboard-round-block.is-counting .dashboard-round {
+    border-bottom: 0;
+    padding: 0;
+    margin-top: 0;
+    color: var(--color-text-muted);
+}
+.dashboard-auto-advance-label {
+    font-size: var(--tv-fs-6);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+.dashboard-auto-advance-label[hidden] { display: none; }
+.dashboard-auto-advance-ring {
+    width: clamp(64px, 6.25vw, 120px);
+    height: clamp(64px, 6.25vw, 120px);
+}
+.dashboard-auto-advance-ring .qz-ring-num { font-size: var(--tv-fs-9); }
+
 .dashboard-round {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     /* #707: 12px was a phone label. It carries "Question 4 / 10" —
