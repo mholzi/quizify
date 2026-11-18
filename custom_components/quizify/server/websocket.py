@@ -230,6 +230,7 @@ class QuizifyWebSocketHandler:
         ("_lightning_task", "_cancel_lightning_loop"),
         ("_hot_seat_task", "_cancel_hot_seat_loop"),
         ("_admin_pause_task", "_cancel_admin_pause"),
+        ("_auto_advance_task", "_cancel_auto_advance"),
     )
 
     # Deliberately NOT round-scoped: broadcast coalescers. They batch frames
@@ -288,6 +289,10 @@ class QuizifyWebSocketHandler:
         # admin-as-player WS closes mid-question. Cancelled by reconnect
         # or join when admin comes back within ADMIN_REDIRECT_GRACE.
         self._admin_pause_task: asyncio.Task | None = None
+        # Starts the next question when the reveal's auto-advance pause runs
+        # out (#1249). Round-scoped: every advance, end, reset and start
+        # cancels it, so a pause can never outlive the reveal it belongs to.
+        self._auto_advance_task: asyncio.Task | None = None
         # Last value of the host-presence flag actually put on the wire (#842),
         # so the announcer broadcasts transitions rather than every socket
         # event. None until the first announcement.
@@ -1486,6 +1491,14 @@ class QuizifyWebSocketHandler:
         """Delegate: see :func:`round_flow.cancel_admin_pause` (#1124)."""
         round_flow.cancel_admin_pause(self)
 
+    def _schedule_auto_advance(self, game_state: QuizifyGameState) -> None:
+        """Delegate: see :func:`round_flow.schedule_auto_advance` (#1249)."""
+        round_flow.schedule_auto_advance(self, game_state)
+
+    def _cancel_auto_advance(self) -> None:
+        """Delegate: see :func:`round_flow.cancel_auto_advance` (#1249)."""
+        round_flow.cancel_auto_advance(self)
+
     # ------------------------------------------------------------------
     # Admin auth helper
     # ------------------------------------------------------------------
@@ -1936,6 +1949,9 @@ class QuizifyWebSocketHandler:
         """Handler for the ``round_evaluated`` state event."""
         game_state = self._get_game_state()
         if game_state:
+            # #1249: arm the pause first, so the summary below already
+            # carries the countdown every screen draws.
+            self._schedule_auto_advance(game_state)
             await self._round_out.send_round_summary(game_state)
             # #1150: right behind the reveal that moved the ranking.
             await game_commands.send_scoring_notices(self, game_state)

@@ -2153,7 +2153,55 @@
         _wireFlagButton();
     }
 
+    var _aaHeader = null;
+    var _aaButton = null;
+
+    function _aaRings() {
+        var shared = window.QuizifyRenderShared;
+        if (!shared) return [];
+        if (!_aaHeader) {
+            var headEl = document.getElementById('header-auto-advance');
+            if (headEl) {
+                _aaHeader = shared.createCountdownRing(headEl, {
+                    label: function (secs) {
+                        var key = 'reveal.autoAdvanceAria';
+                        var text = t(key, { seconds: secs });
+                        return text === key ? 'Next question in ' + secs + ' seconds' : text;
+                    }
+                });
+            }
+        }
+        if (!_aaButton) {
+            var btnEl = document.getElementById('next-round-ring');
+            if (btnEl) {
+                _aaButton = shared.createCountdownRing(btnEl, {
+                    onShow: function (on) {
+                        var arrow = document.getElementById('next-round-arrow');
+                        if (arrow) arrow.hidden = on;
+                    }
+                });
+            }
+        }
+        return [_aaHeader, _aaButton].filter(Boolean);
+    }
+
+    function syncAutoAdvance(status) {
+        _aaRings().forEach(function (ring) {
+            if (status) ring.start(status); else ring.stop();
+        });
+    }
+
+    function stopAutoAdvanceUnlessRevealing() {
+        var view = document.getElementById('reveal-view');
+        if (view && !view.classList.contains('hidden')) return;
+        if ((_aaHeader && _aaHeader.running()) || (_aaButton && _aaButton.running())) {
+            syncAutoAdvance(null);
+        }
+    }
+
     window.QuizifyPlayerReveal = {
+        syncAutoAdvance: syncAutoAdvance,
+        stopAutoAdvanceUnlessRevealing: stopAutoAdvanceUnlessRevealing,
         updateRevealView: updateRevealView,
         updateScoringStatus: updateScoringStatus,
         resetRankMemo: resetRankMemo,
@@ -5191,6 +5239,7 @@
 
             case 'round_summary':
                 handleRoundSummary(msg);
+                reveal.syncAutoAdvance(msg.auto_advance || null);
                 if (msg.next_image_url && window.QuizifyPlayerGame
                     && QuizifyPlayerGame.preloadNextImage) {
                     QuizifyPlayerGame.preloadNextImage(msg.next_image_url);
@@ -5295,6 +5344,7 @@
         }
 
         enterStageFor(msg);
+        reveal.stopAutoAdvanceUnlessRevealing();
         clearStalePanels(msg);
     }
 
@@ -5406,6 +5456,7 @@
                 game.stopCountdown();
                 pu.showView('reveal-view');
                 reveal.updateRevealView(msg);
+                if ('auto_advance' in msg) reveal.syncAutoAdvance(msg.auto_advance || null);
                 disarmResetAffordance('paused-reset-btn');
                 break;
 

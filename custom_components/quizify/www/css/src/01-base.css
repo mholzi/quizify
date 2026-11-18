@@ -279,6 +279,39 @@ body {
 .player-header-round-num { color: var(--coral-ink); }
 .player-header-round-sep { color: var(--color-border-dark); }
 
+/* #1249: the reveal's auto-advance ring, next to "Q 6/10". */
+.player-header-ring {
+    width: 34px;
+    height: 34px;
+}
+.player-header-ring .qz-ring-svg .qz-ring-track,
+.player-header-ring .qz-ring-svg .qz-ring-prog { stroke-width: 6; }
+.player-header-ring .qz-ring-num { font-size: var(--fs-1); }
+
+/* #1249: the host's mini ring, in the Next button where the arrow was. Dark
+   on the coral button (currentColor), the track a faint copy of it. 28 px
+   rather than the mockup's 24 so the digits can stay at the 12 px floor. */
+.pl-btn-ring {
+    width: 28px;
+    height: 28px;
+    margin-left: var(--space-xs);
+    vertical-align: middle;
+}
+.pl-btn-ring .qz-ring-track {
+    fill: none;
+    stroke: currentColor;
+    stroke-opacity: 0.15;
+    stroke-width: 7;
+}
+.pl-btn-ring .qz-ring-prog {
+    stroke: currentColor;
+    stroke-width: 7;
+}
+.pl-btn-ring .qz-ring-num {
+    font-size: var(--fs-1);
+    color: inherit;
+}
+
 /* Sound cue mute toggle — Variant C (issue #194). Embedded as a subtle
    round affordance inside the right-side header cluster, immediately before
    the round indicator, instead of floating as its own corner icon. Quiet by

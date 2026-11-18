@@ -48,7 +48,18 @@
             <h1 class="wordmark">
                 <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
             </h1>
-            <div id="round-indicator" class="dashboard-round"></div>
+            <!-- #1249: the round indicator and the auto-advance ring are one
+                 block. While the reveal counts down, the ring replaces the
+                 indicator's underline and a "Next question" line joins it;
+                 the timer bar below stays the answer clock only. -->
+            <div id="round-block" class="dashboard-round-block">
+                <div class="dashboard-round-text">
+                    <div id="round-indicator" class="dashboard-round"></div>
+                    <div id="auto-advance-label" class="dashboard-auto-advance-label" hidden
+                         data-i18n="dashboard.nextQuestion">Next question</div>
+                </div>
+                <span id="auto-advance-ring" class="dashboard-auto-advance-ring" hidden></span>
+            </div>
         </div>
 
         <!-- #619: how many of the room have answered. Sits above the bar

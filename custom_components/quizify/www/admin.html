@@ -169,7 +169,7 @@
                     <button type="button" class="preset-card" data-preset="schnellrunde"
                             data-rounds="5" data-difficulty="easy" data-timer="20"
                             data-hot-seat="1" data-lightning="1"
-                            data-powerups="1" data-wager="1">
+                            data-powerups="1" data-wager="1" data-auto-advance="0">
                         <span class="preset-icon qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.fastName">Quick round</span>
@@ -180,7 +180,7 @@
                     <button type="button" class="preset-card is-active" data-preset="klassiker"
                             data-rounds="10" data-difficulty="medium" data-timer="30"
                             data-hot-seat="1" data-lightning="1"
-                            data-powerups="1" data-wager="1">
+                            data-powerups="1" data-wager="1" data-auto-advance="0">
                         <span class="preset-icon qz-icon qz-icon--sky" data-ui-icon="brain" aria-hidden="true">🧠</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.classicName">Classic</span>
@@ -203,7 +203,7 @@
                     <button type="button" class="preset-card" data-preset="kinder"
                             data-rounds="5" data-difficulty="easy" data-timer="180"
                             data-hot-seat="0" data-lightning="0"
-                            data-powerups="0" data-wager="0">
+                            data-powerups="0" data-wager="0" data-auto-advance="0">
                         <!-- Deliberately no data-ui-icon: _paintUiIcons() only
                              swaps the emoji for an SVG on slots that carry one,
                              so leaving it off keeps the teddy while the sage
@@ -218,7 +218,7 @@
                     <button type="button" class="preset-card" data-preset="marathon"
                             data-rounds="20" data-difficulty="hard" data-timer="45"
                             data-hot-seat="1" data-lightning="1"
-                            data-powerups="1" data-wager="1">
+                            data-powerups="1" data-wager="1" data-auto-advance="0">
                         <span class="preset-icon qz-icon qz-icon--sun" data-ui-icon="trophy" aria-hidden="true">🏆</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.marathonName">Marathon</span>
@@ -422,6 +422,26 @@
                            data-i18n="setup.eigene.needsMultipleChoice">These modes need multiple-choice questions.</p>
                     </div>
 
+                    <!-- Auto-advance after the reveal (#1249). Same toggle shape as
+                         steps 6-9, default OFF (today's behaviour: the reveal waits
+                         for Next). On, the seconds chips appear indented below it,
+                         60 s preselected. The value rides start_game as
+                         auto_advance (0 = Off), and the server runs the clock. -->
+                    <div class="vF-step">
+                        <div class="vF-q"><span class="num">10</span><span data-i18n="setup.eigene.qAdvance">Continue on its own?</span></div>
+                        <label class="toggle-compact setup-lightning-toggle" id="auto-advance-toggle-row" for="auto-advance-toggle">
+                            <input type="checkbox" id="auto-advance-toggle">
+                            <span class="toggle-switch-compact" aria-hidden="true"></span>
+                            <span class="toggle-label" data-i18n="setup.eigene.advanceHint">After the answer, the next question starts by itself</span>
+                        </label>
+                        <div class="vF-answers chip-group setup-advance-chips" id="auto-advance-chips" role="group"
+                             data-i18n-aria-label="setup.eigene.qAdvance" aria-label="Continue on its own?" hidden>
+                            <button type="button" class="chip" data-value="30">30 s</button>
+                            <button type="button" class="chip active" data-value="60">60 s</button>
+                            <button type="button" class="chip" data-value="90">90 s</button>
+                        </div>
+                    </div>
+
                     <!-- The room (#1185 P10): voice, lights and sound in ONE step,
                          sorted by moment instead of by channel. The keys did not
                          change — every cell is one of the toggles that used to sit
@@ -432,7 +452,7 @@
                          presets drive them ("Off" turns both off), and turning a
                          cell on turns its column's master on. -->
                     <div class="vF-step setup-room">
-                        <div class="vF-q"><span class="num">10</span><span data-i18n="setup.room.title">Does the room play along?</span></div>
+                        <div class="vF-q"><span class="num">11</span><span data-i18n="setup.room.title">Does the room play along?</span></div>
                         <div class="setup-room-masters" hidden>
                             <input type="checkbox" id="tts-enable-toggle" aria-hidden="true" tabindex="-1">
                             <input type="checkbox" id="house-enable-toggle" aria-hidden="true" tabindex="-1">

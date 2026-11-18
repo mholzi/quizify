@@ -21,6 +21,12 @@ DEFAULT_ROUND_DURATION = 30  # seconds
 # category only, no answer timer. It closes early as soon as every connected
 # player has locked a bet, so a quick table never waits out the full 20s.
 WAGER_WINDOW_DURATION = 20  # seconds
+# Auto-advance after the answer reveal (#1249). The host picks Off or one of
+# these pauses in the custom setup; the server then starts the next question by
+# itself once the pause has run out. 0 means Off, which is today's behaviour
+# and the default. Any other value on the wire is read as Off: three choices
+# the setup offers, nothing in between that a client would have to render.
+AUTO_ADVANCE_CHOICES = (30, 60, 90)
 MAX_NAME_LENGTH = 20
 MIN_NAME_LENGTH = 1
 LOBBY_DISCONNECT_GRACE_PERIOD = 5  # seconds before removing disconnected player
@@ -264,3 +270,20 @@ ERR_SUBMIT_INVALID_FORMAT = "INVALID_FORMAT"
 ERR_SUBMIT_RATE_LIMITED = "RATE_LIMITED"
 ERR_SUBMIT_GITHUB_ERROR = "GITHUB_ERROR"
 ERR_SUBMIT_DISABLED = "SUBMIT_DISABLED"
+
+
+def coerce_auto_advance(value: object) -> int:
+    """Read an auto-advance setting off the wire (#1249).
+
+    Returns one of :data:`AUTO_ADVANCE_CHOICES`, or 0 (Off) for anything else:
+    a missing key, ``False``, a string that is not a number, a value the setup
+    never offers. Off is the safe reading because it is what the game did
+    before the setting existed.
+    """
+    if isinstance(value, bool) or value is None:
+        return 0
+    try:
+        seconds = int(value)  # type: ignore[call-overload]
+    except (TypeError, ValueError):
+        return 0
+    return seconds if seconds in AUTO_ADVANCE_CHOICES else 0

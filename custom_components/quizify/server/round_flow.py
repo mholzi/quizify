@@ -253,6 +253,10 @@ async def start_next_question(
 ) -> None:
     """Start the next question: shuffle answers, broadcast, start timer ticks."""
     handler._cancel_timer_tick()
+    # #1249: every advance ends the reveal's pause, whoever asked for it. A
+    # host who taps Next early lands here too, so the pending auto-advance
+    # cannot fire a second advance a few seconds later.
+    handler._cancel_auto_advance()
 
     # Auto Lightning Round (#285): exactly once per game, when the game is
     # about to enter the pre-picked target round, detour into the fast
@@ -621,6 +625,64 @@ def schedule_admin_pause(handler: QuizifyWebSocketHandler, admin_name: str) -> N
     # Surface a crash in the deferred-pause loop (#362/#307) instead of
     # letting "Task exception was never retrieved" leak at GC time.
     handler._admin_pause_task.add_done_callback(handler._log_task_exception)
+
+
+def schedule_auto_advance(
+    handler: QuizifyWebSocketHandler,
+    game_state: QuizifyGameState,
+) -> None:
+    """Arm the reveal's auto-advance, if the host switched it on (#1249).
+
+    The server owns the clock: the deadline lives on the game state, every
+    client is told the seconds that remain and only draws them, and this task
+    is what actually starts the next question. When it wakes it re-checks
+    that the reveal it was armed for is still the one on screen
+    (``auto_advance_due``), so an early tap, an end, a reset or a new game in
+    between can never be followed by a second advance.
+
+    On the last question the advance is the same call the host's button makes,
+    so it lands in the final results. A room with nobody connected any more is
+    not advanced: the countdown is dropped and the reveal waits for the host,
+    instead of the game playing itself to the end in an empty room.
+    """
+    handler._cancel_auto_advance()
+    seconds = game_state.arm_auto_advance()
+    if seconds <= 0:
+        return
+    round_num = game_state.round
+    game_id = game_state.game_id
+
+    async def advance_after_pause() -> None:
+        await asyncio.sleep(seconds)
+        if (
+            handler._get_game_state() is not game_state
+            or game_state.game_id != game_id
+            or not game_state.auto_advance_due(round_num)
+        ):
+            return
+        # Leave the slot before advancing: start_next_question cancels
+        # whatever task sits there, and that must not be this one.
+        handler._auto_advance_task = None
+        if not any(p.connected for p in game_state.get_players()):
+            game_state.clear_auto_advance()
+            _LOGGER.info("Auto-advance held: nobody is connected")
+            state = handler._snapshot(game_state)
+            state["type"] = "game_state"
+            await handler._conn.broadcast(state)
+            return
+        _LOGGER.info("Auto-advance after round %d", round_num)
+        await handler._advance_round(game_state)
+
+    handler._auto_advance_task = asyncio.ensure_future(advance_after_pause())
+    handler._auto_advance_task.add_done_callback(handler._log_task_exception)
+
+
+def cancel_auto_advance(handler: QuizifyWebSocketHandler) -> None:
+    """Cancel a pending auto-advance (#1249). Safe when none is pending."""
+    task = handler._auto_advance_task
+    if task is not None and not task.done():
+        task.cancel()
+    handler._auto_advance_task = None
 
 
 def cancel_admin_pause(handler: QuizifyWebSocketHandler) -> None:

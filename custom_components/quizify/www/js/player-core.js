@@ -547,6 +547,8 @@
 
             case 'round_summary':
                 handleRoundSummary(msg);
+                // #1249: the server's countdown to the next question.
+                reveal.syncAutoAdvance(msg.auto_advance || null);
                 // #736: the reveal is the one stretch of the round with an idle
                 // network, and the server has told us which picture comes next.
                 // Warm it here so `question_started` finds it in cache instead
@@ -711,6 +713,8 @@
         // rather than inside three `case` blocks — the bug this closes was a
         // fourth case that nobody wrote.
         enterStageFor(msg);
+        // #1249: whatever took the reveal down takes its countdown with it.
+        reveal.stopAutoAdvanceUnlessRevealing();
         // #864: and its counterpart. Same reason for living here rather than
         // in a `case`: the teardown that was forgotten was the one nobody
         // thought to write.
@@ -894,6 +898,9 @@
                 game.stopCountdown();  // #1174: as handleRoundSummary does
                 pu.showView('reveal-view');
                 reveal.updateRevealView(msg);
+                // #1249: a phone that (re)joins mid-pause. Only a full
+                // snapshot carries the key; a leaderboard refresh does not.
+                if ('auto_advance' in msg) reveal.syncAutoAdvance(msg.auto_advance || null);
                 // The hatch itself is armed by setResetStage above, which
                 // reads this same phase off the snapshot.
                 disarmResetAffordance('paused-reset-btn');

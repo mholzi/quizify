@@ -21,6 +21,7 @@ import asyncio
 import secrets
 from typing import TYPE_CHECKING, Any
 
+from ..const import coerce_auto_advance
 from ..storage import JsonFile
 
 if TYPE_CHECKING:
@@ -170,6 +171,12 @@ def _validate(payload: dict[str, Any]) -> dict[str, Any]:
 
     if payload.get("wager") is not None:
         record["wager"] = bool(payload["wager"])
+
+    # #1249: the pause after the reveal, in seconds (0 = Off). Stored only as
+    # one of the values the setup offers, so a preset can never come back with
+    # a pace the chips cannot show.
+    if payload.get("auto_advance") is not None:
+        record["auto_advance"] = coerce_auto_advance(payload["auto_advance"])
 
     packs = payload.get("packs")
     if isinstance(packs, list):

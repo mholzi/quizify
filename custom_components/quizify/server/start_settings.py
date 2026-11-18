@@ -12,6 +12,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from custom_components.quizify.const import coerce_auto_advance
+
 
 def _coerce_toggle(value: Any, *, default: bool) -> bool:
     """Coerce a wire toggle value to a bool (#285).
@@ -49,6 +51,7 @@ _START_GAME_FIELDS = frozenset(
         "hot_seat_enabled",
         "powerups_enabled",
         "wager_enabled",
+        "auto_advance",
     }
 )
 
@@ -68,6 +71,7 @@ _PRESET_FIELD_MAP = {
     "hot_seat": "hot_seat_enabled",
     "powerups": "powerups_enabled",
     "wager": "wager_enabled",
+    "auto_advance": "auto_advance",
 }
 
 
@@ -118,6 +122,10 @@ def _preset_to_start_settings(preset: dict[str, Any]) -> dict[str, Any]:
             text = str(value).strip()
             if text:
                 settings["language"] = text
+        elif keyword == "auto_advance":
+            # #1249: seconds, not a toggle. 0 (Off) is a real value here,
+            # so it must not fall through to the bool() branch below.
+            settings["auto_advance"] = coerce_auto_advance(value)
         elif keyword in ("num_rounds", "timer_duration"):
             try:
                 settings[keyword] = int(value)

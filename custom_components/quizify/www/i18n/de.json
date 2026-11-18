@@ -303,7 +303,8 @@
     "wrongHeadline": "Knapp daneben",
     "timeUp": "Zeit abgelaufen",
     "answerLabel": "Antwort",
-    "noAnswerShort": "Keine Antwort abgegeben"
+    "noAnswerShort": "Keine Antwort abgegeben",
+    "autoAdvanceAria": "Nächste Frage in {seconds} Sekunden"
   },
   "a11y": {
     "qrCodeRegion": "QR-Code zum Beitreten",
@@ -357,7 +358,9 @@
       "q9": "Einsatz bei der letzten Frage?",
       "needsMultipleChoice": "Diese Modi brauchen Fragen mit Antwortmöglichkeiten.",
       "wagerHint": "Punkte auf die letzte Frage setzen",
-      "wagerTeamNote": "Mit Teams: der Einsatz gehört dem Team und geht auf den Teampunktestand."
+      "wagerTeamNote": "Mit Teams: der Einsatz gehört dem Team und geht auf den Teampunktestand.",
+      "qAdvance": "Automatisch weiter?",
+      "advanceHint": "Nach der Auflösung startet die nächste Frage von selbst"
     },
     "tts": {
       "question": "Jede Frage vorlesen",
@@ -515,7 +518,8 @@
     "scoringLeft": "{name} spielt nicht mehr mit",
     "scoringBack": "{name} ist wieder dabei",
     "streakStrip": "{name}: {points} in Folge",
-    "streakChip": "{count} in Folge"
+    "streakChip": "{count} in Folge",
+    "nextQuestion": "Nächste Frage"
   },
   "connection": {
     "connected": "Verbunden",

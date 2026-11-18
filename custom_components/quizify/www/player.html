@@ -64,6 +64,10 @@
                 <span class="player-header-round-sep" aria-hidden="true">/</span>
                 <span id="header-round-total">10</span>
             </span>
+            <!-- #1249: the reveal's auto-advance countdown. Shown only while
+                 the server says the next question starts by itself; the
+                 result page below stays exactly as it is. -->
+            <span id="header-auto-advance" class="player-header-ring" role="timer" hidden></span>
         </span>
         <!-- Connection status dot — JS updates via conn-status div -->
         <div id="connection-indicator" class="connection-indicator" aria-hidden="true"></div>
@@ -643,7 +647,11 @@
                     </button>
                     <button id="next-round-btn" class="pl-result-bar-btn pl-result-bar-btn--primary btn-primary" type="button">
                         <span data-i18n="admin.nextQuestion">Next question</span>
-                        <span aria-hidden="true">→</span>
+                        <span id="next-round-arrow" aria-hidden="true">→</span>
+                        <!-- #1249: while the reveal counts down, a mini ring
+                             takes the arrow's place. A tap still advances
+                             right away. -->
+                        <span id="next-round-ring" class="pl-btn-ring" aria-hidden="true" hidden></span>
                     </button>
                 </div>
 

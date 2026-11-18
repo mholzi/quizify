@@ -36,6 +36,9 @@ _DEFINITION = re.compile(r"\bfunction\s+([A-Za-z_$][\w$]*)\s*\(")
 #: Renderers ``updateRevealView`` dispatches to, plus the two entry points
 #: ``player-core.js`` reaches through ``window.QuizifyPlayerReveal``.
 EXPECTED_EXPORTS = (
+    # #1249: the reveal's auto-advance rings, driven from player-core.js.
+    "syncAutoAdvance",
+    "stopAutoAdvanceUnlessRevealing",
     "updateRevealView",
     "updateScoringStatus",
     "resetRankMemo",

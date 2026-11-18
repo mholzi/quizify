@@ -514,6 +514,11 @@ class RoundBroadcaster(_Broadcaster):
         summary_msg = self._messages.build_round_summary(game_state)
         if summary_msg is None:
             return
+        # #1249: the countdown is live, and the built summary is cached for
+        # the whole reveal (#414), so it rides a copy and never the cache.
+        auto_advance = game_state.auto_advance_status()
+        if auto_advance is not None:
+            summary_msg = {**summary_msg, "auto_advance": auto_advance}
         await self._conn.broadcast(summary_msg)
 
     async def send_teams_update(self, game_state: QuizifyGameState) -> None:

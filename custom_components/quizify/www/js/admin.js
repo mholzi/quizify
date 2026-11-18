@@ -69,6 +69,11 @@
     // checkbox at start_game time.
     let selectedPowerups = true;
     let selectedWager = true;
+    // Auto-advance after the reveal (#1249), in seconds; 0 = Off (default,
+    // the reveal waits for Next). _autoAdvanceChoice is the chip the host
+    // last picked, so switching the toggle off and on keeps it (60 s first).
+    let selectedAutoAdvance = 0;
+    var _autoAdvanceChoice = 60;
 
     // Game state
     let currentPhase = 'LOBBY';
@@ -316,6 +321,7 @@
             hot_seat: selectedHotSeat,
             powerups: selectedPowerups,
             wager: selectedWager,
+            auto_advance: selectedAutoAdvance,
             language: selectedLanguage,
             packs: (selectedCategories || []).slice()
         }));
@@ -1087,8 +1093,8 @@
     // `lightning` mirrors data-lightning on the cards in admin.html (1/0) and
     // arms or disarms the auto Lightning Round (#285) for the bundle.
     var _PRESETS = [
-        { id: 'schnellrunde', rounds: 5,  difficulty: 'easy',   timer: 20, lightning: true,  hotSeat: true,  powerups: true,  wager: true,  labelKey: 'setup.preset.fastName'     },
-        { id: 'klassiker',    rounds: 10, difficulty: 'medium', timer: 30, lightning: true,  hotSeat: true,  powerups: true,  wager: true,  labelKey: 'setup.preset.classicName'  },
+        { id: 'schnellrunde', rounds: 5,  difficulty: 'easy',   timer: 20, lightning: true,  hotSeat: true,  powerups: true,  wager: true, autoAdvance: 0,  labelKey: 'setup.preset.fastName'     },
+        { id: 'klassiker',    rounds: 10, difficulty: 'medium', timer: 30, lightning: true,  hotSeat: true,  powerups: true,  wager: true, autoAdvance: 0,  labelKey: 'setup.preset.classicName'  },
         // #506: the long-timer bundle for hosts playing with small kids. Its
         // timer must stay one of the #timer-chips values — _applyPreset calls
         // _activateChip, which silently highlights nothing otherwise.
@@ -1101,8 +1107,8 @@
         // call a third and fourth time. Steal and Freeze take points off
         // another child, and the last question staked "no answer costs you the
         // stake" against a score a seven-year-old spent the evening building.
-        { id: 'kinder',       rounds: 5,  difficulty: 'easy',   timer: 180, lightning: false, hotSeat: false, powerups: false, wager: false, labelKey: 'setup.preset.kidsName'   },
-        { id: 'marathon',     rounds: 20, difficulty: 'hard',   timer: 45, lightning: true,  hotSeat: true,  powerups: true,  wager: true,  labelKey: 'setup.preset.marathonName' },
+        { id: 'kinder',       rounds: 5,  difficulty: 'easy',   timer: 180, lightning: false, hotSeat: false, powerups: false, wager: false, autoAdvance: 0, labelKey: 'setup.preset.kidsName'   },
+        { id: 'marathon',     rounds: 20, difficulty: 'hard',   timer: 45, lightning: true,  hotSeat: true,  powerups: true,  wager: true, autoAdvance: 0,  labelKey: 'setup.preset.marathonName' },
     ];
 
     // #433: the host's own saved presets, loaded from the server so a preset
@@ -1120,7 +1126,21 @@
             && p.hotSeat === selectedHotSeat
             // #742: and neither is one with Steal and the final bet back on.
             && p.powerups === selectedPowerups
-            && p.wager === selectedWager;
+            && p.wager === selectedWager
+            // #1249: and the pace. Every built-in preset is Off; a saved one
+            // carries its own value, or none (saved before #1249) = Off.
+            && _presetAutoAdvance(p) === selectedAutoAdvance;
+    }
+
+    function _presetAutoAdvance(p) {
+        var v = p.autoAdvance != null ? p.autoAdvance : p.auto_advance;
+        return _coerceAutoAdvance(v);
+    }
+
+    // The three paces the setup offers; anything else is Off, as on the server.
+    function _coerceAutoAdvance(v) {
+        var n = parseInt(v, 10);
+        return (n === 30 || n === 60 || n === 90) ? n : 0;
     }
 
     function _samePacks(packs) {
@@ -1272,9 +1292,11 @@
         var hotSeat = p.hotSeat != null ? p.hotSeat : p.hot_seat;
         // #742: powerups/wager need no such translation — the JS name and the
         // wire name are already the same word.
+        // #1249: the built-ins say autoAdvance, the store says auto_advance.
+        var autoAdvance = p.autoAdvance != null ? p.autoAdvance : p.auto_advance;
         _applyPreset(
             p.rounds, p.difficulty, p.timer, p.lightning, hotSeat,
-            p.powerups, p.wager
+            p.powerups, p.wager, autoAdvance
         );
         // #889: the language first, and only then the packs. _applyLanguage
         // hides the chips of every other language and drops an active chip
@@ -1365,6 +1387,7 @@
                 hot_seat: selectedHotSeat,
                 powerups: selectedPowerups,
                 wager: selectedWager,
+                auto_advance: selectedAutoAdvance,
                 category: selectedCategory,
                 // #889: the packs a preset names belong to one language, so
                 // the language is part of the preset, not of the session that
@@ -1437,7 +1460,7 @@
 
     // Apply preset: write to the active-chip state AND to the typed vars
     // so the existing chip group serialization works unchanged.
-    function _applyPreset(rounds, difficulty, timer, lightning, hotSeat, powerups, wager) {
+    function _applyPreset(rounds, difficulty, timer, lightning, hotSeat, powerups, wager, autoAdvance) {
         if (rounds != null) {
             selectedRounds = rounds;
             _activateChip(els.roundsChips, String(rounds));
@@ -1478,11 +1501,27 @@
             var wagerEl = document.getElementById('wager-enabled-toggle');
             if (wagerEl) wagerEl.checked = wager;
         }
+        // #1249: the toggle and the chips, for the same DOM-first reason.
+        if (autoAdvance != null) _setAutoAdvance(_coerceAutoAdvance(autoAdvance));
         // #851: a preset is the other way the difficulty changes, and the one
         // the live test used — "Schnellrunde" sets easy without the chip
         // handler ever running.
         _pushDifficulty();
         updateSettingsSummary();
+    }
+
+    // #1249: one writer for the setting, the toggle and the chips, so a
+    // preset, a reload and a tap can never leave them disagreeing.
+    function _setAutoAdvance(seconds) {
+        selectedAutoAdvance = seconds;
+        if (seconds > 0) _autoAdvanceChoice = seconds;
+        var toggle = document.getElementById('auto-advance-toggle');
+        if (toggle) toggle.checked = seconds > 0;
+        var chips = document.getElementById('auto-advance-chips');
+        if (chips) {
+            chips.hidden = seconds <= 0;
+            _activateChip(chips, String(_autoAdvanceChoice));
+        }
     }
 
     function _activateChip(container, value) {
@@ -1531,8 +1570,11 @@
                 var powerups = powerupsAttr == null ? null : powerupsAttr === '1';
                 var wagerAttr = card.getAttribute('data-wager');
                 var wager = wagerAttr == null ? null : wagerAttr === '1';
+                var autoAdvanceAttr = card.getAttribute('data-auto-advance');
+                var autoAdvance = autoAdvanceAttr == null ? null : parseInt(autoAdvanceAttr, 10);
                 _applyPreset(
-                    rounds, difficulty, timer, lightning, hotSeat, powerups, wager
+                    rounds, difficulty, timer, lightning, hotSeat, powerups, wager,
+                    autoAdvance
                 );
             });
         });
@@ -1607,6 +1649,24 @@
         on(wagerToggle, 'change', function () {
             selectedWager = !!wagerToggle.checked;
             updateSettingsSummary();
+        });
+    }
+    // Auto-advance after the reveal (#1249): a toggle like the four above,
+    // and the 30/60/90 s chips under it that only show while it is on.
+    var autoAdvanceToggle = document.getElementById('auto-advance-toggle');
+    if (autoAdvanceToggle) {
+        on(autoAdvanceToggle, 'change', function () {
+            _setAutoAdvance(autoAdvanceToggle.checked ? _autoAdvanceChoice : 0);
+            updateSettingsSummary();
+        });
+    }
+    var autoAdvanceChips = document.getElementById('auto-advance-chips');
+    if (autoAdvanceChips) {
+        autoAdvanceChips.querySelectorAll('.chip').forEach(function (chip) {
+            on(chip, 'click', function () {
+                _setAutoAdvance(_coerceAutoAdvance(chip.dataset.value));
+                updateSettingsSummary();
+            });
         });
     }
     // TTS narration toggles (#281). Master switch defaults OFF; the per-event
@@ -4556,6 +4616,9 @@
         var powerupsEnabled = powerupsEl ? !!powerupsEl.checked : selectedPowerups;
         var wagerEl = document.getElementById('wager-enabled-toggle');
         var wagerEnabled = wagerEl ? !!wagerEl.checked : selectedWager;
+        // #1249: Off unless the toggle is on, whatever chip is lit.
+        var autoAdvanceEl = document.getElementById('auto-advance-toggle');
+        var autoAdvance = (autoAdvanceEl && !autoAdvanceEl.checked) ? 0 : selectedAutoAdvance;
         return {
             category: categoryPayload,
             difficulty: selectedDifficulty === 'mixed' ? null : selectedDifficulty,
@@ -4566,6 +4629,7 @@
             hot_seat_enabled: hotSeatEnabled,
             powerups_enabled: powerupsEnabled,
             wager_enabled: wagerEnabled,
+            auto_advance: autoAdvance,
             // TTS narration toggles (#281), read live from the inputs.
             tts: _readTtsConfig(),
             // House Plays Along config (#494), read live from the inputs.

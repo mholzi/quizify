@@ -936,7 +936,90 @@
         });
     }
 
+    // ------------------------------------------------------------------
+    // Auto-advance countdown ring (#1249)
+    // ------------------------------------------------------------------
+    // One object on three surfaces: the TV's corner, the phone's header and
+    // the host's Next button. The server owns the clock and sends the seconds
+    // that remain; this only draws them, counting down locally from the
+    // moment the frame arrived so a phone's wrong wall clock cannot matter.
+    // ``host`` is an empty element; the caller sizes it with CSS.
+    var RING_R = 25;
+    var RING_C = 2 * Math.PI * RING_R;
+
+    function createCountdownRing(host, opts) {
+        opts = opts || {};
+        var ns = 'http://www.w3.org/2000/svg';
+        var svg = document.createElementNS(ns, 'svg');
+        svg.setAttribute('viewBox', '0 0 60 60');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.setAttribute('class', 'qz-ring-svg');
+        var track = document.createElementNS(ns, 'circle');
+        var prog = document.createElementNS(ns, 'circle');
+        [track, prog].forEach(function (c) {
+            c.setAttribute('cx', '30');
+            c.setAttribute('cy', '30');
+            c.setAttribute('r', String(RING_R));
+        });
+        track.setAttribute('class', 'qz-ring-track');
+        prog.setAttribute('class', 'qz-ring-prog');
+        prog.setAttribute('stroke-dasharray', RING_C.toFixed(2));
+        svg.appendChild(track);
+        svg.appendChild(prog);
+        var num = document.createElement('span');
+        num.className = 'qz-ring-num';
+        host.textContent = '';
+        host.classList.add('qz-ring');
+        host.appendChild(svg);
+        host.appendChild(num);
+
+        var timer = null;
+        var endsAt = 0;
+        var total = 0;
+        var shown = null;
+
+        function paint() {
+            var left = Math.max(0, (endsAt - Date.now()) / 1000);
+            var frac = total > 0 ? left / total : 0;
+            prog.setAttribute('stroke-dashoffset', (RING_C * (1 - frac)).toFixed(2));
+            var secs = Math.ceil(left);
+            if (secs !== shown) {
+                shown = secs;
+                num.textContent = String(secs);
+                if (opts.label) host.setAttribute('aria-label', opts.label(secs));
+            }
+            if (left <= 0) _clear();
+        }
+
+        function _clear() {
+            if (timer !== null) { clearInterval(timer); timer = null; }
+        }
+
+        return {
+            /** Start (or re-sync) from ``{seconds, remaining}`` off the wire. */
+            start: function (status) {
+                if (!status || !(status.seconds > 0)) { this.stop(); return; }
+                total = status.seconds;
+                endsAt = Date.now() + Math.max(0, Number(status.remaining) || 0) * 1000;
+                shown = null;
+                host.hidden = false;
+                if (opts.onShow) opts.onShow(true);
+                paint();
+                _clear();
+                timer = setInterval(paint, 250);
+            },
+            stop: function () {
+                _clear();
+                shown = null;
+                host.hidden = true;
+                if (opts.onShow) opts.onShow(false);
+            },
+            running: function () { return !host.hidden; }
+        };
+    }
+
     window.QuizifyRenderShared = {
+        createCountdownRing: createCountdownRing,
         captureRemoved: captureRemoved,
         slideRemoved: slideRemoved,
         motionStreaks: motionStreaks,
