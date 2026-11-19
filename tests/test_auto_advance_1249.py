@@ -372,3 +372,11 @@ def test_i18n_keys(lang: str) -> None:
     assert d["setup"]["eigene"]["advanceHint"]
     assert d["dashboard"]["nextQuestion"]
     assert "{seconds}" in d["reveal"]["autoAdvanceAria"]
+
+
+def test_advance_chips_stay_hidden_while_toggle_is_off_1252() -> None:
+    """`.chip-group` is display:flex, which beats the `hidden` attribute, so
+    the seconds chips need their own `[hidden]` rule (#1252)."""
+    rule = r"\.setup-advance-chips\[hidden\]\s*\{\s*display:\s*none"
+    assert re.search(rule, _read("css/src/07-player.css"))
+    assert re.search(rule, _read("css/styles.css"))
