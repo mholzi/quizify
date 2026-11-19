@@ -4640,6 +4640,7 @@ footer {
     cursor: pointer;
 }
 .setup-house-evening-chip[hidden] { display: none; }
+.setup-advance-chips[hidden] { display: none; }
 
 .setup-select {
     width: 100%;

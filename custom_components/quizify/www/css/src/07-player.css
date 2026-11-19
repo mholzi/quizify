@@ -1688,6 +1688,9 @@
     cursor: pointer;
 }
 .setup-house-evening-chip[hidden] { display: none; }
+/* #1252: .chip-group sets display:flex, which beats the bare `hidden`
+   attribute — the auto-advance seconds chips showed with the toggle off. */
+.setup-advance-chips[hidden] { display: none; }
 
 .setup-select {
     width: 100%;
