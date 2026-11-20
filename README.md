@@ -602,6 +602,10 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 
 The complete history is in [`CHANGELOG.md`](CHANGELOG.md); longer prose notes for each release are on the [GitHub releases page](https://github.com/mholzi/quizify/releases).
 
+### v1.28.0 — Games That Carry On By Themselves ⏭️
+- **Auto-advance after the reveal**: the game can move on by itself after 30, 60 or 90 seconds, with a countdown ring on the TV and the phones; leave it off and the host keeps control (#1249, #1252)
+- New Year's Eve packs in German, English and Spanish grow to 160 questions each (#1244)
+
 ### v1.27.0 — Kids & Family, and Phones That Keep Their Seat 🧒
 - **Kids & Family packs in German, English and Spanish**, 160 questions each, made for game nights with children (#1231)
 - A phone that reloads mid-game gets its seat back even when the first reconnect is cut off, a rotated session token stays valid for a minute, and the lights return to the room's own state after colour accents and the streak double pulse (#1234, #1222, #1220, #1233)
