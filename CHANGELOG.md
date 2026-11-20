@@ -5,6 +5,22 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.28.0] — 2026-11-20
+
+**Games That Carry On By Themselves**
+
+Since 1.27.0 the library grew to 8,350 questions in 59 packs, and a quiz can now keep its own pace after each reveal.
+
+### ⏭️ Auto-advance after the reveal
+
+Hosts can let the game continue on its own once the answer is shown. A new setup step offers 30, 60 or 90 seconds, and the choice only appears once the toggle is on. A small ring in the corner shows the remaining time. Leave it off and the game waits for the host, exactly as before.
+
+### 🎆 New Year's Eve packs at 160
+
+The German, English and Spanish New Year's Eve packs now hold 160 questions each. Topics range from Dinner for One and Times Square to Hogmanay and fireworks.
+
+Also: the README explains installing through the Home Assistant Marketplace, which replaced HACS, and a few behind-the-scenes tooling updates.
+
 ## [1.28.0-RC3] — 2026-11-20
 
 **Games That Carry On By Themselves**
